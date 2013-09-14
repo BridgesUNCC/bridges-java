@@ -5,9 +5,8 @@ import net.liftweb.json
 //import java.nio.file._
 import scalax.file.Path
 
-
 /** Session object capable of being loaded from a JSON file */
-case class Session(url: String, var cache: Map[String, List[json.JValue]]) {
+case class Session(var cache: Map[String, List[json.JValue]]) {
     def entries(stream: String)= {
         // TODO: expire
         if (cache.contains(stream)) {
@@ -37,7 +36,7 @@ object Session {
              *  Initiate a session
              *  The API here isn't known yet; STUB, TODO
              */
-        Session("Example", Map[String, List[json.JValue]]())
+        Session(Map[String, List[json.JValue]]())
     }
     
     def load()= {
@@ -64,7 +63,7 @@ object Session {
     }
     
     def save(session: Session) {
-        config_path.write(json.Serialization.write(session))
+        config_path.write(json.Serialization.writePretty(session))
     }
 }
 
