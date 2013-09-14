@@ -7,23 +7,22 @@ import scalax.file.Path
 
 
 /** Session object capable of being loaded from a JSON file */
-case class Session(url: String, cache: Map[String, json.JObject]) {
+case class Session(url: String, var cache: Map[String, List[json.JValue]]) {
     def entries(stream: String)= {
         // TODO: expire
-        if (cache.contains(stream))
+        if (cache.contains(stream)) {
             cache(stream)
-        else
-            // TODO: make mutable
-            cache(stream) = live(stream)
-            
+        } else {
+            cache += stream -> live(stream)
+            cache
+        }
     }
-    def live(stream: String) : List[Any]= {
-        
+    def live(stream: String) : List[json.JValue]= {
         val location = dispatch.url(s"http://localhost/$stream.json")
         val request = Http.configure(_ setFollowRedirects true)(location OK as.String)
         json.parse(request()) match {
             case json.JArray(entries) => entries
-            case _ => List(1, 3, 5) // Should come up with something better
+            case _ => List() // Should come up with something better
         }
     }
 }
@@ -38,7 +37,7 @@ object Session {
              *  Initiate a session
              *  The API here isn't known yet; STUB, TODO
              */
-        Session("Example", Map[String, json.JObject]())
+        Session("Example", Map[String, List[json.JValue]]())
     }
     
     def load()= {
@@ -64,7 +63,7 @@ object Session {
         
     }
     
-    def dump(session: Session) {
+    def save(session: Session) {
         config_path.write(json.Serialization.write(session))
     }
 }
@@ -73,7 +72,9 @@ class Retrieve(stream: String, structure: StudentStructure[Any]) {
     val session = Session.load()
     
     def getMultiple() {
-        for (entry <- session.live(stream)) structure.push(entry)
+        for (entry <- session.entries(stream))
+            structure.push(entry)
+        Session.save(session)
     }
 }
 
