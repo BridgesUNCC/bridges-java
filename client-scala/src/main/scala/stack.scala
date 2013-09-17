@@ -8,7 +8,7 @@ import net.liftweb.json
 case class StackNode[T](next: StackNode[T], element: T)
 
 abstract class StudentStack[T] extends StudentStructure[T] {
-    var root : StackNode[T]
+    var root : StackNode[T] = null
     def serialize()= {
         val out = collection.mutable.ListBuffer[T]()
         var node = root

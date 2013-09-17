@@ -6,12 +6,6 @@ import bridges.StudentStack;
 /** Pointer-based reference example of a student stack */
 public class ReferenceStack<T> extends StudentStack<T> {
     private StackNode<T> root = null;
-    public StackNode<T> root() {
-        return root;
-    }
-    public void root_$eq(StackNode<T> node) {
-        root=node;
-    }
     
     public void push(T element) {
         root = new StackNode<T>(root, element);
