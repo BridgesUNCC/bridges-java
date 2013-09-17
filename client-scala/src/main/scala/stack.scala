@@ -19,21 +19,3 @@ abstract class StudentStack[T] extends StudentStructure[T] {
         json.Serialization.write(out.result)
     }
 }
-
-/** Pointer-based reference example of a student stack
-class ReferenceStack[T] extends StudentStack[T] {
-    // TODO: Replace this with Java
-    var root : StackNode[T] = _
-    
-    def push(element: T) {
-        root = new StackNode[T](root, element)
-    }
-    
-    def pop()= {
-        if (root == null)
-            null
-        val element = root.element
-        root = root.next
-        element
-    }
-} */
