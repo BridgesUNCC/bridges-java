@@ -16,6 +16,7 @@ case class Session(var cache: Map[String, List[json.JValue]]) {
             cache
         }
     }
+    
     def live(stream: String) : List[json.JValue]= {
         val location = dispatch.url(s"http://localhost/$stream.json")
         val request = Http.configure(_ setFollowRedirects true)(location OK as.String)
@@ -23,6 +24,11 @@ case class Session(var cache: Map[String, List[json.JValue]]) {
             case json.JArray(entries) => entries
             case _ => List() // Should come up with something better
         }
+    }
+    
+    def send_state(serial: String) {
+        // TODO
+        println("Unimplemented: session.send_state")
     }
 }
 
@@ -34,7 +40,7 @@ object Session {
     def new_session()= {
             /* 
              *  Initiate a session
-             *  The API here isn't known yet; STUB, TODO
+             *  The API here isn't known yet; TODO
              */
         Session(Map[String, List[json.JValue]]())
     }
@@ -56,6 +62,7 @@ object Session {
     def refresh() {
         // STUB
         // Request a new session
+        println("Unimplemented: Session.refresh()")
         val session_init_url = url("http://localhost/session")
         // This API is not determined yet
         val request = Http(session_init_url.POST)
@@ -70,10 +77,11 @@ object Session {
 class Retrieve(stream: String, structure: StudentStructure[Any]) {
     val session = Session.load()
     
-    def getMultiple() {
+    def get_multiple() {
         for (entry <- session.entries(stream))
             structure.push(entry)
         Session.save(session)
+        session.send_state(structure.serialize())
     }
 }
 
@@ -83,6 +91,6 @@ object Intro {
         val session = Session.load()
         val is = new ReferenceStack[Any]
         val ret = new Retrieve("geolist", is)
-        ret.getMultiple
+        ret.get_multiple
     }
 }

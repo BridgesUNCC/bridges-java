@@ -13,17 +13,17 @@ abstract class StudentStack[T] extends StudentStructure[T] {
         val out = collection.mutable.ListBuffer[T]()
         var node = root
         while(node != null) {
-            node = node.next
             out += node.element
+            node = node.next
         }
         json.Serialization.write(out.result)
     }
 }
 
-/** Pointer-based reference example of a student stack */
+/** Pointer-based reference example of a student stack
 class ReferenceStack[T] extends StudentStack[T] {
     // TODO: Replace this with Java
-    var root: StackNode[T] = null
+    var root : StackNode[T] = _
     
     def push(element: T) {
         root = new StackNode[T](root, element)
@@ -32,10 +32,8 @@ class ReferenceStack[T] extends StudentStack[T] {
     def pop()= {
         if (root == null)
             null
-        else {
-            val e = root.element
-            root = root.next
-            e
-        }
+        val element = root.element
+        root = root.next
+        element
     }
-}
+} */
