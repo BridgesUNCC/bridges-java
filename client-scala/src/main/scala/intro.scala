@@ -4,27 +4,29 @@ import Defaults._
 import net.liftweb.json
 //import java.nio.file._
 import scalax.file.Path
-import scala.reflect.runtime.universe._ // TypeTags
+import java.util.Date
+
+case class SessionStream(refreshed: Date, entries: List[json.JValue])
 
 /** Session object capable of being loaded from a JSON file */
-case class Session(var cache: Map[String, List[json.JValue]]) {
+case class Session(username: String, password: String,
+    var cache: Map[String, SessionStream] = Map()) {
+    implicit val formats = json.Serialization.formats(json.NoTypeHints)
+        
     def entries(stream: String)= {
         // TODO: expire
-        if (cache.contains(stream)) {
-            cache(stream)
-        } else {
-            cache += stream -> live(stream)
-            cache
+        if ( (cache contains stream) && (cache(stream).refreshed before new Date()))
+            cache(stream).entries
+        else {
+            live(stream) foreach {cache += stream -> SessionStream(new Date, _)}
+            cache.get(stream) map {_.entries} getOrElse List()
         }
     }
     
-    def live(stream: String) : List[json.JValue]= {
-        val location = dispatch.url(s"http://localhost/$stream.json")
-        val request = Http.configure(_ setFollowRedirects true)(location OK as.String)
-        json.parse(request()) match {
-            case json.JArray(entries) => entries
-            case _ => List() // Should come up with something better
-        }
+    def live(stream: String) : Option[List[json.JValue]]= {
+        val location = dispatch.url(s"http://localhost/$stream?username=$username&password=$password")
+        val request = Http.configure(_ setFollowRedirects true)(location OK as.String).option
+        return request() map {json.Serialization.read[List[json.JValue]](_)}
     }
     
     def send_state(serial: String) {
@@ -36,38 +38,19 @@ case class Session(var cache: Map[String, List[json.JValue]]) {
 /** Session factory */
 object Session {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
+    // TODO: Windows + Mac configuration locations
     val config_path = Path.fromString(System.getProperty("user.home")) / ".config" / "bridges"
     
-    def new_session()= {
-            /* 
-             *  Initiate a session
-             *  The API here isn't known yet; TODO
-             */
-        Session(Map[String, List[json.JValue]]())
-    }
     
-    def load()= {
-        // TODO: Windows + Mac configuration locations
+    def load(username: String, password: String): Session= {
         if (config_path.exists) {
             try {
-                json.Serialization.read[Session](config_path.chars().mkString)
+                return json.Serialization.read[Session](config_path.chars().mkString)
             } catch {
-                case mape: json.MappingException => new_session()
+                case map_e: json.MappingException => None
             }
-        } else {
-            config_path.createFile()
-            new_session()
         }
-    }
-    
-    def refresh() {
-        // STUB
-        // Request a new session
-        println("Unimplemented: Session.refresh()")
-        val session_init_url = url("http://localhost/session")
-        // This API is not determined yet
-        val request = Http(session_init_url.POST)
-        
+        return Session(username, password)
     }
     
     def save(session: Session) {
@@ -75,8 +58,8 @@ object Session {
     }
 }
 
-class Retrieve(stream: String, structure: StudentStructure[Any]) {
-    val session = Session.load()
+class Retrieve(stream: String, structure: StudentStructure[Any], username: String, password: String) {
+    val session = Session.load(username, password)
     
     def get_multiple() {
         for (entry <- session.entries(stream))
@@ -89,8 +72,8 @@ class Retrieve(stream: String, structure: StudentStructure[Any]) {
 object Intro {
     // The student should be able to do this part
     def main(args: Array[String]) {
-        val is = new ReferenceStack[Any]
-        val ret = new Retrieve("geolist", is)
+        val structure = new ReferenceStack[Any]
+        val ret = new Retrieve("geolist", structure, "user", "pass")
         ret.get_multiple
     }
 }
