@@ -6,9 +6,18 @@ import net.liftweb.json
 import scalax.file.Path
 import java.util.Date
 
+/** Container for received JSON entries
+  * 
+  * refreshed: when the data was last downloaded
+  * entries: the list of JSON values received from the server
+  */
 case class SessionStream(refreshed: Date, entries: List[json.JValue])
 
-/** Session object capable of being loaded from a JSON file */
+/** Container for information persisting between invocations
+  *
+  * cache: the most recent response from the server for several streams
+  * username, password: exactly what the seem, as strings
+  */
 case class Session(username: String, password: String,
     var cache: Map[String, SessionStream] = Map()) {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
