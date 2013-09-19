@@ -1,4 +1,5 @@
 import bridges.ReferenceStack
+import bridges.ReferenceStackDriver
 import org.scalatest._
 import java.util.EmptyStackException
 
@@ -18,4 +19,10 @@ class ReferenceStackTest extends FlatSpec with Matchers {
         emptyStack.pop()
     }
   }
+}
+
+class ReferenceStackDriverTest extends FlatSpec with Matchers {
+    "ReferenceStackDriver" should "run ReferenceStack without error" in {
+        ReferenceStackDriver.main()
+    }
 }
