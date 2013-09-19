@@ -2,6 +2,7 @@ package bridges;
 import bridges.Retrieve;
 import bridges.StackNode;
 import bridges.StudentStack;
+import java.util.EmptyStackException;
 
 /** Pointer-based reference example of a student stack */
 public class ReferenceStack<T> extends StudentStack<T> {
@@ -13,7 +14,7 @@ public class ReferenceStack<T> extends StudentStack<T> {
     
     public T pop() {
         if (root == null)
-            return null;
+            throw new EmptyStackException();
         T element = root.element();
         root = root.next();
         return element;

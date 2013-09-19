@@ -4,6 +4,7 @@ import Defaults._
 import net.liftweb.json
 //import java.nio.file._
 import scalax.file.Path
+import scala.reflect.runtime.universe._ // TypeTags
 
 /** Session object capable of being loaded from a JSON file */
 case class Session(var cache: Map[String, List[json.JValue]]) {
@@ -88,7 +89,6 @@ class Retrieve(stream: String, structure: StudentStructure[Any]) {
 object Intro {
     // The student should be able to do this part
     def main(args: Array[String]) {
-        val session = Session.load()
         val is = new ReferenceStack[Any]
         val ret = new Retrieve("geolist", is)
         ret.get_multiple

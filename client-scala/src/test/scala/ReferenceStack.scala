@@ -1,5 +1,6 @@
 import bridges.ReferenceStack
 import org.scalatest._
+import java.util.EmptyStackException
 
 class ReferenceStackTest extends FlatSpec with Matchers {
 
@@ -11,9 +12,10 @@ class ReferenceStackTest extends FlatSpec with Matchers {
     stack.pop() should be (1)
   }
 
-  it should "return null if an empty stack is popped" in {
-    // Do we really want to require students to do this?
+  it should "throw an EmptyStackException if an empty stack is popped" in {
     val emptyStack = new ReferenceStack[Int]
-    emptyStack.pop() should be (null)
+    a [EmptyStackException] should be thrownBy {
+        emptyStack.pop()
+    }
   }
 }
