@@ -1,18 +1,18 @@
 package bridges
 import net.liftweb.json
 
-/** Abstract base of student-implemented structures except Nodes
+/** Adds serialize() functionality to stacks.
   *
-  * This would be a trait, but it needs to be inherited in Java
+  * This would be a trait, but it needs to be inherited in Java.
   */
-case class StackNode[T](next: StackNode[T], element: T)
-
 abstract class StudentStack[T] extends StudentStructure[T] {
-    var root : StackNode[T] = null
+    val top: OneNode[T] //= null 
     def serialize()= {
         val out = collection.mutable.ListBuffer[T]()
-        var node = root
-        while(node != null) {
+        var node = top
+        println("scala:")
+        println(node);
+        while (node != null) {
             out += node.element
             node = node.next
         }

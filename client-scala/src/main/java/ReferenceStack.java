@@ -1,22 +1,27 @@
 package bridges;
-import bridges.Retrieve;
-import bridges.StackNode;
+import bridges.OneNode;
 import bridges.StudentStack;
 import java.util.EmptyStackException;
 
-/** Pointer-based reference example of a student stack */
+/** Pointer-based reference example of a student stack. */
 public class ReferenceStack<T> extends StudentStack<T> {
-    private StackNode<T> root = null;
+    // The name of this private variable can be anything
+    private OneNode<T> top = null;
+    
+    /** Note the getter: students need to implement this for visuals. */
+    public OneNode<T> top() {
+        return top;
+    }
     
     public void push(T element) {
-        root = new StackNode<T>(root, element);
+        top = new OneNode<T>(top, element);
     }
     
     public T pop() {
-        if (root == null)
+        if (top == null)
             throw new EmptyStackException();
-        T element = root.element();
-        root = root.next();
+        T element = top.element();
+        top = top.next();
         return element;
     }
 }
