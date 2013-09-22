@@ -52,7 +52,7 @@ object Session {
             try {
                 json.Serialization.read[Session](config_path.chars().mkString)
             } catch {
-                case mape: json.MappingException => new_session()
+                case map_e: json.MappingException => new_session()
             }
         } else {
             config_path.createFile()
@@ -91,6 +91,6 @@ object Intro {
     def main(args: Array[String]) {
         val is = new ReferenceStack[Any]
         val ret = new Retrieve("geolist", is)
-        ret.get_multiple
+        ret.get_multiple()
     }
 }
