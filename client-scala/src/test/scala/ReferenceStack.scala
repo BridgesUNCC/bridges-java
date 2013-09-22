@@ -23,6 +23,6 @@ class ReferenceStackTest extends FlatSpec with Matchers {
 
 class ReferenceStackDriverTest extends FlatSpec with Matchers {
     "ReferenceStackDriver" should "run ReferenceStack without error" in {
-        ReferenceStackDriver.main()
+        ReferenceStackDriver.main(Array("example"))
     }
 }
