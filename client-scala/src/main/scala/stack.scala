@@ -6,7 +6,7 @@ import net.liftweb.json
   * This would be a trait, but it needs to be inherited in Java.
   */
 abstract class StudentStack[T] extends StudentStructure[T] {
-    val top: OneNode[T] //= null 
+    val top: OneNode[T]
     def serialize()= {
         val out = collection.mutable.ListBuffer[T]()
         var node = top

@@ -18,7 +18,7 @@ abstract class StudentStructure[T] {
   * Students should use it
   */
 case class OneNode[T](@BeanProperty var next: OneNode[T],
-                      @BeanProperty val element: T)
+                      @BeanProperty var element: T)
 
 
 
@@ -28,4 +28,4 @@ case class OneNode[T](@BeanProperty var next: OneNode[T],
   */
 case class TwoNode[T](@BeanProperty var left: TwoNode[T],
                       @BeanProperty var right: TwoNode[T],
-                      @BeanProperty val element: T)
+                      @BeanProperty var element: T)
