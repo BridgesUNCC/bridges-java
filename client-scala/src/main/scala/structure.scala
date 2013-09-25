@@ -1,5 +1,6 @@
 package bridges
 import net.liftweb.json
+import scala.reflect.BeanProperty
 
 /** Abstract base of student-implemented structures except Nodes.
   *
@@ -16,11 +17,15 @@ abstract class StudentStructure[T] {
   * 
   * Students should use it
   */
-case class OneNode[T](next: OneNode[T], element: T)
+case class OneNode[T](@BeanProperty var next: OneNode[T],
+                      @BeanProperty val element: T)
+
 
 
 /** Base node for structures with two links.
   * 
   * Students should use it
   */
-case class TwoNode[T](left: TwoNode[T], right: TwoNode[T], element: T)
+case class TwoNode[T](@BeanProperty var left: TwoNode[T],
+                      @BeanProperty var right: TwoNode[T],
+                      @BeanProperty val element: T)

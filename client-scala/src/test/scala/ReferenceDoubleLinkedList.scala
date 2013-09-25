@@ -3,7 +3,7 @@ import bridges.ReferenceDoubleLinkedList;
 
 class ReferenceDoubleLinkedListTest extends FlatSpec with Matchers {
     "ReferenceDoubleLinkedList" should "be indexed and mutable" in {
-        val dll = new ReferenceDoubleLinkedList<Int>
+        val dll = new ReferenceDoubleLinkedList[Int]
         dll.push(8)
         dll.push(6)
         dll.get(0) should be (8)
@@ -14,12 +14,12 @@ class ReferenceDoubleLinkedListTest extends FlatSpec with Matchers {
     }
 
     it should "serialize as an empty list when empty" in {
-        val dll = new ReferenceDoubleLinkedList<Int>
+        val dll = new ReferenceDoubleLinkedList[Int]
         dll.serialize() should be ("[]")
     }
     
     it should "serialize as a FIFO list when populated" in {
-        val dll = new ReferenceDoubleLinkedList<Int>
+        val dll = new ReferenceDoubleLinkedList[Int]
         dll.push(8)
         dll.push(9)
         dll.serialize() should be ("[8,9]")

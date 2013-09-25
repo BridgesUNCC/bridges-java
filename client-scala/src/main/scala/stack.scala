@@ -10,8 +10,6 @@ abstract class StudentStack[T] extends StudentStructure[T] {
     def serialize()= {
         val out = collection.mutable.ListBuffer[T]()
         var node = top
-        println("scala:")
-        println(node);
         while (node != null) {
             out += node.element
             node = node.next
