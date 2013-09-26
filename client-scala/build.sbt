@@ -11,3 +11,5 @@ libraryDependencies += "net.liftweb" %% "lift-json" % "2.5.1"
 libraryDependencies += "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.2"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.0.M8" % "test"
+
+libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "0.6.0"
