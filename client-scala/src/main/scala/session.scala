@@ -43,9 +43,10 @@ case class Session(username: String, password: String, assignment: Int,
     
     /** Send structure serialization to the server. */
     def send_state(serial: String) {
-        val location = dispatch.url(s"http://localhost/assign$assignment?username=$username&password=$password").
+        val location = dispatch.url(s"http://localhost/assign/$assignment").
             POST.addParameter("username", username).
-            addParameter("password", password)
+            addParameter("password", password).
+            addParameter("serial", serial)
         val request = Http.configure(_ setFollowRedirects true)(
             location OK as.String)
         request()
