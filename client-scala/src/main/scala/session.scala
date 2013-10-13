@@ -41,6 +41,10 @@ case class Session(username: String, password: String, assignment: Int,
         return request() map {json.Serialization.read[List[json.JValue]](_)}
     }
     
+    def save() {
+        Session.config_path.write(json.Serialization.writePretty(this))
+    }
+    
     /** Send structure serialization to the server. */
     def send_state(serial: String) {
         val location = dispatch.url(s"http://localhost/assign/$assignment").
@@ -73,9 +77,5 @@ object Session {
             }
         }
         return Session(username, password, assignment)
-    }
-    
-    def save(session: Session) {
-        config_path.write(json.Serialization.writePretty(session))
     }
 }

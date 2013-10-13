@@ -18,7 +18,7 @@ class Bridges(stream: String, structure: StudentStructure[Any],
             structure.push(entry)
             if (interactive) draw()
         }
-        Session.save(session)
+        session.save()
         draw()
     }
     
