@@ -5,6 +5,7 @@ import net.liftweb.json
 //import java.nio.file._
 import scalax.file.Path
 import com.github.nscala_time.time.Imports._
+import org.apache.http.client.fluent
 
 /** Contains received JSON entries.
   * 
@@ -18,8 +19,14 @@ case class SessionStream(refreshed: DateTime, entries: List[json.JValue])
   * This is so that it can be easily stubbed out
   */
 trait Connectable {
-    def http(url: dispatch.Req)= {
-         (Http.configure(_ setFollowRedirects true)(url OK as.String).option) ()
+    val http_connection = fluent.Executor.newInstance()
+    
+    def http(url: fluent.Request)= {
+        val res = http_connection.execute(url).returnContent().asString()
+        if (res == null)
+            None
+        else
+            Some(res)
     }
 }
 
@@ -32,8 +39,13 @@ trait Connectable {
 class Session(val username: String, val password: String, val assignment: Int,
     var cache: Map[String, SessionStream] = Map()) {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
+    http(
+        fluent.Request.Post("http://localhost:3000/users/session").bodyForm(
+            fluent.Form.form().add("username", username).add("password", password).build()
+        )
+    )
 
-    def http(url: dispatch.Req) : Option[String]= None
+    def http(url: fluent.Request) : Option[String]= None
         
     /** Request the latest entries, cached if fresh, or if fetch() fails. */
     def entries(stream: String)= {
@@ -51,7 +63,7 @@ class Session(val username: String, val password: String, val assignment: Int,
     
     /** Fetch the latest entries from the server. */
     def fetch(stream: String) : Option[List[json.JValue]]= {
-        val location = dispatch.url(s"http://localhost/$stream?username=$username&password=$password")
+        val location = fluent.Request.Get(s"http://localhost/streams/$stream")
         val request = http(location)
         // Serializing None is ambiguous
         return request map {
@@ -65,10 +77,10 @@ class Session(val username: String, val password: String, val assignment: Int,
     
     /** Send structure serialization to the server. */
     def send_state(serial: String) {
-        val location = dispatch.url(s"http://localhost/assign/$assignment").
-            POST.addParameter("username", username).
-            addParameter("password", password).
-            addParameter("serial", serial)
+        val location = fluent.Request.
+            Post(s"http://localhost/assign/$assignment").bodyForm(
+                fluent.Form.form().add("serial", serial).build()
+            )
         val request = http(location)
         if (request == None) {
             println("Status upload failed")
