@@ -2,19 +2,24 @@
   Authentications
 <% end %>
 
-<table>
-  <tr>
-    <th>User</th>
-    <th>Provider</th>
-    <th>Uid</th>
-  </tr>
-  <% for authentication in @authentications %>
-    <tr>
-      <td><%= authentication.user_id %></td>
-      <td><%= authentication.provider %></td>
-      <td><%= authentication.uid %></td>
-      <td><%= link_to "Destroy", authentication, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
+<h2>Signed in</h2>
+<ul>
+  <% if @authentications.empty? %>
+    You haven't signed into any providers yet. Pick one out below.
+  <% else %>
+    <% for auth in @authentications %>
+      <%= link_to "Sign out of #{auth.provider.titleize}", auth, :confirm => 'Are you sure?', :method => :delete %>
+    <% end %>
   <% end %>
-</table>
+</ul>
 
+<h2>Signed out</h2>
+<ul>
+  <% if @missing_providers.empty? %>
+    You're signed into every provider!
+  <% else %>
+    <% for provider in @missing_providers %>
+      <%= link_to "Sign in to #{provider.titleize}", user_omniauth_authorize_path(provider) %>
+    <% end %>    
+  <% end %>
+</ul>
