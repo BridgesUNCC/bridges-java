@@ -27,6 +27,9 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
+# Needed for a how-to on connecting social networks
+gem 'nifty-generators'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -34,14 +37,18 @@ end
 
 group :development, :test do
   gem 'better_errors'
-  gem 'rspec-rails'
+  gem 'binding_of_caller' # for better_errors REPL
 end
 
 group :test do
   gem 'cucumber-rails'
+  gem 'rspec-rails'
 end
 
 gem 'devise'
+gem 'omniauth-twitter'
+gem 'twitter'
+gem 'addressable' # Can't start rails with omniauth-twitter without this
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
@@ -54,3 +61,5 @@ gem 'devise'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem "mocha", group: :test

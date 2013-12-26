@@ -11,3 +11,37 @@
  *= require_self
  *= require_tree .
  */
+
+body {
+  background: #ddd;
+}
+
+h1, h2, h3, header {
+  font-family: 'Alegreya Sans', sans-serif;
+}
+
+header {
+  border-bottom: 1px solid gray;
+  font-size: 400%;
+}
+
+main {
+  background: white;
+  box-shadow: 3px 3px 2px gray;
+  border-radius: 3px;
+  margin: auto;
+  min-width: 600px;
+  padding: 1em;
+  width: 80%;
+}
+
+nav {
+  font-size: medium;
+  text-align: right;
+}
+
+nav a {
+  color: gray;
+  padding-left: 0.5em;
+  text-decoration: none;
+}

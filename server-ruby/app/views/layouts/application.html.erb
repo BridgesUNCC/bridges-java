@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ServerRuby</title>
+  <title><%= content_for?(:title) ? yield(:title) : "Bridges" %></title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans' rel='stylesheet' type='text/css'>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <main>
+    <header>
+      Bridges
+      <nav>
+        <% if user_signed_in? %>
+          <%= current_user.email %>
+          <%= link_to 'sign out', destroy_user_session_path, :method => :delete %>
+        <% else %>
+          <%= link_to 'sign in', new_user_session_path %>
+          <%= link_to 'via twitter', user_omniauth_authorize_path(:twitter) %>
+        <% end %>
+      </nav>
+    </header>
+    <%= yield %>
+  </main>
 </body>
 </html>

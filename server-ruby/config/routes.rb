@@ -4,7 +4,15 @@ ServerRuby::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#home'
+  get '/dashboard' => 'welcome#dashboard', 'as' => :dashboard
+  
+  resources :authentications
+  #devise_for :users
+  devise_for :users,
+    path_names: {sign_in: "login", sign_out: "logout"},
+    controllers: {omniauth_callbacks: "authentications", registrations: "registrations"}
 
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
