@@ -3,7 +3,7 @@ SUPPORTED_PROVIDERS = Set.new ["twitter"]
 class AuthenticationsController < ApplicationController
   def index
     if not current_user
-      redirect_to root_path
+      redirect_to root_path and return
     end
     @authentications = Authentication.where(user_id: current_user.id)
     @missing_providers = SUPPORTED_PROVIDERS - @authentications.map {|a| a.provider}
