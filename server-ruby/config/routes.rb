@@ -11,7 +11,13 @@ ServerRuby::Application.routes.draw do
   devise_for :users,
     path_names: {sign_in: "login", sign_out: "logout"},
     controllers: {omniauth_callbacks: "authentications", registrations: "registrations"}
-
+  
+  namespace :streams do
+    scope :followgraph do
+      get 'followers' => 'followgraph#followers', 'as' => :followgraph_followers
+      get 'user' => 'followgraph#user', 'as' => :followgraph_user
+    end
+  end
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
