@@ -14,8 +14,8 @@ ServerRuby::Application.routes.draw do
   
   namespace :streams do
     scope :followgraph do
-      get 'followers' => 'followgraph#followers', 'as' => :followgraph_followers
-      get 'user' => 'followgraph#user', 'as' => :followgraph_user
+      get 'followers/:id' => 'followgraph#followers', 'as' => :followgraph_followers
+      get 'user/:screen_name' => 'followgraph#user', 'as' => :followgraph_user
     end
   end
   
