@@ -10,7 +10,7 @@
 <body>
   <main>
     <header>
-      Bridges
+      <%= link_to "Bridges", root_path %>
       <nav>
         <% if user_signed_in? %>
           <%= current_user.email %>

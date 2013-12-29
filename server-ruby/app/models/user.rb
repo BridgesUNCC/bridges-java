@@ -14,10 +14,19 @@ class User < ActiveRecord::Base
       token: omni['credentials'].token,
       token_secret: omni['credentials'].secret)
   end
+
   
-  def email_required?
-    super and authentications.empty?
+  def update_with_password(params, *options)
+    if encrypted_password.blank?
+      update_attributes(params, *options)
+    else
+      super
+    end
   end
+  
+  #def email_required?
+  #  super and authentications.empty?
+  #end
   
   def password_required?
     super and authentications.empty?

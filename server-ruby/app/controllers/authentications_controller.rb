@@ -46,9 +46,14 @@ class AuthenticationsController < ApplicationController
     else
       user = User.new
       user.apply_omniauth(omni)
-      user.save!
-      flash[:notice] = "Signed in with #{omni[:provider]}"
-      sign_in_and_redirect User.find(user.id)
+      if user.save
+        flash[:notice] = "Signed in with #{omni[:provider]}"
+        sign_in_and_redirect User.find(user.id)
+      else
+        session[:omniauth] = omni.except('extra')
+        flash[:notice] = "Create an account to associate with your twitter login"
+        redirect_to new_user_registration_path
+      end
     end
   end
   

@@ -24,6 +24,10 @@ header {
   border-bottom: 1px solid gray;
   font-size: 400%;
 }
+header a {
+  color: inherit;
+  text-decoration: inherit;
+}
 
 main {
   background: white;
