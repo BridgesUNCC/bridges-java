@@ -42,7 +42,7 @@ class AuthenticationsController < ApplicationController
         uid: omni[:uid],
         token: omni[:credentials].token,
         token_secret: omni[:credentials].secret)
-      redirect_to dashboard_path
+      redirect_to authentications_url
     else
       user = User.new
       user.apply_omniauth(omni)

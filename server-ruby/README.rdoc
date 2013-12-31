@@ -1,3 +1,12 @@
+== Bridges Server
+* Install ruby (>= 1.9.3), and bundler
+* Clone this repository: https://github.com/SeanTater/bridges.git
+* add your TWITTER_CONSUMER_KEY and TWITTER_CONSUMER_SECRET to the environment
+ * for which <tt>source config/keys</tt> may be a good idea (but you will need keys)
+* <tt>bundle install</tt>
+* <tt>rake db:migrate</tt>
+
+
 == README
 
 This README would normally document whatever steps are necessary to get the

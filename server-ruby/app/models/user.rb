@@ -24,9 +24,9 @@ class User < ActiveRecord::Base
     end
   end
   
-  #def email_required?
-  #  super and authentications.empty?
-  #end
+  def email_required?
+    super and authentications.empty?
+  end
   
   def password_required?
     super and authentications.empty?

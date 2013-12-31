@@ -40,13 +40,13 @@ public class FollowerGraphNode {
 	
 	// Convenience method, intended for creating the first node without knowing the id
 	FollowerGraphNode(String screen_name, FollowerGraph g) {
-		String user = graph.exec(Request.Get(graph.url("user/" + screen_name)));
+		graph = g; 
+		String user = graph.exec(Request.Get(graph.url("/user/" + screen_name)));
 		userid = new JsonParser()
 			.parse(user)
 			.getAsJsonObject()
 			.get("id")
 			.getAsLong();
-		graph = g;
 	}
 	
 	public ArrayList<FollowerGraphNode> getFollowers() {
@@ -57,10 +57,12 @@ public class FollowerGraphNode {
 				.getAsJsonArray();
 			
 			for (JsonElement e : follower_json) {
-				followers.add(new FollowerGraphNode(
-						e.getAsJsonObject().get("id").getAsLong(),
-						e.getAsJsonObject().get("name").getAsString(),
-						graph));
+				long id = e.getAsJsonObject().get("id").getAsLong();
+				String name = e.getAsJsonObject().get("name").getAsString();
+				if (graph.nodes.containsKey(id))
+					followers.add(graph.nodes.get(id));
+				else
+					followers.add(new FollowerGraphNode(id, name, graph));
 			}
 			opened = true;
 		}

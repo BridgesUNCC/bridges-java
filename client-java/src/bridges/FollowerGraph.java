@@ -2,7 +2,7 @@ package bridges;
 import java.util.HashMap;
 
 public class FollowerGraph extends Network {
-	FollowerGraphNode root;
+	public FollowerGraphNode root;
 	public HashMap<Long, FollowerGraphNode> nodes;
 	
 	FollowerGraph(String username, String password, String screen_name) {
