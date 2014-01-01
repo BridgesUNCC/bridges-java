@@ -18,9 +18,26 @@ case class SessionStream(refreshed: DateTime, entries: List[json.JValue])
   *
   * This is so that it can be easily stubbed out
   */
-trait Connectable {
+trait SessionConnectable {
     val http_connection = fluent.Executor.newInstance()
+    http(
+        fluent.Request.Post("http://localhost:3000/users/session").bodyForm(
+            fluent.Form.form().add("username", username).add("password", password).build()
+        )
+    )
     
+    def http(url: fluent.Request)= {
+        val res = http_connection.execute(url).returnContent().asString()
+        if (res == null)
+            None
+        else
+            Some(res)
+    }
+}
+
+trait BasicConnectable(val username: String, val password: String) {
+    val http_connection = fluent.Executor.newInstance().auth(username, password)
+  
     def http(url: fluent.Request)= {
         val res = http_connection.execute(url).returnContent().asString()
         if (res == null)
@@ -39,11 +56,6 @@ trait Connectable {
 class Session(val username: String, val password: String, val assignment: Int,
     var cache: Map[String, SessionStream] = Map()) {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
-    http(
-        fluent.Request.Post("http://localhost:3000/users/session").bodyForm(
-            fluent.Form.form().add("username", username).add("password", password).build()
-        )
-    )
 
     def http(url: fluent.Request) : Option[String]= None
         
