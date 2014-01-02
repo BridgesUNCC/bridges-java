@@ -19,6 +19,8 @@ case class SessionStream(refreshed: DateTime, entries: List[json.JValue])
   * This is so that it can be easily stubbed out
   */
 trait SessionConnectable {
+    val username: String
+    val password: String
     val http_connection = fluent.Executor.newInstance()
     http(
         fluent.Request.Post("http://localhost:3000/users/session").bodyForm(
@@ -35,9 +37,10 @@ trait SessionConnectable {
     }
 }
 
-trait BasicConnectable(val username: String, val password: String) {
+trait BasicConnectable {
+    val username: String
+    val password: String
     val http_connection = fluent.Executor.newInstance().auth(username, password)
-  
     def http(url: fluent.Request)= {
         val res = http_connection.execute(url).returnContent().asString()
         if (res == null)
@@ -53,7 +56,7 @@ trait BasicConnectable(val username: String, val password: String) {
   * username, password: exactly what the seem, as strings
   * This is a case class in order to automate JSON serialization
   */
-class Session(val username: String, val password: String, val assignment: Int,
+class StreamSession(val username: String, val password: String, val assignment: Int,
     var cache: Map[String, SessionStream] = Map()) {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
 
@@ -84,7 +87,7 @@ class Session(val username: String, val password: String, val assignment: Int,
     }
     
     def save() {
-        Session.config_path.write(json.Serialization.writePretty(this))
+        StreamSession.config_path.write(json.Serialization.writePretty(this))
     }
     
     /** Send structure serialization to the server. */
@@ -104,21 +107,21 @@ class Session(val username: String, val password: String, val assignment: Int,
   * 
   * A username and password are necessary for login to the server (currently)
   */
-object Session {
+object StreamSession {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
     // TODO: Windows + Mac configuration locations
     val config_path = Path.fromString(System.getProperty("user.home")) / ".config" / "bridges"
     
     
-    def load(username: String, password: String, assignment: Int): Session= {
+    def load(username: String, password: String, assignment: Int): StreamSession= {
         if (config_path.exists) {
             try {
-                var session = json.Serialization.read[Session](config_path.chars().mkString)
-                session = new Session(username, password, assignment, session.cache)
+                var session = json.Serialization.read[StreamSession](config_path.chars().mkString)
+                session = new StreamSession(username, password, assignment, session.cache)
             } catch {
                 case map_e: json.MappingException => None
             }
         }
-        return new Session(username, password, assignment)
+        return new StreamSession(username, password, assignment)
     }
 }

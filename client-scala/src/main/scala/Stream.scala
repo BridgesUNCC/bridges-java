@@ -4,9 +4,9 @@ package bridges
   * 
   * Students should use this class as part of a driver for their structure
   */
-class Bridges(stream: String, structure: StudentStructure[Any],
+class Stream(stream: String, structure: StudentStructure[Any],
               assignment: Int, username: String, password: String) {
-    val session = Session.load(username, password, assignment)
+    val session = StreamSession.load(username, password, assignment)
     var most_recent_get = -1;
     
     /** Fill the structure with all of the live entries.
