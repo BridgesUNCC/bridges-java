@@ -14,53 +14,18 @@ import org.apache.http.client.fluent
   */
 case class SessionStream(refreshed: DateTime, entries: List[json.JValue])
 
-/** Executes HTTP requests.
-  *
-  * This is so that it can be easily stubbed out
-  */
-trait SessionConnectable {
-    val username: String
-    val password: String
-    val http_connection = fluent.Executor.newInstance()
-    http(
-        fluent.Request.Post("http://localhost:3000/users/session").bodyForm(
-            fluent.Form.form().add("username", username).add("password", password).build()
-        )
-    )
-    
-    def http(url: fluent.Request)= {
-        val res = http_connection.execute(url).returnContent().asString()
-        if (res == null)
-            None
-        else
-            Some(res)
-    }
-}
-
-trait BasicConnectable {
-    val username: String
-    val password: String
-    val http_connection = fluent.Executor.newInstance().auth(username, password)
-    def http(url: fluent.Request)= {
-        val res = http_connection.execute(url).returnContent().asString()
-        if (res == null)
-            None
-        else
-            Some(res)
-    }
-}
-
 /** Contains information persisting between invocations.
   *
   * cache: the most recent response from the server for several streams
   * username, password: exactly what the seem, as strings
   * This is a case class in order to automate JSON serialization
   */
-class StreamSession(val username: String, val password: String, val assignment: Int,
+abstract class StreamSession(val username: String, val password: String, val assignment: Int,
     var cache: Map[String, SessionStream] = Map()) {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
 
-    def http(url: fluent.Request) : Option[String]= None
+    /** Abstract method stub to be filled with a connectable trait */
+    def http(url: fluent.Request) : Option[String]
         
     /** Request the latest entries, cached if fresh, or if fetch() fails. */
     def entries(stream: String)= {
@@ -105,7 +70,8 @@ class StreamSession(val username: String, val password: String, val assignment: 
 
 /** Generate sessions from JSON files and save them back.
   * 
-  * A username and password are necessary for login to the server (currently)
+  * A username and password are necessary for login to the server
+  * TODO: Should be able to choose connectivity
   */
 object StreamSession {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
@@ -117,11 +83,11 @@ object StreamSession {
         if (config_path.exists) {
             try {
                 var session = json.Serialization.read[StreamSession](config_path.chars().mkString)
-                session = new StreamSession(username, password, assignment, session.cache)
+                session = new StreamSession(username, password, assignment, session.cache) with FormConnectable
             } catch {
                 case map_e: json.MappingException => None
             }
         }
-        return new StreamSession(username, password, assignment)
+        return new StreamSession(username, password, assignment) with FormConnectable
     }
 }
