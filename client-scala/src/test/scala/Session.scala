@@ -14,5 +14,15 @@ class StreamSessionTest extends FlatSpec with Matchers {
     }
 }
     
-class InteractiveSessionTest extends FlatSpec with Matchers {
+class FollowGraphTest extends FlatSpec with Matchers {
+    "FollowGraph" should "die when loaded without anything" in {
+        a [Exception] should be thrownBy {
+          val graph = new FollowGraph("", "") with DummyConnectable
+        }
+    }
+    
+    "FollowGraph" should "load from a screenname via JSON" in {
+        val graph = new FollowGraph("", "", "screenname") with DummyConnectable
+        graph.response = """{"id": 098098283} """
+    }
 }
