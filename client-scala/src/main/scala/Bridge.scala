@@ -4,11 +4,11 @@ package bridges
   * 
   * Students should use this class as part of a driver for their structure
   */
-class Bridge(username: String, password: String, assignment: Int) with BasicConnectable {
+class Bridge(val username: String, val password: String, val assignment: Int) extends BasicConnectable {
     
     /** Connect to a stream by name. */
     def stream(name: String)= {
-        new Stream(this, name)
+        new BStream(this, name)
     }
     
     /** Create a network-enabled FollowGraph. */
@@ -20,8 +20,8 @@ class Bridge(username: String, password: String, assignment: Int) with BasicConn
       *
       * Call this after making a change to the structure, so that you can see
       * what effect this had graphically.
-      */
+      *
     def draw() {
         session.send_state(structure.serialize())
-    }
+    } */
 }

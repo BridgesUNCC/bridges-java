@@ -1,43 +1,42 @@
 package bridges
 import org.apache.http.client.fluent
 
-/** Executes HTTP requests with form-based authentication. */
-trait FormConnectable {
+abstract class AnyConnectable() {
     val username: String
     val password: String
-    val http_connection = fluent.Executor.newInstance()
-    http(
-        fluent.Request.Post("http://localhost:3000/users/session").bodyForm(
-            fluent.Form.form().add("username", username).add("password", password).build()
-        )
-    )
+    val base: String = "http://localhost:3000"
+    val http_connection: fluent.Executor
     
-    def http(url: fluent.Request)= {
-        val res = http_connection.execute(url).returnContent().asString()
-        if (res == null)
-            None
-        else
-            Some(res)
+    def http(request: fluent.Request)=
+        Option(http_connection.execute(request).returnContent().asString())
+    
+    def get(url:String)=
+        http(fluent.Request.Get(s"$base$url"))
+        
+    def post(url:String, arguments:Map[String, String])= {
+        var req = fluent.Request.Post(s"$base$url")
+        var form = fluent.Form.form()
+        for (pair <- arguments) form = form.add(pair._1, pair._2)
+        http(req.bodyForm(form.build()))
     }
+        
+}
+
+/** Executes HTTP requests with form-based authentication. */
+trait FormConnectable extends AnyConnectable {
+    val http_connection = fluent.Executor.newInstance()
+    post("/users/session", Map("username" -> username, "password" -> password))
+    
 }
 
 /** Executes HTTP requests with basic authentication. */
-trait BasicConnectable {
-    val username: String
-    val password: String
+trait BasicConnectable extends AnyConnectable {
     val http_connection = fluent.Executor.newInstance().auth(username, password)
-    def http(url: fluent.Request)= {
-        val res = http_connection.execute(url).returnContent().asString()
-        if (res == null)
-            None
-        else
-            Some(res)
-    }
 }
 
 /** Returns predefined strings in place of HTTP requests for stubbing. */
-trait DummyConnectable {
+trait DummyConnectable extends AnyConnectable {
     var response: String = _
     
-    def http(url: fluent.Request)= Some(response)
+    override def http(url: fluent.Request)= Some(response)
 }
