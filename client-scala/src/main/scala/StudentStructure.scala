@@ -1,5 +1,4 @@
 package bridges
-import net.liftweb.json
 import scala.reflect.BeanProperty
 
 /** Abstract base of student-implemented structures except Nodes.
@@ -7,7 +6,6 @@ import scala.reflect.BeanProperty
   * This would be a trait, but it needs to be inherited in Java
   */
 abstract class StudentStructure[T] {
-    implicit val formats = json.Serialization.formats(json.NoTypeHints)
     def push(element: T)
     def serialize() : String
 }

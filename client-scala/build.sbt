@@ -6,7 +6,7 @@ scalaVersion := "2.10.2"
 
 libraryDependencies += "net.databinder.dispatch" %% "dispatch-core" % "0.11.0"
 
-libraryDependencies += "net.liftweb" %% "lift-json" % "2.5.1"
+//libraryDependencies += "net.liftweb" %% "lift-json" % "2.5.1"
 
 libraryDependencies += "com.googlecode.json-simple" % "json-simple" % "1.1.1"
 

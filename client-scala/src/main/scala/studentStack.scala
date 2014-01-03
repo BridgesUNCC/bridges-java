@@ -1,5 +1,5 @@
 package bridges
-import net.liftweb.json
+import org.json.simple._
 
 /** Adds serialize() functionality to stacks.
   *
@@ -14,6 +14,6 @@ abstract class StudentStack[T] extends StudentStructure[T] {
             out += node.element
             node = node.next
         }
-        json.Serialization.write(out.result)
+        JSONValue.toJSONString(out.result)
     }
 }

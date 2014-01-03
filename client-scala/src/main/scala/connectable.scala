@@ -1,11 +1,16 @@
 package bridges
 import org.apache.http.client.fluent
+import org.json.simple._
 
 abstract class AnyConnectable() {
     val username: String
     val password: String
     val base: String = "http://localhost:3000"
     val http_connection: fluent.Executor
+    
+    def json[T](text: String)= {
+        JSONValue.parse(text).asInstanceOf[T]
+    }
     
     def http(request: fluent.Request)=
         Option(http_connection.execute(request).returnContent().asString())
