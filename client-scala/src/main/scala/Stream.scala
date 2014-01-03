@@ -4,32 +4,16 @@ package bridges
   * 
   * Students should use this class as part of a driver for their structure
   */
-class Stream(stream: String, structure: StudentStructure[Any],
-              assignment: Int, username: String, password: String) {
-    val session = StreamSession.load(username, password, assignment)
-    var most_recent_get = -1;
+class Bridge(username: String, password: String, assignment: Int) with BasicConnectable {
     
-    /** Fill the structure with all of the live entries.
-      *
-      * Don't call this more than once unless you want multiple copies
-      */
-    def get_multiple(interactive: Boolean = true) {
-        for (entry <- session.entries(stream)) {
-            structure.push(entry)
-            if (interactive) draw()
-        }
-        session.save()
-        draw()
+    /** Connect to a stream by name. */
+    def stream(name: String)= {
+        new Stream(this, name)
     }
     
-    /** Get the next most recent entry.
-      * 
-      * Only considers other get() calls, not get_multiple().
-      * Consider calling draw() at some point.
-      */
-    def get()= {
-        most_recent_get += 1
-        session.entries(stream)(most_recent_get)
+    /** Create a network-enabled FollowGraph. */
+    def followgraph(name: String) {
+        new FollowGraph(this, name)
     }
     
     /** Send serialization to the server for visualization.

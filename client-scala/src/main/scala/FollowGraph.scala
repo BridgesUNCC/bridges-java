@@ -3,7 +3,7 @@ import org.apache.http.client.fluent
 import net.liftweb.json
 
 /** Specialized frontend for the FollowGraph connector */
-abstract class FollowGraph(username: String, password: String, screen_name: String = null, info: json.JValue = null) {
+abstract class FollowGraph(bridge: Bridge, screen_name: String = null, info: json.JValue = null) {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
     val user_json = if (info != null) {
         info

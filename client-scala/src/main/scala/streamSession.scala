@@ -20,12 +20,8 @@ case class SessionStream(refreshed: DateTime, entries: List[json.JValue])
   * username, password: exactly what the seem, as strings
   * This is a case class in order to automate JSON serialization
   */
-abstract class StreamSession(val username: String, val password: String, val assignment: Int,
-    var cache: Map[String, SessionStream] = Map()) {
+class Stream(bridge: Bridge, val assignment: Int) {
     implicit val formats = json.Serialization.formats(json.NoTypeHints)
-
-    /** Abstract method stub to be filled with a connectable trait */
-    def http(url: fluent.Request) : Option[String]
         
     /** Request the latest entries, cached if fresh, or if fetch() fails. */
     def entries(stream: String)= {
