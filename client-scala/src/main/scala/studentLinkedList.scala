@@ -1,4 +1,5 @@
 package bridges
+import scala.collection.JavaConverters._
 import org.json.simple._
 
 /** Adds serialize() functionality to double linked lists.
@@ -19,6 +20,6 @@ abstract class StudentDoubleLinkedList[T] extends StudentStructure[T] {
                 node = node.right
             } while (!(node eq top));
         }
-        JSONValue.toJSONString(out.result);
+        JSONValue.toJSONString(out.result.asJava);
     }
 }
