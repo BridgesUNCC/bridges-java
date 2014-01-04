@@ -29,8 +29,8 @@ class FollowGraphTest extends FlatSpec with Matchers {
         val graph = bridge.followgraph("screenname")
         bridge.response = """{"followers": [{"id": 8, "screen_name": "Fred", "name": "Fred Elmquist"}, {"id": 5, "screen_name": "Alton", "name": "Alton Isenhour"}]}"""
         val followers = graph.root.followers
-        followers(0).id should be(8)
-        followers(1).id should be(5)
+        followers.get(0).id should be(8)
+        followers.get(1).id should be(5)
     }
     
     def bridge= {

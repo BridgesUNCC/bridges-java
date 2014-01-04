@@ -31,9 +31,3 @@ class ReferenceStackTest extends FlatSpec with Matchers {
     stack.serialize() should be ("[2,1]")
   }
 }
-
-class ReferenceStackDriverTest extends FlatSpec with Matchers {
-    "ReferenceStackDriver" should "run ReferenceStack without error" in {
-        ReferenceStackDriver.main(Array("test-script-path"))
-    }
-}

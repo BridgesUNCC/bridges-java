@@ -25,3 +25,5 @@ class Bridge(val username: String, val password: String, val assignment: Int) ex
         session.send_state(structure.serialize())
     } */
 }
+
+class MockBridge(username: String, password: String, assignment: Int) extends Bridge(username, password, assignment) with DummyConnectable {}
