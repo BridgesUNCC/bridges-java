@@ -10,7 +10,7 @@ import org.apache.http.client.fluent
 
 /** Provides a convenient way to read JSON lists from the server.
     TODO: It's not clear if inheriting from JSONArray is best. */
-class BStream(val bridge: Bridge, val stream: String) extends JSONArray {
+class BStream(val bridge: Bridge, val stream: String) {
     
     /** Fetch the latest entries from the server.
       * TODO: Implement caching with HTTPComponents
@@ -33,7 +33,7 @@ class BStream(val bridge: Bridge, val stream: String) extends JSONArray {
         }
     }
     
-    def iterator()= {
-        fetch().iterator()
-    }
+    //def iterator()= {
+    //    fetch().iterator()
+    //}
 }

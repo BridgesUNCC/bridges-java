@@ -1,28 +1,26 @@
 import org.scalatest._
 import bridges._
 
-class StreamSessionTest extends FlatSpec with Matchers {
-    "StreamSession" should "be able to initialize without a cache" in {
-        val s = new StreamSession("", "", assignment=0) with DummyConnectable
-        s.cache should be (Map())
+class BStreamStreamTest extends FlatSpec with Matchers {
+    "BStream" should "load stream data from JSON" in {
     }
     
-    "StreamSession" should "fail gracefully for status uploads" in {
-        val s = new StreamSession("", "", assignment=0) with DummyConnectable
-        // Should not throw
-        s.send_state("sample serial")
+    it should "load an empty ArrayList when receiving an empty response" in {
     }
 }
     
 class FollowGraphTest extends FlatSpec with Matchers {
     "FollowGraph" should "die when loaded without anything" in {
+        val bridge = new Bridge("user", "pass", 0)
         a [Exception] should be thrownBy {
-          val graph = new FollowGraph("", "") with DummyConnectable
+          val graph = bridge.followgraph("screenname")
         }
     }
     
     "FollowGraph" should "load from a screenname via JSON" in {
-        val graph = new FollowGraph("", "", "screenname") with DummyConnectable
-        graph.response = """{"id": 098098283} """
+        val bridge = new Bridge("user", "pass", 0) with DummyConnectable
+        bridge.response = """{"id": 098098283} """
+        bridge.followgraph("screenname")
+        
     }
 }

@@ -2,8 +2,7 @@ package bridges;
 import bridges.BStream;
 // This would be replaced by whatever the student made
 import bridges.ReferenceStack;
-import scala.net.liftweb.json;
-
+import org.json.simple.*;
 
 /** Run the reference student code.
   * 
@@ -11,10 +10,11 @@ import scala.net.liftweb.json;
   */
 public class ReferenceStackDriver {
     public static void main(String[] arguments) {
-        ReferenceStack<Object> structure = new ReferenceStack<Object>();
+        ReferenceStack<JSONValue> structure = new ReferenceStack<JSONValue>();
         Bridge bridge = new Bridge("user", "pass", 0);
         BStream ret = bridge.stream("geolist");
-        for (json.JValue jv : ret)
-            structure.push(jv);
+        for (Object o : ret.fetch())
+            // If you want to do something more interesting with it, cast it:
+            structure.push((JSONValue) o);
     }
 }
