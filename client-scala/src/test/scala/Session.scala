@@ -18,9 +18,24 @@ class FollowGraphTest extends FlatSpec with Matchers {
     }
     
     "FollowGraph" should "load from a screenname via JSON" in {
-        val bridge = new Bridge("user", "pass", 0) with DummyConnectable
-        bridge.response = """{"id": 098098283} """
-        bridge.followgraph("screenname")
+        val graph = bridge.followgraph("screenname")
+        graph.root.id should be(9)
+        graph.root.screen_name should be("John")
+        graph.root.name should be("John S. Abernathy")
         
+    }
+    
+    "FollowGraphNode" should "retrieve followers" in {
+        val graph = bridge.followgraph("screenname")
+        bridge.response = """{"followers": [{"id": 8, "screen_name": "Fred", "name": "Fred Elmquist"}, {"id": 5, "screen_name": "Alton", "name": "Alton Isenhour"}]}"""
+        val followers = graph.root.followers
+        followers(0).id should be(8)
+        followers(1).id should be(5)
+    }
+    
+    def bridge= {
+        val br = new Bridge("user", "pass", 0) with DummyConnectable
+        br.response = """{"id": 9, "screen_name": "John", "name": "John S. Abernathy"}"""
+        br
     }
 }

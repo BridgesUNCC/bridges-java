@@ -12,7 +12,7 @@ class Bridge(val username: String, val password: String, val assignment: Int) ex
     }
     
     /** Create a network-enabled FollowGraph. */
-    def followgraph(name: String) {
+    def followgraph(name: String)= {
         new FollowGraph(this, name)
     }
     

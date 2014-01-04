@@ -1,6 +1,7 @@
 package bridges
 import org.apache.http.client.fluent
 import org.json.simple._
+import java.io.IOException
 
 abstract class AnyConnectable() {
     val username: String
@@ -9,20 +10,29 @@ abstract class AnyConnectable() {
     val http_connection: fluent.Executor
     
     def json[T](text: String)= {
-        JSONValue.parse(text).asInstanceOf[T]
+        val js = JSONValue.parse(text).asInstanceOf[T]
+        if (js == null)
+            throw new IOException("Server returned malformed or empty JSON")
+        else
+            js
     }
     
-    def http(request: fluent.Request)=
-        Option(http_connection.execute(request).returnContent().asString())
+    def http(request: fluent.Request, must:Boolean=true)= {
+        val response = Option(http_connection.execute(request).returnContent().asString())
+        if (response.isEmpty && must)
+            throw new IOException("Server returned empty response")
+        else
+            response
+    }
     
-    def get(url:String)=
-        http(fluent.Request.Get(s"$base$url"))
+    def get(url:String, must:Boolean=true)=
+        http(fluent.Request.Get(s"$base$url"), must)
         
-    def post(url:String, arguments:Map[String, String])= {
+    def post(url:String, arguments:Map[String, String], must:Boolean=true)= {
         var req = fluent.Request.Post(s"$base$url")
         var form = fluent.Form.form()
         for (pair <- arguments) form = form.add(pair._1, pair._2)
-        http(req.bodyForm(form.build()))
+        http(req.bodyForm(form.build()), must)
     }
         
 }
@@ -43,5 +53,5 @@ trait BasicConnectable extends AnyConnectable {
 trait DummyConnectable extends AnyConnectable {
     var response: String = _
     
-    override def http(url: fluent.Request)= Some(response)
+    override def http(url: fluent.Request, must:Boolean=false)= Some(response)
 }
