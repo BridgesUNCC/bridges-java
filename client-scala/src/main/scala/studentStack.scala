@@ -1,4 +1,5 @@
 package bridges
+import scala.collection.JavaConverters._
 import org.json.simple._
 
 /** Adds serialize() functionality to stacks.
@@ -14,6 +15,6 @@ abstract class StudentStack[T] extends StudentStructure[T] {
             out += node.element
             node = node.next
         }
-        JSONValue.toJSONString(out.result)
+        JSONValue.toJSONString(out.result.asJava)
     }
 }
