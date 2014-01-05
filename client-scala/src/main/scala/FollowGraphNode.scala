@@ -1,4 +1,5 @@
 package bridges
+import java.util
 import org.json.simple._
 import scala.collection.JavaConverters._
 
@@ -11,11 +12,11 @@ class FollowGraphNode(bridge: Bridge, val info:JSONObject) {
     val name = info.get("name").asInstanceOf[String]
     
     def followers= {
-        val response = bridge.get("/stream/followgraph/followers/$id")
-        val users = List(bridge.json[JSONObject](response.get)
-            .get("followers").asInstanceOf[JSONArray])
-        Console.println(users)
-        users.map(user => new FollowGraphNode(bridge, user.asInstanceOf[JSONObject]))
-          .asJava
+        val response = bridge.getjs("/stream/followgraph/followers/$id")
+        val users = response.get("followers").asInstanceOf[util.List[JSONValue]]
+        
+        (0 until users.size()).map {
+            i => new FollowGraphNode(bridge, users.get(i).asInstanceOf[JSONObject])
+        }.asJava
     }
 }
