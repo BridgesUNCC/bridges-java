@@ -16,7 +16,7 @@ class BStream(val bridge: Bridge, val stream: String) {
       * TODO: Implement caching with HTTPComponents
       * Returns an ArrayList for the sanity of Java developers */
     def fetch()= {
-        bridge.getjs(s"/streams/$stream").get("streams").asInstanceOf[JSONArray]
+        bridge.getjs(s"/api/$stream").get("streams").asInstanceOf[JSONArray]
     }
     
     /** Send structure serialization to the server. */

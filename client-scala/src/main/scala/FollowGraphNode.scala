@@ -12,7 +12,7 @@ class FollowGraphNode(bridge: Bridge, val info:JSONObject) {
     val name = info.get("name").asInstanceOf[String]
     
     def followers= {
-        val response = bridge.getjs("/stream/followgraph/followers/$id")
+        val response = bridge.getjs("/api/followgraph/followers/$id")
         val users = response.get("followers").asInstanceOf[util.List[JSONValue]]
         
         (0 until users.size()).map {

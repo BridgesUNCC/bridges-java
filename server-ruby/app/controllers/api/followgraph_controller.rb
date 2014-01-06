@@ -1,5 +1,4 @@
-class Streams::FollowgraphController < ApplicationController
-  before_filter :authenticate_api
+class Api::FollowgraphController < ApplicationController
   
   def followers
     # todo: caching!

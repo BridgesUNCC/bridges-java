@@ -6,6 +6,6 @@ class FollowGraph(bridge: Bridge, screen_name: String = null, info: JSONObject =
     assert(screen_name != null || info != null, "FollowGraphNode requires at least one of screen_name or info be supplied")
     val root = new FollowGraphNode(
       bridge,
-      Option(info).getOrElse(bridge.getjs(s"/streams/followgraph/user/$screen_name"))
+      Option(info).getOrElse(bridge.getjs(s"/api/followgraph/user/$screen_name"))
     )
 }

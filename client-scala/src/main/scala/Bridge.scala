@@ -4,7 +4,7 @@ package bridges
   * 
   * Students should use this class as part of a driver for their structure
   */
-class Bridge(val username: String, val password: String, val assignment: Int) extends BasicConnectable {
+class Bridge(val username: String, val password: String, val assignment: Int) extends FormConnectable {
     
     /** Connect to a stream by name. */
     def stream(name: String)= {

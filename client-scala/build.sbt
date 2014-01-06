@@ -4,6 +4,8 @@ version := "0.1a"
 
 scalaVersion := "2.10.2"
 
+organization := "edu.uncc.bridges"
+
 //libraryDependencies += "net.liftweb" %% "lift-json" % "2.5.1"
 
 libraryDependencies ++= Seq(

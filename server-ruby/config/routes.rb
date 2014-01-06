@@ -12,7 +12,10 @@ ServerRuby::Application.routes.draw do
     path_names: {sign_in: "login", sign_out: "logout"},
     controllers: {omniauth_callbacks: "authentications", registrations: "registrations"}
   
-  namespace :streams do
+  namespace :api do
+    scope :csrf do
+      get "/" => "csrf#generate", 'as' => :csrf
+    end
     scope :followgraph do
       get 'followers/:id' => 'followgraph#followers', 'as' => :followgraph_followers
       get 'user/:screen_name' => 'followgraph#user', 'as' => :followgraph_user
