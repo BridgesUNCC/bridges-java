@@ -1,5 +1,7 @@
 package bridges
 import org.apache.http.client.fluent
+import org.apache.http.impl.client.HttpClientBuilder
+import org.apache.http.impl.client.LaxRedirectStrategy
 import org.json.simple._
 import java.io.IOException
 
@@ -15,18 +17,24 @@ abstract class AnyConnectable() {
         )
     }
     
+    /** Execute an Apache Fluent Request. */
     def http(request: fluent.Request)= {
-        val response = http_connection.execute(request).returnContent().asString()
-        assert(response != null)
+        val response = try {
+            http_connection.execute(request).returnContent().asString()
+        } catch {
+            case e: org.apache.http.client.HttpResponseException => {
+                println(s"Error encountered in processing '$request'\n")
+            }
+            throw e
+        }
         if (response == null || response.isEmpty)
-            throw new IOException("Server returned empty response")
+            throw new IOException("Server returned empty response for '$request'")
         else
             response
     }
     
-    def get(url:String)= {
+    def get(url:String)=
         http(fluent.Request.Get(s"$base$url"))
-    }
 
     
     def getjs(url:String)=
@@ -41,20 +49,25 @@ abstract class AnyConnectable() {
         
 }
 
-/** Executes HTTP requests with form-based authentication. */
+/** Executes HTTP requests with form-based authentication.
+    This method uses a different (lax) redirect strategy. */
 trait FormConnectable extends AnyConnectable {
-    val http_connection = fluent.Executor.newInstance()
-    // Get a csrf token, but define it as empty first
-    //  so that the overridden http will work
-  
-    lazy val csrf_token = {
-        val r = getjs("/api/csrf").get("csrf_token").asInstanceOf[String]
-        // Then, login
-        post("/users/session", Map("username" -> username, "password" -> password))
-        r
-    }
+    val http_connection = fluent.Executor.newInstance(
+      HttpClientBuilder.create().setRedirectStrategy(
+        new LaxRedirectStrategy()
+      ).build()
+    )
+    // The CSRF token doesn't change, but can't be val because
+    //    http() doesn't function properly at this point
+    //    and lazy val will send you in loops
+    var csrf_token = ""
     
     abstract override def http(request: fluent.Request)= {
+        if (csrf_token.isEmpty) {
+          csrf_token = " " // Prevent a loop
+          csrf_token = getjs("/api/csrf").get("csrf_token").asInstanceOf[String]
+          post("/users/login", Map("user[email]" -> username, "user[password]" -> password))
+        }
         super.http(request.addHeader("X-CSRF-Token", csrf_token))
     }
     

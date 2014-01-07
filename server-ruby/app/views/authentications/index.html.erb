@@ -8,7 +8,7 @@
     You haven't signed into any providers yet. Pick one out below.
   <% else %>
     <% for auth in @authentications %>
-      <%= link_to "Sign out of #{auth.provider.titleize}", auth, :confirm => 'Are you sure?', :method => :delete %>
+      <%= link_to "Sign out of #{auth.provider.titleize}", auth, data: {confirm: 'Are you sure?'}, method: :delete %>
     <% end %>
   <% end %>
 </ul>
