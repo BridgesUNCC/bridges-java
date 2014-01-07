@@ -28,7 +28,7 @@ abstract class AnyConnectable() {
             throw e
         }
         if (response == null || response.isEmpty)
-            throw new IOException("Server returned empty response for '$request'")
+            throw new IOException(s"Server returned empty response for '$request'")
         else
             response
     }

@@ -1,13 +1,19 @@
 class Api::FollowgraphController < ApplicationController
   
   def followers
-    # todo: caching!
-    render json: api.followers(params[:id].to_i).take(10)
+    # todo: consider persistent storage, possibly lower level cache
+    user_followers = Rails.cache.fetch("twitter:followers:#{params[:id]}") {
+      api.followers(params[:id].to_i).take(10)
+    }
+    render json: {followers: user_followers}
   end
   
   def user
-    # todo: caching!
-    render json: api.user(params[:screen_name])
+    # todo: consider persistent storage
+    user_info = Rails.cache.fetch("twitter:user:#{params[:screen_name]}") {
+      api.user(params[:screen_name])
+    }
+    render json: user_info
   end
   
   protected
