@@ -5,12 +5,18 @@ import org.apache.http.impl.client.LaxRedirectStrategy
 import org.json.simple._
 import java.io.IOException
 
+
+/** Mixin enabling Bridges network connectivity with more user-friendly error
+    handling. */
 abstract class AnyConnectable() {
     val username: String
     val password: String
     val base: String = "http://localhost:3000"
     val http_connection: fluent.Executor
     
+    /** Convert text into a guaranteed non-null JSON format.
+        Throws IOException if the result was null
+        (meaning that the JSON was empty or malformed) */
     def json(text: String)= {
         Option(JSONValue.parse(text).asInstanceOf[JSONObject]).getOrElse(
             throw new IOException("Received empty JSON response")
@@ -69,13 +75,21 @@ abstract class AnyConnectable() {
             response_text
     }
     
+    /** Execute a simple GET request relative to the server root.
+        Omit the leading http://hostname, but include the leading /:
+        [good]: /api/followgraph/user/sean
+        [bad]: api/followgraph/user/sean
+        [bad]: http://myserver:9183/api/followgraph/user/sean  */
     def get(url:String)=
         http(fluent.Request.Get(s"$base$url"))
 
-    
+    /** Execute a simple GET request, implicitly converting to non-null JSON.
+        See get() and json() for more information. */
     def getjs(url:String)=
         json(get(url))
-        
+    
+    /** Execute a simple POST request with relative paths, taking a Scala Map()
+        of request parameters. */
     def post(url:String, arguments:Map[String, String])= {
         var req = fluent.Request.Post(s"$base$url")
         var form = fluent.Form.form()
@@ -98,6 +112,7 @@ trait FormConnectable extends AnyConnectable {
     //    and lazy val will send you in loops
     var csrf_token = ""
     
+    /** Implicitly logs in upon the first http request. */
     abstract override def http(request: fluent.Request)= {
         if (csrf_token.isEmpty) {
           csrf_token = " " // Prevent a loop

@@ -3,14 +3,20 @@ import java.util
 import org.json.simple._
 import scala.collection.JavaConverters._
 
+/** Represent a Social Network User.
+  * Includes a unique id, a unique screen_name, a human-readable name, and
+  * a way to retrieve the user's followers */
 class FollowGraphNode(bridge: Bridge, val info:JSONObject) {
+    // Data sanity check: may be unnecessary if tests are adequate
     assert(info != null, "Can't read null JSONObject")
     for (key <- List("id", "screen_name", "name"))
       assert(info.containsKey(key), s"User JSON missing required key '$key'")
+      
     val id = info.get("id").asInstanceOf[Long]
     val screen_name = info.get("screen_name").asInstanceOf[String]
     val name = info.get("name").asInstanceOf[String]
     
+    /** List the user's followers as more FollowGraphNodes */
     def followers= {
         val response = bridge.getjs(s"/api/followgraph/followers/$id")
         val users = response.get("followers").asInstanceOf[util.List[JSONValue]]

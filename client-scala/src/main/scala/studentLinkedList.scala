@@ -2,7 +2,7 @@ package bridges
 import scala.collection.JavaConverters._
 import org.json.simple._
 
-/** Adds serialize() functionality to double linked lists.
+/** Adds serialize() functionality to doubly linked lists.
   *
   * This would be a trait, but it needs to be inherited in Java.
   */
