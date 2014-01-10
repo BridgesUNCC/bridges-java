@@ -18,7 +18,7 @@ class FollowGraphTest extends FlatSpec with Matchers {
         }
     }
     
-    "FollowGraph" should "load from a screenname via JSON" in {
+    it should "load from a screenname via JSON" in {
         val graph = newbridge.followgraph("screenname")
         graph.root.id should be(9)
         graph.root.screen_name should be("John")

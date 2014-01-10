@@ -1,4 +1,4 @@
-SUPPORTED_PROVIDERS = Set.new ["twitter"]
+SUPPORTED_PROVIDERS = Set.new ["twitter"] # This is a violation of "open-closed"
 
 class AuthenticationsController < ApplicationController
   def index

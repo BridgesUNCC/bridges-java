@@ -1,4 +1,5 @@
 class Api::FollowgraphController < ApplicationController
+  before_filter :check_login
   
   def followers
     # todo: consider persistent storage, possibly lower level cache
@@ -18,11 +19,18 @@ class Api::FollowgraphController < ApplicationController
   
   protected
   
+  def check_login
+    if user_signed_in?
+      true
+    else
+      render json: {error: "Not logged in"}, status: 403
+      false
+    end
+  end
+  
   def api
     auth = Authentication.find_by(user_id: current_user.id, provider: "twitter")
-    if not auth
-      redirect_to root_path, notice: "Sign in with Twitter before using followgraph API"
-    end
+    render json: {error: "Not signed into twitter"}, status: 403 and return unless auth
     
     Twitter::REST::Client.new do |config|
       config.consumer_key = ENV["TWITTER_CONSUMER_KEY"]

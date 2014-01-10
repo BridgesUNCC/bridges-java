@@ -17,20 +17,56 @@ abstract class AnyConnectable() {
         )
     }
     
-    /** Execute an Apache Fluent Request. */
+    /** Execute an Apache Fluent Request.
+        Decorates HTTP error tracebacks with urls and server {"error": "..."}
+        responses.
+        Throws an IOException with URL if the server returns an empty response.
+        Returns server response if the status code is >= 400
+            but can still throw other exceptions if JSON parsing fails when
+            formatting server JSON response
+        */
     def http(request: fluent.Request)= {
+        
+        // Execute the HTTP request
         val response = try {
-            http_connection.execute(request).returnContent().asString()
+            http_connection.execute(request)
         } catch {
+            // Something happened during the request that we can't handle
             case e: org.apache.http.client.HttpResponseException => {
-                println(s"Error encountered in processing '$request'\n")
+                println(s"Connection error encountered in processing '$request'\n")
             }
             throw e
         }
-        if (response == null || response.isEmpty)
+        
+        // The request succeeded but the server threw an error
+        if (response.returnResponse().getStatusLine().getStatusCode() >= 400) {
+            println(s"HTTP error encountered in processing '$request'\n")
+          
+            /* By convention, the server responds {"error": "message"}
+             * Try to extract that, but don't obfuscate the real error if
+             * parsing json fails */
+            var error_text = io.Source.fromInputStream(
+                response.returnResponse().getEntity().getContent()
+            ).mkString
+            
+            // Try to parse, but if it's null, keep error_text instead
+            error_text = Option(json(error_text).asInstanceOf[JSONObject]
+                                .get("error").asInstanceOf[String]
+                                ).getOrElse(error_text)
+            
+            throw new IOException(s"""Error on request '$request.'
+                                  Server responds: '$error_text'
+                                  Consider filing a bug report with this text at
+                                  http://github.com/SeanTater/bridges"""
+                                  )
+        }
+        val response_text = response.returnContent().asString()
+        
+        // Handle empty responses
+        if (response_text == null || response_text.isEmpty)
             throw new IOException(s"Server returned empty response for '$request'")
         else
-            response
+            response_text
     }
     
     def get(url:String)=

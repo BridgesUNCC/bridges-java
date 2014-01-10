@@ -16,7 +16,7 @@ class ConnectableTest extends FlatSpec with Matchers {
         dummy.post("url", Map("x" -> "y")) should be("response")
     }
     
-    "DummyConnectable" should "correctly handle empty responses" in {
+    it should "correctly handle empty responses" in {
         val dummy = new Empty()
         dummy.response = ""
         dummy.http(fluent.Request.Get("url")) should be("")
@@ -25,14 +25,14 @@ class ConnectableTest extends FlatSpec with Matchers {
         dummy.post("url", Map("x" -> "y")) should be("")
     }
     
-    "DummyConnectable" should "decode JSON" in {
+    it should "decode JSON" in {
         val dummy = new Empty()
         dummy.response = """{"x": "y"}"""
         dummy.getjs("url") should not be(null)
         dummy.getjs("url").get("x") should be("y")
     }
     
-    "DummyConnectable" should "complain about empty JSON" in {
+    it should "complain about empty JSON" in {
         val dummy = new Empty()
         dummy.response = ""
         dummy.get("url") should be("")
