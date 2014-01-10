@@ -22,7 +22,7 @@ class BStream(val bridge: Bridge, val stream: String) {
     /** Send structure serialization to the server. */
     def send(serial: String) {
         val assignment = bridge.assignment
-        val request = bridge.post("assign/$assignment", Map("serial" -> serial))
+        val request = bridge.post(s"assign/$assignment", Map("serial" -> serial))
         if (request == None) {
             println("Status upload failed")
         }
