@@ -16,9 +16,12 @@ class FollowGraphNode(bridge: Bridge, val info:JSONObject) {
     val screen_name = info.get("screen_name").asInstanceOf[String]
     val name = info.get("name").asInstanceOf[String]
     
-    /** List the user's followers as more FollowGraphNodes */
-    def followers= {
-        val response = bridge.getjs(s"/api/followgraph/followers/$id")
+    /** List the user's followers as more FollowGraphNodes.
+        Limit the result to `max` followers. Note that results are batched, so
+        a large `max` (as high as 200) _may_ only count as one request.
+        See Bridges.followgraph() for more about rate limiting. */
+    def followers(max:Integer=10)= {
+        val response = bridge.getjs(s"/api/followgraph/followers/$id?max=$max")
         val users = response.get("followers").asInstanceOf[util.List[JSONValue]]
         
         (0 until users.size()).map {
