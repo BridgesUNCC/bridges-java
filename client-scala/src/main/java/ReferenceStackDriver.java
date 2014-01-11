@@ -11,7 +11,7 @@ import org.json.simple.*;
 public class ReferenceStackDriver {
     public static void main(String[] arguments) {
         ReferenceStack<JSONValue> structure = new ReferenceStack<JSONValue>();
-        Bridge bridge = new Bridge("user", "pass", 0);
+        Bridge bridge = new Bridge(0);
         BStream ret = bridge.stream("geolist");
         for (Object o : ret.fetch())
             // If you want to do something more interesting with it, cast it:

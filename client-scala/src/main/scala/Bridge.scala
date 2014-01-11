@@ -3,7 +3,7 @@ package bridges
 /** Network-enabled sample data aggregator.
   * Bridges offers connectivity for students to more easily use interesting real
   * world data for introductory projects. */
-class Bridge(val username: String, val password: String, val assignment: Int) extends FormConnectable {
+class Bridge(val assignment: Int) extends FormConnectable {
     
     /** Connect to a streaming data source such as a social network feed.
         This feature is not yet complete. Use at your own peril. */
@@ -31,4 +31,4 @@ class Bridge(val username: String, val password: String, val assignment: Int) ex
     } */
 }
 
-class MockBridge(username: String, password: String, assignment: Int) extends Bridge(username, password, assignment) with DummyConnectable {}
+class MockBridge(assignment: Int) extends Bridge(assignment) with DummyConnectable {}

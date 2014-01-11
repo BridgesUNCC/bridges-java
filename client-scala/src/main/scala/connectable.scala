@@ -30,10 +30,11 @@ abstract class AnyConnectable() {
             formatting server JSON response
         */
     def http(request: fluent.Request)= {
+        // It's possible we need to reimplement this as a ResponseHandler
         
         // Execute the HTTP request
         val response = try {
-            http_connection.execute(request)
+            http_connection.execute(request).returnResponse()
         } catch {
             // Something happened during the request that we can't handle
             case e: org.apache.http.client.HttpResponseException => {
@@ -41,36 +42,41 @@ abstract class AnyConnectable() {
             }
             throw e
         }
+            
+        /* This is somewhat complicated for getting a string, but:
+         *   ...execute(request).returnContent().asString() won't give error codes
+         *   ...execute(request).returnResponse().getEntity().asInstanceOf[Stream] won't cast
+         */
+        var text = io.Source.fromInputStream(
+            response.getEntity().getContent()
+        ).mkString
         
         // The request succeeded but the server threw an error
-        if (response.returnResponse().getStatusLine().getStatusCode() >= 400) {
+        if (response.getStatusLine().getStatusCode() >= 400) {
             println(s"HTTP error encountered in processing '$request'\n")
           
             /* By convention, the server responds {"error": "message"}
              * Try to extract that, but don't obfuscate the real error if
              * parsing json fails */
-            var error_text = io.Source.fromInputStream(
-                response.returnResponse().getEntity().getContent()
-            ).mkString
+            
             
             // Try to parse, but if it's null, keep error_text instead
-            error_text = Option(json(error_text).asInstanceOf[JSONObject]
+            text = Option(json(text).asInstanceOf[JSONObject]
                                 .get("error").asInstanceOf[String]
-                                ).getOrElse(error_text)
+                                ).getOrElse(text)
             
             throw new IOException(s"""Error on request '$request.'
-                                  Server responds: '$error_text'
+                                  Server responds: '$text'
                                   Consider filing a bug report with this text at
                                   http://github.com/SeanTater/bridges"""
                                   )
         }
-        val response_text = response.returnContent().asString()
         
         // Handle empty responses
-        if (response_text == null || response_text.isEmpty)
+        if (text == null || text.isEmpty)
             throw new IOException(s"Server returned empty response for '$request'")
         else
-            response_text
+            text
     }
     
     /** Execute a simple GET request relative to the server root.

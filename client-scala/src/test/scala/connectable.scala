@@ -4,7 +4,7 @@ import org.apache.http.client.fluent
 import org.json.simple._
 import java.io.IOException
 
-class Empty(val username:String="", val password:String="", val http_connection:fluent.Executor=null) extends DummyConnectable {}
+class Empty(val http_connection:fluent.Executor=null) extends DummyConnectable {}
 
 class ConnectableTest extends FlatSpec with Matchers {
     "DummyConnectable" should "respond with a predefined string" in {

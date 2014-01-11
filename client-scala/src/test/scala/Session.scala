@@ -12,7 +12,7 @@ class BStreamStreamTest extends FlatSpec with Matchers {
     
 class FollowGraphTest extends FlatSpec with Matchers {
     "FollowGraph" should "complain helpfully about empty responses" in {
-        val bridge = new Bridge("user", "pass", 0) with DummyConnectable
+        val bridge = new Bridge(0) with DummyConnectable
         a [IOException] should be thrownBy {
             bridge.followgraph("screenname")
         }
@@ -38,7 +38,7 @@ class FollowGraphTest extends FlatSpec with Matchers {
     }
     
     def newbridge= {
-        val br = new Bridge("user", "pass", 0) with DummyConnectable
+        val br = new Bridge(0) with DummyConnectable
         br.response = """{"id": 9, "screen_name": "John", "name": "John S. Abernathy", "followers": []}"""
         br
     }
