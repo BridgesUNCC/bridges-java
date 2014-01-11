@@ -9,8 +9,6 @@ import java.io.IOException
 /** Mixin enabling Bridges network connectivity with more user-friendly error
     handling. */
 abstract class AnyConnectable() {
-    val username: String
-    val password: String
     val base: String = "http://localhost:3000"
     val http_connection: fluent.Executor
     
@@ -117,16 +115,13 @@ trait FormConnectable extends AnyConnectable {
         if (csrf_token.isEmpty) {
           csrf_token = " " // Prevent a loop
           csrf_token = getjs("/api/csrf").get("csrf_token").asInstanceOf[String]
+          val username = readLine("Username: ")
+          val password = System.console.readPassword("Password: ").asInstanceOf[String]
           post("/users/login", Map("user[email]" -> username, "user[password]" -> password))
         }
         super.http(request.addHeader("X-CSRF-Token", csrf_token))
     }
     
-}
-
-/** Executes HTTP requests with basic authentication. */
-trait BasicConnectable extends AnyConnectable {
-    val http_connection = fluent.Executor.newInstance().auth(username, password)
 }
 
 /** Returns predefined strings in place of HTTP requests for stubbing. */
