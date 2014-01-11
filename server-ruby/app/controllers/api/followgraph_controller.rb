@@ -4,7 +4,7 @@ class Api::FollowgraphController < ApplicationController
   def followers
     # todo: consider persistent storage, possibly lower level cache
     user_followers = Rails.cache.fetch("twitter:followers:#{params[:id]}") {
-      api.followers(params[:id].to_i).take(10)
+      api.followers(params[:id].to_i).take((params[:max] or 10).to_i)
     }
     render json: {followers: user_followers}
   end
