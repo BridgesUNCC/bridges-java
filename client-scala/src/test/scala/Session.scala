@@ -23,7 +23,7 @@ class FollowGraphTest extends FlatSpec with Matchers {
         graph.root.id should be(9)
         graph.root.screen_name should be("John")
         graph.root.name should be("John S. Abernathy")
-        graph.root.followers.size() should be(0)
+        graph.root.followers().size() should be(0)
         
     }
     
@@ -31,7 +31,7 @@ class FollowGraphTest extends FlatSpec with Matchers {
         val bridge = newbridge
         val graph = bridge.followgraph("screenname")
         bridge.response = """{"followers": [{"id": 8, "screen_name": "Fred", "name": "Fred Elmquist"}, {"id": 5, "screen_name": "Alton", "name": "Alton Isenhour"}]}"""
-        val followers = graph.root.followers
+        val followers = graph.root.followers()
         followers.size() should be(2)
         followers.get(0).id should be(8)
         followers.get(1).id should be(5)
