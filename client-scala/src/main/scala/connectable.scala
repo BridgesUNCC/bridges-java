@@ -122,7 +122,8 @@ trait FormConnectable extends AnyConnectable {
           csrf_token = " " // Prevent a loop
           csrf_token = getjs("/api/csrf").get("csrf_token").asInstanceOf[String]
           val username = readLine("Username: ")
-          val password = System.console.readPassword("Password: ").asInstanceOf[String]
+          // TODO: System.console is null in Eclipse. How to workaround password
+          val password = readLine("Password: ")
           post("/users/login", Map("user[email]" -> username, "user[password]" -> password))
         }
         super.http(request.addHeader("X-CSRF-Token", csrf_token))
