@@ -1,8 +1,8 @@
 class Api::CsrfController < ApplicationController
   
   def generate
-    # todo: caching!
-    render json: {csrf_token: form_authenticity_token}
+    render json: {csrf_token: form_authenticity_token,
+                  user_signed_in: user_signed_in? }
   end
   
 end

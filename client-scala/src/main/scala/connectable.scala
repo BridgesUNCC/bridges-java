@@ -60,16 +60,15 @@ abstract class AnyConnectable() {
              * parsing json fails */
             
             
-            // Try to parse, but if it's null, keep error_text instead
+            // Try to parse, but if it's null, keep text instead
             text = Option(json(text).asInstanceOf[JSONObject]
                                 .get("error").asInstanceOf[String]
                                 ).getOrElse(text)
             
-            throw new IOException(s"""Error on request '$request.'
-                                  Server responds: '$text'
-                                  Consider filing a bug report with this text at
-                                  http://github.com/SeanTater/bridges"""
-                                  )
+            throw new IOException(s"Error on request '$request.'\n" +
+                                  s"Server responds: '$text'\n" +
+                                  "Consider filing a bug report with this" +
+                                  " at http://github.com/SeanTater/bridges")
         }
         
         // Handle empty responses
@@ -107,25 +106,40 @@ abstract class AnyConnectable() {
     This method uses a different (lax) redirect strategy. */
 trait FormConnectable extends AnyConnectable {
     val http_connection = fluent.Executor.newInstance(
-      HttpClientBuilder.create().setRedirectStrategy(
-        new LaxRedirectStrategy()
-      ).build()
+      HttpClientBuilder.create()
+        .setRedirectStrategy(new LaxRedirectStrategy())
+        .setDefaultCookieStore(new DiskCookieStore())
+        .build()
     )
     // The CSRF token doesn't change, but can't be val because
     //    http() doesn't function properly at this point
     //    and lazy val will send you in loops
     var csrf_token = ""
     
-    /** Implicitly logs in upon the first http request. */
+    /** Implicitly logs in upon the first http request.
+        Unless the session is still valid.
+        Also requests a new CSRF token regardless. */
     abstract override def http(request: fluent.Request)= {
+        // Once per program, get a new CSRF token
         if (csrf_token.isEmpty) {
-          csrf_token = " " // Prevent a loop
-          csrf_token = getjs("/api/csrf").get("csrf_token").asInstanceOf[String]
-          val username = readLine("Username: ")
-          // TODO: System.console is null in Eclipse. How to workaround password
-          val password = readLine("Password: ")
-          post("/users/login", Map("user[email]" -> username, "user[password]" -> password))
+          /* We need to getjs() but getjs() calls http().
+           * Prevent a loop by keeping it from branching this way */
+          csrf_token = " "
+          
+          /* Get CSRF token, find out if we need to sign in again */
+          val session_status = getjs("/api/csrf")
+          csrf_token = session_status.get("csrf_token").asInstanceOf[String]
+          val user_signed_in = session_status.get("user_signed_in").asInstanceOf[Boolean]
+          
+          if (! user_signed_in) {
+              val username = readLine("Username: ")
+              // TODO: System.console is null in Eclipse. How to workaround password?
+              val password = readLine("Password: ")
+              post("/users/login", Map("user[email]" -> username, "user[password]" -> password))
+          }
         }
+          
+        // Tack on the CSRF token (or the first time, " ") to every request
         super.http(request.addHeader("X-CSRF-Token", csrf_token))
     }
     
