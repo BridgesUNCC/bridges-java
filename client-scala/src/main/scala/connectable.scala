@@ -142,7 +142,27 @@ trait FormConnectable extends AnyConnectable {
         // Tack on the CSRF token (or the first time, " ") to every request
         super.http(request.addHeader("X-CSRF-Token", csrf_token))
     }
+}
+
+/** Executes HTTP requests with api key-based authentication.
+    This method uses a different (lax) redirect strategy. */
+trait KeyConnectable extends AnyConnectable {
+    val http_connection = fluent.Executor.newInstance(
+      HttpClientBuilder.create()
+        .setRedirectStrategy(new LaxRedirectStrategy())
+        .build()
+    )
+    var api_key = "FILL_IN_PUBLIC_API_KEY"
     
+    def authorize(new_key: String)
+        api_key = new_key
+    
+    /** Tacks on an API key to every request before executing. */
+    abstract override def http(request: fluent.Request)= {
+          
+        // TODO: add the API key, as either header or param
+        super.http(request)
+    }
 }
 
 /** Returns predefined strings in place of HTTP requests for stubbing. */

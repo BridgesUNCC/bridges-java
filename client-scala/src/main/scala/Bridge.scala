@@ -3,7 +3,7 @@ package bridges
 /** Network-enabled sample data aggregator.
   * Bridges offers connectivity for students to more easily use interesting real
   * world data for introductory projects. */
-class Bridge(val assignment: Int) extends FormConnectable {
+class Bridge(val assignment: Int) extends KeyConnectable {
     
     /** Connect to a streaming data source such as a social network feed.
         This feature is not yet complete. Use at your own peril. */

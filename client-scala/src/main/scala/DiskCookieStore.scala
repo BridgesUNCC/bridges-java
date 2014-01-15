@@ -18,7 +18,6 @@ class DiskCookieStore() extends BasicCookieStore {
             val ois = new ObjectInputStream(bais)
             super.clear()
             addCookies( ois.readObject().asInstanceOf[Array[Cookie]])
-            //cookies =//
             ois.close()
         } catch {
         case e: EOFException => None
