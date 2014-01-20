@@ -26,9 +26,9 @@ dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.5'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
-    compile 'com.github.scala-incubator.io:scala-io-file:0.4.2'
-    compile 'org.scalatest:scalatest:2.0.M8:test'
-    compile 'com.github.nscala-time:nscala-time:0.6.0'
+    compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
+    compile 'org.scalatest:scalatest_2.10:2.0.M8'
+    compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.1'
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
