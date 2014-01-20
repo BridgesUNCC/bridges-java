@@ -7,7 +7,7 @@
  * user guide available at http://gradle.org/docs/1.10/userguide/tutorial_java_projects.html
  */
 
-/*
+
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 apply plugin: 'scala'
@@ -37,4 +37,3 @@ dependencies {
     testCompile "junit:junit:4.11"
     testCompile "org.scalatest:scalatest:2.8.M8"
 }
-*/
