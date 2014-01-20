@@ -1,5 +1,5 @@
 import org.scalatest._
-import bridges.ReferenceDoubleLinkedList;
+import edu.uncc.cs.bridges._
 
 class ReferenceDoubleLinkedListTest extends FlatSpec with Matchers {
     "ReferenceDoubleLinkedList" should "be indexed and mutable" in {

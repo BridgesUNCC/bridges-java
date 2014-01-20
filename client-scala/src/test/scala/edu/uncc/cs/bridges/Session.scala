@@ -1,5 +1,5 @@
 import org.scalatest._
-import bridges._
+import edu.uncc.cs.bridges._
 import java.io.IOException
 
 class BStreamStreamTest extends FlatSpec with Matchers {

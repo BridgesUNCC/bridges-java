@@ -1,5 +1,4 @@
-import bridges.ReferenceStack
-import bridges.ReferenceStackDriver
+import edu.uncc.cs.bridges._
 import org.scalatest._
 import java.util.EmptyStackException
 
