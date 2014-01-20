@@ -18,7 +18,7 @@ class Bridge(val assignment: Int) extends KeyConnectable {
         Results are cached on the server, so your maximum graph size will grow
         with time. */
     def followgraph(name: String)= {
-        new FollowGraph(this, name)
+        new FollowGraphNode(this, name)
     }
     
     /** Send serialization to the server for visualization.
