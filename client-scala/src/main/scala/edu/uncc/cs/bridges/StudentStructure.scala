@@ -1,4 +1,4 @@
-package bridges
+package edu.uncc.cs.bridges
 import scala.reflect.BeanProperty
 
 /** Abstract base of student-implemented structures except Nodes.

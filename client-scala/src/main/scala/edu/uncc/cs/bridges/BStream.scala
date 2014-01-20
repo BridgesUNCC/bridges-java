@@ -1,4 +1,4 @@
-package bridges
+package edu.uncc.cs.bridges
 import org.json.simple._
 import java.util
 import java.lang

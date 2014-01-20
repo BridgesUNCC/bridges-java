@@ -1,4 +1,4 @@
-package bridges;
+package edu.uncc.cs.bridges;
 import bridges.OneNode;
 import bridges.StudentStack;
 import java.util.EmptyStackException;

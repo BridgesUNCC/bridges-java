@@ -1,4 +1,4 @@
-package bridges;
+package edu.uncc.cs.bridges;
 import bridges.BStream;
 // This would be replaced by whatever the student made
 import bridges.ReferenceStack;

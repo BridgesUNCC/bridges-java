@@ -1,4 +1,4 @@
-package bridges
+package edu.uncc.cs.bridges
 import java.util
 import org.json.simple._
 import scala.collection.JavaConverters._

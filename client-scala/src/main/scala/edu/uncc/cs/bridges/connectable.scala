@@ -1,4 +1,4 @@
-package bridges
+package edu.uncc.cs.bridges
 import org.apache.http.client.fluent
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.impl.client.LaxRedirectStrategy

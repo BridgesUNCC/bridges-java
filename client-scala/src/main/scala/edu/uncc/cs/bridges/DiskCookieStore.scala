@@ -1,4 +1,4 @@
-package bridges
+package edu.uncc.cs.bridges
 import org.apache.http.impl.client._
 import org.apache.http.cookie._
 import java.io._

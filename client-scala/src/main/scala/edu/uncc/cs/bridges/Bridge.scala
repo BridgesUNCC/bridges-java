@@ -1,4 +1,4 @@
-package bridges
+package edu.uncc.cs.bridges
 
 /** Network-enabled sample data aggregator.
   * Bridges offers connectivity for students to more easily use interesting real

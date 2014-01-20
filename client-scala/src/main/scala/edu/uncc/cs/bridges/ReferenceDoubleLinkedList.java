@@ -1,6 +1,5 @@
-package bridges;
-import bridges.TwoNode;
-import bridges.StudentDoubleLinkedList;
+package edu.uncc.cs.bridges;
+import edu.uncc.cs.bridges.*;
 import java.lang.IndexOutOfBoundsException;
 
 /** Pointer-based reference example of a student stack. */
