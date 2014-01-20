@@ -1,5 +1,5 @@
+package edu.uncc.cs.bridges
 import org.scalatest._
-import edu.uncc.cs.bridges._
 import org.apache.http.client.fluent
 import org.json.simple._
 import java.io.IOException

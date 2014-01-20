@@ -1,8 +1,9 @@
+package edu.uncc.cs.bridges
 import org.scalatest._
 import edu.uncc.cs.bridges._
 import java.io.IOException
 
-class BStreamStreamTest extends FlatSpec with Matchers {
+class BStreamTest extends FlatSpec with Matchers {
     "BStream" should "load stream data from JSON" in {
     }
     

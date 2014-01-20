@@ -1,3 +1,4 @@
+package edu.uncc.cs.bridges
 import org.scalatest._
 import edu.uncc.cs.bridges._
 

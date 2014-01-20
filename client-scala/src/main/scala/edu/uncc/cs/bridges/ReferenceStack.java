@@ -1,6 +1,4 @@
 package edu.uncc.cs.bridges;
-import bridges.OneNode;
-import bridges.StudentStack;
 import java.util.EmptyStackException;
 
 /** Pointer-based reference example of a student stack. */

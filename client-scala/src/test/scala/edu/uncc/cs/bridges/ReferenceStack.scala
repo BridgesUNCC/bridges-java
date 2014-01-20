@@ -1,3 +1,4 @@
+package edu.uncc.cs.bridges
 import edu.uncc.cs.bridges._
 import org.scalatest._
 import java.util.EmptyStackException

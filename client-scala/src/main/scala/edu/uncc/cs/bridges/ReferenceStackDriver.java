@@ -1,7 +1,4 @@
 package edu.uncc.cs.bridges;
-import bridges.BStream;
-// This would be replaced by whatever the student made
-import bridges.ReferenceStack;
 import org.json.simple.*;
 
 /** Run the reference student code.
