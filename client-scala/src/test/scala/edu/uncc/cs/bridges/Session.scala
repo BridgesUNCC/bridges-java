@@ -1,13 +1,14 @@
 package edu.uncc.cs.bridges
 import org.scalatest._
-import edu.uncc.cs.bridges._
 import java.io.IOException
 
 class BStreamTest extends FlatSpec with Matchers {
     "BStream" should "load stream data from JSON" in {
+    	fail("Unimplemented");
     }
     
     it should "load an empty ArrayList when receiving an empty response" in {
+    	fail("Unimplemented");
     }
 }
     
