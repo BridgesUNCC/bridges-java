@@ -1,7 +1,6 @@
 package edu.uncc.cs.bridges
 
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest._
 
 /** Optional Integration tests for bridges
  *  These require you to set up as server and are not intended to guarantee
@@ -12,7 +11,7 @@ import org.scalatest.FlatSpec
  */ 
 
 class ServerIntegrationTest extends FlatSpec with Matchers {
-	"Intregation" should "allow successful login" in {
+	"Interface" should "login" taggedAs(NetworkTest) in {
 		val bridge = new Bridge(0);
 		// To run this test you will 
 		bridge.api_key = "b3fb8658857f184f8015134d30953334d71c6f19"
