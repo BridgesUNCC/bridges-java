@@ -6,8 +6,13 @@ import java.io.IOException
 
 class Echo(r: String) extends DummyConnectable {
 	response = r
-	val http_connection: fluent.Executor = null
 	val assignment = 0
+	val http_connection = null
+}
+class EchoKey(r: String) extends DummyConnectable with KeyConnectable {
+	response = r
+	val assignment = 0
+	override val http_connection = null
 }
 
 class ConnectableTest extends FlatSpec with Matchers {
@@ -41,9 +46,17 @@ class ConnectableTest extends FlatSpec with Matchers {
         }
     }
     
-    it should "fill in assignment numbers" in {
+    it should "prepare URLs with bases assignment numbers" in {
     	val dummy = new Echo("")
     	dummy.prepare("") should be (dummy.base)
     	dummy.prepare("$assignment") should be (dummy.base + "0")
+    }
+    
+    "KeyConnectable" should "fill in an api key" in {
+        val keyconn = new EchoKey("")
+        keyconn.api_key = "key"
+        keyconn.prepare("") should be (keyconn.base + "/key")
+        keyconn.prepare("/$assignment") should be (keyconn.base + "/0/key")
+        keyconn.prepare("/possible/path") should be(keyconn.base + "/possible/path/key")
     }
 }
