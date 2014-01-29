@@ -1,13 +1,8 @@
 package edu.uncc.cs.bridges
 import org.apache.http.client.fluent
-import org.apache.http.impl.client.HttpClientBuilder
-import org.apache.http.impl.client.LaxRedirectStrategy
 import org.json.simple._
 import java.io.IOException
 
-
-/** Mixin enabling Bridges network connectivity with more user-friendly error
-    handling. */
 abstract class AnyConnectable() {
     val base: String = "http://localhost:3000"
     val http_connection: fluent.Executor
@@ -95,8 +90,8 @@ abstract class AnyConnectable() {
     /** Execute a simple POST request with relative paths, taking a Scala Map()
         of request parameters. */
     def post(url:String, arguments:Map[String, String])= {
-        var req = fluent.Request.Post(prepare(url))
-        var form = fluent.Form.form()
+        val req = fluent.Request.Post(prepare(url))
+        val form = fluent.Form.form()
         arguments.foreach { (pair) => form.add(pair._1, pair._2) }
         http(req.bodyForm(form.build()))
     }
@@ -105,69 +100,4 @@ abstract class AnyConnectable() {
       	base + url.replace("$assignment", assignment.toString)
     }
         
-}
-
-/** Executes HTTP requests with form-based authentication.
-    This method uses a different (lax) redirect strategy. */
-trait FormConnectable extends AnyConnectable {
-    val http_connection = fluent.Executor.newInstance(
-      HttpClientBuilder.create()
-        .setRedirectStrategy(new LaxRedirectStrategy())
-        .setDefaultCookieStore(new DiskCookieStore())
-        .build()
-    )
-    // The CSRF token doesn't change, but can't be val because
-    //    http() doesn't function properly at this point
-    //    and lazy val will send you in loops
-    var csrf_token = ""
-    
-    /** Implicitly logs in upon the first http request.
-        Unless the session is still valid.
-        Also requests a new CSRF token regardless. */
-    abstract override def http(request: fluent.Request)= {
-        // Once per program, get a new CSRF token
-        if (csrf_token.isEmpty) {
-          /* We need to getjs() but getjs() calls http().
-           * Prevent a loop by keeping it from branching this way */
-          csrf_token = " "
-          
-          /* Get CSRF token, find out if we need to sign in again */
-          val session_status = getjs("/api/csrf")
-          csrf_token = session_status.get("csrf_token").asInstanceOf[String]
-          val user_signed_in = session_status.get("user_signed_in").asInstanceOf[Boolean]
-          
-          if (! user_signed_in) {
-              val username = readLine("Username: ")
-              // TODO: System.console is null in Eclipse. How to workaround password?
-              val password = readLine("Password: ")
-              post("/users/login", Map("user[email]" -> username, "user[password]" -> password))
-          }
-        }
-          
-        // Tack on the CSRF token (or the first time, " ") to every request
-        super.http(request.addHeader("X-CSRF-Token", csrf_token))
-    }
-}
-
-/** Executes HTTP requests with api key-based authentication.
-    This method uses a different (lax) redirect strategy. */
-trait KeyConnectable extends AnyConnectable {
-    val http_connection = fluent.Executor.newInstance(
-      HttpClientBuilder.create()
-        .setRedirectStrategy(new LaxRedirectStrategy())
-        .build()
-    )
-    var api_key = "FILL_IN_PUBLIC_API_KEY"
-    
-    /** Tacks on an API key to every request before executing. */
-    abstract override def prepare(url: String)= {
-        super.prepare(url) + s"/$api_key"
-    }
-}
-
-/** Returns predefined strings in place of HTTP requests for stubbing. */
-trait DummyConnectable extends AnyConnectable {
-    var response: String = ""
-    
-    abstract override def http(url: fluent.Request)= response
 }
