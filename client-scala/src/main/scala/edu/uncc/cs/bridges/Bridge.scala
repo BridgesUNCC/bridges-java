@@ -20,13 +20,4 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     def followgraph(name: String)= {
         new FollowGraphNode(this, name)
     }
-    
-    /** Send serialization to the server for visualization.
-      *
-      * Call this after making a change to the structure, so that you can see
-      * what effect this had graphically.
-      *
-    def draw() {
-        session.send_state(structure.serialize())
-    } */
 }

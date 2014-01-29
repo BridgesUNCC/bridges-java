@@ -6,8 +6,9 @@ import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Set
 
 /** Represent a Social Network User.
-  * Includes a unique id, a unique screen_name, a human-readable name, and
-  * a way to retrieve the user's followers */
+  * Includes a unique id, a unique screen_name, a human-readable name,
+  * a way to retrieve the user's followers, and automatic history tracking
+  * for visualization later */
 class FollowGraphNode(
     bridge: Bridge,
     val screen_name: String,
@@ -25,6 +26,9 @@ class FollowGraphNode(
         a large `max` (as high as 200) _may_ only count as one request.
         See Bridges.followgraph() for more about rate limiting. */
     def followers(max:Integer=10)= {
+	    // Don't repeat responses to the server.
+	    // But clear at the beginning so that the history is available between calls
+        FollowGraphNode.history.clear
         val response = bridge.getjs(s"/streams/twitter.com/followgraph/$screen_name/$max")
         val users = response.get("followers").asInstanceOf[util.List[JSONValue]]
         
@@ -32,7 +36,6 @@ class FollowGraphNode(
             i => new FollowGraphNode(bridge, users.get(i).asInstanceOf[String], Option(this))
         }
         bridge.post("/assignments/$assignment/events", Map("history" -> FollowGraphNode.historyJSON))
-        FollowGraphNode.history.clear
         followerlist.asJava
     }
 }
@@ -41,22 +44,22 @@ object FollowGraphNode {
     var opened = Set[String]()
 	var history = ListBuffer[HistoryEvent]()
 	
+	/** Generate JSON to summarize graph operations for visualization. */
 	def historyJSON= {
-    	val hst = history.map(_.json).reduce(_ + "," + _)
-    	s"""{"history": [$hst]}"""
+    	val hist = history.map(_.json).reduceOption(_ + "," + _).getOrElse("")
+    	s"""{"history": [$hist]}"""
     }
 }
 
 case class HistoryEvent(
     val kind : String,
-    val time : Double,
+    val time : Long,
     val from : Option[String],
     val to : Option[String]
 ) {
+	/** Generates (hardcoded) JSON */ 
 	def json= {
-	    s"""{"kind": "$kind",
-            "time": $time,
-	        "from": "$from",
-	        "to": "$to"}"""
+		def q(a:Option[String])= a.map('"' + _ + '"').getOrElse("null")
+	    s"""{"kind":"$kind", "time":"$time", "from":${q(from)}, "to":${q(to)}}"""
 	}
 }
