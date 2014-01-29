@@ -11,6 +11,7 @@ import java.io.IOException
 abstract class AnyConnectable() {
     val base: String = "http://localhost:3000"
     val http_connection: fluent.Executor
+    val assignment: Int
     
     /** Convert text into a guaranteed non-null JSON format.
         Throws IOException if the result was null
@@ -84,7 +85,7 @@ abstract class AnyConnectable() {
         [bad]: api/followgraph/user/sean
         [bad]: http://myserver:9183/api/followgraph/user/sean  */
     def get(url:String)=
-        http(fluent.Request.Get(s"$base$url"))
+        http(fluent.Request.Get(prepare(url)))
 
     /** Execute a simple GET request, implicitly converting to non-null JSON.
         See get() and json() for more information. */
@@ -94,10 +95,14 @@ abstract class AnyConnectable() {
     /** Execute a simple POST request with relative paths, taking a Scala Map()
         of request parameters. */
     def post(url:String, arguments:Map[String, String])= {
-        var req = fluent.Request.Post(s"$base$url")
+        var req = fluent.Request.Post(prepare(url))
         var form = fluent.Form.form()
         arguments.foreach { (pair) => form.add(pair._1, pair._2) }
         http(req.bodyForm(form.build()))
+    }
+    
+    def prepare(url: String)={
+      	base + url.replace("$assignment", assignment.toString)
     }
         
 }
@@ -154,15 +159,9 @@ trait KeyConnectable extends AnyConnectable {
     )
     var api_key = "FILL_IN_PUBLIC_API_KEY"
     
-    def authorize(new_key: String) {
-        api_key = new_key
-    }
-    
     /** Tacks on an API key to every request before executing. */
-    abstract override def http(request: fluent.Request)= {
-          
-        // TODO: add the API key, as either header or param
-        super.http(request)
+    abstract override def prepare(url: String)= {
+        super.prepare(url) + "/$apikey"
     }
 }
 

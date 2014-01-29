@@ -7,12 +7,18 @@
  * user guide available at http://gradle.org/docs/1.10/userguide/tutorial_java_projects.html
  */
 
-
-// Apply the java plugin to add support for Java
 apply plugin: 'java'
 apply plugin: 'scala'
+apply plugin: 'groovy' // groovy -> scripting -> working scalatests
 apply plugin: 'application'
 apply plugin: 'eclipse'
+
+test << {
+    ant.taskdef(name: 'scalatest', classname: 'org.scalatest.tools.ScalaTestAntTask', classpath: classpath.asPath)
+    ant.scalatest(runpath: testClassesDir, haltonfailure: 'true', fork: 'false') {
+        reporter(type: 'stdout')
+    }
+}
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -36,4 +42,5 @@ dependencies {
     // 'test.useTestNG()' to your build script.
     testCompile "junit:junit:4.11"
     testCompile "org.scalatest:scalatest_2.10:2.0.M8"
+    testCompile 'org.scala-lang:scala-library:2.10.3'
 }
