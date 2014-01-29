@@ -1,6 +1,7 @@
 package edu.uncc.cs.bridges
 import org.scalatest._
 import java.io.IOException
+import org.apache.http.client.fluent
 
 class BStreamTest extends FlatSpec with Matchers {
     "BStream" should "load stream data from JSON" in {
@@ -11,18 +12,22 @@ class BStreamTest extends FlatSpec with Matchers {
     	fail("Unimplemented");
     }
 }
+
+class EchoBridge(var response: String) extends Bridge(0) {
+	override val http_connection = null
+    override def http(url: fluent.Request)= response
+}
     
 class FollowGraphTest extends FlatSpec with Matchers {
     "FollowGraph" should "complain helpfully about empty responses" in {
-        val bridge = new Bridge(0) with DummyConnectable
+        val bridge = new EchoBridge("")
         a [IOException] should be thrownBy {
             bridge.followgraph("screenname").followers()
         }
     }
     
     it should "load from a screenname via JSON" in {
-        val bridge = new Bridge(0) with DummyConnectable
-        bridge.response = """{"followers": []}"""
+        val bridge = new EchoBridge("""{"followers": []}""")
         
         val graph = bridge.followgraph("screenname")
         graph.screen_name should be("screenname")
@@ -31,8 +36,7 @@ class FollowGraphTest extends FlatSpec with Matchers {
     }
     
     "FollowGraphNode" should "retrieve followers" in {
-        val bridge = new Bridge(0) with DummyConnectable
-        bridge.response = """{"followers": ["FredElmquist", "AltonIsenhour"]}"""
+        val bridge = new EchoBridge("""{"followers": ["FredElmquist", "AltonIsenhour"]}""")
         
         val graph = bridge.followgraph("screenname")
         val followers = graph.followers()

@@ -8,7 +8,11 @@ import scala.collection.mutable.Set
 /** Represent a Social Network User.
   * Includes a unique id, a unique screen_name, a human-readable name, and
   * a way to retrieve the user's followers */
-class FollowGraphNode(bridge: Bridge, val screen_name: String, val parent: Option[FollowGraphNode]=None) {
+class FollowGraphNode(
+    bridge: Bridge,
+    val screen_name: String,
+    val parent: Option[FollowGraphNode]=None
+    ) {
 	if (FollowGraphNode.opened.add(screen_name))
 	    // Add the node if it doesn't already exist
 		FollowGraphNode.history += HistoryEvent("node", System.nanoTime(), Option(screen_name), None)
@@ -27,7 +31,8 @@ class FollowGraphNode(bridge: Bridge, val screen_name: String, val parent: Optio
         val followerlist = (0 until users.size()).map {
             i => new FollowGraphNode(bridge, users.get(i).asInstanceOf[String], Option(this))
         }
-        bridge.post("/assignments/$assignment/events", Map("event" -> FollowGraphNode.historyJSON))
+        bridge.post("/assignments/$assignment/events", Map("history" -> FollowGraphNode.historyJSON))
+        FollowGraphNode.history.clear
         followerlist.asJava
     }
 }
@@ -37,7 +42,8 @@ object FollowGraphNode {
 	var history = ListBuffer[HistoryEvent]()
 	
 	def historyJSON= {
-    	history.map(_.json).reduce(_ + "," + _)
+    	val hst = history.map(_.json).reduce(_ + "," + _)
+    	s"""{"history": [$hst]}"""
     }
 }
 
@@ -48,9 +54,9 @@ case class HistoryEvent(
     val to : Option[String]
 ) {
 	def json= {
-	    """{"kind": $kind,
+	    s"""{"kind": "$kind",
             "time": $time,
-	        "from": $from,
-	        "to": $to}"""
+	        "from": "$from",
+	        "to": "$to"}"""
 	}
 }

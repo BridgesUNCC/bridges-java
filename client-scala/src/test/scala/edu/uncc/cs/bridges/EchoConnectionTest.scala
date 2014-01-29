@@ -1,18 +1,11 @@
 package edu.uncc.cs.bridges
 import org.scalatest._
 import org.apache.http.client.fluent
-import org.json.simple._
 import java.io.IOException
-
-class Echo(r: String) extends DummyConnectable {
-	response = r
-	val assignment = 0
-	val http_connection = null
-}
 
 class DummyConnectableTest extends FlatSpec with Matchers {
     "DummyConnectable" should "respond with a predefined string" in {
-        val dummy = new Echo("response")
+        val dummy = new EchoConnection("response")
         dummy.http(fluent.Request.Get("url")) should be("response")
         dummy.get("url") should be("response")
         dummy.post("url", Map()) should be("response")
@@ -20,7 +13,7 @@ class DummyConnectableTest extends FlatSpec with Matchers {
     }
     
     it should "correctly handle empty responses" in {
-        val dummy = new Echo("")
+        val dummy = new EchoConnection("")
         dummy.http(fluent.Request.Get("url")) should be("")
         dummy.get("url") should be("")
         dummy.post("url", Map()) should be("")
@@ -28,13 +21,13 @@ class DummyConnectableTest extends FlatSpec with Matchers {
     }
     
     it should "decode JSON" in {
-        val dummy = new Echo("""{"x": "y"}""")
+        val dummy = new EchoConnection("""{"x": "y"}""")
         dummy.getjs("url") should not be(null)
         dummy.getjs("url").get("x") should be("y")
     }
     
     it should "complain about empty JSON" in {
-        val dummy = new Echo("")
+        val dummy = new EchoConnection("")
         dummy.get("url") should be("")
         a [IOException] should be thrownBy {
             dummy.getjs("url")
@@ -42,7 +35,7 @@ class DummyConnectableTest extends FlatSpec with Matchers {
     }
     
     it should "prepare URLs with bases assignment numbers" in {
-    	val dummy = new Echo("")
+    	val dummy = new EchoConnection("")
     	dummy.prepare("") should be (dummy.base)
     	dummy.prepare("$assignment") should be (dummy.base + "0")
     }

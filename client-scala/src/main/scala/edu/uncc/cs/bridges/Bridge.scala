@@ -30,5 +30,3 @@ class Bridge(val assignment: Int) extends KeyConnectable {
         session.send_state(structure.serialize())
     } */
 }
-
-class MockBridge(assignment: Int) extends Bridge(assignment) with DummyConnectable {}

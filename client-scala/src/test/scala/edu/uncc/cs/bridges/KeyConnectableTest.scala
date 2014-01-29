@@ -2,9 +2,7 @@ package edu.uncc.cs.bridges
 
 import org.scalatest._
 
-class EchoKey(r: String) extends DummyConnectable with KeyConnectable {
-	response = r
-	val assignment = 0
+class EchoKey(response: String) extends EchoConnection(response) with KeyConnectable {
 	override val http_connection = null
 }
 
