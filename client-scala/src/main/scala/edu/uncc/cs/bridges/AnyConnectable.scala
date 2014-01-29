@@ -98,6 +98,5 @@ abstract class AnyConnectable() {
     
     def prepare(url: String)={
       	base + url.replace("$assignment", assignment.toString)
-    }
-        
+    }    
 }
