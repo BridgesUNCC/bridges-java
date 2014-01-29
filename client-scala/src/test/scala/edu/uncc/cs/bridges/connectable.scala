@@ -4,8 +4,9 @@ import org.apache.http.client.fluent
 import org.json.simple._
 import java.io.IOException
 
-class Echo(response: String) extends DummyConnectable {
-	val http_connection:fluent.Executor = null
+class Echo(r: String) extends DummyConnectable {
+	response = r
+	val http_connection: fluent.Executor = null
 	val assignment = 0
 }
 

@@ -161,7 +161,7 @@ trait KeyConnectable extends AnyConnectable {
     
     /** Tacks on an API key to every request before executing. */
     abstract override def prepare(url: String)= {
-        super.prepare(url) + "/$apikey"
+        super.prepare(url) + s"/$api_key"
     }
 }
 
