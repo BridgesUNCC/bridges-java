@@ -81,23 +81,11 @@ publishing  {
                 
                 
             }
-            /*developers{
-            developer {
-                id 'SeanTater'
-                name 'Sean Gallagher'
-            }
-            developer {
-                id 'stevemacn'
-                name 'Stephen MacNeil'
-            }
-            }*/
         }
     }
     repositories {
         maven {
             url "/home/sean/Dropbox/Public/repo"
-           
-            
         }
     }
 }
