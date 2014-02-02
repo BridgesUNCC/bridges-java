@@ -14,6 +14,11 @@ trait KeyConnectable extends AnyConnectable {
     )
     var api_key = "FILL_IN_PUBLIC_API_KEY"
     
+    def login(key: String)= {
+        api_key = key
+        this
+    }
+    
     /** Tacks on an API key to every request before executing. */
     abstract override def prepare(url: String)= {
         super.prepare(url) + s"/$api_key"

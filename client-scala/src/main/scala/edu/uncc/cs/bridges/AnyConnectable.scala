@@ -12,9 +12,13 @@ abstract class AnyConnectable() {
         Throws IOException if the result was null
         (meaning that the JSON was empty or malformed) */
     def json(text: String)= {
-        Option(JSONValue.parse(text).asInstanceOf[JSONObject]).getOrElse(
+        val opt = Option(JSONValue.parse(text).asInstanceOf[JSONObject]).getOrElse(
             throw new IOException("Received empty JSON response")
         )
+        if (opt.containsKey("error")) {
+        	throw new IOException("Error on server: " + opt.get("error"))
+        }
+        opt
     }
     
     /** Execute an Apache Fluent Request.

@@ -14,7 +14,7 @@ class ServerIntegrationTest extends FlatSpec with Matchers {
 	"Interface" should "login" taggedAs(NetworkTest) in {
 		val bridge = new Bridge(0);
 		// To run this test you will 
-		bridge.api_key = "b3fb8658857f184f8015134d30953334d71c6f19"
+		bridge.api_key = "1241307114776"
 		val center = bridge.followgraph("twitterapi")
 		val followers = center.followers(10)
 		// Twitterapi has way more than 10 followers so we should expect 10.

@@ -34,6 +34,14 @@ class DummyConnectableTest extends FlatSpec with Matchers {
         }
     }
     
+    it should "return server error when provided" in {
+        val dummy = new EchoConnection("""{"error": "message"}""")
+        val error = evaluating {
+          dummy.getjs("/url")
+        } should produce [IOException]
+        error.getMessage() should be ("Error on server: message")
+    }
+    
     it should "prepare URLs with bases assignment numbers" in {
     	val dummy = new EchoConnection("")
     	dummy.prepare("") should be (dummy.base)
