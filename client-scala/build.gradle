@@ -45,8 +45,50 @@ signing {
     sign configurations.archives
 }
 
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-publishing  {
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+              authentication(userName: seantater) //password: sonatypePassword)
+            }
+
+            pom.project {
+               name 'Bridges Curriculum Social Network Client'
+               packaging 'jar'
+               description 'Explore and visualize social network follower graphs and user status streams with a highly user friendly, lightweight facade API. (Client)'
+               url 'http://github.com/SeanTater/bridges'
+
+               scm {
+                   url 'scm:git@github.com:SeanTater/bridges.git'
+                   connection 'scm:git@github.com:SeanTater/bridges.git'
+                   developerConnection 'scm:git@github.com:SeanTater/bridges.git'
+               }
+
+               licenses {
+                   license {
+                       name 'GNU General Public Licence, Version 2.0'
+                       url 'http://www.gnu.org/licenses/gpl-2.0.htm'
+                       distribution 'repo'
+                   }
+               }
+
+               developers {
+                   developer {
+                       id 'SeanTater'
+                       name 'Sean Gallagher'
+                   }
+                   developer {
+                       id 'stevemacn'
+                       name 'Stephen MacNeil'
+                   }
+               }
+           }
+        }
+    }
+}
+/* publishing  {
     publications {
         mavenJava(MavenPublication) {
             from components.java
@@ -88,7 +130,7 @@ publishing  {
             url "/home/sean/Dropbox/Public/repo"
         }
     }
-}
+}*/
 
 ///
 /// Repositories and dependencies
