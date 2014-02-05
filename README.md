@@ -21,7 +21,6 @@ TUES Bridges Project - uniting classrooms for better student engagement
 - Add gradle binaries to your PATH
 - One step from nothing to working code with running tests:
   - `gradle test`
-
 - on Linux (execute these one at a time so you can react if something goes wrong):
 ```sh
 git clone https://github.com/SeanTater/bridges.git
