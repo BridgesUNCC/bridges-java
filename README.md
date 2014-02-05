@@ -19,7 +19,16 @@ TUES Bridges Project - uniting classrooms for better student engagement
 - Clone this repository: `git clone https://github.com/SeanTater/bridges.git`
 - Install [Gradle](http://gradle.org)
 - Add gradle binaries to your PATH
-  - on *nix: add this to .bashrc, .zshrc, or shell configuration of your choice:
-  - `PATH=$PATH:/path/to/gradle/bin`
 - One step from nothing to working code with running tests:
   - `gradle test`
+
+- on Linux (execute these one at a time so you can react if something goes wrong):
+"""sh
+git clone https://github.com/SeanTater/bridges.git
+cd bridges
+wget http://services.gradle.org/distributions/gradle-1.10-all.zip
+unzip gradle-1.10-all.zip
+rm gradle-1.10-all.zip
+echo "PATH=\$PATH:$PWD/gradle-1.10/bin" >>~/.bashrc
+gradle test
+"""
