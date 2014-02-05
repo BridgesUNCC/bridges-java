@@ -23,7 +23,7 @@ TUES Bridges Project - uniting classrooms for better student engagement
   - `gradle test`
 
 - on Linux (execute these one at a time so you can react if something goes wrong):
-"""sh
+```sh
 git clone https://github.com/SeanTater/bridges.git
 cd bridges
 wget http://services.gradle.org/distributions/gradle-1.10-all.zip
@@ -31,4 +31,4 @@ unzip gradle-1.10-all.zip
 rm gradle-1.10-all.zip
 echo "PATH=\$PATH:$PWD/gradle-1.10/bin" >>~/.bashrc
 gradle test
-"""
+```
