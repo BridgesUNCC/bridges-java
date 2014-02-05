@@ -3,7 +3,7 @@ apply plugin: 'scala'
 apply plugin: 'groovy' // groovy -> scripting -> working scalatests
 apply plugin: 'application'
 apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
+apply plugin: 'maven'
 apply plugin: 'signing'
 
 ///
@@ -51,7 +51,7 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-              authentication(userName: seantater) //password: sonatypePassword)
+              authentication(userName: "seantater") //password: sonatypePassword)
             }
 
             pom.project {
