@@ -20,7 +20,7 @@ TUES Bridges Project - uniting classrooms for better student engagement
 - Install [Gradle](http://gradle.org)
 - Add gradle binaries to your PATH
 - One step from nothing to working code with running tests:
-  - `gradle test`
+  - `gradle --info test`
 - on Linux, you can do all of that like this: (execute these one at a time so you can react if something goes wrong)
 ```sh
 git clone https://github.com/SeanTater/bridges.git
@@ -29,5 +29,5 @@ wget http://services.gradle.org/distributions/gradle-1.10-all.zip
 unzip gradle-1.10-all.zip
 rm gradle-1.10-all.zip
 echo "PATH=\$PATH:$PWD/gradle-1.10/bin" >>~/.bashrc
-gradle test
+gradle --info test
 ```
