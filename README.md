@@ -24,7 +24,7 @@ TUES Bridges Project - uniting classrooms for better student engagement
 - on Linux, you can do all of that like this: (execute these one at a time so you can react if something goes wrong)
 ```sh
 git clone https://github.com/SeanTater/bridges.git
-cd bridges
+cd bridges/client-scala
 wget http://services.gradle.org/distributions/gradle-1.10-all.zip
 unzip gradle-1.10-all.zip
 rm gradle-1.10-all.zip
