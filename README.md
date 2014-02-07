@@ -29,7 +29,7 @@ wget http://services.gradle.org/distributions/gradle-1.10-all.zip
 unzip gradle-1.10-all.zip
 rm gradle-1.10-all.zip
 echo "PATH=\$PATH:$PWD/gradle-1.10/bin" >>~/.bashrc
-# On fedora, uncomment this line too
+# On fedora, uncomment this line too, otherwise you will get an error telling you how javac can't be found
 # sudo yum install java-1.7.0-openjdk-devel
 gradle assemble
 gradle --info check
