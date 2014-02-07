@@ -29,5 +29,8 @@ wget http://services.gradle.org/distributions/gradle-1.10-all.zip
 unzip gradle-1.10-all.zip
 rm gradle-1.10-all.zip
 echo "PATH=\$PATH:$PWD/gradle-1.10/bin" >>~/.bashrc
-gradle --info test
+# On fedora, uncomment this line too
+# sudo yum install java-1.7.0-openjdk-devel
+gradle assemble
+gradle --info check
 ```
