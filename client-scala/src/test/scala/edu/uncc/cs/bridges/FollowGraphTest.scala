@@ -60,8 +60,8 @@ class FollowGraphTest extends FlatSpec with Matchers {
     	
     	// Handle edges
         val root_followers = graph.followers()
-        FollowGraphNode.history should have length (4) // 2 edges + 2 nodes
-    	event = FollowGraphNode.history(1) // [node, edge, node, edge]
+        FollowGraphNode.history should have length (2+2+1) // 2 edges + 2 nodes + 1 from before
+    	event = FollowGraphNode.history(2) // [root, node, edge, node, edge]
     	event.kind should be("edge")
     	event.from should be(Some("screenname"))
     	event.to should be(Some("FredElmquist"))
@@ -70,8 +70,8 @@ class FollowGraphTest extends FlatSpec with Matchers {
     	bridge.response = """{"followers": ["FredElmquist"]}"""
     	val altons_followers = root_followers.get(1).followers()
     	altons_followers.get(0).screen_name should be ("FredElmquist")
-    	FollowGraphNode.history should have length (1) // 1 edge + 0 nodes
-    	event = FollowGraphNode.history(0)
+    	FollowGraphNode.history should have length (6) // 5 from before + 1 edge + 0 nodes
+    	event = FollowGraphNode.history(5)
     	event.kind should be("edge")
     	event.from should be(Some("AltonIsenhour"))
     	event.to should be(Some("FredElmquist"))
@@ -82,8 +82,8 @@ class FollowGraphTest extends FlatSpec with Matchers {
     	FollowGraphNode.history.clear
     	FollowGraphNode.opened.clear
         val graph = bridge.followgraph("screenname")
-        val event = FollowGraphNode.history(0)
-        event.json should be (s"""{"kind":"node", "time":"${event.time}", "from":"screenname", "to":null}""")
-        FollowGraphNode.historyJSON should be(s"""{"history": [${event.json}]}""")
+        graph.followers();
+        FollowGraphNode.historyJSON should be(
+            s"""{"nodes":[{"name":"screenname"},{"name":"FredElmquist"},{"name":"AltonIsenhour"}],"links":[{"source":0,"target":1,"value":1},{"source":0,"target":2,"value":1}]}""")
     }
 }

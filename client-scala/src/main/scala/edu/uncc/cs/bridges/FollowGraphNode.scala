@@ -19,16 +19,13 @@ class FollowGraphNode(
 		FollowGraphNode.history += HistoryEvent("node", System.nanoTime(), Option(screen_name), None)
 	if (parent.nonEmpty)
 	    // Add an edge if this is not the root node
-		FollowGraphNode.history += HistoryEvent("edge", System.nanoTime(), parent.map(fgn => fgn.screen_name), Option(screen_name))
+		FollowGraphNode.history += HistoryEvent("edge", System.nanoTime(), parent.map(_.screen_name), Option(screen_name))
     
     /** List the user's followers as more FollowGraphNodes.
         Limit the result to `max` followers. Note that results are batched, so
         a large `max` (as high as 200) _may_ only count as one request.
         See Bridges.followgraph() for more about rate limiting. */
     def followers(max:Integer=10)= {
-	    // Don't repeat responses to the server.
-	    // But clear at the beginning so that the history is available between calls
-        FollowGraphNode.history.clear
         val response = bridge.getjs(s"/streams/twitter.com/followgraph/$screen_name/$max")
         val users = response.get("followers").asInstanceOf[util.List[JSONValue]]
         
@@ -46,8 +43,20 @@ object FollowGraphNode {
 	
 	/** Generate JSON to summarize graph operations for visualization. */
 	def historyJSON= {
-    	val hist = history.map(_.json).reduceOption(_ + "," + _).getOrElse("")
-    	s"""{"history": [$hist]}"""
+        val nodes = history
+    		.filter(_.kind == "node")
+    		.map(_.from.get)
+        val links = history
+        	.filter(_.kind == "edge")
+        	.map(l => s"""{"source":${nodes.indexOf(l.from.get)},"target":${nodes.indexOf(l.to.get)},"value":1}""")
+        val node_json = nodes
+    		.map(name => s"""{"name":"$name"}""")
+    		.reduceOption(_ + "," + _)
+    		.getOrElse("")
+    	val link_json = links
+        	.reduceOption(_ + "," + _)
+        	.getOrElse("")
+    	s"""{"nodes":[$node_json],"links":[$link_json]}"""
     }
 }
 
@@ -56,10 +65,4 @@ case class HistoryEvent(
     val time : Long,
     val from : Option[String],
     val to : Option[String]
-) {
-	/** Generates (hardcoded) JSON */ 
-	def json= {
-		def q(a:Option[String])= a.map('"' + _ + '"').getOrElse("null")
-	    s"""{"kind":"$kind", "time":"$time", "from":${q(from)}, "to":${q(to)}}"""
-	}
-}
+) {}
