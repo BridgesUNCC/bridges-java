@@ -2,6 +2,8 @@ package edu.uncc.cs.bridges
 import org.apache.http.client.fluent
 import org.json.simple._
 import java.io.IOException
+import org.apache.http.entity.ContentType
+import org.apache.http.util.EntityUtils
 
 abstract class AnyConnectable() {
     val base: String = "http://localhost:3000"
@@ -34,6 +36,7 @@ abstract class AnyConnectable() {
         
         // Execute the HTTP request
         val response = try {
+            System.out.println("Sending request: " + request)
             http_connection.execute(request).returnResponse()
         } catch {
             // Something happened during the request that we can't handle
@@ -47,9 +50,7 @@ abstract class AnyConnectable() {
          *   ...execute(request).returnContent().asString() won't give error codes
          *   ...execute(request).returnResponse().getEntity().asInstanceOf[Stream] won't cast
          */
-        var text = io.Source.fromInputStream(
-            response.getEntity().getContent()
-        ).mkString
+        var text = EntityUtils.toString(response.getEntity());
         
         // The request succeeded but the server threw an error
         if (response.getStatusLine().getStatusCode() >= 400) {
@@ -98,6 +99,10 @@ abstract class AnyConnectable() {
         val form = fluent.Form.form()
         arguments.foreach { (pair) => form.add(pair._1, pair._2) }
         http(req.bodyForm(form.build()))
+    }
+    
+    def post(url:String, data:String)= {
+        http(fluent.Request.Post(prepare(url)).bodyString(data, ContentType.TEXT_PLAIN))
     }
     
     def prepare(url: String)={

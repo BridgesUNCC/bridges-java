@@ -8,7 +8,7 @@ class DummyConnectableTest extends FlatSpec with Matchers {
         val dummy = new EchoConnection("response")
         dummy.http(fluent.Request.Get("url")) should be("response")
         dummy.get("url") should be("response")
-        dummy.post("url", Map()) should be("response")
+        dummy.post("url", "") should be("response")
         dummy.post("url", Map("x" -> "y")) should be("response")
     }
     
@@ -16,7 +16,7 @@ class DummyConnectableTest extends FlatSpec with Matchers {
         val dummy = new EchoConnection("")
         dummy.http(fluent.Request.Get("url")) should be("")
         dummy.get("url") should be("")
-        dummy.post("url", Map()) should be("")
+        dummy.post("url", "") should be("")
         dummy.post("url", Map("x" -> "y")) should be("")
     }
     
