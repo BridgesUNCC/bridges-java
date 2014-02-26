@@ -11,7 +11,7 @@ apply plugin: 'signing'
 ///
 
 group = "edu.uncc.cs.bridges"
-version = "0.2.1"
+version = "0.2.2"
 
 // Hack to make ScalaTests actually run - not just say they do
 test << {
@@ -41,23 +41,16 @@ artifacts {
     archives sourcesJar
 }
 
-signing {
-    sign configurations.archives
-}
 
 uploadArchives {
     repositories {
         mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-              authentication(userName: "seantater") //password: sonatypePassword)
-            }
+            repository url: "file://$projectDir/releases"
 
             pom.project {
                name 'Bridges Curriculum Social Network Client'
                packaging 'jar'
-               description 'Explore and visualize social network follower graphs and user status streams with a highly user friendly, lightweight facade API. (Client)'
+               description 'Explore and visualize social network follower graphs and user status streams with a lightweight facade API. (Client)'
                url 'http://github.com/SeanTater/bridges'
 
                scm {
@@ -88,49 +81,6 @@ uploadArchives {
         }
     }
 }
-/* publishing  {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            pom.withXml {
-              
-                // Meet maven central standards
-                asNode().appendNode('packaging', 'jar')
-                asNode().appendNode('name', 'Bridges Curriculum Social Network Client')
-                asNode().appendNode('description', 'Explore and visualize social network follower graphs and user status streams with a highly user friendly, lightweight facade API. Client.')
-                asNode().appendNode('url', 'http://github.com/SeanTater/bridges')
-                license = asNode().appendNode('licenses').appendNode("license")
-                license.appendNode("name", "GNU GPLv2")
-                license.appendNode("url", "http://www.gnu.org/licenses/gpl-2.0.html")
-                license.appendNode("distribution", "repo")
-                scm = asNode().appendNode("scm")
-                scm.appendNode("connection", "scm:git:git@github.com:SeanTater/bridges.git")
-                scm.appendNode("url", "git@github.com:SeanTater/bridges.git")
-                devs = asNode().appendNode("developers")
-                dev = devs.appendNode("developer")
-                dev.appendNode("id", "SeanTater")
-                dev.appendNode("name", "Sean Gallagher")
-                dev = devs.appendNode("developer")
-                dev.appendNode("id", "stevemacn")
-                dev.appendNode("name", "Stephen MacNeil")
-                
-                // Make the parent the Sonatype OSS as per their requirements
-                parent = asNode().appendNode("parent")
-                parent.appendNode("groupId", "org.sonatype.oss")
-                parent.appendNode("artifactId", "oss-parent")
-                parent.appendNode("version", "7")
-                
-                
-                
-            }
-        }
-    }
-    repositories {
-        maven {
-            url "/home/sean/Dropbox/Public/repo"
-        }
-    }
-}*/
 
 ///
 /// Repositories and dependencies
