@@ -12,39 +12,26 @@ import org.scalatest._
  */ 
 
 class ServerIntegrationTest extends FlatSpec with Matchers {
-	def boilerplate= {
-	    val bridge = new Bridge(0);
-		// To run this test you will need to change this line
-		bridge.api_key = "504999054938"
-		bridge.followgraph("twitterapi")
-	}
   
 	"Interface" should "login" taggedAs(NetworkTest) in {
-		val center = boilerplate
+	    val bridge = new Bridge(0);
+		bridge.login("504999054938") // Paste your own key
+		val center = bridge.followgraph("twitterapi")
 		val followers = center.followers(10)
 		// Twitterapi has way more than 10 followers so we should expect 10.
 		followers.size() should be(10)
-	}
-	
-	it should "go deep" taggedAs(NetworkTest) in {
-		val center = boilerplate
-		val inner_circle = center.followers(100).asScala.toList
 		
-		def next_followers(last_followers: List[FollowGraphNode])= {
-			last_followers.map { follower => // Collect their followers
-			  try {
-				  Option(follower.followers(100))
-			  } catch {
-				  // Some users don't allow reading their followers it seems
-			      case e: java.io.IOException => None
-			  }
-			}
-			.filter {_.nonEmpty} // Ignore None's
-			.map {_.get.asScala} // Convert inner lists to scala
-			.reduceOption {_ ++ _} // Join lists
-			.getOrElse(List()) // If all are empty, make a List()
-			.slice(0, 300) // Cap at 300 people
+		// Begin Java-style code!
+		val graph = new java.util.HashMap[String, java.util.Set[String]]()
+		val follower_names = new java.util.HashSet[String]()
+		followers.asScala.foreach {follower =>
+		  	graph.put(follower.screen_name, new java.util.HashSet[String]())
+		  	follower_names.add(follower.screen_name)
 		}
-		next_followers(inner_circle)
+		graph.put("twitterapi", follower_names)
+		center.display(graph)
+		// End Java-style code
+		
+		// At this point you should see a small graph of 11 nodes on the server
 	}
 }

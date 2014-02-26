@@ -4,22 +4,29 @@ import org.apache.http.client.fluent
 import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.impl.client.LaxRedirectStrategy
 
-/** Executes HTTP requests with api key-based authentication.
-    This method uses a different (lax) redirect strategy. */
+/** Executes HTTP requests with API-Key-based authentication. */
 trait KeyConnectable extends AnyConnectable {
     val http_connection = fluent.Executor.newInstance(
       HttpClientBuilder.create()
         .setRedirectStrategy(new LaxRedirectStrategy())
         .build()
     )
-    var api_key = "FILL_IN_PUBLIC_API_KEY"
     
-    def login(key: String)= {
-        api_key = key
-        this
-    }
+    /** This is the key sent to the server on each request. */
+    var api_key = ""
     
-    /** Tacks on an API key to every request before executing. */
+    /** Set the API key to be used on the next request.
+     *  This pluggable trait does not connect to the internet.
+     */
+    def login(key: String) { api_key = key; }
+    
+    /** Proxy to login(String) that uses an Integer instead.
+     */
+    def login(key: Int) { api_key = key.toString(); }
+    
+    /** Tacks on an API key to every request before executing it.
+     *  See AnyConnectable.prepare also.
+     */
     abstract override def prepare(url: String)= {
         super.prepare(url) + s"?apikey=$api_key"
     }

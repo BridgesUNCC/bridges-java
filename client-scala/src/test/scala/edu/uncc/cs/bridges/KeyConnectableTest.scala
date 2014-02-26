@@ -9,7 +9,7 @@ class EchoKey(response: String) extends EchoConnection(response) with KeyConnect
 class KeyConnectableTest extends FlatSpec with Matchers {
     "KeyConnectable" should "fill in an api key" in {
         val keyconn = new EchoKey("")
-        keyconn.api_key = "key"
+        keyconn.login("key")
         keyconn.prepare("") should be (keyconn.base + "?apikey=key")
         keyconn.prepare("/$assignment") should be (keyconn.base + "/0?apikey=key")
         keyconn.prepare("/possible/path") should be(keyconn.base + "/possible/path?apikey=key")

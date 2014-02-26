@@ -1,25 +1,34 @@
 package edu.uncc.cs.bridges
 import java.util
 import org.json.simple._
+import scala.collection._
 import scala.collection.JavaConverters._
-import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Set
 
 /** Represent a Social Network User.
-  * Includes a unique id, a unique screen_name, a human-readable name,
-  * a way to retrieve the user's followers, and automatic history tracking
-  * for visualization later */
+  * Includes a unique screen_name and a way to retrieve followers.
+  * To upload visualization data:
+  *   Make a java.util.Map<String, Set<String>> with screen names as keys
+  *   and a list of screen names as values. Using Maps and Sets is intended
+  *   to help avoid duplicates and possibly make searching easier. 
+  */
 class FollowGraphNode(
     bridge: Bridge,
-    val screen_name: String,
-    val parent: Option[FollowGraphNode]=None
+    val screen_name: String
     ) {
-	if (FollowGraphNode.opened.add(screen_name))
-	    // Add the node if it doesn't already exist
-		FollowGraphNode.history += HistoryEvent("node", System.nanoTime(), Option(screen_name), None)
-	if (parent.nonEmpty)
-	    // Add an edge if this is not the root node
-		FollowGraphNode.history += HistoryEvent("edge", System.nanoTime(), parent.map(_.screen_name), Option(screen_name))
+    
+    /** Create JSON for visualization server.
+     *  Returns the URL associated with this assignment.
+     *  
+     *  nodes: An adjacency list, implemented as a Map from screen names to
+     *      Iterables of screen names.
+     */
+    def display(nodes: java.util.Map[String, _ <: java.lang.Iterable[String]])= {
+    	// Create and upload JSON
+        bridge.post("/assignments/$assignment", json(nodes))
+        // Return a URL to the user
+        s"/assignments/${bridge.assignment}/YOUR_USERNAME"
+    }
     
     /** List the user's followers as more FollowGraphNodes.
         Limit the result to `max` followers. Note that results are batched, so
@@ -28,46 +37,42 @@ class FollowGraphNode(
     def followers(max:Integer=10)= {
         val response = bridge.getjs(s"/streams/twitter.com/followers/$screen_name/$max")
         val users = response.get("followers").asInstanceOf[util.List[JSONValue]]
-        val followerlist = if (users != null) {
+        (if (users == null) {
             // Twitter sometimes gives us garbage
-        	(0 until users.size()).map {
-        		i => new FollowGraphNode(bridge, users.get(i).asInstanceOf[String], Option(this))
-        	}            
+    		List()
         } else {
-        	List()
-        }
-        
-        bridge.post("/assignments/$assignment", FollowGraphNode.historyJSON)
-        followerlist.asJava
+        	(0 until users.size()).map {
+        		i => new FollowGraphNode(bridge, users.get(i).asInstanceOf[String])
+        	}
+        }).asJava
     }
-}
-
-object FollowGraphNode {
-    var opened = Set[String]()
-	var history = ListBuffer[HistoryEvent]()
-	
-	/** Generate JSON to summarize graph operations for visualization. */
-	def historyJSON= {
-        val nodes = history
-    		.filter(_.kind == "node")
-    		.map(_.from.get)
-        val links = history
-        	.filter(_.kind == "edge")
-        	.map(l => s"""{"source":${nodes.indexOf(l.from.get)},"target":${nodes.indexOf(l.to.get)},"value":1}""")
-        val node_json = nodes
-    		.map(name => s"""{"name":"$name"}""")
+    
+    /** Create JSON for the visualization server.
+     *  You should not need this in outside code. Use display() instead, which
+     *  also uploads the result to the server.
+     */
+    def json(nodes: java.util.Map[String, _ <: java.lang.Iterable[String]])= {
+        // Freeze the keys so that iteration order is consistent
+    	val frozen_nodes = nodes.asScala.keys.toList
+        // Convert links to JSON (with node numbers instead of node names)
+        val links = nodes.asScala.flatMap { case (source, targets) =>
+        	targets.asScala.map{ target =>
+        	  	if (! frozen_nodes.contains(target)) throw new MissingNodeException(s"Edge $source->$target: Target not found. (Maybe you forgot to add $target to the map?)")
+        	    s"""{"source":${frozen_nodes.indexOf(source)},"target":${frozen_nodes.indexOf(target)},"value":1}"""
+    	    }
+        }
+        // Join nodes into one JSON array
+        val node_json = frozen_nodes
+    		.map(node => s"""{"name":"$node"}""")
     		.reduceOption(_ + "," + _)
     		.getOrElse("")
+        // Join links into one JSON array
     	val link_json = links
         	.reduceOption(_ + "," + _)
         	.getOrElse("")
-    	s"""{"nodes":[$node_json],"links":[$link_json]}"""
+    	// Join nodes and links, and send them both
+        s"""{"nodes":[$node_json],"links":[$link_json]}"""
     }
 }
 
-case class HistoryEvent(
-    val kind : String,
-    val time : Long,
-    val from : Option[String],
-    val to : Option[String]
-) {}
+class MissingNodeException(msg: String) extends RuntimeException(msg)
