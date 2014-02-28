@@ -5,6 +5,8 @@ import java.io.IOException
 import org.apache.http.entity.ContentType
 import org.apache.http.util.EntityUtils
 
+class RateLimitException(msg: String) extends Exception(msg)
+
 abstract class AnyConnectable() {
     val base: String = "http://localhost:3000"
     val http_connection: fluent.Executor
@@ -52,8 +54,10 @@ abstract class AnyConnectable() {
          */
         var text = EntityUtils.toString(response.getEntity());
         
-        // The request succeeded but the server threw an error
-        if (response.getStatusLine().getStatusCode() >= 400) {
+        if (response.getStatusLine().getStatusCode() == 503) {
+        	throw new RateLimitException("Twitter isn't responding. You have probably reached your rate limit for the next 15 minutes.")
+        } else if (response.getStatusLine().getStatusCode() >= 400) {
+        	// The request succeeded but the server threw an error
             println(s"HTTP error encountered in processing '$request'\n")
           
             /* By convention, the server responds {"error": "message"}
