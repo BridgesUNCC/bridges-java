@@ -11,7 +11,7 @@ apply plugin: 'signing'
 ///
 
 group = "edu.uncc.cs.bridges"
-version = "0.2.3"
+version = "0.2.4"
 
 // Hack to make ScalaTests actually run - not just say they do
 test << {
