@@ -34,17 +34,22 @@ class FollowGraphNode(
         Limit the result to `max` followers. Note that results are batched, so
         a large `max` (as high as 200) _may_ only count as one request.
         See Bridges.followgraph() for more about rate limiting. */
-    def followers(max:Integer=10)= {
-        val response = bridge.getjs(s"/streams/twitter.com/followers/$screen_name/$max")
-        val users = response.get("followers").asInstanceOf[util.List[JSONValue]]
-        (if (users == null) {
-            // Twitter sometimes gives us garbage
-    		List()
-        } else {
-        	(0 until users.size()).map {
-        		i => new FollowGraphNode(bridge, users.get(i).asInstanceOf[String])
-        	}
-        }).asJava
+    def followers(max:Integer=100)= {
+        // TODO: Don't eat all HTTP errors
+        (try {
+	        val response = bridge.getjs(s"/streams/twitter.com/followers/$screen_name/$max")
+	        val users = response.get("followers").asInstanceOf[util.List[JSONValue]]
+	        if (users == null) {
+	            // Twitter sometimes gives us garbage
+	    		List()
+	        } else {
+	        	(0 until users.size()).map {
+	        		i => new FollowGraphNode(bridge, users.get(i).asInstanceOf[String])
+	        	}
+	        }
+        } catch {
+        	case e: java.io.IOException => List()
+    	}).asJava
     }
     
     /** Create JSON for the visualization server.
