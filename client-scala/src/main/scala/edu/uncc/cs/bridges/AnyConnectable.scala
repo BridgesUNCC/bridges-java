@@ -8,9 +8,15 @@ import org.apache.http.util.EntityUtils
 class RateLimitException(msg: String) extends Exception(msg)
 
 abstract class AnyConnectable() {
-    val base: String = "http://localhost:3000"
+    var base: String = "http://localhost:3000"
     val http_connection: fluent.Executor
     val assignment: Int
+    
+    /** Change the central Bridges server.
+     *  You normally should not need to use this function. */
+    def server(new_base: String) {
+        base = new_base;
+    }
     
     /** Convert text into a guaranteed non-null JSON format.
         Throws IOException if the result was null
