@@ -14,8 +14,9 @@ import scala.collection.mutable.Set
   */
 class FollowGraphNode(
     bridge: Bridge,
-    val screen_name: String
+    val identifier: String
     ) {
+	val Array(service, screen_name) = identifier.split("/") 
     
     /** Create JSON for visualization server.
      *  Returns the URL associated with this assignment.
@@ -36,7 +37,7 @@ class FollowGraphNode(
         See Bridges.followgraph() for more about rate limiting. */
     def followers(max:Integer=100)= {
         (try {
-	        val response = bridge.getjs(s"/streams/twitter.com/followers/$screen_name/$max")
+	        val response = bridge.getjs(s"/streams/$service/followers/$screen_name/$max")
 	        val users = response.get("followers").asInstanceOf[util.List[JSONValue]]
 	        if (users == null) {
 	            // Twitter sometimes gives us garbage
