@@ -48,10 +48,10 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     	  
     	while (! open.isEmpty()) {
     	  val local = open.remove()
-    	  nodes = nodes + s"""{"name":"${splitIdentifier(local)(1)}"}"""
+    	  nodes = nodes + s""",{"name":"${splitIdentifier(local)(1)}"}"""
     	  var neighbor = graph.first(local)
     	  while (neighbor != null) {
-    	      edges = edges + s""",{"source":local,"target":neighbor,"value":1}"""
+    	      edges = edges + s""",{"source":"${splitIdentifier(local)(1)}","target":"${splitIdentifier(neighbor)(1)}","value":1}"""
     	      if (graph.getMark(neighbor) != VISITED) {
     	    	  graph.setMark(neighbor, VISITED)
     	    	  open.add(neighbor);
@@ -60,7 +60,7 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     	  }
     	}
     	
-    	s"""{"nodes":[$nodes],"links":[$edges]}"""
+    	s"""{"nodes":[${nodes.substring(1)}],"links":[${edges.substring(1)}]}"""
     }
     
     /** List the user's followers as more FollowGraphNodes.

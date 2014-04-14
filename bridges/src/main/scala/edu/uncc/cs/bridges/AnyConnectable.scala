@@ -8,7 +8,7 @@ import org.apache.http.util.EntityUtils
 class RateLimitException(msg: String) extends Exception(msg)
 
 abstract class AnyConnectable() {
-    var base: String = "http://localhost:3000"
+    var base: String = "http://bridges.cs.uncc.edu"
     val http_connection: fluent.Executor
     val assignment: Int
     
