@@ -12,17 +12,27 @@ import scala.collection.mutable.ListBuffer
   * world data for introductory projects. */
 class Bridge(val assignment: Int) extends KeyConnectable {
     
-    /** Connect to a streaming data source such as a social network feed.
-        This feature is not yet complete. Use at your own peril. */
+    /** 
+     * Connect to a streaming data source such as a social network feed.
+     * This feature is not yet complete. Use at your own peril.
+     * 
+     * @unimplemented
+     * @param name  The name of the stream to receive
+     * */
     def stream(name: String)= {
         new BStream(this, name)
     }
     
-    /** Create JSON for visualization server.
-     *  Returns the URL associated with this assignment.
+    /**
+     * Upload visualization data.
+     * Note that only one contiguous group will be shown.
+     * So if you only see half of the graph you expected, make sure that there
+     * is a path between the center node and the missing nodes.
      *  
-     *  nodes: An adjacency list, implemented as a Map from screen names to
-     *      Iterables of screen names.
+     *  @param graph: a Graph or a subclass of Graph
+     *  @param center: the central node of the visualization
+     *  
+     *  @return JSON-encoded String
      */
     def displayGraph(center: String, graph: Graph)= {
     	// Create and upload JSON
@@ -31,6 +41,12 @@ class Bridge(val assignment: Int) extends KeyConnectable {
         s"/assignments/${assignment}/YOUR_USERNAME"
     }
     
+    /**
+     * Split an identifier into its constituent parts.
+     * @private
+     * @param identifier
+     * @return a length-2 String Array of [provider, username]
+     */
     def splitIdentifier(identifier: String)= {
     	if (! identifier.contains("/")) {
     		throw new RuntimeException("Provider or screenname missing. Should look like: twitter.com/username")
@@ -38,6 +54,23 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     	identifier.split("/", 2) 
     }
     
+    /**
+     * Generate the JSON to be uploaded.
+     * It uses a BFS, and expects one contiguous group of nodes.
+     * 
+     * So if you only see half of the graph you expected, make sure that there
+     * is a path between the center node and the missing nodes.
+     * 
+     *  This method is not idempotent; it will edit the graph and will not
+     *  produce an accurate graph the second time.
+     *  
+     *  This method can be useful for debugging. But you should usually prefer
+     *  to use displayGraph.
+     *  
+     *  @param graph: a Graph or a subclass of Graph
+     *  @param center: the central node of the visualization
+     * 
+     */
     def generateGraphJson(center: String, graph: Graph)= {
     	val VISITED=173
     	val open = new ArrayDeque[String]();
