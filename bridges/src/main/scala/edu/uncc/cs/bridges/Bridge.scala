@@ -5,6 +5,7 @@ import org.json.simple._
 import scala.collection._
 import scala.collection.JavaConverters._
 import scala.collection.mutable.Set
+import scala.collection.mutable.ListBuffer
 
 /** Network-enabled sample data aggregator.
   * Bridges offers connectivity for students to more easily use interesting real
@@ -43,15 +44,15 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     	graph.setMark(center, VISITED);
     	open.add(center);
     	
-    	var edges = ""
-    	var nodes = ""
+    	var edges = List[List[String]]()
+    	var nodes = List[String]()
     	  
     	while (! open.isEmpty()) {
     	  val local = open.remove()
-    	  nodes = nodes + s""",{"name":"${splitIdentifier(local)(1)}"}"""
+    	  nodes ++= List(splitIdentifier(local)(1))
     	  var neighbor = graph.first(local)
     	  while (neighbor != null) {
-    	      edges = edges + s""",{"source":"${splitIdentifier(local)(1)}","target":"${splitIdentifier(neighbor)(1)}","value":1}"""
+    	      edges ++= List(List(splitIdentifier(local)(1), splitIdentifier(neighbor)(1)))
     	      if (graph.getMark(neighbor) != VISITED) {
     	    	  graph.setMark(neighbor, VISITED)
     	    	  open.add(neighbor);
@@ -59,8 +60,16 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     	      neighbor = graph.next(local)
     	  }
     	}
-    	
-    	s"""{"nodes":[${nodes.substring(1)}],"links":[${edges.substring(1)}]}"""
+    	var node_string = nodes
+			.map("{\"name\": \"" + _ + "\"}")
+			.reduceOption(_ + "," + _)
+			.getOrElse("")
+    	var edge_string = edges
+    		.map(x => List(nodes.indexOf(x(0)), nodes.indexOf(x(1))))
+		    .map(x => s"""{"source":${x(0)},"target":${x(1)},"value":1}""")
+    		.reduceOption(_ + "," + _)
+    		.getOrElse("")
+    	s"""{"nodes":[$node_string],"links":[$edge_string]}"""
     }
     
     /** List the user's followers as more FollowGraphNodes.
