@@ -43,13 +43,14 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     
     /**
      * Split an identifier into its constituent parts.
+     * An identifier should look like "example.com/username".
      * @private
      * @param identifier
      * @return a length-2 String Array of [provider, username]
      */
     def splitIdentifier(identifier: String)= {
     	if (! identifier.contains("/")) {
-    		throw new RuntimeException("Provider or screenname missing. Should look like: twitter.com/username")
+    		throw new RuntimeException("Provider or screenname missing. Should look like: example.com/username")
     	}
     	identifier.split("/", 2) 
     }
