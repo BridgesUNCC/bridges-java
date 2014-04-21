@@ -9,10 +9,21 @@ package edu.uncc.cs.bridges.scaffold;
 class Edge {
   private String vert;
   private int wt;
+  private String clr;
 
-  public Edge(String v, int w) // Constructor
-    { vert = v;  wt = w; }
+  /** Create an edge 
+   * @param v  Destination vertex
+   * @param w  Edge Weight
+   * @param c  Color for visualization
+   */
+  public Edge(String v, int w, String c) {
+	  vert = v; 
+	  wt = w;
+	  clr = c;
+  }
 
   public String vertex() { return vert; }
   public int weight() { return wt; }
+  public String color() { return clr; }
+  
 }

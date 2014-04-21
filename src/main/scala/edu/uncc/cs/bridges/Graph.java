@@ -29,8 +29,9 @@ public interface Graph {         // Graph class ADT
   /** Set the edge's color */
   public boolean setEdgeColor(String i, String j, String color);
   
-  /** @returns the edge's color */
-  public void getEdgeColor(String i, String j);
+  /** @return 
+ * @returns the edge's color */
+  public String getEdgeColor(String i, String j);
 
   /** Set the mark value for a vertex
       @param v The vertex
@@ -43,4 +44,10 @@ public interface Graph {         // Graph class ADT
   public int getMark(String v);
   
   public void DFS(String string);
+
+  /** @return the color of the node for visualization */
+  public String getNodeColor(String v);
+
+  /** Set the color of a node in visualization */
+  public void setNodeColor(String v, String color);
 }

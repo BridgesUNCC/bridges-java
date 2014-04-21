@@ -17,8 +17,12 @@ public class Graphl implements Graph{
 
 	private HashMap<String, GraphList> vertex = new HashMap<>(); // The vertex list
 	private HashMap<String, Integer> mark = new HashMap<>(); // The mark array
+	private HashMap<String, String> color = new HashMap<>(); // The mark array
 
+	/** Create an empty Adjacency List graph */
 	public Graphl(){}
+	
+	/** Create a filled Adjacency List graph */
 	public Graphl(String... strings) { // Constructor
 		// init adj list for each
 		for (String string : strings) {
@@ -31,9 +35,13 @@ public class Graphl implements Graph{
 		}
 	}
 	
-	/** Either add a vertex, returning true, or skip it and return false */
+	/** Either add a vertex, returning true, or skip it and return false
+	 * 
+	 * This method is absent in the book. This must be provided for or
+	 * implemented by students.
+	 * */
 	public boolean add(String name) {
-		if (vertex.containsKey(name)) {
+		if (name == null || vertex.containsKey(name)) {
 			return false;
 		} else {
 			vertex.put(name, new GraphList());
@@ -42,38 +50,92 @@ public class Graphl implements Graph{
 		}	
 	}
 	
+	/** @return whether this node is in the graph
+	 * 
+	 * This method is not part of the Graph interface.
+	 * 
+	 * This method is absent in the book. This _may_ be provided for or
+	 * implemented by students.*/
+	public boolean has(String name) {
+		 return vertex.containsKey(name);
+	}
+	
+	/** @return the GraphList, shifted to the link going from node i to node j
+	 * If the link doesn't exist, return null. 
+	 * 
+	 * This method is absent in the book. Since it is not public, students do
+	 * not need to implement it but may find it very useful to implement it
+	 * as it will aid with other methods.
+	 * */
+	private GraphList getEdgeLink(String i, String j) {
+		GraphList l = vertex.get(i);
+		if (l == null || !has(j)) {
+			// No edge
+			return null;
+		} else {
+			/* 1: GraphList can't do a search.
+			 * 2: Can't iterate either, because that's n^2.
+			 *   - LList always moves back to 0 before moving to an index
+			 * 3: next() doesn't tell if it reached the end.
+			 *   - So increment and check to see if the position changed.
+			 */
+			int last_position = -1;
+			l.moveToStart();
+			System.out.println("Searching for " + i + " -> " + j);
+			while (last_position != l.currPos() // While still going forward ...
+					&& !(
+							l.getValue() != null // (Guard against calling vertex() on null)
+							&& j.equals(l.getValue().vertex()) // .. and the destination of this edge is not correct
+						)
+					) {
+				// Move forward in the list
+				last_position = l.currPos();
+				l.next();
+			}
+			// At this point we might have found it...
+			// ... or we might have reached the end.
+			if (l.getValue() != null && j.equals(l.getValue().vertex())) {
+				// Yay! Tell the user the good news.
+				return l;
+			} else {
+				// No edge.
+				return null;
+			}
+		}
+	}
 	/** @return edge weight */
 	public int getEdge(String i, String j) {
-		// GraphList can't do a search, so look for the element.
-		// Can't iterate either, and next() doesn't tell if it reached the end.
-		// So check to see if the position changed.
-		GraphList l = vertex.get(i);
-		int position = -1;
-		l.moveToStart();
-		while (position != l.currPos() && !l.getValue().equals(j)) {
-			l.next();
-		}
-		// At this point we might have found it, or we might have reached the end.
-		if (l.getValue().equals(j)) {
-			// Yay! Tell the user the good news.
-			return l.getValue().weight();
+		GraphList l = getEdgeLink(i, j);
+		if (l == null) {
+			// No edge, no weight.
+			return 0; 
 		} else {
-			// No edge.
-			return 0;
+			return l.getValue().weight();
 		}
 	}
 	
 	/** Store edge weight */
 	public void setEdge(String i, String j, int weight) {
-		// Why not? Is it so bad to delete an edge?
-		assert weight != 0 : "May not set weight to 0";
-		Edge currEdge = new Edge(j, weight);
-		vertex.get(i).insert(currEdge);
+		if (!(has(i) && has(j))) {
+			// TODO: Could return false here
+		} else {
+			GraphList l = getEdgeLink(i, j);
+			if (l == null) {
+				// There is no link. But we know has(i) so we know we can
+				//  create a link.
+				Edge newEdge = new Edge(j, weight, "");
+				vertex.get(i).insert(newEdge);
+			} else {
+				// The weight already exists. Overwrite it.
+				Edge newEdge = new Edge(j, weight, l.getValue().color());
+				l.remove();
+				l.insert(newEdge);
+			}
+		}
 	}
 
 	// Set and get marks
 	public void setMark(String string, int val) {
-		mark.remove(string);
 		mark.put(string, val);
 	}
 
@@ -122,6 +184,14 @@ public class Graphl implements Graph{
 	}
 
 	@Override
+	/**
+	 * Start iterating the neighbors of root.
+	 * @param root  The center node.
+	 * @returns the name of the first neighbor node, or null if there are none
+	 * 
+	 * This method is present in the book. Students may easily find solutions
+	 * for this method.
+	 */
 	public String first(String root) {
 		vertex.get(root).moveToStart();
 		String first = null;
@@ -131,6 +201,14 @@ public class Graphl implements Graph{
 	}
 
 	@Override
+	/**
+	 * Continue iterating the neighbors of root.
+	 * @param root  The center node.
+	 * @returns the name of the next neighbor node, or null if there are no more
+	 * 
+	 * This method is present in the book. Students may easily find solutions
+	 * for this method.
+	 */
 	public String next(String root) {
 		int pos = vertex.get(root).currPos();
 		vertex.get(root).moveToPos(pos + 1);
@@ -141,24 +219,82 @@ public class Graphl implements Graph{
 	}
 
 	@Override
-	public String getColor(String v) {
-		// TODO Auto-generated method stub
-		return null;
+	/** Get the color associated with a node for visualization.
+	 * @returns the color as a string
+	 * @see setNodeColor(String, String)
+	 * 
+	 * This method is absent in the book. This must be provided for or
+	 * implemented by students.
+	 */
+	public String getNodeColor(String v) {
+		String c = color.get(v);
+		if (v == null) {
+			return "";
+		} else {
+			return c;
+		}
 	}
 
 	@Override
-	public void setColor(String v, String color) {
-		// TODO Auto-generated method stub
+	/**
+	 * Set the color associated with a node for visualization.
+	 * Anything recognized by CSS works. e.g.
+	 * "#a4d", "red", "SandyBrown", "#71726a", "rgb(100, 172, 191)",
+	 * "rgba(100, 172, 191, 0.2)"
+	 * An empty string is retained as empty but indicates to pick a color at
+	 * random when viewed on the web.
+	 * 
+	 * This method is absent in the book. This must be provided for or
+	 * implemented by students.
+	 */
+	public void setNodeColor(String v, String c) {
+		if (has(v))
+			color.put(v, c);
 		
 	}
+	
 	@Override
+	/** Set the color of the edge from i to j.
+	 * @param i  Source node
+	 * @param j  Target node
+	 * @param color  CSS-formatted color.
+	 * @return  Whether the color was successfully set.
+	 * @see setNodeColor(String, String) for more information on valid colors
+	 * @see getNodeColor(String, String)
+	 * 
+	 * This method is absent in the book. This must be provided for or
+	 * implemented by students.
+	 * */
 	public boolean setEdgeColor(String i, String j, String color) {
-		// TODO Auto-generated method stub
-		return false;
+		GraphList l = getEdgeLink(i, j);
+		if (l == null) {
+			// There is no link, or i or j is missing.
+			// Don't make a new link for the color.
+			return false;
+		} else {
+			// The edge already exists. Change its color.
+			Edge newEdge = new Edge(j, l.getValue().weight(), color);
+			l.remove();
+			l.insert(newEdge);
+			return true;
+		}
 	}
+	
 	@Override
-	public void getEdgeColor(String i, String j) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * @return the color of the edge from i to j, or "" for a random color, or null for missing edges.
+	 * 
+	 * This method is absent in the book. This must be provided for or
+	 * implemented by students.
+	 */
+	public String getEdgeColor(String i, String j) {
+		GraphList l = getEdgeLink(i, j);
+		if (l == null) {
+			// There is no link, or i or j is missing.
+			return null;
+		} else {
+			// The edge already exists. Change its color.
+			return l.getValue().color();
+		}	
 	}
 }
