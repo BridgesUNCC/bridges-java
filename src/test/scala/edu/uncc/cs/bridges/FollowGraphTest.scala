@@ -1,23 +1,7 @@
 package edu.uncc.cs.bridges
 import org.scalatest._
 import java.io.IOException
-import org.apache.http.client.fluent
 import scaffold._
-
-class BStreamTest extends FlatSpec with Matchers {
-    it should "load stream data from JSON" in {
-    	fail("Unimplemented");
-    }
-    
-    it should "load an empty ArrayList when receiving an empty response" in {
-    	fail("Unimplemented");
-    }
-}
-
-class EchoBridge(var response: String) extends Bridge(0) {
-	override val http_connection = null
-    override def http(url: fluent.Request)= response
-}
     
 class FollowGraphTest extends FlatSpec with Matchers {
     val bridge = new EchoBridge("")

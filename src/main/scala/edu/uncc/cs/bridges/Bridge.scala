@@ -139,7 +139,7 @@ class Bridge(val assignment: Int) extends KeyConnectable {
         Limit the result to `max` followers. Note that results are batched, so
         a large `max` (as high as 200) _may_ only count as one request.
         See Bridges.followgraph() for more about rate limiting. */
-    def neighbors(identifier: String, max:Integer=100)= {
+    def neighbors(identifier: String, max: Integer=100)= {
     	val Array(service, screen_name) = splitIdentifier(identifier) 
         (try {
 	        val response = getjs(s"/streams/$service/followers/$screen_name/$max")
@@ -155,5 +155,25 @@ class Bridge(val assignment: Int) extends KeyConnectable {
         } catch {
         	case e: RateLimitException => List()
     	}).asJava
+    }
+    
+    def movies(actor: String)= {
+        (try {
+	        val response = getjsarray(s"/streams/actors/$actor")
+	        val movies_json = response.asInstanceOf[util.List[JSONValue]]
+        	(0 until movies_json.size()).map {
+        		i => movies_json
+    				.get(i).asInstanceOf[JSONObject]
+    				.get("title").asInstanceOf[String]
+        	}
+        } catch {
+        	case e: RateLimitException => List()
+        	// TODO: Decide whether to warn, error, or eat cast exceptions
+        	case e: ClassCastException => List()
+    	}).asJava
+    }
+    
+    def actors(movie: String)= {
+        List[String]().asJava
     }
 }

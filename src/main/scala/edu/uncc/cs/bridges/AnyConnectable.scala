@@ -23,12 +23,38 @@ abstract class AnyConnectable() {
         (meaning that the JSON was empty or malformed) */
     def json(text: String)= {
         val opt = Option(JSONValue.parse(text).asInstanceOf[JSONObject]).getOrElse(
-            throw new IOException("Received empty JSON response")
+            throw new IOException("Received empty or malformed JSON response")
         )
         if (opt.containsKey("error")) {
         	throw new IOException("Error on server: " + opt.get("error"))
         }
         opt
+    }
+    
+    def jsonArray(text: String): JSONArray = {
+        try {
+        	// We should get an array.
+	        val opt = Option(JSONValue.parse(text).asInstanceOf[JSONArray]).getOrElse(
+	            throw new IOException("Received empty JSON response")
+            )
+            return opt // Success!
+        } catch {
+          	case e: ClassCastException => {
+        	  	try {
+	        	  	// We didn't get an array. Look for an object with an error message.
+		            val opt = Option(JSONValue.parse(text).asInstanceOf[JSONObject]).getOrElse(
+			            throw new IOException("Received empty JSON object (but expected an array)")
+			        )
+			        if (opt.containsKey("error")) {
+			        	throw new IOException("Error on server: " + opt.get("error"))
+			        } else {
+			        	throw new IOException("Received unexpected JSON object from server (wanted array): " + opt)
+			        }
+        	  	} catch {
+        	  	  	case e: ClassCastException => throw new IOException("Wanted an array from server, received garbage.")
+        	  	}
+          	}
+        }
     }
     
     /** Execute an Apache Fluent Request.
@@ -101,6 +127,11 @@ abstract class AnyConnectable() {
         See get() and json() for more information. */
     def getjs(url:String)=
         json(get(url))
+        
+    /** Execute a simple GET request, implicitly converting to non-null JSON
+        Array. See get() and jsonArray() for more information. */
+    def getjsarray(url:String)=
+        jsonArray(get(url))
     
     /** Execute a simple POST request with relative paths, taking a Scala Map()
         of request parameters. */
@@ -115,7 +146,11 @@ abstract class AnyConnectable() {
         http(fluent.Request.Post(prepare(url)).bodyString(data, ContentType.TEXT_PLAIN))
     }
     
+    /**
+     * Escape the URL and prepend the base URL.
+     * @returns the new url as a String
+     */
     def prepare(url: String)={
-      	base + url.replace("$assignment", assignment.toString)
+      	base + url.replace(" ", "%20").replace("$assignment", assignment.toString)
     }    
 }
