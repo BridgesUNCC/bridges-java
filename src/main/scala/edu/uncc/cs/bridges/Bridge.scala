@@ -73,20 +73,35 @@ class Bridge(val assignment: Int) extends KeyConnectable {
      * 
      */
     def generateGraphJson(center: String, graph: Graph)= {
-    	val VISITED=173
+    	val VISITED=1
     	val open = new ArrayDeque[String]();
+    	graph.clearMarks();
     	graph.setMark(center, VISITED);
     	open.add(center);
     	
-    	var edges = List[List[String]]()
-    	var nodes = List[String]()
+    	// These maps will be JSON objects
+    	var edges = ListBuffer[Map[String, String]]()
+    	var nodes = ListBuffer[Map[String, String]]()
+    	// Gives the nodes a natural order
+    	var names = ListBuffer[String]()
     	  
+    	// Traverse the graph, as a BFS (although a DFS would work well too) 
     	while (! open.isEmpty()) {
     	  val local = open.remove()
-    	  nodes ++= List(splitIdentifier(local)(1))
+    	  val name = splitIdentifier(local)(1)
+    	  nodes += Map(
+    	      "name" -> name,
+    	      "color" -> Option(graph.getNodeColor(local)).getOrElse("")
+	      )
+	      names += name
     	  var neighbor = graph.first(local)
     	  while (neighbor != null) {
-    	      edges ++= List(List(splitIdentifier(local)(1), splitIdentifier(neighbor)(1)))
+    	      edges += Map(
+    	          "source" -> name,
+    	          "target" -> splitIdentifier(neighbor)(1),
+    	          "color" -> Option(graph.getEdgeColor(local, neighbor)).getOrElse(""),
+    	          "value" -> graph.getEdge(local, neighbor).toString()
+	          )
     	      if (graph.getMark(neighbor) != VISITED) {
     	    	  graph.setMark(neighbor, VISITED)
     	    	  open.add(neighbor);
@@ -94,16 +109,30 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     	      neighbor = graph.next(local)
     	  }
     	}
+    	
+    	// Convert the JSON-like maps into real JSON
     	var node_string = nodes
-			.map("{\"name\": \"" + _ + "\"}")
-			.reduceOption(_ + "," + _)
-			.getOrElse("")
+			.toList.sortBy( _("name") )  // Improve testability
+			.map {
+    			_
+    				.map({case (k, v) => s""""$k":"$v""""})
+    				.reduceOption(_+","+_)
+    				.getOrElse("")
+    		}
+			.map(a => s"{$a}")
+			.reduceOption(_+","+_)
+			.map(a => s"[$a]")
+			.getOrElse("[]")
+			
+		// Repeat for edges
     	var edge_string = edges
-    		.map(x => List(nodes.indexOf(x(0)), nodes.indexOf(x(1))))
-		    .map(x => s"""{"source":${x(0)},"target":${x(1)},"value":1}""")
-    		.reduceOption(_ + "," + _)
-    		.getOrElse("")
-    	s"""{"nodes":[$node_string],"links":[$edge_string]}"""
+			.map { m =>
+				s"""{"source":${names.indexOf(m("source"))},"target":${names.indexOf(m("target"))},"color":"${m("color")}","value":${m("value")}}"""
+			}
+			.reduceOption(_+","+_)
+			.map(a => s"[$a]")
+			.getOrElse("[]")
+    	s"""{"nodes":$node_string,"links":$edge_string}"""
     }
     
     /** List the user's followers as more FollowGraphNodes.

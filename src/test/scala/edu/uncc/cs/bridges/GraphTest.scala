@@ -67,8 +67,21 @@ class GraphTest extends FlatSpec with Matchers {
 		g = new Graphl("Aaron", "Bill")
 		g.getNodeColor("Aaron") should be(null)
 		g.setNodeColor("Aaron", "Amber")
-		g.getNodeColor("Aaron") should be("Amber")
-		
+		g.getNodeColor("Aaron") should be("Amber")	
+	}
+	
+	it should "get and set node marks" in {
+		val g = new Graphl()
+		g.getMark("nobody") should be(0)
+		g.add("Aaron")
+		g.getMark("nobody") should be(0)
+		g.getMark("Aaron") should be(0)
+		g.setMark("nobody", 1)
+		g.getMark("nobody") should be(0)
+		g.setMark("Aaron", 1)
+		g.getMark("Aaron") should be(1)
+		g.setMark("Aaron", 2)
+		g.getMark("Aaron") should be(2)
 	}
 	
 	it should "set and get edge colors" in {
@@ -110,5 +123,33 @@ class GraphTest extends FlatSpec with Matchers {
 		g.add("Aaron")
 		g.has("Aaron") should be(true)
 		g.has("Bill") should be(false)
+	}
+	
+	it should "iterate neighbors, even of null nodes and orphans" in {
+	  val g = new Graphl()
+	  // 0 members
+	  g.first("Aaron") should be(null)
+	  g.next("Aaron") should be(null)
+	  g.next("Bill") should be(null) // Next without first()
+	  
+	  // 1 member, 0 neighbors
+	  g.add("Aaron")
+	  g.first("Aaron") should be(null)
+	  g.next("Aaron") should be(null)
+	  
+	  // 2 members, 1 neighbor
+	  g.add("Bill")
+	  g.setEdge("Aaron", "Bill", 1)
+	  g.first("Aaron") should be("Bill")
+	  g.next("Aaron") should be(null)
+	  g.next("Aaron") should be(null) // Just making sure!
+	  
+	  // 3 members, 2 neighbors
+	  g.add("Carson")
+	  g.setEdge("Aaron", "Carson", 2)
+	  g.first("Aaron") should be("Bill")
+	  g.next("Aaron") should be("Carson")
+	  g.next("Aaron") should be(null)
+	  
 	}
 }

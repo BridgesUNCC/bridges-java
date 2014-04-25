@@ -13,8 +13,9 @@ import org.scalatest._
 
 class ServerIntegrationTest extends FlatSpec with Matchers {
   
-	"Interface" should "login" taggedAs(NetworkTest) in {
+	"Interface" should "login" in {
 	    val bridge = new Bridge(0);
+	    bridge.server("http://127.0.0.1:3000")
 		bridge.login("1279205054113") // Paste your own key
 		val followers = bridge.neighbors("twitter.com/twitterapi")
 		// Twitterapi has way more than 10 followers so we should expect 100.

@@ -81,7 +81,6 @@ public class Graphl implements Graph{
 			 */
 			int last_position = -1;
 			l.moveToStart();
-			System.out.println("Searching for " + i + " -> " + j);
 			while (last_position != l.currPos() // While still going forward ...
 					&& !(
 							l.getValue() != null // (Guard against calling vertex() on null)
@@ -135,12 +134,18 @@ public class Graphl implements Graph{
 	}
 
 	// Set and get marks
-	public void setMark(String string, int val) {
-		mark.put(string, val);
+	public void setMark(String key, int val) {
+		if (has(key))
+			mark.put(key, val);
 	}
 
-	public int getMark(String string) {
-		return mark.get(string);
+	public int getMark(String key) {
+		Integer m = mark.get(key);
+		return m == null ? 0 : m;
+	}
+	
+	public void clearMarks() {
+		mark.clear();
 	}
 
 	@Override
@@ -193,11 +198,17 @@ public class Graphl implements Graph{
 	 * for this method.
 	 */
 	public String first(String root) {
-		vertex.get(root).moveToStart();
-		String first = null;
-		if (vertex.get(root).getValue() != null)
-			first = vertex.get(root).getValue().vertex();
-		return first;
+		GraphList gl = vertex.get(root);
+		if (gl == null) {
+			// That vertex doesn't exist.
+			return null;
+		} else {
+			gl.moveToStart();
+			String first = null;
+			if (gl.getValue() != null)
+				first = gl.getValue().vertex();
+			return first;
+		}
 	}
 
 	@Override
@@ -210,12 +221,21 @@ public class Graphl implements Graph{
 	 * for this method.
 	 */
 	public String next(String root) {
-		int pos = vertex.get(root).currPos();
-		vertex.get(root).moveToPos(pos + 1);
-		String next = null;
-		if (vertex.get(root).getValue() != null)
-			next = vertex.get(root).getValue().vertex();
-		return next;
+		GraphList gl = vertex.get(root);
+		if (gl == null) {
+			return null;
+		} else {
+			// Can't use moveToPos(). It throws runtime errors.
+			// Also, it's n^2 efficiency to iterate followers then.
+			int pos = gl.currPos();
+			gl.next();
+			if (gl.currPos() > pos && gl.getValue() != null) {
+				return gl.getValue().vertex();
+			} else {
+				// We are at the end.
+				return null;
+			}
+		}
 	}
 
 	@Override
