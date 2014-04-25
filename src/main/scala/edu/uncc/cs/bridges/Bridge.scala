@@ -157,10 +157,19 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     	}).asJava
     }
     
+    /**
+     * Return a list of movies an actor played in.
+     * 
+     * The quota for this resource is about 10k actors/day but is shared by all
+     * students. So if you consume all 10k, it will be a bad day. Please make
+     * sure you limit your queries appropriately.
+     * 
+     */
     def movies(actor: String)= {
         (try {
 	        val response = getjsarray(s"/streams/actors/$actor")
 	        val movies_json = response.asInstanceOf[util.List[JSONValue]]
+	        // Get (in JS) movies_json.map(function(m) { return m.title; }) 
         	(0 until movies_json.size()).map {
         		i => movies_json
     				.get(i).asInstanceOf[JSONObject]
@@ -173,7 +182,36 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     	}).asJava
     }
     
+    /**
+     * Return the actors that played in a movie.
+     * 
+     * This resource has unlimited queries but has caveats. Not every extra
+     * that played in every movie ever is listed in the database and some
+     * movies are documented rather sparsely. Expect some to be missing.
+     */
     def actors(movie: String)= {
-        List[String]().asJava
+        (try {
+	        val response = getjsarray(s"/streams/rottentomatoes.com/$movie")
+	        // We will assume that the first movie is the right one
+	        val actors_json = response.asInstanceOf[util.List[JSONValue]]
+	        if (actors_json.isEmpty()) {
+	        	// There wasn't a first movie.
+	        	List()
+        	} else {
+        		// Get (in JS) movies[0].abridged_cast.map(function(a) {return a.name;})
+	        	val abridged_cast = actors_json
+	        		.get(0).asInstanceOf[JSONObject]
+    				.get("abridged_cast").asInstanceOf[JSONArray];
+	        	(0 until abridged_cast.size()).map {
+	        		i => abridged_cast
+	    				.get(i).asInstanceOf[JSONObject]
+	    				.get("name").asInstanceOf[String]
+	        	}
+        	}
+        } catch {
+        	case e: RateLimitException => List()
+        	// TODO: Decide whether to warn, error, or eat cast exceptions
+        	case e: ClassCastException => List()
+    	}).asJava
     }
 }

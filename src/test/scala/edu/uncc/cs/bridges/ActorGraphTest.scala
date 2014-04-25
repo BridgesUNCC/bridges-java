@@ -13,8 +13,6 @@ class ActorGraphTest extends FlatSpec with Matchers {
         }
     }
     
-    
-    
 	"actors()" should "return the actors in a movie" in {
 		val bridge = new EchoBridge("""[
 	        {
