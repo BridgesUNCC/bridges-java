@@ -13,7 +13,7 @@ class ActorGraphTest extends FlatSpec with Matchers {
         }
     }
     
-	"actors()" should "return the actors in a movie" in {
+	it should "return the actors in a movie" in {
 		val bridge = new EchoBridge("""[
 	        {
 	            "id": "771243352",
@@ -53,6 +53,6 @@ class ActorGraphTest extends FlatSpec with Matchers {
 	            ]
 	        }]""")
 		val movie_list = bridge.actors("Starbuck")
-		movie_list.asScala should be(List("Patrick Huard", "Julie Le Breton", "Antoine Bertrand"))
+		movie_list.asScala should be(List("actor/Patrick Huard", "actor/Julie Le Breton", "actor/Antoine Bertrand"))
 	}
 }

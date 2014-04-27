@@ -14,7 +14,7 @@ class MovieTest extends FlatSpec with Matchers {
     
     
     
-	"movies()" should "return the movies an actor played in" in {
+	it should "return the movies an actor played in" in {
 		val bridge = new EchoBridge("""
 		    [
 			    {
@@ -58,6 +58,6 @@ class MovieTest extends FlatSpec with Matchers {
 			        "title": "Moulin Rouge!"
 			    }
 		    ]""")
-		bridge.movies("Ewan McGregor").asScala should be(List("Young Adam", "Big Fish", "Trainspotting", "Moulin Rouge!"))
+		bridge.movies("Ewan McGregor").asScala should be(List("movie/Young Adam", "movie/Big Fish", "movie/Trainspotting", "movie/Moulin Rouge!"))
 	}
 }

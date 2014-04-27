@@ -55,7 +55,7 @@ class Bridge(val assignment: Int) extends KeyConnectable {
     		if (provider_optional)
     			Array("", identifier)
     		else
-    			throw new RuntimeException("Provider or screenname missing. Should look like: example.com/username")
+    			throw new RuntimeException(s"Provider or screenname missing in $identifier. Should look like: example.com/username")
     	} else {
     		identifier.split("/", 2)
     	}
@@ -130,8 +130,9 @@ class Bridge(val assignment: Int) extends KeyConnectable {
 			.reduceOption(_+","+_)
 			.map(a => s"[$a]")
 			.getOrElse("[]")
-			
+		
 		// Repeat for edges
+		names = names.sorted
     	var edge_string = edges
 			.map { m =>
 				s"""{"source":${names.indexOf(m("source"))},"target":${names.indexOf(m("target"))},"color":"${m("color")}","value":${m("value")}}"""
@@ -204,7 +205,7 @@ class Bridge(val assignment: Int) extends KeyConnectable {
         		i => movies_json
     				.get(i).asInstanceOf[JSONObject]
     				.get("title").asInstanceOf[String]
-        	}
+        	}.map { "movie/" + _ }
         } catch {
         	case e: RateLimitException => List()
         	// TODO: Decide whether to warn, error, or eat cast exceptions
@@ -239,7 +240,7 @@ class Bridge(val assignment: Int) extends KeyConnectable {
 	        		i => abridged_cast
 	    				.get(i).asInstanceOf[JSONObject]
 	    				.get("name").asInstanceOf[String]
-	        	}
+	        	}.map { "actor/" + _ }
         	}
         } catch {
         	case e: RateLimitException => List()
