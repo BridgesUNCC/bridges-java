@@ -9,7 +9,7 @@ class ActorGraphTest extends FlatSpec with Matchers {
     "actors()" should "complain helpfully about empty responses" in {
         val bridge = new EchoBridge("")
         a [IOException] should be thrownBy {
-            bridge.neighbors("provider/screenname")
+            bridge.neighbors("movie/name")
         }
     }
     

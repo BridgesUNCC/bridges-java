@@ -14,8 +14,8 @@ abstract class AnyConnectable() {
     
     /** Change the central Bridges server.
      *  You normally should not need to use this function. */
-    def server(new_base: String) {
-        base = new_base;
+    def server(new_base: String)= {
+        base = new_base
     }
     
     /** Convert text into a guaranteed non-null JSON format.

@@ -6,26 +6,38 @@ import scaffold._
 class FollowGraphTest extends FlatSpec with Matchers {
     val bridge = new EchoBridge("")
     
-    "neighbors()" should "complain helpfully about empty responses" in {
+    "followers()" should "complain helpfully about empty responses" in {
         a [IOException] should be thrownBy {
-            bridge.neighbors("provider/screenname")
+            bridge.neighbors("twitter.com/screenname")
+        }
+        a [IOException] should be thrownBy {
+            bridge.followers("twitter.com/screenname")
+        }
+        a [IOException] should be thrownBy {
+            bridge.followers("screenname")
         }
     }
     
     it should "load from a screenname via JSON" in {
         val fbridge = new EchoBridge("""{"followers": []}""")
         
-        fbridge.neighbors("provider/screenname").size() should be(0)
+        fbridge.neighbors("twitter.com/screenname").size() should be(0)
         
     }
     
     it should "retrieve followers" in {
         val fbridge = new EchoBridge("""{"followers": ["FredElmquist", "AltonIsenhour"]}""")
         
-        val followers = fbridge.neighbors("provider/screenname")
+        val followers = fbridge.neighbors("twitter.com/screenname")
         followers.size() should be(2)
-        followers.get(0) should be("provider/FredElmquist")
-        followers.get(1) should be("provider/AltonIsenhour")
+        followers.get(0) should be("twitter.com/FredElmquist")
+        followers.get(1) should be("twitter.com/AltonIsenhour")
+    }
+    
+    "generateGraphJSON" should "handle graphs with missing providers" in {
+    	val graph = new Graphl("Aaron")
+    	val json = bridge.generateGraphJson("provider/Aaron", graph)
+    	json should be("""{"nodes":[{"name":"Aaron","color":""}],"links":[]}""")
     }
     
     "generateGraphJson" should "generate JSON for empty graphs" in {

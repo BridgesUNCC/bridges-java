@@ -8,7 +8,7 @@ class MovieTest extends FlatSpec with Matchers {
     "movies()" should "complain helpfully about empty responses" in {
         val bridge = new EchoBridge("")
         a [IOException] should be thrownBy {
-            bridge.neighbors("provider/screenname")
+            bridge.neighbors("actor/name")
         }
     }
     

@@ -18,11 +18,15 @@ trait KeyConnectable extends AnyConnectable {
     /** Set the API key to be used on the next request.
      *  This pluggable trait does not connect to the internet.
      */
-    def login(key: String) { api_key = key; }
+    def login(key: String)= {
+    	api_key = key
+    }
     
     /** Proxy to login(String) that uses an Integer instead.
      */
-    def login(key: Int) { api_key = key.toString(); }
+    def login(key: Int)= {
+    	api_key = key.toString()
+    }
     
     /** Tacks on an API key to every request before executing it.
      *  See AnyConnectable.prepare also.
