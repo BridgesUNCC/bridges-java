@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import scala.actors.threadpool.Arrays;
 
-public class CSS {
+public class Validation {
 
 	private static final Set<String> VALID_COLORS = new HashSet<>();
 	private static final Set<Pattern> COLOR_PATTERNS = new HashSet<>();

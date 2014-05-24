@@ -23,7 +23,7 @@ public class Edge {
 	 * Setting the color to {@code null} or {@code ""} resets to defaults.
 	 * 
 	 * @param color Color as a String
-	 * @see CSS#validateColor(String)
+	 * @see Validation#validateColor(String)
 	 */
 	public String getColor() {
 		String prop = properties.get("color");
@@ -40,13 +40,13 @@ public class Edge {
 	 * Setting the color to {@code null} or {@code ""} resets to defaults.
 	 * 
 	 * @param color Color as a String
-	 * @see CSS#validateColor(String)
+	 * @see Validation#validateColor(String)
 	 */
 	public void setColor(String color) {
 		if (color == null || color.isEmpty()) {
 			properties.remove("color");
 		} else {
-			CSS.validateColor(color);
+			Validation.validateColor(color);
 			properties.put("color", color);
 		}
 	}
