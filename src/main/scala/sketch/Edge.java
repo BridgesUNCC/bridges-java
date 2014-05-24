@@ -1,6 +1,11 @@
 package sketch;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
+
+import scala.actors.threadpool.Arrays;
 
 /**
  * Generic graph link, with visual components. 
@@ -13,16 +18,38 @@ public class Edge {
 	private Map<String, String> properties;
 	
 	/**
-	 * Get the color
-	 * @return Color as a String
+	 * Get the color, according to CSS formats.
+	 * By default, the color will be chosen at random.
+	 * Setting the color to {@code null} or {@code ""} resets to defaults.
+	 * 
+	 * @param color Color as a String
+	 * @see CSS#validateColor(String)
 	 */
-	public String getColor() { return ""; }
+	public String getColor() {
+		String prop = properties.get("color");
+		if (prop == null) {
+			return "";
+		} else {
+			return prop;
+		}
+	}
 	
 	/**
-	 * Set the color
+	 * Set the color, according to CSS formats.
+	 * By default, the color will be chosen at random.
+	 * Setting the color to {@code null} or {@code ""} resets to defaults.
+	 * 
 	 * @param color Color as a String
+	 * @see CSS#validateColor(String)
 	 */
-	public String setColor(String color) {return "";}
+	public void setColor(String color) {
+		if (color == null || color.isEmpty()) {
+			properties.remove("color");
+		} else {
+			CSS.validateColor(color);
+			properties.put("color", color);
+		}
+	}
 	
 	/**
 	 * Get the dash array

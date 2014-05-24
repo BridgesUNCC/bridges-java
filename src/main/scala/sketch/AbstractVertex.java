@@ -26,16 +26,38 @@ abstract public class AbstractVertex implements Map<String, Edge> {
 	/// Accessors and mutators for visualization properties follow
 
 	/**
-	 * Take a node by it's identifier string and get it's node color
-	 * @return Color as a String
+	 * Get the color, according to CSS formats.
+	 * By default, the color will be chosen at random.
+	 * Setting the color to {@code null} or {@code ""} resets to defaults.
+	 * 
+	 * @param color Color as a String
+	 * @see CSS#validateColor(String)
 	 */
-	public String getColor() {return "";}
+	public String getColor() {
+		String prop = properties.get("color");
+		if (prop == null) {
+			return "";
+		} else {
+			return prop;
+		}
+	}
 	
 	/**
-	 * Take a node by it's identifier string and get it's node color
-	 * @param color  Color as a String
+	 * Set the color, according to CSS formats.
+	 * By default, the color will be chosen at random.
+	 * Setting the color to {@code null} or {@code ""} resets to defaults.
+	 * 
+	 * @param color Color as a String
+	 * @see CSS#validateColor(String)
 	 */
-	public void setColor(String color) {}
+	public void setColor(String color) {
+		if (color == null || color.isEmpty()) {
+			properties.remove("color");
+		} else {
+			CSS.validateColor(color);
+			properties.put("color", color);
+		}
+	}
 	
 	/**
 	 * Take a node by it's identifier string and get it's shape
