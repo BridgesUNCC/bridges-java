@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges
+ package edu.uncc.cs.bridges
 
 import org.scalatest._
 import scala.collection.JavaConverters._
@@ -32,7 +32,9 @@ class MovieActorTest extends FlatSpec with Matchers {
 			graph.add(local_center)
 			// Make a css string that looks like: #0a0a0a (dark gray)
 			// The first opened node is black, but later nodes become white.
-			var color = Integer.toHexString(total_nodes)
+			var color = Integer.toHexString(total_nodes % 256)
+			if (color.length() == 1)
+				color = "0" + color; 
 			color = "#" + color + color + color
 			graph.setNodeColor(local_center, color)
 			
