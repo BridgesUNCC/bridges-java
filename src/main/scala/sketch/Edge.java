@@ -1,11 +1,5 @@
 package sketch;
-
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-import scala.actors.threadpool.Arrays;
 
 /**
  * Generic graph link, with visual components. 
@@ -55,26 +49,52 @@ public class Edge {
 	 * Get the dash array
 	 * @return  CSS dash array, for example "5,10,5"
 	 */
-	public String getDash() {return "";}
+	public String getDash() {
+		String prop = properties.get("dash");
+		if (prop == null) {
+			return "";
+		} else {
+			return prop;
+		}
+	}
 	
 	/**
-	 * Set the dash array
+	 * Set the dash array, effectively choosing patterns of dots and dashes for
+	 * edges.
 	 * @param dash CSS dash array, for example "5,10,5"
 	 */
-	public void setDash(String dash) {}
+	public void setDash(double[] dashes) {
+		StringBuilder sb = new StringBuilder("");
+		for (double dash : dashes) {
+			sb.append(dash);
+			sb.append(',');
+		}
+		sb.deleteCharAt(sb.length()-1);
+		properties.put("dasharray", sb.toString());
+	}
 	
 	
 	/**
 	 * Get the thickness in pixels
 	 * @returns Thickness in pixels
 	 */
-	public double getThickness() {return 1.0;}
+	public double getThickness() {
+		String prop = properties.get("thickness");
+		if (prop == null) {
+			return 1.0;
+		} else {
+			return Double.parseDouble(prop);
+		}
+	}
 	
 	/**
 	 * Set the thickness in pixels
 	 * @param pixels  Thickness in pixels
 	 */
-	public void setThickness(double pixels) {}
+	public void setThickness(double pixels) {
+		//TODO: Should we protect against NaN and Inf?
+		properties.put("thickness", Double.toString(pixels));
+	}
 	
 	/**
 	 * Get the edge's current opacity

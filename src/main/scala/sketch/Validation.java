@@ -8,13 +8,15 @@ import scala.actors.threadpool.Arrays;
 
 public class Validation {
 
-	private static final Set<String> VALID_COLORS = new HashSet<>();
-	private static final Set<Pattern> COLOR_PATTERNS = new HashSet<>();
+	public static final Set<String> COLOR_NAMES = new HashSet<>();
+	public static final Set<Pattern> COLOR_PATTERNS = new HashSet<>();
+	public static final Set<String> NODE_SHAPES = new HashSet<>();
+	
 	
 	static {
 		COLOR_PATTERNS.add(Pattern.compile("#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})"));
 		//TODO: Support more colors
-		VALID_COLORS.addAll(Arrays.asList(new String[] {
+		COLOR_NAMES.addAll(Arrays.asList(new String[] {
 				"aliceblue",
 				"antiquewhite",
 				"aqua",
@@ -163,6 +165,10 @@ public class Validation {
 				"yellow",
 				"yellowgreen"
 		}));
+		NODE_SHAPES.addAll(Arrays.asList(new String[]{
+				"circle",
+				"square"
+		}));
 	}
 	
 	/**
@@ -172,12 +178,14 @@ public class Validation {
 	 * color names, (2) #RRGGBB or #RGB, where R, G and B are red, green, blue
 	 * values as hexadecimal digits.
 	 * 
+	 * This method does not check for null because null has special meaning.
+	 * 
 	 * @param color
 	 * 
 	 * @return whether the color is valid
 	 */
 	public static void validateColor(String color) {
-		if (VALID_COLORS.contains(color)) {
+		if (COLOR_NAMES.contains(color)) {
 			// Named color
 			return;
 		} else {
@@ -187,27 +195,17 @@ public class Validation {
 				}
 			}
 		}
-		throw new InvalidCSSValueException("Invalid color value' " + color + "'. Expected"
+		throw new InvalidValueException("Invalid color' " + color + "'. Expected"
 				+ "CSS color name, or #RRGGBB or #RGB formats.");
 	}
 
-}
-
-/**
- * Exception indicating invalid CSS values.
- * Examples of uses for this include sizes with invalid units, and invalid
- * colors.
- * @author Sean Gallagher
- *
- */
-class InvalidCSSValueException extends RuntimeException {
-	public InvalidCSSValueException(String message) {
-		super(message);
+	public static void validateShape(String shape) {
+		if (NODE_SHAPES.contains(shape)) {
+			// Named color
+			return;
+		} else {
+			throw new InvalidValueException("Invalid shape' " + shape + "'. Expected"
+					+ "one of: " + NODE_SHAPES);
+		}
 	}
-
-	/**
-	 * Auto-generated ID
-	 */
-	private static final long serialVersionUID = 8664177180092591999L;
-	
 }

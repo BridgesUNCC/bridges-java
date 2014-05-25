@@ -61,15 +61,25 @@ abstract public class AbstractVertex implements Map<String, Edge> {
 	
 	/**
 	 * Take a node by it's identifier string and get it's shape
-	 * @return "Square" or "Circle"
+	 * @return "square" or "circle"
 	 */
-	public String getShape() {return "";}
+	public String getShape() {
+		String prop = properties.get("shape");
+		if (prop == null) {
+			return "circle";
+		} else {
+			return prop;
+		}
+	}
 	
 	/**
 	 * Take a node by it's identifier string and get it's shape
 	 * @param shape "Circle" or "Square"
 	 */
-	public void setShape(String shape) {};
+	public void setShape(String shape) {
+		Validation.validateShape(shape);
+		properties.put("shape", shape);
+	};
 	
 	/**
 	 * Take a node by it's identifier string and get it's node color
