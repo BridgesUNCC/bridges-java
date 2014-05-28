@@ -25,7 +25,7 @@ TUES Bridges Project - uniting classrooms for better student engagement
 ```sh
 git clone https://github.com/SeanTater/bridges.git
 cd bridges/client-scala
-wget http://services.gradle.org/distributions/gradle-1.10-all.zip
+wget http://services.gradle.org/distributions/gradle-1.12-bin.zip
 unzip gradle-1.10-all.zip
 rm gradle-1.10-all.zip
 echo "PATH=\$PATH:$PWD/gradle-1.10/bin" >>~/.bashrc
