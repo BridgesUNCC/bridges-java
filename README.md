@@ -31,6 +31,7 @@ echo "export PATH=\$PATH:$PWD/gradle-1.12/bin" >>~/.bashrc
 # On fedora, uncomment this line too
 # otherwise you will get an error telling you how javac can't be found
 # sudo yum install java-1.7.0-openjdk-devel
+cd bridges
 gradle assemble
 gradle --info check
 ```
