@@ -22,7 +22,7 @@ TUES Bridges Project - uniting classrooms for better student engagement
 - on Linux, you can do all of that like this: (execute these one at a time so you can react if something goes wrong)
 ```sh
 git clone https://github.com/SeanTater/bridges.git
-cd bridges/client-scala
+cd bridges
 wget http://services.gradle.org/distributions/gradle-1.12-bin.zip
 unzip gradle-1.12-all.zip
 rm gradle-1.12-all.zip
@@ -31,7 +31,6 @@ echo "export PATH=\$PATH:$PWD/gradle-1.12/bin" >>~/.bashrc
 # On fedora, uncomment this line too
 # otherwise you will get an error telling you how javac can't be found
 # sudo yum install java-1.7.0-openjdk-devel
-cd bridges
 gradle assemble
 gradle --info check
 ```
