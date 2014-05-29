@@ -1,10 +1,9 @@
 package sketch;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
-
-import scala.actors.threadpool.Arrays;
 
 public class Validation {
 
