@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'scala'
 apply plugin: 'groovy' // groovy -> scripting -> working scalatests
 apply plugin: 'application'
 apply plugin: 'eclipse'
@@ -12,14 +11,6 @@ apply plugin: 'signing'
 group = "edu.uncc.cs.bridges"
 // release: version = "0.3.8"
 version = "0.99.0"
-
-// Hack to make ScalaTests actually run - not just say they do
-test << {
-    ant.taskdef(name: 'scalatest', classname: 'org.scalatest.tools.ScalaTestAntTask', classpath: classpath.asPath)
-    ant.scalatest(runpath: testClassesDir, haltonfailure: 'true', fork: 'false') {
-        reporter(type: 'stdout')
-    }
-}
 
 ///
 /// Artifacts and deployment
