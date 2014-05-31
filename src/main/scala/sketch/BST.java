@@ -2,7 +2,7 @@ package sketch;
 /**
  * Title: Binary Search Tree ADT with Strings for Bridges
  * @author mihai mehedint
- * @version1.0 modified after the driver provided during 1214 spring 2014 by krs
+ * @version1.0 modified after the driver provided during 2214 spring 2014 by krs
  * @05.25.2014
  */
 class IntBST{

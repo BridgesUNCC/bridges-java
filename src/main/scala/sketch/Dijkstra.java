@@ -4,20 +4,28 @@ package sketch;
  * @date 05/02/2014
  * @Description: You will implement the Dijkstra's shortest path
  *              algorithm using the graph ADT
- * The driver is modified after the one provided during class 1214 spring 2014
+ * The driver is modified after the one provided during class 2214 spring 2014
  */
 public class Dijkstra {
+	
+    private static final String MEGAN = "Megan Fox";
+    private static final String GARY = "Gary Oldman";
+    private static final String SEAN = "Sean Connery";
+    private static final String JENNIFER = "Jennifer Lawrence";
+    private static final String EMMA = "Emma Watson";
+    private static final String DANIEL = "Daniel Radcliffe";
     
     public static void main(String args[]){
 	Graph graph = new Graphl();
 
-	graph.add("A");
-	graph.add("B");
-	graph.add("C");
-	graph.add("D");
-	graph.add("E");
+	graph.add(MEGAN);
+	graph.add(GARY);
+	graph.add(SEAN);
+	graph.add(JENNIFER);
+	graph.add(EMMA);
+	graph.add(DANIEL);
 
-	graph.setEdge("A", "B", 10);
+	graph.setEdge(MEGAN, GARY, "The Unborn");
 	graph.setEdge("A", "C", 3);
 	graph.setEdge("A", "D", 20);
 	graph.setEdge("B", "D", 5);
