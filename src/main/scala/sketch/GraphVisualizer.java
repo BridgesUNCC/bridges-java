@@ -1,5 +1,6 @@
 package sketch;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -22,7 +23,7 @@ public class GraphVisualizer extends Visualizer {
 	 * This visualizer is actually an abstract graph; students could use it as
 	 * part of their homework. So this can be public.
 	 */
-	public Map<String, AbstractVertex> nodes;
+	public Map<String, AbstractVertex> nodes = new HashMap<String, AbstractVertex>();
 	
 	/**
 	 * Test membership of a node in the visualization by identifier.
@@ -30,14 +31,18 @@ public class GraphVisualizer extends Visualizer {
 	 * @return whether the visualization has this node
 	 * @
 	 */
-	public boolean has(String identifier) {return false;}
+	public boolean has(String identifier) {
+		return nodes.containsKey(identifier);
+	}
 	
 	/**
 	 * Test membership of a node in the visualization by object.
 	 * @param identifier
 	 * @return whether the visualization has this node
 	 */
-	public boolean has(AbstractVertex identifier) {return false;}
+	public boolean has(AbstractVertex av) {
+		return nodes.containsValue(av);
+	}
 	
 	/**
 	 * Get a Node in this visualization by its identifier.
@@ -52,6 +57,13 @@ public class GraphVisualizer extends Visualizer {
 	 * @return the associated Node object
 	 */
 	public AbstractVertex add(String identifier) {return null;}
+	
+	/**
+	 * Add a new AbstractVertex to the visualizer
+	 * @param identifier
+	 * @return the associated Node object
+	 */
+	public AbstractVertex add(AbstractVertex av) {return null;}
 	
 	/**
 	 * Remove a Node from the visualizer, along with its Links

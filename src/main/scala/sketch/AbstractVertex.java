@@ -2,7 +2,6 @@ package sketch;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -14,6 +13,12 @@ import java.util.Set;
  */
 abstract public class AbstractVertex implements Map<String, Edge> {
 	/**
+	 * This is the string by which this AbstractVertex should be found.
+	 * This is not a label; it includes provider information as well.
+	 */
+	String identifier;
+	
+	/**
 	 * Links, with properties other than just target Node.
 	 */
 	public Map<String, Edge> links;
@@ -24,6 +29,15 @@ abstract public class AbstractVertex implements Map<String, Edge> {
 	private Map<String, String> properties;
 	
 	/// Accessors and mutators for visualization properties follow
+	
+	/**
+	 * Get the String associated with this Vertex.
+	 * This is not a label; it includes provider information as well.
+	 * @return
+	 */
+	public String getIdentifier() {
+		return identifier;
+	}
 
 	/**
 	 * Get the color, according to CSS formats.
