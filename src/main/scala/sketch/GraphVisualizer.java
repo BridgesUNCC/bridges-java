@@ -49,28 +49,36 @@ public class GraphVisualizer extends Visualizer {
 	 * @param identifier
 	 * @return the associated node, or null.
 	 */
-	public AbstractVertex get(String identifier) {return null;}
+	public AbstractVertex get(String identifier) {
+		return nodes.get(identifier);
+	}
 	
 	/**
 	 * Add a new Node to the visualizer by identifier
 	 * @param identifier
 	 * @return the associated Node object
 	 */
-	public AbstractVertex add(String identifier) {return null;}
+	public AbstractVertex add(String identifier) {
+		return nodes.put(identifier, new Vertex(identifier));
+	}
 	
 	/**
 	 * Add a new AbstractVertex to the visualizer
 	 * @param identifier
 	 * @return the associated Node object
 	 */
-	public AbstractVertex add(AbstractVertex av) {return null;}
+	public AbstractVertex add(AbstractVertex av) {
+		return nodes.put(av.getIdentifier(), av);
+	}
 	
 	/**
-	 * Remove a Node from the visualizer, along with its Links
+	 * Remove a AbstractVertex from the visualizer, along with its Links
 	 * @param identifier 
-	 * @return whether the Node existed before the removal
+	 * @return the removed AbstractVertex or null
 	 */
-	public boolean remove(String identifier) {return false;}
+	public AbstractVertex remove(String identifier) {
+		return nodes.remove(identifier);
+	}
 	
 	/**
 	 * Internal API for exporting visualizer state
