@@ -17,85 +17,114 @@ public class GraphBFS {
 
 	public static void main(String[] args) {
 		Visualizer myGraph = new GraphVisualizer();
+		//adding vertices
 		myGraph.add(DANIEL);
-		myGraph.get(DANIEL).setColor("blue");
-		myGraph.get(DANIEL).setSize(8.0);
 		myGraph.add(EMMA);
-		myGraph.get(EMMA).setColor("blue");
-		myGraph.get(EMMA).setSize(8.0);
 		myGraph.add(JENNIFER);
-		myGraph.get(JENNIFER).setColor("blue");
-		myGraph.get(JENNIFER).setSize(8.0);
 		myGraph.add(SEAN);
-		myGraph.get(SEAN).setColor("blue");
-		myGraph.get(SEAN).setSize(8.0);
 		myGraph.add(GARY);
-		myGraph.get(GARY).setColor("blue");
-		myGraph.get(GARY).setSize(8.0);
 		myGraph.add(MEGAN);
-		myGraph.get(MEGAN).setColor("blue");
-		myGraph.get(MEGAN).setSize(8.0);
 		
-		myGraph.setEdge(MEGAN, DANIEL, "Movie1");
-		myGraph.setEdge(MEGAN, JENNIFER, "Movie2");
-		myGraph.setEdge(SEAN, EMMA, "Movie3");
-		myGraph.setEdge(EMMA, GARY, "Movie4");
-		myGraph.setEdge(EMMA, DANIEL, "Movie5");
-		myGraph.setEdge(JENNIFER, GARY, "Movie6");
-		myGraph.setEdge(JENNIFER, SEAN, "Movie7");
-		myGraph.setEdge(GARY, SEAN, "Movie8");
-		myGraph.setEdge(DANIEL, MEGAN, "Movie9");
+		//setting parameters for vertices
+		Vertex aVertex=myGraph.get(DANIEL);
+			aVertex.setColor("blue");
+			aVertex.setSize(8.0);
+		Vertex aVertex=myGraph.get(EMMA);
+			aVertex.setColor("blue");
+			aVertex.setSize(8.0);
+		Vertex aVertex=myGraph.get(JENNIFER);
+			aVertex.setColor("blue");
+			aVertex.setSize(8.0);
+		Vertex aVertex=myGraph.get(SEAN);
+			aVertex.setColor("blue");
+			aVertex.setSize(8.0);
+		Vertex aVertex=myGraph.get(GARY);
+			aVertex.setColor("blue");
+			aVertex.setSize(8.0);		
+		Vertex aVertex=myGraph.get(MEGAN);
+			aVertex.setColor("blue");
+			aVertex.setSize(8.0);
 		
-		myGraph.setColor(MEGAN, DANIEL, "purple");
-		myGraph.setColor(MEGAN, JENNIFER, "blue");
-		myGraph.setColor(SEAN, EMMA, "red");
-		myGraph.setColor(EMMA, GARY, "green");
-		myGraph.setColor(EMMA, DANIEL, "yellow");
-		myGraph.setColor(JENNIFER, GARY, "brown");
-		myGraph.setColor(JENNIFER, SEAN, "purple");
-		myGraph.setColor(GARY, SEAN, "blue");
-		myGraph.setColor(DANIEL, MEGAN, "red");
+		//add Edges
+		/**
+		 * for now; 
+		 * in the future: myGraph.get(MEGAN)  // A Vertex
+    							.get(DANIEL)    //An Edge 
+    							.setLabel("Movie1");
+		 */
+		myGraph.setEdge(MEGAN, DANIEL); 
+		myGraph.setEdge(MEGAN, JENNIFER);
+		myGraph.setEdge(SEAN, EMMA);
+		myGraph.setEdge(EMMA, GARY);
+		myGraph.setEdge(EMMA, DANIEL);
+		myGraph.setEdge(JENNIFER, GARY);
+		myGraph.setEdge(JENNIFER, SEAN);
+		myGraph.setEdge(GARY, SEAN);
+		myGraph.setEdge(DANIEL, MEGAN);
 		
-		myGraph.setDash(MEGAN, DANIEL, 2);
-		myGraph.setDash(MEGAN, JENNIFER, 1);
-		myGraph.setDash(SEAN, EMMA, 3);
-		myGraph.setDash(EMMA, GARY, 1);
-		myGraph.setDash(EMMA, DANIEL, 4);
-		myGraph.setDash(JENNIFER, GARY, 2);
-		myGraph.setDash(JENNIFER, SEAN, 5);
-		myGraph.setDash(GARY, SEAN, 4);
-		myGraph.setDash(DANIEL, MEGAN, 5);
-		
-		
-		myGraph.setThickness(MEGAN, DANIEL, 2);
-		myGraph.setThickness(MEGAN, JENNIFER, 1);
-		myGraph.setThickness(SEAN, EMMA, 3);
-		myGraph.setThickness(EMMA, GARY, 1);
-		myGraph.setThickness(EMMA, DANIEL, 4);
-		myGraph.setThickness(JENNIFER, GARY, 2);
-		myGraph.setThickness(JENNIFER, SEAN, 5);
-		myGraph.setThickness(GARY, SEAN, 4);
-		myGraph.setThickness(DANIEL, MEGAN, 5);
-		
-		myGraph.setOpacity(MEGAN, DANIEL, 2);
-		myGraph.setOpacity(MEGAN, JENNIFER, 1);
-		myGraph.setOpacity(SEAN, EMMA, 3);
-		myGraph.setOpacity(EMMA, GARY, 1);
-		myGraph.setOpacity(EMMA, DANIEL, 4);
-		myGraph.setOpacity(JENNIFER, GARY, 2);
-		myGraph.setOpacity(JENNIFER, SEAN, 5);
-		myGraph.setOpacity(GARY, SEAN, 4);
-		myGraph.setOpacity(DANIEL, MEGAN, 5);
+		//set parameters for Edges current version
+		//future version: setEdgeColor(MEGAN, DANIEL, "purple");
+		//future version: setEdgeOpacity(MEGAN, DANIEL, 1.0);
+		Edge anEdge = myGraph.get(MEGAN).get(DANIEL);
+			anEdge.setColor("purple");
+			anEdge.setDash(new double[]{3.0,3.0});
+			anEdge.setOpacity(1.0);
+			anEdge.setThickness(1.0);
+		Edge anEdge = myGraph.get(MEGAN).get(JENNIFER);
+			anEdge.setColor("purple");
+			anEdge.setDash(new double[]{3.0,3.0});
+			anEdge.setOpacity(1.0);
+			anEdge.setThickness(1.0);
+		Edge anEdge = myGraph.get(SEAN).get(EMMA);
+			anEdge.setColor("purple");
+			anEdge.setDash(new double[]{3.0,3.0});
+			anEdge.setOpacity(1.0);
+			anEdge.setThickness(1.0);
+		Edge anEdge = myGraph.get(EMMA).get(GARY);
+			anEdge.setColor("purple");
+			anEdge.setDash(new double[]{3.0,3.0});
+			anEdge.setOpacity(1.0);
+			anEdge.setThickness(1.0);
+		Edge anEdge = myGraph.get(EMMA).get(DANIEL);
+			anEdge.setColor("purple");
+			anEdge.setDash(new double[]{3.0,3.0});
+			anEdge.setOpacity(1.0);
+			anEdge.setThickness(1.0);
+		Edge anEdge = myGraph.get(JENNIFER).get(GARY);
+			anEdge.setColor("purple");
+			anEdge.setDash(new double[]{3.0,3.0});
+			anEdge.setOpacity(1.0);
+			anEdge.setThickness(1.0);	
+		Edge anEdge = myGraph.get(JENNIFER).get(SEAN);
+			anEdge.setColor("purple");
+			anEdge.setDash(new double[]{3.0,3.0});
+			anEdge.setOpacity(1.0);
+			anEdge.setThickness(1.0);
+		Edge anEdge = myGraph.get(GARY).get(SEAN);
+			anEdge.setColor("purple");
+			anEdge.setDash(new double[]{3.0,3.0});
+			anEdge.setOpacity(1.0);
+			anEdge.setThickness(1.0);
+		Edge anEdge = myGraph.get(DANIEL).get(MEGAN);
+			anEdge.setColor("purple");
+			anEdge.setDash(new double[]{3.0,3.0});
+			anEdge.setOpacity(1.0);
+			anEdge.setThickness(1.0);
 		
 		
 		System.out.println("Starting BFS on " + JENNIFER);
 		myGraph.BFS(JENNIFER);
 		System.out.println("Ended BFS on " + JENNIFER);
 		
+		//edit the attributes for edges according to the BFS path goes here (color the edges again etc.)
+		
 		System.out.println();
 		
 		System.out.println("Starting BFS on " + MEGAN);
 		myGraph.BFS(MEGAN);
 		System.out.println("Ended BFS on " + MEGAN);
+		
+		//edit the attributes for edges according to the BFS path goes here (color the edges again etc.)
+		
 	}
 }
