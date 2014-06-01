@@ -16,7 +16,7 @@ abstract public class AbstractVertex implements Map<String, Edge> {
 	 * This is the string by which this AbstractVertex should be found.
 	 * This is not a label; it includes provider information as well.
 	 */
-	String identifier;
+	final String identifier;
 	
 	/**
 	 * Links, with properties other than just target Node.
@@ -27,6 +27,14 @@ abstract public class AbstractVertex implements Map<String, Edge> {
 	 * Visualization properties for this Node.
 	 */
 	private Map<String, String> properties;
+	
+	/**
+	 * Create an AbstractVertex
+	 * @param identifier  The unique, final id for this vertex. 
+	 */
+	public AbstractVertex(String identifier) {
+		this.identifier = identifier;
+	}
 	
 	/// Accessors and mutators for visualization properties follow
 	
@@ -140,8 +148,44 @@ abstract public class AbstractVertex implements Map<String, Edge> {
 		properties.put("opacity", Double.toString(opacity));
 	}
 	
-	/// Delegates for links follow.
+	/// Hash code and equals: implements map, but it only uses this.identifier
 
+	/**
+	 * Get the hash code for this AbstractVertex.
+	 * The code is only based on the identifier.
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((identifier == null) ? 0 : identifier.hashCode());
+		return result;
+	}
+
+	/**
+	 * Find whether two AbstractVertex's are the same.
+	 * Based only on the identifier.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractVertex other = (AbstractVertex) obj;
+		if (identifier == null) {
+			if (other.identifier != null)
+				return false;
+		} else if (!identifier.equals(other.identifier))
+			return false;
+		return true;
+	}
+	
+	
+	/// Delegates for links follow.
 	/**
 	 * 
 	 * @see java.util.Map#clear()
@@ -177,29 +221,12 @@ abstract public class AbstractVertex implements Map<String, Edge> {
 	}
 
 	/**
-	 * @param o
-	 * @return
-	 * @see java.util.Map#equals(java.lang.Object)
-	 */
-	public boolean equals(Object o) {
-		return links.equals(o);
-	}
-
-	/**
 	 * @param key
 	 * @return
 	 * @see java.util.Map#get(java.lang.Object)
 	 */
 	public Edge get(Object key) {
 		return links.get(key);
-	}
-
-	/**
-	 * @return
-	 * @see java.util.Map#hashCode()
-	 */
-	public int hashCode() {
-		return links.hashCode();
 	}
 
 	/**
