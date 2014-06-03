@@ -1,4 +1,4 @@
-package sketch;
+package sketch2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,83 +18,10 @@ import java.util.Map;
  * Link n = n.get("movie/Big").setWidth("5,5,5");<br>
  * v.has("actor/Thorin Oakinshield");<br>
  */
-public class GraphVisualizer extends Visualizer {
+interface GraphVisualizer {
 	/**
 	 * This visualizer is actually an abstract graph; students could use it as
 	 * part of their homework. So this can be public.
 	 */
-	public Map<String, AbstractVertex> nodes = new HashMap<String, AbstractVertex>();
-	
-	/**
-	 * Test membership of a node in the visualization by identifier.
-	 * @param identifier
-	 * @return whether the visualization has this node
-	 * @
-	 */
-	public boolean has(String identifier) {
-		return nodes.containsKey(identifier);
-	}
-	
-	/**
-	 * Test membership of a node in the visualization by object.
-	 * @param identifier
-	 * @return whether the visualization has this node
-	 */
-	public boolean has(AbstractVertex av) {
-		return nodes.containsValue(av);
-	}
-	
-	/**
-	 * Get a Node in this visualization by its identifier.
-	 * @param identifier
-	 * @return the associated node, or null.
-	 */
-	public AbstractVertex get(String identifier) {
-		return nodes.get(identifier);
-	}
-	
-	/**
-	 * Add a new Node to the visualizer by identifier
-	 * @param identifier
-	 * @return the associated Node object
-	 */
-	public AbstractVertex add(String identifier) {
-		return nodes.put(identifier, new Vertex(identifier));
-	}
-	
-	/**
-	 * Add a new AbstractVertex to the visualizer
-	 * @param identifier
-	 * @return the associated Node object
-	 */
-	public AbstractVertex add(AbstractVertex av) {
-		return nodes.put(av.getIdentifier(), av);
-	}
-	
-	/**
-	 * Remove a AbstractVertex from the visualizer, along with its Links
-	 * @param identifier 
-	 * @return the removed AbstractVertex or null
-	 */
-	public AbstractVertex remove(String identifier) {
-		return nodes.remove(identifier);
-	}
-	
-	/**
-	 * Internal API for exporting visualizer state
-	 */
-	@Override
-	String getRepresentation() {
-		StringBuilder v_json = new StringBuilder("{"
-				+ "\"name\": \"bridges\","
-				+ "\"version\": \"0.4.0\","
-				+ "\"visual\": \"graph\","
-				+ "\"nodes\": {");
-		for (AbstractVertex v : nodes.values()) {
-			for (Entry<String, String> entry : v.properties)
-			v_json.append(",");
-		}
-		v_json.append("}");
-		return v_json.toString();
-	}
+	public Map<String, AbstractVertex> nodes;
 }
