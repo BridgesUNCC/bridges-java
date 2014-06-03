@@ -22,7 +22,6 @@ abstract public class AbstractVertex implements Map<String, Edge> {
 	 * Links, with properties other than just target Node.
 	 */
 	public Map<String, Edge> links;
-	links.put("Tom Hanks", new Edge(..));
 	
 	/**
 	 * Visualization properties for this Node.
