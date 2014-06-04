@@ -8,8 +8,21 @@ import java.util.HashMap;
  * @author Sean Gallagher
  */
 public class Vertex extends AbstractVertex {
-	public Vertex(String identifier) {
+
+	private GraphVisualizer graph;
+	
+	public Vertex(String identifier, GraphVisualizer graph) {
 		super(identifier);
-		links = new HashMap<>();
+		incoming = outgoing = new HashMap<>();		 
+		
+		this.graph = graph;
+		
+		//adds a vertex to the map
+		graph.vertices.put(identifier, this);		
+	}
+	
+	//removes the vertex that called the method
+	public void remove(){
+		graph.vertices.remove(this);
 	}
 }

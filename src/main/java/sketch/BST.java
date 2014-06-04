@@ -20,7 +20,24 @@ public class BST{
 
     public static void main(String args[])
     {
-      BST<String, IntBST> i_tree = new BST<String, IntBST>();
+    	//--------------------------Testing------------------------------------
+    	GraphVisualizer gv = new GraphVisualizer();
+    		
+    	Vertex bob = new Vertex("actor/Bob", gv);
+   		Vertex fred = new Vertex("loafer/Fred", gv);
+   		Edge bob_to_fred = new Edge(bob, fred);
+   		
+   		bob.remove();
+    		
+   		Vertex steve = new Vertex("actor/Steve", gv);
+   		Edge bob_to_steve = new Edge(bob, steve);
+    		
+   		//gv.vertices.put("actor/Bob", bob);
+   		//gv.vertices.put("loafer/Fred", fred);
+   		//gv.vertices.put("actor/Steve", steve);    	
+   		
+   		//---------------------------------------------------------------------
+    		BST<String, IntBST> i_tree = new BST<String, IntBST>();
 
             System.out.println("------ BEGIN -----------")  ;
             System.out.println("Tree Size: " + i_tree.size());

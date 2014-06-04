@@ -1,12 +1,8 @@
 package sketch;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Object Oriented Graph Visualizer
@@ -75,7 +71,7 @@ public class GraphVisualizer extends Visualizer {
 		//  because otherwise you might meet a vertex without an index
 		for (AbstractVertex v : Bridge.sorted_values(vertices)) {
 			// Manage link properties
-			for (Edge e : Bridge.sorted_values(v.links)) {
+			for (Edge e : Bridge.sorted_values(v.outgoing)) {
 				// Encapsulate in {}, and remove the trailing comma.
 				links += e.getRepresentation(vertex_to_index) + ",";
 			}
