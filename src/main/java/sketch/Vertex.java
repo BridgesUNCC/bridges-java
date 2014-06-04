@@ -8,7 +8,8 @@ import java.util.HashMap;
  * @author Sean Gallagher
  */
 public class Vertex extends AbstractVertex {
-	public Vertex() {
+	public Vertex(String identifier) {
+		super(identifier);
 		links = new HashMap<>();
 	}
 }

@@ -1,16 +1,24 @@
 package sketch;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Generic graph link, with visual components. 
  */
-public class Edge {
+public class Edge implements Comparable<Edge> {
 	/**
 	 * Visualization properties for this Link
 	 * This could be made private.
 	 */
-	private Map<String, String> properties;
+	Map<String, String> properties = new HashMap<>();
+	AbstractVertex source, destination;
 	
+	public Edge(AbstractVertex source, AbstractVertex destination) {
+		this.source = source;
+		this.destination = destination;
+	}
+
 	/**
 	 * Get the color, according to CSS formats.
 	 * By default, the color will be chosen at random.
@@ -118,5 +126,45 @@ public class Edge {
 	 */
 	public void setOpacity(double opacity) {
 		properties.put("opacity", Double.toString(opacity));
+	}
+	
+	/**
+	 * Internal code for getting the properties of an Edge.
+	 * Vertexes are represented by index in the JSON format. Pass a map to
+	 * represent that connection (possibly made by earlier traversal.)
+	 * 
+	 * It produces (without the spaces or newlines):
+	 * <tt>
+	 * {
+	 *  "source": 8162,
+	 *  "destination: 1827,
+	 *  "other CSS properties like color": any_JSON_value
+	 * }
+	 * 
+	 * 
+	 * @param vertex_to_integer		Vertex->index map (see description)
+	 * @returns the encoded JSON string
+	 */
+	String getRepresentation(Map<AbstractVertex, Integer> vertex_to_index) {
+		String json = "{";
+		for (Entry<String, String> entry : properties.entrySet()) {
+			json += String.format("\"%s\":%s,", entry.getKey(), entry.getValue());
+		}
+		json += String.format("\"source\":%s,", vertex_to_index.get(source));
+		json += String.format("\"target\":%s", vertex_to_index.get(destination));
+		return json + "}";
+	}
+
+	@Override
+	public int compareTo(Edge o) {
+		if (o == null) {
+			return 0;
+		} else {
+			int s_compare = source.compareTo(o.source);
+			if (s_compare == 0)
+				return destination.compareTo(o.destination);
+			else
+				return s_compare;
+		}
 	}
 }
