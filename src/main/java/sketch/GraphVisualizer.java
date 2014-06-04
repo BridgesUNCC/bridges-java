@@ -1,6 +1,10 @@
 package sketch;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -25,13 +29,6 @@ public class GraphVisualizer extends Visualizer {
 	 * part of their homework. So this can be public.
 	 */
 	public Map<String, AbstractVertex> vertices = new HashMap<>();
-	
-	/**
-	 * @return a string with all but the last character
-	 */
-	private String trimLast(String in) {
-		return in.substring(0, Math.max(in.length()-1, 0));
-	}
 	
 	/**
 	 * Internal API for exporting visualizer state
@@ -63,31 +60,32 @@ public class GraphVisualizer extends Visualizer {
 	String getRepresentation() {
 		String nodes = "";
 		String links = "";
-		for (AbstractVertex v : vertices.values()) {
+		Map<AbstractVertex, Integer> vertex_to_index = new HashMap<>();
+		
+		int i=0;
+		for (AbstractVertex v : Bridge.sorted_values(vertices)) {
 			// Manage vertex properties
-			String node_json = "";
-			for (Entry<String, String> entry : v.properties.entrySet()) {
-				node_json += String.format("%s:%s,", entry.getKey(), entry.getValue());
-			}
 			// Encapsulate in {}, and remove the trailing comma.
-			nodes += String.format("{%s},", trimLast(node_json));
-			
+			nodes += v.getRepresentation() + ",";
+			vertex_to_index.put(v, i);
+			i++;
+		}
+		
+		// You have to finish all the vertices before you can start any of the edges
+		//  because otherwise you might meet a vertex without an index
+		for (AbstractVertex v : Bridge.sorted_values(vertices)) {
 			// Manage link properties
-			String link_json = "";
-			for (Edge e : v.links.values()) {
-				for (Entry<String, String> entry : e.properties.entrySet()) {
-					link_json += String.format("{%s:%s}", entry.getKey(), entry.getValue());
-				}
+			for (Edge e : Bridge.sorted_values(v.links)) {
 				// Encapsulate in {}, and remove the trailing comma.
-				links += String.format("{%s},", trimLast(link_json));
+				links += e.getRepresentation(vertex_to_index) + ",";
 			}
 		}
 		return "{"
 				+ "\"name\": \"bridges\","
 				+ "\"version\": \"0.4.0\","
 				+ "\"visual\": \"graph\","
-				+ "\"nodes\": [" + trimLast(nodes) + "]"
-				+ "\"links\": [" + trimLast(links) + "]"
+				+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
+				+ "\"links\": [" + Bridge.trimComma(links) + "]"
 				+ "}";
 	}
 }

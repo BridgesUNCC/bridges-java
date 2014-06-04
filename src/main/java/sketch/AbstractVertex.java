@@ -1,18 +1,15 @@
 package sketch;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * Abstract graph vertex, with an unspecified adjacency construct.
  * Whatever is used must be compatible with Map. The default implementation
  * Vertex uses a HashMap. You are free to use any you prefer.
- * 
- * This class provides delegates for its {@link links} member for convenience.
  */
-abstract public class AbstractVertex {
+abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	/**
 	 * This is the string by which this AbstractVertex should be found.
 	 * This is not a label; it includes provider information as well.
@@ -183,6 +180,37 @@ abstract public class AbstractVertex {
 		} else if (!identifier.equals(other.identifier))
 			return false;
 		return true;
+	}
+	
+	/**
+	 * Internal code for getting the properties of an AbstractVertex.
+	 * 
+	 * It produces (without the spaces or newlines):
+	 * <tt>
+	 * {
+	 *  "name": "Some identifier",
+	 *  "other CSS properties like color": any_JSON_value
+	 * }
+	 * @returns the encoded JSON string
+	 */
+	String getRepresentation() {
+		String json = "{";
+		for (Entry<String, String> entry : properties.entrySet()) {
+			json += String.format("\"%s\":%s,", entry.getKey(), entry.getValue());
+		}
+		json += String.format("\"name\": \"%s\"", identifier);
+		return json + "}";
+	}
+
+	/**
+	 * Abstract Vertex comparator: sorts by identifier.
+	 */
+	@Override
+	public int compareTo(AbstractVertex o) {
+		if (o != null) {
+			return identifier.compareTo(o.identifier);
+		}
+		return 0;
 	}
 	
 	
