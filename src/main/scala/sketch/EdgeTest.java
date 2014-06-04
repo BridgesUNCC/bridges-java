@@ -13,6 +13,8 @@ public class EdgeTest {
 
 	@Test
 	public final void testSetColor() {
+		// Edge e = new Edge(); e.setColor("green"); e.getColor().equals("green");
+		// Edge e = new Edge(); e.setColor("DROP TABLE users WHERE 1=1;"); e.getColor().equals("green");
 		fail("Not yet implemented"); // TODO
 	}
 
