@@ -1,4 +1,5 @@
 package sketch;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -9,8 +10,14 @@ public class Edge {
 	 * Visualization properties for this Link
 	 * This could be made private.
 	 */
-	private Map<String, String> properties;
+	Map<String, String> properties = new HashMap<>();
+	AbstractVertex source, destination;
 	
+	public Edge(AbstractVertex source, AbstractVertex destination) {
+		this.source = source;
+		this.destination = destination;
+	}
+
 	/**
 	 * Get the color, according to CSS formats.
 	 * By default, the color will be chosen at random.

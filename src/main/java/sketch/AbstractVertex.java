@@ -1,6 +1,7 @@
 package sketch;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
  * 
  * This class provides delegates for its {@link links} member for convenience.
  */
-abstract public class AbstractVertex implements Map<String, Edge> {
+abstract public class AbstractVertex {
 	/**
 	 * This is the string by which this AbstractVertex should be found.
 	 * This is not a label; it includes provider information as well.
@@ -26,7 +27,7 @@ abstract public class AbstractVertex implements Map<String, Edge> {
 	/**
 	 * Visualization properties for this Node.
 	 */
-	Map<String, String> properties;
+	Map<String, String> properties = new HashMap<>();
 	
 	/**
 	 * Create an AbstractVertex
