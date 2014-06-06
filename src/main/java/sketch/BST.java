@@ -21,20 +21,26 @@ public class BST{
     public static void main(String args[])
     {
     	//--------------------------Testing------------------------------------
+    	//create a graph to add vertices to
     	GraphVisualizer gv = new GraphVisualizer();
-    		
+    	
+    	//create a vertex, (identifier, graph)	
     	Vertex bob = new Vertex("actor/Bob", gv);
    		Vertex fred = new Vertex("loafer/Fred", gv);
+   		
+   		//create edge between vertices, (vertex, vertex)
    		Edge bob_to_fred = new Edge(bob, fred);
    		
+   		//removes the vertex and hopefully associated edges
    		bob.remove();
+   		
     		
    		Vertex steve = new Vertex("actor/Steve", gv);
-   		Edge bob_to_steve = new Edge(bob, steve);
-    		
-   		//gv.vertices.put("actor/Bob", bob);
-   		//gv.vertices.put("loafer/Fred", fred);
-   		//gv.vertices.put("actor/Steve", steve);    	
+   		Edge bob_to_steve = new Edge(bob, steve);   
+   		
+   		//removes the edge, but not the vertices it may be connected to
+   		bob_to_steve.remove();
+   	
    		
    		//---------------------------------------------------------------------
     		BST<String, IntBST> i_tree = new BST<String, IntBST>();

@@ -7,12 +7,23 @@ import java.util.Map.Entry;
 public class AbstractEdge implements Comparable<AbstractEdge> {
 
 	AbstractVertex source, destination;
-	
+	/**
+	 * Visualization properties for this Link
+	 * This could be made private.
+	 */
 	Map<String, String> properties = new HashMap<>();
+	Map<String, AbstractVertex> eOutgoing;
 	
-	public AbstractEdge(AbstractVertex source, AbstractVertex destination){
+	final String identifier;//new
+	
+	public AbstractEdge(AbstractVertex source, AbstractVertex destination, String identifier){//new
 		this.source = source;
-		this.destination = destination;
+		this.destination = destination;	
+		this.identifier = identifier;//new
+	}
+	
+	public String getIdentifier(){
+		return identifier;
 	}
 	/**
 	 * Get the color, according to CSS formats.
@@ -30,7 +41,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 			return prop;
 		}
 	}
-	
+
 	/**
 	 * Set the color, according to CSS formats.
 	 * By default, the color will be chosen at random.
