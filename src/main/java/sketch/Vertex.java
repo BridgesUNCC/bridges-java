@@ -17,46 +17,53 @@ public class Vertex extends AbstractVertex {
 	 */
 	public Vertex(String identifier, GraphVisualizer graph) {
 		super(identifier);
-		outgoing =  new HashMap<>();//incoming = 	 
+		outgoing =  new HashMap<>();
 		
 		this.graph = graph;
 		
 		//adds a vertex to the map
 		graph.vertices.put(identifier, this);		
 	}
-	//testing theory, I think this is better because it doesn't store the edge in memory. Just via pointers that can be erased.
+	
 	/**
 	 * Creates an edge between the calling vertex and a passed vertex.
 	 * 
-	 * @param v2 The second vertex that edge is between
-	 * @param identifier Name of the edge
+	 * @param v2 The second vertex that edge is between.
+	 * @param identifier Name of the edge being created.
 	 */
-	public void createEdge(Vertex v2, String identifier){
+	public void createEdge(String identifier, Vertex v2){
 		Edge tempEdge = new Edge(this, v2, identifier);
 	}
+	
 	/**
 	 * Removes the vertex that is used to call this method from the GraphVisualizer.
 	 */
 	public void remove(){
 
-		if(this.identifier != null){//removes vertex from map, not from memory though
+		if(graph.vertices.containsKey(this.identifier)){		
 			graph.vertices.remove(this.identifier);	
 						
+		}else{
+			System.out.println("The vertex " + this.identifier + " doesn't exist.");
 		}
-		//TODO: message saying the vertex doesn't exist	
+		
+		//TODO: throw exception
 		
 	}
-	/**Removing an edge connected to the calling vertex.
+	
+	/**
+	 * Removes the edge contained between the two vertices used.
 	 * 
-	 * @param edgeName The 'Edge' To be removed
+	 * @param v2 The second vertex that makes up the edge
+	 * @param edgeName The name of the edge to be removed
 	 */
-	//Still needs to get the other vertex removed
-	public void removeEdge(String edgeName){
-		for(String key : edgeMap.keySet() ){//goes through the map of edges connected to the vertex
-			if(edgeMap.keySet().equals(edgeName)){
-				edgeMap.remove(edgeName);//once found removes it
-				
-			}
+	public void removeEdge(String edgeName, Vertex v2){
+		//goes through the map of edges connected to the vertex
+		if(this.outgoing.containsKey(edgeName) && v2.outgoing.containsKey(edgeName)){
+			this.outgoing.remove(edgeName);
+			v2.outgoing.remove(edgeName);
+		}else{
+			System.out.println("The edge " + edgeName + " doesn't exist.");
 		}
 		
 	}

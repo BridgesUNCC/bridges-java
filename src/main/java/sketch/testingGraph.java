@@ -10,30 +10,17 @@ public class testingGraph {
     	
     	//create a vertex, (identifier, graph)	
     	Vertex bob = new Vertex("actor/Bob", gv);
-   		Vertex fred = new Vertex("loafer/Fred", gv);
-   		
-   		//create edge between vertices, (vertex, vertex)
-   		//Edge bob_to_fred = new Edge(bob, fred, "bob_to_fred");
-   		
+   		Vertex fred = new Vertex("loafer/Fred", gv);   		
 
-   		bob.createEdge(fred, "bobToFred");
+   		bob.createEdge("bobToFred", fred);
    		
-   		bob.removeEdge("bobToFred");
+   		bob.removeEdge("bobToFred", fred);
     		
-   		Vertex steve = new Vertex("actor/Steve", gv);
-   		//Edge bob_to_steve = new Edge(bob, steve, "bob_to_steve");
-   		//Edge steve_to_fred = new Edge(steve, fred, "steve_to_fred");  
+   		Vertex steve = new Vertex("actor/Steve", gv); 
    		
-   		//removes the vertex 
+   		//removes the vertex, not from memory just from the graph 
+   		bob.remove(); 
    		bob.remove();
- 
-   		//removes the edge, but not the vertices it may be connected to
-   		//bob_to_steve.remove();
-   		if(true){
-   		//bob_to_fred.remove(); 
-   		}
-   		  	
-   		
 
 	}
 

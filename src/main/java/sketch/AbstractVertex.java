@@ -19,8 +19,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	/**
 	 * Links, with properties other than just target Node.
 	 */
-	public Map<String, Edge>outgoing, edgeMap;// incoming, 
-	
+	public Map<String, Edge>outgoing;
 	/**
 	 * Visualization properties for this Node.
 	 */
