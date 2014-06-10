@@ -1,4 +1,8 @@
-/** The Dictionary abstract class. */
+/** The Dictionary abstract class. 
+ * author: Shaffer
+ * 
+ * */
+
 public interface Dictionary<Key, E>{
   /** Reinitialize dictionary */
   public void clear();

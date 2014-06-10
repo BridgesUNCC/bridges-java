@@ -8,7 +8,7 @@
  */
 class BST<Key extends Comparable<? super Key>, E>
          implements Dictionary<Key, E> {
-  private BSTNoDe<Key,E> root; // Root of the BST
+  private BST_Node<Key,E> root; // Root of the BST
   private int nodecount;       // Number of nodes in the BST
   /** Constructor */
   BST() { root = null; nodecount = 0; }
@@ -16,10 +16,10 @@ class BST<Key extends Comparable<? super Key>, E>
   
   /** @return The current subtree, modified to contain
    the new item */
-private BSTNoDe<Key,E> inserthelp(BSTNoDe<Key,E> rt,
+private BST_Node<Key,E> inserthelp(BST_Node<Key,E> rt,
                                   Key k, E e) {
 
-  if (rt == null) return new BSTNoDe<Key,E>(k, e);
+  if (rt == null) return new BST_Node<Key,E>(k, e);
   if (rt.key().compareTo(k) > 0)
       rt.setLeft(inserthelp(rt.left(), k, e));
   else
@@ -29,7 +29,7 @@ private BSTNoDe<Key,E> inserthelp(BSTNoDe<Key,E> rt,
 
 /** Remove a node with key value k
     @return The tree with the node removed */
-private BSTNoDe<Key,E> removehelp(BSTNoDe<Key,E> rt,Key k) {
+private BST_Node<Key,E> removehelp(BST_Node<Key,E> rt,Key k) {
   if (rt == null) return null;
   if (rt.key().compareTo(k) > 0)
     rt.setLeft(removehelp(rt.left(), k));
@@ -39,7 +39,7 @@ private BSTNoDe<Key,E> removehelp(BSTNoDe<Key,E> rt,Key k) {
     if (rt.left() == null) return rt.right();
     else if (rt.right() == null) return rt.left();
     else { // Two children
-      BSTNoDe<Key,E> temp = getmin(rt.right());
+      BST_Node<Key,E> temp = getmin(rt.right());
       rt.setElement(temp.element());
       rt.setKey(temp.key());
       rt.setRight(deletemin(rt.right()));
@@ -49,7 +49,7 @@ return rt;
 }//end of removehelp
 
 //the findhelp finds and returns the object with key value k
-private E findhelp(BSTNoDe<Key,E> rt, Key k) {
+private E findhelp(BST_Node<Key,E> rt, Key k) {
   if (rt == null) return null;
   if (rt.key().compareTo(k) > 0)
     return findhelp(rt.left(), k);
@@ -58,13 +58,13 @@ private E findhelp(BSTNoDe<Key,E> rt, Key k) {
 }//end of findhelp
 
 //returns the min key value stored in the tree
-private BSTNoDe<Key,E> getmin(BSTNoDe<Key,E> rt) {
+private BST_Node<Key,E> getmin(BST_Node<Key,E> rt) {
   if (rt.left() == null) return rt;
   return getmin(rt.left());
 }//end of getmin
 
 //deletes the min value
-private BSTNoDe<Key,E> deletemin(BSTNoDe<Key,E> rt) {
+private BST_Node<Key,E> deletemin(BST_Node<Key,E> rt) {
   if (rt.left() == null) return rt.right();
   rt.setLeft(deletemin(rt.left()));
   return rt;
@@ -113,7 +113,7 @@ private BSTNoDe<Key,E> deletemin(BSTNoDe<Key,E> rt) {
   
   //this method traverses the tree and 
   //builds a StringBuilder object containing all the nodes' values
-   public StringBuilder printTree(BSTNoDe<Key,E> rt, StringBuilder aCurrentTree){
+   public StringBuilder printTree(BST_Node<Key,E> rt, StringBuilder aCurrentTree){
       
       aCurrentTree.append(rt.key()+" "); //append the key value of current node visited 
       if (rt.left()!=null)
