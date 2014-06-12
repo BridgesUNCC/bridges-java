@@ -8,7 +8,33 @@ public class testingGraph {
     	//create a graph to add vertices to
     	GraphVisualizer gv = new GraphVisualizer();
     	
-    	//create a vertex, (identifier, graph)	
+    	Vertex bob= new Vertex("actor/Bob", gv);
+    	Vertex steve=new Vertex("actor/Steve", gv);
+    	
+    	bob.createEdge("bobToSteve", steve);
+    	
+    	bob.removeEdge("bobToSteve", steve);
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	//create a vertex, (identifier, graph)
+    	/*
     	Vertex bob = new Vertex("actor/Bob", gv);
    		Vertex fred = new Vertex("loafer/Fred", gv);   		
 
@@ -21,7 +47,9 @@ public class testingGraph {
    		//removes the vertex, not from memory just from the graph 
    		bob.remove(); 
    		bob.remove();
-
+	*/
+    	
+    	
 	}
 
 }

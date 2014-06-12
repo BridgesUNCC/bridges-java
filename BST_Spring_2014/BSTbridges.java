@@ -1,9 +1,10 @@
-package sketch;
 /**
  * Title: Binary Search Tree ADT with Strings for Bridges
- * @author mihai mehedint
- * @version1.0 modified after the driver provided during 2214 spring 2014 by krs
+ * @author: mihai mehedint
+ * @version1.0 
  * @05.25.2014
+ * 
+ * The driver is a modified version of the driver used in class
  */
 class IntBST{
     private String value;
@@ -16,11 +17,11 @@ class IntBST{
     
 }
 
-public class BST{
+public class BSTbridges{
 
     public static void main(String args[])
     {
-    		BST<String, IntBST> i_tree = new BST<String, IntBST>();
+      BST<String, IntBST> i_tree = new BST<String, IntBST>();
 
             System.out.println("------ BEGIN -----------")  ;
             System.out.println("Tree Size: " + i_tree.size());
