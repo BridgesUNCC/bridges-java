@@ -32,7 +32,7 @@ public class Vertex extends AbstractVertex {
 	 * @param identifier Name of the edge being created.
 	 */
 	public void createEdge(String identifier, Vertex v2){
-		Edge tempEdge = new Edge(this, v2, identifier);
+		new Edge(this, v2, identifier);
 	}
 	
 	/**
