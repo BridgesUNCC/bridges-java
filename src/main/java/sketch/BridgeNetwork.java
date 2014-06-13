@@ -10,6 +10,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.fluent.*;
 import org.apache.http.entity.ContentType;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,6 +23,15 @@ public class BridgeNetwork {
     String server_url = "http://bridges.cs.uncc.edu";
     Executor http_connection;
     boolean debug = false;
+    
+    public BridgeNetwork() {
+    	http_connection = Executor.newInstance(
+    			HttpClientBuilder
+    					.create()
+    					.setRedirectStrategy(new LaxRedirectStrategy())
+    					.build()
+    		    );
+    }
     
     /* Accessors and Mutators */
     
@@ -337,8 +348,12 @@ public class BridgeNetwork {
      * @returns the new url as a String
      */
     public String prepare(String url) {
-      	return server_url + url
-      			.replace(" ", "%20")
-      			.replace("$assignment", Integer.toString(Bridge.getAssignment()));
+    	String out = server_url;
+    	out += url
+    			.replace(" ", "%20")
+      			.replace("$assignment", Integer.toString(
+      					Bridge.getAssignment()));
+    	out += "?apikey=" + Bridge.getKey();
+      	return out;
     }    
 }

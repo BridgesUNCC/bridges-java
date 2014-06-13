@@ -22,6 +22,7 @@ import edu.uncc.cs.bridges.RateLimitException;
  */
 public class Bridge {
 	private static int assignment;
+	private static String key;
 	private static String server_url;
 	private static Visualizer visualizer;
 	private static BridgeNetwork backend;
@@ -32,8 +33,9 @@ public class Bridge {
 	 * @param assignment  The assignment number, for grading
 	 * @param visualizer  The visualizer, for assignment
 	 */
-	public static void init(int assignment, Visualizer visualizer) {
+	public static void init(int assignment, String key, Visualizer visualizer) {
 		Bridge.assignment = assignment;
+		Bridge.key = key;
 		Bridge.visualizer = visualizer;
 		Bridge.backend = new BridgeNetwork();
 	}
@@ -47,8 +49,8 @@ public class Bridge {
 	 * @param backend
 	 */
 	public static void init(
-			int assignment, Visualizer visualizer, BridgeNetwork backend) {
-		init(assignment, visualizer);
+			int assignment, String key, Visualizer visualizer, BridgeNetwork backend) {
+		init(assignment, key, visualizer);
 		Bridge.backend = backend;
 	}
 	
@@ -58,10 +60,10 @@ public class Bridge {
 	 * @param visual  Type of Visualizer (an enum)
 	 * @return the new Visualizer
 	 */
-	public static Visualizer init(int assignment, visual kind) {
-		Bridge.assignment = assignment;
+	public static Visualizer init(int assignment, String key, visual kind) {
 		// TODO: actually pick a Visualizer
-		Bridge.visualizer = new GraphVisualizer();
+		Visualizer visualizer = new GraphVisualizer();
+		init(assignment, key, visualizer);
 		return Bridge.visualizer;
 	}
 	
@@ -70,15 +72,20 @@ public class Bridge {
 	public static int getAssignment() {
 		return assignment;
 	}
-
 	public static void setAssignment(int assignment) {
 		Bridge.assignment = assignment;
+	}
+	
+	public static String getKey() {
+		return key;
+	}
+	public static void setKey(String key) {
+		Bridge.key = key;
 	}
 
 	public static String getServerURL() {
 		return server_url;
 	}
-
 	public static void setServerURL(String server_url) {
 		Bridge.server_url = server_url;
 	}
@@ -86,10 +93,9 @@ public class Bridge {
 	public static Visualizer getVisualizer() {
 		return visualizer;
 	}
-
 	public static void setVisualizer(Visualizer visualizer) {
 		Bridge.visualizer = visualizer;
-	};
+	}
 	
 	/**
 	 * Update visualization metadata. This may be called many times.
