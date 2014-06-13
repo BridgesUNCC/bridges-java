@@ -1,11 +1,17 @@
 package sketch;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import edu.uncc.cs.bridges.RateLimitException;
 
 /**
  * Connection to the Bridges server.
@@ -18,6 +24,7 @@ public class Bridge {
 	private static int assignment;
 	private static String server_url;
 	private static Visualizer visualizer;
+	private static BridgeNetwork backend;
 	public enum visual {GRAPH, TREE, ARRAY}; 
 
 	/**
@@ -28,6 +35,21 @@ public class Bridge {
 	public static void init(int assignment, Visualizer visualizer) {
 		Bridge.assignment = assignment;
 		Bridge.visualizer = visualizer;
+		Bridge.backend = new BridgeNetwork();
+	}
+	
+	/**
+	 * Initialize Bridges with a Visualizer and a backend.
+	 * This is only intended to make debugging easier by allowing you to stub
+	 * the Internet.
+	 * @param assignment  Your assignment ID
+	 * @param visualizer  
+	 * @param backend
+	 */
+	public static void init(
+			int assignment, Visualizer visualizer, BridgeNetwork backend) {
+		init(assignment, visualizer);
+		Bridge.backend = backend;
 	}
 	
 	/**
@@ -42,43 +64,32 @@ public class Bridge {
 		Bridge.visualizer = new GraphVisualizer();
 		return Bridge.visualizer;
 	}
+	
+	/* Accessors and Mutators */
 
-	public int getAssignment() {
+	public static int getAssignment() {
 		return assignment;
 	}
 
-	public void setAssignment(int assignment) {
-		this.assignment = assignment;
+	public static void setAssignment(int assignment) {
+		Bridge.assignment = assignment;
 	}
 
-	public String getServerURL() {
+	public static String getServerURL() {
 		return server_url;
 	}
 
-	public void setServerURL(String server_url) {
-		this.server_url = server_url;
+	public static void setServerURL(String server_url) {
+		Bridge.server_url = server_url;
 	}
 
-	public Visualizer getVisualizer() {
+	public static Visualizer getVisualizer() {
 		return visualizer;
 	}
 
-	public void setVisualizer(Visualizer visualizer) {
-		this.visualizer = visualizer;
+	public static void setVisualizer(Visualizer visualizer) {
+		Bridge.visualizer = visualizer;
 	};
-	
-	/**
-	 * Get the identifiers of nodes associated with another node
-	 * 
-	 * What exactly this means depends on the identifier.
-	 * For an actor, it would be the movies he played in, for example.
-	 * 
-	 * @param identifier  The node in question
-	 * @return a list of related nodes' identifiers
-	 */
-	public static List<String> getAssociations(String identifier) {
-		return new ArrayList<>();
-	}
 	
 	/**
 	 * Update visualization metadata. This may be called many times.
@@ -95,7 +106,7 @@ public class Bridge {
 	 * This only calls update() but it could conceivably do more.
 	 */
 	public static void complete() {
-		
+		update();
 	}
 	
 	
@@ -124,7 +135,9 @@ public class Bridge {
 	 * @return a string with all but the first and last characters
 	 */
 	static String unquote(String in) {
-		return in.substring(Math.min(in.length()-1, 1), Math.max(in.length()-1, 0));
+		return in.substring(
+				Math.min(in.length()-1, 1),
+				Math.max(in.length()-1, 0));
 	}
 	
 	/**
@@ -155,4 +168,148 @@ public class Bridge {
 		return sorted_entries;
 	}
 	
+    /**
+     * 	Automatically choose whether to open a node identifier with:
+     *  Twitter via followers(),
+     *  TMDb with movies(), or
+     *  RottenTomatoes with actors()
+     * 
+     * @param identifier
+     * @param max
+     * @throws IOException 
+     * @returns a list of identifiers
+     * @throws QueryLimitException
+     */
+    public static List<String> getAssociations(String identifier, int max)
+    		throws RateLimitException, IOException {
+    	Ident id = Ident.fromAnyString(identifier);
+    	switch (id.provider) {
+    	case "twitter.com":
+    		return followers(id, max);
+    	case "actor":
+    		return movies(id, max);
+    	case "movie":
+    		return actors(id, max);
+    	default:
+    		throw new RuntimeException(
+    				"Unrecognized service " + id.provider
+    				+ ". Choose from twitter.com, actor, or movie");
+    	}
+    }
+    
+    /** List the user's followers as more FollowGraphNodes.
+        Limit the result to `max` followers. Note that results are batched, so
+        a large `max` (as high as 200) _may_ only count as one request.
+        See Bridges.followgraph() for more about rate limiting. 
+     * @throws IOException */
+    static List<String> followers(Ident id, int max)
+    		throws RateLimitException, IOException {
+    	String resp = backend.get("/streams/twitter.com/followers/"
+    			+ id.name + "/" + max);
+    	
+        JSONObject response = backend.asJSONObject(resp);
+        JSONArray followers = (JSONArray) backend.safeJSONTraverse(
+        		"['followers']", response, JSONArray.class);
+        
+        List<String> results = new ArrayList<>();
+    	for (Object follower : followers) {
+    		String name = (String) backend.safeJSONTraverse(
+    				"", follower, String.class);
+    		results.add("twitter.com/" + name);
+    	}
+        return results;
+    }
+    
+    /**
+     * Return a list of movies an actor played in.
+     * 
+     * The data comes courtesy of RottenTomatoes.
+     * 
+     * The quota for this resource is about 10k actors/day but is shared by all
+     * students. So if you consume all 10k, it will be a bad day. Please make
+     * sure you limit your queries appropriately.
+     * 
+     */
+    static List<String> movies(Ident id, int max)
+    		throws RateLimitException, IOException {
+    	String resp = backend.get("/streams/actors/" + id.name);
+    	JSONArray movies = backend.asJSONArray(resp);
+    	
+        // Get (in JS) movies_json.map(function(m) { return m.title; })
+        List<String> results = new ArrayList<>();
+        for (Object movie : movies) {
+        	String title = (String) backend.safeJSONTraverse("['title']",
+        			movie, String.class);
+        	results.add("movie/" + title);
+        }
+        return results;
+    }
+    
+    /**
+     * Return the actors that played in a movie.
+     * 
+     * The data comes courtesy of TMDb.
+     * 
+     * This resource has unlimited queries but has caveats. Not every extra
+     * that played in every movie ever is listed in the database and some
+     * movies are documented rather sparsely. Expect some to be missing.
+     * @throws IOException 
+     * @throws RateLimitException 
+     */
+    static List<String> actors(Ident id, int max)
+    		throws IOException, RateLimitException {
+    	String resp = backend.get("/streams/rottentomatoes.com/" + id.name);
+    	JSONArray movies = backend.asJSONArray(resp);
+    	
+        // We will assume that the first movie is the right one
+    	JSONArray abridged_cast = (JSONArray) backend.safeJSONTraverse(
+    			"[0]['abridged_cast']", movies, JSONArray.class);
+    	List<String> results = new ArrayList<>();
+    	for (Object cast_member : abridged_cast) {
+    		if (results.size() == max)
+    			break;
+    		String name = (String) backend.safeJSONTraverse("['name']",
+    				cast_member, String.class);
+			results.add("actor/" + name);
+    	}
+    	return results;
+    }
+}
+
+class Ident {
+	public String provider;
+	public String name;
+	
+	/**
+	 * Create a new Ident from an identifier string with a provider
+	 * @param identifier
+	 */
+	public Ident(String identifier) {
+    	if (identifier.contains("/")) {
+    		String[] halves = identifier.split("/", 2);
+    		provider = halves[0];
+    		name = halves[1];
+    	} else {
+    		throw new RuntimeException("Provider or screenname missing in "
+    				+ identifier + ". Should look like: example.com/username");
+    	}
+	}
+	
+	/**
+	 * Create a plain, straightforward Ident with the provider and name as given.
+	 * @param provider
+	 * @param name
+	 */
+	public Ident(String provider, String name) {
+		this.provider = provider;
+		this.name = name;
+	}
+	
+	public static Ident fromAnyString(String identifier) {
+    	if (identifier.contains("/")) {
+    		return new Ident(identifier);
+    	} else {
+    		return new Ident("", identifier);
+    	}
+	}
 }
