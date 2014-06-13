@@ -146,8 +146,9 @@ public class Bridge {
 	 * @param values
 	 * @return
 	 */
-	static <T extends Comparable> List<T> sorted_values(Map<String, T> values) {
-		List<T> sorted_values = new ArrayList<T>(values.values());
+	static <T extends Comparable<T>> List<T> sorted_values(
+			Map<String, T> values) {
+		List<T> sorted_values = new ArrayList<>(values.values());
 		Collections.sort(sorted_values);
 		return sorted_values;
 	}
@@ -158,8 +159,9 @@ public class Bridge {
 	 * @param values
 	 * @return
 	 */
-	static <K extends Comparable, V> List<Entry<K, V>> sorted_entries(Map<K, V> map) {
-		List<Entry<K, V>> sorted_entries = new ArrayList<Entry<K, V>>(map.entrySet());
+	static <K extends Comparable<K>, V> List<Entry<K, V>> sorted_entries(
+			Map<K, V> map) {
+		List<Entry<K, V>> sorted_entries = new ArrayList<>(map.entrySet());
 		Collections.sort(sorted_entries, new Comparator<Entry<K, V>>() {
 			public int compare(Entry<K, V> t, Entry<K, V> o) {
 				return t.getKey().compareTo(o.getKey());
