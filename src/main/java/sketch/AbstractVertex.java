@@ -1,6 +1,7 @@
 package sketch;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -19,7 +20,8 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	/**
 	 * Links, with properties other than just target Node.
 	 */
-	public Map<String, Edge>outgoing;
+	//public Map<String, Edge>outgoing;
+	List<AbstractEdge> outgoing;
 	/**
 	 * Visualization properties for this Node.
 	 */

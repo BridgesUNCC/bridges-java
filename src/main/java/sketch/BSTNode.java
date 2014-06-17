@@ -52,8 +52,8 @@ public class BSTNode extends AbstractVertex {
 	 */
 	private void setLeftEdge(BSTNode n2){
 		//removing the edgeIdentifier would make removal easier
-		String edgeIdentifier = this.identifier + "To" + n2.identifier;//concatenates the name of the edge -- not sure if necessary
-		this.leftEdge = new BSTEdge(this, n2, edgeIdentifier);//creates the edge, and has the left pointer reference it
+		
+		this.leftEdge = new BSTEdge(this, n2);//creates the edge, and has the left pointer reference it
 	}
 	/**
 	 * Returns the left connected edge for property manipulation.
@@ -90,9 +90,8 @@ public class BSTNode extends AbstractVertex {
 	 * @param n2 The second node that makes up the edge.
 	 */
 	private void setRightEdge(BSTNode n2){
-		//removing the edgeIdentifier would make removal easier, is edgeIdentifier necessary?
-		String edgeIdentifier = this.identifier + "To" + n2.identifier;
-		this.rightEdge = new BSTEdge(this, n2, edgeIdentifier);		
+
+		this.rightEdge = new BSTEdge(this, n2);		
 	}
 	/**
 	 * Returns the right connected edge for property manipulation.

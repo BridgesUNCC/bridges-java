@@ -1,5 +1,6 @@
 package sketch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,8 +18,8 @@ public class Vertex extends AbstractVertex {
 	 */
 	public Vertex(String identifier, GraphVisualizer graph) {
 		super(identifier);
-		outgoing =  new HashMap<>();
-		
+		//outgoing =  new HashMap<>();
+		outgoing = new ArrayList<AbstractEdge>();//creates empty list of connected edges
 		this.graph = graph;
 		
 		//adds a vertex to the map
@@ -29,10 +30,9 @@ public class Vertex extends AbstractVertex {
 	 * Creates an edge between the calling vertex and a passed vertex.
 	 * 
 	 * @param v2 The second vertex that edge is between.
-	 * @param identifier Name of the edge being created.
 	 */
-	public void createEdge(String identifier, Vertex v2){
-		new Edge(this, v2, identifier);
+	public void createEdge(Vertex v2){
+		new Edge(this, v2);
 	}
 	
 	/**
@@ -50,21 +50,25 @@ public class Vertex extends AbstractVertex {
 		//TODO: throw exception
 		
 	}
-	
+	/*
+	//If we remove identifiers can you specify a specific edge to remove?
 	/**
 	 * Removes the edge contained between the two vertices used.
 	 * 
 	 * @param v2 The second vertex that makes up the edge
 	 * @param edgeName The name of the edge to be removed
 	 */
-	public void removeEdge(String edgeName, Vertex v2){
+	/*public void removeEdge(AbstractVertex v2){
+		this.outgoing.
+		if(this.outgoing == v2.outgoing)
+			this.outgoing.remove(outgoing);
 		//goes through the map of edges connected to the vertex
-		if(this.outgoing.containsKey(edgeName) && v2.outgoing.containsKey(edgeName)){
+		/*if(this.outgoing.containsKey(edgeName) && v2.outgoing.containsKey(edgeName)){
 			this.outgoing.remove(edgeName);
 			v2.outgoing.remove(edgeName);
 		}else{
 			System.out.println("The edge " + edgeName + " doesn't exist.");
-		}
+		}*/
 		
-	}
+	}*/
 }

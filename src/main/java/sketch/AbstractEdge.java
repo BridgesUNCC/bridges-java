@@ -1,6 +1,7 @@
 package sketch;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -12,19 +13,20 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * This could be made private.
 	 */
 	Map<String, String> properties = new HashMap<>();
-	Map<String, AbstractVertex> eOutgoing;
+	//Map<String, AbstractVertex> eOutgoing;
+	public List<AbstractVertex> eOutgoing;
 	
-	final String identifier;//new
+	//final String identifier;//new
 	
-	public AbstractEdge(AbstractVertex source, AbstractVertex destination, String identifier){//new
+	public AbstractEdge(AbstractVertex source, AbstractVertex destination){//new
 		this.source = source;
 		this.destination = destination;	
-		this.identifier = identifier;//new
+		
 	}
 	
-	public String getIdentifier(){
+	/*public String getIdentifier(){
 		return identifier;
-	}
+	}*/
 	/**
 	 * Get the color, according to CSS formats.
 	 * By default, the color will be chosen at random.

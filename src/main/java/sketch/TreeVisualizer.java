@@ -1,3 +1,8 @@
+/*
+
+This is what the student would have to write. The methods would be empty for them and they would just fill them out to learn the BST data structure.
+
+*/
 package sketch;
 
 //import java.util.HashMap;
@@ -131,7 +136,7 @@ public class TreeVisualizer extends AbstractVertex {
 		root = removeNode(root, node);
 	}
 	/**
-	 * Removes a specified node from the tree.
+	 * Removes the specified node from the tree.
 	 * 
 	 * @param rt The root node.
 	 * @param node The node to be removed.
