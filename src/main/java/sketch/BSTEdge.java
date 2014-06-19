@@ -8,7 +8,6 @@ public class BSTEdge extends AbstractEdge{
 	 * 
 	 * @param source The source node.
 	 * @param destination The destination node.
-	 * @param identifier The name of the Edge.
 	 */
 	public BSTEdge(BSTNode source, BSTNode destination) {		
 		super(source, destination);

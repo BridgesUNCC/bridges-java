@@ -2,8 +2,7 @@ package sketch;
 
 public class BSTNode extends AbstractVertex {
 	
-	private BSTEdge leftEdge, rightEdge;
-	private String identifier;
+	private BSTEdge leftEdge, rightEdge;	
 	private int val;//temp till I research comparable
 	
 	/**
@@ -13,8 +12,7 @@ public class BSTNode extends AbstractVertex {
 	 * @param val The value so it can be sorted(temporary).
 	 */
 	public BSTNode(String identifier, int val){
-		super(identifier);
-		this.identifier = identifier;
+		super(identifier);		
 		this.val = val;
 	}	
 	
@@ -94,7 +92,7 @@ public class BSTNode extends AbstractVertex {
 		this.rightEdge = new BSTEdge(this, n2);		
 	}
 	/**
-	 * Returns the right connected edge for property manipulation.
+	 * Returns the right connected edge.
 	 * 
 	 * @return The right edge from the calling node.
 	 */

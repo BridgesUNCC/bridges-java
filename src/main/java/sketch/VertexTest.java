@@ -15,10 +15,6 @@ public class VertexTest {
 		Steve = new Vertex("Steve", graph);
 		John = new Vertex("John", graph);
 	}
-/*	@Test
-	public final void testVertex() {
-	
-	}*/
 
 	@Test
 	public final void testCreateEdge() {
@@ -27,19 +23,4 @@ public class VertexTest {
 		Steve.createEdge(John);
 		assertNotNull(John.outgoing);
 	}
-
-	@Test
-	public final void testRemove() {
-		Bob.remove();
-		assertFalse(graph.vertices.containsKey("Bob"));
-
-	}
-
-	/*@Test
-	public final void testRemoveEdge() {
-		John.removeEdge("steveToJohn", Steve);
-		assertFalse(John.outgoing.containsKey("steveToJohn"));
-		assertFalse(Steve.outgoing.containsKey("steveToJohn"));
-	}*/
-
 }

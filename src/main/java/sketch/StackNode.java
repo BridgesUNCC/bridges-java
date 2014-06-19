@@ -3,7 +3,6 @@ package sketch;
 public class StackNode extends AbstractVertex {
 	
 	private StackEdge nodeOutgoing;
-	private String nodeIdentifier;
 	
 	/**
 	 * Creates a new StackNode.
@@ -12,8 +11,7 @@ public class StackNode extends AbstractVertex {
 	 */
 	public StackNode(String nodeIdentifier){
 		super(nodeIdentifier);
-		
-		this.nodeIdentifier = nodeIdentifier;		
+				
 	}
 	/**
 	 * Creates a StackEdge and connects it to the calling StackNode and the passed StackNode.
@@ -22,7 +20,7 @@ public class StackNode extends AbstractVertex {
 	 */
 	private void setEdge (StackNode n){
 		//TODO make identifier if needed
-		this.nodeOutgoing = new StackEdge(this, n, "test");//returns an edge pointing to the next node
+		this.nodeOutgoing = new StackEdge(this, n);//returns an edge pointing to the next node
 	}
 	/**
 	 * Returns the connected StackEdge to the calling StackNode.
@@ -55,14 +53,4 @@ public class StackNode extends AbstractVertex {
 			return null;
 		}else return this.nodeOutgoing.getEdgeOutgoing();
 	}
-	
-	/**
-	 * Returns the name of the calling StackNode.
-	 * 
-	 * @return The StackNode identifier.
-	 */
-	public String getNodeIdentifier(){
-		return nodeIdentifier;
-	}
-
 }
