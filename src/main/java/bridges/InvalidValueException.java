@@ -1,4 +1,4 @@
-package sketch;
+package bridges;
 
 /**
  * Exception indicating invalid CSS values.

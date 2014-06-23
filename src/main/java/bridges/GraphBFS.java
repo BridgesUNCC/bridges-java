@@ -1,4 +1,4 @@
-package sketch;
+package bridges;
 /**
  * Title: Graph ADT with BFS traversal call for Bridges
  * @author mihai mehedint

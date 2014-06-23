@@ -1,4 +1,4 @@
-package sketch;
+package bridges;
 
 import static org.junit.Assert.*;
 

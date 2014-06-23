@@ -1,4 +1,4 @@
-package sketch;
+package bridges;
 
 /*
  * The Node class for a Doubly Linked List. Automates the process for creating the 'Edge objects' between 

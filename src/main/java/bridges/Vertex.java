@@ -1,4 +1,4 @@
-package sketch;
+package bridges;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class Vertex extends AbstractVertex {
 		outgoing = new ArrayList<AbstractEdge>();//creates empty list of connected edges
 		//this.graph = graph;
 		
-		//adds a vertex to the map
+		//adds a vertex to the map	
 		graph.vertices.put(identifier, this);		
 	}
 	

@@ -1,4 +1,4 @@
-package sketch;
+package bridges;
 
 /**
  * Visualizer interface to be implemented by

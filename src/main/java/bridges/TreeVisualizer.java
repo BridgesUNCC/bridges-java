@@ -3,7 +3,7 @@
 This is what the student would have to write. The methods would be empty for them and they would just fill them out to learn the BST data structure.
 
 */
-package sketch;
+package bridges;
 
 //import java.util.HashMap;
 //import java.util.Map;

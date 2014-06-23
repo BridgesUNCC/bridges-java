@@ -1,4 +1,4 @@
-package sketch;
+package bridges;
 
 public class BSTEdge extends AbstractEdge{
 
