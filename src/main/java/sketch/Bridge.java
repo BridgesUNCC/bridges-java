@@ -102,7 +102,24 @@ public class Bridge {
 	 * Calling this method is optional provided you call complete()
 	 */
 	public static void update() {
-		
+        try {
+			backend.post("/assignments/" + assignment, visualizer.getRepresentation());
+		} catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ "representation to the server. Are you connected to the"
+					+ "Internet? Check your network settings. Otherwise, maybe"
+					+ "the central Bridges server is down. Try again later.");
+			e.printStackTrace();
+		} catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ "representation to the server. However, it responded with"
+					+ "an impossible 'RateLimitException'. Please contact"
+					+ "Bridges developers and file a bug report; this error"
+					+ "should not be possible.");
+			e.printStackTrace();
+		}
+        // Return a URL to the user
+        System.out.println("Check out your visuals at " + backend.prepare("/assignments/" + assignment + "/YOUR_USERNAME") );
 	}
 
 	/**
