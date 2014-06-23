@@ -11,7 +11,6 @@ import java.util.Map.Entry;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import edu.uncc.cs.bridges.RateLimitException;
 
 /**
  * Connection to the Bridges server.

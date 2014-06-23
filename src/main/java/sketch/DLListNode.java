@@ -24,8 +24,12 @@ public class DLListNode extends AbstractVertex{
 	 * Creates an Edge between the two Nodes if one doesn't exist, otherwise it utilizes a pre-existing Edge.
 	 * 
 	 * @param next The next Node in the Doubly Linked List.
+	 * @throws Exception Verifies the Nodes aren't NULL.
 	 */
-	public void setNext(DLListNode next){
+	public void setNext(DLListNode next) throws Exception{
+		if(this == null || next == null){
+			throw new Exception("Next not set, one or more Nodes were NULL.");
+		}
 		//o  []  o
 		if(this.nextEdge == null && next.prevEdge == null){
 			//o<- [] ->o
@@ -62,12 +66,16 @@ public class DLListNode extends AbstractVertex{
 	 * Creates an edge between the two Nodes if one doesn't exist, otherwise it utilizes a pre-existing edge.
 	 * 
 	 * @param prev The previous Node in the Double Linked List.
+	 * @throws Exception Verifies the Nodes aren't NULL.
 	 */
-	public void setPrev(DLListNode prev){
+	public void setPrev(DLListNode prev) throws Exception{
+		if(this == null || prev == null){
+			throw new Exception("Previous not set, one or more Nodes were NULL.");
+		}
 		//o  []  o
 		if(this.prevEdge == null && prev.nextEdge == null){
-			//o->[]<-o
-			//     ->
+			//o<-[]->o
+			//     <-
 			this.prevEdge = new DLListEdge(prev, this);
 		}
 		//o->[]  o
@@ -83,7 +91,7 @@ public class DLListNode extends AbstractVertex{
 				prev.nextEdge = null;
 			}
 			//o  []<-o
-			// <-  ->o
+			// <-  ->
 			this.prevEdge.setPrevNode(prev);
 		}
 	}

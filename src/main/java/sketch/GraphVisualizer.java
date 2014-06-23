@@ -1,6 +1,7 @@
 package sketch;
 
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,7 +72,8 @@ public class GraphVisualizer extends Visualizer {
 		//  because otherwise you might meet a vertex without an index
 		for (AbstractVertex v : Bridge.sorted_values(vertices)) {
 			// Manage link properties
-			for (Edge e : Bridge.sorted_values(v.outgoing)) {
+			Collections.sort(v.outgoing);
+			for (AbstractEdge e : v.outgoing) {
 				// Encapsulate in {}, and remove the trailing comma.
 				links += e.getRepresentation(vertex_to_index) + ",";
 			}
