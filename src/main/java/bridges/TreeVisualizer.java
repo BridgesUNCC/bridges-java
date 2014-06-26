@@ -171,7 +171,7 @@ public class TreeVisualizer extends AbstractVertex {
 		}else return removeNode(rt.getLeftChild(), node);				
 	}	
 	//Maybe put this in abstractVertex and tailor it to handle BST? make specific method call?
-	/*@Override
+	@Override
 	String getRepresentation() {
 		String nodes = "";
 		String links = "";
@@ -202,6 +202,6 @@ public class TreeVisualizer extends AbstractVertex {
 				+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
 				+ "\"links\": [" + Bridge.trimComma(links) + "]"
 				+ "}";
-	}*/
+	}
 
 }

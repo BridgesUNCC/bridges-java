@@ -207,4 +207,13 @@ public class Validation {
 					+ "one of: " + NODE_SHAPES);
 		}
 	}
+	
+	public static void validateOpacity(double val){
+		if(val >= 0.0 && val <= 1.0){
+			return;
+		}else{
+			throw new InvalidValueException("Invalid value' " + val + "'. Expected"
+					+ " a value between 0.0 and 1.0.");
+		}
+	}
 }

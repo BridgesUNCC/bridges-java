@@ -144,6 +144,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * @param opacity  Alpha, in range [0.0, 1.0]
 	 */
 	public void setOpacity(double opacity) {
+		Validation.validateOpacity(opacity);
 		properties.put("opacity", Double.toString(opacity));
 	}
 	

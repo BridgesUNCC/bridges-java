@@ -32,6 +32,17 @@ public class Vertex extends AbstractVertex {
 	 * @param v2 The second vertex that edge is between.
 	 */
 	public void createEdge(Vertex v2){
-		new Edge(this, v2);
+		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
+		new Edge(this, v2, ident);
+	}
+	
+	public AbstractEdge getEdge(AbstractVertex v2){
+		
+		for(int i = 0; i < this.outgoing.size(); i++){
+			//if(this.outgoing(i) == v2.outgoing(i))
+		}
+
+		
+		return null;
 	}
 }
