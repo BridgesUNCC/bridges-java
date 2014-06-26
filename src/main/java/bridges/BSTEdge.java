@@ -10,7 +10,7 @@ public class BSTEdge extends AbstractEdge{
 	 * @param destination The destination node.
 	 */
 	public BSTEdge(BSTNode source, BSTNode destination) {		
-		super(source, destination);
+		super(source, destination, "");
 		
 		outgoing = destination;//edge outgoing pointer to the destination vertex	
 	}

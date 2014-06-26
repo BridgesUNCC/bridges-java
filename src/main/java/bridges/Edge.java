@@ -10,7 +10,6 @@ import java.util.Map.Entry;
  */
 public class Edge extends AbstractEdge{
 
-	private String identifier;
 	/**
 	 * Takes two vertices and creates and edge between them.
 	 * 
@@ -18,7 +17,7 @@ public class Edge extends AbstractEdge{
 	 * @param destination The destination vertex. 
 	 */
 	public Edge(AbstractVertex source, AbstractVertex destination, String identifier) {		
-		super(source, destination);		
+		super(source, destination, identifier);		
 		//automates the connection process
 		//creates both connections   O  ->  O
 		//							    <-
@@ -34,8 +33,5 @@ public class Edge extends AbstractEdge{
 		//Adds the destination and the source to the list of vertices connected to the edge
 		this.eOutgoing.add(source);
 		this.eOutgoing.add(destination);		
-	}
-	public String getIdentifier(){
-		return identifier;
 	}
 }

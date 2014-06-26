@@ -14,7 +14,7 @@ public class DLListEdge extends AbstractEdge {
 	 * @param next The next Node in the list.
 	 */
 	public DLListEdge(DLListNode prev, DLListNode next){
-		super(prev, next);
+		super(prev, next, "");
 		
 		//setting the connections for this edge to the next and previous Nodes
 		//o<-[]  o

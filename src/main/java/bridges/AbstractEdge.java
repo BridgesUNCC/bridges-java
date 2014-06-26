@@ -16,17 +16,18 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	//Map<String, AbstractVertex> eOutgoing;
 	public List<AbstractVertex> eOutgoing;
 	
-	//final String identifier;//new
+	final String identifier;
 	
-	public AbstractEdge(AbstractVertex source, AbstractVertex destination){//new
+	public AbstractEdge(AbstractVertex source, AbstractVertex destination, String identifier){
 		this.source = source;
-		this.destination = destination;	
+		this.destination = destination;
+		this.identifier = identifier;
 		
 	}
 	
-	/*public String getIdentifier(){
+	public String getIdentifier(){
 		return identifier;
-	}*/
+	}
 	/**
 	 * Get the color, according to CSS formats.
 	 * By default, the color will be chosen at random.

@@ -106,16 +106,16 @@ public class Bridge {
 			backend.post("/assignments/" + assignment, visualizer.getRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
-					+ "representation to the server. Are you connected to the"
-					+ "Internet? Check your network settings. Otherwise, maybe"
-					+ "the central Bridges server is down. Try again later.");
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central Bridges server is down. Try again later.");
 			e.printStackTrace();
 		} catch (RateLimitException e) {
 			System.err.println("There was a problem sending the visualization"
-					+ "representation to the server. However, it responded with"
-					+ "an impossible 'RateLimitException'. Please contact"
-					+ "Bridges developers and file a bug report; this error"
-					+ "should not be possible.");
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " Bridges developers and file a bug report; this error"
+					+ " should not be possible.");
 			e.printStackTrace();
 		}
         // Return a URL to the user

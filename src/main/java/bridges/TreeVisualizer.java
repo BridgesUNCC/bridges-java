@@ -202,6 +202,6 @@ public class TreeVisualizer extends AbstractVertex {
 				+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
 				+ "\"links\": [" + Bridge.trimComma(links) + "]"
 				+ "}";
-	}
+	} 
 
 }

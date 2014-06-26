@@ -36,13 +36,21 @@ public class Vertex extends AbstractVertex {
 		new Edge(this, v2, ident);
 	}
 	
+	/**
+	 * Returns the Edge between two Vertices.
+	 * 
+	 * @param v2 The second vertex.
+	 * @return The associated Edge.
+	 */
 	public AbstractEdge getEdge(AbstractVertex v2){
-		
+		//Can't think of any faster way to do this. -- Any suggestions?
 		for(int i = 0; i < this.outgoing.size(); i++){
-			//if(this.outgoing(i) == v2.outgoing(i))
-		}
-
-		
+			for(int j = 0; j < v2.outgoing.size(); j++){
+				if(this.outgoing.get(i).getIdentifier() == v2.outgoing.get(i).getIdentifier()){				
+					return this.outgoing.get(i);
+				}
+			}
+		}		
 		return null;
 	}
 }

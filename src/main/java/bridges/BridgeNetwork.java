@@ -304,7 +304,7 @@ public class BridgeNetwork {
             
             // But otherwise, throw something less helpful.
             throw new IOException("Server errored, but gave an invalid"
-            		+ "report: " + text + ". Consider filing a bug report"
+            		+ " report: " + text + ". Consider filing a bug report"
     				+ " about this at http://github.com/SeanTater/bridges.");
         }
         

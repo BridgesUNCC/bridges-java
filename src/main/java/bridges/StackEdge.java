@@ -11,7 +11,7 @@ public class StackEdge extends AbstractEdge {
 	 * @param destination The destination StackNode.
 	 */
 	public StackEdge(StackNode source, StackNode destination){
-		super(source, destination);
+		super(source, destination, "");
 		
 		edgeOutgoing = destination;		
 	}
