@@ -67,7 +67,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @return  CSS dash array, for example "5,10,5"
 	 */
 	public String getDash() {
-		String prop = properties.get("dash");
+		String prop = properties.get("dasharray");
 		if (prop == null) {
 			return "";
 		} else {
@@ -106,10 +106,11 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	
 	/**
 	 * Set the thickness in pixels
-	 * @param pixels  Thickness in pixels
+	 * @param pixels  Thickness in pixels, in range [0.0, 50.0]
 	 */
 	public void setThickness(double pixels) {
 		//TODO: Should we protect against NaN and Inf?
+		Validation.validateSize(pixels);
 		properties.put("thickness", Double.toString(pixels));
 	}
 	
@@ -134,6 +135,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @param opacity  Alpha, in range [0.0, 1.0]
 	 */
 	public void setOpacity(double opacity) {
+		Validation.validateOpacity(opacity);
 		properties.put("opacity", Double.toString(opacity));
 	}
 	
@@ -157,7 +159,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	String getRepresentation(Map<AbstractVertex, Integer> vertex_to_index) {
 		String json = "{";
 		for (Entry<String, String> entry : properties.entrySet()) {
-			json += String.format("\"%s\":%s,", entry.getKey(), entry.getValue());
+			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
 		}
 		json += String.format("\"source\":%s,", vertex_to_index.get(source));
 		json += String.format("\"target\":%s", vertex_to_index.get(destination));

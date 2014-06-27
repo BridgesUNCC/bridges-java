@@ -17,8 +17,9 @@ public class DLListNode extends AbstractVertex{
 	 * 
 	 * @param ident The identifier of the Node.
 	 */
-	public DLListNode(String ident){
+	public DLListNode(String ident, GraphVisualizer graph){
 		super(ident);
+		graph.vertices.put(ident, this);
 	}
 	/**
 	 * Creates an Edge between the two Nodes if one doesn't exist, otherwise it utilizes a pre-existing Edge.

@@ -117,10 +117,11 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	
 	/**
 	 * Take a node by it's identifier string and get it's node color
-	 * @param pixels  Diameter of the node
+	 * @param pixels  Diameter of the node, in range [0.0, 50.0]
 	 */
 	public void setSize(double pixels) {
-		properties.put("opacity", Double.toString(pixels));
+		Validation.validateSize(pixels);
+		properties.put("size", Double.toString(pixels));
 	}
 	
 	/**
@@ -198,7 +199,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	String getRepresentation() {
 		String json = "{";
 		for (Entry<String, String> entry : properties.entrySet()) {
-			json += String.format("\"%s\":%s,", entry.getKey(), entry.getValue());
+			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
 		}
 		json += String.format("\"name\": \"%s\"", identifier);
 		return json + "}";

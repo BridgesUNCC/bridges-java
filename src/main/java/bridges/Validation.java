@@ -197,10 +197,14 @@ public class Validation {
 		throw new InvalidValueException("Invalid color' " + color + "'. Expected"
 				+ "CSS color name, or #RRGGBB or #RGB formats.");
 	}
-
+	
+	/**
+	 * Determines if the shape is supported.
+	 * 
+	 * @param shape
+	 */
 	public static void validateShape(String shape) {
 		if (NODE_SHAPES.contains(shape)) {
-			// Named color
 			return;
 		} else {
 			throw new InvalidValueException("Invalid shape' " + shape + "'. Expected"
@@ -208,12 +212,32 @@ public class Validation {
 		}
 	}
 	
+	/**
+	 * Determines if the value passed is an acceptable value to set the opacity to.
+	 * 	
+	 * @param val
+	 */
 	public static void validateOpacity(double val){
 		if(val >= 0.0 && val <= 1.0){
 			return;
 		}else{
 			throw new InvalidValueException("Invalid value' " + val + "'. Expected"
 					+ " a value between 0.0 and 1.0.");
+		}
+	}
+	
+	/**
+	 * Determines if the value passed is an acceptable value to set the size to.
+	 * 
+	 * @param val
+	 */
+	//Temporary Values
+	public static void validateSize(double val){
+		if(val >= 0.0 && val <= 50.0){
+			return;
+		}else{
+			throw new InvalidValueException("Invalid value' " + val + "'. Expected"
+					+ " a value between 0.0 and 50.0.");
 		}
 	}
 }
