@@ -1,6 +1,7 @@
 package bridges;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 public class BSTNode extends AbstractVertex {
 	
@@ -105,4 +106,33 @@ public class BSTNode extends AbstractVertex {
 	public BSTEdge getRightEdge(){
 		return rightEdge;
 	}
+	
+	/**
+	 * Internal code for getting the properties of an AbstractVertex.
+	 * 
+	 * It produces (without the spaces or newlines):
+	 * <tt>
+	 * {
+	 *  "name": "Some identifier",
+	 *  "other CSS properties like color": any_JSON_value
+	 * }
+	 * @returns the encoded JSON string
+	 */
+/*	String getNodeRepresentation() {
+		return getLeftChild().getRepresentation()
+			+ ","
+			+ super.getRepresentation() 
+			+ ","
+			+ getRightChild().getRepresentation();
+	}
+	
+	String getEdgeRepresentation() {
+		return getLeftChild().getRepresentation()
+			+ ","
+			+ super.getRepresentation() 
+			+ ","
+			+ getRightChild().getRepresentation();
+	}*/
+	
 }
+

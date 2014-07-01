@@ -35,21 +35,18 @@ public class TreeVisualizer {
 			return newNode;			
 		}else if(newNode.getVal() < rt.getVal() ){
 			if(rt.getLeftEdge() == null){
-				rt.setLeftChild(newNode); 
-				return rt;
+				rt.setLeftChild(newNode); 				
 			}else{
-				rt.setLeftChild(insertNode(rt.getLeftChild(), newNode));
-				return rt;
+				rt.setLeftChild(insertNode(rt.getLeftChild(), newNode));				
 			}				
 		}else{
 			if(rt.getRightEdge() == null){
-				rt.setRightChild(newNode);
-				return rt;
+				rt.setRightChild(newNode);				
 			}else{				
-				rt.setRightChild(insertNode(rt.getRightChild(), newNode));
-				return rt;
+				rt.setRightChild(insertNode(rt.getRightChild(), newNode));				
 			}				
 		}
+		return rt;
 	}
 	//Could easily change this to return the name of the object.
 	public boolean find(int val){
@@ -107,8 +104,10 @@ public class TreeVisualizer {
 	 */
 	private BSTNode removeMin(BSTNode rt) throws Exception{
 		if(rt.getLeftChild() == null){
-			
-			return null;
+			if(rt.getRightChild() == null){
+				return null;
+			}
+				return rt.getRightChild();
 		}else{
 			rt.setLeftChild(removeMin(rt.getLeftChild()));//check logic
 			
@@ -151,6 +150,7 @@ public class TreeVisualizer {
 	 * @param node The node to be removed.
 	 * @return The new tree structure after the node is removed.
 	 */
+	//Probably need to find based of identifier
 	private BSTNode removeNode(BSTNode rt, BSTNode node){
 		//if the node is found that you are trying to remove
 		if( rt.getVal() == node.getVal()){
@@ -208,9 +208,9 @@ public class TreeVisualizer {
 				+ "\"name\": \"bridges\","
 				+ "\"version\": \"0.4.0\","
 				+ "\"visual\": \"graph\","
-				+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
-				+ "\"links\": [" + Bridge.trimComma(links) + "]"
+				+ "\"nodes\": [" + nodes + "],"
+				+ "\"links\": [" + links + "]"
 				+ "}";
-	} */
+	}*/
 
 }

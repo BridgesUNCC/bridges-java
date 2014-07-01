@@ -95,8 +95,8 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * Get the thickness in pixels
 	 * @returns Thickness in pixels
 	 */
-	public double getThickness() {
-		String prop = properties.get("thickness");
+	public double getWidth() {
+		String prop = properties.get("width");
 		if (prop == null) {
 			return 1.0;
 		} else {
@@ -108,10 +108,10 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * Set the thickness in pixels
 	 * @param pixels  Thickness in pixels, in range [0.0, 50.0]
 	 */
-	public void setThickness(double pixels) {
+	public void setWidth(double pixels) {
 		//TODO: Should we protect against NaN and Inf?
 		Validation.validateSize(pixels);
-		properties.put("thickness", Double.toString(pixels));
+		properties.put("width", Double.toString(pixels));
 	}
 	
 	/**
