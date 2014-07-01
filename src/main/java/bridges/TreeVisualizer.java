@@ -5,15 +5,20 @@ This is what the student would have to write. The methods would be empty for the
 */
 package bridges;
 
+import java.util.HashMap;
+import java.util.Map;
+
 //import java.util.HashMap;
 //import java.util.Map;
 
-public class TreeVisualizer extends AbstractVertex {
-	
+public class TreeVisualizer {
+		
 	private BSTNode root;
-	public TreeVisualizer(String identifier){
-		super(identifier);
+	
+	public BSTNode getRoot(){
+		return root;
 	}
+	
 	public void insert(BSTNode newNode) throws Exception{
 		root = insertNode(root, newNode);
 	}
@@ -29,18 +34,20 @@ public class TreeVisualizer extends AbstractVertex {
 		if(rt == null){			
 			return newNode;			
 		}else if(newNode.getVal() < rt.getVal() ){
-			if(rt.getLeftChild() == null){
+			if(rt.getLeftEdge() == null){
 				rt.setLeftChild(newNode); 
 				return rt;
-			}else{				
-				return insertNode(rt.getLeftChild(), newNode);
+			}else{
+				rt.setLeftChild(insertNode(rt.getLeftChild(), newNode));
+				return rt;
 			}				
 		}else{
 			if(rt.getRightEdge() == null){
-				rt.setLeftChild(newNode);
+				rt.setRightChild(newNode);
 				return rt;
 			}else{				
-				return insertNode(rt.getRightChild(), newNode);
+				rt.setRightChild(insertNode(rt.getRightChild(), newNode));
+				return rt;
 			}				
 		}
 	}
@@ -100,9 +107,11 @@ public class TreeVisualizer extends AbstractVertex {
 	 */
 	private BSTNode removeMin(BSTNode rt) throws Exception{
 		if(rt.getLeftChild() == null){
+			
 			return null;
 		}else{
 			rt.setLeftChild(removeMin(rt.getLeftChild()));//check logic
+			
 			return rt;
 		}
 	}
@@ -171,7 +180,7 @@ public class TreeVisualizer extends AbstractVertex {
 		}else return removeNode(rt.getLeftChild(), node);				
 	}	
 	//Maybe put this in abstractVertex and tailor it to handle BST? make specific method call?
-	@Override
+	/*@Override
 	String getRepresentation() {
 		String nodes = "";
 		String links = "";
@@ -202,6 +211,6 @@ public class TreeVisualizer extends AbstractVertex {
 				+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
 				+ "\"links\": [" + Bridge.trimComma(links) + "]"
 				+ "}";
-	} 
+	} */
 
 }

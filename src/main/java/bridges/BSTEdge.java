@@ -1,8 +1,10 @@
 package bridges;
 
+import java.util.ArrayList;
+
 public class BSTEdge extends AbstractEdge{
 
-	private BSTNode outgoing;
+	private BSTNode out;
 	/**
 	 * Creates an Edge between two nodes.
 	 * 
@@ -12,7 +14,22 @@ public class BSTEdge extends AbstractEdge{
 	public BSTEdge(BSTNode source, BSTNode destination) {		
 		super(source, destination, "");
 		
-		outgoing = destination;//edge outgoing pointer to the destination vertex	
+		eOutgoing = new ArrayList<AbstractVertex>();
+		
+		out = destination;//edge outgoing pointer to the destination vertex	
+		
+		//source Node -> Edge    destination Node
+		source.outgoing.add(this);
+		//test
+		destination.outgoing.add(this);
+		
+		//this.eOutgoing.add(source);
+		
+		//source Node -> Edge -> destination Node
+		this.eOutgoing.add(destination);
+		//test
+		this.eOutgoing.add(source);
+
 	}
 	/**
 	 * Sets the outgoing pointer of the calling edge.
@@ -20,13 +37,13 @@ public class BSTEdge extends AbstractEdge{
 	 * @param n The new node being referenced.
 	 */
 	public void setOutgoing(BSTNode n){
-		this.outgoing = n;
+		this.out = n;
 	}
 	/**
 	 * 
 	 * @return The pointer of the outgoing connection.
 	 */
 	public BSTNode getOutgoing(){
-		return outgoing;
+		return out;
 	}
 }

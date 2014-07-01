@@ -1,5 +1,7 @@
 package bridges;
 
+import java.util.ArrayList;
+
 public class BSTNode extends AbstractVertex {
 	
 	private BSTEdge leftEdge, rightEdge;	
@@ -11,9 +13,13 @@ public class BSTNode extends AbstractVertex {
 	 * @param identifier Name of the node.
 	 * @param val The value so it can be sorted(temporary).
 	 */
-	public BSTNode(String identifier, int val){
+	public BSTNode(String identifier, int val, GraphVisualizer tree){
 		super(identifier);		
 		this.val = val;
+		
+		outgoing = new ArrayList<AbstractEdge>();//creates empty list of connected edges
+		//adding this vertex to the map for the JSON file.
+		tree.vertices.put(identifier, this);
 	}	
 	
 	public int getVal(){
@@ -28,8 +34,8 @@ public class BSTNode extends AbstractVertex {
 	 * @param n The left child of the calling node.
 	 */
 	public void setLeftChild(BSTNode n) throws Exception{
-		if(this == null || n == null){
-			throw new Exception("Left Child not created, one or more of the nodes was NULL.");
+		if(n == null){
+			this.leftEdge = null;
 		}
 		else this.setLeftEdge(n);
 	}
@@ -68,8 +74,8 @@ public class BSTNode extends AbstractVertex {
 	 * @throws Exception 
 	 */
 	public void setRightChild(BSTNode n) throws Exception{
-		if(this == null || n == null){
-			throw new Exception("Right Child not created, one or more of the nodes was NULL.");
+		if(n == null){
+			this.rightEdge = null;
 		}
 		else this.setRightEdge(n);		
 	}
