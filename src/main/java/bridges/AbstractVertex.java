@@ -33,6 +33,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 */
 	public AbstractVertex(String identifier) {
 		this.identifier = identifier;
+		this.setColor("black");
 	}
 	
 	/// Accessors and mutators for visualization properties follow
@@ -55,12 +56,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * @see Validation#validateColor(String)
 	 */
 	public String getColor() {
-		String prop = properties.get("color");
-		if (prop == null) {
-			return "";
-		} else {
-			return prop;
-		}
+		return properties.get("color");
 	}
 	
 	/**
@@ -73,7 +69,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 */
 	public void setColor(String color) {
 		if (color == null || color.isEmpty()) {
-			properties.remove("color");
+			properties.put("color", "black");
 		} else {
 			Validation.validateColor(color);
 			properties.put("color", color);
