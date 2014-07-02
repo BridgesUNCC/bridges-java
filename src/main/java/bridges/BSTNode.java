@@ -1,6 +1,7 @@
 package bridges;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class BSTNode extends AbstractVertex {
@@ -118,21 +119,12 @@ public class BSTNode extends AbstractVertex {
 	 * }
 	 * @returns the encoded JSON string
 	 */
-/*	String getNodeRepresentation() {
-		return getLeftChild().getRepresentation()
-			+ ","
-			+ super.getRepresentation() 
-			+ ","
-			+ getRightChild().getRepresentation();
-	}
-	
-	String getEdgeRepresentation() {
-		return getLeftChild().getRepresentation()
-			+ ","
-			+ super.getRepresentation() 
-			+ ","
-			+ getRightChild().getRepresentation();
+	/*int getNodeRepresentation(int node_index, StringBuilder node_json, StringBuilder link_json) {
+		node_json.append(super.getRepresentation() + ","); //json rep of properties
+		link_json.append()
+		node_index++;
+		
+		node_index = getLeftChild().getNodeRepresentation(node_index, node_json, link_json);//json rep of node
+		return getRightChild().getNodeRepresentation(node_index, node_json, link_json);
 	}*/
-	
 }
-
