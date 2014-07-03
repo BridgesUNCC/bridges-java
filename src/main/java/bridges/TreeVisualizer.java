@@ -11,7 +11,7 @@ import java.util.Map;
 //import java.util.HashMap;
 //import java.util.Map;
 
-public class TreeVisualizer {
+public class TreeVisualizer extends Visualizer {
 		
 	private BSTNode root;
 	
@@ -86,8 +86,16 @@ public class TreeVisualizer {
 	 */
 	private int findMin(BSTNode rt){
 		if(rt.getLeftChild() == null){
+			rt.setColor("red");
 			return rt.getVal();
-		}else return findMin(rt.getLeftChild());				
+		}else {
+			if(rt != root)
+				rt.setColor("red");//tracing to min node
+			if(rt.getLeftEdge() != null){
+				rt.getLeftEdge().setColor("red");
+			}
+			return findMin(rt.getLeftChild());				
+		}
 	}
 	public void rMin() throws Exception{			
 		if(root == null){
@@ -128,8 +136,14 @@ public class TreeVisualizer {
 	 */
 	private int findMax(BSTNode rt){
 		if(rt.getRightChild() == null){
+			rt.setColor("Orange");			
 			return rt.getVal();
-		}else return findMax(rt.getRightChild());		
+		}else{
+			if(rt != root)//tracing route to max node
+				rt.setColor("Orange");
+			rt.getRightEdge().setColor("Orange");
+			return findMax(rt.getRightChild());		
+		}
 	}
 	//used for node removal ONLY
 	private BSTNode findMinNode(BSTNode rt){
@@ -179,38 +193,21 @@ public class TreeVisualizer {
 		//if the value is smaller
 		}else return removeNode(rt.getLeftChild(), node);				
 	}	
+	
 	//Maybe put this in abstractVertex and tailor it to handle BST? make specific method call?
-	/*@Override
 	String getRepresentation() {
-		String nodes = "";
-		String links = "";
-		Map<AbstractVertex, Integer> vertex_to_index = new HashMap<>();
+		StringBuilder nodes = new StringBuilder();
+		StringBuilder links = new StringBuilder();
 		
-		int i=0;
-		for (AbstractVertex v : Bridge.sorted_values(vertices)) {
-			// Manage vertex properties
-			// Encapsulate in {}, and remove the trailing comma.
-			nodes += v.getRepresentation() + ",";
-			vertex_to_index.put(v, i);
-			i++;
-		}
+		getRoot().getNodeRepresentation(nodes, links);
 		
-		// You have to finish all the vertices before you can start any of the edges
-		//  because otherwise you might meet a vertex without an index
-		for (AbstractVertex v : Bridge.sorted_values(vertices)) {
-			// Manage link properties
-			for (Edge e : Bridge.sorted_values(v.outgoing)) {
-				// Encapsulate in {}, and remove the trailing comma.
-				links += e.getRepresentation(vertex_to_index) + ",";
-			}
-		}
 		return "{"
-				+ "\"name\": \"bridges\","
-				+ "\"version\": \"0.4.0\","
-				+ "\"visual\": \"graph\","
-				+ "\"nodes\": [" + nodes + "],"
-				+ "\"links\": [" + links + "]"
-				+ "}";
-	}*/
+		+ "\"name\": \"bridges\","
+		+ "\"version\": \"0.4.0\","
+		+ "\"visual\": \"tree\","
+		+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
+		+ "\"links\": [" + Bridge.trimComma(links) + "]"
+		+ "}";
+	}
 
 }

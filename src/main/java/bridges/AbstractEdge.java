@@ -54,6 +54,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @see Validation#validateColor(String)
 	 */
 	public void setColor(String color) {
+		color = color.toLowerCase();
 		if (color == null || color.isEmpty()) {
 			properties.remove("color");
 		} else {
@@ -78,7 +79,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	/**
 	 * Set the dash array, effectively choosing patterns of dots and dashes for
 	 * edges.
-	 * @param dash CSS dash array, for example "5,10,5"
+	 * @param dash CSS dash double array, for example "5,10,5"
 	 */
 	public void setDash(double[] dashes) {
 		StringBuilder sb = new StringBuilder("");
@@ -92,8 +93,8 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	
 	
 	/**
-	 * Get the thickness in pixels
-	 * @returns Thickness in pixels
+	 * Get the width in pixels
+	 * @returns Width in pixels, in range [0.0, 50.0]
 	 */
 	public double getWidth() {
 		String prop = properties.get("width");
@@ -105,8 +106,8 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	}
 	
 	/**
-	 * Set the thickness in pixels
-	 * @param pixels  Thickness in pixels, in range [0.0, 50.0]
+	 * Set the width in pixels
+	 * @param pixels  width in pixels, in range [0.0, 50.0]
 	 */
 	public void setWidth(double pixels) {
 		//TODO: Should we protect against NaN and Inf?

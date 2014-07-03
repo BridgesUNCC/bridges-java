@@ -55,15 +55,15 @@ public class GraphVisualizer extends Visualizer {
 	 */
 	@Override
 	String getRepresentation() {
-		String nodes = "";
-		String links = "";
+		StringBuilder nodes = new StringBuilder();
+		StringBuilder links = new StringBuilder();
 		Map<AbstractVertex, Integer> vertex_to_index = new HashMap<>();
 		
 		int i=0;
 		for (AbstractVertex v : Bridge.sorted_values(vertices)) {
 			// Manage vertex properties
 			// Encapsulate in {}, and remove the trailing comma.
-			nodes += v.getRepresentation() + ",";
+			nodes.append(v.getRepresentation() + ",");
 			vertex_to_index.put(v, i);
 			i++;
 		}
@@ -75,7 +75,7 @@ public class GraphVisualizer extends Visualizer {
 			Collections.sort(v.outgoing);
 			for (AbstractEdge e : v.outgoing) {
 				// Encapsulate in {}, and remove the trailing comma.
-				links += e.getRepresentation(vertex_to_index) + ",";
+				links.append(e.getRepresentation(vertex_to_index) + ",");
 			}
 		}
 		return "{"

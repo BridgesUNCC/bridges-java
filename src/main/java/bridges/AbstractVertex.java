@@ -67,7 +67,8 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * @param color Color as a String
 	 * @see Validation#validateColor(String)
 	 */
-	public void setColor(String color) {
+	public void setColor(String color) {		
+		color = color.toLowerCase();
 		if (color == null || color.isEmpty()) {
 			properties.put("color", "black");
 		} else {
@@ -94,6 +95,10 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * @param shape "Circle" or "Square"
 	 */
 	public void setShape(String shape) {
+		shape = shape.toLowerCase();
+		if(shape.equals("square")){
+			shape = "rect";
+		}
 		Validation.validateShape(shape);
 		properties.put("shape", shape);
 	};

@@ -15,13 +15,14 @@ public class BSTNode extends AbstractVertex {
 	 * @param identifier Name of the node.
 	 * @param val The value so it can be sorted(temporary).
 	 */
-	public BSTNode(String identifier, int val, GraphVisualizer tree){
+	public BSTNode(String identifier, int val){
 		super(identifier);		
 		this.val = val;
-		
+		/*
 		outgoing = new ArrayList<AbstractEdge>();//creates empty list of connected edges
 		//adding this vertex to the map for the JSON file.
 		tree.vertices.put(identifier, this);
+		*/
 	}	
 	
 	public int getVal(){
@@ -107,6 +108,20 @@ public class BSTNode extends AbstractVertex {
 	public BSTEdge getRightEdge(){
 		return rightEdge;
 	}
+	/**
+	 * Internal code for getting the properties of an AbstractVertex.
+	 * 
+	 * It produces (without the spaces or newlines):
+	 * <tt>
+	 * {
+	 *  "name": "Some identifier",
+	 *  "other CSS properties like color": any_JSON_value
+	 * }
+	 * @returns the encoded JSON string
+	 */
+	void getNodeRepresentation(StringBuilder node_json, StringBuilder link_json) {
+		getNodeRepresentation(0, node_json, link_json);
+	}
 	
 	/**
 	 * Internal code for getting the properties of an AbstractVertex.
@@ -119,12 +134,34 @@ public class BSTNode extends AbstractVertex {
 	 * }
 	 * @returns the encoded JSON string
 	 */
-	/*int getNodeRepresentation(int node_index, StringBuilder node_json, StringBuilder link_json) {
+	int getNodeRepresentation(int node_index, StringBuilder node_json, StringBuilder link_json) {
 		node_json.append(super.getRepresentation() + ","); //json rep of properties
-		link_json.append()
-		node_index++;
+
+		int left_child_index = node_index + 1;
+		int right_child_index = left_child_index;
 		
-		node_index = getLeftChild().getNodeRepresentation(node_index, node_json, link_json);//json rep of node
-		return getRightChild().getNodeRepresentation(node_index, node_json, link_json);
-	}*/
+		if (getLeftEdge() != null) {
+			link_json.append(getEdgeRepresentation(getLeftEdge(), node_index, left_child_index) + ",");
+			right_child_index = getLeftChild().getNodeRepresentation(left_child_index, node_json, link_json);//json rep of node
+					}
+		
+		
+		int next_open_slot = right_child_index;
+		if (getRightEdge() != null) {
+			link_json.append(getEdgeRepresentation(getRightEdge(), node_index, right_child_index) + ",");
+			next_open_slot = getRightChild().getNodeRepresentation(right_child_index, node_json, link_json);
+		}
+		return next_open_slot;
+	}
+	
+	
+	String getEdgeRepresentation(AbstractEdge edge, int source_index, int target_index) {
+		String json = "{";
+		for (Entry<String, String> entry : properties.entrySet()) {
+			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
+		}
+		json += String.format("\"source\":%s,", source_index);
+		json += String.format("\"target\":%s", target_index);
+		return json + "}";
+	}
 }

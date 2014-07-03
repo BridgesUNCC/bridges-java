@@ -166,7 +166,7 @@ public class Validation {
 		}));
 		NODE_SHAPES.addAll(Arrays.asList(new String[]{
 				"circle",
-				"square"
+				"rect"
 		}));
 	}
 	

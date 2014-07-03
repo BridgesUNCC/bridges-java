@@ -13,10 +13,10 @@ public class BSTEdge extends AbstractEdge{
 	 */
 	public BSTEdge(BSTNode source, BSTNode destination) {		
 		super(source, destination, "");
-		
-		eOutgoing = new ArrayList<AbstractVertex>();
-		
 		out = destination;//edge outgoing pointer to the destination vertex	
+		
+		/*
+		eOutgoing = new ArrayList<AbstractVertex>();
 		
 		//source Node -> Edge    destination Node
 		source.outgoing.add(this);
@@ -29,6 +29,7 @@ public class BSTEdge extends AbstractEdge{
 		this.eOutgoing.add(destination);
 		//test
 		this.eOutgoing.add(source);
+		*/
 
 	}
 	/**

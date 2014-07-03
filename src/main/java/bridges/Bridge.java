@@ -103,7 +103,7 @@ public class Bridge {
 	 */
 	public static void update() {
         try {
-        	System.out.println(visualizer.getRepresentation());
+        	//System.out.println(visualizer.getRepresentation());
 			backend.post("/assignments/" + assignment, visualizer.getRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
@@ -140,8 +140,10 @@ public class Bridge {
 	 * @param in 	The original string
 	 * @return a string with all but the last character
 	 */
-	static String trimComma(String in) {
-		return in.substring(0, Math.max(in.length()-1, 0));
+	static StringBuilder trimComma(StringBuilder in) {
+		if (in.length() > 0 && in.charAt(in.length()-1) == ',')
+			in.deleteCharAt(in.length()-1);
+		return in;
 	}
 	
 	/**
