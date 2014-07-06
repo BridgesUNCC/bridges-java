@@ -212,7 +212,7 @@ public class Bridge {
      * @throws QueryLimitException
      */
     public static List<String> getAssociations(String identifier, int max)
-    		throws RateLimitException, IOException {
+    		throws RateLimitException {
     	Ident id = Ident.fromAnyString(identifier);
     	switch (id.provider) {
     	case "twitter.com":
@@ -276,7 +276,7 @@ public class Bridge {
      * 
      */
     static List<String> movies(Ident id, int max)
-    		throws RateLimitException, IOException {
+    		throws RateLimitException {
 
     	if (failsafe) {
     		// Don't contact Bridges, use sample data
@@ -317,7 +317,7 @@ public class Bridge {
      * @throws RateLimitException 
      */
     static List<String> actors(Ident id, int max)
-    		throws IOException, RateLimitException {
+    		throws RateLimitException {
 
     	if (failsafe) {
     		// Don't contact Bridges, use sample data
