@@ -256,7 +256,7 @@ public class Bridge {
 		    	return results;
 	    	} catch (IOException e) {
 	    		// Trigger failsafe.
-	    		System.err.println("Warning: Trouble contacting Twitter. Using "
+	    		System.err.println("Warning: Trouble contacting Bridges. Using "
 	    				+ "sample data instead. Details on the error follow.");
 	    		e.printStackTrace();
 	    		failsafe = true;
@@ -277,17 +277,32 @@ public class Bridge {
      */
     static List<String> movies(Ident id, int max)
     		throws RateLimitException, IOException {
-    	String resp = backend.get("/streams/actors/" + id.name);
-    	JSONArray movies = backend.asJSONArray(resp);
-    	
-        // Get (in JS) movies_json.map(function(m) { return m.title; })
-        List<String> results = new ArrayList<>();
-        for (Object movie : movies) {
-        	String title = (String) backend.safeJSONTraverse("['title']",
-        			movie, String.class);
-        	results.add("movie/" + title);
-        }
-        return results;
+
+    	if (failsafe) {
+    		// Don't contact Bridges, use sample data
+    		return SampleDataGenerator.getFriends(id.name, max);
+    	} else {
+	    	try {
+		    	String resp = backend.get("/streams/actors/" + id.name);
+		    	JSONArray movies = backend.asJSONArray(resp);
+		    	
+		        // Get (in JS) movies_json.map(function(m) { return m.title; })
+		        List<String> results = new ArrayList<>();
+		        for (Object movie : movies) {
+		        	String title = (String) backend.safeJSONTraverse("['title']",
+		        			movie, String.class);
+		        	results.add("movie/" + title);
+		        }
+		        return results;
+	    	} catch (IOException e) {
+	    		// Trigger failsafe.
+	    		System.err.println("Warning: Trouble contacting Bridges. Using "
+	    				+ "sample data instead. Details on the error follow.");
+	    		e.printStackTrace();
+	    		failsafe = true;
+	    		return movies(id, max);
+	    	}
+    	}
     }
     
     /**
@@ -303,21 +318,36 @@ public class Bridge {
      */
     static List<String> actors(Ident id, int max)
     		throws IOException, RateLimitException {
-    	String resp = backend.get("/streams/rottentomatoes.com/" + id.name);
-    	JSONArray movies = backend.asJSONArray(resp);
-    	
-        // We will assume that the first movie is the right one
-    	JSONArray abridged_cast = (JSONArray) backend.safeJSONTraverse(
-    			"[0]['abridged_cast']", movies, JSONArray.class);
-    	List<String> results = new ArrayList<>();
-    	for (Object cast_member : abridged_cast) {
-    		if (results.size() == max)
-    			break;
-    		String name = (String) backend.safeJSONTraverse("['name']",
-    				cast_member, String.class);
-			results.add("actor/" + name);
+
+    	if (failsafe) {
+    		// Don't contact Bridges, use sample data
+    		return SampleDataGenerator.getFriends(id.name, max);
+    	} else {
+	    	try {
+		    	String resp = backend.get("/streams/rottentomatoes.com/" + id.name);
+		    	JSONArray movies = backend.asJSONArray(resp);
+		    	
+		        // We will assume that the first movie is the right one
+		    	JSONArray abridged_cast = (JSONArray) backend.safeJSONTraverse(
+		    			"[0]['abridged_cast']", movies, JSONArray.class);
+		    	List<String> results = new ArrayList<>();
+		    	for (Object cast_member : abridged_cast) {
+		    		if (results.size() == max)
+		    			break;
+		    		String name = (String) backend.safeJSONTraverse("['name']",
+		    				cast_member, String.class);
+					results.add("actor/" + name);
+		    	}
+		    	return results;
+	    	} catch (IOException e) {
+	    		// Trigger failsafe.
+	    		System.err.println("Warning: Trouble contacting Bridges. Using "
+	    				+ "sample data instead. Details on the error follow.");
+	    		e.printStackTrace();
+	    		failsafe = true;
+	    		return actors(id, max);
+	    	}
     	}
-    	return results;
     }
 }
 
