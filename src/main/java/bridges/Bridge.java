@@ -25,6 +25,10 @@ public class Bridge {
 	private static String server_url;
 	private static Visualizer visualizer;
 	private static BridgeNetwork backend;
+	
+	// This exists to prevent duplicate error traces.
+	private static boolean failsafe = false;
+	
 	public enum visual {GRAPH, TREE, ARRAY}; 
 
 	/**
@@ -230,21 +234,35 @@ public class Bridge {
         See Bridges.followgraph() for more about rate limiting. 
      * @throws IOException */
     static List<String> followers(Ident id, int max)
-    		throws RateLimitException, IOException {
-    	String resp = backend.get("/streams/twitter.com/followers/"
-    			+ id.name + "/" + max);
-    	
-        JSONObject response = backend.asJSONObject(resp);
-        JSONArray followers = (JSONArray) backend.safeJSONTraverse(
-        		"['followers']", response, JSONArray.class);
-        
-        List<String> results = new ArrayList<>();
-    	for (Object follower : followers) {
-    		String name = (String) backend.safeJSONTraverse(
-    				"", follower, String.class);
-    		results.add("twitter.com/" + name);
+    		throws RateLimitException {
+    	if (failsafe) {
+    		// Don't contact Twitter, use sample data
+    		return SampleDataGenerator.getFriends(id.name, max);
+    	} else {
+	    	try {
+		    	String resp = backend.get("/streams/twitter.com/followers/"
+		    			+ id.name + "/" + max);
+		    	
+		        JSONObject response = backend.asJSONObject(resp);
+		        JSONArray followers = (JSONArray) backend.safeJSONTraverse(
+		        		"['followers']", response, JSONArray.class);
+		        
+		        List<String> results = new ArrayList<>();
+		    	for (Object follower : followers) {
+		    		String name = (String) backend.safeJSONTraverse(
+		    				"", follower, String.class);
+		    		results.add("twitter.com/" + name);
+		    	}
+		    	return results;
+	    	} catch (IOException e) {
+	    		// Trigger failsafe.
+	    		System.err.println("Warning: Trouble contacting Twitter. Using "
+	    				+ "sample data instead. Details on the error follow.");
+	    		e.printStackTrace();
+	    		failsafe = true;
+	    		return followers(id, max);
+	    	}
     	}
-        return results;
     }
     
     /**
