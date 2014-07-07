@@ -300,7 +300,8 @@ public class SampleDataGenerator {
 		// Force it to be positive.
 		// But don't use abs() since that skews the result.
 		int h = hash % choices.length;
-		h = h < 0 ? h + choices.length : h;
+		if (h < 0)
+			h = h + choices.length;
 		return choices[h];
 	}
 
@@ -309,8 +310,8 @@ public class SampleDataGenerator {
 	 * This is a function: identical calls generate identical results.
 	 * 
 	 * @param name		String used as a random seed.
-	 * @param choices	Choices of `friends`
-	 * @param max		Maximum number of `friends`
+	 * @param choices	Choices of 'friends'
+	 * @param max		Maximum number of 'friends'
 	 * @param average	lambda of friend count exponential distribution
 	 * @param include_self	If `choices` contains `name`, should `name` be kept?
 	 * @return	About `average` names (up to `max`, but always at least 1), \
@@ -331,7 +332,7 @@ public class SampleDataGenerator {
 			String candidate = pickOneOf(choices, hash);
 			
 			if (friends.contains(candidate)
-					|| (!include_self && name.equals(candidate))) {
+					|| ((!include_self) && name.equals(candidate))) {
 				// Oops, already have that friend (or it's me)
 				// Keep the hash changing
 				hash += 1;
@@ -340,9 +341,7 @@ public class SampleDataGenerator {
 				// Seed the next round
 				hash = friends.hashCode();				
 			}
-			// Only add up to `max` friends.
-			max -= 1;
-		} while (max > 0 && hash % average != 0);
+		} while (friends.size() < max && hash % average != 0);
 		return friends;
 	}
 	
@@ -353,7 +352,7 @@ public class SampleDataGenerator {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println(getFriends("Eli", 5));
+		System.out.println(getFriends("Dylan", 5));
 		System.out.println(getActors("The Shawshank Redemption", 20));
 		System.out.println(getMovies("Isaac", 20));
 	}

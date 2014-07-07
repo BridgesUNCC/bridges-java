@@ -143,7 +143,7 @@ public class BSTNode extends AbstractVertex {
 		if (getLeftEdge() != null) {
 			link_json.append(getEdgeRepresentation(getLeftEdge(), node_index, left_child_index) + ",");
 			right_child_index = getLeftChild().getNodeRepresentation(left_child_index, node_json, link_json);//json rep of node
-					}
+		}
 		
 		
 		int next_open_slot = right_child_index;
@@ -157,7 +157,7 @@ public class BSTNode extends AbstractVertex {
 	
 	String getEdgeRepresentation(AbstractEdge edge, int source_index, int target_index) {
 		String json = "{";
-		for (Entry<String, String> entry : properties.entrySet()) {
+		for (Entry<String, String> entry : edge.properties.entrySet()) {
 			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
 		}
 		json += String.format("\"source\":%s,", source_index);
