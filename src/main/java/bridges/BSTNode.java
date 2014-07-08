@@ -112,7 +112,7 @@ public class BSTNode extends AbstractVertex {
 	 * }
 	 * @returns the encoded JSON string
 	 */
-	void getNodeRepresentation(StringBuilder node_json, StringBuilder link_json) {
+	public void getNodeRepresentation(StringBuilder node_json, StringBuilder link_json) {
 		getNodeRepresentation(0, node_json, link_json);
 	}
 	

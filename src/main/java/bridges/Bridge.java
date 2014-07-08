@@ -144,7 +144,7 @@ public class Bridge {
 	 * @param in 	The original string
 	 * @return a string with all but the last character
 	 */
-	static StringBuilder trimComma(StringBuilder in) {
+	public static StringBuilder trimComma(StringBuilder in) {
 		if (in.length() > 0 && in.charAt(in.length()-1) == ',')
 			in.deleteCharAt(in.length()-1);
 		return in;

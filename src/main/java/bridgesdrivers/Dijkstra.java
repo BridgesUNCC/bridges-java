@@ -1,4 +1,8 @@
-package bridges;
+package bridgesdrivers;
+
+import bridges.Bridge;
+import bridges.GraphVisualizer;
+import bridges.Vertex;
 
 public class Dijkstra {
 

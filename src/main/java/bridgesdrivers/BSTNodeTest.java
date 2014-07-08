@@ -1,9 +1,11 @@
-package bridges;
+package bridgesdrivers;
 
 import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import bridges.BSTNode;
 
 public class BSTNodeTest {
 	

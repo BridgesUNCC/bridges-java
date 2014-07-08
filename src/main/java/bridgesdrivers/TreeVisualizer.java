@@ -3,10 +3,14 @@
 This is what the student would have to write. The methods would be empty for them and they would just fill them out to learn the BST data structure.
 
 */
-package bridges;
+package bridgesdrivers;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import bridges.BSTNode;
+import bridges.Bridge;
+import bridges.Visualizer;
 
 //import java.util.HashMap;
 //import java.util.Map;
@@ -195,7 +199,7 @@ public class TreeVisualizer extends Visualizer {
 	}	
 	
 	//Maybe put this in abstractVertex and tailor it to handle BST? make specific method call?
-	String getRepresentation() {
+	protected String getRepresentation() {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
 		

@@ -54,6 +54,7 @@ public class GraphVisualizer extends Visualizer {
 	 * 
 	 */
 	@Override
+	protected
 	String getRepresentation() {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();

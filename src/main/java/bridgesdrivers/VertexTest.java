@@ -1,9 +1,12 @@
-package bridges;
+package bridgesdrivers;
 
 import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import bridges.GraphVisualizer;
+import bridges.Vertex;
 
 public class VertexTest {
 	static GraphVisualizer graph = new GraphVisualizer();
@@ -19,8 +22,8 @@ public class VertexTest {
 	@Test
 	public final void testCreateEdge() {
 		Bob.createEdge(Steve);
-		assertNotNull(Bob.outgoing);
+		assertNotNull(Bob.getEdge(Steve));
 		Steve.createEdge(John);
-		assertNotNull(John.outgoing);
+		assertNotNull(John.getEdge(Steve));
 	}
 }

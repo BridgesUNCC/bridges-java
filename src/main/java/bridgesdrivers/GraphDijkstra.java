@@ -1,4 +1,4 @@
-package bridges;
+package bridgesdrivers;
 
 
 	/**
@@ -10,6 +10,10 @@ package bridges;
 	 */
 
 	import java.util.*;
+
+import bridges.DLListNodeDijkstra;
+import bridges.Edge;
+import bridges.GraphVisualizer;
 
 	class GraphList extends DLListNodeDijkstra{
 	    GraphList(String identifier, GraphVisualizer graph){
