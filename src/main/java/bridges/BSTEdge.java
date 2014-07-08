@@ -1,7 +1,5 @@
 package bridges;
 
-import java.util.ArrayList;
-
 public class BSTEdge extends AbstractEdge{
 
 	private BSTNode out;
@@ -14,23 +12,6 @@ public class BSTEdge extends AbstractEdge{
 	public BSTEdge(BSTNode source, BSTNode destination) {		
 		super(source, destination, "");
 		out = destination;//edge outgoing pointer to the destination vertex	
-		
-		/*
-		eOutgoing = new ArrayList<AbstractVertex>();
-		
-		//source Node -> Edge    destination Node
-		source.outgoing.add(this);
-		//test
-		destination.outgoing.add(this);
-		
-		//this.eOutgoing.add(source);
-		
-		//source Node -> Edge -> destination Node
-		this.eOutgoing.add(destination);
-		//test
-		this.eOutgoing.add(source);
-		*/
-
 	}
 	/**
 	 * Sets the outgoing pointer of the calling edge.

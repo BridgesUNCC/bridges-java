@@ -18,9 +18,9 @@ public class Vertex extends AbstractVertex {
 	 */
 	public Vertex(String identifier, GraphVisualizer graph) {
 		super(identifier);
-		//outgoing =  new HashMap<>();
+
 		outgoing = new ArrayList<AbstractEdge>();//creates empty list of connected edges
-		//this.graph = graph;
+
 		
 		//adds a vertex to the map	
 		graph.vertices.put(identifier, this);		

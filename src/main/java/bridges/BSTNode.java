@@ -1,7 +1,5 @@
 package bridges;
 
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.Map.Entry;
 
 public class BSTNode extends AbstractVertex {
@@ -18,11 +16,6 @@ public class BSTNode extends AbstractVertex {
 	public BSTNode(String identifier, int val){
 		super(identifier);		
 		this.val = val;
-		/*
-		outgoing = new ArrayList<AbstractEdge>();//creates empty list of connected edges
-		//adding this vertex to the map for the JSON file.
-		tree.vertices.put(identifier, this);
-		*/
 	}	
 	
 	public int getVal(){
