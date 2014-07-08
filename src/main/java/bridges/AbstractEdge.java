@@ -25,9 +25,40 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 		
 	}
 	
+	public AbstractEdge(AbstractVertex source, AbstractVertex destination, String identifier, double weight){
+		this.source = source;
+		this.destination = destination;
+		this.identifier = identifier;
+		properties.put("weight", Double.toString(weight));
+		
+	}
+	
 	public String getIdentifier(){
 		return identifier;
 	}
+	
+	/**
+	 * Get the width in pixels
+	 * @returns Width in pixels, in range [0.0, 50.0]
+	 */
+	public double getWeight() {
+		String weight = properties.get("weight");
+		if (weight == null) {
+			return 1.0;
+		} else {
+			return Double.parseDouble(weight);
+		}
+	}
+	
+	/**
+	 * Sets the weight of the edge
+	 * @param weight is a double 
+	 */
+	public void setWeight(double weight) {
+		
+		properties.put("weight", Double.toString(weight));
+	}
+	
 	/**
 	 * Get the color, according to CSS formats.
 	 * By default, the color will be chosen at random.
@@ -179,4 +210,5 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 				return s_compare;
 		}
 	}
+	
 }

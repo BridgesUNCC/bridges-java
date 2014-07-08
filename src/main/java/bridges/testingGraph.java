@@ -10,7 +10,7 @@ public class testingGraph {
     	
     	Vertex bob= new Vertex("actor/Bob", gv);
     	Vertex steve=new Vertex("actor/Steve", gv);
-    	
+   
     	bob.createEdge(steve);    	
 	}
 
