@@ -17,7 +17,7 @@ public class GraphBFS {
 
 	public static void main(String[] args) {
 		Visualizer myGraph = new GraphVisualizer();
-		//adding vertices
+		/**adding vertices
 		myGraph.add(DANIEL);
 		myGraph.add(EMMA);
 		myGraph.add(JENNIFER);
@@ -46,12 +46,7 @@ public class GraphBFS {
 			aVertex.setSize(8.0);
 		
 		//add Edges
-		/**
-		 * for now; 
-		 * in the future: myGraph.get(MEGAN)  // A Vertex
-    							.get(DANIEL)    //An Edge 
-    							.setLabel("Movie1");
-		 */
+		
 		myGraph.Edge(MEGAN, DANIEL); 
 		myGraph.setEdge(MEGAN, JENNIFER);
 		myGraph.setEdge(SEAN, EMMA);
@@ -125,6 +120,6 @@ public class GraphBFS {
 		System.out.println("Ended BFS on " + MEGAN);
 		
 		//edit the attributes for edges according to the BFS path goes here (color the edges again etc.)
-		
+		*/
 	}
 }
