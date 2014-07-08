@@ -36,6 +36,16 @@ public class Vertex extends AbstractVertex {
 		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
 		new Edge(this, v2, ident);
 	}
+	/**
+	 * Creates an edge between the calling vertex and a passed vertex.
+	 * 
+	 * @param v2 The second vertex that edge is between.
+	 */
+	public void createEdge(Vertex v2, double weight){
+		//identifier is to be used internally to find the Edges later
+		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
+		new Edge(this, v2, ident, weight);
+	}
 	
 	/**
 	 * Returns the Edge between two Vertices.

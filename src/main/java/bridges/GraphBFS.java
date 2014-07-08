@@ -52,7 +52,7 @@ public class GraphBFS {
     							.get(DANIEL)    //An Edge 
     							.setLabel("Movie1");
 		 */
-		myGraph.setEdge(MEGAN, DANIEL); 
+		myGraph.Edge(MEGAN, DANIEL); 
 		myGraph.setEdge(MEGAN, JENNIFER);
 		myGraph.setEdge(SEAN, EMMA);
 		myGraph.setEdge(EMMA, GARY);
