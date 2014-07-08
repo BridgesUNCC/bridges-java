@@ -25,6 +25,10 @@ public class Bridge {
 	private static String server_url;
 	private static Visualizer visualizer;
 	private static BridgeNetwork backend;
+	
+	// This exists to prevent duplicate error traces.
+	private static boolean failsafe = false;
+	
 	public enum visual {GRAPH, TREE, ARRAY}; 
 
 	/**
@@ -103,7 +107,7 @@ public class Bridge {
 	 */
 	public static void update() {
         try {
-        	//System.out.println(visualizer.getRepresentation());
+        	System.out.println(visualizer.getRepresentation());
 			backend.post("/assignments/" + assignment, visualizer.getRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
@@ -208,7 +212,7 @@ public class Bridge {
      * @throws QueryLimitException
      */
     public static List<String> getAssociations(String identifier, int max)
-    		throws RateLimitException, IOException {
+    		throws RateLimitException {
     	Ident id = Ident.fromAnyString(identifier);
     	switch (id.provider) {
     	case "twitter.com":
@@ -230,21 +234,35 @@ public class Bridge {
         See Bridges.followgraph() for more about rate limiting. 
      * @throws IOException */
     static List<String> followers(Ident id, int max)
-    		throws RateLimitException, IOException {
-    	String resp = backend.get("/streams/twitter.com/followers/"
-    			+ id.name + "/" + max);
-    	
-        JSONObject response = backend.asJSONObject(resp);
-        JSONArray followers = (JSONArray) backend.safeJSONTraverse(
-        		"['followers']", response, JSONArray.class);
-        
-        List<String> results = new ArrayList<>();
-    	for (Object follower : followers) {
-    		String name = (String) backend.safeJSONTraverse(
-    				"", follower, String.class);
-    		results.add("twitter.com/" + name);
+    		throws RateLimitException {
+    	if (failsafe) {
+    		// Don't contact Twitter, use sample data
+    		return SampleDataGenerator.getFriends(id.name, max);
+    	} else {
+	    	try {
+		    	String resp = backend.get("/streams/twitter.com/followers/"
+		    			+ id.name + "/" + max);
+		    	
+		        JSONObject response = backend.asJSONObject(resp);
+		        JSONArray followers = (JSONArray) backend.safeJSONTraverse(
+		        		"['followers']", response, JSONArray.class);
+		        
+		        List<String> results = new ArrayList<>();
+		    	for (Object follower : followers) {
+		    		String name = (String) backend.safeJSONTraverse(
+		    				"", follower, String.class);
+		    		results.add("twitter.com/" + name);
+		    	}
+		    	return results;
+	    	} catch (IOException e) {
+	    		// Trigger failsafe.
+	    		System.err.println("Warning: Trouble contacting Bridges. Using "
+	    				+ "sample data instead. Details on the error follow.");
+	    		e.printStackTrace();
+	    		failsafe = true;
+	    		return followers(id, max);
+	    	}
     	}
-        return results;
     }
     
     /**
@@ -258,18 +276,33 @@ public class Bridge {
      * 
      */
     static List<String> movies(Ident id, int max)
-    		throws RateLimitException, IOException {
-    	String resp = backend.get("/streams/actors/" + id.name);
-    	JSONArray movies = backend.asJSONArray(resp);
-    	
-        // Get (in JS) movies_json.map(function(m) { return m.title; })
-        List<String> results = new ArrayList<>();
-        for (Object movie : movies) {
-        	String title = (String) backend.safeJSONTraverse("['title']",
-        			movie, String.class);
-        	results.add("movie/" + title);
-        }
-        return results;
+    		throws RateLimitException {
+
+    	if (failsafe) {
+    		// Don't contact Bridges, use sample data
+    		return SampleDataGenerator.getFriends(id.name, max);
+    	} else {
+	    	try {
+		    	String resp = backend.get("/streams/actors/" + id.name);
+		    	JSONArray movies = backend.asJSONArray(resp);
+		    	
+		        // Get (in JS) movies_json.map(function(m) { return m.title; })
+		        List<String> results = new ArrayList<>();
+		        for (Object movie : movies) {
+		        	String title = (String) backend.safeJSONTraverse("['title']",
+		        			movie, String.class);
+		        	results.add("movie/" + title);
+		        }
+		        return results;
+	    	} catch (IOException e) {
+	    		// Trigger failsafe.
+	    		System.err.println("Warning: Trouble contacting Bridges. Using "
+	    				+ "sample data instead. Details on the error follow.");
+	    		e.printStackTrace();
+	    		failsafe = true;
+	    		return movies(id, max);
+	    	}
+    	}
     }
     
     /**
@@ -284,22 +317,37 @@ public class Bridge {
      * @throws RateLimitException 
      */
     static List<String> actors(Ident id, int max)
-    		throws IOException, RateLimitException {
-    	String resp = backend.get("/streams/rottentomatoes.com/" + id.name);
-    	JSONArray movies = backend.asJSONArray(resp);
-    	
-        // We will assume that the first movie is the right one
-    	JSONArray abridged_cast = (JSONArray) backend.safeJSONTraverse(
-    			"[0]['abridged_cast']", movies, JSONArray.class);
-    	List<String> results = new ArrayList<>();
-    	for (Object cast_member : abridged_cast) {
-    		if (results.size() == max)
-    			break;
-    		String name = (String) backend.safeJSONTraverse("['name']",
-    				cast_member, String.class);
-			results.add("actor/" + name);
+    		throws RateLimitException {
+
+    	if (failsafe) {
+    		// Don't contact Bridges, use sample data
+    		return SampleDataGenerator.getFriends(id.name, max);
+    	} else {
+	    	try {
+		    	String resp = backend.get("/streams/rottentomatoes.com/" + id.name);
+		    	JSONArray movies = backend.asJSONArray(resp);
+		    	
+		        // We will assume that the first movie is the right one
+		    	JSONArray abridged_cast = (JSONArray) backend.safeJSONTraverse(
+		    			"[0]['abridged_cast']", movies, JSONArray.class);
+		    	List<String> results = new ArrayList<>();
+		    	for (Object cast_member : abridged_cast) {
+		    		if (results.size() == max)
+		    			break;
+		    		String name = (String) backend.safeJSONTraverse("['name']",
+		    				cast_member, String.class);
+					results.add("actor/" + name);
+		    	}
+		    	return results;
+	    	} catch (IOException e) {
+	    		// Trigger failsafe.
+	    		System.err.println("Warning: Trouble contacting Bridges. Using "
+	    				+ "sample data instead. Details on the error follow.");
+	    		e.printStackTrace();
+	    		failsafe = true;
+	    		return actors(id, max);
+	    	}
     	}
-    	return results;
     }
 }
 

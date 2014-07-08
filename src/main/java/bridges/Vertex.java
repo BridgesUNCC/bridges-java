@@ -55,9 +55,9 @@ public class Vertex extends AbstractVertex {
 	 */
 	public AbstractEdge getEdge(AbstractVertex v2){
 		//Can't think of any faster way to do this. -- Any suggestions?
-		for(int i = 0; i < this.outgoing.size(); i++){
+		for(int i = 0; i < this.outgoing.size(); i++){ 
 			for(int j = 0; j < v2.outgoing.size(); j++){
-				if(this.outgoing.get(i).getIdentifier() == v2.outgoing.get(i).getIdentifier()){				
+				if(this.outgoing.get(i).getIdentifier() == v2.outgoing.get(j).getIdentifier()){				
 					return this.outgoing.get(i);
 				}
 			}
