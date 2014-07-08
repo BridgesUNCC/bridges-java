@@ -23,7 +23,7 @@ public class TwitterDriver {
 		Deque<Vertex> frontier = new ArrayDeque<>();
 		Map<String, Vertex> visited = new HashMap<>();
 		Map<String, Vertex> parent_of = new HashMap<>();
-		String name = "Zoey";
+		String name = "twitter.com/Zoey";
 		Vertex joey = new Vertex(name, gv);
 		joey.setSize(20);
 		joey.setColor("orange");
@@ -31,12 +31,12 @@ public class TwitterDriver {
 		frontier.add(joey);
 		visited.put(name,  joey);
 		System.out.println(
-				SampleDataGenerator.getFriends(joey.getIdentifier(), 10));
+				Bridge.getAssociations(joey.getIdentifier(), 10));
 		
 		
 		while ((!frontier.isEmpty()) && expands_remaining > 0) {
 			Vertex source = frontier.pop();
-			for (String friend_name : SampleDataGenerator.getFriends(source.getIdentifier(),10)) {
+			for (String friend_name : Bridge.getAssociations(source.getIdentifier(),10)) {
 				
 				Vertex target = visited.get(friend_name);
 				if (target == null) {
@@ -58,7 +58,7 @@ public class TwitterDriver {
 		// Find the route from Joey to Michael by going backward
 		// A BFS will give an MST here because the weights are always 1.
 		// Luckily, we just did a BFS
-		String node = "Audrey";
+		String node = "twitter.com/Scarlett";
 		visited.get(node).setColor("green");
 		
 		while (! node.equals("Zoey")) {

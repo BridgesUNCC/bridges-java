@@ -263,7 +263,7 @@ public class SampleDataGenerator {
 	 * @return about 5 names, up to max, chosen from a list of common names
 	 */
 	public static List<String> getFriends(String name, int max) {
-		return getChoices(name, available_friend_names, max, 5, false);
+		return getChoices(name, "twitter.com", available_friend_names, max, 5, false);
 	}
 	
 	/**
@@ -275,7 +275,7 @@ public class SampleDataGenerator {
 	 * @return
 	 */
 	public static List<String> getActors(String movie, int max) {
-		return getChoices(movie, available_actor_names, max, 7, true);
+		return getChoices(movie, "actor", available_actor_names, max, 7, true);
 	}
 	
 	/**
@@ -285,7 +285,7 @@ public class SampleDataGenerator {
 	 * @return
 	 */
 	public static List<String> getMovies(String name, int max) {
-		return getChoices(name, available_movie_names, max, 15, true);
+		return getChoices(name, "movie", available_movie_names, max, 15, true);
 	}
 	
 	/**
@@ -320,6 +320,7 @@ public class SampleDataGenerator {
 	 */
 	public static List<String> getChoices(
 			String name,
+			String provider,
 			String[] choices,
 			int max,
 			int average,
@@ -337,7 +338,7 @@ public class SampleDataGenerator {
 				// Keep the hash changing
 				hash += 1;
 			} else {
-				friends.add(candidate);
+				friends.add(provider + "/" + candidate);
 				// Seed the next round
 				hash = friends.hashCode();				
 			}
