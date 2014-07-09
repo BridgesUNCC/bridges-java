@@ -213,19 +213,24 @@ public class Bridge {
      */
     public static List<String> getAssociations(String identifier, int max)
     		throws RateLimitException {
-    	Ident id = Ident.fromAnyString(identifier);
-    	switch (id.provider) {
-    	case "twitter.com":
-    		return followers(id, max);
-    	case "actor":
-    		return movies(id, max);
-    	case "movie":
-    		return actors(id, max);
-    	default:
-    		throw new RuntimeException(
-    				"Unrecognized service " + id.provider
-    				+ ". Choose from twitter.com, actor, or movie");
+    	try {
+	    	Ident id = Ident.fromAnyString(identifier);
+	    	switch (id.provider) {
+	    	case "twitter.com":
+	    		return followers(id, max);
+	    	case "actor":
+	    		return movies(id, max);
+	    	case "movie":
+	    		return actors(id, max);
+	    	default:
+	    		throw new RuntimeException(
+	    				"Unrecognized service " + id.provider
+	    				+ ". Choose from twitter.com, actor, or movie");
+	    	}
+    	} catch (RateLimitException e) {
+    		return new ArrayList<>();
     	}
+    	
     }
     
     /** List the user's followers as more FollowGraphNodes.

@@ -164,9 +164,9 @@ public class BridgeNetwork {
     	Object any_json = original;
     	
     	// Parse `sequence`
-    	Pattern array_index_p = Pattern.compile("\\[(\\d+\\)]");
+    	Pattern array_index_p = Pattern.compile("\\[(\\d+)\\]");
 		Matcher array_index_m = array_index_p.matcher(sequence.substring(cursor));
-		Pattern object_p = Pattern.compile("\\['([^']+)']");
+		Pattern object_p = Pattern.compile("\\['([^']+)'\\]");
 		Matcher object_m = object_p.matcher(sequence.substring(cursor));
 		
 		// startsWith()..
