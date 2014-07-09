@@ -43,7 +43,7 @@ public class TwitterDriver {
 				if (target == null) {
 					target = new Vertex(friend_name, gv);
 					parent_of.put(target.getIdentifier(), source);
-					
+					//System.out.println("Here: " + target.getIdentifier());
 					// The student's do this part for fun! :P
 					target.setSize(source.getSize() -4);
 					visited.put(friend_name, target);
@@ -59,14 +59,14 @@ public class TwitterDriver {
 		// Find the route from Joey to Michael by going backward
 		// A BFS will give an MST here because the weights are always 1.
 		// Luckily, we just did a BFS
-		/*String node = "twitter.com/Scarlett";
+		String node = "twitter.com/lordsol_";
 		visited.get(node).setColor("green");
 		
-		while (! node.equals("twiter.com/Zoey")) {
+		while (! node.equals("twitter.com/Joey")) {
 			Vertex parent = parent_of.get(node);
 			parent.getEdge(visited.get(node)).setColor("red");
 			node = parent.getIdentifier();
-		}*/
+		}
 		
 		Bridge.complete();
 	}
