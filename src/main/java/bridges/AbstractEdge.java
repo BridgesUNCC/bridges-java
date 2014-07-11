@@ -29,7 +29,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 		this.source = source;
 		this.destination = destination;
 		this.identifier = identifier;
-		properties.put("weight", Double.toString(weight));
+		setWeight(weight);
 		
 	}
 	
@@ -57,6 +57,12 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	public void setWeight(double weight) {
 		
 		properties.put("weight", Double.toString(weight));
+		if (weight<10)
+			setWidth(1);
+		else if (weight<20)
+			setWidth(3);
+		else 
+			setWidth(7);
 	}
 	
 	/**

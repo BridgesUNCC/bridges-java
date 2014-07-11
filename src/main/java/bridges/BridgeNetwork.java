@@ -19,7 +19,7 @@ import org.json.simple.JSONValue;
 
 
 public class BridgeNetwork {
-    String server_url = "http://bridges.cs.uncc.edu";
+    String server_url = "http://bridges-cs.herokuapp.com";
     Executor http_connection;
     boolean debug = false;
     
