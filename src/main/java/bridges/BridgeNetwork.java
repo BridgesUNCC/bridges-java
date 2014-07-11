@@ -70,7 +70,7 @@ public class BridgeNetwork {
     	}
     	if (jo == null) {
     		throw new IOException("Received an empty JSON response from the"
-    				+ " server: " + text);
+    				+ " server. ");
     	}
         if (jo.containsKey("error")) {
         	throw new IOException("Server reported an error while serving"

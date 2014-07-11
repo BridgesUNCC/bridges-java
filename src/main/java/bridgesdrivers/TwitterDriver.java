@@ -16,8 +16,9 @@ public class TwitterDriver {
 	public static void main(String[] args) throws Exception {
 		// TODO Your code here
 		GraphVisualizer gv = new GraphVisualizer();
-		Bridge.init(0, "796340034401", gv);
-		
+
+		Bridge.init(0, "585371696619", gv);
+		Bridge.setServerURL("http://bridges-cs.herokuapp.com");
 		int expands_remaining = 10;
 		
 		Deque<Vertex> frontier = new ArrayDeque<>();
@@ -59,14 +60,14 @@ public class TwitterDriver {
 		// Find the route from Joey to Michael by going backward
 		// A BFS will give an MST here because the weights are always 1.
 		// Luckily, we just did a BFS
-		String node = "twitter.com/lordsol_";
+		/*String node = "twitter.com/lordsol_";
 		visited.get(node).setColor("green");
 		
 		while (! node.equals("twitter.com/Joey")) {
 			Vertex parent = parent_of.get(node);
 			parent.getEdge(visited.get(node)).setColor("red");
 			node = parent.getIdentifier();
-		}
+		}*/
 		
 		Bridge.complete();
 	}

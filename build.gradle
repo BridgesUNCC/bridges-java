@@ -10,7 +10,7 @@ apply plugin: 'signing'
 ///
 group = "edu.uncc.cs.bridges"
 // release: version = "0.3.8"
-version = "0.99.0"
+version = "0.99.1"
 
 ///
 /// Artifacts and deployment
@@ -30,6 +30,15 @@ artifacts {
     archives jar
     archives javadocJar
     archives sourcesJar
+}
+
+// Ignore the drivers
+sourceSets {
+    main {
+        java {
+            exclude 'bridgesdrivers/**'
+        }
+    }
 }
 
 
