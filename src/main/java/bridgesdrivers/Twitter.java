@@ -11,7 +11,7 @@ import java.util.Set;
 
 import bridges.*;
 
-public class TwitterDriver {
+public class Twitter {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Your code here
@@ -23,11 +23,15 @@ public class TwitterDriver {
 		Deque<Vertex> frontier = new ArrayDeque<>();
 		Map<String, Vertex> visited = new HashMap<>();
 		Map<String, Vertex> parent_of = new HashMap<>();
+		//actual user on Twitter
 		String name = "twitter.com/Joey";
+		//the 
 		Vertex joey = new Vertex(name, gv);
 		//make it easier to find the 'root'
 		joey.setSize(20);
 		joey.setColor("orange");
+		
+		Vertex source;
 		
 		frontier.add(joey);
 		visited.put(name,  joey);
@@ -36,14 +40,13 @@ public class TwitterDriver {
 		
 		
 		while ((!frontier.isEmpty()) && expands_remaining > 0) {
-			Vertex source = frontier.pop();
+			source = frontier.pop();
 			for (String friend_name : Bridge.getAssociations(source.getIdentifier(),50)) {
 				
 				Vertex target = visited.get(friend_name);
 				if (target == null) {
 					target = new Vertex(friend_name, gv);
 					parent_of.put(target.getIdentifier(), source);
-					//System.out.println("Here: " + target.getIdentifier());
 					// The student's do this part for fun! :P
 					target.setSize(source.getSize() -4);
 					visited.put(friend_name, target);
@@ -59,14 +62,14 @@ public class TwitterDriver {
 		// Find the route from Joey to Michael by going backward
 		// A BFS will give an MST here because the weights are always 1.
 		// Luckily, we just did a BFS
-		String node = "twitter.com/lordsol_";
+		/*String node = "twitter.com/roxy27";
 		visited.get(node).setColor("green");
 		
 		while (! node.equals("twitter.com/Joey")) {
 			Vertex parent = parent_of.get(node);
 			parent.getEdge(visited.get(node)).setColor("red");
 			node = parent.getIdentifier();
-		}
+		}*/
 		
 		Bridge.complete();
 	}
