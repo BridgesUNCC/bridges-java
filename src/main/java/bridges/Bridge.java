@@ -361,7 +361,7 @@ public class Bridge {
      * @return
      */
     public static double getEdgeWeight(String source, String target) {
-    	int h = source.hashCode() ^ target.hashCode();
+    	int h = source.hashCode() + target.hashCode();
     	if (h < 0) h = -h;
     	return h % 1000000 / 1000000.0;
     }
