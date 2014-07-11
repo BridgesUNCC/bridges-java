@@ -87,10 +87,10 @@ public class Bridge {
 	}
 
 	public static String getServerURL() {
-		return server_url;
+		return backend.server_url;
 	}
 	public static void setServerURL(String server_url) {
-		Bridge.server_url = server_url;
+		Bridge.backend.server_url = server_url;
 	}
 
 	public static Visualizer getVisualizer() {
@@ -113,16 +113,16 @@ public class Bridge {
 			System.err.println("There was a problem sending the visualization"
 					+ " representation to the server. Are you connected to the"
 					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central Bridges server is down. Try again later.");
-			e.printStackTrace();
+					+ " the central Bridges server is down. Try again later.\n"
+					+ e.getMessage());
 		} catch (RateLimitException e) {
 			System.err.println("There was a problem sending the visualization"
 					+ " representation to the server. However, it responded with"
 					+ " an impossible 'RateLimitException'. Please contact"
 					+ " Bridges developers and file a bug report; this error"
-					+ " should not be possible.");
-			e.printStackTrace();
-		}
+					+ " should not be possible.\n"
+					+ e.getMessage());
+		} 
         // Return a URL to the user
         System.out.println("Check out your visuals at " + backend.prepare("/assignments/" + assignment + "/YOUR_USERNAME") );
 	}
@@ -261,8 +261,8 @@ public class Bridge {
 	    	} catch (IOException e) {
 	    		// Trigger failsafe.
 	    		System.err.println("Warning: Trouble contacting Bridges. Using "
-	    				+ "sample data instead. Details on the error follow.");
-	    		e.printStackTrace();
+	    				+ "sample data instead.\n"
+	    				+ e.getMessage());
 	    		failsafe = true;
 	    		return followers(id, max);
 	    	}
@@ -301,8 +301,8 @@ public class Bridge {
 	    	} catch (IOException e) {
 	    		// Trigger failsafe.
 	    		System.err.println("Warning: Trouble contacting Bridges. Using "
-	    				+ "sample data instead. Details on the error follow.");
-	    		e.printStackTrace();
+	    				+ "sample data instead.\n"
+	    				+ e.getMessage());
 	    		failsafe = true;
 	    		return movies(id, max);
 	    	}
@@ -346,8 +346,8 @@ public class Bridge {
 	    	} catch (IOException e) {
 	    		// Trigger failsafe.
 	    		System.err.println("Warning: Trouble contacting Bridges. Using "
-	    				+ "sample data instead. Details on the error follow.");
-	    		e.printStackTrace();
+	    				+ "sample data instead.\n"
+	    				+ e.getMessage());
 	    		failsafe = true;
 	    		return actors(id, max);
 	    	}

@@ -31,9 +31,9 @@ import bridges.GraphVisualizer;
 
 	    //constructors
 	    public GraphDijkstra() {
-	        Mark = new HashMap();
+	        Mark = new HashMap<>();
 	        numEdge = 0;
-	        vertex = new HashMap();
+	        vertex = new HashMap<>();
 	    }
 	    public GraphDijkstra(String ... args){
 	        Init(args);
@@ -44,12 +44,12 @@ import bridges.GraphVisualizer;
 	     * as well as the queue for BFS
 	     */ 
 	    public void Init(String[] args) {
-	      Mark = new HashMap(args.length);
+	      Mark = new HashMap<>(args.length);
 	      for (String ar: args)
 	        Mark.put(ar, UNVISITED);
 
 	      numEdge = 0;
-	      vertex = new HashMap(args.length);
+	      vertex = new HashMap<>(args.length);
 	      for (String ar: args)
 	        vertex.put(ar, new GraphList(ar, graph));
 	    }//end of Init
