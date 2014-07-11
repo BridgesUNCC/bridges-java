@@ -354,7 +354,13 @@ public class Bridge {
     	}
     }
     
-    static double getEdgeWeight(String source, String target) {
+    /**
+     * Generate a sample Edge weight for two nodes
+     * @param source
+     * @param target
+     * @return
+     */
+    public static double getEdgeWeight(String source, String target) {
     	int h = source.hashCode() ^ target.hashCode();
     	if (h < 0) h = -h;
     	return h % 1000000 / 1000000.0;
