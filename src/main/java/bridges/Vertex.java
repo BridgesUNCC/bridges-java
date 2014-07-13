@@ -38,13 +38,27 @@ public class Vertex extends AbstractVertex {
 	}
 	/**
 	 * Creates an edge between the calling vertex and a passed vertex.
-	 * 
+	 * It attaches the weight attribute to an Edge
 	 * @param v2 The second vertex that edge is between.
+	 * @param weight Contains the weight value as a double
 	 */
 	public void createEdge(Vertex v2, double weight){
 		//identifier is to be used internally to find the Edges later
 		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
 		new Edge(this, v2, ident, weight);
+	}
+	
+	/**
+	 * Creates an edge between the calling vertex and a passed vertex.
+	 * It attaches the weight attribute to an Edge and assigns it a random value
+	 * @param v2 The second vertex that edge is between.
+	 * @param weight Contains the weight value as a string "randWeight", later 
+	 * transformed in a random double between 0.0-9.0
+	 */
+	public void createEdge(Vertex v2, String randWeight){
+		//identifier is to be used internally to find the Edges later
+		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
+		new Edge(this, v2, ident, randWeight);
 	}
 	
 	/**

@@ -8,7 +8,7 @@ public class Dijkstra {
 
 	public static void main(String[] args) {
 		GraphVisualizer graph = new GraphVisualizer();
-		Bridge.init(0,"1022683069234", graph);
+		Bridge.init(0,"134695467477", graph);
 		
 		Vertex A, B, C, D , E;	
 		A = new Vertex("A", graph);
@@ -25,7 +25,8 @@ public class Dijkstra {
 		C.createEdge(E, 15);
 		D.createEdge(E, 11);
 		
-		A.getEdge(B).setWeight(2);
+		A.getEdge(B).setWeight(25);
+		System.out.println(Bridge.getEdgeWeight("B","D"));
 		
 		//graph.Dijkstra("A");
 		//graph.Dijkstra("C");

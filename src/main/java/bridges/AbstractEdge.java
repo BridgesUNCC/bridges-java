@@ -13,6 +13,9 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * This could be made private.
 	 */
 	Map<String, String> properties = new HashMap<>();
+	String randWeight = "randWeight";
+	String weight = "weight";
+	
 	//Map<String, AbstractVertex> eOutgoing;
 	public List<AbstractVertex> eOutgoing;
 	
@@ -33,6 +36,14 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 		
 	}
 	
+	public AbstractEdge(AbstractVertex source, AbstractVertex destination, String identifier, String randomWeight){
+		this.source = source;
+		this.destination = destination;
+		this.identifier = identifier;
+		setWeight(source, destination, randomWeight);
+		
+	}
+	
 	public String getIdentifier(){
 		return identifier;
 	}
@@ -42,7 +53,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @returns Width in pixels, in range [0.0, 50.0]
 	 */
 	public double getWeight() {
-		String weight = properties.get("weight");
+		String weight = properties.get(this.weight);
 		if (weight == null) {
 			return 1.0;
 		} else {
@@ -52,17 +63,54 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	
 	/**
 	 * Sets the weight of the edge
-	 * @param weight is a double 
+	 * Default width is provided in the following format
+	 * For weights less than 4 the width is 1 pixel
+	 * For weights less than 7 the width is 3 pixel
+	 * For weights of other values greater than or equal to 7 the width is 5 pixel  
+	 * @param weight is a double
+	 *  
 	 */
 	public void setWeight(double weight) {
 		
-		properties.put("weight", Double.toString(weight));
-		if (weight<10)
+		properties.put(this.weight, Double.toString(weight));
+		if (weight<4)
 			setWidth(1);
-		else if (weight<20)
+		else if (weight<7)
 			setWidth(3);
 		else 
-			setWidth(7);
+			setWidth(5);
+	}
+	
+	/**
+	 * Sets a Random value between 0 and 9 to the weight attribute of the edge
+	 * Syntax: A.createEdge(B, "randWeight");
+	 * Default width is provided in the following format
+	 * For weights less than 4 the width is 1 pixel
+	 * For weights less than 7 the width is 3 pixel
+	 * For weights of other values greater than or equal to 7 the width is 5 pixel  
+	 * @param weight is the string "randWeight"
+	 * @param source contains the source Vertex
+	 * @param source contains the destination Vertex
+	 * @param random contains the String value "randWeight" later transformed in random double
+	 *  between 0.0-9.0
+	 */
+	
+	public void setWeight(AbstractVertex source, AbstractVertex destination, String random) {
+		double weight;
+		if (random.equals(randWeight))
+			weight = Bridge.getEdgeWeight(source.toString(),destination.toString());
+		else
+			{
+				System.out.println("Syntax error. All weights are 1.");
+				weight=1;
+			}
+		properties.put(this.weight, Double.toString(weight));
+		if (weight<4)
+			setWidth(1);
+		else if (weight<7)
+			setWidth(3);
+		else 
+			setWidth(5);
 	}
 	
 	/**

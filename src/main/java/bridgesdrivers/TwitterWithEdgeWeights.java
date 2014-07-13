@@ -11,14 +11,14 @@ import java.util.Set;
 
 import bridges.*;
 
-public class Twitter {
+public class TwitterWithEdgeWeights {
 
 	public static void main(String[] args) throws Exception {
 		// TODO Your code here
 		GraphVisualizer gv = new GraphVisualizer();
 
-		Bridge.init(0, "1022683069234", gv);
-		Bridge.setServerURL("http://bridges.cs.uncc.edu");
+		Bridge.init(0, "134695467477", gv);
+		Bridge.setServerURL("http://bridges-cs.herokuapp.com");
 		int expands_remaining = 10;
 		
 		Deque<Vertex> frontier = new ArrayDeque<>();
@@ -54,7 +54,7 @@ public class Twitter {
 					frontier.add(target);
 				}
 
-				source.createEdge(target);
+				source.createEdge(target,"randWeight");
 			}
 			frontier.remove(source);
 			expands_remaining -= 1;
