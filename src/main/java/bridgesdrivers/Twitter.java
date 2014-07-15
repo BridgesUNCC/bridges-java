@@ -18,7 +18,7 @@ public class Twitter {
 		GraphVisualizer gv = new GraphVisualizer();
 
 		Bridge.init(0, "585371696619", gv);
-		Bridge.setServerURL("http://bridges-cs.herokuapp.com");
+		//Bridge.setServerURL("http://bridges-cs.herokuapp.com");
 		int expands_remaining = 10;
 		
 		Deque<Vertex> frontier = new ArrayDeque<>();
@@ -63,11 +63,9 @@ public class Twitter {
 		// Find the route from Joey to Michael by going backward
 		// A BFS will give an MST here because the weights are always 1.
 		// Luckily, we just did a BFS
-<<<<<<< HEAD:src/main/java/bridgesdrivers/Twitter.java
+
 		/*String node = "twitter.com/roxy27";
-=======
 		/*String node = "twitter.com/lordsol_";
->>>>>>> e049467627cb4731457e5e184daa093eb419b6b1:src/main/java/bridgesdrivers/TwitterDriver.java
 		visited.get(node).setColor("green");
 		
 		while (! node.equals("twitter.com/Joey")) {
