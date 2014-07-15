@@ -7,8 +7,9 @@ import bridges.Vertex;
 public class Dijkstra {
 
 	public static void main(String[] args) {
-		GraphVisualizer graph = new GraphVisualizer();
+		GraphVisualizer graph = new GraphDijkstra();
 		Bridge.init(0,"134695467477", graph);
+		Bridge.setServerURL("http://bridges.cs.uncc.edu");
 		
 		Vertex A, B, C, D , E;	
 		A = new Vertex("A", graph);

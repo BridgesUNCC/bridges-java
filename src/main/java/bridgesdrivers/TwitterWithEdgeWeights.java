@@ -17,7 +17,7 @@ public class TwitterWithEdgeWeights {
 		// TODO Your code here
 		GraphVisualizer gv = new GraphVisualizer();
 
-		Bridge.init(0, "134695467477", gv);
+		Bridge.init(0, "1022683069234", gv);
 		Bridge.setServerURL("http://bridges-cs.herokuapp.com");
 		int expands_remaining = 10;
 		
@@ -59,21 +59,6 @@ public class TwitterWithEdgeWeights {
 			frontier.remove(source);
 			expands_remaining -= 1;
 		}
-		
-		// Find the route from Joey to Michael by going backward
-		// A BFS will give an MST here because the weights are always 1.
-		// Luckily, we just did a BFS
-		/*String node = "twitter.com/roxy27";
-=======
-		/*String node = "twitter.com/lordsol_";
->>>>>>> e049467627cb4731457e5e184daa093eb419b6b1:src/main/java/bridgesdrivers/TwitterDriver.java
-		visited.get(node).setColor("green");
-		
-		while (! node.equals("twitter.com/Joey")) {
-			Vertex parent = parent_of.get(node);
-			parent.getEdge(visited.get(node)).setColor("red");
-			node = parent.getIdentifier();
-		}*/
 		
 		Bridge.complete();
 	}

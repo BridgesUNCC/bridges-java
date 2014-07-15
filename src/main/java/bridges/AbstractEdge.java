@@ -101,7 +101,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 			weight = Bridge.getEdgeWeight(source.toString(),destination.toString());
 		else
 			{
-				System.out.println("Syntax error. All weights are 1.");
+				System.out.println("Syntax error: \"randWeight\" expected. All weights are 1.");
 				weight=1;
 			}
 		properties.put(this.weight, Double.toString(weight));
@@ -264,5 +264,4 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 				return s_compare;
 		}
 	}
-	
 }
