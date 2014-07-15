@@ -4,30 +4,30 @@ package bridgesdrivers;
 	/**
 	 * @author mihai mehedint
 	 * @date 05/02/2014
-	 * @Description: implementation of Dijkstra’s shortest path
+	 * @Description: implementation of Dijkstra���s shortest path
 	 *              algorithm using the graph ADT
 	 * class Graphl was modified after Shaffer's
 	 */
 
 	import java.util.*;
 
-import bridges.DLListNodeDijkstra;
 import bridges.Edge;
 import bridges.GraphVisualizer;
 
-	class GraphList extends DLListNodeDijkstra{
+	class GraphList extends {
 	    GraphList(String identifier, GraphVisualizer graph){
 	    		super(identifier, graph);
 	    }
 	}
 
 	/** Adjacency list graph implementation */
-	class GraphDijkstra extends GraphVisualizer {
+	class DijkstraGraph extends GraphVisualizer {
 	    private final int VISITED=1;
 	    private final int UNVISITED=0;
 	    private HashMap<String, GraphList> vertex;
 	    private int numEdge;
 	    private HashMap<String, Integer> Mark;
+	    
 
 	    //constructors
 	    public GraphDijkstra() {

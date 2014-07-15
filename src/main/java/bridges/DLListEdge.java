@@ -24,23 +24,7 @@ public class DLListEdge extends AbstractEdge {
 		this.nextNode = next;
 		
 	}
-	/**
-	 * The constructor for an Edge in a Doubly Linked List. Connects the Edge to the two passed Nodes.
-	 * @param prev The previous Node in the list.
-	 * @param next The next Node in the list.
-	 * @param weight Adds the weight attribute to the edge 
-	 */
-	public DLListEdge(DLListNode prev, DLListNode next, double weight){
-		super(prev, next, "", weight);
-		
-		//setting the connections for this edge to the next and previous Nodes
-		//o<-[]  o
-		this.prevNode = prev;
 
-		//o<-[]->o
-		this.nextNode = next;
-		
-	}
 	
 	/**
 	 * Returns the next Node in the list.

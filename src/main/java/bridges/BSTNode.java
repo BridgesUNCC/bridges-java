@@ -1,7 +1,11 @@
 package bridges;
 
 import java.util.Map.Entry;
-
+/**
+ * Generic Tree Node class, with visual components. Stores a value, allows for creation of its children.
+ * @author mvitulli
+ *
+ */
 public class BSTNode extends AbstractVertex {
 	
 	private BSTEdge leftEdge, rightEdge;	

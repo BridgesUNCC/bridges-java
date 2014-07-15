@@ -1,7 +1,10 @@
 package bridges;
 
 public class BSTEdge extends AbstractEdge{
-
+/**
+ * Edge class specifically for trees due to their hierarchical nature.
+ * @author mvitulli
+ */
 	private BSTNode out;
 	/**
 	 * Creates an Edge between two nodes.
