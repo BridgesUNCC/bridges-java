@@ -6,9 +6,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Abstract graph vertex, with an unspecified adjacency construct.
- * Whatever is used must be compatible with Map. The default implementation
- * Vertex uses a HashMap. You are free to use any you prefer.
+ * Base class for visual graph vertices; either subclass it or use Vertex.
+ * Implement `outgoing` with any List-compatible structure to get different
+ * performance characteristics.
+ * 
+ * The default implementation Vertex uses a HashMap. You are free to use any you prefer.
  */
 abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	/**

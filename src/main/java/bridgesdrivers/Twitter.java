@@ -21,8 +21,8 @@ public class Twitter {
 		Bridge.init(0, "585371696619", gv);
 		//Bridge.setServerURL("http://bridges-cs.herokuapp.com");
 
-		Bridge.init(0, "1022683069234", gv);
-		Bridge.setServerURL("http://bridges.cs.uncc.edu");
+		//Bridge.init(0, "1022683069234", gv);
+		//Bridge.setServerURL("http://bridges.cs.uncc.edu");
 
 		int expands_remaining = 10;
 		

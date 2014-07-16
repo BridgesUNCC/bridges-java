@@ -14,7 +14,7 @@ public class Vertex extends AbstractVertex {
 	/**
 	 * Creates and vertex and adds it to the graph.
 	 * @param identifier Name of the vertex.
-	 * @param graph THe graph the vertex is added to.
+	 * @param graph The graph the vertex is added to.
 	 */
 	public Vertex(String identifier, GraphVisualizer graph) {
 		super(identifier);

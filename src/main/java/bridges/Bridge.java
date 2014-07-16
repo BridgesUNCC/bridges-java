@@ -22,7 +22,6 @@ import org.json.simple.JSONObject;
 public class Bridge {
 	private static int assignment;
 	private static String key;
-	private static String server_url;
 	private static Visualizer visualizer;
 	private static BridgeNetwork backend;
 	
