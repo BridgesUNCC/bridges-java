@@ -18,10 +18,12 @@ public class Twitter {
 		GraphVisualizer gv = new GraphVisualizer();
 
 
-		Bridge.init(0, "585371696619", gv);
+		//Bridge.init(0, "585371696619", gv);
+		
+		
+		//Bridge.init(0, "796340034401", gv);//UNCC
+		Bridge.init(0, "5440159290", gv);//Heroku
 		//Bridge.setServerURL("http://bridges-cs.herokuapp.com");
-
-		//Bridge.init(0, "1022683069234", gv);
 		//Bridge.setServerURL("http://bridges.cs.uncc.edu");
 
 		int expands_remaining = 10;
@@ -74,7 +76,7 @@ public class Twitter {
 		//String node = "twitter.com/lordsol_";
 
 		//String node = "twitter.com/roxy27";
-		String node = "twitter.com/William";
+		String node = "twitter.com/GossipTopNews";
 
 		visited.get(node).setColor("green");
 		

@@ -9,7 +9,8 @@ public class TreeDiver {
 
 		TreeVisualizer tree = new TreeVisualizer();//Creating tree structure
 		
-		Bridge.init(0, "796340034401", tree);		
+		Bridge.init(0, "796340034401", tree);
+		Bridge.setServerURL("http://bridges.cs.uncc.edu");
 		
 		tree.insert(new BSTNode("Root, 12", 12));
 		//System.out.println("Root: " + tree.getRoot().getIdentifier());

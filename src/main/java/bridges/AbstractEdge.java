@@ -19,7 +19,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	//Map<String, AbstractVertex> eOutgoing;
 	public List<AbstractVertex> eOutgoing;
 	
-	final String identifier;
+	String identifier;
 	
 	public AbstractEdge(AbstractVertex source, AbstractVertex destination, String identifier){
 		this.source = source;
@@ -28,18 +28,18 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 		
 	}
 	
-	public AbstractEdge(AbstractVertex source, AbstractVertex destination, String identifier, double weight){
-		this.source = source;
+	public AbstractEdge(double weight){
+		/*this.source = source;
 		this.destination = destination;
-		this.identifier = identifier;
+		this.identifier = identifier;*/
 		setWeight(weight);
 		
 	}
 	
-	public AbstractEdge(AbstractVertex source, AbstractVertex destination, String identifier, String randomWeight){
-		this.source = source;
+	public AbstractEdge(String randomWeight){
+		/*this.source = source;
 		this.destination = destination;
-		this.identifier = identifier;
+		this.identifier = identifier;*/
 		setWeight(source, destination, randomWeight);
 		
 	}

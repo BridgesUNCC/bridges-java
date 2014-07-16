@@ -14,10 +14,15 @@ public class Edge extends AbstractEdge{
 	 * Takes two vertices and creates and edge between them.
 	 * 
 	 * @param source The source vertex.
-	 * @param destination The destination vertex. 
+	 * @param destination The destination vertex.
+	 * @param identifier The name of the Edge 
 	 */
 	public Edge(AbstractVertex source, AbstractVertex destination, String identifier) {		
-		super(source, destination, identifier);		
+		super(source, destination, identifier);
+		
+		if(source == null || destination == null){
+			throw new IllegalArgumentException("Source and Destination nodes cannot be NULL.");
+		}
 		//automates the connection process
 		//creates both connections   O  ->  O
 		//							    <-
@@ -35,43 +40,34 @@ public class Edge extends AbstractEdge{
 		this.eOutgoing.add(destination);		
 	}
 	
+	/**
+	 * Takes two vertices and creates and edge between them giving the Edge a weight.
+	 * 
+	 * @param source The source vertex.
+	 * @param destination The destination vertex. 
+	 * @param identifier The name of the Edge
+	 * @param weight The weight(double) of the Edge 
+	 */
 	public Edge(AbstractVertex source, AbstractVertex destination, String identifier, double weight) {		
-		super(source, destination, identifier, weight);		
-		//automates the connection process
-		//creates both connections   O  ->  O
-		//							    <-
+		super(weight);
 		
-		//Maybe put a check making sure the source and destination exist?		
-		eOutgoing = new ArrayList<AbstractVertex>();//each edge gets a list (of 2) connected vertices
-		//creates outgoing links from the associated vertices to the 'Edge'
-		//Adds the this edge to the lists associated with the two connecting vertices
-		source.outgoing.add(this);
-		destination.outgoing.add(this);
-		identifier = source.getIdentifier() + destination.getIdentifier();
-		//creates outgoing links from the 'Edge' to the associated Vertices
-		//Adds the destination and the source to the list of vertices connected to the edge
-		this.eOutgoing.add(source);
-		this.eOutgoing.add(destination);		
+		//calls base Edge constructor, for clarity sake, instead of doing the same instructions again
+		new Edge(source, destination, identifier);
 	}
 	
-	
+	/**
+	 * Takes two vertices and creates and edge between them giving the Edge a weight.
+	 * 
+	 * @param source The source vertex.
+	 * @param destination The destination vertex. 
+	 * @param identifier The name of the Edge
+	 * @param weight The weight(String) of the Edge 
+	 */
 	public Edge(AbstractVertex source, AbstractVertex destination, String identifier, String randWeight) {		
-		super(source, destination, identifier, randWeight);		
-		//automates the connection process
-		//creates both connections   O  ->  O
-		//							    <-
+		super(randWeight);		
 		
-		//Maybe put a check making sure the source and destination exist?		
-		eOutgoing = new ArrayList<AbstractVertex>();//each edge gets a list (of 2) connected vertices
-		//creates outgoing links from the associated vertices to the 'Edge'
-		//Adds the this edge to the lists associated with the two connecting vertices
-		source.outgoing.add(this);
-		destination.outgoing.add(this);
-		identifier = source.getIdentifier() + destination.getIdentifier();
-		//creates outgoing links from the 'Edge' to the associated Vertices
-		//Adds the destination and the source to the list of vertices connected to the edge
-		this.eOutgoing.add(source);
-		this.eOutgoing.add(destination);		
+		//calls base Edge constructor, for clarity sake, instead of doing the same instructions again
+		new Edge(source, destination, identifier);	
 	}
 	
 }
