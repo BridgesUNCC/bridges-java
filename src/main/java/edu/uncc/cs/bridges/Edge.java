@@ -49,10 +49,10 @@ public class Edge extends AbstractEdge{
 	 * @param weight The weight(double) of the Edge 
 	 */
 	public Edge(AbstractVertex source, AbstractVertex destination, String identifier, double weight) {		
-		super(weight);
 		
 		//calls base Edge constructor, for clarity sake, instead of doing the same instructions again
-		new Edge(source, destination, identifier);
+		this(source, destination, identifier);
+		this.setWeight(weight);
 	}
 	
 	/**
@@ -64,10 +64,10 @@ public class Edge extends AbstractEdge{
 	 * @param weight The weight(String) of the Edge 
 	 */
 	public Edge(AbstractVertex source, AbstractVertex destination, String identifier, String randWeight) {		
-		super(randWeight);		
-		
 		//calls base Edge constructor, for clarity sake, instead of doing the same instructions again
-		new Edge(source, destination, identifier);	
+		this(source, destination, identifier);
+		this.setWeight(source, destination, randWeight);
+
 	}
 	
 }
