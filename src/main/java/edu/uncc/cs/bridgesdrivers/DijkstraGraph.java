@@ -3,55 +3,48 @@ package edu.uncc.cs.bridgesdrivers;
 
 	/**
 	 * @author mihai mehedint
-	 * @date 05/02/2014
-	 * @Description: implementation of Dijkstra���s shortest path
-	 *              algorithm using the graph ADT
-	 * class Graphl was modified after Shaffer's
-	 */
 
+	 */
+import edu.uncc.cs.bridges.LinkedList;
 	import java.util.*;
 
-import bridges.Edge;
-import bridges.GraphVisualizer;
+import edu.uncc.cs.bridges.Bridge;
+import edu.uncc.cs.bridges.Edge;
+import edu.uncc.cs.bridges.GraphVisualizer;
 
-	class GraphList extends {
-	    GraphList(String identifier, GraphVisualizer graph){
-	    		super(identifier, graph);
-	    }
-	}
 
 	/** Adjacency list graph implementation */
 	class DijkstraGraph extends GraphVisualizer {
 	    private final int VISITED=1;
 	    private final int UNVISITED=0;
-	    private HashMap<String, GraphList> vertex;
 	    private int numEdge;
 	    private HashMap<String, Integer> Mark;
-	    
+	    private HashMap<String, LinkedList> vertex;
+	    private GraphVisualizer graph;
 
 	    //constructors
-	    public GraphDijkstra() {
+	    public DijkstraGraph() {
 	        Mark = new HashMap<>();
 	        numEdge = 0;
-	        vertex = new HashMap<>();
 	    }
-	    public GraphDijkstra(String ... args){
-	        Init(args);
+	    public DijkstraGraph(String aParent, int numberOfChildren, GraphVisualizer graph){
+	        Init(aParent, numberOfChildren);
+	        this.graph=graph;
 	    }//end of constructors
 
 	    /**
 	     Init initializes mark and vertex hashmaps
 	     * as well as the queue for BFS
 	     */ 
-	    public void Init(String[] args) {
-	      Mark = new HashMap<>(args.length);
-	      for (String ar: args)
+	    public void Init(String aParent, int numberOfChildren) {
+	      Mark = new HashMap<>();
+	      for (String ar: Bridge.getAssociations(aParent,numberOfChildren))
 	        Mark.put(ar, UNVISITED);
 
 	      numEdge = 0;
-	      vertex = new HashMap<>(args.length);
-	      for (String ar: args)
-	        vertex.put(ar, new GraphList(ar, graph));
+	      vertex = new HashMap();
+	      for (String ar: Bridge.getAssociations(aParent,numberOfChildren))
+	        this.vertex.put(ar, new LinkedList(aParent, graph));
 	    }//end of Init
 
 	     public int n() { 
@@ -127,10 +120,10 @@ import bridges.GraphVisualizer;
 
 	     /** @return the vertex first neighbor */
 	     public String first(String aName) {
-	       GraphList aList= (GraphList)vertex.get(aName);
+	       LinkedList aList= vertex.get(aName);
 	       if (aList.length() == 0)
 	         return (null);   // No neighbor
-	       aList.moveToStart();
+	       aList.moveToPos();
 	       Edge it = (Edge)aList.getValue();
 
 	       return it.vertex();

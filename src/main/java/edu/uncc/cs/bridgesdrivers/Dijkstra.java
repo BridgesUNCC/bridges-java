@@ -4,10 +4,11 @@ import edu.uncc.cs.bridges.Bridge;
 import edu.uncc.cs.bridges.GraphVisualizer;
 import edu.uncc.cs.bridges.Vertex;
 
+
 public class Dijkstra {
 
 	public static void main(String[] args) {
-		GraphVisualizer graph = new GraphDijkstra();
+		GraphVisualizer graph = new DijkstraGraph();
 		Bridge.init(0,"134695467477", graph, "YOUR_USERNAME");
 		Bridge.setServerURL("http://edu.uncc.cs.bridges.cs.uncc.edu");
 		
