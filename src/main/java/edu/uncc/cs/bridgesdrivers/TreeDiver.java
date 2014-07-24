@@ -10,9 +10,9 @@ public class TreeDiver {
 		TreeVisualizer tree = new TreeVisualizer();//Creating tree structure
 		
 		//Bridge.init(0, "796340034401", tree);//UNCC
-		Bridge.init(0, "5440159290", tree, "YOUR_USERNAME");//Heroku
-		Bridge.setServerURL("http://edu.uncc.cs.bridges-cs.herokuapp.com");
-		//Bridge.setServerURL("http://edu.uncc.cs.bridges.cs.uncc.edu");
+		Bridge.init(0, "5440159290", tree, "Dismembered");//Heroku
+		Bridge.setServerURL("http://bridges-cs.herokuapp.com");
+		//Bridge.setServerURL("http://bridges.cs.uncc.edu");
 		
 		tree.insert(new BSTNode("Root, 12", 12));
 		//System.out.println("Root: " + tree.getRoot().getIdentifier());

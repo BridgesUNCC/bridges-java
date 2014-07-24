@@ -58,7 +58,11 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * Default width is provided in the following format
 	 * For weights less than 4 the width is 1 pixel
 	 * For weights less than 7 the width is 3 pixel
-	 * For weights of other values greater than or equal to 7 the width is 5 pixel  
+	 * For weights of other values greater than or equal to 7 the width is 5 pixel 
+	 * Syntax: 
+	 * 				A.createEdge(B, 10);           weight is specified as an integer when creating an edge
+	 * Optional: 
+	 * 			    A.getEdge(B).setWeight(25);    here, weight is set after creating the edge 
 	 * @param weight is a double
 	 *  
 	 */
@@ -79,7 +83,9 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * Default width is provided in the following format
 	 * For weights less than 4 the width is 1 pixel
 	 * For weights less than 7 the width is 3 pixel
-	 * For weights of other values greater than or equal to 7 the width is 5 pixel  
+	 * For weights of other values greater than or equal to 7 the width is 5 pixel
+	 * Syntax for creating a random weight: 
+	 *                   source.createEdge(target,"randWeight");   
 	 * @param weight is the string "randWeight"
 	 * @param source contains the source Vertex
 	 * @param source contains the destination Vertex
