@@ -19,7 +19,7 @@ import org.json.simple.JSONValue;
 
 
 public class BridgeNetwork {
-    String server_url = "http://edu.uncc.cs.bridges-cs.herokuapp.com";
+    String server_url = "http://bridges-cs.herokuapp.com";
     Executor http_connection;
     boolean debug = false;
     
@@ -305,7 +305,7 @@ public class BridgeNetwork {
             // But otherwise, throw something less helpful.
             throw new IOException("Server errored, but gave an invalid"
             		+ " report: " + text + ". Consider filing a bug report"
-    				+ " about this at http://github.com/SeanTater/edu.uncc.cs.bridges.");
+    				+ " about this at http://github.com/SeanTater/bridges.");
         }
         
         // Handle empty responses

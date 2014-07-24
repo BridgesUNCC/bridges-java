@@ -9,8 +9,7 @@ apply plugin: 'signing'
 /// General
 ///
 group = "edu.uncc.cs.bridges"
-// release: version = "0.3.8"
-version = "0.99.1"
+version = "0.99.4"
 
 ///
 /// Artifacts and deployment
@@ -36,7 +35,7 @@ artifacts {
 sourceSets {
     main {
         java {
-            exclude 'bridgesdrivers/**'
+            exclude 'edu/uncc/cs/bridgesdrivers/**'
         }
     }
 }
