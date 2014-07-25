@@ -29,9 +29,6 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	}
 	
 	public AbstractEdge(String randomWeight){
-		/*this.source = source;
-		this.destination = destination;
-		this.identifier = identifier;*/
 		setWeight(source, destination, randomWeight);
 		
 	}

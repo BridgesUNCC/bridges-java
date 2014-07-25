@@ -4,78 +4,67 @@ package edu.uncc.cs.bridges;
  * author: Mihai Mehedint
  *  
  */
-public class Link extends DLListNode{
-	private String aNode;					//current node
-	public Link nextNodePointer; //holds the next pointer
-	public Link prevNodePointer; //holds the previous pointer
-	
-	private DLListEdge nextEdgePointer, prevEdgePointer;//hold the pointers to edge objects 
-	
+public class Link<E>{
+	private E 		nodeName;		   //can be set to string, integer, Vertex, Edge etc.; current node
+	private Link<E> 	nextNodePointer;  //holds the next pointer
+	private Link<E> prevNodePointer; //holds the previous pointer 
 	/*
 	 * Constructors
 	 */
-	Link(String ident, GraphVisualizer graph){
-		super(ident, graph);
-		this.aNode=ident;
+	Link(E ident){
+		this.nodeName=ident;
 	}
 	
-	Link(Link nextNodePointer, String ident, GraphVisualizer graph){
-		super(ident, graph);
-		this.aNode=ident;
-		this.nextNodePointer=nextNodePointer;
+	Link(E ident, Link<E> nextNodePointer){
+		this(ident);
+		this.nextNodePointer=nextNodePointer;	
 	}
 	
-	Link(Link nextNodePointer, Link prevNodePointer, String ident, GraphVisualizer graph){
-		super(ident, graph);
-		this.aNode=ident;
-		this.nextNodePointer=nextNodePointer;
+	Link(E ident, Link<E> nextNodePointer, Link<E> prevNodePointer){
+		this(ident, nextNodePointer);
 		this.prevNodePointer=prevNodePointer;
 	}
 	
 	/*
 	 * Returns the next Node
 	 */
-	public Link next(){
+	public Link<E> getNext(){
 		return nextNodePointer;
 	}
 	
 	/*
 	 * Creates a link between 2 nodes
 	 */
-	public Link setNext(Link aLink) throws Exception{
-		 super.setNext(aLink);
-		 //this.getNext().setNext(aLink);
-		 return nextNodePointer=aLink;
+	public Link<E> setNext(Link<E> aNode){
+		 return nextNodePointer=aNode;
 	}
 	
 	/*
 	 * Returns the previous node
 	 */
-	public Link prev(){
+	public Link<E> getPrev(){
 		return prevNodePointer;
 	}
 	
 	/*
 	 * Returns the previous node
 	 */
-	public Link setPrev(Link aLink) throws Exception{
-		super.setPrev(aLink);
-		//this.getPrev().setPrev(aLink);
-		return prevNodePointer=aLink;
+	public Link<E> setPrev(Link<E> aNode){
+		return prevNodePointer=aNode;
 	}
 	
 	/*
 	 * Sets the name of the node element
 	 */
-	public String setNodeName(String aNode){
-		return this.aNode=aNode;
+	public E setNodeName(E aNode){
+		return this.nodeName=aNode;
 	}
 	
 	/*
 	 * Returns the name of the node 
 	 */
-	public String getNodeName(){
-		 return this.aNode;
+	public E getNodeName(){
+		 return this.nodeName;
 	}
 	
 }

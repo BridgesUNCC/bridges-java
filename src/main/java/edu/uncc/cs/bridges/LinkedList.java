@@ -4,33 +4,32 @@ package edu.uncc.cs.bridges;
  * author Mihai Mehedint
  * 
  */
-public class LinkedList extends Link{  
-	public Link currPointer; //holds the current pointer
-	public Link listHead; //the head pointer
-	public Link listTail; //the tail pointer
-	public int size;  //the size of the list
-	public String ident;
-	public GraphVisualizer graph;
+public class LinkedList<E>{  
+	public GraphVisualizer list; //creates a graph
+	private Link<E> currPointer; //holds the current pointer
+	private Link<E> listHead; //the head pointer
+	private Link<E> listTail; //the tail pointer
+	private int size;  //the size of the list
+	private String ident;
+	
 	/*
 	 * constructor
 	 */
-	LinkedList(String ident, GraphVisualizer graph){
-		super(ident, graph);
-		this.ident=ident;
-		this.graph=graph;
-		currPointer=new Link(null, ident, graph);
-		nextNodePointer=currPointer;
-		prevNodePointer = currPointer;
+	public LinkedList(){
+		currPointer=listHead=listTail=new Link(null);
+		list= new GraphVisualizer();
+		
 		size=0;
 	}
+	
 	/*
 	 * Returns the current position as an integer value
 	 */
 	public int currPos(){
 		int aPosition;
-		Link aNode=listHead;
+		Link<E> aNode=listHead;
 		for (aPosition=0;currPointer!=aNode;aPosition++){
-			aNode=aNode.next();
+			aNode=aNode.getNext();
 		}
 		return aPosition;
 	}
@@ -38,16 +37,16 @@ public class LinkedList extends Link{
 	/*
 	 * Returns the head pointer
 	 */
-	public void moveToBegining(){
-		currPointer=listHead;
+	public Link<E> moveToBegining(){
+		return currPointer=listHead;
 	}
 	
 	/* 
 	 * Returns the tail pointer
 	 * 
 	 */
-	public void moveToEnd(){
-		currPointer=listTail;
+	public Link<E> moveToEnd(){
+		return currPointer=listTail;
 	}
 	
 	/*
@@ -60,42 +59,62 @@ public class LinkedList extends Link{
 	/*
 	 * Clears the list
 	 */
-	public void clearList() throws Exception{
-		listHead.setNext(null);
+	public void clearList(){
+		listHead=currPointer=listTail=null;
 		size=0;
-		currPointer=listHead=listTail=new Link(null, ident, graph);
 	}
 	
 	/*
 	 * Inserts a node into the list and increments the length of the list
 	 */
-	public void insert(String aNode) throws Exception{
-		Link aNodeLink = new Link(currPointer.next(), aNode, graph);
-		size++;
-		currPointer.setNext(aNodeLink);
+	public void insert(E aNode, int position){
+		moveToPos(position-1);  //moves current pointer to the position
+		Link<E> node=new Link(new Vertex(aNode.toString(),list));
+		
+		
+		if(currPointer==null)
+			listHead=listTail=currPointer=node;
+		else if (currPointer==listHead && currPointer==listTail)
+				currPointer.setNext(node);
+		else{
+			node.setPrev(currPointer);
+			node.setNext(currPointer.getNext());
+			
+			currPointer.getNext().setPrev(node);
+			currPointer.setNext(node);
+			setEdge(currPointer.getNodeName(), currPointer.getNext().getNodeName());
+			//setEdge(currPointer.getNext().getNodeName(), currPointer.getNext().getNext().getNodeName());
+			
+		}
+		size++;	
+		//setEdge(currPointer.getNodeName(), currPointer.getNext().getNodeName());
+		//setEdge(currPointer.getNext().getNodeName(), currPointer.getNext().getNext().getNodeName());
 	}
 	
 	/*
 	 * Appends a node to the list and increments the length variable
 	 */
-	public void append(String aNode) throws Exception{
-		Link aNodeLink=new Link(null, aNode, graph);
-		listTail=listTail.setNext(aNodeLink);
+	public void append(E aNode){
+		Link<E> node=new Link(new Vertex(aNode.toString(),list));
+		listTail.setNext(new Link(aNode));
+		currPointer=listTail;
+		listTail=next();
 		size++;
 	}
 	
 	/*
 	 * Removes the a node and decrements the length variable
 	 */
-	public String remove() throws Exception{
-		if (currPointer.next()==null)
-			return null;
-		String aNode = currPointer.next().getNodeName();
-		if (listTail==currPointer.next())
+	public Link<E> remove(){
+		if (currPointer.getNext()==null)
+			return currPointer=null;
+		if (listTail==currPointer.getNext())
 			listTail=currPointer;
-		currPointer.setNext(currPointer.next().next());
+		else
+			
+		
 		size--;
-		return aNode;
+		return currPointer.setNext(currPointer.getNext().getNext());
 	}
 	
 	/*
@@ -106,8 +125,8 @@ public class LinkedList extends Link{
 	public Link prev(){
 		if (currPointer==listHead) return null;
 		Link aNode=listHead;
-		while(aNode.next()!=currPointer){
-			aNode=aNode.next();
+		while(aNode.getNext()!=currPointer){
+			aNode=aNode.getNext();
 		}
 		return currPointer=aNode;
 	}
@@ -115,11 +134,11 @@ public class LinkedList extends Link{
 	 * This method returns the next node in the list
 	 * @see edu.uncc.cs.bridges.Link#next()
 	 */
-	public Link next(){
+	public Link<E> next(){
 		if (currPointer==listTail)
 			return null;
 		else
-			return currPointer=currPointer.next();
+			return currPointer=currPointer.getNext();
 	}
 	
 	/*
@@ -131,18 +150,26 @@ public class LinkedList extends Link{
 		}
 		currPointer=listHead;
 		for (int i=0;i<aPosition;i++)
-			currPointer=currPointer.next();
+			currPointer=currPointer.getNext();
 	}
 	
 	/*
 	 * This method returns the node value
 	 */
-	public String getNodeValue(){
-		if (currPointer.next()==null){
+	public E getNodeValue(){
+		if (currPointer.getNext()==null){
 			return null;
 		}
 		else 
-			return currPointer.next().getNodeName();
+			return currPointer.getNext().getNodeName();
+	}
+	
+	/*
+	 * This method is setting default edges between nodes
+	 * without the possibility of changing any parameters
+	 */
+	private void setEdge(E source, E destination){
+		((Vertex) source).createEdge((Vertex) destination);
 	}
 	
 }
