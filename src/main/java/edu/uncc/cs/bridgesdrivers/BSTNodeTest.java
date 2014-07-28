@@ -25,9 +25,10 @@ public class BSTNodeTest {
 
 	@Test
 	public final void testSetLeftChild() throws Exception {
-		
+		root.setLeftChild(new BSTNode("asdsffdgd", 6));
 		assertNotNull(root.getLeftChild());
 		assertEquals(2,  root.getLeftChild().getVal());
+		
 
 	}
 
