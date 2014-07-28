@@ -327,18 +327,18 @@ public class SampleDataGenerator {
 			boolean include_self
 			) {
 		List<String> friends = new ArrayList<String>();
-		int hash = name.hashCode();
+		int hash = name == null ? 17 : name.hashCode();
 		// (do .. while) to be kind, so everyone has at least 1 friend.
 		do {
-			String candidate = pickOneOf(choices, hash);
+			String candidate = provider + "/" + pickOneOf(choices, hash);
 			
 			if (friends.contains(candidate)
-					|| ((!include_self) && name.equals(candidate))) {
+					|| ((!include_self) && candidate.equals(name))) {
 				// Oops, already have that friend (or it's me)
 				// Keep the hash changing
 				hash += 1;
 			} else {
-				friends.add(provider + "/" + candidate);
+				friends.add(candidate);
 				// Seed the next round
 				hash = friends.hashCode();				
 			}
