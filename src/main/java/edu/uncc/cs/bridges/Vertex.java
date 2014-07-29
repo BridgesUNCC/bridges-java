@@ -57,8 +57,15 @@ public class Vertex extends AbstractVertex {
 	 */
 	public void createEdge(Vertex v2, String randWeight){
 		//identifier is to be used internally to find the Edges later
-		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
-		new Edge(this, v2, ident, randWeight);
+		AbstractEdge temp=getEdge(v2);
+		if (temp==null){
+			String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
+			new Edge(this, v2, ident, randWeight);
+		}
+		else{
+			
+		}
+			
 	}
 	
 	/**

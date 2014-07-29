@@ -6,23 +6,25 @@ import org.junit.Test;
 import edu.uncc.cs.bridges.*;
 
 public class EdgeTest {
-
+	
+	GraphVisualizer gv =new GraphVisualizer();
+	Vertex Bob = new Vertex("Bob",gv);
+	Vertex Jane = new Vertex("Jane",gv);
+	Edge anEdge1 = new Edge(Bob,Jane,"movie1",12.3);
+	Edge anEdge2 = new Edge(Bob,Jane,"movie1",15);
+	Edge anEdge3=null;
+	
 	@Test
 	public final void testEdgeAbstractVertexAbstractVertexString() {
 		GraphVisualizer gv =new GraphVisualizer();
 		Edge anEdge = new Edge(new Vertex("Bob",gv), new Vertex("Jane", gv), "movie");
 	}
-
+	public final void setUp(){
+		
+	}
 	@Test
 	public final void testEdgeAbstractVertexAbstractVertexStringDouble() {
-		GraphVisualizer gv =new GraphVisualizer();
-		Vertex Bob = new Vertex("Bob",gv);
-		Vertex Jane = new Vertex("Jane",gv);
-		Edge anEdge1 = new Edge(Bob,Jane,"movie1",12.3);
-		Edge anEdge2 = new Edge(Bob,Jane,"movie1",15);
-		Edge anEdge3=null;
-		assertNotNull("Error while creating the edge: null object", anEdge1);
-		assertNull("Error",anEdge3);
+
 		assertNotEquals("Two edges between the same vertices must be different", anEdge1, anEdge2);
 		assertEquals("The source vertex is different than expected",Bob,anEdge1.source);
 		assertEquals("The destination vertex is different than expected",Jane,anEdge1.destination);

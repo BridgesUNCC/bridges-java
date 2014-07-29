@@ -13,6 +13,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * This could be made private.
 	 */
 	Map<String, String> properties = new HashMap<>();
+	
 	String randWeight = "randWeight";
 	String weight = "weight";
 	

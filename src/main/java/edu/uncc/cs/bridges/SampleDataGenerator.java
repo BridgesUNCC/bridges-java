@@ -1,7 +1,9 @@
 package edu.uncc.cs.bridges;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SampleDataGenerator {
 	
@@ -76,7 +78,7 @@ public class SampleDataGenerator {
 			"The Silence of the Lambs",
 			"Once Upon a Time in the West",
 			"It's a Wonderful Life",
-			"Léon: The Professional",
+			"L��on: The Professional",
 			"Casablanca",
 			"Life Is Beautiful",
 			"Raiders of the Lost Ark",
@@ -109,9 +111,9 @@ public class SampleDataGenerator {
 			"The Lion King",
 			"Paths of Glory",
 			"American Beauty",
-			"WALL·E",
+			"WALL��E",
 			"North by Northwest",
-			"Amélie",
+			"Am��lie",
 			"Citizen Kane",
 			"Aliens",
 			"Vertigo",
@@ -227,7 +229,7 @@ public class SampleDataGenerator {
 		"Ed Harris",
 		"Alain Delon",
 		"Chris Cooper",
-		"Gérard Depardieu",
+		"G��rard Depardieu",
 		"Justin Theroux",
 		"Nick Nolte",
 		"Val Kilmer",
@@ -246,7 +248,7 @@ public class SampleDataGenerator {
 		"Jude Law",
 		"Geoffrey Rush",
 		"Roberto Benigni",
-		"Jürgen Prochnow",
+		"J��rgen Prochnow",
 		"Alec Baldwin",
 		"Joseph Fiennes",
 		"Sebastian Koch",
@@ -255,6 +257,20 @@ public class SampleDataGenerator {
 		"John Wayne",
 	};
 	
+	/*
+	 * This method generates random weights for edges
+	 * @name Name of the node
+	 * @max Maximum number of friends
+	 * @return Returns the map of weights corresponding to the edges connected to a specific node
+	 */
+	public static Map<String, Double> getFriendsLikeness (String name, int max){
+			List<String> aList=getFriends(name, max);
+			Map<String, Double> aMap = new HashMap<>();
+			for (String friend: aList){
+				aMap.put(friend, Math.abs((friend+name).hashCode()%100.0));
+			}
+			return aMap;
+	}
 	/**
 	 * Pick some friends, consistently.
 	 * This is a function: identical calls generate identical results.
