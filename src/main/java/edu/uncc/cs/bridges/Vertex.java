@@ -33,8 +33,11 @@ public class Vertex extends AbstractVertex {
 	 */
 	public void createEdge(Vertex v2){
 		//identifier is to be used internally to find the Edges later
-		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
-		new Edge(this, v2, ident);
+		AbstractEdge temp=getEdge(v2);
+		if (temp==null){
+			String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
+			new Edge(this, v2, ident);
+		}
 	}
 	/**
 	 * Creates an edge between the calling vertex and a passed vertex.
@@ -44,8 +47,8 @@ public class Vertex extends AbstractVertex {
 	 */
 	public void createEdge(Vertex v2, double weight){
 		//identifier is to be used internally to find the Edges later
-		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
-		new Edge(this, v2, ident, weight);
+		createEdge(v2);
+		this.getEdge(v2).setWeight(weight);
 	}
 	
 	/**
@@ -57,15 +60,8 @@ public class Vertex extends AbstractVertex {
 	 */
 	public void createEdge(Vertex v2, String randWeight){
 		//identifier is to be used internally to find the Edges later
-		AbstractEdge temp=getEdge(v2);
-		if (temp==null){
-			String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
-			new Edge(this, v2, ident, randWeight);
-		}
-		else{
-			
-		}
-			
+			createEdge(v2);
+			this.getEdge(v2).setWeight(this, v2, randWeight);			
 	}
 	
 	/**

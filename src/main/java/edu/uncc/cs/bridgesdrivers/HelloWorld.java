@@ -10,8 +10,8 @@ public class HelloWorld {
 	public static void main(String[] args) throws Exception {
 		// TODO Your code here
 		GraphVisualizer gv = new GraphVisualizer();
-		Bridge.init(0, "796340034401", gv, "YOUR_USERNAME");
-		Bridge.setServerURL("http://edu.uncc.cs.bridges.cs.uncc.edu");
+		Bridge.init(0, "693144430396", gv, "mmehedin@uncc.edu");
+		//Bridge.setServerURL("http://edu.uncc.cs.bridges.cs.uncc.edu");
 		
 		Vertex HelloWorld = new Vertex("HelloWorld", gv);
 		
@@ -20,7 +20,8 @@ public class HelloWorld {
 		Vertex Steve = new Vertex("Steve", gv);
 		
 		HelloWorld.createEdge(HiWorld);
-		HelloWorld.createEdge(Bob);
+		HelloWorld.createEdge(Bob,12);
+		HelloWorld.createEdge(Bob,1);
 		Steve.createEdge(HelloWorld);
 		
 		Steve.createEdge(Bob);

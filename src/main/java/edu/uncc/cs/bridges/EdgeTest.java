@@ -8,26 +8,32 @@ import edu.uncc.cs.bridges.*;
 public class EdgeTest {
 	
 	GraphVisualizer gv =new GraphVisualizer();
-	Vertex Bob = new Vertex("Bob",gv);
-	Vertex Jane = new Vertex("Jane",gv);
-	Edge anEdge1 = new Edge(Bob,Jane,"movie1",12.3);
-	Edge anEdge2 = new Edge(Bob,Jane,"movie1",15);
-	Edge anEdge3=null;
+	Vertex Bob;
+	Vertex Jane;
+	Edge anEdge1;
+	Edge anEdge2;
 	
 	@Test
-	public final void testEdgeAbstractVertexAbstractVertexString() {
-		GraphVisualizer gv =new GraphVisualizer();
-		Edge anEdge = new Edge(new Vertex("Bob",gv), new Vertex("Jane", gv), "movie");
-	}
 	public final void setUp(){
+		Bob = new Vertex("Bob",gv);
+		Jane = new Vertex("Jane",gv);
+		anEdge1 = new Edge(Bob,Jane,"movie1",12.3);
+		anEdge2 = new Edge(Bob,Jane,"movie1",15);
+	}
+	@Test
+	public final void testEdgeAbstractVertexAbstractVertexString() {
 		
 	}
+
 	@Test
 	public final void testEdgeAbstractVertexAbstractVertexStringDouble() {
 
-		assertNotEquals("Two edges between the same vertices must be different", anEdge1, anEdge2);
+		assertNotEquals("There cannot be 2 edges with the same orientation between the same vertices", anEdge1, anEdge2);
 		assertEquals("The source vertex is different than expected",Bob,anEdge1.source);
 		assertEquals("The destination vertex is different than expected",Jane,anEdge1.destination);
+		assertFalse("The identifier does not match the expected value",anEdge1.identifier.equals("movie1"));
+		assertEquals("The value of edge weight does not match the expected value.", 12.3, anEdge1.weight);
+		
 	}
 
 	@Test
