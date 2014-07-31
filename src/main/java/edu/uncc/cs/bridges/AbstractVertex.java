@@ -34,8 +34,12 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * @param identifier  The unique, final id for this vertex. 
 	 */
 	public AbstractVertex(String identifier) {
-		this.identifier = identifier;
-		this.setColor("black");
+		if(identifier!=null){
+			this.identifier = identifier;
+			this.setColor("black");
+		}
+		else 
+			throw new IllegalArgumentException("param cannot be null.");
 	}
 	
 	/// Accessors and mutators for visualization properties follow
@@ -69,7 +73,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * @param color Color as a String
 	 * @see Validation#validateColor(String)
 	 */
-	public void setColor(String color) {		
+	public AbstractVertex setColor(String color) {		
 		color = color.toLowerCase();
 		if (color == null || color.isEmpty()) {
 			properties.put("color", "black");
@@ -77,6 +81,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 			Validation.validateColor(color);
 			properties.put("color", color);
 		}
+		return this;
 	}
 	
 	/**
@@ -96,14 +101,16 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * Take a node by it's identifier string and get it's shape
 	 * @param shape "Circle" or "Square"
 	 */
-	public void setShape(String shape) {
+	public AbstractVertex setShape(String shape) {
 		shape = shape.toLowerCase();
 		if(shape.equals("square")){
 			shape = "rect";
 		}
 		Validation.validateShape(shape);
 		properties.put("shape", shape);
-	};
+		
+		return this;
+	}
 	
 	/**
 	 * Take a node by it's identifier string and get it's node color
@@ -122,9 +129,11 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * Take a node by it's identifier string and get it's node color
 	 * @param pixels  Diameter of the node, in range [0.0, 50.0]
 	 */
-	public void setSize(double pixels) {
+	public AbstractVertex setSize(double pixels) {
 		Validation.validateSize(pixels);
 		properties.put("size", Double.toString(pixels));
+		
+		return this;
 	}
 	
 	/**
@@ -147,9 +156,11 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * 1.0 is opaque
 	 * @param opacity  Alpha, in range [0.0, 1.0]
 	 */
-	public void setOpacity(double opacity) {
+	public AbstractVertex setOpacity(double opacity) {
 		Validation.validateOpacity(opacity);
 		properties.put("opacity", Double.toString(opacity));
+		
+		return this;
 	}
 	
 	/// Hash code and equals: implements map, but it only uses this.identifier

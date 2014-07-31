@@ -64,7 +64,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @param weight is a double
 	 *  
 	 */
-	public void setWeight(double weight) {
+	public AbstractEdge setWeight(double weight) {
 		
 		properties.put(this.weight, Double.toString(weight));
 		if (weight<4)
@@ -73,6 +73,8 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 			setWidth(3);
 		else 
 			setWidth(5);
+		
+		return this;
 	}
 	
 	/**
@@ -91,7 +93,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 *  between 0.0-9.0
 	 */
 	
-	public void setWeight(AbstractVertex source, AbstractVertex destination, String random) {
+	public AbstractEdge setWeight(AbstractVertex source, AbstractVertex destination, String random) {
 		double weight;
 		if (random.equals(randWeight))
 			weight = Bridge.getEdgeWeight(source.toString(),destination.toString());
@@ -107,6 +109,8 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 			setWidth(3);
 		else 
 			setWidth(5);
+		
+		return this;
 	}
 	
 	/**
@@ -134,7 +138,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @param color Color as a String
 	 * @see Validation#validateColor(String)
 	 */
-	public void setColor(String color) {
+	public AbstractEdge setColor(String color) {
 		color = color.toLowerCase();
 		if (color == null || color.isEmpty()) {
 			properties.remove("color");
@@ -142,6 +146,8 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 			Validation.validateColor(color);
 			properties.put("color", color);
 		}
+		
+		return this;
 	}
 	
 	/**
@@ -162,7 +168,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * edges.
 	 * @param dash CSS dash double array, for example "5,10,5"
 	 */
-	public void setDash(double[] dashes) {
+	public AbstractEdge setDash(double[] dashes) {
 		StringBuilder sb = new StringBuilder("");
 		for (double dash : dashes) {
 			sb.append(dash);
@@ -170,6 +176,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 		}
 		sb.deleteCharAt(sb.length()-1);
 		properties.put("dasharray", sb.toString());
+		return this;
 	}
 	
 	
@@ -190,10 +197,12 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * Set the width in pixels
 	 * @param pixels  width in pixels, in range [0.0, 50.0]
 	 */
-	public void setWidth(double pixels) {
+	public AbstractEdge setWidth(double pixels) {
 		//TODO: Should we protect against NaN and Inf?
 		Validation.validateSize(pixels);
 		properties.put("width", Double.toString(pixels));
+		
+		return this;
 	}
 	
 	/**
@@ -216,9 +225,11 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * 1.0 is opaque
 	 * @param opacity  Alpha, in range [0.0, 1.0]
 	 */
-	public void setOpacity(double opacity) {
+	public AbstractEdge setOpacity(double opacity) {
 		Validation.validateOpacity(opacity);
 		properties.put("opacity", Double.toString(opacity));
+		
+		return this;
 	}
 	
 	/**

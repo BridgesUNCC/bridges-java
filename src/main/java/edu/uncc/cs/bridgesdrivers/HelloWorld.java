@@ -19,7 +19,11 @@ public class HelloWorld {
 		Vertex Bob = new Vertex("Bob", gv);
 		Vertex Steve = new Vertex("Steve", gv);
 		
-		HelloWorld.createEdge(HiWorld);
+		AbstractEdge anEdge=HelloWorld.createEdge(HiWorld);
+		System.out.println(anEdge);
+		System.out.println(anEdge.getIdentifier());
+		System.out.println(HelloWorld.getEdge(HiWorld));
+		
 		HelloWorld.createEdge(Bob,12);
 		HelloWorld.createEdge(Bob,1);
 		Steve.createEdge(HelloWorld);

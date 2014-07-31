@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.uncc.cs.bridges;
+package edu.uncc.cs.bridgesdrivers;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+
+import edu.uncc.cs.bridges.SampleDataGenerator;
 
 /**
  * @author sean

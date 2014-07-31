@@ -31,13 +31,14 @@ public class Vertex extends AbstractVertex {
 	 * 
 	 * @param v2 The second vertex that edge is between.
 	 */
-	public void createEdge(Vertex v2){
+	public AbstractEdge createEdge(Vertex v2){
 		//identifier is to be used internally to find the Edges later
 		AbstractEdge temp=getEdge(v2);
 		if (temp==null){
 			String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
-			new Edge(this, v2, ident);
+			return new Edge(this, v2, ident);
 		}
+		return null;
 	}
 	/**
 	 * Creates an edge between the calling vertex and a passed vertex.
@@ -45,10 +46,11 @@ public class Vertex extends AbstractVertex {
 	 * @param v2 The second vertex that edge is between.
 	 * @param weight Contains the weight value as a double
 	 */
-	public void createEdge(Vertex v2, double weight){
+	public AbstractEdge createEdge(Vertex v2, double weight){
 		//identifier is to be used internally to find the Edges later
 		createEdge(v2);
 		this.getEdge(v2).setWeight(weight);
+		return this.getEdge(v2);
 	}
 	
 	/**
@@ -58,10 +60,11 @@ public class Vertex extends AbstractVertex {
 	 * @param weight Contains the weight value as a string "randWeight", later 
 	 * transformed in a random double between 0.0-9.0
 	 */
-	public void createEdge(Vertex v2, String randWeight){
+	public AbstractEdge createEdge(Vertex v2, String randWeight){
 		//identifier is to be used internally to find the Edges later
 			createEdge(v2);
-			this.getEdge(v2).setWeight(this, v2, randWeight);			
+			this.getEdge(v2).setWeight(this, v2, randWeight);
+			return this.getEdge(v2);
 	}
 	
 	/**
@@ -80,5 +83,33 @@ public class Vertex extends AbstractVertex {
 			}
 		}		
 		return null;
+	}
+
+	@Override
+	public Vertex setColor(String color) {
+		// TODO Auto-generated method stub
+		super.setColor(color);
+		return this;
+	}
+
+	@Override
+	public Vertex setShape(String shape) {
+		// TODO Auto-generated method stub
+		super.setShape(shape);
+		return this;
+	}
+
+	@Override
+	public Vertex setSize(double pixels) {
+		// TODO Auto-generated method stub
+		super.setSize(pixels);
+		return this;
+	}
+
+	@Override
+	public Vertex setOpacity(double opacity) {
+		// TODO Auto-generated method stub
+		super.setOpacity(opacity);
+		return this;
 	}
 }
