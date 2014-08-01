@@ -73,7 +73,6 @@ public class SampleDataGeneratorTest {
 		
 		// Null
 		assertEquals(5, SampleDataGenerator.getMovies(null, 5).size());
-		
 	}
 
 	/**

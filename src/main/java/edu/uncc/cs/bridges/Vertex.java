@@ -10,12 +10,18 @@ import java.util.HashMap;
  */
 public class Vertex extends AbstractVertex {
 
+	public int curr=-1; //this holds the pointer to the current vertex 
+					    //in the the list of the children vertices
+						// by default initialized to -1 meaning no children
+	
 	//private GraphVisualizer graph;
 	/**
 	 * Creates and vertex and adds it to the graph.
 	 * @param identifier Name of the vertex.
 	 * @param graph The graph the vertex is added to.
 	 */
+	
+	
 	public Vertex(String identifier, GraphVisualizer graph) {
 		super(identifier);
 
@@ -74,15 +80,28 @@ public class Vertex extends AbstractVertex {
 	 * @return The associated Edge.
 	 */
 	public AbstractEdge getEdge(AbstractVertex v2){
+		
 		//Can't think of any faster way to do this. -- Any suggestions?
 		for(int i = 0; i < this.outgoing.size(); i++){ 
+			AbstractEdge anEdge=this.outgoing.get(i);
 			for(int j = 0; j < v2.outgoing.size(); j++){
-				if(this.outgoing.get(i).getIdentifier() == v2.outgoing.get(j).getIdentifier()){				
+				
+				if(anEdge.destination.compareTo(v2)==0){				
 					return this.outgoing.get(i);
 				}
 			}
 		}		
 		return null;
+	}
+	
+	public AbstractVertex next(int anIndex){
+		if (anIndex<0 || anIndex>=outgoing.size())
+			return null;
+		return outgoing.get(anIndex).eOutgoing.get(0);
+	}
+	
+	public AbstractVertex next(){
+		return outgoing.get(curr).eOutgoing.get(0);
 	}
 
 	@Override

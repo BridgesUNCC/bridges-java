@@ -69,5 +69,26 @@ public class Edge extends AbstractEdge{
 		this.setWeight(source, destination, randWeight);
 
 	}
+	@Override
+	public Edge setColor(String color) {
+		// TODO Auto-generated method stub
+		super.setColor(color);
+		return this;
+	}
+
+
+	@Override
+	public Edge setWidth(double pixels) {
+		// TODO Auto-generated method stub
+		super.setWidth(pixels);
+		return this;
+	}
+
+	@Override
+	public Edge setOpacity(double opacity) {
+		// TODO Auto-generated method stub
+		super.setOpacity(opacity);
+		return this;
+	}
 	
 }
