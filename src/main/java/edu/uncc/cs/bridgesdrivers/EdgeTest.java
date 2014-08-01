@@ -2,6 +2,7 @@ package edu.uncc.cs.bridgesdrivers;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.sun.corba.se.impl.orbutil.graph.Graph;
@@ -15,7 +16,7 @@ public class EdgeTest {
 	static Vertex Jane;
 	static AbstractEdge temp;
 	
-	@Test
+	@Before
 	public void setUp(){
 		gv =new GraphVisualizer();
 		Bob = new Vertex("Bob",gv);
@@ -27,29 +28,38 @@ public class EdgeTest {
 	public final void testEdgeAbstractVertexAbstractVertexString() {
 		temp=Bob.createEdge(Jane,15);
 		assertEquals("The destination vertex is different than expected",temp, Bob.getEdge(Jane));
+		assertEquals("The value of edge weight does not match the expected value.", 15, temp.getWeight(),0.0001);
 	}
 
 	@Test
 	public final void testEdgeAbstractVertexAbstractVertexStringDouble() {
 		assertEquals("The destination vertex is different than expected",temp, Bob.getEdge(Jane));
-		assertEquals("The identifier does not match the expected value", Jane, temp.eOutgoing);
 		assertNull("The edge is not null", Jane.getEdge(Bob));
-		assertEquals("The value of edge weight does not match the expected value.", 15, temp.getWeight());
+		assertEquals("The value of edge weight does not match the expected value.", 12.3, temp.getWeight(),0.0001);
 	}
 
 	@Test
 	public final void testEdgeAbstractVertexAbstractVertexStringString() {
-		fail("Not yet implemented"); // TODO
+		Bob.createEdge(Jane,"randWeight");
+		assertEquals("The destination vertex is different than expected",temp, Bob.getEdge(Jane));
+		assertNull("The edge is not null", Jane.getEdge(Bob));
+		assertEquals("The value of edge weight does not match the expected value.", 5, temp.getWeight(),5);
 	}
 
 	@Test
 	public final void testAbstractEdgeAbstractVertexAbstractVertexString() {
-		fail("Not yet implemented"); // TODO
+		assertEquals("The destination vertex is different than expected",temp, Bob.getEdge(Jane));
+		assertNull("The edge is not null", Jane.getEdge(Bob));
+		assertEquals("The value of edge weight does not match the expected value.", 12.3, temp.getWeight(),0.0001);
 	}
 
 	@Test
 	public final void testAbstractEdgeString() {
-		fail("Not yet implemented"); // TODO
+		AbstractVertex Jack = new Vertex("Jack", gv);
+		AbstractEdge tempRandom = new Edge(Bob, Jack,"randWeight");
+		AbstractEdge  tempNull = new Edge(Bob, Jack,"rand");
+		assertNotNull("The weight parameter is Null",tempRandom.getWeight());
+		assertEquals("The weight parameter is null",1, tempNull.getWeight(),0.0001);
 	}
 
 	@Test
@@ -59,12 +69,20 @@ public class EdgeTest {
 
 	@Test
 	public final void testGetWeight() {
-		assertEquals("The edge weight parameter has an unexpected value", 15,temp.getWeight());
+		AbstractEdge anEdge = Bob.createEdge(new Vertex("Bill", gv));
+		assertEquals("The edge weight is not set. Weight is 1 by default.", 1,anEdge.getWeight(), 0.0001);
+		assertEquals("The edge weight parameter has an unexpected value by GetWeight method.", 12.3, temp.getWeight(), 0.0001);
+		Bob.getEdge(Jane).setWeight(20);
+		assertEquals("The edge weight parameter is incorrect.",20,temp.getWeight(),0.0001);
 	}
 
 	@Test
 	public final void testSetWeightDouble() {
-		assertEquals("The edge weight parameter is incorrect.",15,temp.getWeight());
+		AbstractEdge anEdge = Bob.createEdge(new Vertex("Bill", gv));
+		assertEquals("The edge weight is not set. Weight is 1 by default.", 1,anEdge.getWeight(), 0.0001);
+		assertEquals("The edge weight parameter is incorrect.",12.3,temp.getWeight(),0.0001);
+		Bob.getEdge(Jane).setWeight(20);
+		assertEquals("The edge weight parameter is incorrect.",20,temp.getWeight(),0.0001);
 	}
 
 	@Test
@@ -100,8 +118,8 @@ public class EdgeTest {
 		temp.setDash(dash);
 		
 		for(double aDouble:dash)
-		assertNull("The dash string is null.",temp.getDash());
-		assertEquals("The dash string is empty.","",temp.getDash());
+		assertNotNull("The dash string is null.",temp.getDash());
+		assertNotEquals("The dash string is empty.","",temp.getDash());
 		assertEquals("The dash array is not set properly.",str,temp.getDash());
 		
 	}
@@ -119,46 +137,49 @@ public class EdgeTest {
 		temp.setDash(dash);
 		
 		for(double aDouble:dash)
-		assertNull("The dash string is null.",temp.getDash());
-		assertEquals("The dash string is empty.","",temp.getDash());
+		assertNotNull("The dash string is null.",temp.getDash());
+		assertNotEquals("The dash string is empty.","",temp.getDash());
 		assertEquals("The dash array is not set properly.",str,temp.getDash());
 	}
 
 	@Test
 	public final void testGetWidth() {
 		temp.setWidth(10.2);
-		assertEquals("The width value is not set properly.",10.2,temp.getWidth());
+		assertEquals("The width value is not set properly.",10.2,temp.getWidth(),0.0001);
 	}
 
 	@Test
 	public final void testSetWidth() {
 		temp.setWidth(10.2);
-		assertEquals("The width value is not set corectly.",10.2,temp.getWidth());
+		assertEquals("The width value is not set corectly.",10.2,temp.getWidth(),0.0001);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public final void testGetOpacity() {
-		temp.setOpacity(5);
-		assertEquals("The opacity is not set correctly",5, temp.getOpacity());
+		temp.setOpacity(0.4);
+		assertNotNull("The opacity was not set.",temp.getOpacity());
+		assertEquals("The opacity is not set correctly",0.4, temp.getOpacity(), 0.0001);
 	}
 
 	@Test
 	public final void testSetOpacity() {
-		temp.setOpacity(5);
-		assertEquals("The opacity is not set correctly",5, temp.getOpacity());
+		temp.setOpacity(0.1);
+		assertNotNull("The opacity was not set.",temp.getOpacity());
+		assertEquals("The opacity is not set correctly", 0.1, temp.getOpacity(), 0.0001);
 	}
 
 	@Test
 	public final void testGetRepresentation() {
-		assertNull("Representation is null",gv.);
+		assertNotNull("Representation is null",gv);
 	}
 
 	@Test
 	public final void testCompareTo() {
 		AbstractEdge aNullEdge=null;
 		AbstractEdge anEdge=Bob.createEdge(new Vertex("jack",gv));
-		assertEquals("The edge is not null.",0,temp.compareTo(aNullEdge));
-		assertEquals("The compareTo method is not returning the correct", ,temp.compareTo(anEdge));
+		assertEquals("The expected null edge is not null.",0,temp.compareTo(aNullEdge));
+		assertNotEquals("The compareTo method is not returning the correct value", 0, anEdge.compareTo(temp));
 	}
 
 }
