@@ -80,15 +80,10 @@ public class Vertex extends AbstractVertex {
 	 * @return The associated Edge.
 	 */
 	public AbstractEdge getEdge(AbstractVertex v2){
-		
-		//Can't think of any faster way to do this. -- Any suggestions?
 		for(int i = 0; i < this.outgoing.size(); i++){ 
 			AbstractEdge anEdge=this.outgoing.get(i);
-			for(int j = 0; j < v2.outgoing.size(); j++){
-				
 				if(anEdge.destination.compareTo(v2)==0){				
 					return this.outgoing.get(i);
-				}
 			}
 		}		
 		return null;
