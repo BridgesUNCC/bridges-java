@@ -17,7 +17,6 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	String randWeight = "randWeight";
 	String weight = "weight";
 	
-	//Map<String, AbstractVertex> eOutgoing;
 	public List<AbstractVertex> eOutgoing;
 	
 	String identifier;
@@ -102,15 +101,8 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 				System.out.println("Syntax error: \"randWeight\" expected. All weights are 1.");
 				weight=1;
 			}
-		properties.put(this.weight, Double.toString(weight));
-		if (weight<4)
-			setWidth(1);
-		else if (weight<7)
-			setWidth(3);
-		else 
-			setWidth(5);
 		
-		return this;
+		return this.setWeight(weight);
 	}
 	
 	/**
@@ -169,6 +161,9 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @param dash CSS dash double array, for example "5,10,5"
 	 */
 	public AbstractEdge setDash(double[] dashes) {
+		if (dashes.length==0)
+			return this;
+		
 		StringBuilder sb = new StringBuilder("");
 		for (double dash : dashes) {
 			sb.append(dash);
