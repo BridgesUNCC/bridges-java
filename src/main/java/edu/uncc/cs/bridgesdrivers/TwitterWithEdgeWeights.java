@@ -13,44 +13,40 @@ import edu.uncc.cs.bridges.*;
 
 public class TwitterWithEdgeWeights {
 
-	public static void main(String[] args) throws Exception {
+	public static<T> void main(String[] args) throws Exception {
 		// TODO Your code here
-		GraphVisualizer gv = new GraphVisualizer();
+		GraphVisualizer<Follower> gv = new GraphVisualizer<>();
 
-		Bridge.init(0, "1022683069234", gv, "YOUR_USERNAME");
-		Bridge.setServerURL("http://edu.uncc.cs.bridges-cs.herokuapp.com");
+		Bridge.init(0, "693144430396", gv, "mmehedin@uncc.edu");
 		int expands_remaining = 10;
 		
-		Deque<Vertex> frontier = new ArrayDeque<>();
-		Map<String, Vertex> visited = new HashMap<>();
-		Map<String, Vertex> parent_of = new HashMap<>();
+		Deque<Vertex<Follower>> frontier = new ArrayDeque<>();
+		Map<String, Vertex<Follower>> visited = new HashMap<>();
+		Map<String, Vertex<Follower>> parent_of = new HashMap<>();
 		//actual user on Twitter
-		String name = "twitter.com/Joey";
+		Follower name = new Follower("Joey");
 		//the 
-		Vertex joey = new Vertex(name, gv);
+		Vertex<Follower> joey = new Vertex(name, gv);
 		//make it easier to find the 'root'
 		joey.setSize(20);
 		joey.setColor("orange");
 		
-		Vertex source;
+		Vertex<Follower> source;
 		
 		frontier.add(joey);
-		visited.put(name,  joey);
-		System.out.println(
-				Bridge.getAssociations(joey.getIdentifier(), 50));
-		
+		visited.put(name.getName(),  joey);
 		
 		while ((!frontier.isEmpty()) && expands_remaining > 0) {
 			source = frontier.pop();
-			for (String friend_name : Bridge.getAssociations(source.getIdentifier(),50)) {
+			for (Follower friend_name : Bridge.getAssociations(source.getIdentifier(),50)) {
 				
-				Vertex target = visited.get(friend_name);
+				Vertex<Follower> target = visited.get(friend_name);
 				if (target == null) {
 					target = new Vertex(friend_name, gv);
-					parent_of.put(target.getIdentifier(), source);
+					parent_of.put(target.getIdentifier().getName(), source);
 					// The student's do this part for fun! :P
 					target.setSize(source.getSize() -4);
-					visited.put(friend_name, target);
+					visited.put(friend_name.getName(), target);
 					frontier.add(target);
 				}
 

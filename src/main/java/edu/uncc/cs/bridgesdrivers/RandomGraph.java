@@ -7,11 +7,11 @@ import java.util.Set;
 
 import edu.uncc.cs.bridges.*;
 
-public class RandomGraph extends GraphVisualizer {
-	protected static GraphVisualizer graph;
-	protected static Vertex root;
-	final static int numberOfChildren=30; //number of vertices for a parent node 
-	final static int numberOfRecursiveCalls=10; 
+public class RandomGraph<T> extends GraphVisualizer<T> {
+	protected GraphVisualizer<T> graph;
+	protected  Vertex<T> root;
+	static int numberOfChildren=30; //number of vertices for a parent node 
+	static int numberOfRecursiveCalls=10; 
 	
 	
 	/**
@@ -19,22 +19,21 @@ public class RandomGraph extends GraphVisualizer {
 	 * @param root holds the root node
 	 */
 	public RandomGraph(){
-		graph = new GraphVisualizer();
+		graph = new GraphVisualizer<T>();
 	}
 	/**
 	 * The randomVertex method selects a random Vertex from an existing graph
 	 * @param graph - references an already populated graph
 	 * @return
 	 */
-	public static Vertex randomVertex(GraphVisualizer graph){
+	public Vertex<Follower> randomVertex(GraphVisualizer<Follower> graph){
 		if (graph==null || graph.vertices.size()==0) 
 			throw new IllegalArgumentException
 			("No vertices were added to graph or graph was not initialized!");
-		Collection<AbstractVertex> vertices= graph.vertices.values();
-		int a=new Random().nextInt(vertices.size());
+		Collection<AbstractVertex<Follower>> vertices= graph.vertices.values();
 		Object[] i= vertices.toArray();
 
-		return (Vertex)i[new Random().nextInt(vertices.size())];
+		return (Vertex<Follower>)i[new Random().nextInt(vertices.size())];
 	}
 	/**
 	 * The randomColor method selects a random color from the available
@@ -52,22 +51,23 @@ public class RandomGraph extends GraphVisualizer {
 	 * @param max is the number of recursive calls made
 	 * @return Returns a populated graph
 	 */
-	public static GraphVisualizer populate(Vertex root, GraphVisualizer graph, int max){
+	public GraphVisualizer<Follower> populate(Vertex<Follower> root, GraphVisualizer<Follower> graph, int max){
 		
 		if (max!=0){
-			Vertex aVertex=root;
-			AbstractEdge anEdge;
+			Vertex<Follower> aVertex=root;
+			AbstractEdge<Follower> anEdge;
 			String aColor =randomColor();
 			//System.out.println(max);
-			List<String> temp= Bridge.getAssociations(root.getIdentifier(), numberOfChildren);
-			Set<Map.Entry<String, AbstractVertex>> existingVertices=graph.vertices.entrySet();
+			
+			List<Follower>	temp= Bridge.getAssociations((Follower)root.getIdentifier(), numberOfChildren);
+			Set<Map.Entry<String, AbstractVertex<Follower>>> existingVertices=graph.vertices.entrySet();
 			for(int i=0; i<temp.size();i++){
 				if (!existingVertices.contains(temp.get(i))){ 
-					aVertex=new Vertex(temp.get(i),graph).setColor(aColor).setOpacity(0.2);
+					aVertex=new Vertex<Follower>(temp.get(i), graph).setColor(aColor).setOpacity(0.2);
 					root.createEdge(aVertex, "randWeight").setOpacity(0.2);
 				}
 				else{
-					aVertex=(Vertex)graph.vertices.get(temp.get(i));
+					aVertex=(Vertex<Follower>)graph.vertices.get(temp.get(i));
 					root.createEdge(aVertex).setColor(aColor).setOpacity(0.2);
 				}	
 			}
@@ -82,7 +82,21 @@ public class RandomGraph extends GraphVisualizer {
 		}
 		return graph;
 	}
+	/**
+	 * Sets the number of recursive calls made
+	 * @param numberOfRecursiveCalls
+	 * @return the current number of calls
+	 */
+	public int setNumberOfCalls(int numberOfRecursiveCalls){
+		return this.numberOfRecursiveCalls=numberOfRecursiveCalls;
+	}
 	
-	 
-
+	/**
+	 * Sets the number of children a node has
+	 * @param numberOfChildren
+	 * @return the number of children
+	 */
+	public int setNumberOfChildren(int numberOfChildren){
+		return this.numberOfChildren=numberOfChildren;
+	}
 }

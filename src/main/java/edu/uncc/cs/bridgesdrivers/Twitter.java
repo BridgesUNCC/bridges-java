@@ -9,30 +9,30 @@ import edu.uncc.cs.bridges.*;
 
 public class Twitter {
 
-	public static void main(String[] args) {
-		GraphVisualizer gv = new GraphVisualizer();
+	public static <T> void main(String[] args) {
+		GraphVisualizer<T> gv = new GraphVisualizer<>();
 		
 		// Assignment, API key, visualizer, username
 		Bridge.init(0, "693144430396", gv, "mmehedin@uncc.edu");
 		
-		Deque<Vertex> frontier = new ArrayDeque<>();
-		Map<String, Vertex> visited = new HashMap<>();
+		Deque<Vertex<Follower>> frontier = new ArrayDeque<>();
+		Map<String, Vertex<Follower>> visited = new HashMap<>();
 		
 		// Any actual user on Twitter
-		String name = "twitter.com/Joey"; 
-		Vertex joey = new Vertex(name, gv);
+		Follower name = new Follower("Joey"); 
+		Vertex<Follower> joey = new Vertex(name, gv);
 		
 		frontier.add(joey);
-		visited.put(name, joey);
+		visited.put(name.getName(), joey);
 		
 		for (int expands=0; expands < 10 && !frontier.isEmpty(); expands++) {
-			Vertex source = frontier.pop();
-			for (String friend_name : Bridge.getAssociations(source.getIdentifier(), 50)) {
+			Vertex<Follower> source = frontier.pop();
+			for (Follower friend_name : Bridge.getAssociations(source.getIdentifier(), 50)) {
 				
-				Vertex target = visited.get(friend_name);
+				Vertex<Follower> target = visited.get(friend_name);
 				if (target == null) {
 					target = new Vertex(friend_name, gv);
-					visited.put(friend_name, target);
+					visited.put(friend_name.getName(), target);
 					frontier.add(target);
 				}
 				source.createEdge(target);
