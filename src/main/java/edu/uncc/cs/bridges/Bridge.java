@@ -235,7 +235,7 @@ public class Bridge {
          * @param max holds the max number of movies
          * @return
          */
-        	public static List<Movies> getAssociations(Movies identifier, int max){
+        	public static List<Movie> getAssociations(Movie identifier, int max){
             	try {
             		return movies(identifier, max);
         	    }
@@ -340,7 +340,7 @@ public class Bridge {
      * sure you limit your queries appropriately.
      * 
      */
-    static List<Movies> movies(Movies id, int max)
+    static List<Movie> movies(Movie id, int max)
     		throws RateLimitException {
 
     	if (failsafe) {
@@ -352,11 +352,11 @@ public class Bridge {
 		    	JSONArray movies = backend.asJSONArray(resp);
 		    	
 		        // Get (in JS) movies_json.map(function(m) { return m.title; })
-		        List<Movies> results = new ArrayList<>();
+		        List<Movie> results = new ArrayList<>();
 		        for (Object movie : movies) {
 		        	String title = (String) backend.safeJSONTraverse("['title']",
 		        			movie, String.class);
-		        	results.add(new Movies(title));
+		        	results.add(new Movie(title));
 		        }
 		        return results;
 	    	} catch (IOException e) {

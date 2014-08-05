@@ -10,15 +10,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import edu.uncc.cs.bridges.Actors;
+import edu.uncc.cs.bridges.Actor;
 import edu.uncc.cs.bridges.Follower;
-import edu.uncc.cs.bridges.Movies;
+import edu.uncc.cs.bridges.Movie;
 import edu.uncc.cs.bridges.SampleDataGenerator;
 
-/**
- * @author sean
- *
- */
 public class SampleDataGeneratorTest {
 
 	/**
@@ -44,9 +40,9 @@ public class SampleDataGeneratorTest {
 	 */
 	@Test
 	public void testGetCast() {
-		List<Actors> names = new ArrayList<>();
-		names.add(new Actors("Val Kilmer"));
-		names.add(new Actors("Christian Bale"));
+		List<Actor> names = new ArrayList<>();
+		names.add(new Actor("Val Kilmer"));
+		names.add(new Actor("Christian Bale"));
 		assertEquals(names, SampleDataGenerator.getCast("Pulp Fiction", 5));
 		
 		// Empty
@@ -62,11 +58,11 @@ public class SampleDataGeneratorTest {
 	 */
 	@Test
 	public void testGetMovies() {
-		List<Movies> names = new ArrayList<>();
-		names.add(new Movies("Paths of Glory"));
-		names.add(new Movies("It's a Wonderful Life"));
-		names.add(new Movies("American Beauty"));
-		names.add(new Movies("Monty Python and the Holy Grail"));
+		List<Movie> names = new ArrayList<>();
+		names.add(new Movie("Paths of Glory"));
+		names.add(new Movie("It's a Wonderful Life"));
+		names.add(new Movie("American Beauty"));
+		names.add(new Movie("Monty Python and the Holy Grail"));
 		assertEquals(names, SampleDataGenerator.getMovies("Joey", 5));
 		
 		// Empty
@@ -75,13 +71,22 @@ public class SampleDataGeneratorTest {
 		// Null
 		assertEquals(5, SampleDataGenerator.getMovies(null, 5).size());
 	}
-
-	/**
-	 * Test method for {@link edu.uncc.cs.bridges.SampleDataGenerator#getChoices(java.lang.String, java.lang.String, java.lang.String[], int, int, boolean)}.
-	 */
+	
 	@Test
-	public void testGetChoices() {
-		assertTrue(true);
+	public void testGetTwitterTimeline() {
+
+		List<Movie> names = new ArrayList<>();
+		names.add(new Movie("Paths of Glory"));
+		names.add(new Movie("It's a Wonderful Life"));
+		names.add(new Movie("American Beauty"));
+		names.add(new Movie("Monty Python and the Holy Grail"));
+		assertEquals(names, SampleDataGenerator.getMovies("Joey", 5));
+		
+		// Empty
+		assertEquals(5, SampleDataGenerator.getMovies("", 5).size());
+		
+		// Null
+		assertEquals(5, SampleDataGenerator.getMovies(null, 5).size());
 	}
 
 }

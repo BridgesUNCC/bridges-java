@@ -229,8 +229,8 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 				return  ((Follower)identifier).compareTo((Follower)(o.identifier));
 			else if (identifier instanceof Actor && o.identifier instanceof Actor)
 				return  ((Actor)identifier).compareTo((Actor)(o.identifier));
-			else if (identifier instanceof Movies && o.identifier instanceof Movies)
-				return  ((Movies)identifier).compareTo((Movies)(o.identifier));
+			else if (identifier instanceof Movie && o.identifier instanceof Movie)
+				return  ((Movie)identifier).compareTo((Movie)(o.identifier));
 		}
 		return 0;
 	}

@@ -524,11 +524,11 @@ public class SampleDataGenerator {
 	 * @param max		The maximum number of movies
 	 * @return
 	 */
-	public static List<Movies> getMovies(String name, int max) {
+	public static List<Movie> getMovies(String name, int max) {
 		List<String> movies=getChoices(name, available_movie_names, max, 15, true);
-		List <Movies> theMovies = new ArrayList<>();
+		List <Movie> theMovies = new ArrayList<>();
 		for (String str: movies)
-			theMovies.add(new Movies(str));
+			theMovies.add(new Movie(str));
 		return theMovies;
 	}
 	
