@@ -20,6 +20,8 @@ import org.json.simple.JSONObject;
  * @author Sean Gallagher
  */
 public class Bridge {
+	
+	
 	private static int assignment;
 	private static String key;
 	private static Visualizer visualizer;
@@ -188,55 +190,80 @@ public class Bridge {
      * 
      * @param identifier
      * @param max
-     * @throws IOException 
      * @returns a list of identifiers
      * @throws QueryLimitException
      */
-    public static List<String> getAssociations(String identifier, int max){
-    	try {
-	    	Ident id = Ident.fromAnyString(identifier);
-	    	switch (id.provider) {
-	    	case "twitter.com":
-	    		return followers(id, max);
-	    	case "actor":
-	    		return movies(id, max);
-	    	case "movie":
-	    		return actors(id, max);
-	    	default:
-	    		throw new RuntimeException(
-	    				"Unrecognized service " + id.provider
-	    				+ ". Choose from twitter.com, actor, or movie");
-	    	}
-    	} catch (RateLimitException e) {
-    		return new ArrayList<>();
-    	}
-    	
+   
+    /**
+     * This Method returns the list of followers 
+     * @param identifier holds the name of the 
+     * @param max holds the max number of followers
+     * @return
+     */
+    	public static List<Follower> getAssociations(Follower identifier, int max){
+        	try {
+        		return followers(identifier, max);
+    	    }
+        		catch (RateLimitException e) {
+        		return new ArrayList<>();
+        	}
     }
     
+    	/**
+         * This Method returns the list of actors 
+         * @param identifier holds the name of the movie
+         * @param max holds the max number of actors
+         * @return
+         */
+        	public static List<Actors> getAssociations(Actors identifier, int max){
+            	try {
+            		return actors(identifier, max);
+        	    }
+            		catch (RateLimitException e) {
+            		return new ArrayList<>();
+            	}
+        }
+        	
+        	
+    	/**
+         * This Method returns the list of movies 
+         * @param identifier holds the name of the movie
+         * @param max holds the max number of movies
+         * @return
+         */
+        	public static List<Movies> getAssociations(Movies identifier, int max){
+            	try {
+            		return movies(identifier, max);
+        	    }
+            		catch (RateLimitException e) {
+            		return new ArrayList<>();
+            	}
+        }
+	
     /** List the user's followers as more FollowGraphNodes.
         Limit the result to `max` followers. Note that results are batched, so
         a large `max` (as high as 200) _may_ only count as one request.
         See Bridges.followgraph() for more about rate limiting. 
      * @throws IOException */
-    static List<String> followers(Ident id, int max)
+    static List<Follower> followers(Follower id, int max)
     		throws RateLimitException {
     	if (failsafe) {
     		// Don't contact Twitter, use sample data
-    		return SampleDataGenerator.getFriends(id.name, max);
+    		return SampleDataGenerator.getFriends(id.getName(), max);
     	} else {
 	    	try {
 		    	String resp = backend.get("/streams/twitter.com/followers/"
-		    			+ id.name + "/" + max);
+		    			+ id.getName() + "/" + max);
 		    	
 		        JSONObject response = backend.asJSONObject(resp);
 		        JSONArray followers = (JSONArray) backend.safeJSONTraverse(
 		        		"['followers']", response, JSONArray.class);
 		        
-		        List<String> results = new ArrayList<>();
+		        List<Follower> results = new ArrayList<>();
 		    	for (Object follower : followers) {
 		    		String name = (String) backend.safeJSONTraverse(
 		    				"", follower, String.class);
-		    		results.add("twitter.com/" + name);
+		    		results.add(new Follower(name));
 		    	}
 		    	return results;
 	    	} catch (IOException e) {
@@ -260,23 +287,23 @@ public class Bridge {
      * sure you limit your queries appropriately.
      * 
      */
-    static List<String> movies(Ident id, int max)
+    static List<Movies> movies(Movies id, int max)
     		throws RateLimitException {
 
     	if (failsafe) {
     		// Don't contact Bridges, use sample data
-    		return SampleDataGenerator.getFriends(id.name, max);
+    		return SampleDataGenerator.getMovies(id.getName(), max);
     	} else {
 	    	try {
-		    	String resp = backend.get("/streams/actors/" + id.name);
+		    	String resp = backend.get("/streams/actors/" + id.getName());
 		    	JSONArray movies = backend.asJSONArray(resp);
 		    	
 		        // Get (in JS) movies_json.map(function(m) { return m.title; })
-		        List<String> results = new ArrayList<>();
+		        List<Movies> results = new ArrayList<>();
 		        for (Object movie : movies) {
 		        	String title = (String) backend.safeJSONTraverse("['title']",
 		        			movie, String.class);
-		        	results.add("movie/" + title);
+		        	results.add(new Movies(title));
 		        }
 		        return results;
 	    	} catch (IOException e) {
@@ -301,27 +328,27 @@ public class Bridge {
      * @throws IOException 
      * @throws RateLimitException 
      */
-    static List<String> actors(Ident id, int max)
+    static List<Actors> actors(Actors id, int max)
     		throws RateLimitException {
 
     	if (failsafe) {
     		// Don't contact Bridges, use sample data
-    		return SampleDataGenerator.getFriends(id.name, max);
+    		return SampleDataGenerator.getCast(id.getName(), max);
     	} else {
 	    	try {
-		    	String resp = backend.get("/streams/rottentomatoes.com/" + id.name);
+		    	String resp = backend.get("/streams/rottentomatoes.com/" + id.getName());
 		    	JSONArray movies = backend.asJSONArray(resp);
 		    	
 		        // We will assume that the first movie is the right one
 		    	JSONArray abridged_cast = (JSONArray) backend.safeJSONTraverse(
 		    			"[0]['abridged_cast']", movies, JSONArray.class);
-		    	List<String> results = new ArrayList<>();
+		    	List<Actors> results = new ArrayList<>();
 		    	for (Object cast_member : abridged_cast) {
 		    		if (results.size() == max)
 		    			break;
 		    		String name = (String) backend.safeJSONTraverse("['name']",
 		    				cast_member, String.class);
-					results.add("actor/" + name);
+					results.add(new Actors(name));
 		    	}
 		    	return results;
 	    	} catch (IOException e) {

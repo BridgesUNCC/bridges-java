@@ -1,18 +1,22 @@
 package edu.uncc.cs.bridges;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * An implementation of AbstractVertex with HashMap for adjacency.
  *  
  * @author Sean Gallagher
  */
-public class Vertex extends AbstractVertex {
+public class Vertex<T> extends AbstractVertex<T> {
 
-	public int curr=-1; //this holds the pointer to the current vertex 
+	public int currIndex=-1; //this holds the number of visited children belonging to the current vertex 
 					    //in the the list of the children vertices
 						// by default initialized to -1 meaning no children
+	public AbstractVertex<T> curr=null; //holds the pointer to the next() child of this vertex
 	
 	//private GraphVisualizer graph;
 	/**
@@ -22,10 +26,10 @@ public class Vertex extends AbstractVertex {
 	 */
 	
 	
-	public Vertex(String identifier, GraphVisualizer graph) {
+	public Vertex(T identifier, GraphVisualizer graph) {
 		super(identifier);
 
-		outgoing = new ArrayList<AbstractEdge>();//creates empty list of connected edges
+		outgoing = new ArrayList<AbstractEdge<T>>();//creates empty list of connected edges
 
 		
 		//adds a vertex to the map	
@@ -37,9 +41,9 @@ public class Vertex extends AbstractVertex {
 	 * 
 	 * @param v2 The second vertex that edge is between.
 	 */
-	public AbstractEdge createEdge(Vertex v2){
+	public AbstractEdge<T> createEdge(Vertex<T> v2){
 		//identifier is to be used internally to find the Edges later
-		AbstractEdge temp=getEdge(v2);
+		AbstractEdge<T> temp=getEdge(v2);
 		if (temp==null){
 			String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
 			return new Edge(this, v2, ident);
@@ -52,7 +56,7 @@ public class Vertex extends AbstractVertex {
 	 * @param v2 The second vertex that edge is between.
 	 * @param weight Contains the weight value as a double
 	 */
-	public AbstractEdge createEdge(Vertex v2, double weight){
+	public AbstractEdge<T> createEdge(Vertex<T> v2, double weight){
 		//identifier is to be used internally to find the Edges later
 		createEdge(v2);
 		this.getEdge(v2).setWeight(weight);
@@ -66,7 +70,7 @@ public class Vertex extends AbstractVertex {
 	 * @param weight Contains the weight value as a string "randWeight", later 
 	 * transformed in a random double between 0.0-9.0
 	 */
-	public AbstractEdge createEdge(Vertex v2, String randWeight){
+	public AbstractEdge<T> createEdge(Vertex<T> v2, String randWeight){
 		//identifier is to be used internally to find the Edges later
 			createEdge(v2);
 			this.getEdge(v2).setWeight(this, v2, randWeight);
@@ -79,9 +83,9 @@ public class Vertex extends AbstractVertex {
 	 * @param v2 The second vertex.
 	 * @return The associated Edge.
 	 */
-	public AbstractEdge getEdge(AbstractVertex v2){
+	public AbstractEdge<T> getEdge(AbstractVertex<T> v2){
 		for(int i = 0; i < this.outgoing.size(); i++){ 
-			AbstractEdge anEdge=this.outgoing.get(i);
+			AbstractEdge<T> anEdge=this.outgoing.get(i);
 				if(anEdge.destination.compareTo(v2)==0){				
 					return this.outgoing.get(i);
 			}
@@ -89,41 +93,73 @@ public class Vertex extends AbstractVertex {
 		return null;
 	}
 	
-	public AbstractVertex next(int anIndex){
+	/**
+	 * This method returns the next child of the current vertex as specified by the index integer value
+	 * if the index value is above or below the number of children vertices it returns null
+	 * @param anIndex represents the index of the child vertex
+	 * @return AbstractVertex 
+	 */
+	public AbstractVertex<T> next(int anIndex){
 		if (anIndex<0 || anIndex>=outgoing.size())
 			return null;
-		return outgoing.get(anIndex).eOutgoing.get(0);
+		AbstractEdge<T> anEdge =this.outgoing.get(anIndex); 
+		if(anEdge.eOutgoing.get(0).equals(this))
+			return curr=anEdge.eOutgoing.get(1); //returns the vertex corresponding to edge destination
+											// where .get(0) is the vertex source for the edge (equivalent to the parent)
+		return curr=anEdge.eOutgoing.get(0); 		//vice versa, if the destination is actually the current vector it returns the source
+											//after all, GraphVisualizer is an undirected graph
 	}
-	
-	public AbstractVertex next(){
-		return outgoing.get(curr).eOutgoing.get(0);
+	/**
+	 * This method returns the next child of the current vertex
+	 * If no children nodes are present it returns null
+	 * it also keeps track of the last next() method call and returns the following child
+	 * @return AbstractVertex representing the next child of the currrent vertex
+	 */
+	public AbstractVertex<T> next(){
+		if (currIndex==-1 && !this.outgoing.isEmpty()){
+			currIndex=0;
+		}
+		if(currIndex!=-1 && currIndex!=this.outgoing.size()){
+			return this.next(currIndex++);}
+		else 
+			return null;
 	}
 
 	@Override
-	public Vertex setColor(String color) {
+	public Vertex<T> setColor(String color) {
 		// TODO Auto-generated method stub
 		super.setColor(color);
 		return this;
 	}
 
 	@Override
-	public Vertex setShape(String shape) {
+	public Vertex<T> setShape(String shape) {
 		// TODO Auto-generated method stub
 		super.setShape(shape);
 		return this;
 	}
 
 	@Override
-	public Vertex setSize(double pixels) {
+	public Vertex<T> setSize(double pixels) {
 		// TODO Auto-generated method stub
 		super.setSize(pixels);
 		return this;
 	}
 
 	@Override
-	public Vertex setOpacity(double opacity) {
+	public Vertex<T> setOpacity(double opacity) {
 		// TODO Auto-generated method stub
 		super.setOpacity(opacity);
 		return this;
+	}
+
+	public Collection<? extends Vertex<T>> getNeighbors() {
+		Collection children = new HashSet();
+		//Iterator i = new this.outgoing.iterator();
+		
+		children.addAll(this.outgoing);
+		if (!children.isEmpty())
+			return children;
+		return null;
 	}
 }

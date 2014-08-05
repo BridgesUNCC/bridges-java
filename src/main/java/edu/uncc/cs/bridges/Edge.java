@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 /**
  * Generic graph link, with visual components. 
  */
-public class Edge extends AbstractEdge{
+public class Edge<T> extends AbstractEdge<T>{
 
 	/**
 	 * Takes two vertices and creates and edge between them.
@@ -17,7 +17,7 @@ public class Edge extends AbstractEdge{
 	 * @param destination The destination vertex.
 	 * @param identifier The name of the Edge 
 	 */
-	public Edge(AbstractVertex source, AbstractVertex destination, String identifier) {		
+	public Edge(AbstractVertex<T> source, AbstractVertex<T> destination, T identifier) {		
 		super(source, destination, identifier);
 		
 		if(source == null || destination == null){
@@ -28,12 +28,11 @@ public class Edge extends AbstractEdge{
 		//							    <-
 		
 		//Maybe put a check making sure the source and destination exist?		
-		eOutgoing = new ArrayList<AbstractVertex>();//each edge gets a list (of 2) connected vertices
+		eOutgoing = new ArrayList<>();//each edge gets a list (of 2) connected vertices
 		//creates outgoing links from the associated vertices to the 'Edge'
 		//Adds the this edge to the lists associated with the two connecting vertices
 		source.outgoing.add(this);
 		destination.outgoing.add(this);
-		identifier = source.getIdentifier() + destination.getIdentifier();
 		//creates outgoing links from the 'Edge' to the associated Vertices
 		//Adds the destination and the source to the list of vertices connected to the edge
 		this.eOutgoing.add(source);
@@ -48,7 +47,7 @@ public class Edge extends AbstractEdge{
 	 * @param identifier The name of the Edge
 	 * @param weight The weight(double) of the Edge 
 	 */
-	public Edge(AbstractVertex source, AbstractVertex destination, String identifier, double weight) {		
+	public Edge(AbstractVertex<T> source, AbstractVertex<T> destination, T identifier, double weight) {		
 		
 		//calls base Edge constructor, for clarity sake, instead of doing the same instructions again
 		this(source, destination, identifier);
@@ -63,14 +62,14 @@ public class Edge extends AbstractEdge{
 	 * @param identifier The name of the Edge
 	 * @param weight The weight(String) of the Edge 
 	 */
-	public Edge(AbstractVertex source, AbstractVertex destination, String identifier, String randWeight) {		
+	public Edge(AbstractVertex<T> source, AbstractVertex<T> destination, T identifier, String randWeight) {		
 		//calls base Edge constructor, for clarity sake, instead of doing the same instructions again
 		this(source, destination, identifier);
 		this.setWeight(source, destination, randWeight);
 
 	}
 	@Override
-	public Edge setColor(String color) {
+	public Edge<T> setColor(String color) {
 		// TODO Auto-generated method stub
 		super.setColor(color);
 		return this;
@@ -78,14 +77,14 @@ public class Edge extends AbstractEdge{
 
 
 	@Override
-	public Edge setWidth(double pixels) {
+	public Edge<T> setWidth(double pixels) {
 		// TODO Auto-generated method stub
 		super.setWidth(pixels);
 		return this;
 	}
 
 	@Override
-	public Edge setOpacity(double opacity) {
+	public Edge<T> setOpacity(double opacity) {
 		// TODO Auto-generated method stub
 		super.setOpacity(opacity);
 		return this;

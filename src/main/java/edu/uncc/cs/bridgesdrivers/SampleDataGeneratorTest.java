@@ -10,6 +10,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import edu.uncc.cs.bridges.Actors;
+import edu.uncc.cs.bridges.Follower;
+import edu.uncc.cs.bridges.Movies;
 import edu.uncc.cs.bridges.SampleDataGenerator;
 
 /**
@@ -24,10 +27,9 @@ public class SampleDataGeneratorTest {
 	@Test
 	public void testGetFriends() {
 		// Typical
-		List<String> names = new ArrayList<>();
-		names.add("twitter.com/Carter");
-		names.add("twitter.com/Addison");
-		assertEquals(names, SampleDataGenerator.getFriends("twitter.com/Joey", 5));
+		List<Follower> names = new ArrayList<>();
+		names.add(new Follower("Elizabeth"));
+		assertEquals(names, SampleDataGenerator.getFriends("Joey", 5));
 		
 		// Empty
 		assertEquals(5, SampleDataGenerator.getFriends("", 5).size());
@@ -41,18 +43,17 @@ public class SampleDataGeneratorTest {
 	 * Test method for {@link edu.uncc.cs.bridges.SampleDataGenerator#getActors(java.lang.String, int)}.
 	 */
 	@Test
-	public void testGetActors() {
-		List<String> names = new ArrayList<>();
-		names.add("actor/Billy Bob Thornton");
-		names.add("actor/Daniel Day-Lewis");
-		names.add("actor/Richard Gere");
-		assertEquals(names, SampleDataGenerator.getActors("actor/Joey", 5));
+	public void testGetCast() {
+		List<Actors> names = new ArrayList<>();
+		names.add(new Actors("Val Kilmer"));
+		names.add(new Actors("Christian Bale"));
+		assertEquals(names, SampleDataGenerator.getCast("Pulp Fiction", 5));
 		
 		// Empty
-		assertEquals(5, SampleDataGenerator.getActors("", 5).size());
+		assertEquals(5, SampleDataGenerator.getCast("", 5).size());
 		
 		// Null
-		assertEquals(2, SampleDataGenerator.getActors(null, 5).size());
+		assertEquals(2, SampleDataGenerator.getCast(null, 5).size());
 		
 	}
 
@@ -61,12 +62,12 @@ public class SampleDataGeneratorTest {
 	 */
 	@Test
 	public void testGetMovies() {
-		List<String> names = new ArrayList<>();
-		names.add("movie/A Clockwork Orange");
-		names.add("movie/Singin' in the Rain");
-		names.add("movie/Saving Private Ryan");
-		names.add("movie/Spirited Away");
-		assertEquals(names, SampleDataGenerator.getMovies("movie/Joey", 5));
+		List<Movies> names = new ArrayList<>();
+		names.add(new Movies("Paths of Glory"));
+		names.add(new Movies("It's a Wonderful Life"));
+		names.add(new Movies("American Beauty"));
+		names.add(new Movies("Monty Python and the Holy Grail"));
+		assertEquals(names, SampleDataGenerator.getMovies("Joey", 5));
 		
 		// Empty
 		assertEquals(5, SampleDataGenerator.getMovies("", 5).size());

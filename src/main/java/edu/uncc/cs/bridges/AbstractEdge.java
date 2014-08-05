@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class AbstractEdge implements Comparable<AbstractEdge> {
+public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 
-	AbstractVertex source, destination;
+	AbstractVertex<T> source, destination;
 	/**
 	 * Visualization properties for this Link
 	 * This could be made private.
@@ -17,11 +17,11 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	String randWeight = "randWeight";
 	String weight = "weight";
 	
-	public List<AbstractVertex> eOutgoing;
+	public List<AbstractVertex<T>> eOutgoing;
 	
-	String identifier;
+	T identifier;
 	
-	public AbstractEdge(AbstractVertex source, AbstractVertex destination, String identifier){
+	public AbstractEdge(AbstractVertex<T> source, AbstractVertex<T> destination, T identifier){
 		this.source = source;
 		this.destination = destination;
 		this.identifier = identifier;
@@ -33,7 +33,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 		
 	}
 	
-	public String getIdentifier(){
+	public T getIdentifier(){
 		return identifier;
 	}
 	
@@ -63,7 +63,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @param weight is a double
 	 *  
 	 */
-	public AbstractEdge setWeight(double weight) {
+	public AbstractEdge<T> setWeight(double weight) {
 		
 		properties.put(this.weight, Double.toString(weight));
 		if (weight<4)
@@ -92,7 +92,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 *  between 0.0-9.0
 	 */
 	
-	public AbstractEdge setWeight(AbstractVertex source, AbstractVertex destination, String random) {
+	public AbstractEdge<T> setWeight(AbstractVertex<T> source, AbstractVertex<T> destination, String random) {
 		double weight;
 		if (random.equals(randWeight))
 			weight = Bridge.getEdgeWeight(source.toString(),destination.toString());
@@ -130,7 +130,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @param color Color as a String
 	 * @see Validation#validateColor(String)
 	 */
-	public AbstractEdge setColor(String color) {
+	public AbstractEdge<T> setColor(String color) {
 		color = color.toLowerCase();
 		if (color == null || color.isEmpty()) {
 			properties.remove("color");
@@ -160,7 +160,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * edges.
 	 * @param dash CSS dash double array, for example "5,10,5"
 	 */
-	public AbstractEdge setDash(double[] dashes) {
+	public AbstractEdge<T> setDash(double[] dashes) {
 		if (dashes.length==0)
 			return this;
 		
@@ -192,7 +192,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * Set the width in pixels
 	 * @param pixels  width in pixels, in range [0.0, 50.0]
 	 */
-	public AbstractEdge setWidth(double pixels) {
+	public AbstractEdge<T> setWidth(double pixels) {
 		//TODO: Should we protect against NaN and Inf?
 		Validation.validateSize(pixels);
 		properties.put("width", Double.toString(pixels));
@@ -220,7 +220,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * 1.0 is opaque
 	 * @param opacity  Alpha, in range [0.0, 1.0]
 	 */
-	public AbstractEdge setOpacity(double opacity) {
+	public AbstractEdge<T> setOpacity(double opacity) {
 		Validation.validateOpacity(opacity);
 		properties.put("opacity", Double.toString(opacity));
 		
@@ -244,7 +244,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	 * @param vertex_to_integer		Vertex->index map (see description)
 	 * @returns the encoded JSON string
 	 */
-	String getRepresentation(Map<AbstractVertex, Integer> vertex_to_index) {
+	String getRepresentation(Map<AbstractVertex<T>, Integer> vertex_to_index) {
 		String json = "{";
 		for (Entry<String, String> entry : properties.entrySet()) {
 			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
@@ -255,7 +255,7 @@ public class AbstractEdge implements Comparable<AbstractEdge> {
 	}
 
 	@Override
-	public int compareTo(AbstractEdge o) {
+	public int compareTo(AbstractEdge<T> o) {
 		if (o == null) {
 			return 0;
 		} else {

@@ -12,18 +12,18 @@ import java.util.Map.Entry;
  * 
  * The default implementation Vertex uses a HashMap. You are free to use any you prefer.
  */
-abstract public class AbstractVertex implements Comparable<AbstractVertex> {
+abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>> {
 	/**
 	 * This is the string by which this AbstractVertex should be found.
 	 * This is not a label; it includes provider information as well.
 	 */
-	final String identifier;
+	final T identifier;
 	
 	/**
 	 * Links, with properties other than just target Node.
 	 */
 	//public Map<String, Edge>outgoing;
-	List<AbstractEdge> outgoing;
+	List<AbstractEdge<T>> outgoing;
 	/**
 	 * Visualization properties for this Node.
 	 */
@@ -33,7 +33,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * Create an AbstractVertex
 	 * @param identifier  The unique, final id for this vertex. 
 	 */
-	public AbstractVertex(String identifier) {
+	public AbstractVertex(T identifier) {
 		if(identifier!=null){
 			this.identifier = identifier;
 			this.setColor("black");
@@ -49,7 +49,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * This is not a label; it includes provider information as well.
 	 * @return
 	 */
-	public String getIdentifier() {
+	public T getIdentifier() {
 		return identifier;
 	}
 
@@ -73,7 +73,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * @param color Color as a String
 	 * @see Validation#validateColor(String)
 	 */
-	public AbstractVertex setColor(String color) {		
+	public AbstractVertex<T> setColor(String color) {		
 		color = color.toLowerCase();
 		if (color == null || color.isEmpty()) {
 			properties.put("color", "black");
@@ -101,7 +101,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * Take a node by it's identifier string and get it's shape
 	 * @param shape "Circle" or "Square"
 	 */
-	public AbstractVertex setShape(String shape) {
+	public AbstractVertex<T> setShape(String shape) {
 		shape = shape.toLowerCase();
 		if(shape.equals("square")){
 			shape = "rect";
@@ -129,7 +129,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * Take a node by it's identifier string and get it's node color
 	 * @param pixels  Diameter of the node, in range [0.0, 50.0]
 	 */
-	public AbstractVertex setSize(double pixels) {
+	public AbstractVertex<T> setSize(double pixels) {
 		Validation.validateSize(pixels);
 		properties.put("size", Double.toString(pixels));
 		
@@ -156,7 +156,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	 * 1.0 is opaque
 	 * @param opacity  Alpha, in range [0.0, 1.0]
 	 */
-	public AbstractVertex setOpacity(double opacity) {
+	public AbstractVertex<T> setOpacity(double opacity) {
 		Validation.validateOpacity(opacity);
 		properties.put("opacity", Double.toString(opacity));
 		
@@ -190,7 +190,7 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AbstractVertex other = (AbstractVertex) obj;
+		AbstractVertex<T> other = (AbstractVertex<T>) obj;
 		if (identifier == null) {
 			if (other.identifier != null)
 				return false;
@@ -222,10 +222,15 @@ abstract public class AbstractVertex implements Comparable<AbstractVertex> {
 	/**
 	 * Abstract Vertex comparator: sorts by identifier.
 	 */
-	@Override
-	public int compareTo(AbstractVertex o) {
+	public int compareTo(AbstractVertex<T> o) {
+		
 		if (o != null) {
-			return identifier.compareTo(o.identifier);
+			if (identifier instanceof Follower && o.identifier instanceof Follower)
+				return  ((Follower)identifier).compareTo((Follower)(o.identifier));
+			else if (identifier instanceof Actors && o.identifier instanceof Actors)
+				return  ((Actors)identifier).compareTo((Actors)(o.identifier));
+			else if (identifier instanceof Movies && o.identifier instanceof Movies)
+				return  ((Movies)identifier).compareTo((Movies)(o.identifier));
 		}
 		return 0;
 	}

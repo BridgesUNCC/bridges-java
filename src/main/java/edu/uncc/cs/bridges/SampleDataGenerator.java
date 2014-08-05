@@ -263,10 +263,10 @@ public class SampleDataGenerator {
 	 * @max Maximum number of friends
 	 * @return Returns the map of weights corresponding to the edges connected to a specific node
 	 */
-	public static Map<String, Double> getFriendsLikeness (String name, int max){
-			List<String> aList=getFriends(name, max);
-			Map<String, Double> aMap = new HashMap<>();
-			for (String friend: aList){
+	public static Map<Follower, Double> getFriendsLikeness (String name, int max){
+			List<Follower> aList=getFriends(name, max);
+			Map<Follower, Double> aMap = new HashMap<>();
+			for (Follower friend: aList){
 				aMap.put(friend, Math.abs((friend+name).hashCode()%100.0));
 			}
 			return aMap;
@@ -278,8 +278,12 @@ public class SampleDataGenerator {
 	 * @param max	Maximum number of names to return 
 	 * @return about 5 names, up to max, chosen from a list of common names
 	 */
-	public static List<String> getFriends(String name, int max) {
-		return getChoices(name, "twitter.com", available_friend_names, max, 5, false);
+	public static List<Follower> getFriends(String name, int max) {
+		List<String> names =  getChoices(name, available_friend_names, max, 5, false);
+		List<Follower> followers  = new ArrayList<>();
+		for (String n : names)
+			followers.add(new Follower(n));
+		return followers;
 	}
 	
 	/**
@@ -290,8 +294,12 @@ public class SampleDataGenerator {
 	 * @param max		The maximum number of actors
 	 * @return
 	 */
-	public static List<String> getActors(String movie, int max) {
-		return getChoices(movie, "actor", available_actor_names, max, 7, true);
+	public static List<Actors> getCast(String movie, int max) {
+		List<String> actors=getChoices(movie, available_actor_names, max, 7, true);
+		List<Actors> theActors= new ArrayList<>();
+		for (String str: actors)
+			theActors.add(new Actors(str));
+		return theActors;
 	}
 	
 	/**
@@ -300,8 +308,12 @@ public class SampleDataGenerator {
 	 * @param max		The maximum number of movies
 	 * @return
 	 */
-	public static List<String> getMovies(String name, int max) {
-		return getChoices(name, "movie", available_movie_names, max, 15, true);
+	public static List<Movies> getMovies(String name, int max) {
+		List<String> movies=getChoices(name, available_movie_names, max, 15, true);
+		List <Movies> theMovies = new ArrayList<>();
+		for (String str: movies)
+			theMovies.add(new Movies(str));
+		return theMovies;
 	}
 	
 	/**
@@ -336,17 +348,16 @@ public class SampleDataGenerator {
 	 */
 	public static List<String> getChoices(
 			String name,
-			String provider,
 			String[] choices,
 			int max,
 			int average,
 			boolean include_self
 			) {
-		List<String> friends = new ArrayList<String>();
+		List<String> friends = new ArrayList<>();
 		int hash = name == null ? 17 : name.hashCode();
 		// (do .. while) to be kind, so everyone has at least 1 friend.
 		do {
-			String candidate = provider + "/" + pickOneOf(choices, hash);
+			String candidate = pickOneOf(choices, hash);
 			
 			if (friends.contains(candidate)
 					|| ((!include_self) && candidate.equals(name))) {
@@ -370,7 +381,8 @@ public class SampleDataGenerator {
 	 */
 	public static void main(String[] args) {
 		System.out.println(getFriends("Dylan", 5));
-		System.out.println(getActors("The Shawshank Redemption", 20));
+		System.out.println(getCast("The Shawshank Redemption", 20));
 		System.out.println(getMovies("Isaac", 20));
 	}
+	
 }

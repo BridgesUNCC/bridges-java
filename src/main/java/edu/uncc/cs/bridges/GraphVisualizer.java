@@ -20,12 +20,13 @@ import java.util.Map;
  * Link n = n.get("movie/Big").setWidth("5,5,5");<br>
  * v.has("actor/Thorin Oakinshield");<br>
  */
-public class GraphVisualizer extends Visualizer {
+public class GraphVisualizer<T> extends Visualizer {
 	/**
 	 * This visualizer is actually an abstract graph; students could use it as
 	 * part of their homework. So this can be public.
 	 */
-	public Map<String, AbstractVertex> vertices = new HashMap<>();
+	
+	public Map<String, AbstractVertex<T>> vertices = new HashMap<>();
 	
 	/**
 	 * Internal API for exporting visualizer state
@@ -58,10 +59,10 @@ public class GraphVisualizer extends Visualizer {
 	String getRepresentation() {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		Map<AbstractVertex, Integer> vertex_to_index = new HashMap<>();
+		Map<AbstractVertex<T>, Integer> vertex_to_index = new HashMap<>();
 		
 		int i=0;
-		for (AbstractVertex v : Bridge.sorted_values(vertices)) {
+		for (AbstractVertex<T> v : Bridge.sorted_values(vertices)) {
 			// Manage vertex properties
 			// Encapsulate in {}, and remove the trailing comma.
 			nodes.append(v.getRepresentation() + ",");
@@ -71,10 +72,10 @@ public class GraphVisualizer extends Visualizer {
 		
 		// You have to finish all the vertices before you can start any of the edges
 		//  because otherwise you might meet a vertex without an index
-		for (AbstractVertex v : Bridge.sorted_values(vertices)) {
+		for (AbstractVertex<T> v : Bridge.sorted_values(vertices)) {
 			// Manage link properties
 			Collections.sort(v.outgoing);
-			for (AbstractEdge e : v.outgoing) {
+			for (AbstractEdge<T> e : v.outgoing) {
 				// Encapsulate in {}, and remove the trailing comma.
 				links.append(e.getRepresentation(vertex_to_index) + ",");
 			}
