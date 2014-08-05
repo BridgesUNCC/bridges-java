@@ -1,12 +1,12 @@
 package edu.uncc.cs.bridges;
 
-public class Actors {
+public class Actor {
 	protected String anActor;
 	
 	/**
 	 * The constructor
 	 */
-	public Actors(String anActor){
+	public Actor(String anActor){
 		this.anActor=anActor;
 	}
 	
@@ -20,7 +20,7 @@ public class Actors {
 	/**
 	 * This method implements compareTo for the Actors
 	 */
-	public int compareTo(Actors anotherActor){
+	public int compareTo(Actor anotherActor){
 		return anActor.compareTo(anotherActor.getName());
 	}
 	

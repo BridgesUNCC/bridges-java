@@ -1,9 +1,13 @@
 package edu.uncc.cs.bridges;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -215,7 +219,7 @@ public class Bridge {
          * @param max holds the max number of actors
          * @return
          */
-        	public static List<Actors> getAssociations(Actors identifier, int max){
+        	public static List<Actor> getAssociations(Actor identifier, int max){
             	try {
             		return actors(identifier, max);
         	    }
@@ -278,6 +282,55 @@ public class Bridge {
     }
     
     /**
+     * List the user's followers as more FollowGraphNodes.
+     * Limit the result to `max` followers. Note that results are batched, so 
+     * a large `max` (as high as 200) _may_ only count as one request.
+     * See Bridges.followgraph() for more about rate limiting. 
+     * @throws IOException */
+	static List<Tweet> getTwitterTimeline(Follower id, int max)
+			throws RateLimitException {
+		if (failsafe) {
+			// Don't contact Twitter, use sample data
+			return SampleDataGenerator.getTwitterTimeline(id.getName(), max);
+		} else {
+	    	try {
+		    	String resp = backend.get("/streams/twitter.com/timeline/"
+		    			+ id.getName() + "/" + max);
+		    	
+		        JSONObject response = backend.asJSONObject(resp);
+		        JSONArray tweets_json = (JSONArray) backend.safeJSONTraverse(
+		        		"['tweets']", response, JSONArray.class);
+		        
+		        List<Tweet> results = new ArrayList<>();
+		    	for (Object tweet_json : tweets_json) {
+		    		String content = (String) backend.safeJSONTraverse(
+		    				"", tweet_json, String.class);
+		    		String date_str = (String) backend.safeJSONTraverse(
+		    				"", tweet_json, String.class);
+		    		
+		    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
+		    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		    		Date date;
+		    		try {
+						date = df.parse(date_str);
+					} catch (ParseException e) {
+						date = new Date();
+					}
+		    		results.add(new Tweet(content, date));
+		    	}
+		    	return results;
+	    	} catch (IOException e) {
+	    		// Trigger failsafe.
+	    		System.err.println("Warning: Trouble contacting Bridges. Using "
+	    				+ "sample data instead.\n"
+	    				+ e.getMessage());
+	    		failsafe = true;
+	    		return getTwitterTimeline(id, max);
+	    	}
+		}
+	}
+    
+    /**
      * Return a list of movies an actor played in.
      * 
      * The data comes courtesy of RottenTomatoes.
@@ -328,7 +381,7 @@ public class Bridge {
      * @throws IOException 
      * @throws RateLimitException 
      */
-    static List<Actors> actors(Actors id, int max)
+    static List<Actor> actors(Actor id, int max)
     		throws RateLimitException {
 
     	if (failsafe) {
@@ -342,13 +395,13 @@ public class Bridge {
 		        // We will assume that the first movie is the right one
 		    	JSONArray abridged_cast = (JSONArray) backend.safeJSONTraverse(
 		    			"[0]['abridged_cast']", movies, JSONArray.class);
-		    	List<Actors> results = new ArrayList<>();
+		    	List<Actor> results = new ArrayList<>();
 		    	for (Object cast_member : abridged_cast) {
 		    		if (results.size() == max)
 		    			break;
 		    		String name = (String) backend.safeJSONTraverse("['name']",
 		    				cast_member, String.class);
-					results.add(new Actors(name));
+					results.add(new Actor(name));
 		    	}
 		    	return results;
 	    	} catch (IOException e) {
