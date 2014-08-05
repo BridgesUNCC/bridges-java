@@ -6,9 +6,9 @@ import java.util.Map.Entry;
  * @author mvitulli
  *
  */
-public class BSTNode extends AbstractVertex {
+public class BSTNode<T> extends AbstractVertex<T> {
 	
-	private BSTEdge leftEdge, rightEdge;	
+	private BSTEdge<T> leftEdge, rightEdge;	
 	private int val;//temp till I research comparable
 	
 	/**
@@ -17,7 +17,7 @@ public class BSTNode extends AbstractVertex {
 	 * @param identifier Name of the node.
 	 * @param val The value so it can be sorted(temporary).
 	 */
-	public BSTNode(String identifier, int val){
+	public BSTNode(T identifier, int val){
 		super(identifier);		
 		this.val = val;
 	}	
@@ -33,7 +33,7 @@ public class BSTNode extends AbstractVertex {
 	 * 
 	 * @param n The left child of the calling node.
 	 */
-	public void setLeftChild(BSTNode n) throws Exception{
+	public void setLeftChild(BSTNode<T> n) throws Exception{
 		if(n == null){
 			this.leftEdge = null;
 		}
@@ -43,7 +43,7 @@ public class BSTNode extends AbstractVertex {
 	 * 
 	 * @return The left child of the calling node.
 	 */
-	public BSTNode getLeftChild(){
+	public BSTNode<T> getLeftChild(){
 		if(this.getLeftEdge() == null){
 			return null;
 		}else return this.getLeftEdge().getOutgoing();
@@ -54,7 +54,7 @@ public class BSTNode extends AbstractVertex {
 	 * 
 	 * @param n2 The second node that makes up the edge.
 	 */
-	private void setLeftEdge(BSTNode n2){
+	private void setLeftEdge(BSTNode<T> n2){
 		//removing the edgeIdentifier would make removal easier
 		
 		this.leftEdge = new BSTEdge(this, n2);//creates the edge, and has the left pointer reference it
@@ -64,7 +64,7 @@ public class BSTNode extends AbstractVertex {
 	 * 
 	 * @return The left edge from the calling node.
 	 */
-	public BSTEdge getLeftEdge(){
+	public BSTEdge<T> getLeftEdge(){
 		return leftEdge;//returns the left connected edge
 	}
 	/**
@@ -73,7 +73,7 @@ public class BSTNode extends AbstractVertex {
 	 * @param n The right child of the calling node.
 	 * @throws Exception 
 	 */
-	public void setRightChild(BSTNode n) throws Exception{
+	public void setRightChild(BSTNode<T> n) throws Exception{
 		if(n == null){
 			this.rightEdge = null;
 		}
@@ -83,7 +83,7 @@ public class BSTNode extends AbstractVertex {
 	 * 
 	 * @return The right child of the calling node.
 	 */
-	public BSTNode getRightChild(){
+	public BSTNode<T> getRightChild(){
 		if(this.getRightEdge() == null){
 			return null;
 		}else return this.getRightEdge().getOutgoing();
@@ -93,7 +93,7 @@ public class BSTNode extends AbstractVertex {
 	 * 
 	 * @param n2 The second node that makes up the edge.
 	 */
-	private void setRightEdge(BSTNode n2){
+	private void setRightEdge(BSTNode<T> n2){
 
 		this.rightEdge = new BSTEdge(this, n2);		
 	}
@@ -102,7 +102,7 @@ public class BSTNode extends AbstractVertex {
 	 * 
 	 * @return The right edge from the calling node.
 	 */
-	public BSTEdge getRightEdge(){
+	public BSTEdge<T> getRightEdge(){
 		return rightEdge;
 	}
 	/**
@@ -152,7 +152,7 @@ public class BSTNode extends AbstractVertex {
 	}
 	
 	
-	String getEdgeRepresentation(AbstractEdge edge, int source_index, int target_index) {
+	String getEdgeRepresentation(AbstractEdge<T> edge, int source_index, int target_index) {
 		String json = "{";
 		for (Entry<String, String> entry : edge.properties.entrySet()) {
 			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
