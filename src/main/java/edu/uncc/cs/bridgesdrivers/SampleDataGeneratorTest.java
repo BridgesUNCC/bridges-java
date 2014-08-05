@@ -14,6 +14,7 @@ import edu.uncc.cs.bridges.Actor;
 import edu.uncc.cs.bridges.Follower;
 import edu.uncc.cs.bridges.Movie;
 import edu.uncc.cs.bridges.SampleDataGenerator;
+import edu.uncc.cs.bridges.Tweet;
 
 public class SampleDataGeneratorTest {
 
@@ -31,7 +32,7 @@ public class SampleDataGeneratorTest {
 		assertEquals(5, SampleDataGenerator.getFriends("", 5).size());
 		
 		// Null
-		assertEquals(3, SampleDataGenerator.getFriends(null, 5).size());
+		assertEquals(5, SampleDataGenerator.getFriends(null, 5).size());
 		
 	}
 
@@ -75,18 +76,18 @@ public class SampleDataGeneratorTest {
 	@Test
 	public void testGetTwitterTimeline() {
 
-		List<Movie> names = new ArrayList<>();
-		names.add(new Movie("Paths of Glory"));
-		names.add(new Movie("It's a Wonderful Life"));
-		names.add(new Movie("American Beauty"));
-		names.add(new Movie("Monty Python and the Holy Grail"));
-		assertEquals(names, SampleDataGenerator.getMovies("Joey", 5));
+		List<Tweet> tweets = new ArrayList<>();
+		tweets.add(new Tweet("Paths of Glory"));
+		tweets.add(new Tweet("It's a Wonderful Life"));
+		tweets.add(new Tweet("American Beauty"));
+		tweets.add(new Tweet("Monty Python and the Holy Grail"));
+		assertEquals(tweets, SampleDataGenerator.getTwitterTimeline("Joey", 5));
 		
 		// Empty
-		assertEquals(5, SampleDataGenerator.getMovies("", 5).size());
+		assertEquals(5, SampleDataGenerator.getTwitterTimeline("", 5).size());
 		
 		// Null
-		assertEquals(5, SampleDataGenerator.getMovies(null, 5).size());
+		assertEquals(5, SampleDataGenerator.getTwitterTimeline(null, 5).size());
 	}
 
 }

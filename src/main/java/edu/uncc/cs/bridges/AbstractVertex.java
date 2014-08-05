@@ -19,6 +19,9 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 	 */
 	final T identifier;
 	
+	private static int next_id = 0;
+	private int id;
+	
 	/**
 	 * Links, with properties other than just target Node.
 	 */
@@ -37,6 +40,7 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 		if(identifier!=null){
 			this.identifier = identifier;
 			this.setColor("black");
+			this.id = next_id++;
 		}
 		else 
 			throw new IllegalArgumentException("param cannot be null.");
@@ -225,12 +229,15 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 	public int compareTo(AbstractVertex<T> o) {
 		
 		if (o != null) {
+			Integer.compare(id, o.id); 
+			/* Plan B
 			if (identifier instanceof Follower && o.identifier instanceof Follower)
 				return  ((Follower)identifier).compareTo((Follower)(o.identifier));
 			else if (identifier instanceof Actor && o.identifier instanceof Actor)
 				return  ((Actor)identifier).compareTo((Actor)(o.identifier));
 			else if (identifier instanceof Movie && o.identifier instanceof Movie)
 				return  ((Movie)identifier).compareTo((Movie)(o.identifier));
+			 */
 		}
 		return 0;
 	}
