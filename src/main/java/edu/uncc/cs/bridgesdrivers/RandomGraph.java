@@ -63,12 +63,12 @@ public class RandomGraph<T> extends GraphVisualizer<T> {
 			Set<Map.Entry<String, AbstractVertex<Follower>>> existingVertices=graph.vertices.entrySet();
 			for(int i=0; i<temp.size();i++){
 				if (!existingVertices.contains(temp.get(i))){ 
-					aVertex=new Vertex<Follower>(temp.get(i), graph).setColor(aColor).setOpacity(0.2);
-					root.createEdge(aVertex, "randWeight").setOpacity(0.2);
+					aVertex=new Vertex<Follower>(temp.get(i), graph).setColor(aColor);
+					root.createEdge(aVertex, "hashCodeWeight").setOpacity(0.2);
 				}
 				else{
 					aVertex=(Vertex<Follower>)graph.vertices.get(temp.get(i));
-					root.createEdge(aVertex).setColor(aColor).setOpacity(0.2);
+					root.createEdge(aVertex,"hashCodeWeight").setColor(aColor).setOpacity(0.2);
 				}	
 			}
 			populate(randomVertex(graph),graph,--max);
@@ -76,7 +76,7 @@ public class RandomGraph<T> extends GraphVisualizer<T> {
 			//randomly connect vertices to increase complexity
 			
 			for (int i=1; i<10;i++){
-				randomVertex(graph).createEdge(randomVertex(graph));
+				randomVertex(graph).createEdge(randomVertex(graph),"hashCodeWeight").setOpacity(0.2);;
 			}
 			
 		}

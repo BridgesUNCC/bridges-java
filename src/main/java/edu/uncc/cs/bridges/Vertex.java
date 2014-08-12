@@ -13,11 +13,11 @@ import java.util.Iterator;
  */
 public class Vertex<T> extends AbstractVertex<T> {
 
-	public int currIndex=-1; //this holds the number of visited children belonging to the current vertex 
+	public int currVertexIndex=-1; //this holds the number of visited children belonging to the current vertex 
 					    //in the the list of the children vertices
 						// by default initialized to -1 meaning no children
 	public AbstractVertex<T> curr=null; //holds the pointer to the next() child of this vertex
-	
+	public int currEdgeIndex = -1;
 	//private GraphVisualizer graph;
 	/**
 	 * Creates and vertex and adds it to the graph.
@@ -116,11 +116,11 @@ public class Vertex<T> extends AbstractVertex<T> {
 	 * @return AbstractVertex representing the next child of the currrent vertex
 	 */
 	public AbstractVertex<T> next(){
-		if (currIndex==-1 && !this.outgoing.isEmpty()){
-			currIndex=0;
+		if (currVertexIndex==-1 && !this.outgoing.isEmpty()){
+			currVertexIndex=0;
 		}
-		if(currIndex!=-1 && currIndex!=this.outgoing.size()){
-			return this.next(currIndex++);}
+		if(currVertexIndex!=-1 && currVertexIndex!=this.outgoing.size()){
+			return this.next(currVertexIndex++);}
 		else 
 			return null;
 	}
@@ -152,14 +152,33 @@ public class Vertex<T> extends AbstractVertex<T> {
 		super.setOpacity(opacity);
 		return this;
 	}
-
+	/**
+	 * This method returns a collection of exiting edges emerging from the current vertex
+	 * @return
+	 */
 	public Collection<? extends Vertex<T>> getNeighbors() {
-		Collection children = new HashSet();
+		Collection edges = new HashSet();
 		//Iterator i = new this.outgoing.iterator();
 		
-		children.addAll(this.outgoing);
-		if (!children.isEmpty())
-			return children;
+		edges.addAll(this.outgoing);
+		if (!edges.isEmpty())
+			return edges;
 		return null;
+	}
+	
+	/**
+	 * This method returns the next unvisited edge from the current vertex's list of emerging edges
+	 * if the list is empty (no edges) it returns null
+	 * if the method is called repeatedly one can iterate, one edge at a time, through the entire list of existing edges
+	 * @return
+	 */
+	public AbstractEdge<T> nextEdge(){
+		if (this.outgoing.isEmpty() || ++currEdgeIndex == this.outgoing.size()){
+			currEdgeIndex = -1; //the counter is reset 
+			return null;
+		}
+		
+		return this.outgoing.get(currEdgeIndex);
+			
 	}
 }

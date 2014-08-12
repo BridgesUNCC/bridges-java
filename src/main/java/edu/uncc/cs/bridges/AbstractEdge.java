@@ -14,10 +14,10 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 */
 	Map<String, String> properties = new HashMap<>();
 	
-	String randWeight = "randWeight";
+	String hashCodeWeight = "hashCodeWeight";
 	String weight = "weight";
 	
-	public List<AbstractVertex<T>> eOutgoing;
+	List<AbstractVertex<T>> eOutgoing;
 	
 	T identifier;
 	
@@ -77,28 +77,28 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	}
 	
 	/**
-	 * Sets a Random value between 0 and 9 to the weight attribute of the edge
-	 * Syntax: A.createEdge(B, "randWeight");
+	 * Sets a hashcode value based on the string hashcode of source and destination, to the weight attribute of the edge
+	 * Syntax: A.createEdge(B, "hashCodeWeight");
 	 * Default width is provided in the following format
 	 * For weights less than 4 the width is 1 pixel
 	 * For weights less than 7 the width is 3 pixel
 	 * For weights of other values greater than or equal to 7 the width is 5 pixel
 	 * Syntax for creating a random weight: 
-	 *                   source.createEdge(target,"randWeight");   
-	 * @param weight is the string "randWeight"
+	 *                   source.createEdge(target,"hashCodeWeight");   
+	 * @param weight is the string "hashCodeWeight"
 	 * @param source contains the source Vertex
 	 * @param source contains the destination Vertex
-	 * @param random contains the String value "randWeight" later transformed in random double
-	 *  between 0.0-9.0
+	 * @param random contains the String value "hashCodeWeight" later transformed in random double
+	 *  based on the String identifiers of source and destination vertices for a given edge 
 	 */
 	
 	public AbstractEdge<T> setWeight(AbstractVertex<T> source, AbstractVertex<T> destination, String random) {
 		double weight;
-		if (random.equals(randWeight))
+		if (random.equals(hashCodeWeight))
 			weight = Bridge.getEdgeWeight(source.toString(),destination.toString());
 		else
 			{
-				System.out.println("Syntax error: \"randWeight\" expected. All weights are 1.");
+				System.out.println("Syntax error: \"hashCodeWeight\" expected. All weights are 1.");
 				weight=1;
 			}
 		

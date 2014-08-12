@@ -32,12 +32,12 @@ public class HelloWorld {
 		
 		//John.createEdge(Dave);
 
-		Dave.createEdge(John);
+		Dave.createEdge(John,"hashCodeWeight");
 		
 		Dave.getEdge(John).setColor("red");//works
 		Dave.getEdge(John).setWidth(5);//works
 		Dave.getEdge(John).setDash(new double[]{5, 10, 5});//works
-		Dave.getEdge(Dave).setOpacity(.1);//works
+		//Dave.getEdge(Dave).setOpacity(.1);//doesn't work unless the edge is created first
 		Dave.setShape("Square");
 		Bob.setShape("Square");//works
 		Bob.setColor("pink");//works

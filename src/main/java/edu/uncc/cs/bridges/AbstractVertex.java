@@ -26,7 +26,7 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 	 * Links, with properties other than just target Node.
 	 */
 	//public Map<String, Edge>outgoing;
-	List<AbstractEdge<T>> outgoing;
+	public List<AbstractEdge<T>> outgoing;
 	/**
 	 * Visualization properties for this Node.
 	 */
@@ -229,7 +229,7 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 	public int compareTo(AbstractVertex<T> o) {
 		
 		if (o != null) {
-			Integer.compare(id, o.id); 
+			return Integer.compare(id, o.id); 
 			/* Plan B
 			if (identifier instanceof Follower && o.identifier instanceof Follower)
 				return  ((Follower)identifier).compareTo((Follower)(o.identifier));
