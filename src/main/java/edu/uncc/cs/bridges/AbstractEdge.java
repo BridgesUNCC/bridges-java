@@ -228,6 +228,22 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	}
 	
 	/**
+	 * This method returns the source of the current edge
+	 * @return AbstractVertex<T>
+	 */
+	public AbstractVertex<T> getSource(){
+		return source;
+	}
+	
+	/**
+	 * This method returns the destination of the current edge
+	 * @return AbstractVertex<T>
+	 */
+	public AbstractVertex<T> getDestination(){
+		return destination;
+	}
+	
+	/**
 	 * Internal code for getting the properties of an Edge.
 	 * Vertexes are represented by index in the JSON format. Pass a map to
 	 * represent that connection (possibly made by earlier traversal.)

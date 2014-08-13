@@ -1,31 +1,23 @@
 package edu.uncc.cs.bridgesdrivers;
 
-/**
- * The minHeap class uses a minHeap to select the edge with the smallest cost emerging
- * from a given vertex. This can be used as part of more complex algorithms like Dijakstra 
- * to select the shortest path.
- * @Title minHeap and minHeap sort of edges based on their cost 
- * @author Mihai Mehedint
- * @date August 2014
- *  
- */
-		
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import edu.uncc.cs.bridges.*;
+import edu.uncc.cs.bridges.AbstractEdge;
+import edu.uncc.cs.bridges.Follower;
+import edu.uncc.cs.bridges.Vertex;
 
-public class minHeap {
-	final static int numberOfRecursiveCalls=1;
+public class minHeapEdges {
+	static int numberOfRecursiveCalls=1;
 	static RandomGraph<Follower> graph;
-	static ArrayList<AbstractEdge<Follower>> minHeap;
+	static ArrayList<AbstractEdge<Follower>> minHeap=new ArrayList<AbstractEdge<Follower>>();;
 	static ArrayList<AbstractEdge<Follower>> minHeapSorted = new ArrayList<AbstractEdge<Follower>>();
 	static Vertex<Follower> root;
 	static int heapElements=0;
 	
 	/**
 	 * print method prints the heap to the standard output
-	 * @param minHeap
+	 * @param minHeapDriver
 	 */
 	public static void print (ArrayList<AbstractEdge<Follower>> aHeap){
 		
@@ -37,7 +29,7 @@ public class minHeap {
 	
 	/**
 	 * This method removes the root element repeatedly until the heap is empty
-	 * @param minHeap
+	 * @param minHeapDriver
 	 */
 	public static AbstractEdge<Follower> removeHeap(ArrayList<AbstractEdge<Follower>> aHeap, int anIndex){
 		if(anIndex==1){
@@ -191,48 +183,5 @@ public class minHeap {
 		
 	}
 	
-	/**
-	 * the main driver, 
-	 * populates a random graph and creates a minHeap using the edge costs that connect root
-	 * to its children
-	 * @param args
-	 */
-	public static  void main(String[] args) {
-		graph = new RandomGraph<>();
-		//initiate bridges
-		Bridge.init(1, "693144430396", graph, "mmehedin@uncc.edu");
-		root= new Vertex<>(new Follower("Riley"),graph);
-		root.setSize(10);
-		root.setColor("red");
-		
-		graph.setNumberOfChildren(4);
-		//populate the graph with sampleGenerator data
-		graph.populate(root,graph,numberOfRecursiveCalls);		
-		//System.out.println("This is the edge: "+root.getEdge(root.next()).getIdentifier()+" "+root.getEdge(root.next()).getWeight());		
-		
-		minHeap=new ArrayList<AbstractEdge<Follower>>();
-		createHeap(minHeap, root);
-		
-		System.out.println("Created a minHeap using the edges emerging from root: ");
-		print(minHeap);
-		System.out.println("\nThis is a minHeap: " + isHeap(minHeap,1));
-		System.out.println();
-		
-		//Performing the heap sort using the minimum heap 
-		heapSort(minHeap,minHeap.size()-1);
-		
-		//printing the sorted edge values in descending order
-		//System.out.println("Sorted: "+minHeapSorted);
-		System.out.println("Sorted minHeap: \n");
-		print(minHeapSorted);
-		
-		//remove minHeap
-		//minHeapSorted.add(0, null);
-		//System.out.println("Sorted: "+minHeapSorted);
-		//removeHeap(minHeapSorted,minHeapSorted.size()-1);
-		
-		minHeapSorted.get(0).setColor("red").setOpacity(1);
-		Bridge.complete();
-	}
 
 }
