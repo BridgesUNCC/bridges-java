@@ -1,14 +1,17 @@
 /**
  * 
  */
-package edu.uncc.cs.bridges;
+package edu.uncc.cs.bridgesdrivers;
 
 import static org.junit.Assert.*;
+import edu.uncc.cs.bridges.*;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import edu.uncc.cs.bridges.*;
 
 /**
  * @author mihai
@@ -21,11 +24,11 @@ public class AbstractEdgeTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	static GraphVisualizer graph;
-	static Vertex bob, jane, bill;
+	static GraphVisualizer<?> graph;
+	static Vertex<Follower> bob, jane, bill;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		graph=new GraphVisualizer();
+		graph=new GraphVisualizer<>();
 		bob = new Vertex("Bob", graph);
 		jane = new Vertex("Jane", graph);
 		bill = new Vertex("Bill", graph);
@@ -102,11 +105,11 @@ public class AbstractEdgeTest {
 	 */
 	@Test
 	public final void testGetColor() {
-		AbstractEdge edge1 = bob.getEdge(jane).setColor("red");
+		AbstractEdge<Follower> edge1 = bob.getEdge(jane).setColor("red");
 		assertEquals("The edge color is not correctly set.","red",edge1.getColor());
 		assertNotNull("The color attribute is null.",edge1.getColor());
 		
-		AbstractEdge edge2 = (new Vertex("x",graph)).createEdge(new Vertex("y", graph));
+		AbstractEdge<Follower> edge2 = (new Vertex("x",graph)).createEdge(new Vertex("y", graph));
 		assertEquals("The edge attribute is not null","" ,edge2.getColor());
 		
 	}
@@ -116,11 +119,11 @@ public class AbstractEdgeTest {
 	 */
 	@Test
 	public final void testSetColor() {
-		AbstractEdge edge1 = bob.getEdge(jane).setColor("red");
+		AbstractEdge<Follower> edge1 = bob.getEdge(jane).setColor("red");
 		assertEquals("The edge color is not correctly set.","red",edge1.getColor());
 		assertNotNull("The color attribute is null.",edge1.getColor());
 		
-		AbstractEdge edge2 = (new Vertex("x",graph)).createEdge(new Vertex("y", graph));
+		AbstractEdge<Follower> edge2 = (new Vertex("x",graph)).createEdge(new Vertex("y", graph));
 		assertEquals("The edge attribute is not null","" ,edge2.getColor());
 	}
 
@@ -140,7 +143,7 @@ public class AbstractEdgeTest {
 	 */
 	@Test
 	public final void testSetDash() {
-		AbstractEdge edge2 = (new Vertex("x",graph)).createEdge(new Vertex("y", graph));
+		AbstractEdge<Follower> edge2 = (new Vertex("x",graph)).createEdge(new Vertex("y", graph));
 		assertEquals("The dash parameter was empty", "", edge2.getDash());
 		assertEquals("The dash pattern was not set correctly.", "5.0,10.0,5.0", bob.getEdge(jane).getDash());
 		bob.getEdge(jane).setDash(new double[]{});
@@ -206,7 +209,7 @@ public class AbstractEdgeTest {
 	 */
 	@Test
 	public final void testGetRepresentation() {
-		assertNotNull("GetRepresentation returned a null value.", graph.getRepresentation());
+		assertNotNull("GetRepresentation returned a null value.", bob.getEdge(jane).getRepresentation());
 	}
 
 	/**
@@ -214,10 +217,10 @@ public class AbstractEdgeTest {
 	 */
 	@Test
 	public final void testCompareTo() {
-		Vertex vertex3 = new Vertex("vertex3", graph);
-		Vertex vertex4 = new Vertex("vertex4", graph);
+		Vertex<Follower> vertex3 = new Vertex("vertex3", graph);
+		Vertex<Follower> vertex4 = new Vertex("vertex4", graph);
 		vertex3.createEdge(vertex4);
-		AbstractEdge edge5 = null;
+		AbstractEdge<Follower> edge5 = null;
 		assertEquals("The compareTo with null returned a anexpected value.", 0,vertex3.getEdge(vertex4).compareTo(edge5));
 		bob.createEdge(vertex3);
 		assertNotEquals("The compareTo with null returned a anexpected value.", 0,vertex3.getEdge(vertex4).compareTo(bob.getEdge(vertex3)));

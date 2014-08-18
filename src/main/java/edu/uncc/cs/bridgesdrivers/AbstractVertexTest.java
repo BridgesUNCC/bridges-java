@@ -1,12 +1,14 @@
 /**
  * 
  */
-package edu.uncc.cs.bridges;
+package edu.uncc.cs.bridgesdrivers;
 
 import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import edu.uncc.cs.bridges.*;
 
 /**
  * @author mihai mehedint
@@ -144,7 +146,7 @@ public class AbstractVertexTest {
 	 */
 	@Test
 	public final void testGetRepresentation() {
-		assertNotNull("The representation returns a null object", graph.getRepresentation());
+		assertNotNull("The representation returns a null object", testVertex1.getRepresentation());
 	}
 
 	/**

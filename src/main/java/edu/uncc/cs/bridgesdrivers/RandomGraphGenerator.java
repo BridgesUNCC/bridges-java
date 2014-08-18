@@ -1,15 +1,7 @@
 
 package edu.uncc.cs.bridgesdrivers;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+
+import java.io.IOException;
 
 import edu.uncc.cs.bridges.*;
 
@@ -17,11 +9,13 @@ import edu.uncc.cs.bridges.*;
 public class RandomGraphGenerator { 
 	final static int numberOfRecursiveCalls=10; 
 	
-		public static <T> void main(String[] args) {
+		public static <T> void main(String[] args) throws IOException {
+		outputLog aLog = new outputLog();
+			
 		// create a new graph
 		RandomGraph<Follower> graph = new RandomGraph<Follower>();
 		//initiate bridges
-		Bridge.init(1, "693144430396", graph, "mmehedin@uncc.edu");
+		Bridge.init(1, "1157177351793", graph, "mmehedin@uncc.edu");
 		//create the root node
 		Vertex<Follower> root= new Vertex<Follower>(new Follower("Riley"),graph);
 		root.setSize(10);
@@ -31,6 +25,8 @@ public class RandomGraphGenerator {
 		graph.populate(root,graph,numberOfRecursiveCalls);
 		
 		Bridge.complete();
+		
+		aLog.returnStream();
 	}
 
 }
