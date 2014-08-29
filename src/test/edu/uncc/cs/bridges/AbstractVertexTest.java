@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.uncc.cs.bridgesdrivers;
+package edu.uncc.cs.bridges;
 
 import static org.junit.Assert.*;
 
@@ -15,8 +15,9 @@ import edu.uncc.cs.bridges.*;
  *
  */
 public class AbstractVertexTest {
-	static GraphVisualizer<?> graph ;
+	static GraphVisualizer<?> graph;
 	static Vertex<?> testVertex1;
+	static Follower aFollower;
 	static Vertex<?> testVertex2;
 	static Vertex<?> testVertex;
 	/**
@@ -25,7 +26,8 @@ public class AbstractVertexTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		graph = new GraphVisualizer<Object>();
-		testVertex1 = new Vertex<String>("vertex1", graph);
+		aFollower = new Follower("vertex1");
+		testVertex1 = new Vertex<>(aFollower, graph);
 		testVertex2 = new Vertex<String>("vertex2", graph);
 		testVertex = new Vertex<String>("vertex1", graph);
 	}
@@ -147,6 +149,9 @@ public class AbstractVertexTest {
 	@Test
 	public final void testGetRepresentation() {
 		assertNotNull("The representation returns a null object", testVertex1.getRepresentation());
+		System.out.println(testVertex1.getRepresentation());
+		assertEquals("The getRepresentation returns a malformed JSON string.", 
+				"\{\"color\": \"red\", \"opacity\": \"0.2\", \"size\": \"0.6\", \"name\": \"vertex1\"\}", testVertex1.getRepresentation());
 	}
 
 	/**
@@ -155,8 +160,10 @@ public class AbstractVertexTest {
 	@Test
 	public final void testCompareTo() {
 		AbstractVertex<Follower> nullVertex = null;
-		AbstractVertex vertex1 = new Vertex("aTest1", graph);
-		AbstractVertex vertex2 = new Vertex("aTest2", graph);
+		Follower aFirstFollower = new Follower("aTest1");
+		AbstractVertex<Follower> vertex1 = new Vertex<>(aFirstFollower, graph);
+		Follower aSecondFollower = new Follower("aTest2");
+		AbstractVertex<Follower> vertex2 = new Vertex<>(aSecondFollower, graph);
 		assertEquals("The comparison to a null vertex is not 0.", 0, vertex1.compareTo(nullVertex));
 		assertNotEquals("The comparison to a null vertex is not 0.", 0, vertex1.compareTo(vertex2));
 	}
