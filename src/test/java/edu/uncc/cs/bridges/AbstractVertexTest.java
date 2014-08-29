@@ -151,7 +151,7 @@ public class AbstractVertexTest {
 		assertNotNull("The representation returns a null object", testVertex1.getRepresentation());
 		System.out.println(testVertex1.getRepresentation());
 		assertEquals("The getRepresentation returns a malformed JSON string.", 
-				"\{\"color\": \"red\", \"opacity\": \"0.2\", \"size\": \"0.6\", \"name\": \"vertex1\"\}", testVertex1.getRepresentation());
+				"{\"color\": \"red\", \"opacity\": \"0.2\", \"size\": \"0.6\", \"name\": \"vertex1\"}", testVertex1.getRepresentation());
 	}
 
 	/**
