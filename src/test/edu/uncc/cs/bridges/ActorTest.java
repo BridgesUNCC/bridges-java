@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.uncc.cs.bridgesdrivers;
+package edu.uncc.cs.bridges;
 
 import static org.junit.Assert.*;
 

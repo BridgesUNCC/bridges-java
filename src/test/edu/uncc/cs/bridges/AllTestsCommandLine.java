@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridgesdrivers;
+package edu.uncc.cs.bridges;
 /**
  * @author mihai mehedint
  * @Description: This class runs all the test classes outside the Eclipse unit test
@@ -8,6 +8,7 @@ package edu.uncc.cs.bridgesdrivers;
 import java.io.IOException;
 
 import edu.uncc.cs.bridges.outputLog;
+import edu.uncc.cs.bridgesdrivers.SampleDataGeneratorTest;
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;

@@ -3,7 +3,7 @@
  * @Description: this test suite class runs all the test classes in the 
  * Eclipse JUnit test environment
  */
-package edu.uncc.cs.bridgesdrivers;
+package edu.uncc.cs.bridges;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +16,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+
+import edu.uncc.cs.bridgesdrivers.SampleDataGeneratorTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({AbstractEdgeTest.class, 
