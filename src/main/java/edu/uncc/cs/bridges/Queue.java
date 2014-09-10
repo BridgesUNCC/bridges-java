@@ -16,21 +16,22 @@ import java.util.Set;
  */
 public class Queue<T> extends GraphVisualizer<T>{
 	
-	private AbstractVertex<T> bottom = null;
-	private AbstractVertex<T> top = null;
-	private String topColor = "red";
-	private String bottomColor = "orange";
-	private String defaultColor = "black";
-	private boolean llist = false;
+	private AbstractVertex<T> bottom = null; //save the link to bottom element
+	private AbstractVertex<T> top = null; //save the link to top element
+	private String topColor = "red";//color of the top element
+	private String bottomColor = "orange";//color of the bottom element
+	private String defaultColor = "black";//color of the intermediary elements
+	private boolean llist = true; //by default the visualization will display the links between the elements
 	
-	public Map<String, AbstractVertex<T>> vertices = new LinkedHashMap<>();
+	public Map<String, AbstractVertex<T>> vertices = new LinkedHashMap<>();//this overrides the vertices Map in Visualizer so the order of elements is maintained
+	
 	
 	/**
 	 * The constructor
 	 */
 	public Queue(){
 		super();
-		super.vertices=this.vertices;
+		super.vertices=this.vertices;//overrides the vertices Map in GraphVisualizer
 	}
 	
 	/**
@@ -97,6 +98,14 @@ public class Queue<T> extends GraphVisualizer<T>{
 	public AbstractVertex getBottom(){
 		return bottom;
 	}
+	
+	/**
+	 * This method retrieves the top of the queue 
+	 * @return
+	 */
+	public AbstractVertex getTop(){
+		return top;
+	}
 
 	/**
 	 * This method empties the queue
@@ -106,8 +115,12 @@ public class Queue<T> extends GraphVisualizer<T>{
 		top = bottom = null;
 	}
 	
-	public void linkedList(){
-		llist = true;
+	public void noLListVisualization(){
+		llist = false;
+	}
+	
+	public boolean LList(){
+		return llist;
 	}
 
 }//end of the class

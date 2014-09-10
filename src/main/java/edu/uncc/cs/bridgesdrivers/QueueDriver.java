@@ -15,12 +15,23 @@ public class QueueDriver {
 		queue.clear();
 		
 		
+		
 		queue.enQueue(new Follower("entity2"));
 		queue.enQueue(new Follower("entity3"));
 		queue.enQueue(new Follower("entity4"));
 		System.out.println(queue.vertices);
-		queue.deQueue();
-		queue.deQueue();
+		
+		//after this statement the elements are not connected
+		//the user can display the queue with or without links(edges) in between
+		queue.noLListVisualization();
+		
+		queue.enQueue(new Follower("entity5"));
+		queue.enQueue(new Follower("entity6"));
+		queue.enQueue(new Follower("entity7"));
+		System.out.println(queue.vertices);
+		
+		//queue.deQueue();
+		//queue.deQueue();
 		//queue.deQueue();
 		//queue.deQueue();
 		//queue.deQueue();
