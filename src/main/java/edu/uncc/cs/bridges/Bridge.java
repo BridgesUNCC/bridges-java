@@ -94,7 +94,7 @@ public class Bridge {
 	 */
 	public static void update() {
         try {
-        	//System.out.println(visualizer.getRepresentation());
+        	System.out.println(visualizer.getRepresentation());
 			backend.post("/assignments/" + assignment, visualizer.getRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
