@@ -1,7 +1,9 @@
 package edu.uncc.cs.bridges;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,11 +22,15 @@ public class Queue<T> extends GraphVisualizer<T>{
 	private String bottomColor = "orange";
 	private String defaultColor = "black";
 	private boolean llist = false;
+	
+	public Map<String, AbstractVertex<T>> vertices = new LinkedHashMap<>();
+	
 	/**
 	 * The constructor
 	 */
 	public Queue(){
 		super();
+		super.vertices=this.vertices;
 	}
 	
 	/**
