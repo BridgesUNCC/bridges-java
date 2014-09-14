@@ -22,7 +22,6 @@ public class QueueElement<T> extends AbstractVertex{
 		outgoing = new ArrayList<AbstractEdge<T>>();
 		queue.vertices.put(identifier, this);
 		this.setSize(elementSize);
-		
 	}
 	
 	/**
@@ -32,7 +31,7 @@ public class QueueElement<T> extends AbstractVertex{
 	 */
 	boolean queueEdge(AbstractVertex<T> v2){
 		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
-		return outgoing.add(new Edge(this, v2, ident));	
+		return outgoing.add(new QueueEdge(this, v2, ident));	
 	}
 	
 	/**
@@ -41,16 +40,16 @@ public class QueueElement<T> extends AbstractVertex{
 	 * @param anElement
 	 * @return
 	 */
-	public Edge getQueueEdge(QueueElement<T> anElement){
+	public QueueEdge getQueueEdge(QueueElement<T> anElement){
 		for(int i = 0; i < this.outgoing.size(); i++){ 
-			AbstractEdge<T> anEdge = (Edge)this.outgoing.get(i);
+			AbstractEdge<T> anEdge = (QueueEdge)this.outgoing.get(i);
 				if(anEdge.destination.compareTo((AbstractVertex<T>)anElement)==0){				
-					return (Edge)this.outgoing.get(i);
+					return (QueueEdge)this.outgoing.get(i);
 			}
 		}		
-		return null;
-		
+		return null;	
 	}
+	
 	/**
 	 * This method compares two elements
 	 * @param o
@@ -61,6 +60,11 @@ public class QueueElement<T> extends AbstractVertex{
 			return Integer.compare(id, o.id);
 		}
 		return 0;
+	}
+	
+	public QueueElement<T> next(){
+		QueueEdge<T> anEdge = (QueueEdge<T>)this.outgoing.iterator().next(); 
+		return (QueueElement<T>)anEdge.destination;
 	}
 
 }

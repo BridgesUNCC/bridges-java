@@ -1,7 +1,11 @@
 package edu.uncc.cs.bridgesdrivers;
 
 import edu.uncc.cs.bridges.*;
-
+/**
+ * 
+ * @author Mihai Mehedint
+ *
+ */
 public class QueueDriver {
 
 	public static void main(String[] args) {
@@ -48,13 +52,18 @@ public class QueueDriver {
 		//to set properties to elements
 		QueueElement<Follower> entity11 = queue.enQueue(new Follower("entity11"));
 		QueueElement<Follower> entity12 = queue.enQueue(new Follower("entity12"));
-		//entity12.getQueueEdge(entity11).setColor("purple");
-		//entity11.setColor("grey");
-		queue.enQueue(new Follower("entity13"));
-		queue.enQueue(new Follower("entity13"));
-		queue.deQueue();
-		queue.deQueue();
+		entity12.getQueueEdge(entity11).setColor("purple");
 		
+		//One can iterate through the elements of the queue using next();
+		System.out.println(entity11.next().next().getIdentifier());
+		
+		//Element's properties can be changed
+		//entity11.setColor("grey");
+		
+		queue.enQueue(new Follower("entity13"));
+		queue.enQueue(new Follower("entity13"));
+		queue.deQueue();
+		queue.deQueue();
 		
 		
 		Bridge.complete();
