@@ -9,7 +9,6 @@ import java.util.Map;
 		
 		private StackElement<T> bottom = null; //save the link to bottom element
 		private StackElement<T> top = null; //save the link to top element
-		private StackElement<T> prev = null; //save the link to the previous element
 		private String topColor = "red";//color of the top element
 		private String bottomColor = "orange";//color of the bottom element
 		private String defaultColor = "black";//color of the intermediary elements
@@ -30,21 +29,17 @@ import java.util.Map;
 		 * This method removes one element(the bottom one) from the stack 
 		 */
 		public void pop(){
-			if (!bottom.outgoing.isEmpty()) {
-				bottom.outgoing.clear();
+			if (!top.outgoing.isEmpty()) {
 				top.outgoing.clear();
 			}
-			this.vertices.values().removeAll(Collections.singleton(bottom));
+			this.vertices.values().removeAll(Collections.singleton(top));
 			
 			if (this.vertices.isEmpty()) 
-				bottom = null;
+				top = bottom = null;
 			else{
-				setBottom(this.vertices.entrySet().iterator().next().getValue());
+				setTop((StackElement<T>)this.vertices.values().iterator().next());
 				if (top != null & circularLList) {
-					top.outgoing.clear();
-					bottom.outgoing.clear();
 					top.setStackEdge(bottom);
-					top.setStackEdge(prev);
 				}
 			}
 		}
@@ -64,7 +59,7 @@ import java.util.Map;
 				bottomColor(bottom);
 			}
 			else {
-				setBottom(prev = top = new StackElement(identifier, this));
+				setBottom(top = new StackElement(identifier, this));
 			}
 			return top;
 		}
@@ -78,7 +73,7 @@ import java.util.Map;
 			if (this.LList() & this.vertices.size() != 0 & !circularLList){
 				this.changeEdges(anEntity);
 			}
-			if (top != null & top != bottom & bottom != null & circularLList){
+			if (top != null & bottom != null & circularLList){
 				this.changeEdges(anEntity);
 				this.setCircularLList();
 			}
@@ -106,7 +101,7 @@ import java.util.Map;
 		}
 		
 		/**
-		 * This metod sets the color for the bottom element of the stack
+		 * This method sets the color for the bottom element of the stack
 		 * @param aVertex
 		 */
 		private void bottomColor(AbstractVertex<T> aVertex){
@@ -123,16 +118,15 @@ import java.util.Map;
 		}
 		
 		/**
-		 * This method rearranges the links (or edges) after one element is inserted  
+		 * This method rearranges the links (connections between elements) after one element is inserted  
 		 * @param anEntity
 		 */
 		private void changeEdges(StackElement<T> anEntity){
-			top.outgoing.clear();
-			bottom.outgoing.clear();
-			top.setStackEdge(prev);
-			prev = top;
+			top.outgoing.removeAll(Collections.singleton(top.getStackEdge(bottom))); 
+			if (this.vertices.size()==2)
+				 top.setStackEdge(bottom);
+			anEntity.setStackEdge(top);
 			top = anEntity;
-			top.setStackEdge(prev);
 		}
 		
 		/**
@@ -156,7 +150,7 @@ import java.util.Map;
 		 */
 		public void clear(){
 			this.vertices.clear();
-			top = bottom = prev = null;
+			top = bottom = null;
 		}
 		
 		/**
