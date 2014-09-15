@@ -7,10 +7,11 @@ import java.util.ArrayList;
  *
  * @param <T>
  */
-public class QueueElement<T> extends AbstractVertex{
+public class QueueElement<T> extends AbstractVertex<T>{
 	
 	private int elementSize = 30;
 	private int id;
+	
 	
 	/**
 	 * The constructor
@@ -25,11 +26,11 @@ public class QueueElement<T> extends AbstractVertex{
 	}
 	
 	/**
-	 * This method sets a line object between 2 queue elements
+	 * This method sets a (visual) connection object between 2 queue elements
 	 * @param v2
 	 * @return
 	 */
-	boolean queueEdge(AbstractVertex<T> v2){
+	boolean queueEdge(QueueElement<T> v2){
 		String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
 		return outgoing.add(new QueueEdge(this, v2, ident));	
 	}
@@ -40,11 +41,11 @@ public class QueueElement<T> extends AbstractVertex{
 	 * @param anElement
 	 * @return
 	 */
-	public QueueEdge getQueueEdge(QueueElement<T> anElement){
+	public QueueEdge<T> getQueueEdge(QueueElement<T> anElement){
 		for(int i = 0; i < this.outgoing.size(); i++){ 
-			AbstractEdge<T> anEdge = (QueueEdge)this.outgoing.get(i);
+			AbstractEdge<T> anEdge = (QueueEdge<T>)this.outgoing.get(i);
 				if(anEdge.destination.compareTo((AbstractVertex<T>)anElement)==0){				
-					return (QueueEdge)this.outgoing.get(i);
+					return (QueueEdge<T>)this.outgoing.get(i);
 			}
 		}		
 		return null;	
@@ -62,6 +63,10 @@ public class QueueElement<T> extends AbstractVertex{
 		return 0;
 	}
 	
+	/**
+	 * This method returns the next element in the queue
+	 * @return
+	 */
 	public QueueElement<T> next(){
 		QueueEdge<T> anEdge = (QueueEdge<T>)this.outgoing.iterator().next(); 
 		return (QueueElement<T>)anEdge.destination;

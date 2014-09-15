@@ -84,7 +84,7 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 */
 	private void setTop(QueueElement<T> anEntity){
 		topColor(anEntity);
-		if (this.LList() == true & this.vertices.size() != 0 & !circularLList){
+		if (this.LList() & this.vertices.size() != 0 & !circularLList){
 			this.changeEdges(anEntity);
 		}
 		if (top != null & top != bottom & bottom != null & circularLList){

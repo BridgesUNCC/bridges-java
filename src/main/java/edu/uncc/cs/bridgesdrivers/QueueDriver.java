@@ -13,7 +13,7 @@ public class QueueDriver {
 		Bridge.init(6, "1157177351793", queue, "mmehedin@uncc.edu");
 		
 		//this statement sets the status of the queue to circular
-		//queue.circularLList();
+		queue.circularLList();
 		//This works also:
 		//AbstractVertex<Follower> entity1= new QueueElement<>(new Follower("entity1"), queue);
 		//AbstractVertex<Follower> entity2= new QueueElement<>(new Follower("entity2"), queue);
@@ -52,20 +52,24 @@ public class QueueDriver {
 		//to set properties to elements
 		QueueElement<Follower> entity11 = queue.enQueue(new Follower("entity11"));
 		QueueElement<Follower> entity12 = queue.enQueue(new Follower("entity12"));
-		entity12.getQueueEdge(entity11).setColor("purple");
+		//retrieve an line object between 2 queue elements
+		//to test this remove the comment sign from the statement below
+		System.out.println(entity12.getQueueEdge(entity11).setColor("red").setDash(new double[]{5,10,5}));
 		
 		//One can iterate through the elements of the queue using next();
-		System.out.println(entity11.next().next().getIdentifier());
+		//to test this remove the comment sign from the statement below
+		//System.out.println(entity11.next().next().setColor("blue"));
 		
 		//Element's properties can be changed
+		//to test this remove the comment sign from the statement below
 		//entity11.setColor("grey");
 		
 		queue.enQueue(new Follower("entity13"));
-		queue.enQueue(new Follower("entity13"));
+		queue.enQueue(new Follower("entity14"));
 		queue.deQueue();
 		queue.deQueue();
 		
-		
+		System.out.print("\nJSON: ");
 		Bridge.complete();
 
 	}

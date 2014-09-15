@@ -19,5 +19,13 @@ public class QueueEdge<T> extends AbstractEdge<T>{
 	public QueueEdge(String aValue){
 		super(aValue);
 	}
+	
+	public AbstractEdge<T> setDash(double[] aPattern){
+		return super.setDash(aPattern);
+	}
+	
+	public AbstractEdge<T> setColor(String color){
+		return super.setColor(color);
+	}
 
 }
