@@ -1,26 +1,31 @@
 package edu.uncc.cs.bridges;
-
-public class StackEdge extends AbstractEdge {
-	
-	private StackNode edgeOutgoing;
-	
+/**
+ * 
+ * @author Mihai Mehedint
+ * @param <T>
+ */
+public class StackEdge<T> extends AbstractEdge<T>{
 	/**
-	 * Creates a new StackEdge and connects it to the destination StackNode.
-	 * 
-	 * @param source The source StackNode.
-	 * @param destination The destination StackNode.
+	 * the constructor
+	 * @param source
+	 * @param destination
+	 * @param identifier
 	 */
-	public StackEdge(StackNode source, StackNode destination){
-		super(source, destination, "");
-		
-		edgeOutgoing = destination;		
+	public StackEdge(AbstractVertex<T> source, AbstractVertex<T> destination,
+			T identifier) {
+		super(source, destination, identifier);
 	}
 	
-	public void setEdgeOutgoing(StackNode n){
-		this.edgeOutgoing = n;
+	public StackEdge(String aValue){
+		super(aValue);
 	}
 	
-	public StackNode getEdgeOutgoing(){
-		return edgeOutgoing;
+	public AbstractEdge<T> setDash(double[] aPattern){
+		return super.setDash(aPattern);
 	}
+	
+	public AbstractEdge<T> setColor(String color){
+		return super.setColor(color);
+	}
+
 }
