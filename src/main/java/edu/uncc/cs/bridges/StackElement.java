@@ -4,6 +4,8 @@
 package edu.uncc.cs.bridges;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author Mihai Mehedint
@@ -73,5 +75,20 @@ public class StackElement <T> extends AbstractVertex<T>{
 			StackEdge<T> anEdge = (StackEdge<T>)this.outgoing.iterator().next(); 
 			return (StackElement<T>)anEdge.destination;
 		}
+		
+		/**
+		 * This method removes on one element form the list of connected elements 
+		 * @param anElement this is the element that will not be connected with the current element
+		 */
+		public void remove(StackElement<T> anElement){
+			AbstractEdge<T> temp = null;
+			for (int i=0; i<this.outgoing.size(); i++){
+				temp = this.outgoing.iterator().next();
+				if (this.next().equals(anElement))
+					this.outgoing.removeAll(Collections.singleton(temp));
+			}
+				
+		}
+		
 
 	}

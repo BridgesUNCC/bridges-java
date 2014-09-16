@@ -36,15 +36,16 @@ import java.util.Map.Entry;
 			System.out.println(temp);
 			if (temp.equals(bottom))
 				temp = this.top.next().next();
+			this.top.remove(bottom);
 			System.out.println(temp);
 			//clear all edges from the top element
 			if(!top.outgoing.isEmpty()) {
 				top.outgoing.clear();
 			}
-			
+			top = (StackElement<T>)temp;
 			//remove the top element 
 			this.vertices.values().removeAll(Collections.singleton(top));
-			top=(StackElement<T>)temp;
+
 			if (this.vertices.isEmpty()) 
 				top = bottom = null;
 			else{
