@@ -1,8 +1,10 @@
 package edu.uncc.cs.bridges;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 
 	public class Stack<T> extends GraphVisualizer<T>{
@@ -29,15 +31,24 @@ import java.util.Map;
 		 * This method removes one element(the bottom one) from the stack 
 		 */
 		public void pop(){
-			if (!top.outgoing.isEmpty()) {
+			//find previous before deleting the top
+			AbstractVertex<T> temp = this.top.next();
+			System.out.println(temp);
+			if (temp.equals(bottom))
+				temp = this.top.next().next();
+			System.out.println(temp);
+			//clear all edges from the top element
+			if(!top.outgoing.isEmpty()) {
 				top.outgoing.clear();
 			}
-			this.vertices.values().removeAll(Collections.singleton(top));
 			
+			//remove the top element 
+			this.vertices.values().removeAll(Collections.singleton(top));
+			top=(StackElement<T>)temp;
 			if (this.vertices.isEmpty()) 
 				top = bottom = null;
 			else{
-				setTop((StackElement<T>)this.vertices.values().iterator().next());
+				setTop((StackElement<T>)temp);
 				if (top != null & circularLList) {
 					top.setStackEdge(bottom);
 				}
