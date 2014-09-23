@@ -16,11 +16,11 @@ import java.util.Set;
  */
 public class Queue<T> extends GraphVisualizer<T>{
 	
-	private QueueElement<T> bottom = null; //save the link to bottom element
-	private QueueElement<T> top = null; //save the link to top element
+	private QueueElement<T> rear = null; //save the link to rear element
+	private QueueElement<T> front = null; //save the link to front element
 	private QueueElement<T> prev = null; //save the link to the previous element
-	private String topColor = "red";//color of the top element
-	private String bottomColor = "orange";//color of the bottom element
+	private String frontColor = "red";//color of the front element
+	private String rearColor = "orange";//color of the rear element
 	private String defaultColor = "black";//color of the intermediary elements
 	private boolean llist = true; //by default the visualization will display the links between the elements
 	private boolean circularLList = false; //this can be set to true in case we want to display the queue as a circular LList
@@ -36,26 +36,30 @@ public class Queue<T> extends GraphVisualizer<T>{
 	}
 	
 	/**
-	 * This method removes one element(the bottom one) from the queue 
+	 * This method removes one element(the rear one) from the queue 
+	 * @return Returns the rear element after dequeue
 	 */
-	public void deQueue(){
-		if (!bottom.outgoing.isEmpty()) {
-			bottom.outgoing.clear();
-			top.outgoing.clear();
+	public QueueElement<T> deQueue(){
+		if (!rear.outgoing.isEmpty()) {
+			rear.outgoing.clear();
+			front.outgoing.clear();
 		}
-		this.vertices.values().removeAll(Collections.singleton(bottom));
+		
+		QueueElement<T> temp = rear;
+		this.vertices.values().removeAll(Collections.singleton(rear));
 		
 		if (this.vertices.isEmpty()) 
-			bottom = null;
+			rear = null;
 		else{
-			setBottom(this.vertices.entrySet().iterator().next().getValue());
-			if (top != null & circularLList) {
-				top.outgoing.clear();
-				bottom.outgoing.clear();
-				top.queueEdge(bottom);
-				top.queueEdge(prev);
+			setRear(this.vertices.entrySet().iterator().next().getValue());
+			if (front != null & circularLList) {
+				front.outgoing.clear();
+				rear.outgoing.clear();
+				front.queueEdge(rear);
+				front.queueEdge(prev);
 			}
 		}
+		return temp;
 	}
 	
 	/**
@@ -64,67 +68,67 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 */
 	public QueueElement<T> enQueue(T identifier){
 		int currentNumber = this.vertices.entrySet().size(); 
-		if (bottom != null & currentNumber != 1) {
-			defaultColor(top);
-			setTop(new QueueElement<>(identifier, this));
+		if (rear != null & currentNumber != 1) {
+			defaultColor(front);
+			setFront(new QueueElement<>(identifier, this));
 		}
 		else if (currentNumber == 1){
-			setTop(new QueueElement(identifier, this));		
-			bottomColor(bottom);
+			setFront(new QueueElement(identifier, this));		
+			rearColor(rear);
 		}
 		else {
-			setBottom(prev = top = new QueueElement(identifier, this));
+			setRear(prev = front = new QueueElement(identifier, this));
 		}
-		return top;
+		return front;
 	}
 	
 	/**
-	 * This method sets a new top element for the queue
+	 * This method sets a new front element for the queue
 	 * @param anEntity
 	 */
-	private void setTop(QueueElement<T> anEntity){
-		topColor(anEntity);
+	private void setFront(QueueElement<T> anEntity){
+		frontColor(anEntity);
 		if (this.LList() & this.vertices.size() != 0 & !circularLList){
 			this.changeEdges(anEntity);
 		}
-		if (top != null & top != bottom & bottom != null & circularLList){
+		if (front != null & front != rear & rear != null & circularLList){
 			this.changeEdges(anEntity);
 			this.setCircularLList();
 		}
 		else
-			top = anEntity;
+			front = anEntity;
 	}
 	
 	/**
-	 * This method saves the reference to the bottom element
-	 * @param anEntity - this is the bottom element
+	 * This method saves the reference to the rear element
+	 * @param anEntity - this is the rear element
 	 */
-	private void setBottom(AbstractVertex<T> anEntity){
-		bottomColor(anEntity);
-		bottom = (QueueElement<T>)anEntity;
-		bottom.outgoing.clear();
+	private void setRear(AbstractVertex<T> anEntity){
+		rearColor(anEntity);
+		rear = (QueueElement<T>)anEntity;
+		rear.outgoing.clear();
 	}
 	
 	/**
-	 * This method sets the color of the top element of the queue
+	 * This method sets the color of the front element of the queue
 	 * @param aVertex
 	 */
-	private void topColor(AbstractVertex<T> aVertex){
-		aVertex.setColor(topColor);
+	public void frontColor(AbstractVertex<T> aVertex){
+		aVertex.setColor(frontColor);
 		aVertex.setShape("rect");
 	}
 	
 	/**
-	 * This metod sets the color for the bottom element of the queue
+	 * This metod sets the color for the rear element of the queue
 	 * @param aVertex
 	 */
-	private void bottomColor(AbstractVertex<T> aVertex){
-		aVertex.setColor(bottomColor);
+	public void rearColor(AbstractVertex<T> aVertex){
+		aVertex.setColor(rearColor);
 	}
 	
 	/**
 	 * This method sets the default color value to elements of the queue different than 
-	 * top or bottom 
+	 * front or rear 
 	 * @param aVertex
 	 */
 	private void defaultColor(AbstractVertex<T> aVertex){
@@ -136,28 +140,28 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 * @param anEntity
 	 */
 	private void changeEdges(QueueElement<T> anEntity){
-		top.outgoing.clear();
-		bottom.outgoing.clear();
-		top.queueEdge(prev);
-		prev = top;
-		top = anEntity;
-		top.queueEdge(prev);
+		front.outgoing.clear();
+		rear.outgoing.clear();
+		front.queueEdge(prev);
+		prev = front;
+		front = anEntity;
+		front.queueEdge(prev);
 	}
 	
 	/**
-	 * This method retrieves the bottom of the queue 
+	 * This method retrieves the rear of the queue 
 	 * @return
 	 */
-	public AbstractVertex<T> getBottom(){
-		return bottom;
+	public AbstractVertex<T> getrear(){
+		return rear;
 	}
 	
 	/**
-	 * This method retrieves the top of the queue 
+	 * This method retrieves the front of the queue 
 	 * @return
 	 */
-	public AbstractVertex<T> getTop(){
-		return top;
+	public AbstractVertex<T> getfront(){
+		return front;
 	}
 
 	/**
@@ -165,7 +169,7 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 */
 	public void clear(){
 		this.vertices.clear();
-		top = bottom = prev = null;
+		front = rear = prev = null;
 	}
 	
 	/**
@@ -195,11 +199,11 @@ public class Queue<T> extends GraphVisualizer<T>{
 	}
 	
 	/**
-	 * This method closes the loop between the bottom and the top of the queue
+	 * This method closes the loop between the rear and the front of the queue
 	 * in a circular list
 	 */
 	public void setCircularLList(){
-		top.queueEdge(bottom);
+		front.queueEdge(rear);
 	}
 
 }//end of the class

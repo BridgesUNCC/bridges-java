@@ -13,7 +13,7 @@ public class QueueDriver {
 		Bridge.init(6, "1157177351793", queue, "mmehedin@uncc.edu");
 		
 		//this statement sets the status of the queue to circular
-		queue.circularLList();
+		//queue.circularLList();
 		//This works also:
 		//AbstractVertex<Follower> entity1= new QueueElement<>(new Follower("entity1"), queue);
 		//AbstractVertex<Follower> entity2= new QueueElement<>(new Follower("entity2"), queue);
@@ -54,7 +54,7 @@ public class QueueDriver {
 		QueueElement<Follower> entity12 = queue.enQueue(new Follower("entity12"));
 		//retrieve an line object between 2 queue elements
 		//to test this remove the comment sign from the statement below
-		System.out.println(entity12.getQueueEdge(entity11).setColor("red").setDash(new double[]{5,10,5}));
+		//System.out.println(entity12.getQueueEdge(entity11).setColor("red").setDash(new double[]{5,10,5}));
 		
 		//One can iterate through the elements of the queue using next();
 		//to test this remove the comment sign from the statement below
