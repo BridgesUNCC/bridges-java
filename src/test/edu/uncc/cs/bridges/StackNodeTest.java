@@ -5,23 +5,23 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.uncc.cs.bridges.StackNode;
+import edu.uncc.cs.bridges.StackElement;
 
 public class StackNodeTest {
 
-	static StackNode root, top;
+	static StackElement root, top;
 	
 	@BeforeClass
 	public static void beforeClass() throws Exception{
-		root = new StackNode("Steve");
+		root = new StackElement("Steve");
 		top = root;
 	}
 
 	@Test
 	public final void testSetNextNode() throws Exception {
-		top.setNextNode(new StackNode("John"));
+		top.setNextNode(new StackElement("John"));
 		top = top.getNextNode();
-		top.setNextNode(new StackNode("Bob"));
+		top.setNextNode(new StackElement("Bob"));
 		top = top.getNextNode();
 		assertEquals("John", root.getNextNode().getIdentifier());
 	}

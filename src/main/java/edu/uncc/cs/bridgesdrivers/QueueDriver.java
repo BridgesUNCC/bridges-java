@@ -1,5 +1,11 @@
 package edu.uncc.cs.bridgesdrivers;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+
 import edu.uncc.cs.bridges.*;
 /**
  * 
@@ -7,67 +13,67 @@ import edu.uncc.cs.bridges.*;
  *
  */
 public class QueueDriver {
-
+	public static final int maxElements = 10; //number of Followers from Twitter
+	
+	/**
+	 * The populate method enQueues a specified number of Tweeter followers
+	 * @param root is the first element of the queue
+	 * @param queue the current queue
+	 * @param max is the number of followers enqueued by this method
+	 * @return
+	 */
+	public static Queue<Follower> populate(QueueElement<Follower> root, Queue<Follower> queue, int max){
+		if (max!=0){
+			List<Follower>	temp= Bridge.getAssociations((Follower)root.getIdentifier(), max);
+			Set<Map.Entry<String, AbstractVertex<Follower>>> existingElements=queue.vertices.entrySet();
+			for(int i=0; i<temp.size();i++){
+				if (!existingElements.contains(temp.get(i))){ 
+					queue.enQueue(temp.get(i));
+				}	
+			}
+		}
+		return queue;
+	}
+	
+	
 	public static void main(String[] args) {
 		Queue<Follower> queue = new Queue<Follower>();
 		Bridge.init(6, "1157177351793", queue, "mmehedin@uncc.edu");
 		
-		//this statement sets the status of the queue to circular
-		//queue.circularLList();
-		//This works also:
-		//AbstractVertex<Follower> entity1= new QueueElement<>(new Follower("entity1"), queue);
-		//AbstractVertex<Follower> entity2= new QueueElement<>(new Follower("entity2"), queue);
-		
 		//Adding elements to the queue
-		queue.enQueue(new Follower("entity1"));
-		queue.enQueue(new Follower("entity2"));
+		QueueElement<Follower> root = queue.enQueue(new Follower("Joey"));
+		queue.enQueue(new Follower("Jane"));
 		
 		//the queue is emptied
 		queue.clear();
+				
+		queue.enQueue(new Follower("Bob"));//the first element of the queue
+		populate(queue.enQueue(new Follower("Riley")), queue, maxElements);
 		
+		//This is how you can access the existing elements of the queue, just remove the comments from the 
+		//statement below
+		System.out.println("The queue elements: "+queue.vertices);
 		
-		queue.enQueue(new Follower("entity2"));
-		queue.enQueue(new Follower("entity3"));
-		queue.enQueue(new Follower("entity4"));
-		
-		//after the noLListVisualization statement the elements are not connected visually by lines
-		//the user can display the queue with or without lines in between
-		//circularLList overrides noLListVisualization
-		//queue.noLListVisualization();
-		
-		queue.enQueue(new Follower("entity5"));
-		queue.enQueue(new Follower("entity6"));
-		queue.enQueue(new Follower("entity7"));
-		queue.enQueue(new Follower("entity8"));
-		queue.enQueue(new Follower("entity9"));
-		queue.enQueue(new Follower("entity10"));
-		//System.out.println(queue.vertices);
-		
-		//create a circular Queue based on LList
-		//queue.circularLList();
 		queue.deQueue();
 		queue.deQueue();
 		queue.deQueue();
-		
-		//to set properties to elements
-		QueueElement<Follower> entity11 = queue.enQueue(new Follower("entity11"));
-		QueueElement<Follower> entity12 = queue.enQueue(new Follower("entity12"));
-		//retrieve an line object between 2 queue elements
-		//to test this remove the comment sign from the statement below
-		//System.out.println(entity12.getQueueEdge(entity11).setColor("red").setDash(new double[]{5,10,5}));
-		
+		queue.enQueue(new Follower("John"));
 		//One can iterate through the elements of the queue using next();
+		//this method is inherited from graph
 		//to test this remove the comment sign from the statement below
-		//System.out.println(entity11.next().next().setColor("blue"));
+		//System.out.println(((QueueElement<Follower>)queue.getfront()).next().next().getIdentifier());
 		
-		//Element's properties can be changed
+		//One element's properties can be changed
 		//to test this remove the comment sign from the statement below
-		//entity11.setColor("grey");
+		//queue.getfront().setColor("purple");
 		
-		queue.enQueue(new Follower("entity13"));
-		queue.enQueue(new Follower("entity14"));
+		//This is another deQueue statement
 		queue.deQueue();
-		queue.deQueue();
+		//queue.deQueue();
+		
+		//One can find the size of the queue at any given moment
+		//to test this remove the quotes
+		//System.out.println(queue.length());
 		
 		System.out.print("\nJSON: ");
 		Bridge.complete();

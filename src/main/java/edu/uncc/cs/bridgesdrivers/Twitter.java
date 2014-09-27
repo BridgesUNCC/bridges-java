@@ -13,7 +13,7 @@ public class Twitter {
 		GraphVisualizer<T> gv = new GraphVisualizer<>();
 		
 		// Assignment, API key, visualizer, username
-		Bridge.init(0, "693144430396", gv, "mmehedin@uncc.edu");
+		Bridge.init(0, "1157177351793", gv, "mmehedin@uncc.edu");
 		
 		Deque<Vertex<Follower>> frontier = new ArrayDeque<>();
 		Map<String, Vertex<Follower>> visited = new HashMap<>();

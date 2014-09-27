@@ -83,6 +83,15 @@ public class Queue<T> extends GraphVisualizer<T>{
 	}
 	
 	/**
+	 * This method enQueues a queue element
+	 * @param anElement
+	 * @return
+	 */
+	public QueueElement<T> enQueue(QueueElement<T> anElement){
+		return this.enQueue(anElement.getIdentifier());
+	}
+	
+	/**
 	 * This method sets a new front element for the queue
 	 * @param anEntity
 	 */
@@ -176,7 +185,7 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 * This method sets the boolean variable llist
 	 * to false and no lines will be displayed between the queue elements
 	 */
-	public void noLListVisualization(){
+	protected void noLListVisualization(){
 		llist = false;
 	}
 	
@@ -193,7 +202,7 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 * This method sets the status of the queue to circular
 	 * @return
 	 */
-	public boolean circularLList(){
+	protected boolean circularLList(){
 		//setCircularLList();
 		return circularLList = true;	
 	}
@@ -205,5 +214,13 @@ public class Queue<T> extends GraphVisualizer<T>{
 	public void setCircularLList(){
 		front.queueEdge(rear);
 	}
+	
+	/**
+	 * The length method returns the size of the queue
+	 * @return
+	 */
+	public int length(){
+		return this.vertices.size();
+	} 
 
 }//end of the class

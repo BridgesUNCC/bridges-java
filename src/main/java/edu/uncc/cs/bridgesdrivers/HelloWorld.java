@@ -10,7 +10,7 @@ public class HelloWorld {
 	public static <Follower> void main(String[] args) throws Exception {
 		// TODO Your code here
 		GraphVisualizer<Follower> gv = new GraphVisualizer<>();
-		Bridge.init(0, "693144430396", gv, "mmehedin@uncc.edu");
+		Bridge.init(10, "1157177351793", gv, "mmehedin@uncc.edu");
 		//Bridge.setServerURL("http://edu.uncc.cs.bridges.cs.uncc.edu");
 		
 		Vertex<Follower> HelloWorld = new Vertex("HelloWorld", gv);

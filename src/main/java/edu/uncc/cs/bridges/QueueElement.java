@@ -18,10 +18,18 @@ public class QueueElement<T> extends AbstractVertex<T>{
 	 * @param identifier contains the identifier object: Follower, Movie, Actor
 	 * @param queue is the Queue structure harboring the element
 	 */
-	public QueueElement(T identifier, Queue queue) {
+	protected QueueElement(T identifier, Queue queue) {
 		super(identifier);
 		outgoing = new ArrayList<AbstractEdge<T>>();
+		//queue.enQueue(identifier);
 		queue.vertices.put(identifier, this);
+		if(queue.vertices.size()==1)
+			queue.frontColor(this);
+		else if (queue.vertices.size()==2)
+			queue.rearColor(this);
+		else {
+			queue.rearColor(this);
+		}
 		this.setSize(elementSize);
 	}
 	
@@ -41,7 +49,7 @@ public class QueueElement<T> extends AbstractVertex<T>{
 	 * @param anElement
 	 * @return
 	 */
-	public QueueEdge<T> getQueueEdge(QueueElement<T> anElement){
+	protected QueueEdge<T> getQueueEdge(QueueElement<T> anElement){
 		for(int i = 0; i < this.outgoing.size(); i++){ 
 			AbstractEdge<T> anEdge = (QueueEdge<T>)this.outgoing.get(i);
 				if(anEdge.destination.compareTo((AbstractVertex<T>)anElement)==0){				
