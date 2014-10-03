@@ -22,7 +22,11 @@ public class QueueElement<T> extends AbstractVertex<T>{
 		super(identifier);
 		outgoing = new ArrayList<AbstractEdge<T>>();
 		//queue.enQueue(identifier);
-		queue.vertices.put(identifier, this);
+		if (identifier instanceof EarthquakeTweet)
+			queue.vertices.put(((EarthquakeTweet) identifier).getContent(), this);
+		else 
+			queue.vertices.put(identifier, this);
+		
 		if(queue.vertices.size()==1)
 			queue.frontColor(this);
 		else if (queue.vertices.size()==2)

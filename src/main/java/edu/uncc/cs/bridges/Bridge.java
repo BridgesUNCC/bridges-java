@@ -15,6 +15,8 @@ import java.util.Map.Entry;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import sun.security.pkcs11.wrapper.Functions;
+
 
 /**
  * Connection to the Bridges server.
@@ -212,6 +214,33 @@ public class Bridge {
         		return new ArrayList<>();
         	}
     }
+    	
+
+    	
+    	/**
+         * This Method returns the list of tweets
+         * @param identifier holds the name of the 
+         * @param max holds the max number of tweets
+         * @return
+         */
+        	public static List<Tweet> getAssociations(TwitterAccount identifier, int max){
+            	try {
+            		return getTwitterTimeline(identifier, max);
+        	    }
+            		catch (RateLimitException e) {
+            		return new ArrayList<>();
+            	}
+        }
+        	
+        	public static List<EarthquakeTweet> convertTweet(List<Tweet> aList){
+        		List<EarthquakeTweet> earthquakes = new ArrayList<>();
+        		for (int i =0; i<aList.size();i++){
+        			Tweet aTweet = aList.get(i);
+        			EarthquakeTweet anEarthquake = new EarthquakeTweet(aTweet);
+        			earthquakes.add(anEarthquake);
+        			}
+        		return earthquakes;
+        	} 
     
     	/**
          * This Method returns the list of actors 
@@ -256,13 +285,13 @@ public class Bridge {
     		return SampleDataGenerator.getFriends(id.getName(), max);
     	} else {
 	    	try {
+	    		//either timeline or followers
 		    	String resp = backend.get("/streams/twitter.com/followers/"
 		    			+ id.getName() + "/" + max);
-		    	
+		    		//System.out.println("the resp: "+resp);
 		        JSONObject response = backend.asJSONObject(resp);
 		        JSONArray followers = (JSONArray) backend.safeJSONTraverse(
 		        		"['followers']", response, JSONArray.class);
-		        
 		        List<Follower> results = new ArrayList<>();
 		    	for (Object follower : followers) {
 		    		String name = (String) backend.safeJSONTraverse(
@@ -287,7 +316,7 @@ public class Bridge {
      * a large `max` (as high as 200) _may_ only count as one request.
      * See Bridges.followgraph() for more about rate limiting. 
      * @throws IOException */
-	static List<Tweet> getTwitterTimeline(Follower id, int max)
+	static List<Tweet> getTwitterTimeline(TwitterAccount id, int max)
 			throws RateLimitException {
 		if (failsafe) {
 			// Don't contact Twitter, use sample data
@@ -296,7 +325,6 @@ public class Bridge {
 	    	try {
 		    	String resp = backend.get("/streams/twitter.com/timeline/"
 		    			+ id.getName() + "/" + max);
-		    	
 		        JSONObject response = backend.asJSONObject(resp);
 		        JSONArray tweets_json = (JSONArray) backend.safeJSONTraverse(
 		        		"['tweets']", response, JSONArray.class);
@@ -304,9 +332,9 @@ public class Bridge {
 		        List<Tweet> results = new ArrayList<>();
 		    	for (Object tweet_json : tweets_json) {
 		    		String content = (String) backend.safeJSONTraverse(
-		    				"", tweet_json, String.class);
+		    				"['tweet']", tweet_json, String.class);
 		    		String date_str = (String) backend.safeJSONTraverse(
-		    				"", tweet_json, String.class);
+		    				"['date']", tweet_json, String.class);
 		    		
 		    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
 		    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");

@@ -55,6 +55,4 @@ public class Follower implements Comparable<Follower> {
 		return true;
 	}
 	
-	
-	
 }

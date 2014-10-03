@@ -1,5 +1,6 @@
 package edu.uncc.cs.bridgesdrivers;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -36,28 +37,29 @@ public class QueueDriver {
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException{
+		outputLog aLog = new outputLog();
 		Queue<Follower> queue = new Queue<Follower>();
-		Bridge.init(6, "1157177351793", queue, "mmehedin@uncc.edu");
+		Bridge.init(7, "1157177351793", queue, "mmehedin@uncc.edu");
 		
 		//Adding elements to the queue
 		QueueElement<Follower> root = queue.enQueue(new Follower("Joey"));
-		queue.enQueue(new Follower("Jane"));
+		queue.enQueue(new Follower("Achusimjennifer"));
 		
 		//the queue is emptied
-		queue.clear();
+		//queue.clear();
 				
-		queue.enQueue(new Follower("Bob"));//the first element of the queue
-		populate(queue.enQueue(new Follower("Riley")), queue, maxElements);
+		//queue.enQueue(new Follower("Bob"));//the first element of the queue
+		//populate(queue.enQueue(new Follower("Achusimjennifer")), queue, maxElements);
 		
 		//This is how you can access the existing elements of the queue, just remove the comments from the 
 		//statement below
 		System.out.println("The queue elements: "+queue.vertices);
 		
-		queue.deQueue();
-		queue.deQueue();
-		queue.deQueue();
-		queue.enQueue(new Follower("John"));
+		//queue.deQueue();
+		//queue.deQueue();
+		//queue.deQueue();
+		//queue.enQueue(new Follower("John"));
 		//One can iterate through the elements of the queue using next();
 		//this method is inherited from graph
 		//to test this remove the comment sign from the statement below
@@ -68,7 +70,7 @@ public class QueueDriver {
 		//queue.getfront().setColor("purple");
 		
 		//This is another deQueue statement
-		queue.deQueue();
+		//queue.deQueue();
 		//queue.deQueue();
 		
 		//One can find the size of the queue at any given moment
@@ -77,6 +79,7 @@ public class QueueDriver {
 		
 		System.out.print("\nJSON: ");
 		Bridge.complete();
+		aLog.returnStream();
 
 	}
 
