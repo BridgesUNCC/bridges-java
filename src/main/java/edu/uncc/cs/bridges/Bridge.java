@@ -356,8 +356,6 @@ public class Bridge {
 							}
 				    		allTweets.add(new Tweet(content, date));
 				    	}
-				    	System.out.println("\nallTweets size: "+ allTweets.size()+
-				    			"\n");
 			 }
 			
 			max = validNumberOfTweets(max);
@@ -400,16 +398,16 @@ public class Bridge {
 	/**
 	 * Check the validity of number of Tweets requested
 	 * @param max the number of tweets
-	 * @return returns true if the number is in the range 0 - 1000
+	 * @return returns true if the number is in the range 0 - 500
 	 * @throws MyExceptionClass otherwise
 	 */
 	public static int validNumberOfTweets(int max){
 		 //check if max is valid
 		 try{
-			 if (max<0 || max>2000){
+			 if (max<0 || (max-tweetIterator)>500){
 		 
 				 max = 1000 - tweetIterator -1 ;
-			 	throw new MyExceptionClass("The number of tweets requested must be in the range 0 - 1000");
+			 	throw new MyExceptionClass("The number of tweets requested must be in the range 0 - 500");
 			 }
 		 } catch (MyExceptionClass ex){
 			 System.out.println (ex);
