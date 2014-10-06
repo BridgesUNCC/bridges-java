@@ -404,9 +404,9 @@ public class Bridge {
 	public static int validNumberOfTweets(int max){
 		 //check if max is valid
 		 try{
-			 if (max<0 || (max-tweetIterator)>500){
+			 if (max<0 || (max+tweetIterator)>500){
 		 
-				 max = 1000 - tweetIterator -1 ;
+				 max = 500 - tweetIterator;
 			 	throw new MyExceptionClass("The number of tweets requested must be in the range 0 - 500");
 			 }
 		 } catch (MyExceptionClass ex){
