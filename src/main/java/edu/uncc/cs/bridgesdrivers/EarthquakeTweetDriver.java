@@ -2,6 +2,7 @@ package edu.uncc.cs.bridgesdrivers;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ public class EarthquakeTweetDriver {
 	 * @return
 	 */
 	public static Queue<EarthquakeTweet> populate(List<EarthquakeTweet> aList, Queue<EarthquakeTweet> queue){
+		//queue.clear();
 		if (aList.size()!=0){
 			Set<Map.Entry<String, AbstractVertex<EarthquakeTweet>>> existingElements=queue.vertices.entrySet();
 			for(int i=0; i<aList.size();i++){
@@ -54,7 +56,6 @@ public class EarthquakeTweetDriver {
 		//EarthquakeTweet is a special tweet containing also the magnitude field
 		List<EarthquakeTweet> EarthquakeTweetList = Bridge.convertTweet (TweetList);
 		
-		
 		//add one tweet (the latest tweet) to the queue
 		//if there is an identical element in the queue the element will not be added
 		aQueue.enQueue(EarthquakeTweetList.get(0));
@@ -65,10 +66,18 @@ public class EarthquakeTweetDriver {
 		//dequeue one element
 		aQueue.deQueue();
 		
-		//dequeue another
+		//get another batch of 3 tweets to the queue
+		List<Tweet> aSecondTweetList = new ArrayList<>();
+		
+		Bridge.next(aSecondTweetList, 50);
+		
+		//add the new batch to the queue
+		populate(Bridge.convertTweet (aSecondTweetList), aQueue);
+		
+		//dequeue another tweet
 		aQueue.deQueue();
 		
-		//enQueue another
+		//enQueue another tweet
 		aQueue.enQueue(EarthquakeTweetList.get(1));
 		
 		//System.out.println(name.getNeighbors());
