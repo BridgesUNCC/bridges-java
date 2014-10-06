@@ -16,6 +16,11 @@ public class Tweet {
 		this.content = content;
 		this.date = new Date();
 	}
+	
+	public Tweet(Tweet aTweetToCopy){
+		this.content = aTweetToCopy.getContent();
+		this.date = aTweetToCopy.getDate();
+	}
 
 	public String getContent() {
 		return content;

@@ -24,6 +24,7 @@ import sun.security.pkcs11.wrapper.Functions;
  * Initialize this class before using it, and call complete() afterward.
  * 
  * @author Sean Gallagher
+ * @secondAuthor Mihai Mehedint
  */
 public class Bridge {
 	
@@ -32,7 +33,10 @@ public class Bridge {
 	private static String key;
 	private static Visualizer visualizer;
 	private static BridgeNetwork backend;
-	private static String userName;	
+	private static String userName;
+	private static List<Tweet> allTweets = new ArrayList<>();// this is the list off all the tweets retrieved
+	private static int maxRequests = 2000; //This is the max number of tweets one can retrieve from the server
+	private static int tweetIterator = -1; //this iterator is used when requesting a new batch of tweets
 	
 	// This exists to prevent duplicate error traces.
 	public static String getUserName() {
@@ -222,8 +226,9 @@ public class Bridge {
          * @param identifier holds the name of the 
          * @param max holds the max number of tweets
          * @return
+    	 * @throws MyExceptionClass 
          */
-        	public static List<Tweet> getAssociations(TwitterAccount identifier, int max){
+        	public static List<Tweet> getAssociations(TwitterAccount identifier, int max) {
             	try {
             		return getTwitterTimeline(identifier, max);
         	    }
@@ -231,7 +236,12 @@ public class Bridge {
             		return new ArrayList<>();
             	}
         }
-        	
+        	/**
+        	 * This method change the tweet object into an earthquake tweet object with
+        	 * more data extracted from the tweet content, like magnitude
+        	 * @param aList
+        	 * @return
+        	 */
         	public static List<EarthquakeTweet> convertTweet(List<Tweet> aList){
         		List<EarthquakeTweet> earthquakes = new ArrayList<>();
         		for (int i =0; i<aList.size();i++){
@@ -315,38 +325,46 @@ public class Bridge {
      * Limit the result to `max` followers. Note that results are batched, so 
      * a large `max` (as high as 200) _may_ only count as one request.
      * See Bridges.followgraph() for more about rate limiting. 
+     * @throws MyExceptionClass 
      * @throws IOException */
-	static List<Tweet> getTwitterTimeline(TwitterAccount id, int max)
-			throws RateLimitException {
+	private static List<Tweet> getTwitterTimeline(TwitterAccount id, int max)
+			throws RateLimitException{
 		if (failsafe) {
 			// Don't contact Twitter, use sample data
 			return SampleDataGenerator.getTwitterTimeline(id.getName(), max);
 		} else {
 	    	try {
-		    	String resp = backend.get("/streams/twitter.com/timeline/"
-		    			+ id.getName() + "/" + max);
-		        JSONObject response = backend.asJSONObject(resp);
-		        JSONArray tweets_json = (JSONArray) backend.safeJSONTraverse(
-		        		"['tweets']", response, JSONArray.class);
-		        
-		        List<Tweet> results = new ArrayList<>();
-		    	for (Object tweet_json : tweets_json) {
-		    		String content = (String) backend.safeJSONTraverse(
-		    				"['tweet']", tweet_json, String.class);
-		    		String date_str = (String) backend.safeJSONTraverse(
-		    				"['date']", tweet_json, String.class);
-		    		
-		    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
-		    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		    		Date date;
-		    		try {
-						date = df.parse(date_str);
-					} catch (ParseException e) {
-						date = new Date();
-					}
-		    		results.add(new Tweet(content, date));
-		    	}
-		    	return results;
+			 if (allTweets.isEmpty()){   
+	    			String resp = backend.get("/streams/twitter.com/timeline/"
+			    			+ id.getName() + "/" + maxRequests);
+			        JSONObject response = backend.asJSONObject(resp);
+			        JSONArray tweets_json = (JSONArray) backend.safeJSONTraverse(
+			        		"['tweets']", response, JSONArray.class);
+				    	for (Object tweet_json : tweets_json) {
+				    		String content = (String) backend.safeJSONTraverse(
+				    				"['tweet']", tweet_json, String.class);
+				    		String date_str = (String) backend.safeJSONTraverse(
+				    				"['date']", tweet_json, String.class);
+				    		
+				    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
+				    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+				    		Date date;
+				    		try {
+								date = df.parse(date_str);
+							} catch (ParseException e) {
+								date = new Date();
+							}
+				    		allTweets.add(new Tweet(content, date));
+				    	}
+				    	System.out.println("\nallTweets size: "+ allTweets.size()+
+				    			"\n");
+			 }
+			
+			max = validNumberOfTweets(max);
+		    	List<Tweet> results = new ArrayList<>();
+		    //	results.addAll(allTweets);
+		    	return next(results, max);
+		    	
 	    	} catch (IOException e) {
 	    		// Trigger failsafe.
 	    		System.err.println("Warning: Trouble contacting Bridges. Using "
@@ -356,6 +374,47 @@ public class Bridge {
 	    		return getTwitterTimeline(id, max);
 	    	}
 		}
+	}
+	/**
+	 * The next(List<Tweet>, int) method retrieves the next batch of tweets
+	 * and adds deep copy of those tweets to the current list 
+	 * @param aList holds the reference to the current list of tweets
+	 * @param max the number of tweets in the new batch of tweets
+	 * @return the list of tweets containing the old and the new batch of tweets
+	 * @throws MyExceptionClass 
+	 */
+	public static List<Tweet> next(List<Tweet> aList, int max){
+		max = validNumberOfTweets(max);
+		for (int i = 0; i < max; i++){
+			tweetIterator ++;
+			try{
+				//aList.add(allTweets.get(tweetIterator));
+				aList.add(new Tweet(allTweets.get(tweetIterator)));
+				} catch(Exception e){
+					System.out.println(e.getMessage());
+				}
+			
+		}
+		return aList;
+	}
+	/**
+	 * Check the validity of number of Tweets requested
+	 * @param max the number of tweets
+	 * @return returns true if the number is in the range 0 - 1000
+	 * @throws MyExceptionClass otherwise
+	 */
+	public static int validNumberOfTweets(int max){
+		 //check if max is valid
+		 try{
+			 if (max<0 || max>2000){
+		 
+				 max = 1000 - tweetIterator -1 ;
+			 	throw new MyExceptionClass("The number of tweets requested must be in the range 0 - 1000");
+			 }
+		 } catch (MyExceptionClass ex){
+			 System.out.println (ex);
+		 }
+		 return max;	
 	}
     
     /**
