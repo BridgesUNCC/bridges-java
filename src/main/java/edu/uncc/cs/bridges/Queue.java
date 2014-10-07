@@ -129,7 +129,7 @@ public class Queue<T> extends GraphVisualizer<T>{
 	}
 	
 	/**
-	 * This metod sets the color for the rear element of the queue
+	 * This method sets the color for the rear element of the queue
 	 * @param aVertex
 	 */
 	public void rearColor(AbstractVertex<T> aVertex){

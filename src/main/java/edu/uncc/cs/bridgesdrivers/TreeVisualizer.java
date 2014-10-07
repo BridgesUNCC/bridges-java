@@ -18,7 +18,11 @@ import edu.uncc.cs.bridges.Visualizer;
 public class TreeVisualizer extends Visualizer {
 		
 	private BSTNode root;
+	private String visualizerType;
 	
+	public TreeVisualizer(){
+		setVisualizerType("tree");
+	}
 	public BSTNode getRoot(){
 		return root;
 	}
@@ -212,6 +216,12 @@ public class TreeVisualizer extends Visualizer {
 		+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
 		+ "\"links\": [" + Bridge.trimComma(links) + "]"
 		+ "}";
+	}
+
+	@Override
+	protected String setVisualizerType(String type) {
+		this.visualizerType = type;
+		return null;
 	}
 
 }

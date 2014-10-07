@@ -10,7 +10,7 @@ public class TreeDiver {
 		TreeVisualizer tree = new TreeVisualizer();//Creating tree structure
 		
 		//Bridge.init(0, "796340034401", tree);//UNCC
-		Bridge.init(0, "1157177351793", tree, "mmehedin@uncc.edu");//Heroku
+		Bridge.init(23, "1157177351793", tree, "mmehedin@uncc.edu");//Heroku
 		Bridge.setServerURL("http://bridges-cs.herokuapp.com");
 		//Bridge.setServerURL("http://bridges.cs.uncc.edu");
 		
