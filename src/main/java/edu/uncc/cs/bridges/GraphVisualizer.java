@@ -20,6 +20,9 @@ import java.util.Map;
  * Link n = n.get("movie/Big").setWidth("5,5,5");<br>
  * v.has("actor/Thorin Oakinshield");<br>
  */
+
+
+
 public class GraphVisualizer<T> extends Visualizer {
 	/**
 	 * This visualizer is actually an abstract graph; students could use it as
@@ -27,6 +30,8 @@ public class GraphVisualizer<T> extends Visualizer {
 	 */
 	
 	public Map<String, AbstractVertex<T>> vertices = new HashMap<>();
+	public String visualizerType ="graph";
+	
 	
 	/**
 	 * Internal API for exporting visualizer state
@@ -83,9 +88,15 @@ public class GraphVisualizer<T> extends Visualizer {
 		return "{"
 				+ "\"name\": \"edu.uncc.cs.bridges\","
 				+ "\"version\": \"0.4.0\","
-				+ "\"visual\": \"graph\","
+				+ "\"visual\": \""+visualizerType+"\","
 				+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
 				+ "\"links\": [" + Bridge.trimComma(links) + "]"
 				+ "}";
+	}
+
+	@Override
+	protected String setVisualizerType(String type) {
+		this.visualizerType = type;
+		return null;
 	}
 }

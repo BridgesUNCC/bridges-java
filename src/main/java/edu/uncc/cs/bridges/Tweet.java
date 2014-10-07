@@ -1,7 +1,11 @@
 package edu.uncc.cs.bridges;
 
 import java.util.Date;
-
+/**
+ * @author Sean Gallager
+ * @second author mihai mehedint
+ *
+ */
 public class Tweet {
 
 	private String content;

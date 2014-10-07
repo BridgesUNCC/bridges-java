@@ -5,7 +5,7 @@ import java.util.ArrayList;
  * The QueueElement method extends the AbstractVertex method 
  * @author Mihai Mehedint
  *
- * @param <T>
+ * @param <T> holds the type of element: Follower, Tweet, Movie, Actor
  */
 public class QueueElement<T> extends AbstractVertex<T>{
 	

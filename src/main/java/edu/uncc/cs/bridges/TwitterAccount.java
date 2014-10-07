@@ -1,5 +1,9 @@
 package edu.uncc.cs.bridges;
-
+/**
+ * 
+ * @author mihai mehedint
+ *
+ */
 public class TwitterAccount implements Comparable<TwitterAccount> {
 		protected String aTwitterAccount;
 		

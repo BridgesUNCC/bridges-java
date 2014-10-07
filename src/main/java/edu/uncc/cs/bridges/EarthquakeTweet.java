@@ -2,16 +2,23 @@ package edu.uncc.cs.bridges;
 
 import java.util.Date;
 import java.util.Scanner;
-
+/**
+ * 
+ * @author mihai mehedint
+ *
+ */
 public class EarthquakeTweet extends Tweet{
 	private double magnitude;
 	
 	public EarthquakeTweet(String content, Date date2) {
 		super(content, date2);
-		setMagnitude(); 
+		setMagnitude();
+		this.setContent(enterCarriageReturn(content));
+		
 	}
 	public EarthquakeTweet(Tweet aTweet){
 		this(aTweet.getContent(), aTweet.getDate());
+		this.setContent(enterCarriageReturn(aTweet.getContent()));
 	}
 	
 	public void setMagnitude(){
@@ -24,6 +31,11 @@ public class EarthquakeTweet extends Tweet{
 		magnitude = Double.parseDouble(str.toString());
 		
 	}
+	
+	public String enterCarriageReturn(String str){
+		return str.replace(" ", "%n");
+	}
+	
 	public double getMagnitude(){
 		return magnitude;
 	}

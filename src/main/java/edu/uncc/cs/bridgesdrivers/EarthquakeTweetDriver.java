@@ -10,7 +10,11 @@ import java.util.Map;
 import java.util.Set;
 
 import edu.uncc.cs.bridges.*;
-
+/**
+ * 
+ * @author mihai mehedint
+ *
+ */
 public class EarthquakeTweetDriver {
 	public static final int maxElements = 10; //number of tweets
 	
@@ -44,7 +48,7 @@ public class EarthquakeTweetDriver {
 		Queue<EarthquakeTweet> aQueue = new Queue<>();
 		
 		// Assignment, API key, visualizer, username
-		Bridge.init(0, "1157177351793", aQueue, "mmehedin@uncc.edu");
+		Bridge.init(2, "1157177351793", aQueue, "mmehedin@uncc.edu");
 
 		// Any actual user on Twitter; in this case we use the earthquake account
 		TwitterAccount name = new TwitterAccount("earthquake"); 
@@ -82,7 +86,8 @@ public class EarthquakeTweetDriver {
 		
 		//System.out.println(name.getNeighbors());
 		Bridge.complete();
-	aLog.returnStream();
+		
+		aLog.returnStream();
 	}
 
 }

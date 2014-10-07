@@ -5,7 +5,11 @@ import java.io.IOException;
 
 import edu.uncc.cs.bridges.*;
 
-
+/**
+ * 
+ * @author mihai mehedint
+ *
+ */
 public class RandomGraphGenerator { 
 	final static int numberOfRecursiveCalls=10; 
 	

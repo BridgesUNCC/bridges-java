@@ -32,7 +32,8 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 */
 	public Queue(){
 		super();
-		super.vertices = this.vertices; //overrides the vertices Map in GraphVisualizer	
+		super.vertices = this.vertices; //overrides the vertices Map in GraphVisualizer
+		super.setVisualizerType("list"); //overrides the type of visualizer to be displayed as a queue
 	}
 	
 	/**

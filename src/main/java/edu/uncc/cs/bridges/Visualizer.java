@@ -12,4 +12,5 @@ public abstract class Visualizer {
 	 * @returns a complete, valid JSON object (not array) for uploading
 	 */
 	protected abstract String getRepresentation();
+	protected abstract String setVisualizerType(String type);
 }
