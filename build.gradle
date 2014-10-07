@@ -9,7 +9,7 @@ apply plugin: 'signing'
 /// General
 ///
 group = "edu.uncc.cs.bridges"
-version = "0.99.6"
+version = "0.99.7"
 
 ///
 /// Artifacts and deployment
@@ -111,6 +111,10 @@ uploadArchives {
                    developer {
                        id 'stevemacn'
                        name 'Stephen MacNeil'
+                   }
+                   developer {
+                       id 'Dismembered'
+                       name 'Michael Vitulli'
                    }
                    developer {
                        id 'mmehedin'
