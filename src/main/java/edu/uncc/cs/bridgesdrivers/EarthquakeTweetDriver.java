@@ -48,7 +48,7 @@ public class EarthquakeTweetDriver {
 		Queue<EarthquakeTweet> aQueue = new Queue<>();
 		
 		// Assignment, API key, visualizer, username
-		Bridge.init(2, "1157177351793", aQueue, "mmehedin@uncc.edu");
+		Bridge.init(11, "1157177351793", aQueue, "mmehedin@uncc.edu");
 
 		// Any actual user on Twitter; in this case we use the earthquake account
 		TwitterAccount name = new TwitterAccount("earthquake"); 
@@ -69,6 +69,9 @@ public class EarthquakeTweetDriver {
 		
 		//dequeue one element
 		aQueue.deQueue();
+		
+		//get a snapshot of the queue
+		Bridge.update();
 		
 		//get another batch of 3 tweets to the queue
 		List<Tweet> aSecondTweetList = new ArrayList<>();

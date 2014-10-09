@@ -100,7 +100,7 @@ public class Bridge {
 	 */
 	public static void update() {
         try {
-        	System.out.println(visualizer.getRepresentation());
+        	System.out.println("JSON is: "+visualizer.getRepresentation());
 			backend.post("/assignments/" + assignment, visualizer.getRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
@@ -118,6 +118,7 @@ public class Bridge {
 		} 
         // Return a URL to the user
         System.out.println("Check out your visuals at " + backend.prepare("/assignments/" + assignment + "/" + userName) );
+        assignment++;
 	}
 
 	/**
