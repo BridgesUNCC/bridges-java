@@ -33,7 +33,7 @@ public class EarthquakeTweet extends Tweet{
 	}
 	
 	public String enterCarriageReturn(String str){
-		return str.replace(" ", "\n");
+		return str.replace(" ", " ");
 	}
 	
 	public double getMagnitude(){

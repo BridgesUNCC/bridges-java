@@ -86,12 +86,28 @@ public class Bridge {
 	public static void setServerURL(String server_url) {
 		Bridge.backend.server_url = server_url;
 	}
-
+	
+	/**
+	 * This method returns the current visualizer
+	 * @return visualizer
+	 */
 	public static Visualizer getVisualizer() {
 		return visualizer;
 	}
+	/**
+	 * This method sets the new Bridge visualizer
+	 * @param visualizer
+	 */
 	public static void setVisualizer(Visualizer visualizer) {
 		Bridge.visualizer = visualizer;
+	}
+	
+	/**
+	 * This method returns the current JSON
+	 * @return JSON string
+	 */
+	public static String getJSON(){
+		return visualizer.getRepresentation();
 	}
 	
 	/**
@@ -101,7 +117,6 @@ public class Bridge {
 	 */
 	public static void update() {
         try {
-        	System.out.println("JSON is: "+visualizer.getRepresentation());
 			backend.post("/assignments/" + getAssignment(), visualizer.getRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
@@ -551,4 +566,5 @@ class Ident {
     		return new Ident("", identifier);
     	}
 	}
+	
 }

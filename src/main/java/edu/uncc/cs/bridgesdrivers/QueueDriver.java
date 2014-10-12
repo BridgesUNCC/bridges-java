@@ -64,7 +64,7 @@ public class QueueDriver {
 		
 		//To access/view the existing elements of the queue remove the comments from the 
 		//statement below
-		System.out.println("The queue elements: "+queue.vertices);
+		System.out.println("\nThe queue elements are: "+queue.vertices + "\n");
 		
 		queue.deQueue();
 		queue.deQueue();
@@ -75,7 +75,7 @@ public class QueueDriver {
 		//One can iterate through the elements of the queue using next();
 		//this method is inherited from graph
 		//to test this remove the comment sign from the statement below
-		System.out.println(((QueueElement<Follower>)queue.getfront()).next().next().getIdentifier());
+		//System.out.println(((QueueElement<Follower>)queue.getfront()).next().next().getIdentifier());
 		
 		//One element's properties can be changed
 		//to test this remove the comment sign from the statement below
@@ -90,11 +90,13 @@ public class QueueDriver {
 		
 		//One can find the size of the queue at any given moment
 		//to test this remove the quotes
-		System.out.println(queue.length());
+		System.out.println("\nThe size of the queue is: " + queue.length() + "\n");
+		
+		//This is how one can see the JSON content
+		System.out.println("\nThe JSON is: "+ Bridge.getJSON() + "\n");
 		
 		Bridge.complete();
 		aLog.returnStream();
-
 	}
 
 }
