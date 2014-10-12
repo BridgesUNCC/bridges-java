@@ -30,12 +30,13 @@ public class Bridge {
 	
 	
 	private static int assignment;
+	private static double assignmentDecimal = 0.0;
 	private static String key;
 	private static Visualizer visualizer;
 	private static BridgeNetwork backend;
 	private static String userName;
 	private static List<Tweet> allTweets = new ArrayList<>();// this is the list off all the tweets retrieved
-	private static int maxRequests = 2000; //This is the max number of tweets one can retrieve from the server
+	private static int maxRequests = 500; //This is the max number of tweets one can retrieve from the server
 	private static int tweetIterator = -1; //this iterator is used when requesting a new batch of tweets
 	
 	// This exists to prevent duplicate error traces.
@@ -65,8 +66,8 @@ public class Bridge {
 	
 	/* Accessors and Mutators */
 
-	public static int getAssignment() {
-		return assignment;
+	public static String getAssignment() {
+		return Double.toString(assignment+assignmentDecimal);
 	}
 	public static void setAssignment(int assignment) {
 		Bridge.assignment = assignment;
@@ -101,7 +102,7 @@ public class Bridge {
 	public static void update() {
         try {
         	System.out.println("JSON is: "+visualizer.getRepresentation());
-			backend.post("/assignments/" + assignment, visualizer.getRepresentation());
+			backend.post("/assignments/" + getAssignment(), visualizer.getRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
 					+ " representation to the server. Are you connected to the"
@@ -117,8 +118,8 @@ public class Bridge {
 					+ e.getMessage());
 		} 
         // Return a URL to the user
-        System.out.println("Check out your visuals at " + backend.prepare("/assignments/" + assignment + "/" + userName) );
-        assignment++;
+        System.out.println("Check out your visuals at " + backend.prepare("/assignments/" + getAssignment() + "/" + userName) );
+        assignmentDecimal+=0.01;
 	}
 
 	/**
@@ -408,10 +409,10 @@ public class Bridge {
 			 if (max<0 || (max+tweetIterator)>500){
 		 
 				 max = 500 - tweetIterator;
-			 	throw new MyExceptionClass("The number of tweets requested must be in the range 0 - 500");
+			 	throw new BridgesException("The number of tweets requested must be in the range 0 - 500");
 			 }
-		 } catch (MyExceptionClass ex){
-			 System.out.println (ex);
+		 } catch (BridgesException ex){
+			 System.out.println (ex.getError());
 		 }
 		 return max;	
 	}

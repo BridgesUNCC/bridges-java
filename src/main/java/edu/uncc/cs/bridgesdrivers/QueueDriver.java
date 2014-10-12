@@ -21,7 +21,7 @@ public class QueueDriver {
 	 * @param root is the first element of the queue
 	 * @param queue the current queue
 	 * @param max is the number of followers enqueued by this method
-	 * @return
+	 * @return the queue populated
 	 */
 	public static Queue<Follower> populate(QueueElement<Follower> root, Queue<Follower> queue, int max){
 		if (max!=0){
@@ -40,44 +40,58 @@ public class QueueDriver {
 	public static void main(String[] args) throws IOException{
 		outputLog aLog = new outputLog();
 		Queue<Follower> queue = new Queue<Follower>();
-		Bridge.init(7, "1157177351793", queue, "mmehedin@uncc.edu");
+		Bridge.init(7, "300587042698", queue, "mmehedin@uncc.edu");
+		
 		
 		//Adding elements to the queue
-		QueueElement<Follower> root = queue.enQueue(new Follower("Joey"));
-		queue.enQueue(new Follower("Achusimjennifer"));
+		QueueElement<Follower> root = queue.enQueue(new Follower("Bob"));
+		queue.enQueue(new Follower("Joey"));
+		
+		//queue elements with the same identity will not be enqueued
+		queue.enQueue(new Follower("Joey"));
+		queue.deQueue();
+		
+		//take a first snapshot of the queue at this stage
+		Bridge.update();
 		
 		//the queue is emptied
-		//queue.clear();
+		queue.clear();
 				
-		//queue.enQueue(new Follower("Bob"));//the first element of the queue
-		//populate(queue.enQueue(new Follower("Achusimjennifer")), queue, maxElements);
+		queue.enQueue(new Follower("Bob"));//the first element of the queue
 		
-		//This is how you can access the existing elements of the queue, just remove the comments from the 
+		//this is how you can add many elements to the queue
+		populate(queue.enQueue(new Follower("Achusimjennifer")), queue, maxElements);
+		
+		//To access/view the existing elements of the queue remove the comments from the 
 		//statement below
 		System.out.println("The queue elements: "+queue.vertices);
 		
-		//queue.deQueue();
-		//queue.deQueue();
-		//queue.deQueue();
-		//queue.enQueue(new Follower("John"));
+		queue.deQueue();
+		queue.deQueue();
+		queue.deQueue();
+		
+		queue.enQueue(new Follower("John"));
+		
 		//One can iterate through the elements of the queue using next();
 		//this method is inherited from graph
 		//to test this remove the comment sign from the statement below
-		//System.out.println(((QueueElement<Follower>)queue.getfront()).next().next().getIdentifier());
+		System.out.println(((QueueElement<Follower>)queue.getfront()).next().next().getIdentifier());
 		
 		//One element's properties can be changed
 		//to test this remove the comment sign from the statement below
-		//queue.getfront().setColor("purple");
+		queue.getfront().setColor("purple");
+		
+		//get another snapshot of the queue
+		Bridge.update();
 		
 		//This is another deQueue statement
-		//queue.deQueue();
-		//queue.deQueue();
+		queue.deQueue();
+		queue.deQueue();
 		
 		//One can find the size of the queue at any given moment
 		//to test this remove the quotes
-		//System.out.println(queue.length());
+		System.out.println(queue.length());
 		
-		System.out.print("\nJSON: ");
 		Bridge.complete();
 		aLog.returnStream();
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>edu.uncc.cs.bridges</groupId>
+  <artifactId>client-scala</artifactId>
+  <version>0.2.2</version>
+  <versioning>
+    <versions>
+      <version>0.2.2</version>
+      <version>0.2.3</version>
+      <version>0.2.4</version>
+      <version>0.2.5</version>
+      <version>0.2.6</version>
+      <version>0.3.0</version>
+    </versions>
+    <lastUpdated>20140410194141</lastUpdated>
+  </versioning>
+</metadata>

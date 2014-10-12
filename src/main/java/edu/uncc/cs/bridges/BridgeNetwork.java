@@ -350,8 +350,7 @@ public class BridgeNetwork {
     	String out = server_url;
     	out += url
     			.replace(" ", "%20")
-      			.replace("$assignment", Integer.toString(
-      					Bridge.getAssignment()));
+      			.replace("$assignment", Bridge.getAssignment());
     	out += "?apikey=" + Bridge.getKey();
       	return out;
     }    

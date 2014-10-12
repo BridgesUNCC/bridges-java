@@ -19,7 +19,7 @@ public class RandomGraphGenerator {
 		// create a new graph
 		RandomGraph<Follower> graph = new RandomGraph<Follower>();
 		//initiate bridges
-		Bridge.init(11, "1157177351793", graph, "mmehedin@uncc.edu");
+		Bridge.init(11, "300587042698", graph, "mmehedin@uncc.edu");
 		//create the root node
 		Vertex<Follower> root= new Vertex<Follower>(new Follower("Riley"),graph);
 		root.setSize(10);

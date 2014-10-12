@@ -1,5 +1,6 @@
 package edu.uncc.cs.bridges;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,7 +24,6 @@ public class Queue<T> extends GraphVisualizer<T>{
 	private String rearColor = "orange";//color of the rear element
 	private String defaultColor = "black";//color of the intermediary elements
 	private boolean llist = true; //by default the visualization will display the links between the elements
-	private boolean circularLList = false; //this can be set to true in case we want to display the queue as a circular LList
 	
 	public Map<String, AbstractVertex<T>> vertices = new LinkedHashMap<>();//this overrides the vertices Map in Visualizer so the order of elements is maintained
 	
@@ -41,25 +41,21 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 * @return Returns the rear element after dequeue
 	 */
 	public QueueElement<T> deQueue(){
-		if (!rear.outgoing.isEmpty()) {
-			rear.outgoing.clear();
-			front.outgoing.clear();
-		}
 		
 		QueueElement<T> temp = rear;
 		this.vertices.values().removeAll(Collections.singleton(rear));
 		
 		if (this.vertices.isEmpty()) 
-			rear = null;
+			front = prev = rear = null;
 		else{
 			setRear(this.vertices.entrySet().iterator().next().getValue());
-			if (front != null & circularLList) {
-				front.outgoing.clear();
-				rear.outgoing.clear();
-				front.queueEdge(rear);
-				front.queueEdge(prev);
-			}
+		
+		if(this.length() == 1)
+			front = prev =rear;
+		else if (this.length() == 2)
+			prev = rear;
 		}
+		
 		return temp;
 	}
 	
@@ -68,47 +64,41 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 * @param identifier contains the element: Follower, Movies, etc.
 	 */
 	public QueueElement<T> enQueue(T identifier){
+		if (!this.vertices.keySet().contains(identifier)){	 
 		int currentNumber = this.vertices.entrySet().size(); 
-		if (rear != null & currentNumber != 1) {
-			defaultColor(front);
-			setFront(new QueueElement<>(identifier, this));
-		}
-		else if (currentNumber == 1){
-			setFront(new QueueElement(identifier, this));		
+		
+		if(currentNumber == 0){
+			front=prev=rear = 
+					new QueueElement<>(identifier, this);
 			rearColor(rear);
 		}
-		else {
-			setRear(prev = front = new QueueElement(identifier, this));
+		else if (currentNumber == 1){
+			front = new QueueElement<>(identifier, this);
+			frontColor(front);
 		}
+		else {
+			prev = front;
+			defaultColor(prev);
+			front = new QueueElement<>(identifier, this);
+			frontColor(front);
+			
+		}
+		
+		if (!front.equals(prev) && llist)
+			front.queueEdge(prev);
+		}
+		
 		return front;
 	}
 	
 	/**
 	 * This method enQueues a queue element
-	 * @param anElement
-	 * @return
+	 * @param an element of the queue
 	 */
 	public QueueElement<T> enQueue(QueueElement<T> anElement){
 		return this.enQueue(anElement.getIdentifier());
 	}
-	
-	/**
-	 * This method sets a new front element for the queue
-	 * @param anEntity
-	 */
-	private void setFront(QueueElement<T> anEntity){
-		frontColor(anEntity);
-		if (this.LList() & this.vertices.size() != 0 & !circularLList){
-			this.changeEdges(anEntity);
-		}
-		if (front != null & front != rear & rear != null & circularLList){
-			this.changeEdges(anEntity);
-			this.setCircularLList();
-		}
-		else
-			front = anEntity;
-	}
-	
+
 	/**
 	 * This method saves the reference to the rear element
 	 * @param anEntity - this is the rear element
@@ -130,7 +120,7 @@ public class Queue<T> extends GraphVisualizer<T>{
 	
 	/**
 	 * This method sets the color for the rear element of the queue
-	 * @param aVertex
+	 * @param this is an AbstractVertex of type T
 	 */
 	public void rearColor(AbstractVertex<T> aVertex){
 		aVertex.setColor(rearColor);
@@ -139,23 +129,10 @@ public class Queue<T> extends GraphVisualizer<T>{
 	/**
 	 * This method sets the default color value to elements of the queue different than 
 	 * front or rear 
-	 * @param aVertex
+	 * @param this is an AbstractVertex type T
 	 */
 	private void defaultColor(AbstractVertex<T> aVertex){
 		aVertex.setColor(defaultColor);
-	}
-	
-	/**
-	 * This method rearranges the links (or edges) after one element is inserted  
-	 * @param anEntity
-	 */
-	private void changeEdges(QueueElement<T> anEntity){
-		front.outgoing.clear();
-		rear.outgoing.clear();
-		front.queueEdge(prev);
-		prev = front;
-		front = anEntity;
-		front.queueEdge(prev);
 	}
 	
 	/**
@@ -186,7 +163,7 @@ public class Queue<T> extends GraphVisualizer<T>{
 	 * This method sets the boolean variable llist
 	 * to false and no lines will be displayed between the queue elements
 	 */
-	protected void noLListVisualization(){
+	public void noLListVisualization(){
 		llist = false;
 	}
 	
@@ -199,29 +176,25 @@ public class Queue<T> extends GraphVisualizer<T>{
 		return llist;
 	}
 	
-	/**
-	 * This method sets the status of the queue to circular
-	 * @return
-	 */
-	protected boolean circularLList(){
-		//setCircularLList();
-		return circularLList = true;	
-	}
-	
-	/**
-	 * This method closes the loop between the rear and the front of the queue
-	 * in a circular list
-	 */
-	public void setCircularLList(){
-		front.queueEdge(rear);
-	}
-	
+
 	/**
 	 * The length method returns the size of the queue
 	 * @return
 	 */
 	public int length(){
 		return this.vertices.size();
-	} 
+	}
+	/**
+	 * This method returns the next element in the queue
+	 * @return an AbstractVertex<T> element
+	 */
+	public QueueElement<T> next(AbstractVertex<T> temp){
+		Set aSet= vertices.entrySet();
+		Iterator it = aSet.iterator();//.next().getValue();
+		while(it.hasNext() && aSet.contains(temp) && !it.next().equals(temp)){
+			it.next();
+		}
+		return (QueueElement<T>)it.next(); 
+	}
 
 }//end of the class

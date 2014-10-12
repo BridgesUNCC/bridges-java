@@ -24,6 +24,7 @@ public class EarthquakeTweetDriver {
 	 * @param queue the current queue
 	 * @param max is the number of followers enqueued by this method
 	 * @return
+	 * @throws BridgesException 
 	 */
 	public static Queue<EarthquakeTweet> populate(List<EarthquakeTweet> aList, Queue<EarthquakeTweet> queue){
 		//queue.clear();
@@ -48,7 +49,7 @@ public class EarthquakeTweetDriver {
 		Queue<EarthquakeTweet> aQueue = new Queue<>();
 		
 		// Assignment, API key, visualizer, username
-		Bridge.init(11, "1157177351793", aQueue, "mmehedin@uncc.edu");
+		Bridge.init(13, "300587042698", aQueue, "mmehedin@uncc.edu");
 
 		// Any actual user on Twitter; in this case we use the earthquake account
 		TwitterAccount name = new TwitterAccount("earthquake"); 

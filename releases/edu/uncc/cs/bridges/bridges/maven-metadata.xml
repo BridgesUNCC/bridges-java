@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>edu.uncc.cs.bridges</groupId>
+  <artifactId>bridges</artifactId>
+  <version>0.99.7</version>
+  <versioning>
+    <versions>
+      <version>0.99.7</version>
+      <version>0.99.8</version>
+      <version>0.99.9</version>
+    </versions>
+    <lastUpdated>20141010140512</lastUpdated>
+  </versioning>
+</metadata>

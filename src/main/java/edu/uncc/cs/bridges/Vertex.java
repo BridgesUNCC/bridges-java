@@ -44,7 +44,7 @@ public class Vertex<T> extends AbstractVertex<T> {
 	public AbstractEdge<T> createEdge(Vertex<T> v2){
 		//identifier is to be used internally to find the Edges later
 		AbstractEdge<T> temp=getEdge(v2);
-		if (temp==null){
+		if (temp==null && this.equals(v2)){
 			String ident = this.getIdentifier() +"To"+ v2.getIdentifier();
 			return new Edge(this, v2, ident);
 		}
