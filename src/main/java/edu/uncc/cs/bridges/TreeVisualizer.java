@@ -3,19 +3,15 @@
 This is what the student would have to write. The methods would be empty for them and they would just fill them out to learn the BST data structure.
 
 */
-package edu.uncc.cs.bridgesdrivers;
+package edu.uncc.cs.bridges;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.uncc.cs.bridges.BSTNode;
-import edu.uncc.cs.bridges.Bridge;
-import edu.uncc.cs.bridges.Visualizer;
-
 //import java.util.HashMap;
 //import java.util.Map;
 
-public class TreeVisualizer extends Visualizer {
+public class TreeVisualizer<T> extends GraphVisualizer<T> {
 		
 	private BSTNode root;
 	private String visualizerType;
@@ -27,8 +23,8 @@ public class TreeVisualizer extends Visualizer {
 		return root;
 	}
 	
-	public void insert(BSTNode newNode) throws Exception{
-		root = insertNode(root, newNode);
+	public BSTNode<T> insert(BSTNode<T> newNode) throws Exception{
+		return root = insertNode(root, newNode);
 	}
 	/**
 	 * Inserts a new node into the correct position in the tree.
@@ -83,6 +79,11 @@ public class TreeVisualizer extends Visualizer {
 			}else return findNode(rt.getRightChild(), val);			
 		}		
 	}
+	
+	/**
+	 * This method returns the minimum value
+	 * @return minimum value in the tree
+	 */
 	public int fMin(){
 		return findMin(root);
 	}

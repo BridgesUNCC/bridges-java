@@ -265,7 +265,7 @@ public class BridgeNetwork {
     public String executeHTTPRequest(Request request)
     		throws ClientProtocolException, IOException, RateLimitException {
         // It's possible we need to reimplement this as a ResponseHandler
-        
+    		//System.out.println("Sending request: " + request);
         // Execute the HTTP request
         HttpResponse response;
         if (debug)

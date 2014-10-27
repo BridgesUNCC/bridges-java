@@ -338,9 +338,9 @@ public class Bridge {
     }
     
     /**
-     * List the user's followers as more FollowGraphNodes.
+     * List the user's tweets in the current twitter account.
      * Limit the result to `max` followers. Note that results are batched, so 
-     * a large `max` (as high as 200) _may_ only count as one request.
+     * a large `max` (as high as 500) _may_ only count as one request.
      * See Bridges.followgraph() for more about rate limiting. 
      * @throws MyExceptionClass 
      * @throws IOException */
@@ -407,8 +407,7 @@ public class Bridge {
 				aList.add(new Tweet(allTweets.get(tweetIterator)));
 				} catch(Exception e){
 					System.out.println(e.getMessage());
-				}
-			
+				}	
 		}
 		return aList;
 	}

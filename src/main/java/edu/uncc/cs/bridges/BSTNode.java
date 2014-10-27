@@ -4,7 +4,7 @@ import java.util.Map.Entry;
 /**
  * Generic Tree Node class, with visual components. Stores a value, allows for creation of its children.
  * @author mvitulli
- *
+ * @second author/modified: mihai mehedint
  */
 public class BSTNode<T> extends AbstractVertex<T> {
 	
@@ -21,7 +21,8 @@ public class BSTNode<T> extends AbstractVertex<T> {
 		super(identifier);		
 		this.val = val;
 	}	
-	
+
+
 	public int getVal(){
 		return val;
 	}

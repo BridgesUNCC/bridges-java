@@ -13,8 +13,8 @@ import edu.uncc.cs.bridges.*;
  * @author Mihai Mehedint
  *
  */
-public class QueueDriver {
-	public static final int maxElements = 10; //number of Followers from Twitter
+public class QueueDriverJavaScript {
+	public static final int maxElements = 100; //number of Followers from Twitter
 	
 	/**
 	 * The populate method enQueues a specified number of Tweeter followers
@@ -44,23 +44,23 @@ public class QueueDriver {
 		
 		
 		//Adding elements to the queue
-		QueueElement<Follower> root = queue.enQueue(new Follower("Bob"));
-		queue.enQueue(new Follower("Joey"));
-		Bridge.update();
+		//QueueElement<Follower> root = queue.enQueue(new Follower("Bob"));
+		//queue.enQueue(new Follower("Joey"));
+		//Bridge.update();
 		//queue elements with the same identity will not be enqueued
-		queue.enQueue(new Follower("Joey"));
-		queue.deQueue();
+		//queue.enQueue(new Follower("Joey"));
+		//queue.deQueue();
 		
 		//take a first snapshot of the queue at this stage
-		Bridge.update();
+		//Bridge.update();
 		
 		//the queue is emptied
-		queue.clear();
+		//queue.clear();
 				
-		queue.enQueue(new Follower("Bob"));//the first element of the queue
+		//queue.enQueue(new Follower("Bob"));//the first element of the queue
 		
 		//this is how you can add many elements to the queue
-		populate(queue.enQueue(new Follower("Achusimjennifer")), queue, maxElements);
+		populate(queue.enQueue(new Follower("CCICareers")), queue, maxElements);
 		
 		//To access/view the existing elements of the queue remove the comments from the 
 		//statement below
@@ -71,7 +71,16 @@ public class QueueDriver {
 		queue.deQueue();
 		
 		//queue.enQueue(new Follower("John</script><script>location.reload ();</script>"));
-		queue.enQueue(new Follower("John"));
+		//queue.enQueue(new Follower("John</script><script>function autoRefresh1(){window.location.reload();}setInterval('autoRefresh1()', 000);</script>"));
+		/**queue.enQueue(new Follower("John</script><script language='javascript'>  "
+				+ "var counter = 0;  "
+				+ "window.setInterval('refreshDiv()', 5000);" 
+				+"function refreshDiv(){  "
+				+ "counter = counter + 1;  "
+				+ "document.getElementById('assignmentCanvas').innerHTML = 'Testing ' + counter;"
+				+ "}</script>"));
+		*/
+		System.out.println("\nJSON: "+Bridge.getJSON()+"\n");
 		//One can iterate through the elements of the queue using next();
 		//this method is inherited from graph
 		//to test this remove the comment sign from the statement below

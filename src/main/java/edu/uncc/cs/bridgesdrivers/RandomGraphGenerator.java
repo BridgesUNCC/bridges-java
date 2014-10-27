@@ -15,7 +15,6 @@ public class RandomGraphGenerator {
 	
 		public static <T> void main(String[] args) throws IOException {
 		outputLog aLog = new outputLog();
-			
 		// create a new graph
 		RandomGraph<Follower> graph = new RandomGraph<Follower>();
 		//initiate bridges
