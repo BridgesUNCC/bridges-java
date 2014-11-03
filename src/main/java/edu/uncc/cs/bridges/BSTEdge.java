@@ -4,6 +4,7 @@ public class BSTEdge<T> extends AbstractEdge<T>{
 /**
  * Edge class specifically for trees due to their hierarchical nature.
  * @author mvitulli
+ * @modified mihai
  */
 	private BSTNode<T> out;
 	/**

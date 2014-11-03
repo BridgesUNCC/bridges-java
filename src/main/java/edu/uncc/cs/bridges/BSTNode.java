@@ -10,6 +10,7 @@ public class BSTNode<T> extends AbstractVertex<T> {
 	
 	private BSTEdge<T> leftEdge, rightEdge;	
 	private int val;//temp till I research comparable
+	public BSTNode<T> parent = null;
 	
 	/**
 	 * Constructor for a new node.
@@ -57,9 +58,15 @@ public class BSTNode<T> extends AbstractVertex<T> {
 	 */
 	private void setLeftEdge(BSTNode<T> n2){
 		//removing the edgeIdentifier would make removal easier
-		
-		this.leftEdge = new BSTEdge(this, n2);//creates the edge, and has the left pointer reference it
+		this.leftEdge = new BSTEdge<>(this, n2);//creates the edge, and has the left pointer reference it
+		n2.childOf(this);
 	}
+	
+	
+	public void childOf(BSTNode<T> n){
+		parent = this;
+	}
+	
 	/**
 	 * Returns the left connected edge for property manipulation.
 	 * 
@@ -96,7 +103,8 @@ public class BSTNode<T> extends AbstractVertex<T> {
 	 */
 	private void setRightEdge(BSTNode<T> n2){
 
-		this.rightEdge = new BSTEdge(this, n2);		
+		this.rightEdge = new BSTEdge<>(this, n2);
+		n2.childOf(this);
 	}
 	/**
 	 * Returns the right connected edge.
@@ -106,6 +114,11 @@ public class BSTNode<T> extends AbstractVertex<T> {
 	public BSTEdge<T> getRightEdge(){
 		return rightEdge;
 	}
+	
+	public BSTNode<T> getParent(){
+		return parent;
+	}
+	
 	/**
 	 * Internal code for getting the properties of an AbstractVertex.
 	 * 

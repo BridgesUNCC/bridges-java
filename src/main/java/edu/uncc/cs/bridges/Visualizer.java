@@ -6,7 +6,7 @@ package edu.uncc.cs.bridges;
  * @author Sean Gallagher
  *
  */
-public abstract class Visualizer {
+public abstract class Visualizer<T> {
 	/** 
 	 * JSON exporting interface to be called internally by Bridges
 	 * @returns a complete, valid JSON object (not array) for uploading

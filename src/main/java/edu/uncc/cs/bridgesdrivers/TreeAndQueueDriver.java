@@ -6,14 +6,14 @@ public class TreeAndQueueDriver {
 
 	public static void main(String[] args) throws Exception {
 
-		TreeVisualizer tree = new TreeVisualizer();//Creating tree structure
-		Queue aQueue = new Queue();
+		TreeVisualizer<EarthquakeTweet> tree = new TreeVisualizer<>();//Creating tree structure
+		Queue<EarthquakeTweet> aQueue = new Queue<>();
 		//Bridge.init(0, "796340034401", tree);//UNCC
 		Bridge firstBridge = new Bridge();
 		Bridge secondBridge = new Bridge();
 		firstBridge.init(23, "300587042698", tree, "mmehedin@uncc.edu");//Heroku
 		secondBridge.init(24, "300587042698", aQueue, "mmehedin@uncc.edu");//Heroku
-		aQueue.enQueue(new Follower("Jack"));
+		aQueue.enQueue(new Tweet("Jack"));
 		firstBridge.update();
 		//Bridge.setServerURL("http://bridges-cs.herokuapp.com");
 		//Bridge.setServerURL("http://bridges.cs.uncc.edu");

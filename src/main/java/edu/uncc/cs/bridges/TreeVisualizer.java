@@ -5,26 +5,23 @@ This is what the student would have to write. The methods would be empty for the
 */
 package edu.uncc.cs.bridges;
 
-import java.util.HashMap;
-import java.util.Map;
-
-//import java.util.HashMap;
-//import java.util.Map;
-
 public class TreeVisualizer<T> extends GraphVisualizer<T> {
 		
-	private BSTNode root;
+	private BSTNode<T> root = null;	 //the root node
+	private BSTNode<T> curr = null; //last inserted node
 	private String visualizerType;
 	
 	public TreeVisualizer(){
 		setVisualizerType("tree");
 	}
-	public BSTNode getRoot(){
+	public BSTNode<T> getRoot(){
 		return root;
 	}
 	
 	public BSTNode<T> insert(BSTNode<T> newNode) throws Exception{
-		return root = insertNode(root, newNode);
+		if (root == null)
+			return root = curr = insertNode(curr, newNode);
+		return curr = insertNode(curr, newNode);
 	}
 	/**
 	 * Inserts a new node into the correct position in the tree.
@@ -34,7 +31,7 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 	 * @return The newly generated tree structure.
 	 * @throws Exception 
 	 */
-	private BSTNode insertNode(BSTNode rt, BSTNode newNode) throws Exception{
+	private BSTNode<T> insertNode(BSTNode<T> rt, BSTNode<T> newNode) throws Exception{
 		if(rt == null){			
 			return newNode;			
 		}else if(newNode.getVal() < rt.getVal() ){
@@ -56,6 +53,23 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 	public boolean find(int val){
 		return findNode(root, val);
 	}
+	
+	public BSTNode<T> getNode(BSTNode<T>rt, int val){
+		if(rt.getLeftChild() == null && rt.getVal() != val){
+			return null;
+		}
+		else if(val == rt.getVal()){
+			return rt;
+		}else if(val < rt.getVal()){
+			if(rt.getLeftChild() == null){
+				return null;
+			}else return getNode(rt.getLeftChild(), val);			
+		}else{
+			if(rt.getRightChild() == null){
+				return null;
+			}else return getNode(rt.getRightChild(), val);			
+		}
+	}
 	/**
 	 * Determines whether or not the tree contains the value being searched for.
 	 * 
@@ -63,7 +77,7 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 	 * @param val The value being looked for.
 	 * @return True if found, false if not.
 	 */
-	private boolean findNode(BSTNode rt, int val){
+	private boolean findNode(BSTNode<T> rt, int val){
 		if(rt == null){
 			return false;
 		}
@@ -93,7 +107,7 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 	 * @param rt The root node of the tree.
 	 * @return The minimum value contained in the tree.
 	 */
-	private int findMin(BSTNode rt){
+	private int findMin(BSTNode<T> rt){
 		if(rt.getLeftChild() == null){
 			rt.setColor("red");
 			return rt.getVal();
@@ -119,7 +133,7 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 	 * @return A new tree minus the minimum value.
 	 * @throws Exception 
 	 */
-	private BSTNode removeMin(BSTNode rt) throws Exception{
+	private BSTNode<T> removeMin(BSTNode<T> rt) throws Exception{
 		if(rt.getLeftChild() == null){
 			if(rt.getRightChild() == null){
 				return null;
@@ -143,7 +157,7 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 	 * @param rt The root node of the tree.
 	 * @return The maximum value contained in the tree.
 	 */
-	private int findMax(BSTNode rt){
+	private int findMax(BSTNode<T> rt){
 		if(rt.getRightChild() == null){
 			rt.setColor("Orange");			
 			return rt.getVal();
@@ -154,17 +168,25 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 			return findMax(rt.getRightChild());		
 		}
 	}
+	
+	
 	//used for node removal ONLY
-	private BSTNode findMinNode(BSTNode rt){
+	private BSTNode<T> findMinNode(BSTNode<T> rt){
 		if(rt.getLeftChild() == null){
 			return rt;
 		}else return rt.getLeftChild();				
 	}
-	public void removeN(BSTNode node) throws Exception{
+	
+	/**
+	 * This method removes a specific node from the tree
+	 * @param node
+	 * @throws Exception
+	 */
+	public BSTNode<T> removeN(BSTNode<T> node) throws Exception{
 		if(root == null){
 			throw new Exception("Nothing to remove, the tree is empty.");
 		}
-		root = removeNode(root, node);
+		return removeNode(root, node);
 	}
 	/**
 	 * Removes the specified node from the tree.
@@ -172,36 +194,97 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 	 * @param rt The root node.
 	 * @param node The node to be removed.
 	 * @return The new tree structure after the node is removed.
+	 * @throws Exception 
 	 */
 	//Probably need to find based of identifier
-	private BSTNode removeNode(BSTNode rt, BSTNode node){
+	private BSTNode<T> removeNode(BSTNode<T> rt, BSTNode<T> node) throws Exception{
 		//if the node is found that you are trying to remove
-		if( rt.getVal() == node.getVal()){
-			//if there are no children
-			if(rt.getLeftChild() == null && rt.getRightChild() == null){
-				return null;
-			}
-			//if there is only one child
-			else if(rt.getLeftChild() == null || rt.getRightChild() == null){
-				if(rt.getRightChild() == null){
-					return rt.getLeftChild();
-				}else return rt.getRightChild();				
-			}
-			//if the node has 2 children
-			//finds min node of the right tree
-			BSTNode temp = findMinNode(rt.getRightChild());
-			//removes the min of the right tree returning an updated sub-tree
-			rt = removeNode(rt, temp);
-			//updates the node to be removed to reflect the removal/balancing
-			rt.setVal(temp.getVal());
+			BSTNode<T> aLeaf = this.findLeaf(root); //check if the node = aLeaf
+			System.out.println(rt.getIdentifier()+"  "+aLeaf.getIdentifier());
+			//swapNodes(node, aLeaf);
+			//reHeap(aLeaf);
 			//returns updated tree
-			return rt;
-		}//if the value is larger
-		else if(node.getVal() > rt.getVal()){
-			return removeNode(rt.getRightChild(), node);
-		//if the value is smaller
-		}else return removeNode(rt.getLeftChild(), node);				
+			return aLeaf;
 	}	
+	
+	public void reHeap(BSTNode<T> aLeaf) throws Exception{
+		if(aLeaf.getVal()<aLeaf.getLeftChild().getVal()){
+			swapNodes(aLeaf, aLeaf.getLeftChild());
+			reHeap(aLeaf);
+		}
+		else if(aLeaf.getVal() > aLeaf.getRightChild().getVal()){
+			swapNodes(aLeaf, aLeaf.getRightChild());
+			reHeap(aLeaf);
+		}
+	}
+	
+	/**
+	 * Swaps one node in the tree, with the minimum value node. 
+	 * @param nodeToRemove
+	 * @param minLeaf
+	 * @throws Exception
+	 */
+	protected void swapNodes(BSTNode<T> nodeToRemove, BSTNode<T> aLeaf) throws Exception{
+		BSTNode<T> temp = aLeaf;
+		//temp.getParent().
+		aLeaf = nodeToRemove;
+		nodeToRemove = temp;
+		if (nodeToRemove.getParent().getLeftChild().equals(aLeaf))
+			nodeToRemove.setLeftChild(null);
+		else
+			nodeToRemove.setRightChild(null);
+		
+		if (aLeaf.getLeftChild() != null){
+			nodeToRemove.setLeftChild(aLeaf.getLeftChild());
+			aLeaf.setLeftChild(null);
+		}
+		
+		if (aLeaf.getRightChild() != null){
+			nodeToRemove.setRightChild(aLeaf.getRightChild());
+			aLeaf.setRightChild(null);
+		}
+	}
+	
+	/**
+	 * This method returns a leaf
+	 * @param root is the node we start when looking for a leaf 
+	 * @return the leaf node
+	 */
+	protected BSTNode<T> findLeaf(BSTNode<T> root){
+		if(root == null){
+			return null;
+		} else if (root.getLeftChild() == null && root.getRightChild() == null){
+			return root;
+		} else if (root.getLeftChild() == null)
+			return findLeaf (root.getRightChild());
+		else
+			return findLeaf(root.getLeftChild());
+	}
+	
+	/**
+	 * This method determines whether a node is a leaf
+	 * @param aNode
+	 * @return true if aNode is a leaf and false otherwise
+	 */
+	protected boolean isLeaf(BSTNode<T> aNode){
+		if (aNode.getLeftChild() == null && aNode.getRightChild() == null)
+			return true;
+		else 
+			return false;
+	}
+	
+	/**
+	 * This method finds if there is a leaf with a certain value
+	 * @param val is the value of the node 
+	 * @return true if there is a leaf with value val and it returns false otherwise
+	 */
+	protected boolean isLeaf(int val){
+		BSTNode<T> aNode = this.getNode(root, val);
+		if (aNode.getLeftChild() == null && aNode.getRightChild() == null)
+			return true;
+		else 
+			return false;
+	}
 	
 	//Maybe put this in abstractVertex and tailor it to handle BST? make specific method call?
 	protected String getRepresentation() {
@@ -213,7 +296,7 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 		return "{"
 		+ "\"name\": \"edu.uncc.cs.bridges\","
 		+ "\"version\": \"0.4.0\","
-		+ "\"visual\": \"tree\","
+		+ "\"visual\": \"" + getVisualizerType() + "\","
 		+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
 		+ "\"links\": [" + Bridge.trimComma(links) + "]"
 		+ "}";
@@ -222,7 +305,11 @@ public class TreeVisualizer<T> extends GraphVisualizer<T> {
 	@Override
 	protected String setVisualizerType(String type) {
 		this.visualizerType = type;
-		return null;
+		return type;
+	}
+	
+	protected String getVisualizerType() {
+		return this.visualizerType;
 	}
 
 }

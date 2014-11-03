@@ -15,7 +15,7 @@ import edu.uncc.cs.bridges.*;
  *
  */
 public class TreeEarthquakeTweeterDriver {
-	public static final int maxElements = 10; //number of Followers from Twitter
+	public static final int maxElements = 3; //number of Followers from Twitter
 	
 	/**
 	 * The populate method enQueues a specified number of Tweeter followers
@@ -30,8 +30,8 @@ public class TreeEarthquakeTweeterDriver {
 			Set<Map.Entry<String, AbstractVertex<EarthquakeTweet>>> existingElements=tree.vertices.entrySet();
 			for(int i=0; i<aList.size();i++){
 				if (!existingElements.contains(aList.get(i))){
-					int aValue = (int)(aList.get(i).getMagnitude()); 
-					BSTNode anEarthquake = new BSTNode(aList.get(i), aValue); 
+					double aValue = (int)(aList.get(i).getMagnitude()); 
+					BSTNode<EarthquakeTweet> anEarthquake = new BSTNode<>(aList.get(i), (int)((aValue-5)*10)); 
 					tree.insert(anEarthquake);
 					double size = (aValue-5)*10;//object size range is 0-50; the actual value is adjusted for a better visualization
 					anEarthquake.setSize(size);
@@ -63,14 +63,14 @@ public class TreeEarthquakeTweeterDriver {
 		Bridge.update();
 		
 		//remove minimum
-		tree.rMin();
+		//tree.rMin();
 				
 		Bridge.update();
 		
 		//get a second list of earthquakes
 		List<Tweet> aSecondTweetList = new ArrayList<>();
 		
-		Bridge.next(aSecondTweetList, 50);
+		Bridge.next(aSecondTweetList, 5);
 		
 		//add the new batch to the tree
 		populate(Bridge.convertTweet (aSecondTweetList), tree);
@@ -80,13 +80,13 @@ public class TreeEarthquakeTweeterDriver {
 		//remove root, this will cause errors
 		//tree.removeN(tree.getRoot());
 		
-		Bridge.update();
+		//Bridge.update();
 		
 		//remove minimum
-		tree.rMin();
+		//tree.rMin();
 		
 		//get another snapshot of the tree
-		Bridge.update();
+		//Bridge.update();
 		
 		//This is another removeN statement
 		//tree.removeN(tree.getRoot());

@@ -22,29 +22,53 @@ public class TreeDriver {
 		tree.insert(new BSTNode<>(new Actor("John, 10"), 10));
 		//System.out.println("Left Child: " + tree.getRoot().getLeftChild().getIdentifier());
 		
+		tree.insert(new BSTNode<>(new Actor("Brian, 14"), 14));
+		//System.out.println("Left Child: " + tree.getRoot().getLeftChild().getIdentifier());
+		
+		tree.insert(new BSTNode<>(new Actor("Stephen, 9"), 9));
+		//System.out.println("Left Child: " + tree.getRoot().getLeftChild().getIdentifier());
 		Bridge.update();
+		
+		//tree.removeN(tree.getRoot());
 		
 		tree.insert(new BSTNode<>(new Actor("Frank, 11"), 11));		
 		//System.out.println("Left-Right Child: " + tree.getRoot().getLeftChild().getRightChild().getIdentifier());
 		
-		tree.insert(new BSTNode<>(new Actor("Dave, 8"), 8));
+		//tree.insert(new BSTNode<>(new Actor("Dave, 8"), 8));
 		
-		tree.insert(new BSTNode<>(new Actor("C, 13"), 13));
+		//tree.insert(new BSTNode<>(new Actor("C, 13"), 13));
 		
-		tree.insert(new BSTNode<>(new Actor("Chris, 5"), 5));
+		//tree.insert(new BSTNode<>(new Actor("Chris, 5"), 5));
 		
-		tree.insert(new BSTNode<>(new Actor("Ada, 1"), 1));
+		//tree.insert(new BSTNode<>(new Actor("Ada, 1"), 1));
 
-		tree.insert(new BSTNode<>(new Actor("Betsy, 7"), 7));
+		//tree.insert(new BSTNode<>(new Actor("Betsy, 7"), 7));
 		
-		tree.insert(new BSTNode<>(new Actor("B, 6"), 6));
+		//tree.insert(new BSTNode<>(new Actor("B, 6"), 6));
 		
-		tree.getRoot().setColor("red").setSize(50);
+		//tree.getRoot().setColor("red").setSize(50);
 		
 		tree.fMax();
 		
 		//System.out.println("Is the number found: " + tree.find(7));
 		tree.fMin();
+		//tree.insert(new BSTNode<>(new Actor("E, 0"), 0));
+		
+		//this statement finds and retrieves a node with a specific value
+		System.out.println(tree.getNode(tree.getRoot(), 11).getIdentifier());
+		Bridge.update();
+		
+		//this statement finds and removes a node with a specific node value
+		tree.removeN(tree.getNode(tree.getRoot(), 11));
+		
+		Bridge.update();
+		//tree.fMin();
+		//tree.rMin();
+		//tree.rMin();
+		//tree.rMin();
+		//tree.rMin();
+		//tree.rMin();
+		//tree.rMin();
 		//tree.rMin();
 		//System.out.println("Minimum is " + tree.fMin());		
 		System.out.println(Bridge.getJSON());
