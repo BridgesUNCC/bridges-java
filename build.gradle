@@ -9,7 +9,11 @@ apply plugin: 'signing'
 /// General
 ///
 group = "edu.uncc.cs.bridges"
+<<<<<<< HEAD
 version = "0.99.992"
+=======
+version = "0.99.993"
+>>>>>>> 7cb4b3a2f708cd3a6618e52a38c95343f9841ee8
 
 ///
 /// Artifacts and deployment
@@ -19,7 +23,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from 'build/docs/javadoc'
 }
- 
+
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'

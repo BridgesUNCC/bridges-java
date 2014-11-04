@@ -30,7 +30,7 @@ public class HelloWorld {
 		
 		Vertex<Follower> Dave = new Vertex("Dave", gv);
 		
-		//John.createEdge(Dave);
+		//John.createEdge(Back);
 
 		Dave.createEdge(John,"hashCodeWeight");
 		

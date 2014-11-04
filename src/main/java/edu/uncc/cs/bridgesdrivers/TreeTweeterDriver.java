@@ -14,7 +14,7 @@ import edu.uncc.cs.bridges.*;
  *
  */
 public class TreeTweeterDriver {
-	public static final int maxElements = 10; //number of Followers from Twitter
+	public static final int maxElements = 50; //number of Followers from Twitter
 	
 	/**
 	 * The populate method enQueues a specified number of Tweeter followers

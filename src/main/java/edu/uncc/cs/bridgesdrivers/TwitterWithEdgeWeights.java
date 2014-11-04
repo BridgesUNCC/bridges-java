@@ -17,7 +17,7 @@ public class TwitterWithEdgeWeights {
 		// TODO Your code here
 		GraphVisualizer<Follower> gv = new GraphVisualizer<>();
 
-		Bridge.init(0, "693144430396", gv, "mmehedin@uncc.edu");
+		Bridge.init(0, "300587042698", gv, "mmehedin@uncc.edu");
 		int expands_remaining = 10;
 		
 		Deque<Vertex<Follower>> frontier = new ArrayDeque<>();
