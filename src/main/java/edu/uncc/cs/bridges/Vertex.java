@@ -10,6 +10,7 @@ import java.util.Iterator;
  * An implementation of AbstractVertex with HashMap for adjacency.
  *  
  * @author Sean Gallagher
+ * @coauthor Mihai Mehedint
  */
 public class Vertex<T> extends AbstractVertex<T> {
 

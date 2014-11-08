@@ -4,14 +4,15 @@
 package edu.uncc.cs.bridges;
 
 import static org.junit.Assert.*;
-import edu.uncc.cs.bridges.*;
+
+import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import edu.uncc.cs.bridges.*;
+
 
 /**
  * @author mihai
@@ -209,7 +210,8 @@ public class AbstractEdgeTest {
 	 */
 	@Test
 	public final void testGetRepresentation() {
-		assertNotNull("GetRepresentation returned a null value.", bob.getEdge(jane).getRepresentation());
+		Map<AbstractVertex<Follower>, Integer> vertex_to_index = null;
+		assertNotNull("GetRepresentation returned a null value.", bob.getEdge(jane).getRepresentation(vertex_to_index));
 	}
 
 	/**
