@@ -1,5 +1,7 @@
 package edu.uncc.cs.bridgesdrivers;
 
+import java.util.List;
+
 import edu.uncc.cs.bridges.*;
 
 public class TreeAndQueueDriver {
@@ -13,51 +15,26 @@ public class TreeAndQueueDriver {
 		Bridge secondBridge = new Bridge();
 		firstBridge.init(23, "300587042698", tree, "mmehedin@uncc.edu");//Heroku
 		secondBridge.init(24, "300587042698", aQueue, "mmehedin@uncc.edu");//Heroku
-		aQueue.enQueue(new Tweet("Jack"));
+		
+		//retrieve a list of 5 tweets 
+		List<Tweet> TweetList = Bridge.getAssociations(new TwitterAccount("earthquake"), 5);
+		
+		//and convert them to EarthquakeTweets 
+		//EarthquakeTweet is a special tweet containing also the magnitude field
+		List<EarthquakeTweet> EarthquakeTweetList = Bridge.convertTweet (TweetList);
+		
+		//add one tweet (the latest tweet) to the queue
+		//if there is an identical element in the queue the element will not be added
+		aQueue.enQueue(EarthquakeTweetList.get(0));
+	
 		firstBridge.update();
-		//Bridge.setServerURL("http://bridges-cs.herokuapp.com");
-		//Bridge.setServerURL("http://bridges.cs.uncc.edu");
 		
-		tree.insert(new BSTNode("Root, 12", 12));
-		System.out.println("Root: " + tree.getRoot().getIdentifier());
+		tree.insert(new BSTNode(EarthquakeTweetList.get(1), 12));
+		//System.out.println("Root: " + tree.getRoot().getIdentifier());
 		
-		tree.insert(new BSTNode("Steve, 15", 15));		
-		System.out.println("Right Child: " + tree.getRoot().getRightChild().getIdentifier());		
+		tree.insert(new BSTNode(EarthquakeTweetList.get(2), 15));				
 		
-		tree.insert(new BSTNode("D, 18", 18));
-		
-		tree.insert(new BSTNode("John, 10", 10));
-		//System.out.println("Left Child: " + tree.getRoot().getLeftChild().getIdentifier());
-		
-		Bridge.update();
-		
-		tree.insert(new BSTNode("Frank, 11", 11));		
-		//System.out.println("Left-Right Child: " + tree.getRoot().getLeftChild().getRightChild().getIdentifier());
-		
-		tree.insert(new BSTNode("Dave, 8", 8));
-		
-		tree.insert(new BSTNode("C, 13", 13));
-		
-		tree.insert(new BSTNode("Chris, 5", 5));
-		
-		tree.insert(new BSTNode("Ada, 1", 1));
-
-		tree.insert(new BSTNode("Betsy, 7", 7));
-		
-		tree.insert(new BSTNode("B, 6", 6));
-		
-		tree.getRoot().setColor("red").setSize(50);
-		
-		tree.fMax();
-		
-		//System.out.println("Is the number found: " + tree.find(7));
-		tree.fMin();
-		//tree.rMin();
-		//System.out.println("Minimum is " + tree.fMin());		
-		System.out.println(Bridge.getJSON());
-		//System.out.println("Maximum is " + tree.fMax());
-		//tree.getRoot().getRightEdge().setColor("yellow");
-		Bridge.complete();
+		secondBridge.complete();
 	}
 
 }
