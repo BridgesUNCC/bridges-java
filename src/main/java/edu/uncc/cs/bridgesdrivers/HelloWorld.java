@@ -43,6 +43,7 @@ public class HelloWorld {
 		Bob.setColor("pink");//works
 		Bob.setOpacity(1);// works
 		Bob.setSize(20);//works
+		HelloWorld.createEdge(John);
 		
 		Bridge.complete();
 	}
