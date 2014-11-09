@@ -91,7 +91,7 @@ public class GraphSmallIMDBdriver {
 	public static void main(String[] args) {
 		GraphMovieActor<?> graph = new GraphMovieActor<>();
 		Bridge.init(71, "300587042698", graph, "mmehedin@uncc.edu");
-		Vertex<Actor> Kevin = new Vertex<>(new Actor("Kevin_Bacon_(I)"), graph);
+		Vertex<Actor> Kevin = new Vertex<>(new Actor("Kevin_Bacon_(I)"), graph).setColor("orange");
 		populate(graph, max);
 		//System.out.println(graph.vertices.keySet().iterator().next());
 		//Kevin = (Vertex<Actor>) graph.vertices.get(1);
