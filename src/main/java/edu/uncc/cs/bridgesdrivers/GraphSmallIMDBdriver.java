@@ -18,7 +18,7 @@ public class GraphSmallIMDBdriver {
 	public static int max=500; //this variable holds the number of vertices
 	
 	public static File imdb;
-	public static String pathToFile = "/Users/mihai/Documents/workspace/bridges/src/main/java/edu/uncc/cs/bridgesdrivers/imdb-small-Revised.txt";
+	public static String pathToFile = "/Users/mihai/Documents/workspace/bridges/src/main/java/edu/uncc/cs/bridgesdrivers/imdb-small-Revised.txt"; 
 	
 	/**
 	 * this method reads the file and creates a file object
@@ -91,7 +91,45 @@ public class GraphSmallIMDBdriver {
 	public static void main(String[] args) {
 		GraphMovieActor<?> graph = new GraphMovieActor<>();
 		Bridge.init(71, "300587042698", graph, "mmehedin@uncc.edu");
+		Vertex<Actor> Kevin = new Vertex<>(new Actor("Kevin_Bacon_(I)"), graph);
 		populate(graph, max);
+		//System.out.println(graph.vertices.keySet().iterator().next());
+		//Kevin = (Vertex<Actor>) graph.vertices.get(1);
+		//---------------------------------------
+				//getting the first vertex child of vertex Bob(to get the identifier use getIdentifier()
+				//you can replace getIdentifier with any other method for setting the vertex attributes
+				System.out.println("Kevin's movie: " + Kevin.next().getIdentifier());
+				
+				//By calling a second time next() on the same vertex we can get another child of Bob
+				//different from the first
+				System.out.println(Kevin.next().getIdentifier());
+				
+				//calling again the next() method on Bob returns null if there are no unvisited children left
+				System.out.println(Kevin.next());
+				
+				//the next(index) method can retrieve a specific element 
+				//from the list of children, using its index
+				System.out.println(Kevin.next(1).getIdentifier());
+				
+				//setting the value of the first child of Bob to visited
+				System.out.println(Kevin.next(0).getIdentifier()+ " was visited is: " +((Vertex<Actor>) Kevin.next(0)).isVisited());
+				((Vertex<Actor>) Kevin.next(0)).setVisited();
+				//verifying if the first child vertex of Bob was visited
+				System.out.println(Kevin.next(0).getIdentifier()+ " was visited is: " +((Vertex<Actor>) Kevin.next(0)).isVisited());
+				
+				//---------------------------------------
+				
+				//getting the collection of neighboring edges
+				System.out.println(Kevin.getNeighbors());
+				
+				//getting the entire list of neighboring edges, 
+				//this is the address to the iterator over the hashmap of edges
+				System.out.println(Kevin.getNeighbors().iterator());
+				
+				//getting an iterator over the edges, 
+				//and the address of the first edge in the list with next()
+				System.out.println(Kevin.getNeighbors().iterator().next());
+				//---------------------------------------	
 		
 		Bridge.complete();
 	}
