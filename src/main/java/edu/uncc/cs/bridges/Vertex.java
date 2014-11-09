@@ -18,6 +18,7 @@ public class Vertex<T> extends AbstractVertex<T> {
 						// by default initialized to -1 meaning no children
 	public AbstractVertex<T> curr=null; //holds the pointer to the next() child of this vertex
 	public int currEdgeIndex = -1;
+	public boolean visited = false;
 	//private GraphVisualizer graph;
 	/**
 	 * Creates and vertex and adds it to the graph.
@@ -181,4 +182,28 @@ public class Vertex<T> extends AbstractVertex<T> {
 		return this.outgoing.get(currEdgeIndex);
 			
 	}
+	
+		
+		/**
+		 * this method sets the visited attribute to true
+		 */
+		public void setVisited(){
+			visited = true;
+		}
+		
+		/**
+		 * this method sets the visited attribute to false
+		 */
+		public void setNotVisited(){
+			visited = false;
+		}
+		
+		/**
+		 * This method returns the value of the visited attribute
+		 * @return the value of the visited attribute: true/false
+		 */
+		public boolean isVisited(){
+			return visited;
+		}
 }
+
