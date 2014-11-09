@@ -30,7 +30,7 @@ public class HelloWorld {
 		
 		Vertex<Follower> Dave = new Vertex("Dave", gv);
 		
-		//John.createEdge(Back);
+		//John.createEdge(Dave);
 
 		Dave.createEdge(John,"hashCodeWeight");
 		
@@ -44,43 +44,6 @@ public class HelloWorld {
 		Bob.setOpacity(1);// works
 		Bob.setSize(20);//works
 		HelloWorld.createEdge(John);
-		
-		//---------------------------------------
-
-		//getting the first vertex child of vertex Bob(to get the identifier use getIdentifier()
-		//you can replace getIdentifier with any other method for setting the vertex attributes
-		System.out.println(Bob.next().getIdentifier());
-		
-		//By calling a second time next() on the same vertex we can get another child of Bob
-		//different from the first
-		System.out.println(Bob.next().getIdentifier());
-		
-		//calling again the next() method on Bob returns null if there are no unvisited children left
-		System.out.println(Bob.next());
-		
-		//the next(index) method can retrieve a specific element 
-		//from the list of children, using its index
-		System.out.println(Bob.next(1).getIdentifier());
-		
-		//setting the value of the first child of Bob to visited
-		System.out.println(Bob.next(0).getIdentifier()+ " was visited is: " +((Vertex<Follower>) Bob.next(0)).isVisited());
-		((Vertex<Follower>) Bob.next(0)).setVisited();
-		//verifying if the first child vertex of Bob was visited
-		System.out.println(Bob.next(0).getIdentifier()+ " was visited is: " +((Vertex<Follower>) Bob.next(0)).isVisited());
-		
-		//---------------------------------------
-		
-		//getting the collection of neighboring edges
-		System.out.println(Bob.getNeighbors());
-		
-		//getting the entire list of neighboring edges, 
-		//this is the address to the iterator over the hashmap of edges
-		System.out.println(Bob.getNeighbors().iterator());
-		
-		//getting an iterator over the edges, 
-		//and the address of the first edge in the list with next()
-		System.out.println(Bob.getNeighbors().iterator().next());
-		//---------------------------------------
 		
 		Bridge.complete();
 	}
