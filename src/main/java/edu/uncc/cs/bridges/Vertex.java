@@ -43,7 +43,7 @@ public class Vertex<T> extends AbstractVertex<T> {
 	 * 
 	 * @param v2 The second vertex that edge is between.
 	 */
-	public AbstractEdge<T> createEdge(Vertex<T> v2){
+	public AbstractEdge<T> createEdge(Vertex<?> v2){
 		//identifier is to be used internally to find the Edges later
 		AbstractEdge<T> temp=getEdge(v2);
 		if (temp==null && !this.equals(v2)){
@@ -85,10 +85,10 @@ public class Vertex<T> extends AbstractVertex<T> {
 	 * @param v2 The second vertex.
 	 * @return The associated Edge.
 	 */
-	public AbstractEdge<T> getEdge(AbstractVertex<T> v2){
+	public AbstractEdge<T> getEdge(AbstractVertex<?> v2){
 		for(int i = 0; i < this.outgoing.size(); i++){ 
 			AbstractEdge<T> anEdge=this.outgoing.get(i);
-				if(anEdge.destination.compareTo(v2)==0){				
+				if(anEdge.destination.compareTo((AbstractVertex<T>) v2)==0){				
 					return this.outgoing.get(i);
 			}
 		}		
