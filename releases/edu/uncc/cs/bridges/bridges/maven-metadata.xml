@@ -11,13 +11,9 @@
       <version>0.99.99</version>
       <version>0.99.991</version>
       <version>0.99.992</version>
-<<<<<<< HEAD
-    </versions>
-    <lastUpdated>20141027201450</lastUpdated>
-=======
       <version>0.99.993</version>
+      <version>0.99.994</version>
     </versions>
-    <lastUpdated>20141029162524</lastUpdated>
->>>>>>> 7cb4b3a2f708cd3a6618e52a38c95343f9841ee8
+    <lastUpdated>20141110151029</lastUpdated>
   </versioning>
 </metadata>
