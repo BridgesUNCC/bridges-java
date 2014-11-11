@@ -101,16 +101,38 @@ public class Vertex<T> extends AbstractVertex<T> {
 	 * @param anIndex represents the index of the child vertex
 	 * @return AbstractVertex 
 	 */
+	/**
 	public AbstractVertex<T> next(int anIndex){
 		if (anIndex<0 || anIndex>=outgoing.size())
 			return null;
 		AbstractEdge<T> anEdge =this.outgoing.get(anIndex); 
-		if(anEdge.eOutgoing.get(0).equals(this))
+		if(anEdge.eOutgoing.get(0).equals(this)){
+			//System.out.println(anEdge.getDestination().getIdentifier());
 			return curr=anEdge.eOutgoing.get(1); //returns the vertex corresponding to edge destination
 											// where .get(0) is the vertex source for the edge (equivalent to the parent)
+			
+		}
 		return curr=anEdge.eOutgoing.get(0); 		//vice versa, if the destination is actually the current vector it returns the source
 											//after all, GraphVisualizer is an undirected graph
 	}
+	*/
+	
+	private AbstractVertex<T> nextHelper(int anIndex){
+		//System.out.println("anIndex: "+anIndex);
+		//System.out.println(this.outgoing);
+		if (anIndex<0 || anIndex>=outgoing.size())
+			return null;
+		AbstractEdge<T> anEdge =this.outgoing.get(anIndex);
+		if (((Vertex<T>)anEdge.getSource())==this){
+			System.out.println(((Vertex<T>)anEdge.getSource()).getIdentifier());
+			return anEdge.getDestination();
+		}
+		else{
+			currVertexIndex++;
+			return nextHelper(++anIndex);
+		}
+	}
+	
 	/**
 	 * This method returns the next child of the current vertex
 	 * If no children nodes are present it returns null
@@ -122,9 +144,20 @@ public class Vertex<T> extends AbstractVertex<T> {
 			currVertexIndex=0;
 		}
 		if(currVertexIndex!=-1 && currVertexIndex!=this.outgoing.size()){
-			return this.next(currVertexIndex++);}
+			return this.nextHelper(currVertexIndex++);}
 		else 
 			return null;
+	}
+	
+	public AbstractVertex<T> next(int anIndex){
+		if (anIndex <= currVertexIndex)
+			currVertexIndex = 0;
+		if (anIndex<0 || anIndex>=outgoing.size())
+			return null;
+		for (int i = 0; i<anIndex;i++){
+			next();
+		}
+		return next();
 	}
 
 	@Override
@@ -158,8 +191,28 @@ public class Vertex<T> extends AbstractVertex<T> {
 	 * This method returns a collection of exiting edges emerging from the current vertex
 	 * @return
 	 */
-	public Collection<? extends Vertex<T>> getNeighbors() {
-		Collection edges = new HashSet();
+	public Collection<? extends AbstractVertex<T>> getNeighbors() {
+		Collection<?> edges = getNeighboringEdges();
+		//Iterator i = new this.outgoing.iterator();
+		Collection<AbstractVertex<T>> children = new HashSet<>();
+		Iterator<?> i = edges.iterator();
+		while(i.hasNext()){
+			AbstractVertex<T> aChild = ((AbstractEdge<T>)i.next()).getDestination();
+			if (!children.contains(aChild) && !aChild.equals(this))
+				children.add(aChild);
+		}
+		
+		if (!edges.isEmpty())
+			return children;
+		return null;
+	}
+	
+	/**
+	 * This method returns a collection of exiting edges emerging from the current vertex
+	 * @return
+	 */
+	public Collection<?> getNeighboringEdges() {
+		Collection<AbstractEdge<?>> edges = new HashSet<>();
 		//Iterator i = new this.outgoing.iterator();
 		
 		edges.addAll(this.outgoing);
