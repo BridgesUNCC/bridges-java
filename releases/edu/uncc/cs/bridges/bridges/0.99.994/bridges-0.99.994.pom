@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.uncc.cs.bridges</groupId>
-  <artifactId>bridges</artifactId>
+  <artifactId>Bridges</artifactId>
   <version>0.99.994</version>
   <name>Bridges Curriculum Social Network Client</name>
   <description>Explore and visualize social network follower graphs and user status streams with a lightweight facade API. (Client)</description>
