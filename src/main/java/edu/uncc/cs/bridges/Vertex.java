@@ -118,13 +118,11 @@ public class Vertex<T> extends AbstractVertex<T> {
 	*/
 	
 	private AbstractVertex<T> nextHelper(int anIndex){
-		//System.out.println("anIndex: "+anIndex);
-		//System.out.println(this.outgoing);
 		if (anIndex<0 || anIndex>=outgoing.size())
 			return null;
 		AbstractEdge<T> anEdge =this.outgoing.get(anIndex);
 		if (((Vertex<T>)anEdge.getSource())==this){
-			System.out.println(((Vertex<T>)anEdge.getSource()).getIdentifier());
+			//System.out.println(((Vertex<T>)anEdge.getSource()).getIdentifier());
 			return anEdge.getDestination();
 		}
 		else{
