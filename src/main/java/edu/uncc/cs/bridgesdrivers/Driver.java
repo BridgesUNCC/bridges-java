@@ -1,5 +1,12 @@
 package edu.uncc.cs.bridgesdrivers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import edu.uncc.cs.bridges.*;
 
 public class Driver {
@@ -65,7 +72,19 @@ public class Driver {
 		//System.out.println(graph.vertices.keySet().iterator().next());
 		//Kevin = (Vertex<Actor>) graph.vertices.get(1);
 		//System.out.println(graph.vertices);
-		System.out.println(Kevin.getNeighbors());
+//		System.out.println(Kevin.getNeighbors());
+		
+		//getting an iterator over the edges, 
+		//and the address of the first edge in the list with next()
+		Iterator<Entry<AbstractVertex<?>, String>> i = Kevin.getNeighbors().entrySet().iterator();
+		while(i.hasNext()){
+			System.out.println(i.next().getKey().getIdentifier());
+		}
+
+		System.out.println(Kevin.getNeighbors().keySet().iterator().next()); 
+		System.out.println(Kevin.getNeighbors().entrySet().iterator().next());// this is the first child
+		//---------------------------------------	
+
 		//System.out.println(Kevin.outgoing.get(4).getDestination().getIdentifier());
 		System.out.println("Kevin's first movie: " + Kevin.next().getIdentifier());
 		System.out.println("Kevin's second movie: " + Kevin.next().getIdentifier());
@@ -74,7 +93,7 @@ public class Driver {
 		System.out.println("Kevin's second movie: " + Kevin.next().getIdentifier());
 		
 		
-		System.out.println("Kevin's [1] movie: " + Kevin.next(0).getIdentifier());
+		System.out.println("Kevin's [1] movie: " + Kevin.next(4).getIdentifier());
 		System.out.println("Kevin's [2] movie: " + Kevin.next(2).getIdentifier());
 		System.out.println("Kevin's [3] movie: " + Kevin.next(3).getIdentifier());
 		System.out.println("Kevin's [4] movie: " + Kevin.next(4).getIdentifier());

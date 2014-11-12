@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 /**
  * An implementation of AbstractVertex with HashMap for adjacency.
@@ -148,10 +150,10 @@ public class Vertex<T> extends AbstractVertex<T> {
 	}
 	
 	public AbstractVertex<T> next(int anIndex){
-		if (anIndex <= currVertexIndex)
-			currVertexIndex = 0;
 		if (anIndex<0 || anIndex>=outgoing.size())
 			return null;
+		//else if (anIndex <= currVertexIndex)
+			currVertexIndex = 0;
 		for (int i = 0; i<anIndex;i++){
 			next();
 		}
@@ -189,15 +191,15 @@ public class Vertex<T> extends AbstractVertex<T> {
 	 * This method returns a collection of exiting edges emerging from the current vertex
 	 * @return
 	 */
-	public Collection<? extends AbstractVertex<T>> getNeighbors() {
-		Collection<?> edges = getNeighboringEdges();
+	public LinkedHashMap<AbstractVertex<?>, String> getNeighbors() {
+		LinkedHashMap<AbstractEdge<T>, String> edges = getNeighboringEdges();
 		//Iterator i = new this.outgoing.iterator();
-		Collection<AbstractVertex<T>> children = new HashSet<>();
-		Iterator<?> i = edges.iterator();
+		LinkedHashMap<AbstractVertex<?>, String> children = new LinkedHashMap<>();
+		Iterator<Entry<AbstractEdge<T>, String>> i = edges.entrySet().iterator();
 		while(i.hasNext()){
-			AbstractVertex<T> aChild = ((AbstractEdge<T>)i.next()).getDestination();
-			if (!children.contains(aChild) && !aChild.equals(this))
-				children.add(aChild);
+			AbstractVertex<T> aChild = i.next().getKey().getDestination();
+			if (!children.containsKey(aChild) && !aChild.equals(this))
+				children.put(aChild, aChild.getIdentifier().toString());
 		}
 		
 		if (!edges.isEmpty())
@@ -209,11 +211,13 @@ public class Vertex<T> extends AbstractVertex<T> {
 	 * This method returns a collection of exiting edges emerging from the current vertex
 	 * @return
 	 */
-	public Collection<?> getNeighboringEdges() {
-		Collection<AbstractEdge<?>> edges = new HashSet<>();
-		//Iterator i = new this.outgoing.iterator();
-		
-		edges.addAll(this.outgoing);
+	public LinkedHashMap<AbstractEdge<T>, String> getNeighboringEdges() {
+		LinkedHashMap<AbstractEdge<T>, String> edges = new LinkedHashMap<>();
+		Iterator<AbstractEdge<T>> i = this.outgoing.iterator();
+		while(i.hasNext()){
+			AbstractEdge<T> anEdge = i.next();
+			edges.put(anEdge, anEdge.getIdentifier().toString());
+		}
 		if (!edges.isEmpty())
 			return edges;
 		return null;

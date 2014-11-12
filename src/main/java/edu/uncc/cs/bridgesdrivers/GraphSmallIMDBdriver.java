@@ -6,16 +6,18 @@
 package edu.uncc.cs.bridgesdrivers;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import edu.uncc.cs.bridges.*;
 
 public class GraphSmallIMDBdriver {
 
-	public static int max=500; //this variable holds the number of vertices
+	public static int max=1500; //this variable holds the number of vertices
 	
 	public static File imdb;
 	public static String pathToFile = "/Users/mihai/Documents/workspace/bridges/src/main/java/edu/uncc/cs/bridgesdrivers/imdb-small-Revised.txt"; 
@@ -124,11 +126,14 @@ public class GraphSmallIMDBdriver {
 				
 				//getting the entire list of neighboring edges, 
 				//this is the address to the iterator over the hashmap of edges
-				System.out.println(Kevin.getNeighbors().iterator());
-				
+				System.out.println(Kevin.getNeighbors().entrySet().iterator());
+				Iterator<Entry<AbstractVertex<?>, String>> i = Kevin.getNeighbors().entrySet().iterator();
 				//getting an iterator over the edges, 
 				//and the address of the first edge in the list with next()
-				System.out.println(Kevin.getNeighbors().iterator().next());
+				while(i.hasNext()){
+					System.out.println(i.next().getKey().getIdentifier());
+				}
+				System.out.println(Kevin.getNeighbors().entrySet().iterator().next());
 				//---------------------------------------	
 		
 		Bridge.complete();

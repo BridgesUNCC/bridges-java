@@ -2,8 +2,10 @@ package edu.uncc.cs.bridgesdrivers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import edu.uncc.cs.bridges.AbstractEdge;
+import edu.uncc.cs.bridges.AbstractVertex;
 import edu.uncc.cs.bridges.Follower;
 import edu.uncc.cs.bridges.Vertex;
 
@@ -150,10 +152,10 @@ public class minHeapEdges {
 	 * @return
 	 */
 	public static ArrayList<AbstractEdge<Follower>> createHeap(ArrayList<AbstractEdge<Follower>> minHeap, Vertex<Follower> root){
-		Iterator i=root.getNeighbors().iterator();
+		Iterator<Entry<AbstractVertex<?>, String>> i=root.getNeighbors().entrySet().iterator();
 		minHeap.add(null);  //the heap has a null element on its first position (index 0) this allows finding children by 2*index and 2*index+1
 		while(i.hasNext()){
-			minHeap.add((AbstractEdge<Follower>)i.next());
+			minHeap.add(root.getEdge(i.next().getKey()));
 			rearrange(minHeap, minHeap.size()-1);
 		}
 		return minHeap;
