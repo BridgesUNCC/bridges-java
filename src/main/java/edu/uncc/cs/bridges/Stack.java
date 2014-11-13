@@ -67,11 +67,11 @@ import java.util.Map.Entry;
 				setTop(new StackElement<>(identifier, this));
 			}
 			else if (currentNumber == 1){
-				setTop(new StackElement(identifier, this));		
+				setTop(new StackElement<>(identifier, this));		
 				bottomColor(bottom);
 			}
 			else {
-				setBottom(top = new StackElement(identifier, this));
+				setBottom(top = new StackElement<>(identifier, this));
 			}
 			return top;
 		}

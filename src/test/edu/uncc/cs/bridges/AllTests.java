@@ -25,7 +25,7 @@ import edu.uncc.cs.bridgesdrivers.SampleDataGeneratorTest;
 				BSTNodeTest.class, 
 				EdgeTest.class, 
 				SampleDataGeneratorTest.class, 
-				StackNodeTest.class, 
+				StackElementTest.class, 
 				VertexTest.class })
 public class AllTests {
 

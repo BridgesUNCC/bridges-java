@@ -20,7 +20,7 @@ public class AllTestsCommandLine {
 													BSTNodeTest.class, 
 													EdgeTest.class,
 													SampleDataGeneratorTest.class,
-													StackNodeTest.class,
+													StackElementTest.class,
 													VertexTest.class};
 
 	/**
