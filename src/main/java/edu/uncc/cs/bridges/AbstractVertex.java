@@ -119,7 +119,7 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 	/**
 	 * Take a node by it's identifier string and get it's node color
 	 * @param node  Node identifier
-	 * @returns  Diameter of the node
+	 * @return  Diameter of the node
 	 */
 	public double getSize() {
 		String prop = properties.get("size");
@@ -144,7 +144,7 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 	 * Get the node's current opacity
 	 * 0.0 is invisible
 	 * 1.0 is opaque
-	 * @returns  Alpha, in range [0.0, 1.0]
+	 * @return  Alpha, in range [0.0, 1.0]
 	 */
 	public double getOpacity() {
 		String prop = properties.get("opacity");
@@ -212,7 +212,7 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 	 *  "name": "Some identifier",
 	 *  "other CSS properties like color": any_JSON_value
 	 * }
-	 * @returns the encoded JSON string
+	 * @return the encoded JSON string
 	 */
 	String getRepresentation() {
 		String json = "{";
