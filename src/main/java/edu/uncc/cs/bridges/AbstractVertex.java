@@ -118,7 +118,6 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 	
 	/**
 	 * Take a node by it's identifier string and get it's node color
-	 * @param node  Node identifier
 	 * @return  Diameter of the node
 	 */
 	public double getSize() {
