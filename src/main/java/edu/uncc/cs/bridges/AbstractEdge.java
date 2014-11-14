@@ -85,9 +85,8 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 * For weights of other values greater than or equal to 7 the width is 5 pixel
 	 * Syntax for creating a random weight: 
 	 *                   source.createEdge(target,"hashCodeWeight");   
-	 * @param weight is the string "hashCodeWeight"
 	 * @param source contains the source Vertex
-	 * @param source contains the destination Vertex
+	 * @param destination contains the destination Vertex
 	 * @param random contains the String value "hashCodeWeight" later transformed in random double
 	 *  based on the String identifiers of source and destination vertices for a given edge 
 	 */
@@ -110,7 +109,6 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 * By default, the color will be chosen at random.
 	 * Setting the color to {@code null} or {@code ""} resets to defaults.
 	 * 
-	 * @param color Color as a String
 	 * @see Validation#validateColor(String)
 	 */
 	public String getColor() {
@@ -158,7 +156,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	/**
 	 * Set the dash array, effectively choosing patterns of dots and dashes for
 	 * edges.
-	 * @param dash CSS dash double array, for example "5,10,5"
+	 * @param dashes CSS dash double array, for example "5,10,5"
 	 */
 	public AbstractEdge<T> setDash(double[] dashes) {
 		if (dashes.length==0)
