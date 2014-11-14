@@ -39,7 +39,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	
 	/**
 	 * Get the width in pixels
-	 * @returns Width in pixels, in range [0.0, 50.0]
+	 * @return Width in pixels, in range [0.0, 50.0]
 	 */
 	public double getWeight() {
 		String weight = properties.get(this.weight);
@@ -177,7 +177,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	
 	/**
 	 * Get the width in pixels
-	 * @returns Width in pixels, in range [0.0, 50.0]
+	 * @return Width in pixels, in range [0.0, 50.0]
 	 */
 	public double getWidth() {
 		String prop = properties.get("width");
@@ -204,7 +204,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 * Get the edge's current opacity
 	 * 0.0 is invisible
 	 * 1.0 is opaque
-	 * @returns  Alpha, in range [0.0, 1.0]
+	 * @return  Alpha, in range [0.0, 1.0]
 	 */
 	public double getOpacity() {
 		String prop = properties.get("opacity");
@@ -258,7 +258,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 * 
 	 * 
 	 * @param vertex_to_integer		Vertex->index map (see description)
-	 * @returns the encoded JSON string
+	 * @return the encoded JSON string
 	 */
 	String getRepresentation(Map<AbstractVertex<T>, Integer> vertex_to_index) {
 		String json = "{";
