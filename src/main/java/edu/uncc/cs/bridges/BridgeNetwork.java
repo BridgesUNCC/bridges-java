@@ -141,7 +141,7 @@ public class BridgeNetwork {
      * ["quoted string"] to get an object attribute
      * 
      * @param sequence
-     * @param o
+     * @param original
      */
     public Object safeJSONTraverse(
     		String sequence,
@@ -253,7 +253,7 @@ public class BridgeNetwork {
      * Decorates HTTP error tracebacks with urls and server {"error": "..."}
      * responses.
      * Throws an IOException with URL if the server returns an empty response.
-     * Returns server response if the status code is >= 400
+     * Returns server response if the status code is greater than 400
      *     but can still throw other exceptions if JSON parsing fails when
      *     formatting server JSON response
      * @param request
@@ -344,7 +344,7 @@ public class BridgeNetwork {
     
     /**
      * Escape the URL and prepend the base URL.
-     * @returns the new url as a String
+     * @return the new url as a String
      */
     public String prepare(String url) {
     	String out = server_url;
