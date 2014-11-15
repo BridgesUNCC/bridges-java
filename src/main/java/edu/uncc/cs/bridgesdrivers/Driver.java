@@ -93,7 +93,18 @@ public class Driver {
 		System.out.println("Kevin's second movie: " + Kevin.next().getIdentifier());
 		
 		
-		System.out.println("Kevin's [1] movie: " + Kevin.next(4).getIdentifier());
+		System.out.println("Kevin's [1] movie: " + Kevin.next(1).getIdentifier());
+		System.out.println("Kevin's [2] movie: " + Kevin.next(2).getIdentifier());
+		System.out.println("Kevin's [3] movie: " + Kevin.next(3).getIdentifier());
+		System.out.println("Kevin's [4] movie: " + Kevin.next(4).getIdentifier());
+		
+		//this node is set to invisible
+		Kevin.setInvisible();
+		
+		//the node is still present in the client's structure
+		//including his children and edges
+		//but there is no visualization for it because was set to invisible
+		System.out.println("Kevin's [1] movie: " + Kevin.next(1).getIdentifier());
 		System.out.println("Kevin's [2] movie: " + Kevin.next(2).getIdentifier());
 		System.out.println("Kevin's [3] movie: " + Kevin.next(3).getIdentifier());
 		System.out.println("Kevin's [4] movie: " + Kevin.next(4).getIdentifier());
