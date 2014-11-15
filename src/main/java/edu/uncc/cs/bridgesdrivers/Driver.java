@@ -108,7 +108,9 @@ public class Driver {
 		System.out.println("Kevin's [2] movie: " + Kevin.next(2).getIdentifier());
 		System.out.println("Kevin's [3] movie: " + Kevin.next(3).getIdentifier());
 		System.out.println("Kevin's [4] movie: " + Kevin.next(4).getIdentifier());
-				
+		
+		//set visible again
+		Kevin.setVisible();		
 		Bridge.complete();
 	}
 
