@@ -42,7 +42,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	
 	/**
 	 * Get the width in pixels
-	 * @returns Width in pixels, in range [0.0, 50.0]
+	 * @return Width in pixels, in range [0.0, 50.0]
 	 */
 	public double getWeight() {
 		String weight = properties.get(this.weight);
@@ -88,9 +88,8 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 * For weights of other values greater than or equal to 7 the width is 5 pixel
 	 * Syntax for creating a random weight: 
 	 *                   source.createEdge(target,"hashCodeWeight");   
-	 * @param weight is the string "hashCodeWeight"
 	 * @param source contains the source Vertex
-	 * @param source contains the destination Vertex
+	 * @param destination contains the destination Vertex
 	 * @param random contains the String value "hashCodeWeight" later transformed in random double
 	 *  based on the String identifiers of source and destination vertices for a given edge 
 	 */
@@ -113,7 +112,6 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 * By default, the color will be chosen at random.
 	 * Setting the color to {@code null} or {@code ""} resets to defaults.
 	 * 
-	 * @param color Color as a String
 	 * @see Validation#validateColor(String)
 	 */
 	public String getColor() {
@@ -161,7 +159,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	/**
 	 * Set the dash array, effectively choosing patterns of dots and dashes for
 	 * edges.
-	 * @param dash CSS dash double array, for example "5,10,5"
+	 * @param dashes CSS dash double array, for example "5,10,5"
 	 */
 	public AbstractEdge<T> setDash(double[] dashes) {
 		if (dashes.length==0)
@@ -180,7 +178,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	
 	/**
 	 * Get the width in pixels
-	 * @returns Width in pixels, in range [0.0, 50.0]
+	 * @return Width in pixels, in range [0.0, 50.0]
 	 */
 	public double getWidth() {
 		String prop = properties.get("width");
@@ -207,7 +205,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 * Get the edge's current opacity
 	 * 0.0 is invisible
 	 * 1.0 is opaque
-	 * @returns  Alpha, in range [0.0, 1.0]
+	 * @return  Alpha, in range [0.0, 1.0]
 	 */
 	public double getOpacity() {
 		String prop = properties.get("opacity");
@@ -263,7 +261,7 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 * 
 	 * 
 	 * @param vertex_to_integer		Vertex->index map (see description)
-	 * @returns the encoded JSON string
+	 * @return the encoded JSON string
 	 */
 	String getRepresentation(Map<AbstractVertex<T>, Integer> vertex_to_index) {
 		String json = "{";
