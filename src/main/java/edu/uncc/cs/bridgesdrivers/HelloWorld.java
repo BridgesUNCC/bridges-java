@@ -17,6 +17,22 @@ public class HelloWorld {
 		
 		Vertex<Follower> HiWorld = new Vertex("Back", gv);
 		Vertex<Follower> Bob = new Vertex("Bob", gv);
+		
+		//set Bob invisible
+		Bob.setInvisible();
+		
+		//set Bob visible again
+		Bob.setVisible();
+		
+		//changing Bob's visibility depending on its last visibility status
+		Bob.toggleVisibility();
+		
+		//set HelloWorld invisible
+		HelloWorld.setInvisible();
+		
+		//change Bob's visibility again
+		Bob.toggleVisibility();
+		
 		Vertex<Follower> Steve = new Vertex("Steve", gv);
 		
 		AbstractEdge<Follower> anEdge=HelloWorld.createEdge(HiWorld);

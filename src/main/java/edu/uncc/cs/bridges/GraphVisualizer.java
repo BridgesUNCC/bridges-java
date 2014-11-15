@@ -70,19 +70,24 @@ public class GraphVisualizer<T> extends Visualizer {
 		for (AbstractVertex<T> v : Bridge.sorted_values(vertices)) {
 			// Manage vertex properties
 			// Encapsulate in {}, and remove the trailing comma.
-			nodes.append(v.getRepresentation() + ",");
-			vertex_to_index.put(v, i);
-			i++;
+			if (v.getVisibility()){
+				nodes.append(v.getRepresentation() + ",");
+				vertex_to_index.put(v, i);
+				i++;
+			}
 		}
 		
 		// You have to finish all the vertices before you can start any of the edges
 		//  because otherwise you might meet a vertex without an index
 		for (AbstractVertex<T> v : Bridge.sorted_values(vertices)) {
 			// Manage link properties
-			Collections.sort(v.outgoing);
-			for (AbstractEdge<T> e : v.outgoing) {
-				// Encapsulate in {}, and remove the trailing comma.
-				links.append(e.getRepresentation(vertex_to_index) + ",");
+			if (v.getVisibility()){
+				Collections.sort(v.outgoing);
+				for (AbstractEdge<T> e : v.outgoing) {
+					// Encapsulate in {}, and remove the trailing comma.
+					if (e.visibility)
+						links.append(e.getRepresentation(vertex_to_index) + ",");
+				}
 			}
 		}
 		return "{"

@@ -16,9 +16,8 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	
 	String hashCodeWeight = "hashCodeWeight";
 	String weight = "weight";
-	
+	boolean visibility = true; 
 	List<AbstractVertex<T>> eOutgoing;
-	
 	T identifier;
 	
 	public AbstractEdge(AbstractVertex<T> source, AbstractVertex<T> destination, T identifier){
@@ -26,6 +25,10 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 		this.destination = destination;
 		this.identifier = identifier;
 		
+		if (!source.getVisibility() || !destination.getVisibility())
+			this.visibility = false;
+		else
+			this.visibility = true;
 	}
 	
 	public AbstractEdge(String randomWeight){
@@ -242,6 +245,8 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	public AbstractVertex<T> getDestination(){
 		return destination;
 	}
+	
+	
 	
 	/**
 	 * Internal code for getting the properties of an Edge.

@@ -1,6 +1,7 @@
 package edu.uncc.cs.bridges;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,6 +32,7 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 	 * Visualization properties for this Node.
 	 */
 	Map<String, String> properties = new HashMap<>();
+	boolean visibility = true;
 	
 	/**
 	 * Create an AbstractVertex
@@ -164,6 +166,68 @@ abstract public class AbstractVertex<T> implements Comparable<AbstractVertex<T>>
 		Validation.validateOpacity(opacity);
 		properties.put("opacity", Double.toString(opacity));
 		
+		return this;
+	}
+	
+	public AbstractVertex<T> setVisibility(boolean vis){
+		visibility = vis;
+		Iterator<AbstractEdge<T>> it = this.outgoing.iterator();
+		while(it.hasNext()){
+			AbstractEdge<T> anEdge = it.next();
+			anEdge.visibility = vis;
+			/**
+			if (anEdge.getDestination() == this)
+				anEdge.getSource().outgoing.remove(anEdge);
+			else
+				anEdge.getDestination().outgoing.remove(anEdge);
+				*/
+		}
+		
+		return this;
+	}
+	
+	public boolean getVisibility(){
+		return visibility;
+	}
+	
+	public AbstractVertex<T> setInvisible(){
+		visibility = false;
+		Iterator<AbstractEdge<T>> it = this.outgoing.iterator();
+		while(it.hasNext()){
+			AbstractEdge<T> anEdge = it.next();
+			anEdge.visibility = false;
+			/**
+			if (anEdge.getDestination() == this)
+				anEdge.getSource().outgoing.remove(anEdge);
+			else
+				anEdge.getDestination().outgoing.remove(anEdge);
+				*/
+		}
+		return this;
+	}
+	
+	public AbstractVertex<T> setVisible(){
+		visibility = true;
+		Iterator<AbstractEdge<T>> it = this.outgoing.iterator();
+		while(it.hasNext()){
+			AbstractEdge<T> anEdge = it.next();
+			anEdge.visibility = true;
+		}
+		
+		return this;
+	}
+	
+	public AbstractVertex<T> toggleVisibility(){
+		if (visibility)
+			visibility = false;
+		else
+			visibility = true;
+		
+		Iterator<AbstractEdge<T>> it = this.outgoing.iterator();
+		while(it.hasNext()){
+			AbstractEdge<T> anEdge = it.next();
+			anEdge.visibility = this.visibility;
+		}
 		return this;
 	}
 	
