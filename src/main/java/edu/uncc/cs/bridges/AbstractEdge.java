@@ -264,13 +264,16 @@ public class AbstractEdge<T> implements Comparable<AbstractEdge<T>> {
 	 * @return the encoded JSON string
 	 */
 	String getRepresentation(Map<AbstractVertex<T>, Integer> vertex_to_index) {
-		String json = "{";
-		for (Entry<String, String> entry : properties.entrySet()) {
-			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
+		if(vertex_to_index.get(source)!=null && vertex_to_index.get(destination)!=null){
+			String json = "{";
+			for (Entry<String, String> entry : properties.entrySet()) {
+				json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
+			}
+				json += String.format("\"source\":%s,", vertex_to_index.get(source));
+				json += String.format("\"target\":%s", vertex_to_index.get(destination));
+			return json + "}";
 		}
-		json += String.format("\"source\":%s,", vertex_to_index.get(source));
-		json += String.format("\"target\":%s", vertex_to_index.get(destination));
-		return json + "}";
+		return null;
 	}
 
 	@Override

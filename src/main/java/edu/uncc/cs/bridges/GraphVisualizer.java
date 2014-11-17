@@ -85,7 +85,7 @@ public class GraphVisualizer<T> extends Visualizer {
 				Collections.sort(v.outgoing);
 				for (AbstractEdge<T> e : v.outgoing) {
 					// Encapsulate in {}, and remove the trailing comma.
-					if (e.visibility)
+					if (e.visibility && e.getRepresentation(vertex_to_index)!=null)
 						links.append(e.getRepresentation(vertex_to_index) + ",");
 				}
 			}
