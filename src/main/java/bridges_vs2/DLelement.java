@@ -14,7 +14,7 @@ public class DLelement<value, T> extends Element<value, T>{
 	 */
 	public DLelement (DLelement<value, T> original){
 		this.identifier = new String(original.getIdentifier());
-		this.visualizer = new Visualizer(original.getVisualizer());
+		this.visualizer = new ElementVisualizer(original.getVisualizer());
 		this.next = original.next;
 		this.prev = original.prev;
 	}

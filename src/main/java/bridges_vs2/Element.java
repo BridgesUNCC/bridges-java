@@ -1,14 +1,15 @@
 package bridges_vs2;
 
-public class Element<value, T> {
+public class Element<Value, Type> {
 	protected String identifier;
-	protected Visualizer visualizer;
-	private T aType;
-	private value val;
+	protected ElementVisualizer visualizer;
+	private Type type;
+	private Value val;
 	
 	
 	public Element(){
 		super();
+		this.visualizer = new ElementVisualizer();
 	}
 	
 	/**
@@ -18,19 +19,19 @@ public class Element<value, T> {
 	 * @param val
 	 */
 	public Element (String identifier,
-					value val){
+					Value val){
 		this.identifier = identifier;
 		this.val = val;
-		this.visualizer = new Visualizer();
+		this.visualizer = new ElementVisualizer();
 	}
 	
 	/**
 	 * performing deep copy of an element when needed
 	 * @param identifier
 	 */
-	public Element (Element<value, T> original){
+	public Element (Element<Value, Type> original){
 		this.identifier = new String(original.getIdentifier());
-		this.visualizer = new Visualizer(original.getVisualizer());
+		this.visualizer = new ElementVisualizer(original.getVisualizer());
 	}
 	
 	/**
@@ -44,7 +45,7 @@ public class Element<value, T> {
 	 * 
 	 * @return the visualizer
 	 */
-	public Visualizer getVisualizer(){
+	public ElementVisualizer getVisualizer(){
 		return visualizer;
 	}
 }

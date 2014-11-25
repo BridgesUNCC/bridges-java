@@ -1,37 +1,37 @@
 package bridges_vs2;
 
-public class Visualizer {
+public class ElementVisualizer {
 	private String aColor = "black";
 	private String aShape = "circle";
 	private String opacity = "0.5";
 	private double size = 10.0;
 	
-	public Visualizer (){
+	public ElementVisualizer (){
 		super();
 	}
 	
-	public Visualizer (String aColor){
+	public ElementVisualizer (String aColor){
 		super();
 		this.aColor = aColor;
 	}
 	
-	public Visualizer (String aColor, String aShape){
+	public ElementVisualizer (String aColor, String aShape){
 		this(aColor);
 		this.aShape = aShape;
 	}
 	
-	public Visualizer (double size){
+	public ElementVisualizer (double size){
 		super();
 		this.size = size;
 	}
 	
-	public Visualizer(String aColor, String aShape, String opacity, double size){
+	public ElementVisualizer(String aColor, String aShape, String opacity, double size){
 		this(aColor, aShape);
 		this.opacity = opacity;
 		this.size = size;
 	}
 	
-	public Visualizer (Visualizer v){
+	public ElementVisualizer (ElementVisualizer v){
 		this(v.getColor(), v.getShape(), v.getOpacity(), v.getSize());
 	}
 	

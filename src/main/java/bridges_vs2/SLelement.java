@@ -13,7 +13,7 @@ public class SLelement<value, T> extends Element<value, T>{
 	 */
 	public SLelement (SLelement<value, T> original){
 		this.identifier = new String(original.getIdentifier());
-		this.visualizer = new Visualizer(original.getVisualizer());
+		this.visualizer = new ElementVisualizer(original.getVisualizer());
 		this.next = original.next;
 	}
 
