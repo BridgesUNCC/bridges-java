@@ -16,7 +16,7 @@ import edu.uncc.cs.bridges.*;
  *
  */
 public class CCiCareers {
-	public static final int maxElements = 6; //number of tweets
+	public static final int maxElements = 40; //number of tweets
 	
 	/**
 	 * The populate method enQueues a specified number of Tweeter followers

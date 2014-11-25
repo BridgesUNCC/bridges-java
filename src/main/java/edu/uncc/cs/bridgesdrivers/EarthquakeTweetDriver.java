@@ -16,7 +16,7 @@ import edu.uncc.cs.bridges.*;
  *
  */
 public class EarthquakeTweetDriver {
-	public static final int maxElements = 10; //number of tweets
+	public static final int maxElements = 5000; //number of tweets
 	
 	/**
 	 * The populate method enQueues a specified number of Tweeter followers
