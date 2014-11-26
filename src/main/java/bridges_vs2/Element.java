@@ -1,10 +1,10 @@
 package bridges_vs2;
 
-public class Element<Value, Type> {
+public class Element<Val, Ty> {
 	protected String identifier;
 	protected ElementVisualizer visualizer;
-	private Type type;
-	private Value val;
+	private Ty Ty;
+	private Val val;
 	
 	
 	public Element(){
@@ -15,11 +15,11 @@ public class Element<Value, Type> {
 	/**
 	 * the constructor
 	 * @param identifier
-	 * @param aType
+	 * @param aTy
 	 * @param val
 	 */
 	public Element (String identifier,
-					Value val){
+					Val val){
 		this.identifier = identifier;
 		this.val = val;
 		this.visualizer = new ElementVisualizer();
@@ -29,7 +29,7 @@ public class Element<Value, Type> {
 	 * performing deep copy of an element when needed
 	 * @param identifier
 	 */
-	public Element (Element<Value, Type> original){
+	public Element (Element<Val, Ty> original){
 		this.identifier = new String(original.getIdentifier());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
 	}

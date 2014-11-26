@@ -1,5 +1,7 @@
 package bridges_vs2;
 
-public class ADTVisualizer {
+import java.util.LinkedHashMap;
 
+public class ADTVisualizer {
+	public LinkedHashMap<Element<Value, Type>, String> LList;
 }
