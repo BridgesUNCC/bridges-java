@@ -1,10 +1,18 @@
 package bridges_vs2;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import edu.uncc.cs.bridges.Validation;
+
 public class ElementVisualizer {
 	private String aColor = "black";
 	private String aShape = "circle";
-	private String opacity = "0.5";
+	private double opacity = 0.5;
 	private double size = 10.0;
+	// Visualization properties for this Node.
+	Map<String, String> properties = new HashMap<>();
 	
 	public ElementVisualizer (){
 		super();
@@ -13,19 +21,22 @@ public class ElementVisualizer {
 	public ElementVisualizer (String aColor){
 		super();
 		this.aColor = aColor;
+		setColor(aColor);
 	}
 	
 	public ElementVisualizer (String aColor, String aShape){
 		this(aColor);
 		this.aShape = aShape;
+		setShape(aShape);
 	}
 	
 	public ElementVisualizer (double size){
 		super();
 		this.size = size;
+		setSize(size);
 	}
 	
-	public ElementVisualizer(String aColor, String aShape, String opacity, double size){
+	public ElementVisualizer(String aColor, String aShape, double opacity, double size){
 		this(aColor, aShape);
 		this.opacity = opacity;
 		this.size = size;
@@ -35,37 +46,62 @@ public class ElementVisualizer {
 		this(v.getColor(), v.getShape(), v.getOpacity(), v.getSize());
 	}
 	
+	/**
+	 * The size is in pixels
+	 * @param size
+	 */
 	public void setSize(double size){
 		this.size = size;
+		Validation.validateSize(size);
+		properties.put("size", Double.toString(size));
 	}
 	
 	public double getSize(){
-		return size;
+		return Double.parseDouble(properties.get("size"));
 	}
 
 	public void setColor(String aColor){
-		this.aColor = aColor;
+		//this.aColor = aColor;
+		
+		aColor = aColor.toLowerCase();
+		if (aColor == null || aColor.isEmpty()) {
+			properties.put("color", "black");
+		} else {
+			Validation.validateColor(aColor);
+			properties.put("color", aColor);
+		}
 	}
 	
 	public String getColor(){
-		return aColor;
+		return properties.get("color");
 	} 
 	
 	public String getShape(){
-		return aShape;
+		return properties.get("shape");
 	}
 	
 	public void setShape(String aShape){
-		this.aShape = aShape;
+		//this.aShape = aShape;
 		
+		aShape = aShape.toLowerCase();
+		if(aShape.equals("square")){
+			aShape = "rect";
+		}
+		Validation.validateShape(aShape);
+		properties.put("shape", aShape);
 	}
 	
-	public void setOpacity(String opacity){
-		this.opacity = opacity;
+	public void setOpacity(double opacity){
+		Validation.validateOpacity(opacity);
+		properties.put("opacity", Double.toString(opacity));
 	}
 	
-	public String getOpacity(){
-		return opacity;
+	public double getOpacity(){
+		String prop = properties.get("opacity");
+		if (prop == null)
+			return 1.0;
+		else
+			return Double.parseDouble(properties.get("opacity"));
 	}
 	
 }

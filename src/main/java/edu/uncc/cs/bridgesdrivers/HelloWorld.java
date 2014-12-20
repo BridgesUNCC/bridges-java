@@ -80,7 +80,7 @@ public class HelloWorld {
 		//and the address of the first edge in the list with next()
 		System.out.println(Bob.getNeighbors().iterator().next());
 		//---------------------------------------	
-		
+		System.out.println(Bridge.getJSON());
 		Bridge.complete();
 	}
 

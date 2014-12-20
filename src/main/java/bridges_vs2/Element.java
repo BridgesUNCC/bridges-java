@@ -1,11 +1,12 @@
 package bridges_vs2;
 
-public class Element<Val, Ty> {
+import java.util.Map.Entry;
+
+public class Element<E> {
+	
 	protected String identifier;
 	protected ElementVisualizer visualizer;
-	private Ty Ty;
-	private Val val;
-	
+	private E value;
 	
 	public Element(){
 		super();
@@ -19,9 +20,9 @@ public class Element<Val, Ty> {
 	 * @param val
 	 */
 	public Element (String identifier,
-					Val val){
+					E val){
 		this.identifier = identifier;
-		this.val = val;
+		this.value = val;
 		this.visualizer = new ElementVisualizer();
 	}
 	
@@ -29,7 +30,7 @@ public class Element<Val, Ty> {
 	 * performing deep copy of an element when needed
 	 * @param identifier
 	 */
-	public Element (Element<Val, Ty> original){
+	public Element (Element<E> original){
 		this.identifier = new String(original.getIdentifier());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
 	}
@@ -48,4 +49,37 @@ public class Element<Val, Ty> {
 	public ElementVisualizer getVisualizer(){
 		return visualizer;
 	}
+	
+	public E getElement(){
+		return this.value;
+	}
+	
+	public String getClassName(){
+		return this.value.getClass().getName();
+	}
+	
+	public int compare(Element<E> e1){
+		return e1.getIdentifier().compareTo(this.getIdentifier());
+	}
+	
+	/**
+	 * Internal code for getting the properties of an AbstractVertex.
+	 * 
+	 * It produces (without the spaces or newlines):
+	 * <tt>
+	 * {
+	 *  "name": "Some identifier",
+	 *  "other CSS properties like color": any_JSON_value
+	 * }
+	 * @returns the encoded JSON string
+	 */
+	public String getRepresentation(){
+		String json = "{";
+		for (Entry<String, String> entry : visualizer.properties.entrySet()) {
+			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
+		}
+		json += String.format("\"name\": \"%s\"", identifier);
+		return json + "}";
+	}
+	
 }

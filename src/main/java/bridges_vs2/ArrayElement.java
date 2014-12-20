@@ -1,9 +1,9 @@
 package bridges_vs2;
 
-public class ArrayElement<value, T> extends Element<value, T>{
+public class ArrayElement<E> extends Element<E>{
 	
-	public ArrayElement(){
-		super();
+	public ArrayElement(String identifier, E type){
+		super(identifier, type);
 	}
 	
 }
