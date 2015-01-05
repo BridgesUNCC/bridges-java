@@ -1,4 +1,4 @@
-package bridges_vs2;
+package bridges_vs2.Network;
 
  
 import java.io.IOException;
@@ -16,6 +16,17 @@ import java.util.Map.Entry;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import bridges_vs2.Sources.Actor;
+import bridges_vs2.Sources.EarthquakeTweet;
+import bridges_vs2.Sources.Follower;
+import bridges_vs2.Sources.Movie;
+import bridges_vs2.Sources.SampleDataGenerator;
+import bridges_vs2.Sources.Tweet;
+import bridges_vs2.Sources.TwitterAccount;
+import bridges_vs2.Structure.ADTVisualizer;
+import bridges_vs2.Structure.SLelement;
+import bridges_vs2.Validation.DataFormatterException;
+import bridges_vs2.Validation.RateLimitException;
 import sun.security.pkcs11.wrapper.Functions;
 
 

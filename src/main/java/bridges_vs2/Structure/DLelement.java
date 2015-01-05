@@ -1,4 +1,5 @@
-package bridges_vs2;
+package bridges_vs2.Structure;
+
 
 public class DLelement<E> extends Element<E>{
 	private DLelement<E> next;

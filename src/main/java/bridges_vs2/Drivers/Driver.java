@@ -1,4 +1,9 @@
-package bridges_vs2;
+package bridges_vs2.Drivers;
+
+import bridges_vs2.Network.DataFormatter;
+import bridges_vs2.Sources.Tweet;
+import bridges_vs2.Structure.ADTVisualizer;
+import bridges_vs2.Structure.SLelement;
 
 public class Driver{
 

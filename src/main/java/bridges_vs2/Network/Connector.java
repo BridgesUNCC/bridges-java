@@ -1,4 +1,4 @@
-package bridges_vs2;
+package bridges_vs2.Network;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,6 +16,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+
+import bridges_vs2.Validation.RateLimitException;
 
 
 public class Connector {

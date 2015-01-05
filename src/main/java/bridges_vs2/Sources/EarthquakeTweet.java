@@ -1,7 +1,9 @@
-package bridges_vs2;
+package bridges_vs2.Sources;
 
 import java.util.Date;
 import java.util.Scanner;
+
+import bridges_vs2.Network.DataFormatter;
 /**
  * 
  * @author mihai mehedint

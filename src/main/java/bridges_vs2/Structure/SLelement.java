@@ -1,4 +1,5 @@
-package bridges_vs2;
+package bridges_vs2.Structure;
+
 
 public class SLelement<E> extends Element<E>{
 	protected SLelement<E> next; //the link to the next element 

@@ -1,4 +1,4 @@
-package bridges_vs2;
+package bridges_vs2.Structure;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class ADTVisualizer {
 		this.visualizerType = visualizerType;
 	}
 	
-	protected
+	public
 	<E> String getSLRepresentation(SLelement<E> e) {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();

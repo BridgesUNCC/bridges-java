@@ -1,4 +1,4 @@
-package bridges_vs2;
+package bridges_vs2.Structure;
 
 import java.util.Map.Entry;
 
