@@ -1,0 +1,28 @@
+@startuml
+top to bottom direction
+skinparam packageStyle rect
+actor student
+rectangle DataSource {
+}
+student-->DataSource
+rectangle DataSource {
+(RandomlyGenerated) .- (External Data, Locally Stored) : or
+(External Data, Locally Stored) .- (Live Data, via API) : or
+}
+rectangle BridgesClient {
+actor (BuildDataStructure) as bds
+actor (Elements,Links) as elmts
+elmts-->bds
+}
+DataSource-->BridgesClient
+rectangle BridgesServer {
+}
+BridgesClient-->BridgesServer : JSON
+rectangle DataStruct_Visualization {
+}
+BridgesServer-->DataStruct_Visualization
+DataStruct_Visualization<--(D3js)
+@enduml
+
+
+

@@ -1,10 +1,8 @@
-package bridges_vs2.Structure;
+package bridges_vs2.structure;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import edu.uncc.cs.bridges.Validation;
+import bridges_vs2.validation.*;
 
 public class ElementVisualizer {
 	private String aColor = "black";
@@ -62,24 +60,35 @@ public class ElementVisualizer {
 
 	public void setColor(String aColor){
 		//this.aColor = aColor;
-		
 		aColor = aColor.toLowerCase();
 		if (aColor == null || aColor.isEmpty()) {
-			properties.put("color", "black");
+			properties.put("color", this.aColor);
 		} else {
 			Validation.validateColor(aColor);
 			properties.put("color", aColor);
 		}
 	}
 	
+	/**
+	 * 
+	 * @return the element's color
+	 */
 	public String getColor(){
 		return properties.get("color");
 	} 
 	
+	/**
+	 * 
+	 * @return the element's shape
+	 */
 	public String getShape(){
 		return properties.get("shape");
 	}
 	
+	/**
+	 * Sets the shape of the element
+	 * @param aShape
+	 */
 	public void setShape(String aShape){
 		//this.aShape = aShape;
 		
@@ -91,11 +100,19 @@ public class ElementVisualizer {
 		properties.put("shape", aShape);
 	}
 	
+	/**
+	 * Sets the opacity
+	 * @param opacity
+	 */
 	public void setOpacity(double opacity){
 		Validation.validateOpacity(opacity);
 		properties.put("opacity", Double.toString(opacity));
 	}
 	
+	/**
+	 * 
+	 * @return the opacity value
+	 */
 	public double getOpacity(){
 		String prop = properties.get("opacity");
 		if (prop == null)

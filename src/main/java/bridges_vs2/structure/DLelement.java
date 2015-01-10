@@ -1,4 +1,4 @@
-package bridges_vs2.Structure;
+package bridges_vs2.structure;
 
 
 public class DLelement<E> extends Element<E>{
@@ -7,6 +7,11 @@ public class DLelement<E> extends Element<E>{
 	
 	public DLelement(){
 		super();
+		this.next = null;
+	}
+	
+	public DLelement (String identifier, E e){
+		super(identifier, e);
 	}
 	
 	public DLelement(DLelement<E> next, DLelement<E> prev) {
@@ -14,7 +19,12 @@ public class DLelement<E> extends Element<E>{
 		this.next = next;
 		this.prev = prev;
 	}
-
+	
+	public DLelement(E e, DLelement<E> next, DLelement<E> prev) {
+		super();
+		this.next = next;
+		this.prev = prev;
+	}
 	
 	/**
 	 * performing deep copy of an element when needed

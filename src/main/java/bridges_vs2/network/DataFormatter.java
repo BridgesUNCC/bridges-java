@@ -1,4 +1,4 @@
-package bridges_vs2.Network;
+package bridges_vs2.network;
 
  
 import java.io.IOException;
@@ -16,17 +16,17 @@ import java.util.Map.Entry;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import bridges_vs2.Sources.Actor;
-import bridges_vs2.Sources.EarthquakeTweet;
-import bridges_vs2.Sources.Follower;
-import bridges_vs2.Sources.Movie;
-import bridges_vs2.Sources.SampleDataGenerator;
-import bridges_vs2.Sources.Tweet;
-import bridges_vs2.Sources.TwitterAccount;
-import bridges_vs2.Structure.ADTVisualizer;
-import bridges_vs2.Structure.SLelement;
-import bridges_vs2.Validation.DataFormatterException;
-import bridges_vs2.Validation.RateLimitException;
+import bridges_vs2.sources.Actor;
+import bridges_vs2.sources.EarthquakeTweet;
+import bridges_vs2.sources.Follower;
+import bridges_vs2.sources.Movie;
+import bridges_vs2.sources.SampleDataGenerator;
+import bridges_vs2.sources.Tweet;
+import bridges_vs2.sources.TwitterAccount;
+import bridges_vs2.structure.ADTVisualizer;
+import bridges_vs2.structure.SLelement;
+import bridges_vs2.validation.DataFormatterException;
+import bridges_vs2.validation.RateLimitException;
 import sun.security.pkcs11.wrapper.Functions;
 
 
@@ -36,22 +36,37 @@ import sun.security.pkcs11.wrapper.Functions;
  * Initialize this class before using it, and call complete() afterward.
  * 
  * @author Sean Gallagher
+ * @param <E>
  * @secondAuthor Mihai Mehedint
  */
-public class DataFormatter {
+public class DataFormatter<E> {
 	
 	
+
 	private static int assignment;
 	private static double assignmentDecimal = 0.0;
 	private static String key;
-	private static ADTVisualizer visualizer;
-	private static SLelement root;
+	public ADTVisualizer<E> visualizer ;
+	//private SLelement<E> root;
 	private static Connector backend;
 	private static String userName;
 	private static List<Tweet> allTweets = new ArrayList<>();// this is the list off all the tweets retrieved
 	private static int maxRequests = 500; //This is the max number of tweets one can retrieve from the server
 	private static int tweetIterator = -1; //this iterator is used when requesting a new batch of tweets
 	
+
+	/**
+	 */
+	public DataFormatter() {
+		super();
+		this.visualizer = visualizer;
+	}
+	
+	public DataFormatter(int i, String string, String string2) throws Exception {
+		super();
+		init(i,string, string2);
+	}
+
 	// This exists to prevent duplicate error traces.
 	public static String getUserName() {
 		return userName;
@@ -69,14 +84,15 @@ public class DataFormatter {
 	 * @param assignment  The assignment number, for grading
 	 * @param visualizer  The visualizer, for assignment
 	 * @param username TODO
+	 * @throws Exception 
 	 */
-	public static <E> void init(int assignment, String key, SLelement<E> e, ADTVisualizer vis, String username) {
+	public <E> void init(int assignment, String key, String username) throws Exception {
 		DataFormatter.assignment = assignment;
 		DataFormatter.key = key;
-		DataFormatter.visualizer = vis;
-		root = e;
+		visualizer = new ADTVisualizer<>();
 		DataFormatter.backend = new Connector();
 		DataFormatter.userName = username;
+		
 	}
 	
 	/* Accessors and Mutators */
@@ -106,23 +122,23 @@ public class DataFormatter {
 	 * This method returns the current visualizer
 	 * @return visualizer
 	 */
-	public static ADTVisualizer getVisualizer() {
+	public ADTVisualizer<E> getVisualizer() {
 		return visualizer;
 	}
 	/**
 	 * This method sets the new DataFormatter visualizer
 	 * @param visualizer
 	 */
-	public static void setVisualizer(ADTVisualizer visualizer) {
-		DataFormatter.visualizer = visualizer;
+	public void setVisualizer(ADTVisualizer<E> visualizer) {
+		this.visualizer = visualizer;
 	}
 	
 	/**
 	 * This method returns the current JSON
 	 * @return JSON string
 	 */
-	public static String getJSON(){
-		return visualizer.getSLRepresentation(root);
+	public String getJSON(){
+		return visualizer.getSLRepresentation();
 	}
 	
 	/**
@@ -130,9 +146,9 @@ public class DataFormatter {
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
-	public static void update() {
+	public void update() {
         try {
-			backend.post("/assignments/" + getAssignment(), visualizer.getSLRepresentation(root));
+			backend.post("/assignments/" + getAssignment(), visualizer.getSLRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
 					+ " representation to the server. Are you connected to the"
@@ -157,7 +173,7 @@ public class DataFormatter {
 	 * 
 	 * This only calls update() but it could conceivably do more.
 	 */
-	public static void complete() {
+	public void complete() {
 		update();
 	}
 	
@@ -553,14 +569,14 @@ class Ident {
 	 * @param identifier
 	 */
 	public Ident(String identifier) {
-    	if (identifier.contains("/")) {
-    		String[] halves = identifier.split("/", 2);
-    		provider = halves[0];
-    		name = halves[1];
-    	} else {
-    		throw new RuntimeException("Provider or screenname missing in "
-    				+ identifier + ". Should look like: example.com/username");
-    	}
+	    	if (identifier.contains("/")) {
+	    		String[] halves = identifier.split("/", 2);
+	    		provider = halves[0];
+	    		name = halves[1];
+	    	} else {
+	    		throw new RuntimeException("Provider or screenname missing in "
+	    				+ identifier + ". Should look like: example.com/username");
+	    	}
 	}
 	
 	/**
@@ -573,12 +589,17 @@ class Ident {
 		this.name = name;
 	}
 	
+	/**
+	 * 
+	 * @param identifier
+	 * @return
+	 */
 	public static Ident fromAnyString(String identifier) {
-    	if (identifier.contains("/")) {
-    		return new Ident(identifier);
-    	} else {
-    		return new Ident("", identifier);
-    	}
+	    	if (identifier.contains("/")) {
+	    		return new Ident(identifier);
+	    	} else {
+	    		return new Ident("", identifier);
+	    	}
 	}
 	
 }

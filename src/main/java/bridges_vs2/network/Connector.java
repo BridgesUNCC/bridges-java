@@ -1,4 +1,4 @@
-package bridges_vs2.Network;
+package bridges_vs2.network;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,7 +17,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import bridges_vs2.Validation.RateLimitException;
+import bridges_vs2.validation.RateLimitException;
 
 
 public class Connector {

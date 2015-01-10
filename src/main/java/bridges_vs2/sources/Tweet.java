@@ -1,4 +1,4 @@
-package bridges_vs2.Sources;
+package bridges_vs2.sources;
 
 import java.util.Date;
 /**

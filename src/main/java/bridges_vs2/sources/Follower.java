@@ -1,4 +1,4 @@
-package bridges_vs2.Sources;
+package bridges_vs2.sources;
 
 public class Follower implements Comparable<Follower> {
 	protected String aFollower;

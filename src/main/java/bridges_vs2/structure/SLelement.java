@@ -1,4 +1,4 @@
-package bridges_vs2.Structure;
+package bridges_vs2.structure;
 
 
 public class SLelement<E> extends Element<E>{
@@ -11,7 +11,8 @@ public class SLelement<E> extends Element<E>{
 	
 	public SLelement (SLelement<E> next) {
 		super();
-		this.next = next;
+		validateVal(next);
+		this.next = next;	
 	}
 
 	/**
@@ -25,15 +26,38 @@ public class SLelement<E> extends Element<E>{
 		
 	}
 	
+	/**
+	 * Validates the element
+	 * @param value
+	 */
+	private void validateVal(SLelement<E> value) {
+		if (value == null){
+			throw new NullPointerException("Invalid value' " + value + "'. Expected"
+					+ " non null value.");
+		}	
+	}
+	
+	/**
+	 * Retrieves the next element
+	 * @return
+	 */
 	public SLelement<E> getNext() {
 		return next;
 	}
 	
+	/**
+	 * Sets the pointer to the next element
+	 * @param next
+	 */
 	public void setNext(SLelement<E> next) {
 		this.next = next;
 	}
 	
+	//method removed
+	//students will create this method
+	/*
 	public void removeNext(){
 		this.next = null;
 	}
+	*/
 }

@@ -76,7 +76,7 @@ public class EarthquakeTweetDriver {
 		//get another batch of 3 tweets to the queue
 		List<Tweet> aSecondTweetList = new ArrayList<>();
 		
-		Bridge.next(aSecondTweetList, 50);
+		Bridge.next(aSecondTweetList, -50);
 		
 		//add the new batch to the queue
 		populate(Bridge.convertTweet (aSecondTweetList), aQueue);

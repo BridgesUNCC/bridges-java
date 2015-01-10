@@ -1,4 +1,4 @@
-package bridges_vs2.Validation;
+package bridges_vs2.validation;
 
 /**
  * Exception indicating invalid CSS values.

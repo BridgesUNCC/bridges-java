@@ -1,4 +1,4 @@
-package bridges_vs2.Validation;
+package bridges_vs2.validation;
 
 import java.util.Arrays;
 import java.util.HashSet;

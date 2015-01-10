@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges;
+package bridges_vs2.validation;
 /**
  * @Title: Log file generator
 
@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 import java.util.logging.Logger;
 
 //public class OutputLog extends OutputStream{
-public class outputLog extends OutputStream{	
+public class OutputLog extends OutputStream{	
 	protected static PrintStream capturedStream;
 	protected static PrintStream newOutputStream;
 	protected static PrintStream logStream;
@@ -33,7 +33,7 @@ public class outputLog extends OutputStream{
 	/**
 	 * Constructor
 	 */
-	public outputLog(){
+	public OutputLog(){
 		try{
 			newOutputStream = System.out;
 			logFile = new FileOutputStream(generatedPath(), true);

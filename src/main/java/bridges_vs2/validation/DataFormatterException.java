@@ -1,6 +1,6 @@
 
 
-package bridges_vs2.Validation;
+package bridges_vs2.validation;
 
 /**
  * This is an extension of the Exception class
