@@ -6,13 +6,19 @@ public class SLelement<E> extends Element<E>{
 	
 	
 	public SLelement (String identifier, E e){
-		super(identifier, e);
+		super(e, identifier);
+		this.next = null;
 	}
-	
+
+
 	public SLelement (SLelement<E> next) {
 		super();
 		validateVal(next);
 		this.next = next;	
+	}
+	
+	public SLelement (E e, SLelement<E> next) {
+		super(e, next.getIdentifier());	
 	}
 
 	/**

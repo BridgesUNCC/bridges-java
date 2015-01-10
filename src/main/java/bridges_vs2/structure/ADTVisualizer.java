@@ -86,12 +86,17 @@ public class ADTVisualizer<E> {
 		return visualizerType;
 	}
 
+	/**
+	 * This method sets the visualizer type
+	 * @param visualizerType
+	 * @throws Exception
+	 */
 	protected void setVisualizerType(String visualizerType) throws Exception {
 		
 		if (ADT_TYPE.keySet().contains(visualizerType))
 			this.visualizerType = ADT_TYPE.get(visualizerType);
 		else if (visualizerType==null){
-			throw new Exception("Invalid value" + visualizerType + "'. Expected "
+			throw new Exception("Invalid value '" + visualizerType + "'. Expected "
 					+ " a string value: graph, stack, tree, or queue.");
 		}
 		this.visualizerType = visualizerType;

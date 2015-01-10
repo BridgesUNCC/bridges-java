@@ -8,10 +8,13 @@ public class DLelement<E> extends Element<E>{
 	public DLelement(){
 		super();
 		this.next = null;
+		this.prev = null;
 	}
 	
 	public DLelement (String identifier, E e){
-		super(identifier, e);
+		super(e, identifier);
+		this.next = null;
+		this.prev = null;
 	}
 	
 	public DLelement(DLelement<E> next, DLelement<E> prev) {

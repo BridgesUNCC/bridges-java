@@ -46,7 +46,7 @@ public class Driver{
 		//the cast is necessary to solve the problem of creating an array of generic types
 		//however casting to a subtype gives runtime errors for arrays
 		//Element<Tweet> [] array = (Element<Tweet> []) new Object[10]; 
-		
+		//Element<Tweet> [] array = new Element<Tweet> [10];
 		DataFormatter<Tweet> bridge = new DataFormatter<Tweet>(13,"300587042698", "mmehedin@uncc.edu");
 		ADTVisualizer<Tweet> vis = bridge.getVisualizer();
 		vis.setMapOfLinks(mapOfLinks); //set the structure holding the nodes and links i.e. hashmap
