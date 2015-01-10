@@ -5,7 +5,7 @@ public class ArrayElement<E> extends Element<E>{
 	public static int index;
 	
 	public ArrayElement(String identifier, E type){
-		super(identifier, type);
+		super(type, identifier);
 	}
 	
 }
