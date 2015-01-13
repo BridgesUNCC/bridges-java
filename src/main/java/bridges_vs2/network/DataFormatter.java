@@ -42,8 +42,6 @@ import sun.security.pkcs11.wrapper.Functions;
  * @secondAuthor Mihai Mehedint
  */
 public class DataFormatter<E> {
-	
-	
 
 	private static int assignment;
 	private static double assignmentDecimal = 0.0;
@@ -196,19 +194,25 @@ public class DataFormatter<E> {
 	 * @return JSON string
 	 */
 	public String getJSON(){
-		if (visualizer.getVisualizerIdentifier().equalsIgnoreCase("graph"))
+		System.out.println(visualizer.getVisualizerIdentifier());
+		if (visualizer.getVisualizerType().compareToIgnoreCase("graph")==0)
 			return visualizer.getGraphRepresentation();
-		else if (visualizer.getVisualizerIdentifier().equalsIgnoreCase("llist"))
+		else if (visualizer.getVisualizerType().equalsIgnoreCase("llist"))
 			return visualizer.getSLRepresentation(root);
 		else
 			return visualizer.getGraphRepresentation();
 	}
 	
-	
+	/**
+	 * This method calls the updateGraph() or updateSL() methods
+	 * depending upon the type of ADT being created.
+	 * These methods send the JSON to post() which ultimately executes the http request
+	 * from the server
+	 */
 	public void update(){
-		if (visualizer.visualizerIdentifier.equalsIgnoreCase("graph"))
+		if (visualizer.visualizerType.equalsIgnoreCase("graph"))
 			this.updateGraph();
-		else if (visualizer.visualizerIdentifier.equalsIgnoreCase("llist"))
+		else if (visualizer.visualizerType.equalsIgnoreCase("llist"))
 			this.updateSL();
 		else
 			this.updateGraph();
