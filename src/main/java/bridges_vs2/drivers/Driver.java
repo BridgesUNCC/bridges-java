@@ -32,6 +32,7 @@ public class Driver{
 		//changing the visual properties of the elements
 		test.getVisualizer().setColor("red");
 		test.getVisualizer().setSize(20);
+		//System.out
 		//test.setNext(test2);
 		//test.setNext(test3);
 		//test3.setNext(test4);
@@ -48,30 +49,27 @@ public class Driver{
 		//Element<Tweet> [] array = (Element<Tweet> []) new Object[10]; 
 		//Element<Tweet> [] array = new Element<Tweet> [10];
 		DataFormatter<Tweet> bridge = new DataFormatter<Tweet>(13,"300587042698", "mmehedin@uncc.edu");
-		ADTVisualizer<Tweet> vis = bridge.getVisualizer();
-		vis.setMapOfLinks(mapOfLinks); //set the structure holding the nodes and links i.e. hashmap
-		vis.setGraph();//set ADT type
+		bridge.setVisParam(mapOfLinks, "graph"); //set the structure holding the nodes and links i.e. hashmap
+												//set ADT type
 		
-		vis.add(test);
-		vis.add(test2);
-		vis.add(test3);
-		vis.add(test4);
-		vis.add(test5);
-		vis.add(test6);
-		vis.add(test7);
+		bridge.add(test);
+		bridge.add(test2);
+		bridge.add(test3);
+		bridge.add(test4);
+		bridge.add(test5);
+		bridge.add(test6);
+		bridge.add(test7);
 		
-		vis.setLink(test, test2);
-		vis.setLink(test, test3);
-		vis.setLink(test, test5);
-		vis.setLink(test2, test5);
-		vis.setLink(test3, test4);
+		bridge.setLink(test, test2);
+		bridge.setLink(test, test3);
+		bridge.setLink(test, test5);
+		bridge.setLink(test2, test5);
+		bridge.setLink(test3, test4);
 		
 		//this is used to visualize the JSON before it is passed to the server
 		//errors in JSON formatting can be visualized on the console
 		System.out.println(bridge.getJSON());
-		
-		bridge.complete();
-		
 		//aLog.returnStream();
+		bridge.complete();
 	}
 }

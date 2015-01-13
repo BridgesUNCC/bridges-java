@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,6 +25,7 @@ import bridges_vs2.sources.SampleDataGenerator;
 import bridges_vs2.sources.Tweet;
 import bridges_vs2.sources.TwitterAccount;
 import bridges_vs2.structure.ADTVisualizer;
+import bridges_vs2.structure.Element;
 import bridges_vs2.structure.SLelement;
 import bridges_vs2.validation.DataFormatterException;
 import bridges_vs2.validation.RateLimitException;
@@ -47,7 +49,7 @@ public class DataFormatter<E> {
 	private static double assignmentDecimal = 0.0;
 	private static String key;
 	public ADTVisualizer<E> visualizer ;
-	//private SLelement<E> root;
+	private SLelement<E> root;
 	private static Connector backend;
 	private static String userName;
 	private static List<Tweet> allTweets = new ArrayList<>();// this is the list off all the tweets retrieved
@@ -95,6 +97,19 @@ public class DataFormatter<E> {
 		
 	}
 	
+	/**
+	 * Initialize DataFormatters with Visualizer
+	 * @param <E>
+	 * @param assignment  The assignment number, for grading
+	 * @param visualizer  The visualizer, for assignment
+	 * @param username TODO
+	 */
+	public void init(int assignment, String key, SLelement<E> e, String username) throws Exception{
+		init(assignment, key, username);
+		root = e;
+		DataFormatter.backend = new Connector();
+	}
+	
 	/* Accessors and Mutators */
 
 	public static String getAssignment() {
@@ -134,21 +149,81 @@ public class DataFormatter<E> {
 	}
 	
 	/**
+	 * This method sets the HashMap and the type of ADT for the ADTVisualizer object
+	 * @param mapOfLinks
+	 * @param visualizerType
+	 * @throws Exception
+	 */
+	public void setVisParam(HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks,
+			String visualizerType) throws Exception{
+		visualizer.setMapOfLinks(mapOfLinks);
+		visualizer.setVisualizerType(visualizerType);
+	}
+	
+	/**
+	 * This method sets the HashMap and the type of ADT for the ADTVisualizer object
+	 * @param mapOfLinks
+	 * @param visualizerType
+	 * @throws Exception
+	 */
+	public void setVisParam(SLelement<E> e, 
+			String visualizerType) throws Exception{
+		root = e;
+		visualizer.setVisualizerType(visualizerType);
+	}
+	
+	/**
+	 * This method adds one Element to the ADTVisualizer object
+	 * @param e
+	 * @throws Exception
+	 */
+	public void add(Element<E> e) throws Exception{
+		visualizer.add(e);
+	}
+	
+	/**
+	 * This methods sets a link between 2 given elements of the ADTVisualizer
+	 * @param source
+	 * @param target
+	 * @throws Exception
+	 */
+	public void setLink(Element<E> source, Element<E> target) throws Exception{
+		visualizer.setLink(source, target);
+	}
+	
+	/**
 	 * This method returns the current JSON
 	 * @return JSON string
 	 */
 	public String getJSON(){
-		return visualizer.getSLRepresentation();
+		if (visualizer.getVisualizerIdentifier().equalsIgnoreCase("graph"))
+			return visualizer.getGraphRepresentation();
+		else if (visualizer.getVisualizerIdentifier().equalsIgnoreCase("llist"))
+			return visualizer.getSLRepresentation(root);
+		else
+			return visualizer.getGraphRepresentation();
 	}
+	
+	
+	public void update(){
+		if (visualizer.visualizerIdentifier.equalsIgnoreCase("graph"))
+			this.updateGraph();
+		else if (visualizer.visualizerIdentifier.equalsIgnoreCase("llist"))
+			this.updateSL();
+		else
+			this.updateGraph();
+		
+	}
+	
 	
 	/**
 	 * Update visualization metadata. This may be called many times.
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
-	public void update() {
+	public void updateGraph() {
         try {
-			backend.post("/assignments/" + getAssignment(), visualizer.getSLRepresentation());
+			backend.post("/assignments/" + getAssignment(), visualizer.getGraphRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
 					+ " representation to the server. Are you connected to the"
@@ -167,6 +242,35 @@ public class DataFormatter<E> {
         System.out.println("Check out your visuals at " + backend.prepare("/assignments/" + getAssignment() + "/" + userName) );
         assignmentDecimal+=0.01;
 	}
+	
+	/**
+	 * Update visualization metadata. This may be called many times.
+	 * This is usually an expensive operation and involves connecting to the network.
+	 * Calling this method is optional provided you call complete()
+	 */
+	public void updateSL() {
+        try {
+			backend.post("/assignments/" + getAssignment(), visualizer.getSLRepresentation(root));
+		} catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+		} catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+		} 
+        // Return a URL to the user
+        System.out.println("Check out your visuals at " + backend.prepare("/assignments/" + getAssignment() + "/" + userName) );
+        assignmentDecimal+=0.01;
+	}
+
+	
 
 	/**
 	 * Close down DataFormatters.

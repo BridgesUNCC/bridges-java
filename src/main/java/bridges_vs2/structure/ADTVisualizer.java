@@ -20,6 +20,7 @@ public class ADTVisualizer<E> {
 		put("stackVis","stack");
 		put("queueVis","queue");
 		put("treeVis","tree");
+		put("llist", "llist");
 		}};
 	public Map<String, String> linkProperties =  new HashMap<String, String>(){{
 															put("color","black");
@@ -91,13 +92,13 @@ public class ADTVisualizer<E> {
 	 * @param visualizerType
 	 * @throws Exception
 	 */
-	protected void setVisualizerType(String visualizerType) throws Exception {
+	public void setVisualizerType(String visualizerType) throws Exception {
 		
 		if (ADT_TYPE.keySet().contains(visualizerType))
 			this.visualizerType = ADT_TYPE.get(visualizerType);
 		else if (visualizerType==null){
 			throw new Exception("Invalid value '" + visualizerType + "'. Expected "
-					+ " a string value: graph, stack, tree, or queue.");
+					+ " a string value: graph, llist, stack, tree, or queue.");
 		}
 		this.visualizerType = visualizerType;
 	}
@@ -169,7 +170,8 @@ public class ADTVisualizer<E> {
 	 * @param e - is the starting element(node)
 	 * @return - this method returns the JSON 
 	 */
-	public String getSLRepresentation() {
+	public String getGraphRepresentation() {
+		System.out.println(this.getVisualizerIdentifier());
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
 		Map<Element<E>, Integer> element_to_index = new HashMap<>();
@@ -191,6 +193,46 @@ public class ADTVisualizer<E> {
 		}
 		
 
+		return "{"
+				+ "\"name\": \"edu.uncc.cs.bridges\","
+				+ "\"version\": \"0.4.0\","
+				+ "\"visual\": \""+visualizerType+"\","
+				+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
+				+ "\"links\": [" + Bridge.trimComma(links) + "]"
+				+ "}";
+	}
+	
+	
+	public
+	<E> String getSLRepresentation(SLelement<E> e) {
+		StringBuilder nodes = new StringBuilder();
+		StringBuilder links = new StringBuilder();
+		Map<Element<E>, Integer> element_to_index = new HashMap<>();
+		
+		int i=0;
+		SLelement<E> anElement = e;
+		do {
+			// Manage vertex properties
+			// Encapsulate in {}, and remove the trailing comma.
+			if (anElement != null){
+				nodes.append(anElement.getRepresentation() + ",");
+				element_to_index.put(anElement, i);
+				i++;
+			}
+			anElement = anElement.getNext();
+		}while(anElement != null);
+		
+		anElement = e;
+			// Manage link properties
+			do {
+				// Encapsulate in {}, and remove the trailing comma.
+				if (anElement.getNext() != null){
+					links.append(getLinkRepresentation(anElement, anElement.getNext(), element_to_index) + ",");
+				}	
+					anElement = anElement.getNext();
+				
+			}while(anElement!=null);
+			
 		return "{"
 				+ "\"name\": \"edu.uncc.cs.bridges\","
 				+ "\"version\": \"0.4.0\","

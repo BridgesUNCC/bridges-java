@@ -1,8 +1,6 @@
 package bridges_vs2.validation;
 /**
  * @Title: Log file generator
-
-
  * @author: Mihai Mehedint
  * @Description: this class generates a log file 
  * containing both the standard output and the error output

@@ -183,7 +183,7 @@ public class Validation {
 	 * 
 	 * @return whether the color is valid
 	 */
-	public static void validateColor(String color) {
+	public static void validateColor(String color) throws InvalidValueException{
 		if (COLOR_NAMES.contains(color)) {
 			// Named color
 			return;
