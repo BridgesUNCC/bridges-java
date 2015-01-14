@@ -194,7 +194,6 @@ public class DataFormatter<E> {
 	 * @return JSON string
 	 */
 	public String getJSON(){
-		System.out.println(visualizer.getVisualizerIdentifier());
 		if (visualizer.getVisualizerType().compareToIgnoreCase("graph")==0)
 			return visualizer.getGraphRepresentation();
 		else if (visualizer.getVisualizerType().equalsIgnoreCase("llist"))

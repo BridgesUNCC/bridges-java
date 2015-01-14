@@ -171,7 +171,6 @@ public class ADTVisualizer<E> {
 	 * @return - this method returns the JSON 
 	 */
 	public String getGraphRepresentation() {
-		System.out.println(this.getVisualizerIdentifier());
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
 		Map<Element<E>, Integer> element_to_index = new HashMap<>();
@@ -280,14 +279,14 @@ public class ADTVisualizer<E> {
 	/**
 	 * @return the visualizerIdentifier
 	 */
-	public String getVisualizerIdentifier() {
+	protected String getVisualizerIdentifier() {
 		return visualizerIdentifier;
 	}
 
 	/**
 	 * @param visualizerIdentifier the visualizerIdentifier to set
 	 */
-	public void setVisualizerIdentifier(String visualizerIdentifier) {
+	protected void setVisualizerIdentifier(String visualizerIdentifier) {
 		this.visualizerIdentifier = visualizerIdentifier;
 	}
 

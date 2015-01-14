@@ -50,7 +50,7 @@ public class Driver{
 		//Element<Tweet> [] array = new Element<Tweet> [10];
 		DataFormatter<Tweet> bridge = new DataFormatter<Tweet>(13,"300587042698", "mmehedin@uncc.edu");
 		bridge.setVisParam(mapOfLinks, "graph"); //set the structure holding the nodes and links i.e. hashmap
-			System.out.println(bridge.getVisualizer().getVisualizerIdentifier());									//set ADT type
+									//set ADT type
 		
 		bridge.add(test);
 		bridge.add(test2);
