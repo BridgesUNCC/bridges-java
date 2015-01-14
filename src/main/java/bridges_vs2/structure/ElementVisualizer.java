@@ -2,6 +2,7 @@ package bridges_vs2.structure;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import bridges_vs2.validation.*;
 
 public class ElementVisualizer {
@@ -10,7 +11,12 @@ public class ElementVisualizer {
 	private double opacity = 0.5;
 	private double size = 10.0;
 	// Visualization properties for this Node.
-	Map<String, String> properties = new HashMap<>();
+	Map<String, String> properties =  new HashMap<String, String>(){{
+		put("color","green");
+		put("opacity","1.0");
+		put("weight","1.0");
+		put("width","1.0");
+		}}; 
 	
 	public ElementVisualizer (){
 		super();
@@ -70,7 +76,6 @@ public class ElementVisualizer {
 	}
 	
 	/**
-	 * 
 	 * @return the element's color
 	 */
 	public String getColor(){
@@ -110,7 +115,6 @@ public class ElementVisualizer {
 	}
 	
 	/**
-	 * 
 	 * @return the opacity value
 	 */
 	public double getOpacity(){

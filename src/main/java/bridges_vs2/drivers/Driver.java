@@ -19,6 +19,9 @@ public class Driver{
 		//OutputLog aLog = new OutputLog();
 		
 		DLelement<Tweet> test = new DLelement<>("test", new Tweet("test"));
+		//a duplicate value throws an exception (uncomment below)
+		//DLelement<Tweet> test = new DLelement<>("test", new Tweet("test"));
+		
 		SLelement<Tweet> test2 = new SLelement<>("test2", new Tweet("test2"));
 		SLelement<Tweet> test3 = new SLelement<>("test3", new Tweet("test3"));
 		SLelement<Tweet> test4 = new SLelement<>("test4", new Tweet("test4"));

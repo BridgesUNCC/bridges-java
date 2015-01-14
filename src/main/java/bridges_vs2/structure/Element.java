@@ -129,6 +129,7 @@ public class Element<E> {
 	 * @returns the encoded JSON string
 	 */
 	public String getRepresentation(){
+		System.out.println(visualizer.properties.entrySet());
 		String json = "{";
 		for (Entry<String, String> entry : visualizer.properties.entrySet()) {
 			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());

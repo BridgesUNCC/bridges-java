@@ -3,7 +3,6 @@
  */
 package bridges_vs2.drivers;
 
-
 import bridges_vs2.network.DataFormatter;
 import bridges_vs2.sources.Tweet;
 import bridges_vs2.structure.ADTVisualizer;
