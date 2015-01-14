@@ -51,7 +51,7 @@ public class Bacon_Number2 {
 						aVertexActor = new Vertex<String>(actorName,gv);
 						aVertexActor.setColor("red");
 						aVertexActor.setOpacity(0.7);
-						aVertexActor.setInvisible();
+						//aVertexActor.setInvisible();
 					}
 					
 					if (gv.vertices.containsKey(movieName)){
@@ -61,7 +61,7 @@ public class Bacon_Number2 {
 						aVertexMovie = new Vertex<String>(movieName,gv);
 						aVertexMovie.setColor("green");
 						aVertexMovie.setOpacity(0.7);
-						aVertexMovie.setInvisible();
+						//aVertexMovie.setInvisible();
 					}
 					
 					edge=aVertexActor.createEdge(aVertexMovie);
@@ -178,7 +178,7 @@ public class Bacon_Number2 {
 			private static void visitBFSnode(Vertex<String> v) {
 							
 				v.setVisited();
-				v.setVisible();
+				//v.setVisible();
 			}
 
 		}

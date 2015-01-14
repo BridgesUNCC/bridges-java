@@ -8,7 +8,7 @@ apply plugin: 'signing'
 ///
 /// General
 ///
-group = "edu.uncc.cs.bridges_vs1"
+group = "edu.uncc.cs.bridges"
 version = "1.00"
 
 ///
