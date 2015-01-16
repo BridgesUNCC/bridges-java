@@ -14,7 +14,7 @@ public class DriverGraphList{
 		//create a log for all outputs with or without errors in user's home directory
 		//OutputLog aLog = new OutputLog();
 		
-		DLelement<Tweet> test = new DLelement<>("test", new Tweet("test"));
+		SLelement<Tweet> test = new SLelement<>("test", new Tweet("test"));
 		//a duplicate value throws an exception (uncomment below)
 		//DLelement<Tweet> test = new DLelement<>("test", new Tweet("test"));
 		
@@ -36,40 +36,34 @@ public class DriverGraphList{
 		//test.setNext(test3);
 		//test3.setNext(test4);
 		
-		//this hashmap stores the links between the nodes
-		//it is initialized here
-		//students have the option of using an array structure instead
-		//other types passed to the ADTvisualizer will throw an explicit error message
-		HashMap<Element<Tweet>, HashMap<String, Element<Tweet>>> mapOfLinks = new HashMap<>();
+
+		HashMap<Element<Tweet>, GraphList<Tweet>> adjacencyList = new HashMap<>();
 		//mapOfLinks.get(test).get("test");
-		//this could be used to initialize the array
-		//the cast is necessary to solve the problem of creating an array of generic types
-		//however casting to a subtype gives runtime errors for arrays
-		//Element<Tweet> [] array = (Element<Tweet> []) new Object[10]; 
-		//Element<Tweet> [] array = new Element<Tweet> [10];
+
 		
-		mapOfLinks.put(test, new HashMap<String, Element<Tweet>>());
-		mapOfLinks.get(test).put("test2", test2);
-		mapOfLinks.get(test).put("test3", test3);
-		mapOfLinks.get(test).put("test5", test5);
+		adjacencyList.put(test, new GraphList<Tweet>());
+		adjacencyList.put(test2, new GraphList<Tweet>());
+		adjacencyList.get(test).setNext(test2);
+		//adjacencyList.get(test).put("test3", test3);
+		//adjacencyList.get(test).put("test5", test5);
 		
 		Bridges<Tweet> bridge = new Bridges<Tweet>("300587042698", "mmehedin@uncc.edu");
-		bridge.setDataStructure(mapOfLinks, "graph"); //set the structure holding the nodes and links i.e. hashmap
+		bridge.setDataStructure("graph", adjacencyList); //set the structure holding the nodes and links i.e. hashmap
 									//set ADT type
 		
 		//bridge.add(test);
-		bridge.add(test2);
-		bridge.add(test3);
-		bridge.add(test4);
-		bridge.add(test5);
-		bridge.add(test6);
-		bridge.add(test7);
+		//bridge.add(test2);
+		//bridge.add(test3);
+		//bridge.add(test4);
+		//bridge.add(test5);
+		//bridge.add(test6);
+		//bridge.add(test7);
 		
 		//bridge.setLink(test, test2);
 		//bridge.setLink(test, test3);
 		//bridge.setLink(test, test5);
-		bridge.setLink(test2, test5);
-		bridge.setLink(test3, test4);
+		//bridge.setLink(test2, test5);
+		//bridge.setLink(test3, test4);
 		
 		//this is used to visualize the JSON before it is passed to the server
 		//errors in JSON formatting can be visualized on the console

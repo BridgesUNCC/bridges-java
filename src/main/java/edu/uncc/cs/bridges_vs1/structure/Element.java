@@ -24,8 +24,7 @@ public class Element<E> {
 	 * @param aTy
 	 * @param val
 	 */
-	public Element (E val, String identifier
-					){
+	public Element (E val, String identifier){
 		validateIdentifier(identifier);
 		validateVal(val);
 		this.identifier = identifier;

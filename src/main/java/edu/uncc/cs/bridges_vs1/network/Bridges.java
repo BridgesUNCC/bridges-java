@@ -13,8 +13,10 @@ package edu.uncc.cs.bridges_vs1.network;
 import java.io.IOException;
 import java.util.HashMap;
 
+import edu.uncc.cs.bridges_vs1.sources.Tweet;
 import edu.uncc.cs.bridges_vs1.structure.ADTVisualizer;
 import edu.uncc.cs.bridges_vs1.structure.Element;
+import edu.uncc.cs.bridges_vs1.structure.GraphList;
 import edu.uncc.cs.bridges_vs1.structure.SLelement;
 import edu.uncc.cs.bridges_vs1.validation.RateLimitException;
 
@@ -145,6 +147,19 @@ public class Bridges <E> {
 	}
 	
 	/**
+	 * This method is sets the adjacency list for the Graph ADT
+	 * @param adjacencyList
+	 * @param visualizerType
+	 * @throws Exception
+	 */
+	public void setDataStructure(
+			String visualizerType,
+			HashMap<Element<E>, GraphList<E>> adjacencyList) throws Exception{
+		visualizer.setAdjacencyList(adjacencyList);
+		visualizer.setVisualizerType(visualizerType);	
+	}
+	
+	/**
 	 * This method adds one Element to the ADTVisualizer object
 	 * @param e
 	 * @throws Exception
@@ -184,10 +199,12 @@ public class Bridges <E> {
 	 */
 	public void visualize(int assignment){
 		this.assignment = assignment;
-		if (visualizer.visualizerType.equalsIgnoreCase("graph"))
+		if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList().size()==0)
 			this.updateGraph(assignment);
 		else if (visualizer.visualizerType.equalsIgnoreCase("llist"))
 			this.updateSL(assignment);
+		else if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList().size()!=0)
+			this.updateGraphL(assignment);
 		else
 			this.updateGraph(assignment);
 		
@@ -248,7 +265,32 @@ public class Bridges <E> {
         assignmentDecimal+=0.01;
 	}
 
-	
+	/**
+	 * Update visualization metadata. This may be called many times.
+	 * This is usually an expensive operation and involves connecting to the network.
+	 * Calling this method is optional provided you call complete()
+	 */
+	public void updateGraphL(int assignment) {
+        try {
+        	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getGraphLRepresentation());
+		} catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central Bridges server is down. Try again later.\n"
+					+ e.getMessage());
+		} catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+		} 
+        // Return a URL to the user
+        System.out.println("Check out your visuals at " + formatter.getBackend().prepare("/assignments/" + getAssignment() + "/" + userName) );
+        assignmentDecimal+=0.01;
+	}
 
 	/**
 	 * Close down DataFormatters.
@@ -259,6 +301,7 @@ public class Bridges <E> {
 	public void complete(int assignment) {
 		visualize(assignment);
 	}
+
 	
 	
 	

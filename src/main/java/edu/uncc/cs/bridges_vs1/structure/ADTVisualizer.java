@@ -6,10 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import edu.uncc.cs.bridges.AbstractEdge;
-import edu.uncc.cs.bridges.AbstractVertex;
-import edu.uncc.cs.bridges.Bridge;
 import edu.uncc.cs.bridges_vs1.validation.InvalidValueException;
+import edu.uncc.cs.bridges_vs1.network.*;
 
 public class ADTVisualizer<E> {
 	//public LinkedHashMap<Element<Value, T>, String> LList;
@@ -29,6 +27,7 @@ public class ADTVisualizer<E> {
 															put("width","1.0");
 															}}; 
 	public HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks;
+	public HashMap<Element<E>, GraphList<E>> adjacencyList;
 	//public Map<Element<E>, Element<E> []> arrayOfLinks;
 	public Element<E> [] adtArray;
 	protected int arrayIndex;
@@ -196,11 +195,48 @@ public class ADTVisualizer<E> {
 				+ "\"name\": \"edu.uncc.cs.bridges\","
 				+ "\"version\": \"0.4.0\","
 				+ "\"visual\": \""+visualizerType+"\","
-				+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
-				+ "\"links\": [" + Bridge.trimComma(links) + "]"
+				+ "\"nodes\": [" + DataFormatter.trimComma(nodes) + "],"
+				+ "\"links\": [" + DataFormatter.trimComma(links) + "]"
 				+ "}";
 	}
 	
+	/**
+	 * This method creates a JSON representation of the graph 
+	 * @param e - is the starting element(node)
+	 * @return - this method returns the JSON 
+	 */
+	public String getGraphLRepresentation() {
+		StringBuilder nodes = new StringBuilder();
+		StringBuilder links = new StringBuilder();
+		Map<Element<E>, Integer> element_to_index = new HashMap<>();
+		
+		int i=0;
+		for (Entry<Element<E>, GraphList<E>> element: adjacencyList.entrySet()) {
+			nodes.append(element.getKey().getRepresentation() + ",");
+			element_to_index.put(element.getKey(), i);
+			i++;
+		}
+		// Manage link properties
+		for (Entry<Element<E>, GraphList<E>> elementList: adjacencyList.entrySet()) {
+			//System.out.println("Element entryset: "+element.getKey().getIdentifier()+"  "+element.getValue().entrySet().toString());
+			if (elementList.getValue().getSize()!=0){
+				Element<E> target = elementList.getValue().getStart();
+				links.append(getLinkRepresentation(elementList.getKey(), target, element_to_index) + ",");
+				for(int j = 0; j<elementList.getValue().getSize(); j++){
+					links.append(getLinkRepresentation(elementList.getKey(), ((SLelement<E>)target).getNext(), element_to_index) + ",");
+				}
+			}
+		}
+		
+
+		return "{"
+				+ "\"name\": \"edu.uncc.cs.bridges\","
+				+ "\"version\": \"0.4.0\","
+				+ "\"visual\": \""+visualizerType+"\","
+				+ "\"nodes\": [" + DataFormatter.trimComma(nodes) + "],"
+				+ "\"links\": [" + DataFormatter.trimComma(links) + "]"
+				+ "}";
+	}
 	
 	public
 	<E> String getSLRepresentation(SLelement<E> e) {
@@ -236,8 +272,8 @@ public class ADTVisualizer<E> {
 				+ "\"name\": \"edu.uncc.cs.bridges\","
 				+ "\"version\": \"0.4.0\","
 				+ "\"visual\": \""+visualizerType+"\","
-				+ "\"nodes\": [" + Bridge.trimComma(nodes) + "],"
-				+ "\"links\": [" + Bridge.trimComma(links) + "]"
+				+ "\"nodes\": [" + DataFormatter.trimComma(nodes) + "],"
+				+ "\"links\": [" + DataFormatter.trimComma(links) + "]"
 				+ "}";
 	}
 	
@@ -303,6 +339,20 @@ public class ADTVisualizer<E> {
 	public void setMapOfLinks(
 			HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks) {
 		this.mapOfLinks = mapOfLinks;
+	}
+
+	/**
+	 * @return the adjacencyList
+	 */
+	public HashMap<Element<E>, GraphList<E>> getAdjacencyList() {
+		return adjacencyList;
+	}
+
+	/**
+	 * @param adjacencyList the adjacencyList to set
+	 */
+	public void setAdjacencyList(HashMap<Element<E>, GraphList<E>> adjacencyList) {
+		this.adjacencyList = adjacencyList;
 	}
 	
 }
