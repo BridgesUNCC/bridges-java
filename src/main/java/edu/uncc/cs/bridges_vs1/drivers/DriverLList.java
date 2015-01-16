@@ -3,9 +3,8 @@
  */
 package edu.uncc.cs.bridges_vs1.drivers;
 
-import edu.uncc.cs.bridges_vs1.network.DataFormatter;
+import edu.uncc.cs.bridges_vs1.network.Bridges;
 import edu.uncc.cs.bridges_vs1.sources.Tweet;
-import edu.uncc.cs.bridges_vs1.structure.ADTVisualizer;
 import edu.uncc.cs.bridges_vs1.structure.SLelement;
 
 /**
@@ -27,12 +26,12 @@ public class DriverLList {
 			test3.setNext(test4);
 			test2.setNext(test3);
 			//create a DataFormater object
-			DataFormatter<Tweet> bridge = new DataFormatter<Tweet>(13,"300587042698", "mmehedin@uncc.edu");
+			Bridges<Tweet> bridge = new Bridges<Tweet>("300587042698", "mmehedin@uncc.edu");
 			//set visualizer type
-			bridge.setVisParam(test, "llist");
+			bridge.setDataStructure(test, "llist");
 			//Print the JSON to console
 			System.out.println(bridge.getJSON());
-			bridge.complete();
+			bridge.complete(13);
 		}
 }
 

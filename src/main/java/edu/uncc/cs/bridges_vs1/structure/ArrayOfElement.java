@@ -11,19 +11,19 @@ package edu.uncc.cs.bridges_vs1.structure;
 public class ArrayOfElement<E>{
 
 	  // declare the class instance
-	  private Class<E> tClass;
+	  private Class<?> e;
 
 	  // code to initialize tClass
 	  /**
 		 * @param tClass
 		 */
-		public ArrayOfElement(Class<E> tClass) {
+		public ArrayOfElement(Class<?> e) {
 			super();
-			this.tClass = tClass;
+			this.e = e;
 		}
 
 	  // returns an array of the parameterized type
-	  public <E> E[] returnArray(){
-	    return (E[])java.lang.reflect.Array.newInstance(tClass, 10);
+	  public <E> Element<E>[] returnArray(){
+	    return (Element<E>[])java.lang.reflect.Array.newInstance(e, 10);
 	  }
 	}

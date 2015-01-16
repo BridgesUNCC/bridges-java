@@ -352,8 +352,8 @@ public class Connector {
     	String out = server_url;
     	out += url
     			.replace(" ", "%20")
-      			.replace("$assignment", DataFormatter.getAssignment());
-    	out += "?apikey=" + DataFormatter.getKey();
+      			.replace("$assignment", Bridges.getAssignment());
+    	out += "?apikey=" + Bridges.getKey();
       	return out;
     }    
 }

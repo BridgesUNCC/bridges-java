@@ -7,7 +7,7 @@ import edu.uncc.cs.bridges_vs1.sources.Tweet;
 import edu.uncc.cs.bridges_vs1.structure.*;
 import edu.uncc.cs.bridges_vs1.validation.OutputLog;
 
-public class Driver{
+public class DriverGraphList{
 
 	public static <E> void main(String[] args) throws Exception{
 		
