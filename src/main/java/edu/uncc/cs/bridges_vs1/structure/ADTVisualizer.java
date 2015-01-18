@@ -27,7 +27,7 @@ public class ADTVisualizer<E> {
 															put("width","1.0");
 															}}; 
 	public HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks;
-	public HashMap<Element<E>, GraphList<E>> adjacencyList;
+	public HashMap<String, SLelement<E>> adjacencyList;
 	//public Map<Element<E>, Element<E> []> arrayOfLinks;
 	public Element<E> [] adtArray;
 	protected int arrayIndex;
@@ -172,12 +172,12 @@ public class ADTVisualizer<E> {
 	public String getGraphRepresentation() {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		Map<Element<E>, Integer> element_to_index = new HashMap<>();
+		Map<String, Integer> element_to_index = new HashMap<>();
 		
 		int i=0;
 		for (Entry<Element<E>, HashMap<String, Element<E>>> element: mapOfLinks.entrySet()) {
 			nodes.append(element.getKey().getRepresentation() + ",");
-			element_to_index.put(element.getKey(), i);
+			element_to_index.put(element.getKey().getIdentifier(), i);
 			i++;
 		}
 		// Manage link properties
@@ -190,7 +190,6 @@ public class ADTVisualizer<E> {
 			}
 		}
 		
-
 		return "{"
 				+ "\"name\": \"edu.uncc.cs.bridges\","
 				+ "\"version\": \"0.4.0\","
@@ -208,22 +207,23 @@ public class ADTVisualizer<E> {
 	public String getGraphLRepresentation() {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		Map<Element<E>, Integer> element_to_index = new HashMap<>();
+		Map<String, Integer> element_to_index = new HashMap<>();
 		
 		int i=0;
-		for (Entry<Element<E>, GraphList<E>> element: adjacencyList.entrySet()) {
-			nodes.append(element.getKey().getRepresentation() + ",");
-			element_to_index.put(element.getKey(), i);
+		for (Entry<String, SLelement<E>> element: adjacencyList.entrySet()) {
+			nodes.append(element.getValue().getRepresentation() + ",");
+			element_to_index.put(element.getValue().getIdentifier(), i);
 			i++;
 		}
 		// Manage link properties
-		for (Entry<Element<E>, GraphList<E>> elementList: adjacencyList.entrySet()) {
-			//System.out.println("Element entryset: "+element.getKey().getIdentifier()+"  "+element.getValue().entrySet().toString());
-			if (elementList.getValue().getSize()!=0){
-				Element<E> target = elementList.getValue().getStart();
-				links.append(getLinkRepresentation(elementList.getKey(), target, element_to_index) + ",");
-				for(int j = 0; j<elementList.getValue().getSize(); j++){
-					links.append(getLinkRepresentation(elementList.getKey(), ((SLelement<E>)target).getNext(), element_to_index) + ",");
+		for (Entry<String, SLelement<E>> elementList: adjacencyList.entrySet()){
+			SLelement<E> currElement = elementList.getValue();
+			if (currElement.getNext()!=null)
+			if (currElement.getNext()!=null){
+				SLelement<E> target = currElement.getNext();
+				while(target!=null){
+					links.append(getLinkRepresentation(currElement, target, element_to_index) + ",");
+					target=target.getNext();
 				}
 			}
 		}
@@ -242,7 +242,7 @@ public class ADTVisualizer<E> {
 	<E> String getSLRepresentation(SLelement<E> e) {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		Map<Element<E>, Integer> element_to_index = new HashMap<>();
+		Map<String, Integer> element_to_index = new HashMap<>();
 		
 		int i=0;
 		SLelement<E> anElement = e;
@@ -251,7 +251,7 @@ public class ADTVisualizer<E> {
 			// Encapsulate in {}, and remove the trailing comma.
 			if (anElement != null){
 				nodes.append(anElement.getRepresentation() + ",");
-				element_to_index.put(anElement, i);
+				element_to_index.put(anElement.getIdentifier(), i);
 				i++;
 			}
 			anElement = anElement.getNext();
@@ -295,7 +295,10 @@ public class ADTVisualizer<E> {
 	 * @param element_to_index holds the integer representation of the node
 	 * @return
 	 */
-	<E> String getLinkRepresentation(Element<E>source, Element<E>target, Map<Element<E>, Integer> element_to_index) {
+	//Changed the Map<Element<E>, Integer> element_to_index to Map<String, Integer> element_to_index
+	//this allows for creating the Link representation using copy of SLelement objects
+	//however the down side is there cannot be elements with the same String identifier
+	<E> String getLinkRepresentation(Element<E>source, Element<E>target, Map<String, Integer> element_to_index) {
 		String json = "{";
 		if (source == null || target == null){
 			return json = "";
@@ -305,8 +308,8 @@ public class ADTVisualizer<E> {
 		
 			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
 			}
-			json += String.format("\"source\":%s,", element_to_index.get(source));
-			json += String.format("\"target\":%s", element_to_index.get(target));
+			json += String.format("\"source\":%s,", element_to_index.get(source.getIdentifier()));
+			json += String.format("\"target\":%s", element_to_index.get(target.getIdentifier()));
 			//System.out.println("json: " + json);
 			return json + "}";
 		}
@@ -344,15 +347,15 @@ public class ADTVisualizer<E> {
 	/**
 	 * @return the adjacencyList
 	 */
-	public HashMap<Element<E>, GraphList<E>> getAdjacencyList() {
+	public HashMap<String, SLelement<E>> getAdjacencyList() {
 		return adjacencyList;
 	}
 
 	/**
-	 * @param adjacencyList the adjacencyList to set
+	 * @param adjacencyList2 the adjacencyList to set
 	 */
-	public void setAdjacencyList(HashMap<Element<E>, GraphList<E>> adjacencyList) {
-		this.adjacencyList = adjacencyList;
+	public void setAdjacencyList(HashMap<String, SLelement<E>> adjacencyList2) {
+		this.adjacencyList = adjacencyList2;
 	}
 	
 }

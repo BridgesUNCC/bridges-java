@@ -7,7 +7,7 @@ import edu.uncc.cs.bridges_vs1.sources.Tweet;
 import edu.uncc.cs.bridges_vs1.structure.*;
 import edu.uncc.cs.bridges_vs1.validation.OutputLog;
 
-public class DriverGraphList{
+public class DriverGraphAdjacencyList{
 
 	public static <E> void main(String[] args) throws Exception{
 		
@@ -15,7 +15,7 @@ public class DriverGraphList{
 		//OutputLog aLog = new OutputLog();
 		
 		SLelement<Tweet> test = new SLelement<>("test", new Tweet("test"));
-		//a duplicate value throws an exception (uncomment below)
+		//a duplicate value throws an exception (uncomment the line below to test)
 		//DLelement<Tweet> test = new DLelement<>("test", new Tweet("test"));
 		
 		SLelement<Tweet> test2 = new SLelement<>("test2", new Tweet("test2"));
@@ -31,22 +31,18 @@ public class DriverGraphList{
 		//changing the visual properties of the elements
 		test.getVisualizer().setColor("red");
 		test.getVisualizer().setSize(20);
-		//System.out
-		//test.setNext(test2);
-		//test.setNext(test3);
-		//test3.setNext(test4);
+		//test.setNext(new SLelement<>(test2).setNext(new SLelement<>(test3)));
+		test.setNext(new SLelement<>(test2));
+		test2.setNext(new SLelement<>(test4));
+		//this is the adjacency list, with the HashMap<key, value> where 
+		//key represents the element's identifier and 
+		//value is the element.
 		
+		HashMap<String, SLelement<Tweet>> adjacencyList = new HashMap<>();
+		adjacencyList.put("test", test);
+		adjacencyList.put("test2", test2);
+		adjacencyList.put("test4", test4);
 
-		HashMap<Element<Tweet>, GraphList<Tweet>> adjacencyList = new HashMap<>();
-		//mapOfLinks.get(test).get("test");
-
-		
-		adjacencyList.put(test, new GraphList<Tweet>());
-		adjacencyList.put(test2, new GraphList<Tweet>());
-		adjacencyList.get(test).setNext(test2);
-		//adjacencyList.get(test).put("test3", test3);
-		//adjacencyList.get(test).put("test5", test5);
-		
 		Bridges<Tweet> bridge = new Bridges<Tweet>("300587042698", "mmehedin@uncc.edu");
 		bridge.setDataStructure("graph", adjacencyList); //set the structure holding the nodes and links i.e. hashmap
 									//set ADT type
@@ -65,10 +61,11 @@ public class DriverGraphList{
 		//bridge.setLink(test2, test5);
 		//bridge.setLink(test3, test4);
 		
-		//this is used to visualize the JSON before it is passed to the server
+
 		//errors in JSON formatting can be visualized on the console
 		System.out.println(bridge.getJSON());
 		//aLog.returnStream();
+		
 		bridge.complete(13);
 	}
 }

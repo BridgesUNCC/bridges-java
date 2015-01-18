@@ -4,9 +4,8 @@
 package edu.uncc.cs.bridges_vs1.structure;
 
 /**
- * @author mihai
- * @
- *
+ * @author Mihai Mehedint
+ * @date 01/17/2015
  */
 public class GraphList <E>{
 	private int size; //size of list

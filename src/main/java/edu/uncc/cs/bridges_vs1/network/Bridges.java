@@ -154,7 +154,7 @@ public class Bridges <E> {
 	 */
 	public void setDataStructure(
 			String visualizerType,
-			HashMap<Element<E>, GraphList<E>> adjacencyList) throws Exception{
+			HashMap<String, SLelement<E>> adjacencyList) throws Exception{
 		visualizer.setAdjacencyList(adjacencyList);
 		visualizer.setVisualizerType(visualizerType);	
 	}
@@ -183,10 +183,12 @@ public class Bridges <E> {
 	 * @return JSON string
 	 */
 	public String getJSON(){
-		if (visualizer.getVisualizerType().compareToIgnoreCase("graph")==0)
+		if (visualizer.getVisualizerType().compareToIgnoreCase("graph")==0 && visualizer.getAdjacencyList() == null)
 			return visualizer.getGraphRepresentation();
 		else if (visualizer.getVisualizerType().equalsIgnoreCase("llist"))
 			return visualizer.getSLRepresentation(root);
+		else if (visualizer.getVisualizerType().compareToIgnoreCase("graph")==0 && visualizer.getAdjacencyList() != null)
+			return visualizer.getGraphLRepresentation();
 		else
 			return visualizer.getGraphRepresentation();
 	}
@@ -199,14 +201,17 @@ public class Bridges <E> {
 	 */
 	public void visualize(int assignment){
 		this.assignment = assignment;
-		if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList().size()==0)
+		if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList()==null)
 			this.updateGraph(assignment);
 		else if (visualizer.visualizerType.equalsIgnoreCase("llist"))
 			this.updateSL(assignment);
-		else if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList().size()!=0)
+		else if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList()!=null)
 			this.updateGraphL(assignment);
-		else
+		else{
+			if (visualizer.getMapOfLinks() == null) 
+				throw new NullPointerException(); 
 			this.updateGraph(assignment);
+		}
 		
 	}
 	

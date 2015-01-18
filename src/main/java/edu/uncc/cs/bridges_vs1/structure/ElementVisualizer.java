@@ -3,20 +3,15 @@ package edu.uncc.cs.bridges_vs1.structure;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.uncc.cs.bridges_vs1.validation.Validation;
 import edu.uncc.cs.bridges_vs1.validation.*;
 
 public class ElementVisualizer {
-	private String aColor = "black";
-	private String aShape = "circle";
-	private double opacity = 0.5;
-	private double size = 10.0;
 	// Visualization properties for this Node.
 	Map<String, String> properties =  new HashMap<String, String>(){{
 		put("color","green");
 		put("opacity","1.0");
-		put("weight","1.0");
-		put("width","1.0");
+		put("size","10.0");
+		put("shape","circle");
 		}}; 
 	
 	public ElementVisualizer (){
@@ -25,30 +20,29 @@ public class ElementVisualizer {
 	
 	public ElementVisualizer (String aColor){
 		super();
-		this.aColor = aColor;
 		setColor(aColor);
 	}
 	
 	public ElementVisualizer (String aColor, String aShape){
 		this(aColor);
-		this.aShape = aShape;
 		setShape(aShape);
 	}
 	
 	public ElementVisualizer (double size){
 		super();
-		this.size = size;
 		setSize(size);
 	}
 	
 	public ElementVisualizer(String aColor, String aShape, double opacity, double size){
 		this(aColor, aShape);
-		this.opacity = opacity;
-		this.size = size;
+		
+		setOpacity(opacity);
+		setSize(size);
 	}
 	
 	public ElementVisualizer (ElementVisualizer v){
 		this(v.getColor(), v.getShape(), v.getOpacity(), v.getSize());
+		
 	}
 	
 	/**
@@ -56,7 +50,6 @@ public class ElementVisualizer {
 	 * @param size
 	 */
 	public void setSize(double size){
-		this.size = size;
 		Validation.validateSize(size);
 		properties.put("size", Double.toString(size));
 	}
@@ -69,7 +62,7 @@ public class ElementVisualizer {
 		//this.aColor = aColor;
 		aColor = aColor.toLowerCase();
 		if (aColor == null || aColor.isEmpty()) {
-			properties.put("color", this.aColor);
+			properties.put("color", aColor);
 		} else {
 			Validation.validateColor(aColor);
 			properties.put("color", aColor);

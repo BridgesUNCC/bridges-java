@@ -49,15 +49,15 @@ public class Driver{
 		//Element<Tweet> [] array = new Element<Tweet> [10];
 		
 		mapOfLinks.put(test, new HashMap<String, Element<Tweet>>());
-		mapOfLinks.get(test).put("test2", test2);
-		mapOfLinks.get(test).put("test3", test3);
-		mapOfLinks.get(test).put("test5", test5);
+		//create edges between the nodes
+		
 		
 		Bridges<Tweet> bridge = new Bridges<Tweet>("300587042698", "mmehedin@uncc.edu");
 		bridge.setDataStructure(mapOfLinks, "graph"); //set the structure holding the nodes and links i.e. hashmap
 									//set ADT type
 		
 		//bridge.add(test);
+		//elements can be added to ADT by using .add(Element<E>) 
 		bridge.add(test2);
 		bridge.add(test3);
 		bridge.add(test4);
@@ -65,9 +65,14 @@ public class Driver{
 		bridge.add(test6);
 		bridge.add(test7);
 		
+		mapOfLinks.get(test).put("test2", test2);
+		mapOfLinks.get(test).put("test3", test3);
+		mapOfLinks.get(test).put("test5", test5);
+		
 		//bridge.setLink(test, test2);
 		//bridge.setLink(test, test3);
 		//bridge.setLink(test, test5);
+		//links can be set using .setLink(source, target)
 		bridge.setLink(test2, test5);
 		bridge.setLink(test3, test4);
 		

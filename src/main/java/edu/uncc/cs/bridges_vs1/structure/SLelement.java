@@ -2,7 +2,7 @@ package edu.uncc.cs.bridges_vs1.structure;
 
 
 public class SLelement<E> extends Element<E>{
-	protected SLelement<E> next; //the link to the next element 
+	protected SLelement<E> next=null; //the link to the next element 
 	
 	
 	public SLelement (String identifier, E e){
@@ -14,7 +14,7 @@ public class SLelement<E> extends Element<E>{
 	public SLelement (SLelement<E> next) {
 		super();
 		validateVal(next);
-		this.next = next;	
+		copySLelement(next);	
 	}
 	
 	public SLelement (E e, SLelement<E> next) {
@@ -28,7 +28,7 @@ public class SLelement<E> extends Element<E>{
 	public void copySLelement (SLelement<E> original){
 		this.identifier = new String(original.getIdentifier());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
-		this.next = original.next;
+		this.setNext(original.getNext());
 		
 	}
 	
