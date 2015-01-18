@@ -129,9 +129,10 @@ public class Bridges <E> {
 	 * @throws Exception
 	 */
 	public void setDataStructure(HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks,
-			String visualizerType) throws Exception{
+			String visualizerType, int assignment) throws Exception{
 		visualizer.setMapOfLinks(mapOfLinks);
 		visualizer.setVisualizerType(visualizerType);
+		this.assignment = assignment;
 		visualize(assignment);
 	}
 	
@@ -142,9 +143,10 @@ public class Bridges <E> {
 	 * @throws Exception
 	 */
 	public void setDataStructure(SLelement<E> e, 
-			String visualizerType) throws Exception{
+			String visualizerType, int assignment) throws Exception{
 		root = e;
 		visualizer.setVisualizerType(visualizerType);
+		this.assignment = assignment;
 		visualize(assignment);
 	}
 	
@@ -156,7 +158,8 @@ public class Bridges <E> {
 	 */
 	public void setDataStructure(
 			String visualizerType,
-			HashMap<String, SLelement<E>> adjacencyList) throws Exception{
+			HashMap<String, SLelement<E>> adjacencyList, 
+			int assignment) throws Exception{
 		visualizer.setAdjacencyList(adjacencyList);
 		visualizer.setVisualizerType(visualizerType);
 		visualize(assignment);

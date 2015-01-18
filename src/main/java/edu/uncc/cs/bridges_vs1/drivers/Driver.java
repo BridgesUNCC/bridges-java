@@ -53,7 +53,7 @@ public class Driver{
 		
 		
 		Bridges<Tweet> bridge = new Bridges<Tweet>("300587042698", "mmehedin@uncc.edu");
-		bridge.setDataStructure(mapOfLinks, "graph"); //set the structure holding the nodes and links i.e. hashmap
+		bridge.setDataStructure(mapOfLinks, "graph", 13); //set the structure holding the nodes and links i.e. hashmap
 									//set ADT type
 		
 		//bridge.add(test);

@@ -28,7 +28,7 @@ public class DriverLList {
 			//create a DataFormater object
 			Bridges<Tweet> bridge = new Bridges<Tweet>("300587042698", "mmehedin@uncc.edu");
 			//set visualizer type
-			bridge.setDataStructure(test, "llist");
+			bridge.setDataStructure(test, "llist", 13);
 			//Print the JSON to console
 			System.out.println(bridge.getJSON());
 			bridge.complete(13);
