@@ -9,7 +9,7 @@ public interface List<E> {
 
 	/**
 	 * Insert an element at the current location. The client must ensure that
-	 * the list’s capacity is not exceeded.
+	 * the lists capacity is not exceeded.
 	 * 
 	 * @param item
 	 *            The element to be inserted.
@@ -18,7 +18,7 @@ public interface List<E> {
 
 	/**
 	 * Append an element at the end of the list. The client must ensure that the
-	 * list’s capacity is not exceeded.
+	 * lists capacity is not exceeded.
 	 * 
 	 * @param item
 	 *            The element to be appended.

@@ -132,6 +132,7 @@ public class Bridges <E> {
 			String visualizerType) throws Exception{
 		visualizer.setMapOfLinks(mapOfLinks);
 		visualizer.setVisualizerType(visualizerType);
+		visualize(assignment);
 	}
 	
 	/**
@@ -144,6 +145,7 @@ public class Bridges <E> {
 			String visualizerType) throws Exception{
 		root = e;
 		visualizer.setVisualizerType(visualizerType);
+		visualize(assignment);
 	}
 	
 	/**
@@ -156,7 +158,8 @@ public class Bridges <E> {
 			String visualizerType,
 			HashMap<String, SLelement<E>> adjacencyList) throws Exception{
 		visualizer.setAdjacencyList(adjacencyList);
-		visualizer.setVisualizerType(visualizerType);	
+		visualizer.setVisualizerType(visualizerType);
+		visualize(assignment);
 	}
 	
 	/**
