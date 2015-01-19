@@ -43,14 +43,14 @@ public class DriverGraphAdjacencyList{
 		adjacencyList.put("test2", test2);
 		adjacencyList.put("test4", test4);
 		
-		Bridges<Tweet> bridge = new Bridges<Tweet>("300587042698", "mmehedin@uncc.edu");
-		bridge.setDataStructure("graph", adjacencyList, 13); //set the structure holding the nodes and links i.e. hashmap
+		Bridges<Tweet> bridge = new Bridges<Tweet>(13, "300587042698", "mmehedin@uncc.edu");
+		bridge.setDataStructure("graph", adjacencyList); //set the structure holding the nodes and links i.e. hashmap
 									//set ADT type
 				
 		//this is used to visualize the JSON before it is passed to the server
 		//errors in JSON formatting can be visualized on the console
 		System.out.println(bridge.getJSON());
 		//aLog.returnStream();
-		bridge.complete(13);
+		bridge.visualize();
 	}
 }

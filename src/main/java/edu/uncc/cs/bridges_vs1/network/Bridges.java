@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import edu.uncc.cs.bridges_vs1.sources.Tweet;
 import edu.uncc.cs.bridges_vs1.structure.ADTVisualizer;
+import edu.uncc.cs.bridges_vs1.structure.DLelement;
 import edu.uncc.cs.bridges_vs1.structure.Element;
 import edu.uncc.cs.bridges_vs1.structure.GraphList;
 import edu.uncc.cs.bridges_vs1.structure.SLelement;
@@ -24,7 +25,7 @@ public class Bridges <E> {
 	
 	private static double assignmentDecimal = 0.0;
 	public ADTVisualizer<E> visualizer ;
-	private SLelement<E> root;
+	private Element<E> root;
 	private static int assignment;
 	private static String key;
 
@@ -43,14 +44,14 @@ public class Bridges <E> {
 		Bridges.formatter = new DataFormatter();
 	}
 
-	public Bridges(String key, String username) throws Exception{
+	public Bridges(int assignment, String key, String username) throws Exception{
 		this();
-		init(key, username);
+		init(assignment, key, username);
 	}
 	
-	public Bridges(String key, SLelement<E> e, String username) throws Exception{
+	public Bridges(int assignment, String key, SLelement<E> e, String username) throws Exception{
 		this();
-		init(key, e, username);
+		init(assignment, key, e, username);
 	}
 
 	/**
@@ -61,7 +62,8 @@ public class Bridges <E> {
 	 * @param username 
 	 * @throws Exception 
 	 */
-	public <E> void init(String key, String username){
+	public <E> void init(int assignment, String key, String username){
+		Bridges.setAssignment(assignment);
 		Bridges.key = key;
 		Bridges.userName = username;
 		
@@ -74,8 +76,8 @@ public class Bridges <E> {
 	 * @param visualizer  The visualizer, for assignment
 	 * @param username TODO
 	 */
-	public void init(String key, SLelement<E> e, String username) throws Exception{
-		init(key, username);
+	public void init(int assignment, String key, Element<E> e, String username) throws Exception{
+		init(assignment, key, username);
 		root = e;
 	}
 	
@@ -129,25 +131,39 @@ public class Bridges <E> {
 	 * @throws Exception
 	 */
 	public void setDataStructure(HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks,
-			String visualizerType, int assignment) throws Exception{
+			String visualizerType) throws Exception{
 		visualizer.setMapOfLinks(mapOfLinks);
 		visualizer.setVisualizerType(visualizerType);
 		this.assignment = assignment;
-		visualize(assignment);
+		visualize();
 	}
 	
 	/**
-	 * This method sets the HashMap and the type of ADT for the ADTVisualizer object
-	 * @param mapOfLinks
+	 * This method sets the first element and the type of ADT for the ADTVisualizer object
+	 * @param e - is a SLelement<E>
 	 * @param visualizerType
 	 * @throws Exception
 	 */
 	public void setDataStructure(SLelement<E> e, 
-			String visualizerType, int assignment) throws Exception{
+			String visualizerType) throws Exception{
 		root = e;
 		visualizer.setVisualizerType(visualizerType);
 		this.assignment = assignment;
-		visualize(assignment);
+		visualize();
+	}
+	
+	/**
+	 * This method sets the first element and the type of ADT for the ADTVisualizer object
+	 * @param e - is a DLelement<E>
+	 * @param visualizerType
+	 * @throws Exception
+	 */
+	public void setDataStructure(DLelement<E> e, 
+			String visualizerType) throws Exception{
+		root = e;
+		visualizer.setVisualizerType(visualizerType);
+		this.assignment = assignment;
+		visualize();
 	}
 	
 	/**
@@ -158,11 +174,10 @@ public class Bridges <E> {
 	 */
 	public void setDataStructure(
 			String visualizerType,
-			HashMap<String, SLelement<E>> adjacencyList, 
-			int assignment) throws Exception{
+			HashMap<String, SLelement<E>> adjacencyList) throws Exception{
 		visualizer.setAdjacencyList(adjacencyList);
 		visualizer.setVisualizerType(visualizerType);
-		visualize(assignment);
+		visualize();
 	}
 	
 	/**
@@ -192,7 +207,9 @@ public class Bridges <E> {
 		if (visualizer.getVisualizerType().compareToIgnoreCase("graph")==0 && visualizer.getAdjacencyList() == null)
 			return visualizer.getGraphRepresentation();
 		else if (visualizer.getVisualizerType().equalsIgnoreCase("llist"))
-			return visualizer.getSLRepresentation(root);
+			return visualizer.getSLRepresentation((SLelement<E>)root);
+		else if (visualizer.getVisualizerType().equalsIgnoreCase("Dllist"))
+			return visualizer.getDLRepresentation((DLelement<E>)root);
 		else if (visualizer.getVisualizerType().compareToIgnoreCase("graph")==0 && visualizer.getAdjacencyList() != null)
 			return visualizer.getGraphLRepresentation();
 		else
@@ -205,29 +222,31 @@ public class Bridges <E> {
 	 * These methods send the JSON to post() which ultimately executes the http request
 	 * from the server
 	 */
-	public void visualize(int assignment){
+	public void visualize(){
 		this.assignment = assignment;
 		if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList()==null)
-			this.updateGraph(assignment);
+			this.updateGraph();
 		else if (visualizer.visualizerType.equalsIgnoreCase("llist"))
-			this.updateSL(assignment);
+			this.updateSL();
+		else if (visualizer.visualizerType.equalsIgnoreCase("Dllist"))
+			this.updateDL();
 		else if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList()!=null)
-			this.updateGraphL(assignment);
+			this.updateGraphL();
 		else{
 			if (visualizer.getMapOfLinks() == null) 
 				throw new NullPointerException(); 
-			this.updateGraph(assignment);
+			this.updateGraph();
 		}
 		
 	}
 	
 	
 	/**
-	 * Update visualization metadata. This may be called many times.
+	 * Update visualization metadata of graph using adjacency matrix. This may be called many times.
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
-	public void updateGraph(int assignment) {
+	public void updateGraph() {
         try {
 			formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getGraphRepresentation());
 		} catch (IOException e) {
@@ -250,13 +269,40 @@ public class Bridges <E> {
 	}
 	
 	/**
-	 * Update visualization metadata. This may be called many times.
+	 * Update visualization metadata of singly linked list. This may be called many times.
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
-	public void updateSL(int assignment) {
+	public void updateSL() {
         try {
-        	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getSLRepresentation(root));
+        	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getSLRepresentation((SLelement<E>)root));
+		} catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+		} catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+		} 
+        // Return a URL to the user
+        System.out.println("Check out your visuals at " + formatter.getBackend().prepare("/assignments/" + getAssignment() + "/" + userName) );
+        assignmentDecimal+=0.01;
+	}
+	
+	/**
+	 * Update visualization metadata of doubly linked list. This may be called many times.
+	 * This is usually an expensive operation and involves connecting to the network.
+	 * Calling this method is optional provided you call complete()
+	 */
+	public void updateDL() {
+        try {
+        	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getDLRepresentation((DLelement<E>)root));
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
 					+ " representation to the server. Are you connected to the"
@@ -277,11 +323,11 @@ public class Bridges <E> {
 	}
 
 	/**
-	 * Update visualization metadata. This may be called many times.
+	 * Update visualization metadata of Graph with Adjacency List. This may be called many times.
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
-	public void updateGraphL(int assignment) {
+	public void updateGraphL() {
         try {
         	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getGraphLRepresentation());
 		} catch (IOException e) {
@@ -309,11 +355,7 @@ public class Bridges <E> {
 	 * This only calls update() but it could conceivably do more.
 	 * @param i 
 	 */
-	public void complete(int assignment) {
-		visualize(assignment);
-	}
-
-	
-	
-	
+	public void complete() {
+		visualize();
+	}	
 }

@@ -19,6 +19,7 @@ public class ADTVisualizer<E> {
 		put("queueVis","queue");
 		put("treeVis","tree");
 		put("llist", "llist");
+		put("Dllist", "Dllist");
 		}};
 	public Map<String, String> linkProperties =  new HashMap<String, String>(){{
 															put("color","black");
@@ -227,8 +228,6 @@ public class ADTVisualizer<E> {
 				}
 			}
 		}
-		
-
 		return "{"
 				+ "\"name\": \"edu.uncc.cs.bridges\","
 				+ "\"version\": \"0.4.0\","
@@ -238,6 +237,11 @@ public class ADTVisualizer<E> {
 				+ "}";
 	}
 	
+	/**
+	 * This method returns the JSON string of a singly linked list 
+	 * @param e
+	 * @return
+	 */
 	public
 	<E> String getSLRepresentation(SLelement<E> e) {
 		StringBuilder nodes = new StringBuilder();
@@ -260,14 +264,13 @@ public class ADTVisualizer<E> {
 		anElement = e;
 			// Manage link properties
 			do {
-				// Encapsulate in {}, and remove the trailing comma.
 				if (anElement.getNext() != null){
 					links.append(getLinkRepresentation(anElement, anElement.getNext(), element_to_index) + ",");
 				}	
 					anElement = anElement.getNext();
 				
 			}while(anElement!=null);
-			
+			// Encapsulate in {}, and remove the trailing comma.	
 		return "{"
 				+ "\"name\": \"edu.uncc.cs.bridges\","
 				+ "\"version\": \"0.4.0\","
@@ -276,6 +279,50 @@ public class ADTVisualizer<E> {
 				+ "\"links\": [" + DataFormatter.trimComma(links) + "]"
 				+ "}";
 	}
+	
+	/**
+	 * This method returns the JSON string of a singly linked list 
+	 * @param e
+	 * @return
+	 */
+	public
+	<E> String getDLRepresentation(DLelement<E> e) {
+		StringBuilder nodes = new StringBuilder();
+		StringBuilder links = new StringBuilder();
+		Map<String, Integer> element_to_index = new HashMap<>();
+		
+		int i=0;
+		DLelement<E> anElement = e;
+		do {
+			// Manage vertex properties
+			// Encapsulate in {}, and remove the trailing comma.
+			if (anElement != null){
+				nodes.append(anElement.getRepresentation() + ",");
+				element_to_index.put(anElement.getIdentifier(), i);
+				i++;
+			}
+			anElement = anElement.getNext();
+		}while(anElement != null);
+		
+		anElement = e;
+			// Manage link properties
+			do {
+				if (anElement.getNext() != null){
+					links.append(getLinkRepresentation(anElement, anElement.getNext(), element_to_index) + ",");
+				}	
+					anElement = anElement.getNext();
+				
+			}while(anElement!=null);
+			// Encapsulate in {}, and remove the trailing comma.	
+		return "{"
+				+ "\"name\": \"edu.uncc.cs.bridges\","
+				+ "\"version\": \"0.4.0\","
+				+ "\"visual\": \""+visualizerType+"\","
+				+ "\"nodes\": [" + DataFormatter.trimComma(nodes) + "],"
+				+ "\"links\": [" + DataFormatter.trimComma(links) + "]"
+				+ "}";
+	}
+	
 	
 	/**
 	 * 

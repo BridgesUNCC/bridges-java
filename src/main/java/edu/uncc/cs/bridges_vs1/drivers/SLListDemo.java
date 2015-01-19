@@ -55,7 +55,7 @@ public class SLListDemo {
 		printList(list);
 
 		//Pass list to bridges
-		b.setDataStructure(sle0, "llist");
+		b.setDataStructure(sle0, "llist", 13);
 		b.complete(ASSIGNMENT);
 		System.out.println();
 

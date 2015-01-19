@@ -1,10 +1,18 @@
 package edu.uncc.cs.bridges_vs1.structure;
-
+/**
+ * @author mihai Mehedint
+ * This class can be used to create doubly linked element objects
+ * with next and previous (prev) pointers
+ *
+ */
 
 public class DLelement<E> extends Element<E>{
 	private DLelement<E> next;
 	private DLelement<E> prev;
 	
+	/**
+	 * Constructors
+	 */
 	public DLelement(){
 		super();
 		this.next = null;
@@ -39,19 +47,37 @@ public class DLelement<E> extends Element<E>{
 		this.next = original.next;
 		this.prev = original.prev;
 	}
-
+	
+	/**
+	 * This method returns the pointer to the next DLelement
+	 * @return
+	 */
 	public DLelement<E> getNext() {
 		return next;
 	}
+	
 
+	/**
+	 * This method sets the pointer to the next DLelement
+	 * @return
+	 */
 	public void setNext(DLelement<E> next) {
 		this.next = next;
 	}
+	
 
+	/**
+	 * This method returns the pointer to the previous DLelement
+	 * @return 
+	 */
 	public DLelement<E> getPrev() {
 		return prev;
 	}
 
+	/**
+	 * This method sets the pointer to the previous DLelement
+	 * @return
+	 */
 	public void setPrev(DLelement<E> prev) {
 		this.prev = prev;
 	}

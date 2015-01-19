@@ -38,7 +38,7 @@ public class Driver{
 		
 		//this hashmap stores the links between the nodes
 		//it is initialized here
-		//students have the option of using an array structure instead
+		//the students have the option of using an array structure instead
 		//other types passed to the ADTvisualizer will throw an explicit error message
 		HashMap<Element<Tweet>, HashMap<String, Element<Tweet>>> mapOfLinks = new HashMap<>();
 		//mapOfLinks.get(test).get("test");
@@ -52,8 +52,8 @@ public class Driver{
 		//create edges between the nodes
 		
 		
-		Bridges<Tweet> bridge = new Bridges<Tweet>("300587042698", "mmehedin@uncc.edu");
-		bridge.setDataStructure(mapOfLinks, "graph", 13); //set the structure holding the nodes and links i.e. hashmap
+		Bridges<Tweet> bridge = new Bridges<Tweet>(13, "300587042698", "mmehedin@uncc.edu");
+		bridge.setDataStructure(mapOfLinks, "graph"); //set the structure holding the nodes and links i.e. hashmap
 									//set ADT type
 		
 		//bridge.add(test);
@@ -80,6 +80,6 @@ public class Driver{
 		//errors in JSON formatting can be visualized on the console
 		System.out.println(bridge.getJSON());
 		//aLog.returnStream();
-		bridge.complete(13);
+		bridge.visualize();
 	}
 }
