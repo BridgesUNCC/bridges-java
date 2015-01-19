@@ -28,13 +28,21 @@ public class DLelement<E> extends Element<E>{
 	public DLelement(DLelement<E> next, DLelement<E> prev) {
 		super();
 		this.next = next;
+		if(next.getPrev()!=this)
+			next.setPrev(this);
 		this.prev = prev;
+		if(prev.getNext()!=this)
+			prev.setNext(this);
 	}
 	
 	public DLelement(E e, DLelement<E> next, DLelement<E> prev) {
 		super();
 		this.next = next;
+		if(next.getPrev()!=this)
+			next.setPrev(this);
 		this.prev = prev;
+		if(prev.getNext()!=this)
+			prev.setNext(this);
 	}
 	
 	/**
@@ -63,6 +71,8 @@ public class DLelement<E> extends Element<E>{
 	 */
 	public void setNext(DLelement<E> next) {
 		this.next = next;
+		if(next.getPrev()!=this)
+			next.setPrev(this);
 	}
 	
 
@@ -80,5 +90,7 @@ public class DLelement<E> extends Element<E>{
 	 */
 	public void setPrev(DLelement<E> prev) {
 		this.prev = prev;
+		if(prev.getNext()!=this)
+			prev.setNext(this);
 	}
 }

@@ -33,7 +33,7 @@ public class SLListDemo {
 	
 	public static void main(String[] args) throws Exception {		
 		//intialize bridges
-		Bridges<Integer> b = new Bridges<Integer>("691659187196", "cgrafer");
+		Bridges<Integer> b = new Bridges<Integer>(ASSIGNMENT, "691659187196", "cgrafer");
 		
 		//elements
 		SLelement<Integer> sle0 = new SLelement<Integer>("head", 0);
@@ -55,8 +55,8 @@ public class SLListDemo {
 		printList(list);
 
 		//Pass list to bridges
-		b.setDataStructure(sle0, "llist", 13);
-		b.complete(ASSIGNMENT);
+		b.setDataStructure(sle0, "llist");
+		b.complete();
 		System.out.println();
 
 		
@@ -64,7 +64,7 @@ public class SLListDemo {
 		list.moveToStart();
 		list.remove();
 		printList(list);
-		b.updateSL(ASSIGNMENT);
+		b.updateSL();
 		System.out.println();
 		
 		
@@ -72,7 +72,7 @@ public class SLListDemo {
 		list.moveToPos(1);			//positions start at 0
 		list.remove();
 		printList(list);
-		b.updateSL(ASSIGNMENT);
+		b.updateSL();
 		System.out.println();
 
 		
@@ -80,14 +80,14 @@ public class SLListDemo {
 		list.moveToPos(1);
 		list.insert(sle1);
 		printList(list);
-		b.updateSL(ASSIGNMENT);
+		b.updateSL();
 		System.out.println();
 
 		
 		System.out.println("Remove tail and append element #3");
 		list.append(sle3);
 		printList(list);
-		b.updateSL(ASSIGNMENT);
+		b.updateSL();
 		System.out.println();
 
 	}

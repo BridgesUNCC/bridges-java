@@ -309,6 +309,8 @@ public class ADTVisualizer<E> {
 			do {
 				if (anElement.getNext() != null){
 					links.append(getLinkRepresentation(anElement, anElement.getNext(), element_to_index) + ",");
+					
+					links.append(getLinkRepresentation(anElement.getNext(), anElement.getNext().getPrev(), element_to_index) + ",");
 				}	
 					anElement = anElement.getNext();
 				

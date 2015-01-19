@@ -11,7 +11,9 @@ package edu.uncc.cs.bridges_vs1.network;
  */
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Map;
 
 import edu.uncc.cs.bridges_vs1.sources.Tweet;
 import edu.uncc.cs.bridges_vs1.structure.ADTVisualizer;
@@ -31,8 +33,16 @@ public class Bridges <E> {
 
 	private static DataFormatter formatter;
 	private static String userName;
-
-	
+	public final Map<String, String> ADT_UPDATE = new HashMap <String, String>(){{
+		put("graph","updateGraph");
+		put("graphl","updateGraphL");
+		put("stack","stack");
+		put("queue","queue");
+		put("tree","tree");
+		put("llist", "updateSL");
+		put("Dllist", "updateDL");
+		}};
+	public java.lang.reflect.Method method;
 	
 	/**
 	 * Constructors
@@ -222,8 +232,27 @@ public class Bridges <E> {
 	 * These methods send the JSON to post() which ultimately executes the http request
 	 * from the server
 	 */
+	/*
 	public void visualize(){
-		this.assignment = assignment;
+		try {
+			this.getClass().getMethod(ADT_UPDATE.get(visualizer.getVisualizerType()));
+			//method.invoke(ADT_UPDATE.get(visualizer.getVisualizerType()));
+			System.out.println(ADT_UPDATE.get(visualizer.getVisualizerType()));
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	*/
+	
+	
+	
+	  public void visualize(){
 		if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList()==null)
 			this.updateGraph();
 		else if (visualizer.visualizerType.equalsIgnoreCase("llist"))
