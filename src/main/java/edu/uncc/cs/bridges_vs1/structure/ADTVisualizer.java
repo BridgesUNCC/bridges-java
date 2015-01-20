@@ -13,6 +13,8 @@ public class ADTVisualizer<E> {
 	//public LinkedHashMap<Element<Value, T>, String> LList;
 	public String visualizerType;
 	public String visualizerIdentifier;
+	private int MAX_LINKS_ALLOWED = 1000; //this holds the maximum number of edges allowed 
+	private int MAX_ELEMENTS_ALLOWED = 1000; //this variable holds the maximum number of nodes allowed
 	public final Map<String, String> ADT_TYPE = new HashMap <String, String>(){{
 		put("graphVis","graph");
 		put("stackVis","stack");
@@ -180,13 +182,26 @@ public class ADTVisualizer<E> {
 			nodes.append(element.getKey().getRepresentation() + ",");
 			element_to_index.put(element.getKey().getIdentifier(), i);
 			i++;
+			if (i == MAX_ELEMENTS_ALLOWED)
+				try {
+					throw new Exception ("No more than 1000 elements can be created!");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
+		
 		// Manage link properties
 		for (Entry<Element<E>, HashMap<String, Element<E>>> element: mapOfLinks.entrySet()) {
 			//System.out.println("Element entryset: "+element.getKey().getIdentifier()+"  "+element.getValue().entrySet().toString());
 			if (!element.getValue().entrySet().isEmpty()){
 				for(Entry<String, Element<E>> target: element.getValue().entrySet()) {
 					links.append(getLinkRepresentation(element.getKey(), target.getValue(), element_to_index) + ",");
+					if (element.getValue().entrySet().size() > MAX_LINKS_ALLOWED)
+						try {
+							throw new Exception ("No more than 1000 links per element can be created!");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 				}
 			}
 		}
@@ -215,6 +230,12 @@ public class ADTVisualizer<E> {
 			nodes.append(element.getValue().getRepresentation() + ",");
 			element_to_index.put(element.getValue().getIdentifier(), i);
 			i++;
+			if (i == MAX_ELEMENTS_ALLOWED)
+				try {
+					throw new Exception ("No more than 1000 elements can be created!");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		// Manage link properties
 		for (Entry<String, SLelement<E>> elementList: adjacencyList.entrySet()){
@@ -222,8 +243,16 @@ public class ADTVisualizer<E> {
 			if (currElement.getNext()!=null)
 			if (currElement.getNext()!=null){
 				SLelement<E> target = currElement.getNext();
+				int j=0;
 				while(target!=null){
 					links.append(getLinkRepresentation(currElement, target, element_to_index) + ",");
+					j++;
+					if (j == MAX_LINKS_ALLOWED)
+						try {
+							throw new Exception ("No more than 1000 links per element can be created!");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					target=target.getNext();
 				}
 			}
@@ -257,15 +286,29 @@ public class ADTVisualizer<E> {
 				nodes.append(anElement.getRepresentation() + ",");
 				element_to_index.put(anElement.getIdentifier(), i);
 				i++;
+				if (i == MAX_ELEMENTS_ALLOWED)
+					try {
+						throw new Exception ("No more than 1000 elements can be created!");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 			}
 			anElement = anElement.getNext();
 		}while(anElement != null);
 		
+		int j=0;
 		anElement = e;
 			// Manage link properties
 			do {
 				if (anElement.getNext() != null){
 					links.append(getLinkRepresentation(anElement, anElement.getNext(), element_to_index) + ",");
+					j++;
+					if (j == MAX_LINKS_ALLOWED)
+						try {
+							throw new Exception ("No more than 1000 links per element can be created!");
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
 				}	
 					anElement = anElement.getNext();
 				
@@ -300,18 +343,34 @@ public class ADTVisualizer<E> {
 				nodes.append(anElement.getRepresentation() + ",");
 				element_to_index.put(anElement.getIdentifier(), i);
 				i++;
+				if (i == MAX_ELEMENTS_ALLOWED)
+					try {
+						throw new Exception ("No more than 1000 elements can be created!");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 			}
 			anElement = anElement.getNext();
 		}while(anElement != null);
 		
+		int j=0;
 		anElement = e;
 			// Manage link properties
 			do {
 				if (anElement.getNext() != null){
 					links.append(getLinkRepresentation(anElement, anElement.getNext(), element_to_index) + ",");
-					
-					links.append(getLinkRepresentation(anElement.getNext(), anElement.getNext().getPrev(), element_to_index) + ",");
-				}	
+					j++;
+				}
+				if (anElement.getPrev() != null){
+					links.append(getLinkRepresentation(anElement, anElement.getPrev(), element_to_index) + ",");
+					j++;
+				}
+				if (j == MAX_LINKS_ALLOWED)
+					try {
+						throw new Exception ("No more than 1000 links per element can be created!");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 					anElement = anElement.getNext();
 				
 			}while(anElement!=null);

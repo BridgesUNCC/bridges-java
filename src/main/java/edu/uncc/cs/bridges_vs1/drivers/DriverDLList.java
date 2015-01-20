@@ -26,6 +26,7 @@ public class DriverDLList {
 			//create an edge between the 2 elements
 			test3.setNext(test4);
 			test2.setNext(test3);
+			test3.setPrev(test2);
 			//create a DataFormater object
 			Bridges<Tweet> bridge = new Bridges<Tweet>(13, "300587042698", "mmehedin@uncc.edu");
 			//set visualizer type
