@@ -9,27 +9,32 @@ public class SLelement<E> extends Element<E>{
 		super(e, identifier);
 		this.next = null;
 	}
-
-
-	public SLelement (SLelement<E> next) {
-		super();
-		validateVal(next);
-		copySLelement(next);	
-	}
 	
+	public SLelement (SLelement<E> original) {
+		super(original.getElement(), original.getCaller());
+		validateVal(original);
+		copySLelement(original);	
+		//original = null;
+		validateVal(this);
+	}
+	/**
+	 * Creates a new element with a copy of current Element
+	 * @param e
+	 * @param original
+	 */
 	public SLelement (E e, SLelement<E> next) {
-		super(e, next.getIdentifier());	
+		super(e, e.toString());
+		this.setNext(next);
 	}
 
 	/**
 	 * performing deep copy of an element when needed
 	 * @param identifier
 	 */
-	public void copySLelement (SLelement<E> original){
-		this.identifier = new String(original.getIdentifier());
+	protected void copySLelement (SLelement<E> original){
+		this.caller = new String(original.getCaller());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
-		this.setNext(original.getNext());
-		
+		this.setNext(original.getNext());	
 	}
 	
 	/**
@@ -37,10 +42,14 @@ public class SLelement<E> extends Element<E>{
 	 * @param value
 	 */
 	private void validateVal(SLelement<E> value) {
-		if (value == null){
-			throw new NullPointerException("Invalid value' " + value + "'. Expected"
+		if (value.getElement() == null){
+			throw new NullPointerException("Invalid value' " + value.getElement() + "'. Expected"
 					+ " non null value.");
-		}	
+		}
+		else if (value.getClass().isInstance(getElement()))
+			System.out.println(value.getClass().isInstance(getElement()));
+		else
+			;
 	}
 	
 	/**

@@ -31,7 +31,7 @@ public class DriverLList {
 			//set visualizer type
 			bridge.setDataStructure(test, "llist");
 			//Print the JSON to console
-			System.out.println(bridge.getJSON());
+			bridge.toggleJSONdisplay();
 			bridge.visualize();
 		}
 }

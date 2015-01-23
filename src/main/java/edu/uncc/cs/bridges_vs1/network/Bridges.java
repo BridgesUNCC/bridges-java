@@ -15,25 +15,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.uncc.cs.bridges_vs1.sources.Tweet;
+
 import edu.uncc.cs.bridges_vs1.structure.ADTVisualizer;
 import edu.uncc.cs.bridges_vs1.structure.DLelement;
 import edu.uncc.cs.bridges_vs1.structure.Element;
-import edu.uncc.cs.bridges_vs1.structure.GraphList;
 import edu.uncc.cs.bridges_vs1.structure.SLelement;
 import edu.uncc.cs.bridges_vs1.validation.RateLimitException;
 
 public class Bridges <E> {
 	
 	private static double assignmentDecimal = 0.0;
-	public ADTVisualizer<E> visualizer ;
+	protected ADTVisualizer<E> visualizer ;
 	private Element<E> root;
 	private static int assignment;
 	private static String key;
 
 	private static DataFormatter formatter;
 	private static String userName;
-	public final Map<String, String> ADT_UPDATE = new HashMap <String, String>(){{
+	private final Map<String, String> ADT_UPDATE = new HashMap <String, String>(){{
 		put("graph","updateGraph");
 		put("graphl","updateGraphL");
 		put("stack","stack");
@@ -42,7 +41,7 @@ public class Bridges <E> {
 		put("llist", "updateSL");
 		put("Dllist", "updateDL");
 		}};
-	public java.lang.reflect.Method method;
+	
 	
 	/**
 	 * Constructors
@@ -52,8 +51,17 @@ public class Bridges <E> {
 		super();
 		visualizer = new ADTVisualizer<>();
 		Bridges.formatter = new DataFormatter();
+		
 	}
-
+	
+	/**
+	 * 
+	 * @param assignment this is an integer value;
+	 * Ex: 13; whenever new Bridges.
+	 * @param key
+	 * @param username
+	 * @throws Exception
+	 */
 	public Bridges(int assignment, String key, String username) throws Exception{
 		this();
 		init(assignment, key, username);
@@ -126,6 +134,7 @@ public class Bridges <E> {
 	public ADTVisualizer<E> getVisualizer() {
 		return visualizer;
 	}
+	
 	/**
 	 * This method sets the new DataFormatter visualizer
 	 * @param visualizer
@@ -152,6 +161,7 @@ public class Bridges <E> {
 	 * This method sets the first element and the type of ADT for the ADTVisualizer object
 	 * @param e - is a SLelement<E>
 	 * @param visualizerType
+	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist" or "Dllist" 
 	 * @throws Exception
 	 */
 	public void setDataStructure(SLelement<E> e, 
@@ -166,6 +176,7 @@ public class Bridges <E> {
 	 * This method sets the first element and the type of ADT for the ADTVisualizer object
 	 * @param e - is a DLelement<E>
 	 * @param visualizerType
+	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist" or "Dllist"
 	 * @throws Exception
 	 */
 	public void setDataStructure(DLelement<E> e, 
@@ -180,6 +191,7 @@ public class Bridges <E> {
 	 * This method is sets the adjacency list for the Graph ADT
 	 * @param adjacencyList
 	 * @param visualizerType
+	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist" or "Dllist"
 	 * @throws Exception
 	 */
 	public void setDataStructure(
@@ -213,17 +225,11 @@ public class Bridges <E> {
 	 * This method returns the current JSON
 	 * @return JSON string
 	 */
-	public String getJSON(){
-		if (visualizer.getVisualizerType().compareToIgnoreCase("graph")==0 && visualizer.getAdjacencyList() == null)
-			return visualizer.getGraphRepresentation();
-		else if (visualizer.getVisualizerType().equalsIgnoreCase("llist"))
-			return visualizer.getSLRepresentation((SLelement<E>)root);
-		else if (visualizer.getVisualizerType().equalsIgnoreCase("Dllist"))
-			return visualizer.getDLRepresentation((DLelement<E>)root);
-		else if (visualizer.getVisualizerType().compareToIgnoreCase("graph")==0 && visualizer.getAdjacencyList() != null)
-			return visualizer.getGraphLRepresentation();
+	public void toggleJSONdisplay(){
+		if (this.getVisualizer().isVisualizeJSON())
+			this.getVisualizer().setVisualizeJSON(false);
 		else
-			return visualizer.getGraphRepresentation();
+			this.getVisualizer().setVisualizeJSON(true);
 	}
 	
 	/**
@@ -231,45 +237,27 @@ public class Bridges <E> {
 	 * depending upon the type of ADT being created.
 	 * These methods send the JSON to post() which ultimately executes the http request
 	 * from the server
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws NoSuchMethodException 
 	 */
-	/*
-	public void visualize(){
+	public void visualize() {
 		try {
-			this.getClass().getMethod(ADT_UPDATE.get(visualizer.getVisualizerType()));
-			//method.invoke(ADT_UPDATE.get(visualizer.getVisualizerType()));
-			System.out.println(ADT_UPDATE.get(visualizer.getVisualizerType()));
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			java.lang.reflect.Method method = this.getClass().getDeclaredMethod((ADT_UPDATE.get(visualizer.getVisualizerType())));
+			method.invoke(this);
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	*/
-	
-	
-	
-	  public void visualize(){
-		if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList()==null)
-			this.updateGraph();
-		else if (visualizer.visualizerType.equalsIgnoreCase("llist"))
-			this.updateSL();
-		else if (visualizer.visualizerType.equalsIgnoreCase("Dllist"))
-			this.updateDL();
-		else if (visualizer.visualizerType.equalsIgnoreCase("graph") && visualizer.getAdjacencyList()!=null)
-			this.updateGraphL();
-		else{
-			if (visualizer.getMapOfLinks() == null) 
-				throw new NullPointerException(); 
-			this.updateGraph();
-		}
-		
-	}
-	
-	
+
 	/**
 	 * Update visualization metadata of graph using adjacency matrix. This may be called many times.
 	 * This is usually an expensive operation and involves connecting to the network.
@@ -302,7 +290,7 @@ public class Bridges <E> {
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
-	public void updateSL() {
+	protected void updateSL() {
         try {
         	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getSLRepresentation((SLelement<E>)root));
 		} catch (IOException e) {
@@ -329,7 +317,7 @@ public class Bridges <E> {
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
-	public void updateDL() {
+	protected void updateDL() {
         try {
         	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getDLRepresentation((DLelement<E>)root));
 		} catch (IOException e) {
@@ -356,7 +344,7 @@ public class Bridges <E> {
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
-	public void updateGraphL() {
+	protected void updateGraphL() {
         try {
         	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getGraphLRepresentation());
 		} catch (IOException e) {
@@ -383,8 +371,11 @@ public class Bridges <E> {
 	 * 
 	 * This only calls update() but it could conceivably do more.
 	 * @param i 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws NoSuchMethodException 
 	 */
-	public void complete() {
+	public void complete() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		visualize();
 	}	
 }

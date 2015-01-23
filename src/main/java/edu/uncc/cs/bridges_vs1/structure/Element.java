@@ -6,6 +6,8 @@ import edu.uncc.cs.bridges_vs1.validation.InvalidValueException;
 
 public class Element<E> {
 	
+	static Integer ids = 0;
+	protected String caller;
 	protected String identifier;
 	protected ElementVisualizer visualizer;
 	private E value;
@@ -13,8 +15,10 @@ public class Element<E> {
 	//check for identifier value if it is null 
 	//check for the generic type to be one that exists
 	//
-	public Element(){
+	protected Element(){
 		super();
+		this.caller = ids.toString();
+		ids++;
 		this.visualizer = new ElementVisualizer();
 	}
 	
@@ -27,6 +31,8 @@ public class Element<E> {
 	public Element (E val, String identifier){
 		validateIdentifier(identifier);
 		validateVal(val);
+		this.caller = ids.toString();
+		ids++;
 		this.identifier = identifier;
 		this.value = val;
 		this.visualizer = new ElementVisualizer();
@@ -58,14 +64,24 @@ public class Element<E> {
 	}
 	
 	/**
+	 * this method returns the identifier
 	 * @return the string identifier
 	 */
 	public String getIdentifier(){
 		return identifier;
 	}
 	
+	
 	/**
-	 * 
+	 * this method sets the string identifier
+	 * @return void
+	 */
+	public void setIdentifier(String identifier){
+		this.identifier = identifier;
+	}
+	
+	/**
+	 * Returns the Element's visualizer object
 	 * @return the visualizer
 	 */
 	public ElementVisualizer getVisualizer(){
@@ -73,28 +89,28 @@ public class Element<E> {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Returns the Element value
+	 * @return element
 	 */
 	public E getElement(){
 		return this.value;
 	}
 	
 	/**
-	 * 
-	 * @param value
+	 * Sets the element's value
+	 * @param the ELement value
 	 */
 	public void setElement(E value){
 		validateVal(value);
 		this.value = value;
 	}
 	/**
-	 * 
-	 * @param value2
+	 * Validates the Element
+	 * @param ELement value 
 	 */
-	private void validateVal(E value2) {
-		if (value2 == null){
-			throw new NullPointerException("Invalid value' " + value2 + "'. Expected"
+	private void validateVal(E value) {
+		if (value == null){
+			throw new NullPointerException("Invalid value' " + value + "'. Expected"
 					+ " non null value.");
 		}	
 	}
@@ -113,7 +129,10 @@ public class Element<E> {
 	 * @return
 	 */
 	public int compare(Element<E> e1){
-		return e1.getIdentifier().compareTo(this.getIdentifier());
+		if (e1.getCaller().compareTo(this.getCaller())==0)
+			return e1.getIdentifier().compareTo(this.getIdentifier());
+		else 
+			return e1.getCaller().compareTo(this.getCaller());
 	}
 	
 	/**
@@ -134,6 +153,20 @@ public class Element<E> {
 		}
 		json += String.format("\"name\": \"%s\"", identifier);
 		return json + "}";
+	}
+
+	/**
+	 * @return the caller
+	 */
+	public String getCaller() {
+		return caller;
+	}
+
+	/**
+	 * @param caller the caller to set
+	 */
+	protected void setCaller(String caller) {
+		this.caller = caller;
 	}
 	
 }

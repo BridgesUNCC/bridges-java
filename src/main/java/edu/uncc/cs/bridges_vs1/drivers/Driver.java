@@ -24,7 +24,10 @@ public class Driver{
 		SLelement<Tweet> test5 = new SLelement<>("test5", new Tweet("test5"));
 		SLelement<Tweet> test6 = new SLelement<>("test6", new Tweet("test6"));
 		SLelement<Tweet> test7 = new SLelement<>("test7", new Tweet("test7"));
-		
+		//SLelement<Tweet> test8 = new SLelement<>(test7);
+		//SLelement<Tweet> test9 = new SLelement<>("test9", new Tweet("test9"));
+		//System.out.println(test9.getNext());
+		//test7.setNext(null);
 		//a null element cannot be added to the ADT
 		//test7 = null;
 		
@@ -64,6 +67,7 @@ public class Driver{
 		bridge.add(test5);
 		bridge.add(test6);
 		bridge.add(test7);
+		//bridge.add(test8);
 		
 		mapOfLinks.get(test).put("test2", test2);
 		mapOfLinks.get(test).put("test3", test3);
@@ -75,10 +79,16 @@ public class Driver{
 		//links can be set using .setLink(source, target)
 		bridge.setLink(test2, test5);
 		bridge.setLink(test3, test4);
+		//bridge.setLink(test7, test8);
+		SLelement<Tweet> test10 = new SLelement<>("test2", new Tweet("test2"));
+		bridge.add(test10);
+		bridge.setLink(test2, test10);
+		test6.setIdentifier("test3");
+		//System.out.println(test8.getIdentifier());
 		
 		//this is used to visualize the JSON before it is passed to the server
 		//errors in JSON formatting can be visualized on the console
-		System.out.println(bridge.getJSON());
+		bridge.toggleJSONdisplay();
 		//aLog.returnStream();
 		bridge.visualize();
 	}

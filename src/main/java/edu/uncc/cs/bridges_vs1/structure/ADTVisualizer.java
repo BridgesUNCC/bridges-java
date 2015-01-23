@@ -34,6 +34,7 @@ public class ADTVisualizer<E> {
 	//public Map<Element<E>, Element<E> []> arrayOfLinks;
 	public Element<E> [] adtArray;
 	protected int arrayIndex;
+	protected boolean visualizeJSON = false;
 	
 	/**
 	 * constructor using the superclass Object
@@ -206,13 +207,18 @@ public class ADTVisualizer<E> {
 			}
 		}
 		
-		return "{"
-				+ "\"name\": \"edu.uncc.cs.bridges\","
-				+ "\"version\": \"0.4.0\","
-				+ "\"visual\": \""+visualizerType+"\","
-				+ "\"nodes\": [" + DataFormatter.trimComma(nodes) + "],"
-				+ "\"links\": [" + DataFormatter.trimComma(links) + "]"
-				+ "}";
+		StringBuilder s = new StringBuilder();
+		
+		s.append("{").
+		  append("\"name\": \"edu.uncc.cs.bridges\",").
+		  append("\"version\": \"0.4.0\",").
+		  append("\"visual\": \""+visualizerType+"\",").
+		  append("\"nodes\": [").append(DataFormatter.trimComma(nodes)).append( "],").
+		  append("\"links\": [").append(DataFormatter.trimComma(links)).append("]").
+		  append("}");
+		if (this.isVisualizeJSON())
+			System.out.println(s.toString());
+		return s.toString();
 	}
 	
 	/**
@@ -257,13 +263,18 @@ public class ADTVisualizer<E> {
 				}
 			}
 		}
-		return "{"
-				+ "\"name\": \"edu.uncc.cs.bridges\","
-				+ "\"version\": \"0.4.0\","
-				+ "\"visual\": \""+visualizerType+"\","
-				+ "\"nodes\": [" + DataFormatter.trimComma(nodes) + "],"
-				+ "\"links\": [" + DataFormatter.trimComma(links) + "]"
-				+ "}";
+		StringBuilder s = new StringBuilder();
+		
+		s.append("{").
+		  append("\"name\": \"edu.uncc.cs.bridges\",").
+		  append("\"version\": \"0.4.0\",").
+		  append("\"visual\": \""+visualizerType+"\",").
+		  append("\"nodes\": [").append(DataFormatter.trimComma(nodes)).append( "],").
+		  append("\"links\": [").append(DataFormatter.trimComma(links)).append("]").
+		  append("}");
+		if (this.isVisualizeJSON())
+			System.out.println(s.toString());
+		return s.toString();
 	}
 	
 	/**
@@ -314,13 +325,18 @@ public class ADTVisualizer<E> {
 				
 			}while(anElement!=null);
 			// Encapsulate in {}, and remove the trailing comma.	
-		return "{"
-				+ "\"name\": \"edu.uncc.cs.bridges\","
-				+ "\"version\": \"0.4.0\","
-				+ "\"visual\": \""+visualizerType+"\","
-				+ "\"nodes\": [" + DataFormatter.trimComma(nodes) + "],"
-				+ "\"links\": [" + DataFormatter.trimComma(links) + "]"
-				+ "}";
+			StringBuilder s = new StringBuilder();
+			
+			s.append("{").
+			  append("\"name\": \"edu.uncc.cs.bridges\",").
+			  append("\"version\": \"0.4.0\",").
+			  append("\"visual\": \""+visualizerType+"\",").
+			  append("\"nodes\": [").append(DataFormatter.trimComma(nodes)).append( "],").
+			  append("\"links\": [").append(DataFormatter.trimComma(links)).append("]").
+			  append("}");
+			if (this.isVisualizeJSON())
+				System.out.println(s.toString());
+			return s.toString();
 	}
 	
 	/**
@@ -375,13 +391,18 @@ public class ADTVisualizer<E> {
 				
 			}while(anElement!=null);
 			// Encapsulate in {}, and remove the trailing comma.	
-		return "{"
-				+ "\"name\": \"edu.uncc.cs.bridges\","
-				+ "\"version\": \"0.4.0\","
-				+ "\"visual\": \""+visualizerType+"\","
-				+ "\"nodes\": [" + DataFormatter.trimComma(nodes) + "],"
-				+ "\"links\": [" + DataFormatter.trimComma(links) + "]"
-				+ "}";
+			StringBuilder s = new StringBuilder();
+			
+			s.append("{").
+			  append("\"name\": \"edu.uncc.cs.bridges\",").
+			  append("\"version\": \"0.4.0\",").
+			  append("\"visual\": \""+visualizerType+"\",").
+			  append("\"nodes\": [").append(DataFormatter.trimComma(nodes)).append( "],").
+			  append("\"links\": [").append(DataFormatter.trimComma(links)).append("]").
+			  append("}");
+			if (this.isVisualizeJSON())
+				System.out.println(s.toString());
+			return s.toString();
 	}
 	
 	
@@ -464,6 +485,20 @@ public class ADTVisualizer<E> {
 	 */
 	public void setAdjacencyList(HashMap<String, SLelement<E>> adjacencyList2) {
 		this.adjacencyList = adjacencyList2;
+	}
+
+	/**
+	 * @return the visualizeJSON
+	 */
+	public boolean isVisualizeJSON() {
+		return visualizeJSON;
+	}
+
+	/**
+	 * @param visualizeJSON the visualizeJSON to set
+	 */
+	public void setVisualizeJSON(boolean visualizeJSON) {
+		this.visualizeJSON = visualizeJSON;
 	}
 	
 }
