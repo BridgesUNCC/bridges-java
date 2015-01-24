@@ -33,6 +33,15 @@ public class Tweet {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public void setLabel(String label){
+		setContent(label);
+	}
+	
+
+	public String getLabel(){
+		return getContent();
+	}
 
 	public Date getDate() {
 		return date;
@@ -72,7 +81,7 @@ public class Tweet {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Tweet [content=" + content + ", date=" + date + "]";

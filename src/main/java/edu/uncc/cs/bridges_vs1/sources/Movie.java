@@ -15,6 +15,22 @@ public class Movie {
 	}
 	
 	/**
+	 * This method sets the string name
+	 */
+	public void setName(String name){
+		this.aMovie = name;
+	}
+	
+	public void setLabel(String label){
+		setName(label);
+	}
+	
+
+	public String getLabel(){
+		return getName();
+	}
+	
+	/**
 	 * This method implements compareTo for the Movies
 	 */
 	public int compareTo(Movie anotherMovie){

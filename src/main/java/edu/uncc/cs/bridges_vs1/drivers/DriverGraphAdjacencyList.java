@@ -34,6 +34,7 @@ public class DriverGraphAdjacencyList{
 		//test.setNext(new SLelement<>(test2).setNext(new SLelement<>(test3)));
 		test.setNext(new SLelement<>(test2));
 		test2.setNext(new SLelement<>(test4));
+		//test2.setNext(test);
 		//this is the adjacency list, with the HashMap<key, value> where 
 		//key represents the element's identifier and 
 		//value is the element.

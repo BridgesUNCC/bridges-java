@@ -19,8 +19,8 @@ public class DLelement<E> extends Element<E>{
 		this.prev = null;
 	}
 	
-	public DLelement (String identifier, E e){
-		super(e, identifier);
+	public DLelement (String label, E e){
+		super(label, e);
 		this.next = null;
 		this.prev = null;
 	}
@@ -42,8 +42,9 @@ public class DLelement<E> extends Element<E>{
 	 * @param identifier
 	 */
 	public void copyDLelement (DLelement<E> original){
-		this.identifier = new String(original.getIdentifier());
-		this.visualizer = new ElementVisualizer(original.getVisualizer());
+		this.setIdentifier(new String(original.getIdentifier()));
+		this.setVisualizer(new ElementVisualizer(original.getVisualizer()));
+		this.setLabel(new String(original.getLabel()));
 		this.next = original.next;
 		this.prev = original.prev;
 	}

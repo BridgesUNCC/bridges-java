@@ -1,60 +1,52 @@
 package edu.uncc.cs.bridges_vs1.structure;
 
-
+/**
+ * This class can be used to instantiate Singly List Elements
+ * with identifiers (automatically generated), 
+ * labels (derived from the values of E or manually set)
+ * next pointers
+ * an object of E data type: integer, string, Tweet, Actor, Movie, EarthquakeTweet
+ * element visualizer objects containing all the CSS atributes 
+ * (color, shape, opacity, size) necessary for displaying them in a web browser
+ * @author mihai
+ *
+ * @param <E>
+ */
 public class SLelement<E> extends Element<E>{
 	protected SLelement<E> next=null; //the link to the next element 
-	
-	
-	public SLelement (String identifier, E e){
-		super(e, identifier);
+
+	public SLelement (String label, E e){
+		super(label, e);
 		this.next = null;
 	}
 	
-	public SLelement (SLelement<E> original) {
-		super(original.getElement(), original.getCaller());
-		validateVal(original);
-		copySLelement(original);	
-		//original = null;
-		validateVal(this);
-	}
 	/**
 	 * Creates a new element with a copy of current Element
 	 * @param e
 	 * @param original
 	 */
 	public SLelement (E e, SLelement<E> next) {
-		super(e, e.toString());
+		super(e);
 		this.setNext(next);
-	}
-
-	/**
-	 * performing deep copy of an element when needed
-	 * @param identifier
-	 */
-	protected void copySLelement (SLelement<E> original){
-		this.caller = new String(original.getCaller());
-		this.visualizer = new ElementVisualizer(original.getVisualizer());
-		this.setNext(original.getNext());	
 	}
 	
 	/**
-	 * Validates the element
-	 * @param value
+	 * Deep copy SLelement
+	 * @param original
 	 */
-	private void validateVal(SLelement<E> value) {
-		if (value.getElement() == null){
-			throw new NullPointerException("Invalid value' " + value.getElement() + "'. Expected"
-					+ " non null value.");
-		}
-		else if (value.getClass().isInstance(getElement()))
-			System.out.println(value.getClass().isInstance(getElement()));
-		else
-			;
+	public SLelement (SLelement<E> original) {
+		super(original.getValue());
+		this.setIdentifier(original.getIdentifier());
+		this.setLabel(original.getLabel());
+		this.setVisualizer(original.getVisualizer());
+		//original = null;
+		this.setNext(original.getNext());
 	}
+	
 	
 	/**
 	 * Retrieves the next element
-	 * @return
+	 * @return SLelement<E>
 	 */
 	public SLelement<E> getNext() {
 		return next;
@@ -62,10 +54,25 @@ public class SLelement<E> extends Element<E>{
 	
 	/**
 	 * Sets the pointer to the next element
-	 * @param next
+	 * @param next SLelement<E>
 	 */
 	public void setNext(SLelement<E> next) {
 		this.next = next;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "SLelement [next=" + next + ", getNext()=" + getNext()
+				+ ", getIdentifier()=" + getIdentifier() + ", getVisualizer()="
+				+ getVisualizer()
+				+ ", getClassName()=" + getClassName()
+				+ ", getRepresentation()=" + getRepresentation()
+				+ ", getLabel()=" + getLabel() + ", getValue()=" + getValue()
+				+ ", toString()=" + super.toString() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + "]";
 	}
 	
 	//method removed

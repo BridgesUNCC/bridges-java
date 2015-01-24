@@ -2,7 +2,9 @@ package edu.uncc.cs.bridges_vs1.structure;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+import edu.uncc.cs.bridges.Validation;
 import edu.uncc.cs.bridges_vs1.validation.*;
 
 public class ElementVisualizer {
@@ -58,7 +60,7 @@ public class ElementVisualizer {
 		return Double.parseDouble(properties.get("size"));
 	}
 
-	public void setColor(String aColor){
+	public String setColor(String aColor){
 		//this.aColor = aColor;
 		aColor = aColor.toLowerCase();
 		if (aColor == null || aColor.isEmpty()) {
@@ -67,6 +69,7 @@ public class ElementVisualizer {
 			Validation.validateColor(aColor);
 			properties.put("color", aColor);
 		}
+		return aColor;
 	}
 	
 	/**
@@ -117,6 +120,17 @@ public class ElementVisualizer {
 			return 1.0;
 		else
 			return Double.parseDouble(properties.get("opacity"));
+	}
+	
+	/**
+	 * The randomColor method selects a random color from the available
+	 * list of colors found in Validation.java and sets the color
+	 * of the current element
+	 * @return a color name as a string value
+	 */
+	public String randomColor(){
+		Object [] a=Validation.COLOR_NAMES.toArray();
+		return setColor(a[new Random().nextInt(a.length)].toString());
 	}
 	
 }

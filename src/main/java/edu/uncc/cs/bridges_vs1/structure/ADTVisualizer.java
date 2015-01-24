@@ -17,6 +17,7 @@ public class ADTVisualizer<E> {
 	private int MAX_ELEMENTS_ALLOWED = 1000; //this variable holds the maximum number of nodes allowed
 	public final Map<String, String> ADT_TYPE = new HashMap <String, String>(){{
 		put("graphVis","graph");
+		put("graphVis","graphl");
 		put("stackVis","stack");
 		put("queueVis","queue");
 		put("treeVis","tree");
@@ -145,7 +146,7 @@ public class ADTVisualizer<E> {
 			throw new Exception("When setting a link between elements, the source and the target must be different.");
 		}
 		else if (source != null && target != null){
-			mapOfLinks.get(source).put(target.getIdentifier(), target);
+			mapOfLinks.get(source).put(target.getLabel(), target);
 			//System.out.println(mapOfLinks.get(source));
 		}
 		else{
@@ -181,7 +182,7 @@ public class ADTVisualizer<E> {
 		int i=0;
 		for (Entry<Element<E>, HashMap<String, Element<E>>> element: mapOfLinks.entrySet()) {
 			nodes.append(element.getKey().getRepresentation() + ",");
-			element_to_index.put(element.getKey().getIdentifier(), i);
+			element_to_index.put(element.getKey().getLabel(), i);
 			i++;
 			if (i == MAX_ELEMENTS_ALLOWED)
 				try {
@@ -193,7 +194,7 @@ public class ADTVisualizer<E> {
 		
 		// Manage link properties
 		for (Entry<Element<E>, HashMap<String, Element<E>>> element: mapOfLinks.entrySet()) {
-			//System.out.println("Element entryset: "+element.getKey().getIdentifier()+"  "+element.getValue().entrySet().toString());
+			//System.out.println("Element entryset: "+element.getKey().getLabel()+"  "+element.getValue().entrySet().toString());
 			if (!element.getValue().entrySet().isEmpty()){
 				for(Entry<String, Element<E>> target: element.getValue().entrySet()) {
 					links.append(getLinkRepresentation(element.getKey(), target.getValue(), element_to_index) + ",");
@@ -234,7 +235,7 @@ public class ADTVisualizer<E> {
 		int i=0;
 		for (Entry<String, SLelement<E>> element: adjacencyList.entrySet()) {
 			nodes.append(element.getValue().getRepresentation() + ",");
-			element_to_index.put(element.getValue().getIdentifier(), i);
+			element_to_index.put(element.getValue().getLabel(), i);
 			i++;
 			if (i == MAX_ELEMENTS_ALLOWED)
 				try {
@@ -295,7 +296,7 @@ public class ADTVisualizer<E> {
 			// Encapsulate in {}, and remove the trailing comma.
 			if (anElement != null){
 				nodes.append(anElement.getRepresentation() + ",");
-				element_to_index.put(anElement.getIdentifier(), i);
+				element_to_index.put(anElement.getLabel(), i);
 				i++;
 				if (i == MAX_ELEMENTS_ALLOWED)
 					try {
@@ -357,7 +358,7 @@ public class ADTVisualizer<E> {
 			// Encapsulate in {}, and remove the trailing comma.
 			if (anElement != null){
 				nodes.append(anElement.getRepresentation() + ",");
-				element_to_index.put(anElement.getIdentifier(), i);
+				element_to_index.put(anElement.getLabel(), i);
 				i++;
 				if (i == MAX_ELEMENTS_ALLOWED)
 					try {
@@ -405,6 +406,89 @@ public class ADTVisualizer<E> {
 			return s.toString();
 	}
 	
+	public
+	<E> String getTreeRepresentation(TreeElement<E> e) {
+		StringBuilder nodes = new StringBuilder();
+		StringBuilder links = new StringBuilder();
+		Map<String, Integer> element_to_index = new HashMap<>();
+		getTreeRepresentation(e, 0, nodes, element_to_index);
+		getTreeLinkRepresentation(e,0,links, element_to_index);
+		// Encapsulate in {}, and remove the trailing comma.	
+					StringBuilder s = new StringBuilder();
+					
+					s.append("{").
+					  append("\"name\": \"edu.uncc.cs.bridges\",").
+					  append("\"version\": \"0.4.0\",").
+					  append("\"visual\": \""+visualizerType+"\",").
+					  append("\"nodes\": [").append(DataFormatter.trimComma(nodes)).append( "],").
+					  append("\"links\": [").append(DataFormatter.trimComma(links)).append("]").
+					  append("}");
+					if (this.isVisualizeJSON())
+						System.out.println(s.toString());
+					return s.toString();
+	}
+	
+	/**
+	 * This method returns the JSON string of a singly linked list 
+	 * @param e
+	 * @return
+	 */
+	public
+	<E> StringBuilder getTreeRepresentation(TreeElement<E> e, int i, StringBuilder nodes, Map<String, Integer> element_to_index) {
+
+		TreeElement<E> anElement = e;
+	
+			// Manage vertex properties
+			// Encapsulate in {}, and remove the trailing comma.
+			if (anElement != null){
+				nodes.append(anElement.getRepresentation() + ",");
+				element_to_index.put(anElement.getLabel(), i);
+				if (i == MAX_ELEMENTS_ALLOWED)
+					try {
+						throw new Exception ("No more than 1000 elements can be created!");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+			}
+			if (e == null)
+				return null;
+			getTreeRepresentation(e.getLeft(), i++, nodes, element_to_index);
+			getTreeRepresentation(e.getRight(), i++, nodes, element_to_index);
+			return nodes;
+	}
+	
+	public
+	<E> StringBuilder getTreeLinkRepresentation(TreeElement<E> e, int i, StringBuilder links, Map<String, Integer> element_to_index) {
+			// Manage link properties
+		
+				if (e.getLeft() != null){
+					links.append(getLinkRepresentation(e, e.getLeft(), element_to_index) + ",");
+					i++;
+				}
+				if (e.getRight() != null){
+					links.append(getLinkRepresentation(e, e.getRight(), element_to_index) + ",");
+					i++;
+				}
+				if (i == MAX_LINKS_ALLOWED)
+					try {
+						throw new Exception ("No more than 1000 links per element can be created!");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				if (e == null)
+					return null;
+				getTreeLinkRepresentation(e.getLeft(), i++, links, element_to_index);
+				getTreeLinkRepresentation(e.getRight(), i++, links, element_to_index);
+				return links;
+	}
+	/**
+	protected String preOrder(TreeElement<E> root){
+		if (root == null)
+			//return;
+		preOrder(root.getLeft());
+		preOrder(root.getRight());
+		
+	}*/
 	
 	/**
 	 * 
@@ -412,8 +496,11 @@ public class ADTVisualizer<E> {
 	 * @param e2: target element
 	 * @return
 	 */
-	public <E> int compare(Element<E> e1, Element<E> e2){
-		return e1.getIdentifier().compareTo(e2.getIdentifier());
+	public int compare(Element<E> e1, Element<E> e2){
+		 if (e1.getIdentifier().compareTo(e2.getIdentifier())==0)
+			 return e1.getLabel().compareTo(e2.getLabel());
+		 else return e1.getIdentifier().compareTo(e2.getIdentifier());
+		 
 	}
 	
 	
@@ -437,9 +524,9 @@ public class ADTVisualizer<E> {
 		
 			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
 			}
-			json += String.format("\"source\":%s,", element_to_index.get(source.getIdentifier()));
-			json += String.format("\"target\":%s", element_to_index.get(target.getIdentifier()));
-			//System.out.println("json: " + json);
+			json += String.format("\"source\":%s,", element_to_index.get(source.getLabel()));
+			json += String.format("\"target\":%s", element_to_index.get(target.getLabel()));
+			System.out.println(target.toString());
 			return json + "}";
 		}
 	}

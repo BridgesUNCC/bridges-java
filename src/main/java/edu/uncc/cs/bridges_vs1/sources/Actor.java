@@ -19,6 +19,22 @@ public class Actor {
 	}
 	
 	/**
+	 * This method sets the string name
+	 */
+	public void setName(String name){
+		this.anActor = name;
+	}
+	
+	public void setLabel(String label){
+		setName(label);
+	}
+	
+
+	public String getLabel(){
+		return getName();
+	}
+	
+	/**
 	 * This method implements compareTo for the Actors
 	 */
 	public int compareTo(Actor anotherActor){

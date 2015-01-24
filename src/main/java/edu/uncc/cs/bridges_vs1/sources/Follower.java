@@ -15,6 +15,21 @@ public class Follower implements Comparable<Follower> {
 	}
 	
 	/**
+	 * This method sets the string name
+	 */
+	public void setName(String name){
+		this.aFollower = name;
+	}
+	
+	public void setLabel(String label){
+		setName(label);
+	}
+	
+	public String getLabel(){
+		return getName();
+	}
+	
+	/**
 	 * This method implements compareTo for the Follower
 	 */
 	public int compareTo(Follower anotherFollower){

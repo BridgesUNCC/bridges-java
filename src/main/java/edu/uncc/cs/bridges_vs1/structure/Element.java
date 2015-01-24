@@ -2,66 +2,108 @@ package edu.uncc.cs.bridges_vs1.structure;
 
 import java.util.Map.Entry;
 
+import edu.uncc.cs.bridges_vs1.sources.Actor;
+import edu.uncc.cs.bridges_vs1.sources.EarthquakeTweet;
+import edu.uncc.cs.bridges_vs1.sources.Follower;
+import edu.uncc.cs.bridges_vs1.sources.Movie;
+import edu.uncc.cs.bridges_vs1.sources.Tweet;
 import edu.uncc.cs.bridges_vs1.validation.InvalidValueException;
 
+/**
+ * This is the Superclass Element with SLelement, DLelement,
+ * ArrayElement, TreeElement, subclasses
+ * it contains the Element Visualizer object
+ * label field derived from the E value
+ * an object of E data type: integer, string, Tweet, Actor, Movie, EarthquakeTweet
+ * identifier field automatically generataed
+ * @author mihai
+ *
+ * @param <E>
+ */
 public class Element<E> {
 	
 	static Integer ids = 0;
-	protected String caller;
-	protected String identifier;
-	protected ElementVisualizer visualizer;
+	private String label;
+	private String identifier;
+	private ElementVisualizer visualizer;
 	private E value;
 	
-	//check for identifier value if it is null 
-	//check for the generic type to be one that exists
-	//
+	/**
+	 * Element constructor
+	 * creates an ElementVisualizer object
+	 * sets a unique identifier for the current Element
+	 */
 	protected Element(){
 		super();
-		this.caller = ids.toString();
+		this.setIdentifier(ids.toString());
 		ids++;
-		this.visualizer = new ElementVisualizer();
+		this.setVisualizer(new ElementVisualizer());
 	}
 	
 	/**
-	 * the constructor
-	 * @param identifier
-	 * @param aTy
-	 * @param val
+	 * the constructor of Element
+	 * @param val will be used to construct Element
 	 */
-	public Element (E val, String identifier){
-		validateIdentifier(identifier);
-		validateVal(val);
-		this.caller = ids.toString();
-		ids++;
-		this.identifier = identifier;
-		this.value = val;
-		this.visualizer = new ElementVisualizer();
+	public Element (E val){
+		this();	
+		validateVal(val); //here we need to check for null values until the server will accept JSON containing both identifiers(always not NUll) and labels
+		this.setValue(val);
+		//validateLabel(label); //this validation will not be necessary after the full implementation of identifier on the server side
+		if (Tweet.class.isInstance(val))
+			this.setLabel(((Tweet) val).getLabel());
+		else if (Movie.class.isInstance(val))
+			this.setLabel(((Movie) val).getLabel());
+		else if (Actor.class.isInstance(val))
+			this.setLabel(((Actor) val).getLabel());
+		else if (EarthquakeTweet.class.isInstance(val))
+			this.setLabel(((EarthquakeTweet) val).getLabel());
+		else if (Follower.class.isInstance(val))
+			this.setLabel(((Follower) val).getLabel());
+		else{
+			this.setLabel(val.toString());
+		} 
+		
 	}
+	
 	/**
-	 * 
-	 * @param identifier2
+	 * the constructor of Element
+	 * @param val will be used to construct Element
 	 */
-	private void validateIdentifier(String identifier2) {
-		if (identifier2 == null){
-			throw new NullPointerException("Invalid value' " + identifier2 + "'. Expected"
+	public Element (String label, E val){
+		this(val);
+		this.setLabel(label);
+	}
+
+	/**
+	 * performing deep copy of an element when needed
+	 * @param original
+	 */
+	public Element (Element<E> original){
+		this.identifier = new String(original.getIdentifier());
+		this.label = new String(original.getLabel());
+		this.visualizer = new ElementVisualizer(original.getVisualizer());
+		this.setValue(original.getValue());
+	}
+	
+	/**
+	 * Inactive at this point to allow Shaffer's implementation
+	 * This method validates the string label 
+	 * if label = NULL throws an NullPointerException
+	 * @param label
+	 */
+	private void validateLabel(String label) {
+		if (label == null){
+			throw new NullPointerException("Invalid value' " + label + "'. Expected"
 					+ " non null value.");
 		}
-		else if (identifier2.equals("")){
-			throw new InvalidValueException("Invalid value' " + identifier2 + "'. Expected"
+		else if (label.equals("")){
+			throw new InvalidValueException("Invalid value' " + label + "'. Expected"
 					+ " non empty string.");
 		}
 		else
 			;
 	}
 
-	/**
-	 * performing deep copy of an element when needed
-	 * @param identifier
-	 */
-	public Element (Element<E> original){
-		this.identifier = new String(original.getIdentifier());
-		this.visualizer = new ElementVisualizer(original.getVisualizer());
-	}
 	
 	/**
 	 * this method returns the identifier
@@ -70,7 +112,6 @@ public class Element<E> {
 	public String getIdentifier(){
 		return identifier;
 	}
-	
 	
 	/**
 	 * this method sets the string identifier
@@ -89,35 +130,38 @@ public class Element<E> {
 	}
 	
 	/**
-	 * Returns the Element value
-	 * @return element
+	 * This method sets the visualizer object for the current 
+	 * element object
+	 * @param visualizer the visualizer to set
 	 */
-	public E getElement(){
-		return this.value;
+	protected void setVisualizer(ElementVisualizer visualizer) {
+		this.visualizer = visualizer;
 	}
-	
+
 	/**
-	 * Sets the element's value
-	 * @param the ELement value
-	 */
-	public void setElement(E value){
-		validateVal(value);
-		this.value = value;
-	}
-	/**
-	 * Validates the Element
+	 * Validates the Element's value when the Element is created
+	 * A non null value is expected 
+	 * this will be unnecessary after we modify the server
 	 * @param ELement value 
 	 */
-	private void validateVal(E value) {
-		if (value == null){
-			throw new NullPointerException("Invalid value' " + value + "'. Expected"
-					+ " non null value.");
-		}	
+	protected void validateVal(E value) {
+		try{
+			if (value == null){
+				throw new NullPointerException("\nInvalid value set to SLelement<E> '" + value + "'. Expected"
+						+ " non null E value.\n");
+			} else if (value.getClass().getCanonicalName().isEmpty()){
+				throw new IllegalArgumentException("\nThe argument is not a legal Element object!\n"+value.getClass().getCanonicalName());  
+			}
+				else;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
 	
 	/**
 	 * This method returns the name of the class
-	 * @return
+	 * @return "Element"
 	 */
 	public String getClassName(){
 		return this.value.getClass().getName();
@@ -126,22 +170,21 @@ public class Element<E> {
 	/**
 	 * Comparison between 2 elements
 	 * @param e1
-	 * @return
+	 * @return 0 if the 2 elements have the same label and the same identifier 
+	 * and a nonZero integer otherwise
 	 */
 	public int compare(Element<E> e1){
-		if (e1.getCaller().compareTo(this.getCaller())==0)
+		if (e1.getLabel().compareTo(this.getLabel())==0)
 			return e1.getIdentifier().compareTo(this.getIdentifier());
 		else 
-			return e1.getCaller().compareTo(this.getCaller());
+			return e1.getLabel().compareTo(this.getLabel());
 	}
 	
 	/**
-	 * Internal code for getting the properties of an AbstractVertex.
-	 * 
+	 * Internal code for getting the properties of the Element object.
 	 * It produces (without the spaces or newlines):
-	 * <tt>
 	 * {
-	 *  "name": "Some identifier",
+	 *  "name": "Some label",
 	 *  "other CSS properties like color": any_JSON_value
 	 * }
 	 * @returns the encoded JSON string
@@ -151,22 +194,56 @@ public class Element<E> {
 		for (Entry<String, String> entry : visualizer.properties.entrySet()) {
 			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
 		}
-		json += String.format("\"name\": \"%s\"", identifier);
+		json += String.format("\"name\": \"%s\"", label);
 		return json + "}";
 	}
 
 	/**
-	 * @return the caller
+	 * This method returns the existing value of the label fields
+	 * @return the label
 	 */
-	public String getCaller() {
-		return caller;
+	public String getLabel() {
+		return label;
 	}
 
 	/**
-	 * @param caller the caller to set
+	 * This method sets the label
+	 * @param label the label to set
 	 */
-	protected void setCaller(String caller) {
-		this.caller = caller;
+	protected void setLabel(String label) {
+		this.label = label;
 	}
-	
+
+	/**
+	 * this method returns the value E for the current Element
+	 * @return the value
+	 */
+	public E getValue() {
+		return value;
+	}
+
+	/**
+	 * This method sets the value field to the E argument value
+	 * @param value the value to set
+	 */
+	public void setValue(E value) {
+		validateVal(value);
+		this.value = value;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Element [label=" + label + ", identifier=" + identifier
+				+ ", visualizer=" + visualizer + ", value=" + value
+				+ ", getIdentifier()=" + getIdentifier() + ", getVisualizer()="
+				+ getVisualizer()
+				+ ", getClassName()=" + getClassName()
+				+ ", getRepresentation()=" + getRepresentation()
+				+ ", getLabel()=" + getLabel() + ", getValue()=" + getValue()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
 }

@@ -24,7 +24,7 @@ public class TreeElement<E> extends Element<E>{
 	}
 	
 	public TreeElement (String identifier, E e){
-		super(e, identifier);
+		super(identifier, e);
 		this.left = null;
 		this.right = null;
 	}
@@ -46,8 +46,8 @@ public class TreeElement<E> extends Element<E>{
 	 * @param identifier
 	 */
 	public void copyTreeElement (TreeElement<E> original){
-		this.identifier = new String(original.getIdentifier());
-		this.visualizer = new ElementVisualizer(original.getVisualizer());
+		this.setIdentifier(new String(original.getIdentifier()));
+		this.setVisualizer( new ElementVisualizer(original.getVisualizer()));
 		this.left = original.left;
 		this.right = original.right;
 	}

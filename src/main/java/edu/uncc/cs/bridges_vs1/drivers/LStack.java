@@ -22,7 +22,7 @@ class LStack<E>{
 
   public E pop() {              // Remove "it" from stack
     assert top != null : "Stack is empty";
-    E it = top.getElement();
+    E it = top.getValue();
     top = top.getNext();
     size--;
     return it;
@@ -30,7 +30,7 @@ class LStack<E>{
 
   public E topValue() {         // Return top value
     assert top != null : "Stack is empty";
-    return top.getElement();
+    return top.getValue();
   }
 
   public SLelement<E>  stackTop() {         // Return top value
@@ -53,7 +53,7 @@ class LStack<E>{
     out.append("< ");
     SLelement<E> temp = top;
     while (temp != null) {
-      out.append(temp.getElement());
+      out.append(temp.getValue());
       out.append(" ");
       temp = temp.getNext();
     }
