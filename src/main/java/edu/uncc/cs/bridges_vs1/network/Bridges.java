@@ -15,11 +15,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import edu.uncc.cs.bridges_vs1.structure.ADTVisualizer;
 import edu.uncc.cs.bridges_vs1.structure.DLelement;
 import edu.uncc.cs.bridges_vs1.structure.Element;
 import edu.uncc.cs.bridges_vs1.structure.SLelement;
+import edu.uncc.cs.bridges_vs1.structure.TreeElement;
 import edu.uncc.cs.bridges_vs1.validation.RateLimitException;
 
 public class Bridges <E> {
@@ -37,7 +37,7 @@ public class Bridges <E> {
 		put("graphl","updateGraphL");
 		put("stack","stack");
 		put("queue","queue");
-		put("tree","tree");
+		put("tree","updateTree");
 		put("llist", "updateSL");
 		put("Dllist", "updateDL");
 		}};
@@ -153,7 +153,6 @@ public class Bridges <E> {
 			String visualizerType) throws Exception{
 		visualizer.setMapOfLinks(mapOfLinks);
 		visualizer.setVisualizerType(visualizerType);
-		this.assignment = assignment;
 		visualize();
 	}
 	
@@ -168,7 +167,6 @@ public class Bridges <E> {
 			String visualizerType) throws Exception{
 		root = e;
 		visualizer.setVisualizerType(visualizerType);
-		this.assignment = assignment;
 		visualize();
 	}
 	
@@ -183,7 +181,20 @@ public class Bridges <E> {
 			String visualizerType) throws Exception{
 		root = e;
 		visualizer.setVisualizerType(visualizerType);
-		this.assignment = assignment;
+		visualize();
+	}
+	
+	/**
+	 * This method sets the first element and the type of ADT for the ADTVisualizer object
+	 * @param e - is a DLelement<E>
+	 * @param visualizerType
+	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist" or "Dllist"
+	 * @throws Exception
+	 */
+	public void setDataStructure(TreeElement<E> e, 
+			String visualizerType) throws Exception{
+		root = e;
+		visualizer.setVisualizerType(visualizerType);
 		visualize();
 	}
 	
@@ -331,6 +342,33 @@ public class Bridges <E> {
 					+ " representation to the server. However, it responded with"
 					+ " an impossible 'RateLimitException'. Please contact"
 					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+		} 
+        // Return a URL to the user
+        System.out.println("Check out your visuals at " + formatter.getBackend().prepare("/assignments/" + getAssignment() + "/" + userName) );
+        assignmentDecimal+=0.01;
+	}
+	
+	/**
+	 * Update visualization metadata of Tree. This may be called many times.
+	 * This is usually an expensive operation and involves connecting to the network.
+	 * Calling this method is optional provided you call complete()
+	 */
+	protected void updateTree() {
+        try {
+        	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getTreeRepresentation((TreeElement<E>)root));
+		} catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central Bridges server is down. Try again later.\n"
+					+ e.getMessage());
+		} catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " Bridgess developers and file a bug report; this error"
 					+ " should not be possible.\n"
 					+ e.getMessage());
 		} 

@@ -80,7 +80,7 @@ public class Driver{
 		bridge.setLink(test2, test5);
 		bridge.setLink(test3, test4);
 		//bridge.setLink(test7, test8);
-		SLelement<Tweet> test10 = new SLelement<>("test2", new Tweet("test2"));
+		SLelement<Tweet> test10 = new SLelement<>("test10", new Tweet("test10"));
 		bridge.add(test10);
 		bridge.setLink(test2, test10);
 		test6.setIdentifier("test3");

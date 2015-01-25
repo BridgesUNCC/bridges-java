@@ -15,6 +15,7 @@ public class ADTVisualizer<E> {
 	public String visualizerIdentifier;
 	private int MAX_LINKS_ALLOWED = 1000; //this holds the maximum number of edges allowed 
 	private int MAX_ELEMENTS_ALLOWED = 1000; //this variable holds the maximum number of nodes allowed
+	private static int treeElementValue =0;
 	public final Map<String, String> ADT_TYPE = new HashMap <String, String>(){{
 		put("graphVis","graph");
 		put("graphVis","graphl");
@@ -406,13 +407,22 @@ public class ADTVisualizer<E> {
 			return s.toString();
 	}
 	
+	/**
+	 * This method returns the JSON string representation of the tree 
+	 * made by using preorder traversal
+	 * @param e
+	 * @return
+	 */
 	public
 	<E> String getTreeRepresentation(TreeElement<E> e) {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		Map<String, Integer> element_to_index = new HashMap<>();
+		treeElementValue = 0;
+		Map<String, Integer> element_to_index = new HashMap<>(); //indexes the elements with integers
+		element_to_index = preOrder(e, element_to_index, 0);
+
 		getTreeRepresentation(e, 0, nodes, element_to_index);
-		getTreeLinkRepresentation(e,0,links, element_to_index);
+		getTreeLinkRepresentation(e, links, element_to_index);
 		// Encapsulate in {}, and remove the trailing comma.	
 					StringBuilder s = new StringBuilder();
 					
@@ -421,7 +431,8 @@ public class ADTVisualizer<E> {
 					  append("\"version\": \"0.4.0\",").
 					  append("\"visual\": \""+visualizerType+"\",").
 					  append("\"nodes\": [").append(DataFormatter.trimComma(nodes)).append( "],").
-					  append("\"links\": [").append(DataFormatter.trimComma(links)).append("]").
+					  append("\"links\": [").append(DataFormatter.trimComma(links)).
+					  append("]").
 					  append("}");
 					if (this.isVisualizeJSON())
 						System.out.println(s.toString());
@@ -429,20 +440,19 @@ public class ADTVisualizer<E> {
 	}
 	
 	/**
-	 * This method returns the JSON string of a singly linked list 
+	 * This method returns the JSON containing the tree nodes without the links between the nodes 
 	 * @param e
 	 * @return
 	 */
-	public
+	private
 	<E> StringBuilder getTreeRepresentation(TreeElement<E> e, int i, StringBuilder nodes, Map<String, Integer> element_to_index) {
 
 		TreeElement<E> anElement = e;
-	
 			// Manage vertex properties
 			// Encapsulate in {}, and remove the trailing comma.
 			if (anElement != null){
 				nodes.append(anElement.getRepresentation() + ",");
-				element_to_index.put(anElement.getLabel(), i);
+				//element_to_index.put(anElement.getLabel(), i);
 				if (i == MAX_ELEMENTS_ALLOWED)
 					try {
 						throw new Exception ("No more than 1000 elements can be created!");
@@ -457,39 +467,61 @@ public class ADTVisualizer<E> {
 			return nodes;
 	}
 	
-	public
-	<E> StringBuilder getTreeLinkRepresentation(TreeElement<E> e, int i, StringBuilder links, Map<String, Integer> element_to_index) {
+	/**
+	 * Create a JSON representation of tree links between the tree elements
+	 * @param e
+	 * @param links
+	 * @param element_to_index
+	 * @return
+	 */
+	private
+	<E> StringBuilder getTreeLinkRepresentation(TreeElement<E> e, StringBuilder links, Map<String, Integer> element_to_index) {
 			// Manage link properties
-		
+			if (e != null){
 				if (e.getLeft() != null){
 					links.append(getLinkRepresentation(e, e.getLeft(), element_to_index) + ",");
-					i++;
 				}
 				if (e.getRight() != null){
 					links.append(getLinkRepresentation(e, e.getRight(), element_to_index) + ",");
-					i++;
 				}
-				if (i == MAX_LINKS_ALLOWED)
-					try {
-						throw new Exception ("No more than 1000 links per element can be created!");
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
+			}
 				if (e == null)
 					return null;
-				getTreeLinkRepresentation(e.getLeft(), i++, links, element_to_index);
-				getTreeLinkRepresentation(e.getRight(), i++, links, element_to_index);
+				getTreeLinkRepresentation(e.getLeft(), links, element_to_index);
+				getTreeLinkRepresentation(e.getRight(), links, element_to_index);
 				return links;
 	}
-	/**
-	protected String preOrder(TreeElement<E> root){
-		if (root == null)
-			//return;
-		preOrder(root.getLeft());
-		preOrder(root.getRight());
-		
-	}*/
+
 	
+	/**
+	 * Creating a Element to Integer map using preorder tree traversal
+	 * @param root
+	 * @param element_to_index
+	 * @param i
+	 * @return
+	 */
+	 public <E> Map<String, Integer> preOrder(TreeElement<E> root, Map<String, Integer> element_to_index, int i){
+		if (root == null)
+			return null;
+		element_to_index = treeRootProcess(root, element_to_index);
+		preOrder(root.getLeft(), element_to_index, ++i);
+		preOrder(root.getRight(), element_to_index, ++i);
+		return element_to_index;
+	}
+	 
+	 /**
+	  * Helper method for preOrder method
+	  * returning a Map of Element and their corresponding Integers
+	  * @param root
+	  * @param element_to_index
+	  * @return
+	  */
+	 public <E> Map<String, Integer> treeRootProcess(TreeElement<E> root, Map<String, Integer> element_to_index){
+		 if (!element_to_index.containsKey(root.getLabel()))
+				element_to_index.put(root.getLabel(), treeElementValue++);
+		 return element_to_index;
+	 }
+
 	/**
 	 * 
 	 * @param e1: source element
@@ -526,7 +558,7 @@ public class ADTVisualizer<E> {
 			}
 			json += String.format("\"source\":%s,", element_to_index.get(source.getLabel()));
 			json += String.format("\"target\":%s", element_to_index.get(target.getLabel()));
-			System.out.println(target.toString());
+			//System.out.println(target.toString());
 			return json + "}";
 		}
 	}
