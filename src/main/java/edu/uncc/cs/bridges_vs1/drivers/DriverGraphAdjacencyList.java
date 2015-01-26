@@ -2,6 +2,7 @@ package edu.uncc.cs.bridges_vs1.drivers;
 
 import java.util.HashMap;
 
+import scala.annotation.bridge;
 import edu.uncc.cs.bridges_vs1.network.Bridges;
 import edu.uncc.cs.bridges_vs1.sources.Tweet;
 import edu.uncc.cs.bridges_vs1.structure.*;
@@ -32,8 +33,8 @@ public class DriverGraphAdjacencyList{
 		test.getVisualizer().setColor("red");
 		test.getVisualizer().setSize(20);
 		//test.setNext(new SLelement<>(test2).setNext(new SLelement<>(test3)));
-		test.setNext(new SLelement<>(test2));
-		test2.setNext(new SLelement<>(test4));
+		//test.setNext(new SLelement<>(test2));
+		//test2.setNext(new SLelement<>(test4));
 		//test2.setNext(test);
 		//this is the adjacency list, with the HashMap<key, value> where 
 		//key represents the element's identifier and 
@@ -44,10 +45,14 @@ public class DriverGraphAdjacencyList{
 		adjacencyList.put("test2", test2);
 		adjacencyList.put("test4", test4);
 		
+		
 		Bridges<Tweet> bridge = new Bridges<Tweet>(13, "300587042698", "mmehedin@uncc.edu");
 		bridge.setDataStructure("graphl", adjacencyList); //set the structure holding the nodes and links i.e. Singly linked list
 									//set ADT type
-
+		bridge.setLink(test, test2);
+		bridge.setLink(test, test4);
+		bridge.setLink(test4, test2);
+		adjacencyList.put("test5", test5);
 		//this is used to visualize the JSON before it is passed to the server
 		//errors in JSON formatting can be visualized on the console
 		bridge.toggleJSONdisplay();

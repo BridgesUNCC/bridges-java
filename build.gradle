@@ -9,7 +9,7 @@ apply plugin: 'signing'
 /// General
 ///
 group = "edu.uncc.cs.bridges_vs1"
-version = "2.02"
+version = "2.04"
 
 ///
 /// Artifacts and deployment

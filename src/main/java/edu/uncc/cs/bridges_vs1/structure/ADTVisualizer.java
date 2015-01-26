@@ -146,17 +146,27 @@ public class ADTVisualizer<E> {
 	}
 	
 	public void setLink(Element<E> source, Element<E> target) throws Exception{
-		if (source.equals(target)){
-			throw new Exception("When setting a link between elements, the source and the target must be different.");
+		try {
+			if (mapOfLinks != null){
+				if (source.equals(target)){
+					throw new Exception("When setting a link between elements, the source and the target must be different.");
+				}
+				else if (source != null && target != null){
+					mapOfLinks.get(source).put(target.getLabel(), target);
+					System.out.println(mapOfLinks.get(source));
+				}
+				else{
+					throw new NullPointerException("One or both elements are null." +
+													"Cannot set a link between 2 elements if one or both are null.");
+				}
+			} else if (adjacencyList != null){
+				adjacencyList.get(source.getLabel()).setNext((SLelement<E>)target);
+			} else
+				throw new IllegalArgumentException();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		else if (source != null && target != null){
-			mapOfLinks.get(source).put(target.getLabel(), target);
-			//System.out.println(mapOfLinks.get(source));
-		}
-		else{
-			throw new NullPointerException("One or both elements are null." +
-											"Cannot set a link between 2 elements if one or both are null.");
-		} 	
+			
 	}
 	
 	/**
