@@ -14,19 +14,19 @@ public class DriverBinaryTree {
 	public static void main(String[] args) throws Exception {
 		TreeElement<Tweet> test1 = new TreeElement<>("test1", new Tweet("test1"));
 		TreeElement<Tweet> test2 = new TreeElement<>("test2", new Tweet("test2"));
-		TreeElement<Tweet> test3 = new TreeElement<>("test3", new Tweet("test3"));
-		TreeElement<Tweet> test4 = new TreeElement<>("test4", new Tweet("test4"));
-		TreeElement<Tweet> test5 = new TreeElement<>("test5", new Tweet("test5"));
-		TreeElement<Tweet> test6 = new TreeElement<>("test6", new Tweet("test6"));
+		//TreeElement<Tweet> test3 = new TreeElement<>("test3", new Tweet("test3"));
+		//TreeElement<Tweet> test4 = new TreeElement<>("test4", new Tweet("test4"));
+		//TreeElement<Tweet> test5 = new TreeElement<>("test5", new Tweet("test5"));
+		//TreeElement<Tweet> test6 = new TreeElement<>("test6", new Tweet("test6"));
 		
 		//create tree links between the nodes
 		test1.setLeft(test2);
-		test1.setRight(test3);
+		//test1.setRight(test3);
 		
-		test2.setLeft(test4);
-		test2.setRight(test5);
+		//test2.setLeft(test4);
+		//test2.setRight(test5);
 		
-		test3.setLeft(test6);
+		//test3.setLeft(test6);
 		//changing the visual properties of the elements
 		test1.getVisualizer().setColor("red");
 		test1.getVisualizer().setSize(20);

@@ -3,6 +3,7 @@ package edu.uncc.cs.bridges_vs1.structure;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -421,12 +422,25 @@ public class ADTVisualizer<E> {
 	 * @return
 	 */
 	public
+	 String getTreeRepresentation(TreeElement<E> root) {
+		LinkedList<TreeElement<E>> nodes = new LinkedList<>(); 
+		 LinkedList<TreeElement<E>> links =new LinkedList<>();
+		preOrder(root, nodes, links);
+
+		return getTreeRepresentationP(nodes, links);
+	}
+	
+	/**
+	public
 	<E> String getTreeRepresentation(TreeElement<E> e) {
+		//preOrder(e, 0);
+		
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		preOrder(e);
-
+		
 		getTreeRepresentation(e, 0, nodes, links);
+		System.out.println(nodes);
+		System.out.println(links);
 		//getTreeLinkRepresentation(e, 0, links);
 		// Encapsulate in {}, and remove the trailing comma.	
 					StringBuilder s = new StringBuilder();
@@ -443,6 +457,7 @@ public class ADTVisualizer<E> {
 						System.out.println(s.toString());
 					return s.toString();
 	}
+	*/
 	
 	/**
 	 * This method returns the JSON containing the tree nodes without the links between the nodes 
@@ -452,11 +467,11 @@ public class ADTVisualizer<E> {
 	private
 	<E> StringBuilder getTreeRepresentation(TreeElement<E> e, int i, StringBuilder nodes, StringBuilder links) {
 
-		TreeElement<E> anElement = e;
 			// Manage vertex properties
 			// Encapsulate in {}, and remove the trailing comma.
-			if (anElement != null){
-				nodes.append(anElement.getRepresentation() + ",");
+			if (e != null){
+				nodes.append(e.getRepresentation() + ",");
+				//e.setIdentifier(Integer.toString(i));
 				//anElement.setIdentifier(Integer.toString(i));
 				//element_to_index.put(anElement.getLabel(), i);
 				if (i == MAX_ELEMENTS_ALLOWED)
@@ -480,6 +495,7 @@ public class ADTVisualizer<E> {
 			}
 			else if (e == null)
 				return null;
+			
 			getTreeRepresentation(e.getLeft(), i++, nodes, links);
 			getTreeRepresentation(e.getRight(), i++, nodes, links);
 			return nodes;
@@ -493,13 +509,74 @@ public class ADTVisualizer<E> {
 	 * @param i
 	 * @return
 	 */
-	 public <E> void preOrder(TreeElement<E> root){
-		if (root == null)
-			return;
-
-		preOrder(root.getLeft());
-		preOrder(root.getRight());
+	 public void preOrder(TreeElement<E> root, LinkedList<TreeElement<E>> nodes, 
+			 LinkedList<TreeElement<E>> links){
+		 
+		if (root != null){
+			//System.out.println(root.getIdentifier());
+			nodes.push(root);
+			if (root.getLeft() != null){
+				links.push(root);
+				links.push(root.getLeft());
+			}
+			if (root.getRight() != null){
+				links.push(root);
+				links.push(root.getRight());
+			}
+			preOrder(root.getLeft(), nodes, links);
+			preOrder(root.getRight(), nodes, links);
+		}
+			
+		//root.setIdentifier(Integer.toString(i));
+		//i++;		
 	}
+	 
+	 public String getTreeRepresentationP(LinkedList<TreeElement<E>> nodes, 
+			 LinkedList<TreeElement<E>> links){
+		 HashMap<Integer, Integer> map = new HashMap<>();
+//System.out.println(links.isEmpty());
+		 StringBuilder nodes_JSON = new StringBuilder();
+		 StringBuilder links_JSON = new StringBuilder();
+		 int i = 0;
+		 while (!nodes.isEmpty()){
+			 TreeElement<E> element = nodes.pop();
+			  map.put(Integer.parseInt(element.getIdentifier()), i++);
+			  System.out.println("map: "+map.get(Integer.parseInt(element.getIdentifier())));
+			  nodes_JSON.append(element.getRepresentation() + ",");
+		 }
+		 
+		 String str = links_JSON.toString();
+		 while (!links.isEmpty()){
+			  TreeElement<E> child = links.pop();
+			  TreeElement<E> parent = links.pop();
+					for (Entry<String, String> entry : linkProperties.entrySet()) {
+				
+						str += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
+					}
+					System.out.println(parent.getIdentifier());
+					System.out.println(child.getIdentifier());
+					
+					System.out.println(map.get(parent.getIdentifier().toString()));
+					str += String.format("\"source\":%s,", map.get(Integer.parseInt(parent.getIdentifier())));
+					str += String.format("\"target\":%s", map.get(Integer.parseInt(child.getIdentifier())));
+					//System.out.println(target.toString());
+					str += "},";
+		 }
+		 links_JSON.append(str);
+		 StringBuilder s = new StringBuilder();
+			
+			s.append("{").
+			  append("\"name\": \"edu.uncc.cs.bridges\",").
+			  append("\"version\": \"0.4.0\",").
+			  append("\"visual\": \""+visualizerType+"\",").
+			  append("\"nodes\": [").append(DataFormatter.trimComma(nodes_JSON)).append( "],").
+			  append("\"links\": [").append(DataFormatter.trimComma(links_JSON)).
+			  append("]").
+			  append("}");
+			if (this.isVisualizeJSON())
+				System.out.println(s.toString());
+			return s.toString();		 
+	 }
 	 
 	/**
 	 * 
