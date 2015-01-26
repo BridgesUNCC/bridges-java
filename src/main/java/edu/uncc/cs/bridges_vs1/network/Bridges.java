@@ -415,5 +415,19 @@ public class Bridges <E> {
 	 */
 	public void complete() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		visualize();
+	}
+
+	/**
+	 * @return the root
+	 */
+	public Element<E> getRoot() {
+		return root;
+	}
+
+	/**
+	 * @param root the root to set
+	 */
+	public void setRoot(Element<E> root) {
+		this.root = root;
 	}	
 }

@@ -12,18 +12,25 @@ package edu.uncc.cs.bridges_vs1.structure;
  *
  * @param <E>
  */
-public class SLelement<E> extends Element<E>{
+public class SLelement<E> extends Element<E> implements Cloneable{
 	protected SLelement<E> next=null; //the link to the next element 
-
+	
+	/**
+	 * This constructor creates an SLelement object of value "e" and label "label"
+	 * and sets the next pointer to null
+	 * @param label
+	 * @param e
+	 */
 	public SLelement (String label, E e){
 		super(label, e);
 		this.next = null;
 	}
 	
 	/**
-	 * Creates a new element with a copy of current Element
+	 * Creates a new element with value "e" and sets the next pointer
+	 * to the SLelement referenced by the "next" argument 
 	 * @param e
-	 * @param original
+	 * @param next
 	 */
 	public SLelement (E e, SLelement<E> next) {
 		super(e);
@@ -45,7 +52,7 @@ public class SLelement<E> extends Element<E>{
 	
 	
 	/**
-	 * Retrieves the next element
+	 * Retrieves the next SLelement
 	 * @return SLelement<E>
 	 */
 	public SLelement<E> getNext() {
@@ -53,12 +60,22 @@ public class SLelement<E> extends Element<E>{
 	}
 	
 	/**
-	 * Sets the pointer to the next element
+	 * Sets the pointer to the next SLelement
 	 * @param next SLelement<E>
 	 */
 	public void setNext(SLelement<E> next) {
 		this.next = next;
 	}
+	
+	@Override
+    public SLelement<E> clone() throws CloneNotSupportedException {
+				try {
+					return (SLelement<E>)super.clone();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+        return null;
+    }
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

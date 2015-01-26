@@ -15,7 +15,6 @@ public class ADTVisualizer<E> {
 	public String visualizerIdentifier;
 	private int MAX_LINKS_ALLOWED = 1000; //this holds the maximum number of edges allowed 
 	private int MAX_ELEMENTS_ALLOWED = 1000; //this variable holds the maximum number of nodes allowed
-	private static int treeElementValue =0;
 	public final Map<String, String> ADT_TYPE = new HashMap <String, String>(){{
 		put("graphVis","graph");
 		put("graphVis","graphl");
@@ -88,6 +87,10 @@ public class ADTVisualizer<E> {
 		}
 	}
 	
+	/**
+	 * This method returns the visualizer type as a string
+	 * @return string visualizer
+	 */
 	public String getVisualizerType() {
 		return visualizerType;
 	}
@@ -153,8 +156,7 @@ public class ADTVisualizer<E> {
 		else{
 			throw new NullPointerException("One or both elements are null." +
 											"Cannot set a link between 2 elements if one or both are null.");
-		} 
-			
+		} 	
 	}
 	
 	/**
@@ -178,12 +180,10 @@ public class ADTVisualizer<E> {
 	public String getGraphRepresentation() {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		Map<String, Integer> element_to_index = new HashMap<>();
-		
-		int i=0;
+		int i =0;
 		for (Entry<Element<E>, HashMap<String, Element<E>>> element: mapOfLinks.entrySet()) {
 			nodes.append(element.getKey().getRepresentation() + ",");
-			element_to_index.put(element.getKey().getLabel(), i);
+			element.getKey().setIdentifier(Integer.toString(i));
 			i++;
 			if (i == MAX_ELEMENTS_ALLOWED)
 				try {
@@ -196,9 +196,10 @@ public class ADTVisualizer<E> {
 		// Manage link properties
 		for (Entry<Element<E>, HashMap<String, Element<E>>> element: mapOfLinks.entrySet()) {
 			//System.out.println("Element entryset: "+element.getKey().getLabel()+"  "+element.getValue().entrySet().toString());
+			System.out.println("Element entryset: "+element.getKey().getLabel()+" "+element.getKey().getIdentifier() +"  "+element.getValue().keySet());
 			if (!element.getValue().entrySet().isEmpty()){
 				for(Entry<String, Element<E>> target: element.getValue().entrySet()) {
-					links.append(getLinkRepresentation(element.getKey(), target.getValue(), element_to_index) + ",");
+					links.append(getLinkRepresentation(element.getKey(), target.getValue()) + ",");
 					if (element.getValue().entrySet().size() > MAX_LINKS_ALLOWED)
 						try {
 							throw new Exception ("No more than 1000 links per element can be created!");
@@ -231,12 +232,11 @@ public class ADTVisualizer<E> {
 	public String getGraphLRepresentation() {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		Map<String, Integer> element_to_index = new HashMap<>();
 		
 		int i=0;
 		for (Entry<String, SLelement<E>> element: adjacencyList.entrySet()) {
 			nodes.append(element.getValue().getRepresentation() + ",");
-			element_to_index.put(element.getValue().getLabel(), i);
+			element.getValue().setIdentifier(Integer.toString(i));
 			i++;
 			if (i == MAX_ELEMENTS_ALLOWED)
 				try {
@@ -248,12 +248,11 @@ public class ADTVisualizer<E> {
 		// Manage link properties
 		for (Entry<String, SLelement<E>> elementList: adjacencyList.entrySet()){
 			SLelement<E> currElement = elementList.getValue();
-			if (currElement.getNext()!=null)
 			if (currElement.getNext()!=null){
 				SLelement<E> target = currElement.getNext();
 				int j=0;
 				while(target!=null){
-					links.append(getLinkRepresentation(currElement, target, element_to_index) + ",");
+					links.append(getLinkRepresentation(currElement, target) + ",");
 					j++;
 					if (j == MAX_LINKS_ALLOWED)
 						try {
@@ -288,7 +287,6 @@ public class ADTVisualizer<E> {
 	<E> String getSLRepresentation(SLelement<E> e) {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		Map<String, Integer> element_to_index = new HashMap<>();
 		
 		int i=0;
 		SLelement<E> anElement = e;
@@ -297,7 +295,7 @@ public class ADTVisualizer<E> {
 			// Encapsulate in {}, and remove the trailing comma.
 			if (anElement != null){
 				nodes.append(anElement.getRepresentation() + ",");
-				element_to_index.put(anElement.getLabel(), i);
+				anElement.setIdentifier(Integer.toString(i));
 				i++;
 				if (i == MAX_ELEMENTS_ALLOWED)
 					try {
@@ -314,7 +312,7 @@ public class ADTVisualizer<E> {
 			// Manage link properties
 			do {
 				if (anElement.getNext() != null){
-					links.append(getLinkRepresentation(anElement, anElement.getNext(), element_to_index) + ",");
+					links.append(getLinkRepresentation(anElement, anElement.getNext()) + ",");
 					j++;
 					if (j == MAX_LINKS_ALLOWED)
 						try {
@@ -350,7 +348,6 @@ public class ADTVisualizer<E> {
 	<E> String getDLRepresentation(DLelement<E> e) {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		Map<String, Integer> element_to_index = new HashMap<>();
 		
 		int i=0;
 		DLelement<E> anElement = e;
@@ -359,7 +356,7 @@ public class ADTVisualizer<E> {
 			// Encapsulate in {}, and remove the trailing comma.
 			if (anElement != null){
 				nodes.append(anElement.getRepresentation() + ",");
-				element_to_index.put(anElement.getLabel(), i);
+				anElement.setIdentifier(Integer.toString(i));
 				i++;
 				if (i == MAX_ELEMENTS_ALLOWED)
 					try {
@@ -376,11 +373,11 @@ public class ADTVisualizer<E> {
 			// Manage link properties
 			do {
 				if (anElement.getNext() != null){
-					links.append(getLinkRepresentation(anElement, anElement.getNext(), element_to_index) + ",");
+					links.append(getLinkRepresentation(anElement, anElement.getNext()) + ",");
 					j++;
 				}
 				if (anElement.getPrev() != null){
-					links.append(getLinkRepresentation(anElement, anElement.getPrev(), element_to_index) + ",");
+					links.append(getLinkRepresentation(anElement, anElement.getPrev()) + ",");
 					j++;
 				}
 				if (j == MAX_LINKS_ALLOWED)
@@ -417,12 +414,10 @@ public class ADTVisualizer<E> {
 	<E> String getTreeRepresentation(TreeElement<E> e) {
 		StringBuilder nodes = new StringBuilder();
 		StringBuilder links = new StringBuilder();
-		treeElementValue = 0;
-		Map<String, Integer> element_to_index = new HashMap<>(); //indexes the elements with integers
-		element_to_index = preOrder(e, element_to_index, 0);
+		preOrder(e);
 
-		getTreeRepresentation(e, 0, nodes, element_to_index);
-		getTreeLinkRepresentation(e, links, element_to_index);
+		getTreeRepresentation(e, 0, nodes, links);
+		//getTreeLinkRepresentation(e, 0, links);
 		// Encapsulate in {}, and remove the trailing comma.	
 					StringBuilder s = new StringBuilder();
 					
@@ -445,13 +440,14 @@ public class ADTVisualizer<E> {
 	 * @return
 	 */
 	private
-	<E> StringBuilder getTreeRepresentation(TreeElement<E> e, int i, StringBuilder nodes, Map<String, Integer> element_to_index) {
+	<E> StringBuilder getTreeRepresentation(TreeElement<E> e, int i, StringBuilder nodes, StringBuilder links) {
 
 		TreeElement<E> anElement = e;
 			// Manage vertex properties
 			// Encapsulate in {}, and remove the trailing comma.
 			if (anElement != null){
 				nodes.append(anElement.getRepresentation() + ",");
+				//anElement.setIdentifier(Integer.toString(i));
 				//element_to_index.put(anElement.getLabel(), i);
 				if (i == MAX_ELEMENTS_ALLOWED)
 					try {
@@ -459,39 +455,26 @@ public class ADTVisualizer<E> {
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
+				if (e.getLeft() != null){
+					links.append(getLinkRepresentation(e, e.getLeft()) + ",");
+				}
+				if (e.getRight() != null){
+					links.append(getLinkRepresentation(e, e.getRight()) + ",");
+				}
+				if (i == MAX_LINKS_ALLOWED)
+					try {
+						throw new Exception ("No more than 1000 links between the tree elements can be created!");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 			}
-			if (e == null)
+			else if (e == null)
 				return null;
-			getTreeRepresentation(e.getLeft(), i++, nodes, element_to_index);
-			getTreeRepresentation(e.getRight(), i++, nodes, element_to_index);
+			getTreeRepresentation(e.getLeft(), i++, nodes, links);
+			getTreeRepresentation(e.getRight(), i++, nodes, links);
 			return nodes;
 	}
 	
-	/**
-	 * Create a JSON representation of tree links between the tree elements
-	 * @param e
-	 * @param links
-	 * @param element_to_index
-	 * @return
-	 */
-	private
-	<E> StringBuilder getTreeLinkRepresentation(TreeElement<E> e, StringBuilder links, Map<String, Integer> element_to_index) {
-			// Manage link properties
-			if (e != null){
-				if (e.getLeft() != null){
-					links.append(getLinkRepresentation(e, e.getLeft(), element_to_index) + ",");
-				}
-				if (e.getRight() != null){
-					links.append(getLinkRepresentation(e, e.getRight(), element_to_index) + ",");
-				}
-			}
-				if (e == null)
-					return null;
-				getTreeLinkRepresentation(e.getLeft(), links, element_to_index);
-				getTreeLinkRepresentation(e.getRight(), links, element_to_index);
-				return links;
-	}
-
 	
 	/**
 	 * Creating a Element to Integer map using preorder tree traversal
@@ -500,28 +483,14 @@ public class ADTVisualizer<E> {
 	 * @param i
 	 * @return
 	 */
-	 public <E> Map<String, Integer> preOrder(TreeElement<E> root, Map<String, Integer> element_to_index, int i){
+	 public <E> void preOrder(TreeElement<E> root){
 		if (root == null)
-			return null;
-		element_to_index = treeRootProcess(root, element_to_index);
-		preOrder(root.getLeft(), element_to_index, ++i);
-		preOrder(root.getRight(), element_to_index, ++i);
-		return element_to_index;
+			return;
+
+		preOrder(root.getLeft());
+		preOrder(root.getRight());
 	}
 	 
-	 /**
-	  * Helper method for preOrder method
-	  * returning a Map of Element and their corresponding Integers
-	  * @param root
-	  * @param element_to_index
-	  * @return
-	  */
-	 public <E> Map<String, Integer> treeRootProcess(TreeElement<E> root, Map<String, Integer> element_to_index){
-		 if (!element_to_index.containsKey(root.getLabel()))
-				element_to_index.put(root.getLabel(), treeElementValue++);
-		 return element_to_index;
-	 }
-
 	/**
 	 * 
 	 * @param e1: source element
@@ -543,21 +512,25 @@ public class ADTVisualizer<E> {
 	 * @param element_to_index holds the integer representation of the node
 	 * @return
 	 */
-	//Changed the Map<Element<E>, Integer> element_to_index to Map<String, Integer> element_to_index
-	//this allows for creating the Link representation using copy of SLelement objects
-	//however the down side is there cannot be elements with the same String identifier
-	<E> String getLinkRepresentation(Element<E>source, Element<E>target, Map<String, Integer> element_to_index) {
+	
+	/**
+	 * returns the JSON representation of a link between 2 elements
+	 * @param source
+	 * @param target
+	 * @return
+	 */
+	<E> String getLinkRepresentation(Element<E>source, Element<E>target) {
 		String json = "{";
 		if (source == null || target == null){
-			return json = "";
+			return json + "}";
 		}
 		else{
 			for (Entry<String, String> entry : linkProperties.entrySet()) {
 		
 			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
 			}
-			json += String.format("\"source\":%s,", element_to_index.get(source.getLabel()));
-			json += String.format("\"target\":%s", element_to_index.get(target.getLabel()));
+			json += String.format("\"source\":%s,", source.getIdentifier());
+			json += String.format("\"target\":%s", target.getIdentifier());
 			//System.out.println(target.toString());
 			return json + "}";
 		}

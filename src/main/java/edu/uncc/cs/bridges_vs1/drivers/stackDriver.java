@@ -24,6 +24,9 @@ public class stackDriver {
 
              						//set visualizer type
 		bridge.setDataStructure(lstack.stackTop(), "llist");
+		//this is necessary to change the value of root both in bridges as well as in lstack
+		bridge.setRoot(lstack.pop().getNext());
+		
         
 									//Print the JSON to console
 		bridge.toggleJSONdisplay();

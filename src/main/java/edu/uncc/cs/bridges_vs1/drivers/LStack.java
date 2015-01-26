@@ -20,9 +20,9 @@ class LStack<E>{
     size++;
   }
 
-  public E pop() {              // Remove "it" from stack
+  public SLelement<E> pop() {              // Remove "it" from stack
     assert top != null : "Stack is empty";
-    E it = top.getValue();
+    SLelement<E> it = top;
     top = top.getNext();
     size--;
     return it;

@@ -20,7 +20,7 @@ import edu.uncc.cs.bridges_vs1.validation.InvalidValueException;
  *
  * @param <E>
  */
-public class Element<E> {
+public class Element<E>{
 	
 	static Integer ids = 0;
 	private String label;
