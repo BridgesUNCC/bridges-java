@@ -8,8 +8,8 @@ apply plugin: 'signing'
 ///
 /// General
 ///
-group = "edu.uncc.cs.bridges_vs1"
-version = "2.04"
+group = "edu.uncc.cs.bridges_v2"
+version = "2.0"
 
 ///
 /// Artifacts and deployment
@@ -35,7 +35,7 @@ artifacts {
 sourceSets {
     main {
         java {
-            exclude 'edu/uncc/cs/bridgesdrivers/**'
+			srcDir  'src/main/java/edu/uncc/cs/bridges_v2/'
         }
     }
     test {
@@ -77,6 +77,17 @@ test {
   }
 }
 
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title':'Bridges Jar File', 
+            'Implementation-Version': version
+    }
+    baseName = project.name + '-all'
+    from {configurations.compile.collect { 
+			it.isDirectory() ? it : zipTree(it)}
+	}
+    with jar
+}
 
 uploadArchives {
     repositories {
@@ -142,12 +153,13 @@ dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.5'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
-    compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
-    compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.1'
-    // Declare the dependency for your favourite test framework you want to use in your tests.
-    // TestNG is also supported by the Gradle Test task. Just change the
-    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
-    // 'test.useTestNG()' to your build script.
     testCompile "junit:junit:4.11"
+//	compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
+//	compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
+// Declare the dependency for your favourite test framework you want 
+// to use in your tests.
+// TestNG is also supported by the Gradle Test task. Just change the
+// testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
+// 'test.useTestNG()' to your build script.
 }
