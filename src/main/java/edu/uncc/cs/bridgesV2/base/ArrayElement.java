@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges_v2.base;
+package edu.uncc.cs.bridgesV2.base;
 
 
 public class ArrayElement<E> extends Element<E>{

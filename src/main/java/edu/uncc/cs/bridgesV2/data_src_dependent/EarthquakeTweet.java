@@ -1,9 +1,9 @@
-package edu.uncc.cs.bridges_v2.data_src_dependent;
+package edu.uncc.cs.bridgesV2.data_src_dependent;
 
 import java.util.Date;
 import java.util.Scanner;
 
-import edu.uncc.cs.bridges_v2.connect.DataFormatter;
+import edu.uncc.cs.bridgesV2.connect.DataFormatter;
 /**
  * 
  * @author mihai mehedint

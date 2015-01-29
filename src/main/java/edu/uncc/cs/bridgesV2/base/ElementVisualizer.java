@@ -1,10 +1,10 @@
-package edu.uncc.cs.bridges_v2.base;
+package edu.uncc.cs.bridgesV2.base;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import edu.uncc.cs.bridges_v2.validation.*;
+import edu.uncc.cs.bridgesV2.validation.*;
 
 public class ElementVisualizer {
 	// Visualization properties for this Node.

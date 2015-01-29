@@ -2,7 +2,7 @@
  * This class is created to solve the problem with 
  * generic arrays and type erasure
  */
-package edu.uncc.cs.bridges_v2.base;
+package edu.uncc.cs.bridgesV2.base;
 
 /**
  * @author mihai

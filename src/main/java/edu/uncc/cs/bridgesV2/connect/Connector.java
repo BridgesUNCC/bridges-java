@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges_v2.connect;
+package edu.uncc.cs.bridgesV2.connect;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,7 +17,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import edu.uncc.cs.bridges_v2.validation.RateLimitException;
+import edu.uncc.cs.bridgesV2.validation.RateLimitException;
 
 
 public class Connector {

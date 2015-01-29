@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges_v2.validation;
+package edu.uncc.cs.bridgesV2.validation;
 
 /**
  * Exception indicating invalid CSS values.

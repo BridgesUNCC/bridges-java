@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges_v2.connect;
+package edu.uncc.cs.bridgesV2.connect;
 
  
 import java.io.IOException;
@@ -17,9 +17,9 @@ import java.util.Map.Entry;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import edu.uncc.cs.bridges_v2.base.*;
-import edu.uncc.cs.bridges_v2.validation.*;
-import edu.uncc.cs.bridges_v2.data_src_dependent.*;
+import edu.uncc.cs.bridgesV2.base.*;
+import edu.uncc.cs.bridgesV2.validation.*;
+import edu.uncc.cs.bridgesV2.data_src_dependent.*;
 
 
 /**

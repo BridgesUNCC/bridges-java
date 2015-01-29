@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges_v2.data_src_dependent;
+package edu.uncc.cs.bridgesV2.data_src_dependent;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges_v2.base;
+package edu.uncc.cs.bridgesV2.base;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -7,8 +7,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import edu.uncc.cs.bridges_v2.validation.InvalidValueException;
-import edu.uncc.cs.bridges_v2.connect.*;
+import edu.uncc.cs.bridgesV2.validation.InvalidValueException;
+import edu.uncc.cs.bridgesV2.connect.*;
 
 public class ADTVisualizer<E> {
 	//public LinkedHashMap<Element<Value, T>, String> LList;

@@ -1,6 +1,6 @@
 
 
-package edu.uncc.cs.bridges_v2.validation;
+package edu.uncc.cs.bridgesV2.validation;
 
 /**
  * This is an extension of the Exception class

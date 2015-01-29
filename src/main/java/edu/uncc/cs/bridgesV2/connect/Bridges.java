@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges_v2.connect;
+package edu.uncc.cs.bridgesV2.connect;
 
 /**
  * Connection to the Bridges server.
@@ -15,12 +15,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.uncc.cs.bridges_v2.base.ADTVisualizer;
-import edu.uncc.cs.bridges_v2.base.DLelement;
-import edu.uncc.cs.bridges_v2.base.Element;
-import edu.uncc.cs.bridges_v2.base.SLelement;
-import edu.uncc.cs.bridges_v2.base.TreeElement;
-import edu.uncc.cs.bridges_v2.validation.RateLimitException;
+import edu.uncc.cs.bridgesV2.base.ADTVisualizer;
+import edu.uncc.cs.bridgesV2.base.DLelement;
+import edu.uncc.cs.bridgesV2.base.Element;
+import edu.uncc.cs.bridgesV2.base.SLelement;
+import edu.uncc.cs.bridgesV2.base.TreeElement;
+import edu.uncc.cs.bridgesV2.validation.RateLimitException;
 
 public class Bridges <E> {
 	
