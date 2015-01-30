@@ -13,12 +13,13 @@ import edu.uncc.cs.bridgesV2.validation.InvalidValueException;
  * This is the Superclass Element with SLelement, DLelement,
  * ArrayElement, TreeElement, subclasses
  * it contains the Element Visualizer object
- * label field derived from the E value
- * an object of E data type: integer, string, Tweet, Actor, Movie, EarthquakeTweet
+ * label field derived from the E (application data) value
+ * an object of E data type: integer, string, Tweet, Actor, Movie, 
+ * EarthquakeTweet
  * identifier field automatically generataed
  * @author mihai
  *
- * @param <E>
+ * @param generic <E>
  */
 
 
@@ -35,6 +36,7 @@ public class Element<E>{
 	 * Element constructor
 	 * creates an ElementVisualizer object
 	 * sets a unique identifier for the current Element
+	 * normally used from subclasses
 	 */
 	protected Element(){
 		super();
@@ -97,13 +99,14 @@ public class Element<E>{
 
     /**
      * 
-     * @return
+     * @return element value
      */
     public E getElement(){
         return this.value;
     }
     
     /**
+	 * sets the element's data value E
      * 
      * @param value
      */
@@ -134,7 +137,7 @@ public class Element<E>{
 
 	
 	/**
-	 * this method returns the identifier
+	 * this method returns the element's unique identifier
 	 * @return the string identifier
 	 */
 	public String getIdentifier(){
