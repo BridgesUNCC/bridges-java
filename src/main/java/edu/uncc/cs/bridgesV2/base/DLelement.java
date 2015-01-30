@@ -32,7 +32,7 @@ public class DLelement<E> extends Element<E>{
 	}
 	
 	public DLelement(E e, DLelement<E> next, DLelement<E> prev) {
-		super();
+		super(e);
 		this.next = next;
 		this.prev = prev;
 	}
@@ -41,6 +41,7 @@ public class DLelement<E> extends Element<E>{
 	 * performing deep copy of an element when needed
 	 * @param identifier
 	 */
+/*
 	public void copyDLelement (DLelement<E> original){
 		this.setIdentifier(new String(original.getIdentifier()));
 		this.setVisualizer(new ElementVisualizer(original.getVisualizer()));
@@ -48,6 +49,7 @@ public class DLelement<E> extends Element<E>{
 		this.next = original.next;
 		this.prev = original.prev;
 	}
+*/
 	
 	/**
 	 * This method returns the pointer to the next DLelement

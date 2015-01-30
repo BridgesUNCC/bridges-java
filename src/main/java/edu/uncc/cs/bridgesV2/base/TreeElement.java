@@ -45,12 +45,14 @@ public class TreeElement<E> extends Element<E>{
 	 * performing deep copy of an element when needed
 	 * @param identifier
 	 */
+/*
 	public void copyTreeElement (TreeElement<E> original){
 		this.setIdentifier(new String(original.getIdentifier()));
 		this.setVisualizer( new ElementVisualizer(original.getVisualizer()));
 		this.left = original.left;
 		this.right = original.right;
 	}
+*/
 	
 	/**
 	 * This method returns the left tree element pointer

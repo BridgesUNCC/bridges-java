@@ -36,11 +36,21 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 		super(e);
 		this.setNext(next);
 	}
+
+	/**
+	 * Creates a new element and sets the next pointer
+	 * to  null
+	 * @param next
+	 */
+	public SLelement (SLelement<E> next) {
+		this.setNext(next);
+	}
 	
 	/**
 	 * Deep copy SLelement
 	 * @param original
 	 */
+/*
 	public SLelement (SLelement<E> original) {
 		super(original.getValue());
 		this.setIdentifier(original.getIdentifier());
@@ -49,6 +59,7 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 		//original = null;
 		this.setNext(original.getNext());
 	}
+*/
 	
 	
 	/**

@@ -38,7 +38,7 @@ public class Element<E>{
 	 */
 	protected Element(){
 		super();
-		this.setIdentifier(ids.toString());
+		this.identifier = ids.toString();
 		ids++;
 		if (ids > MAX_ELEMENTS_SIZE)
 		try {
@@ -142,14 +142,6 @@ public class Element<E>{
 	}
 	
 	/**
-	 * this method sets the string identifier
-	 * @return void
-	 */
-	public void setIdentifier(String identifier){
-		this.identifier = identifier;
-	}
-	
-	/**
 	 * Returns the Element's visualizer object
 	 * @return the visualizer
 	 */
@@ -175,13 +167,17 @@ public class Element<E>{
 	protected void validateVal(E value) {
 		try{
 			if (value == null){
-				throw new NullPointerException("\nInvalid value set to SLelement<E> '" + value + "'. Expected"
+				throw new NullPointerException(
+				"\nInvalid value set to SLelement<E> '" + value + "'. Expected"
 						+ " non null E value.\n");
 			} else if (value.getClass().getCanonicalName().isEmpty()){
-				throw new IllegalArgumentException("\nThe argument is not a legal Element object!\n"+value.getClass().getCanonicalName());  
+				throw new IllegalArgumentException(
+					"\nThe argument is not a legal Element object!\n" +
+					value.getClass().getCanonicalName());  
 			}
-				else;
-		} catch (Exception e) {
+			else;
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -202,10 +198,7 @@ public class Element<E>{
 	 * and a nonZero integer otherwise
 	 */
 	public int compare(Element<E> e1){
-		if (e1.getLabel().compareTo(this.getLabel())==0)
-			return e1.getIdentifier().compareTo(this.getIdentifier());
-		else 
-			return e1.getLabel().compareTo(this.getLabel());
+		return e1.getLabel().compareTo(this.getLabel());
 	}
 	
 	/**
@@ -220,7 +213,8 @@ public class Element<E>{
 	public String getRepresentation(){
 		String json = "{";
 		for (Entry<String, String> entry : visualizer.properties.entrySet()) {
-			json += String.format("\"%s\": \"%s\", ", entry.getKey(), entry.getValue());
+			json += String.format("\"%s\": \"%s\", ", entry.getKey(), 
+									entry.getValue());
 		}
 		json += String.format("\"name\": \"%s\"", label);
 		return json + "}";
