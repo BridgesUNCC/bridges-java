@@ -91,31 +91,20 @@ public class Element<E>{
 	 * @param original
 	 */
 	public Element (Element<E> original){
-		this.identifier = new String(original.getIdentifier());
+		this.identifier = ids.toString();
+		ids++;
+		if (ids > MAX_ELEMENTS_SIZE)
+		try {
+			throw new Exception ("No more than 1000 elements can be created!");
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.label = new String(original.getLabel());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
 		this.setValue(original.getValue());
 	}
 
-    /**
-     * 
-     * @return element value
-     */
-    public E getElement(){
-        return this.value;
-    }
-    
-    /**
-	 * sets the element's data value E
-     * 
-     * @param value
-     */
-    public void setElement(E value){
-        validateVal(value);
-        this.value = value;
-    }
-
-	
 	/**
 	 * Inactive at this point to allow Shaffer's implementation
 	 * This method validates the string label 

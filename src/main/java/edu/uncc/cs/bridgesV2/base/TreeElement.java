@@ -71,19 +71,6 @@ public class TreeElement<E> extends Element<E>{
 		this.left = left;
 	}
 	
-	public E getElement(){
-        return this.getValue();
-    }
-    
-    /**
-     * 
-     * @param value
-     */
-    public void setElement(E value){
-        validateVal(value);
-        this.setValue(value);
-    }
-
 
 	/**
 	 * This method returns the right tree element pointer

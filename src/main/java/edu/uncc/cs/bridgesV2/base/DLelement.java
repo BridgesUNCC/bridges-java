@@ -41,6 +41,7 @@ public class DLelement<E> extends Element<E>{
 	 * performing deep copy of an element when needed
 	 * @param identifier
 	 */
+
 /*
 	public void copyDLelement (DLelement<E> original){
 		this.setIdentifier(new String(original.getIdentifier()));

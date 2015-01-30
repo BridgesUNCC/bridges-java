@@ -46,21 +46,14 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 		this.setNext(next);
 	}
 	
-	/**
-	 * Deep copy SLelement
-	 * @param original
-	 */
 /*
 	public SLelement (SLelement<E> original) {
 		super(original.getValue());
-		this.setIdentifier(original.getIdentifier());
 		this.setLabel(original.getLabel());
 		this.setVisualizer(original.getVisualizer());
-		//original = null;
 		this.setNext(original.getNext());
 	}
 */
-	
 	
 	/**
 	 * Retrieves the next SLelement
@@ -79,12 +72,18 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 	}
 	
 	@Override
+	/**
+	 * Deep copy SLelement, but change identifier to keep all object ids
+	 * unique
+	 * @param original
+	 */
     public SLelement<E> clone() throws CloneNotSupportedException {
-				try {
-					return (SLelement<E>)super.clone();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		try {
+			return (SLelement<E>)super.clone();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
         return null;
     }
 
@@ -102,12 +101,4 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 				+ ", toString()=" + super.toString() + ", getClass()="
 				+ getClass() + ", hashCode()=" + hashCode() + "]";
 	}
-	
-	//method removed
-	//students will create this method
-	/*
-	public void removeNext(){
-		this.next = null;
-	}
-	*/
 }
