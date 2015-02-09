@@ -1,6 +1,6 @@
 package edu.uncc.cs.bridgesV2.data_src_dependent;
 
-public class Actor {
+public class Actor extends DataSource implements Source{
 	protected String anActor;
 	
 
@@ -25,11 +25,12 @@ public class Actor {
 		this.anActor = name;
 	}
 	
+	@Override
 	public void setLabel(String label){
 		setName(label);
 	}
 	
-
+	@Override
 	public String getLabel(){
 		return getName();
 	}

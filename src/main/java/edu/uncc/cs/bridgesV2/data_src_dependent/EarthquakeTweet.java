@@ -9,7 +9,7 @@ import edu.uncc.cs.bridgesV2.connect.DataFormatter;
  * @author mihai mehedint
  *
  */
-public class EarthquakeTweet extends Tweet{
+public class EarthquakeTweet extends Tweet implements Source{
 	private double magnitude;
 	
 	public EarthquakeTweet(String content, Date date2) {

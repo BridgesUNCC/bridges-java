@@ -1,6 +1,6 @@
 package edu.uncc.cs.bridgesV2.data_src_dependent;
 
-public class Movie {
+public class Movie extends DataSource implements Source{
 	protected String aMovie;
 	
 	public Movie(String aMovie){
@@ -20,12 +20,12 @@ public class Movie {
 	public void setName(String name){
 		this.aMovie = name;
 	}
-	
+	@Override
 	public void setLabel(String label){
 		setName(label);
 	}
 	
-
+	@Override
 	public String getLabel(){
 		return getName();
 	}

@@ -6,6 +6,7 @@ import edu.uncc.cs.bridgesV2.data_src_dependent.Actor;
 import edu.uncc.cs.bridgesV2.data_src_dependent.EarthquakeTweet;
 import edu.uncc.cs.bridgesV2.data_src_dependent.Follower;
 import edu.uncc.cs.bridgesV2.data_src_dependent.Movie;
+import edu.uncc.cs.bridgesV2.data_src_dependent.Source;
 import edu.uncc.cs.bridgesV2.data_src_dependent.Tweet;
 import edu.uncc.cs.bridgesV2.validation.InvalidValueException;
 
@@ -62,7 +63,7 @@ public class Element<E>{
 		this.setValue(val);
 		//validateLabel(label); //this validation will not be necessary after the full implementation of identifier on the server side
 		if (Tweet.class.isInstance(val))
-			this.setLabel(((Tweet) val).getLabel());
+			this.setLabel(((Source) val).getLabel());
 		else if (Movie.class.isInstance(val))
 			this.setLabel(((Movie) val).getLabel());
 		else if (Actor.class.isInstance(val))

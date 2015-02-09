@@ -1,6 +1,6 @@
 package edu.uncc.cs.bridgesV2.data_src_dependent;
 
-public class Follower implements Comparable<Follower> {
+public class Follower implements Source{
 	protected String aFollower;
 	
 	public Follower(String aFollower){
@@ -21,10 +21,12 @@ public class Follower implements Comparable<Follower> {
 		this.aFollower = name;
 	}
 	
+	@Override
 	public void setLabel(String label){
 		setName(label);
 	}
 	
+	@Override
 	public String getLabel(){
 		return getName();
 	}
