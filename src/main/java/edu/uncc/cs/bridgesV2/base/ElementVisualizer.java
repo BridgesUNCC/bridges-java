@@ -94,9 +94,6 @@ public class ElementVisualizer {
 		//this.aShape = aShape;
 		
 		aShape = aShape.toLowerCase();
-		if(aShape.equals("square")){
-			aShape = "rect";
-		}
 		Validation.validateShape(aShape);
 		properties.put("shape", aShape);
 	}

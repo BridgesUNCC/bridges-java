@@ -211,7 +211,7 @@ public class Validation {
 		if (NODE_SHAPES.contains(shape)) {
 			return;
 		} else {
-			throw new InvalidValueException("Invalid shape' " + shape + "'. Expected"
+			throw new InvalidValueException("Invalid shape' " + shape + "'. Expected "
 					+ "one of: " + NODE_SHAPES);
 		}
 	}
