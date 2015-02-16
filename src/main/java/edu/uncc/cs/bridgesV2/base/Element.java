@@ -2,14 +2,6 @@ package edu.uncc.cs.bridgesV2.base;
 
 import java.util.Map.Entry;
 
-import edu.uncc.cs.bridgesV2.data_src_dependent.Actor;
-import edu.uncc.cs.bridgesV2.data_src_dependent.EarthquakeTweet;
-import edu.uncc.cs.bridgesV2.data_src_dependent.Follower;
-import edu.uncc.cs.bridgesV2.data_src_dependent.Movie;
-import edu.uncc.cs.bridgesV2.data_src_dependent.Source;
-import edu.uncc.cs.bridgesV2.data_src_dependent.Tweet;
-import edu.uncc.cs.bridgesV2.validation.InvalidValueException;
-
 /**
  * This is the Superclass Element with SLelement, DLelement,
  * ArrayElement, TreeElement, subclasses
@@ -42,6 +34,7 @@ public class Element<E>{
 	protected Element(){
 		super();
 		this.identifier = ids.toString();
+		this.label = "";
 		ids++;
 		if (ids > MAX_ELEMENTS_SIZE)
 		try {
@@ -59,23 +52,11 @@ public class Element<E>{
 	 */
 	public Element (E val){
 		this();	
-		validateVal(val); //here we need to check for null values until the server will accept JSON containing both identifiers(always not NUll) and labels
+					// here we need to check for null values until the 
+					// server will accept JSON containing both 
+					// identifiers(always not NUll)
+		validateVal(val); 
 		this.setValue(val);
-		//validateLabel(label); //this validation will not be necessary after the full implementation of identifier on the server side
-		if (Tweet.class.isInstance(val))
-			this.setLabel(((Source) val).getLabel());
-		else if (Movie.class.isInstance(val))
-			this.setLabel(((Movie) val).getLabel());
-		else if (Actor.class.isInstance(val))
-			this.setLabel(((Actor) val).getLabel());
-		else if (EarthquakeTweet.class.isInstance(val))
-			this.setLabel(((EarthquakeTweet) val).getLabel());
-		else if (Follower.class.isInstance(val))
-			this.setLabel(((Follower) val).getLabel());
-		else{
-			this.setLabel(val.toString());
-		} 
-		
 	}
 	
 	/**
@@ -106,26 +87,6 @@ public class Element<E>{
 		this.setValue(original.getValue());
 	}
 
-	/**
-	 * Inactive at this point to allow Shaffer's implementation
-	 * This method validates the string label 
-	 * if label = NULL throws an NullPointerException
-	 * @param label
-	 */
-	private void validateLabel(String label) {
-		if (label == null){
-			throw new NullPointerException("Invalid value' " + label + "'. Expected"
-					+ " non null value.");
-		}
-		else if (label.equals("")){
-			throw new InvalidValueException("Invalid value' " + label + "'. Expected"
-					+ " non empty string.");
-		}
-		else
-			;
-	}
-
-	
 	/**
 	 * this method returns the element's unique identifier
 	 * @return the string identifier
@@ -174,7 +135,6 @@ public class Element<E>{
 			e.printStackTrace();
 		}
 	}
-	
 	
 	/**
 	 * This method returns the name of the class
@@ -225,7 +185,7 @@ public class Element<E>{
 	 * This method sets the label
 	 * @param label the label to set
 	 */
-	protected void setLabel(String label) {
+	public void setLabel(String label) {
 		this.label = label;
 	}
 
