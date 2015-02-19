@@ -169,7 +169,7 @@ public class Element<E>{
 			json += String.format("\"%s\": \"%s\", ", entry.getKey(), 
 									entry.getValue());
 		}
-		json += String.format("\"label\": \"%s\"", label);
+		json += String.format("\"name\": \"%s\"", label);
 		return json + "}";
 	}
 
