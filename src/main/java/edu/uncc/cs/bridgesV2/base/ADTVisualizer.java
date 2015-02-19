@@ -35,7 +35,7 @@ public class ADTVisualizer<E> {
 	public HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks;
 	public HashMap<String, SLelement<E>> adjacencyList;
 	//public Map<Element<E>, Element<E> []> arrayOfLinks;
-	public ArrayElement<E> [] adtArray;
+	public Element<E> [] adtArray;
 	protected int arrayIndex;
 	protected boolean visualizeJSON = false;
 	
@@ -643,7 +643,7 @@ public
 		this.adjacencyList = adjacencyList2;
 	}
 	
-	public void setArray(ArrayElement<E> []e) {
+	public void setArray(Element<E> []e) {
 		this.adtArray = e;
 	}
 

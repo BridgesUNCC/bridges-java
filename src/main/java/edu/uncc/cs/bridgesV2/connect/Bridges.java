@@ -166,7 +166,7 @@ public class Bridges <E> {
 	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist", "AList" or "Dllist" 
 	 * @throws Exception
 	 */
-	public void setDataStructure(ArrayElement<E> []arrayVisualizer, 
+	public void setDataStructure(Element<E> []arrayVisualizer, 
 			String visualizerType){
 		visualizer.setArray(arrayVisualizer);
 		visualizer.setVisualizerType(visualizerType);
