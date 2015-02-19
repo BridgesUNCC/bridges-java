@@ -38,8 +38,18 @@ public class Actor extends DataSource implements Source{
 	/**
 	 * This method implements compareTo for the Actors
 	 */
-	public int compareTo(Actor anotherActor){
-		return anActor.compareTo(anotherActor.getName());
+	@Override
+	public int compareTo(DataSource anotherActor){
+		if(anotherActor instanceof Actor)
+			return this.anActor.compareTo(((Actor)anotherActor).getName());
+		else{
+			try {
+				throw new ClassCastException("Expected an instance of Actor for the compareTo method.");
+			} catch (ClassCastException e) {
+				e.printStackTrace();
+			}
+			return -1;
+		}
 	}
 	
 

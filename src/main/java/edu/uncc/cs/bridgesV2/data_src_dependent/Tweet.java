@@ -6,7 +6,7 @@ import java.util.Date;
  * @second author mihai mehedint
  *
  */
-public class Tweet implements Source {
+public class Tweet extends DataSource implements Source {
 
 	private String content;
 	private Date date;
@@ -99,6 +99,20 @@ public class Tweet implements Source {
 	@Override
 	public String toString() {
 		return "Tweet [content=" + content + ", date=" + date + "]";
+	}
+
+	@Override
+	public int compareTo(DataSource anotherTweet){
+		if(anotherTweet instanceof Tweet)
+			return this.content.compareTo(((Actor)anotherTweet).getLabel());
+		else{
+			try {
+				throw new ClassCastException("Expected an instance of Tweet for the compareTo method.");
+			} catch (ClassCastException e) {
+				e.printStackTrace();
+			}
+			return -1;
+		}
 	}
 
 }

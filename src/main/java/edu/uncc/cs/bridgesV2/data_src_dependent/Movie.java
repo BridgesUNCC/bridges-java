@@ -66,4 +66,18 @@ public class Movie extends DataSource implements Source{
 		return true;
 	}
 
+
+	public int compareTo(DataSource anotherMovie){
+		if(anotherMovie instanceof Movie)
+			return this.aMovie.compareTo(((Movie)anotherMovie).getName());
+		else{
+			try {
+				throw new ClassCastException("Expected a Movie object for the compareTo method.");
+			} catch (ClassCastException e) {
+				e.printStackTrace();
+			}
+			return -1;
+		}
+	}
+
 }

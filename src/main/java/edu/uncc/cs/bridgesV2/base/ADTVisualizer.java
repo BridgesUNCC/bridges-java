@@ -23,6 +23,7 @@ public class ADTVisualizer<E> {
 				put("treeVis","tree");
 				put("llist", "llist");
 				put("Dllist", "Dllist");
+				put("arrayVis", "AList");
 			}};
 	public Map<String, String> linkProperties =  
 			new HashMap<String, String>(){{
@@ -34,7 +35,7 @@ public class ADTVisualizer<E> {
 	public HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks;
 	public HashMap<String, SLelement<E>> adjacencyList;
 	//public Map<Element<E>, Element<E> []> arrayOfLinks;
-	public Element<E> [] adtArray;
+	public ArrayElement<E> [] adtArray;
 	protected int arrayIndex;
 	protected boolean visualizeJSON = false;
 	
@@ -43,7 +44,7 @@ public class ADTVisualizer<E> {
 	 * when using this constructor the default ADT structure is graph 
 	 * @throws Exception 
 	 */														
-	public ADTVisualizer() throws Exception{
+	public ADTVisualizer(){
 		super();
 		this.visualizerType =ADT_TYPE.get("graphVis");
 		//validateType(new Object());
@@ -57,7 +58,7 @@ public class ADTVisualizer<E> {
 	/**
 	 * @param adtArray
 	 */
-	public ADTVisualizer(Element<E>[] adtArray) {
+	public ADTVisualizer(ArrayElement<E>[] adtArray) {
 		super();
 		this.adtArray = adtArray;
 	}
@@ -68,21 +69,29 @@ public class ADTVisualizer<E> {
 	 * @param type
 	 * @throws Exception
 	 */
-	public ADTVisualizer(Object type) throws Exception{
+	public ADTVisualizer(Object type){
 		validateType(type);
 	}
 	
-	public void validateType(Object type) throws Exception{
+	public void validateType(Object type){
 		if (type.getClass().getSimpleName().equals("HashMap") ||
 			type.getClass().getSimpleName().equals("Element<>[]"))
 			;
 		else if (type.getClass().getSimpleName().equals("Object")){
-			throw new Exception("ADT structure undefined. Expected a "
-					+ " HashMap or an Array object. Ex: ADTVisualizer<Tweet>[] vis = new ADTVisualizer<Tweet>(new Element<Tweet>[100]);");
+			try {
+				throw new Exception("ADT structure undefined. Expected a "
+						+ " HashMap or an Array object. Ex: ADTVisualizer<Tweet>[] vis = new ADTVisualizer<Tweet>(new Element<Tweet>[100]);");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		else{
-			throw new Exception("Invalid type " +type.getClass().getSimpleName() + "'. Expected a "
-					+ " HashMap or an Array object.");
+			try {
+				throw new Exception("Invalid type " +type.getClass().getSimpleName() + "'. Expected a "
+						+ " HashMap or an Array object.");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -99,13 +108,17 @@ public class ADTVisualizer<E> {
 	 * @param visualizerType
 	 * @throws Exception
 	 */
-	public void setVisualizerType(String visualizerType) throws Exception {
+	public void setVisualizerType(String visualizerType) {
 		
 		if (ADT_TYPE.keySet().contains(visualizerType))
 			this.visualizerType = ADT_TYPE.get(visualizerType);
 		else if (visualizerType==null){
-			throw new Exception("Invalid value '" + visualizerType + "'. Expected "
-					+ " a string value: graph, llist, stack, tree, or queue.");
+			try {
+				throw new Exception("Invalid value '" + visualizerType + "'. Expected "
+						+ " a string value: graph, llist, stack, tree, or queue.");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		this.visualizerType = visualizerType;
 	}
@@ -125,6 +138,10 @@ public class ADTVisualizer<E> {
 	
 	public void setQueue() {
 		this.visualizerType = ADT_TYPE.get("queueVis");
+	}
+	
+	public void setArray(){
+		this.visualizerType = ADT_TYPE.get("arrayVis");
 	}
 	
 /**
@@ -232,6 +249,13 @@ public
 
 		return str;
 	}
+
+public String getALRepresentation() {
+		
+		// generate the JSON string
+		String str =  generateJSON_AL();
+		return str;
+	}
 	/**
 	 * This method returns the JSON string representation of the tree 
 	 * made by using preorder traversal
@@ -272,6 +296,56 @@ public void preOrder(TreeElement<E> root, LinkedList<TreeElement<E>> nodes,
 		preOrder(root.getRight(), nodes, links);
 	}
 }
+
+public 
+<E> String generateJSON_AL(){
+	
+	StringBuilder nodes_JSON = new StringBuilder();
+	StringBuilder links_JSON = new StringBuilder();
+
+	for (int i = 0; i < adtArray.length; i++){
+		if (adtArray[i]!=null)
+			nodes_JSON.append(adtArray[i].getRepresentation() + ",");
+	}
+	
+	// get the JSON string for links
+	String str = links_JSON.toString();
+	for (int j = 0; j < adtArray.length-1; j++){
+		
+		if(adtArray[j] != null && adtArray[j+1] != null){
+			// get the link properties
+			str+="{";
+			for (Entry<String,String> entry : linkProperties.entrySet()) {
+				str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
+									entry.getValue());
+			}
+			// get the link
+			
+			str += String.format("\"source\":%s,", 
+					Integer.parseInt(adtArray[j].getIdentifier()));
+			str += String.format("\"target\":%s", 
+					Integer.parseInt(adtArray[j+1].getIdentifier()));
+			str += "},";
+		}
+	}
+	links_JSON.append(str);
+	StringBuilder s = new StringBuilder();
+			
+	s.append("{").append("\"name\": \"edu.uncc.cs.bridges\",")
+		.append("\"version\": \"0.4.0\",")
+		.append("\"visual\": \""+visualizerType+"\",")
+		.append("\"nodes\": [").append(DataFormatter.trimComma(nodes_JSON))
+		.append( "],")
+		.append("\"links\": [").append(DataFormatter.trimComma(links_JSON))
+		.append("]")
+		.append("}");
+	if (this.isVisualizeJSON())
+		System.out.println(s.toString());
+
+	return s.toString();		 
+}
+
+
 /**
 	 * Generating the JSON string given a set of nodes 
 	 * and links for the singly linked list
@@ -495,8 +569,7 @@ public
 		 else return e1.getIdentifier().compareTo(e2.getIdentifier());
 		 
 	}
-	
-	
+		
 	/**
 	 * This method is used to build a simple JSON for a specific link between 2 nodes 
 	 * @param source element
@@ -568,6 +641,10 @@ public
 	 */
 	public void setAdjacencyList(HashMap<String, SLelement<E>> adjacencyList2) {
 		this.adjacencyList = adjacencyList2;
+	}
+	
+	public void setArray(ArrayElement<E> []e) {
+		this.adtArray = e;
 	}
 
 	/**

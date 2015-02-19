@@ -16,10 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.uncc.cs.bridgesV2.base.ADTVisualizer;
-import edu.uncc.cs.bridgesV2.base.DLelement;
-import edu.uncc.cs.bridgesV2.base.Element;
-import edu.uncc.cs.bridgesV2.base.SLelement;
-import edu.uncc.cs.bridgesV2.base.TreeElement;
+import edu.uncc.cs.bridgesV2.base.*;
 import edu.uncc.cs.bridgesV2.validation.RateLimitException;
 
 public class Bridges <E> {
@@ -32,7 +29,12 @@ public class Bridges <E> {
 
 	private static DataFormatter formatter;
 	private static String userName;
-	private final Map<String, String> ADT_UPDATE = new HashMap <String, String>(){{
+	private final Map<String, String> ADT_UPDATE = new HashMap <String, String>(){/**
+		 * 
+		 */
+		private static final long serialVersionUID = 2055228591103348943L;
+
+	{
 		put("graph","updateGraph");
 		put("graphl","updateGraphL");
 		put("stack","stack");
@@ -40,6 +42,7 @@ public class Bridges <E> {
 		put("tree","updateTree");
 		put("llist", "updateSL");
 		put("Dllist", "updateDL");
+		put("AList", "updateAL");
 		}};
 	
 	
@@ -47,7 +50,7 @@ public class Bridges <E> {
 	 * Constructors
 	 * @throws Exception 
 	 */
-	public Bridges() throws Exception {
+	public Bridges() {
 		super();
 		visualizer = new ADTVisualizer<>();
 		Bridges.formatter = new DataFormatter();
@@ -62,12 +65,12 @@ public class Bridges <E> {
 	 * @param username
 	 * @throws Exception
 	 */
-	public Bridges(int assignment, String key, String username) throws Exception{
+	public Bridges(int assignment, String key, String username){
 		this();
 		init(assignment, key, username);
 	}
 	
-	public Bridges(int assignment, String key, SLelement<E> e, String username) throws Exception{
+	public Bridges(int assignment, String key, SLelement<E> e, String username){
 		this();
 		init(assignment, key, e, username);
 	}
@@ -94,12 +97,10 @@ public class Bridges <E> {
 	 * @param visualizer  The visualizer, for assignment
 	 * @param username TODO
 	 */
-	public void init(int assignment, String key, Element<E> e, String username) throws Exception{
+	public void init(int assignment, String key, Element<E> e, String username){
 		init(assignment, key, username);
 		root = e;
 	}
-	
-
 	
 	/* Accessors and Mutators */
 	public static String getAssignment() {
@@ -162,11 +163,23 @@ public class Bridges <E> {
 	 * This method sets the first element and the type of ADT for the ADTVisualizer object
 	 * @param e - is a SLelement<E>
 	 * @param visualizerType
-	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist" or "Dllist" 
+	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist", "AList" or "Dllist" 
 	 * @throws Exception
 	 */
+	public void setDataStructure(ArrayElement<E> []arrayVisualizer, 
+			String visualizerType){
+		visualizer.setArray(arrayVisualizer);
+		visualizer.setVisualizerType(visualizerType);
+	}
+	
+	/**
+	 * This method sets the first element and the type of ADT for the ADTVisualizer object
+	 * @param e - is a SLelement<E>
+	 * @param visualizerType
+	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist" or "Dllist" 
+	 */
 	public void setDataStructure(SLelement<E> e, 
-			String visualizerType) throws Exception{
+			String visualizerType){
 		root = e;
 		visualizer.setVisualizerType(visualizerType);
 	}
@@ -176,10 +189,9 @@ public class Bridges <E> {
 	 * @param e - is a DLelement<E>
 	 * @param visualizerType
 	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist" or "Dllist"
-	 * @throws Exception
 	 */
 	public void setDataStructure(DLelement<E> e, 
-			String visualizerType) throws Exception{
+			String visualizerType){
 		root = e;
 		visualizer.setVisualizerType(visualizerType);
 	}
@@ -192,7 +204,7 @@ public class Bridges <E> {
 	 * @throws Exception
 	 */
 	public void setDataStructure(TreeElement<E> e, 
-			String visualizerType) throws Exception{
+			String visualizerType){
 		root = e;
 		visualizer.setVisualizerType(visualizerType);
 	}
@@ -205,7 +217,7 @@ public class Bridges <E> {
 	 * @throws Exception
 	 */
 	public void setDataStructure(HashMap<String,SLelement<E>> adjacencyList,
-						String visualizerType) throws Exception{
+						String visualizerType){
 		visualizer.setAdjacencyList(adjacencyList);
 		visualizer.setVisualizerType(visualizerType);
 	}
@@ -219,16 +231,7 @@ public class Bridges <E> {
 //		visualizer.add(e);
 	}
 	
-	/**
-	 * This methods sets a link between 2 given elements of the ADTVisualizer
-	 * @param source
-	 * @param target
-	 * @throws Exception
-	 */
-	public void setLink(Element<E> source, Element<E> target) throws Exception{
-//		visualizer.setLink(source, target);
-	}
-	
+
 	/**
 	 * This method returns the current JSON
 	 * @return JSON string
@@ -330,6 +333,28 @@ public class Bridges <E> {
 	protected void updateDL() {
         try {
         	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getDLRepresentation((DLelement<E>)root));
+		} catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+		} catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+		} 
+        // Return a URL to the user
+        System.out.println("Check out your visuals at " + formatter.getBackend().prepare("/assignments/" + getAssignment() + "/" + userName) );
+        assignmentDecimal+=0.01;
+	}
+	
+	protected void updateAL() {
+        try {
+        	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getALRepresentation());
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
 					+ " representation to the server. Are you connected to the"

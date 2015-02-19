@@ -1,6 +1,6 @@
 package edu.uncc.cs.bridgesV2.data_src_dependent;
 
-public class Follower implements Source{
+public class Follower extends DataSource{
 	protected String aFollower;
 	
 	public Follower(String aFollower){
@@ -23,7 +23,7 @@ public class Follower implements Source{
 	
 	@Override
 	public void setLabel(String label){
-		setName(label);
+		this.aFollower = label;
 	}
 	
 	@Override
@@ -70,6 +70,12 @@ public class Follower implements Source{
 		} else if (!aFollower.equals(other.aFollower))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(DataSource o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

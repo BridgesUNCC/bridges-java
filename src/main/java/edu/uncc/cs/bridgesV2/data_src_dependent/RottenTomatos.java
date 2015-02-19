@@ -2,17 +2,28 @@ package edu.uncc.cs.bridgesV2.data_src_dependent;
 
 
 public class RottenTomatos extends DataSource implements Source{
-
+	protected String rTom;
 	@Override
 	public void setLabel(String label) {
-		// TODO Auto-generated method stub
-		
+		this.rTom = label;
 	}
 
 	@Override
 	public String getLabel() {
-		// TODO Auto-generated method stub
-		return null;
+		return rTom;
 	}
 
+	@Override
+	public int compareTo(DataSource rTom){
+		if(rTom instanceof RottenTomatos)
+			return this.rTom.compareTo(((RottenTomatos)rTom).getLabel());
+		else{
+			try {
+				throw new ClassCastException("Expected an instance of RottenTomatos for the compareTo method.");
+			} catch (ClassCastException e) {
+				e.printStackTrace();
+			}
+			return -1;
+		}
+	}
 }

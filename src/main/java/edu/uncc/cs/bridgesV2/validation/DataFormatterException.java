@@ -9,9 +9,14 @@ package edu.uncc.cs.bridgesV2.validation;
  *
  */
 public class DataFormatterException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7258433246711655706L;
 		public String aMessage;
 		public Throwable aCause;
 	    
+		
 		public DataFormatterException () {
 	    		super();
 	    		aMessage = "Error unknown.";
