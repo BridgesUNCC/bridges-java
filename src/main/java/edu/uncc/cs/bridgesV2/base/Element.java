@@ -26,7 +26,7 @@ public class Element<E>{
 	private String identifier;
 	private ElementVisualizer visualizer;
 	private E value;
-	private final int wordNumber = 2;
+	private final int wordNumber = 1;
 	
 	/**
 	 * Element constructor
@@ -193,8 +193,8 @@ public class Element<E>{
 	}
 	
 	public String arrangeLabel(String label, int wordNumber){
-		//for more complex patterns the key must be changed like so"[Tt][Pp]"
-		final String DIVIDE_KEY ="\\s";
+		//for more complex patterns the key must be changed like so"(Tt)(Pp)"
+		final String DIVIDE_KEY ="(\n)";
 		final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
 		Matcher match= myPattern.matcher(label);
 		if (!match.find())
@@ -204,12 +204,11 @@ public class Element<E>{
 			int counter = 0;
 			StringBuilder str = new StringBuilder();
 			while(match.find()){
-				System.out.println("Start: "+match.start()+ " End: "+match.end());
 				counter++;
 				if (counter == wordNumber){
 					counter = 0;
 					//match.replaceFirst("\\n");
-					str.append(label.substring(0,match.start())).append("\\n").append(label.substring(match.end()));
+					str.append(label.substring(0,match.start())).append("\\").append("\\").append("n").append(label.substring((match.end())));
 				}
 			}
 			if (str.length()==0)
