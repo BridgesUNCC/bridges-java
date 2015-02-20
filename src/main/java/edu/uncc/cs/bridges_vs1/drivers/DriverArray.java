@@ -22,8 +22,8 @@ public class DriverArray {
 		SLelement<Tweet>[] array = (SLelement<Tweet>[]) new SLelement[10];
 		//this doesn't work. it compiles but gives runtime errors
 		//SLelement<Tweet>[] array3 = (SLelement<Tweet>[]) new Object[10];
-		SLelement<Tweet> test = new SLelement<>("test", new Tweet("test"));
-		SLelement<Tweet> test2 = new SLelement<>("test2", new Tweet("test2"));
+		SLelement<Tweet> test = new SLelement<>("test test test2", new Tweet("test"));
+		SLelement<Tweet> test2 = new SLelement<>("test2 test", new Tweet("test2"));
 		SLelement<Tweet> test3 = new SLelement<>("test3", new Tweet("test3"));
 		//add one element to the array
 		array[0]=test;

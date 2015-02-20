@@ -1,6 +1,8 @@
 package edu.uncc.cs.bridgesV2.base;
 
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This is the Superclass Element with SLelement, DLelement,
@@ -24,6 +26,7 @@ public class Element<E>{
 	private String identifier;
 	private ElementVisualizer visualizer;
 	private E value;
+	private final int wordNumber = 2;
 	
 	/**
 	 * Element constructor
@@ -186,7 +189,34 @@ public class Element<E>{
 	 * @param label the label to set
 	 */
 	public void setLabel(String label) {
-		this.label = label;
+		this.label = arrangeLabel(label, wordNumber);
+	}
+	
+	public String arrangeLabel(String label, int wordNumber){
+		//for more complex patterns the key must be changed like so"[Tt][Pp]"
+		final String DIVIDE_KEY ="\\s";
+		final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
+		Matcher match= myPattern.matcher(label);
+		if (!match.find())
+			return label;
+		else{
+			match.reset();
+			int counter = 0;
+			StringBuilder str = new StringBuilder();
+			while(match.find()){
+				System.out.println("Start: "+match.start()+ " End: "+match.end());
+				counter++;
+				if (counter == wordNumber){
+					counter = 0;
+					//match.replaceFirst("\\n");
+					str.append(label.substring(0,match.start())).append("\\n").append(label.substring(match.end()));
+				}
+			}
+			if (str.length()==0)
+				return label;
+			else
+				return label = str.toString();
+		}
 	}
 
 	/**
