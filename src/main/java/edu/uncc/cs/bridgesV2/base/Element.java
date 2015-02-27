@@ -26,12 +26,14 @@ public class Element<E>{
 	private String identifier;
 	private ElementVisualizer visualizer;
 	private E value;
-	private final int wordNumber = 1; //this is the number of pattern matches where a line break is inserted
-										// is the pattern is change to white space this index can be changed to 2 words to insert a 
-										//line break every 2 words
+	private final int wordNumber = 0; //this is the number of pattern matches where the new string can be inserted; useful in case we insert line breaks at a desired number of characters
+									// is the pattern is change to white space this index can be changed to 2 words to insert a 
+									//line break every 2 words
 	private final String INSERT_STRING = "\\n"; //this is the string value that replaces the pattern found in the label
-	final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so"(Tt)(Pp)"
-	
+	private final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
+												//(\\w) matches any word
+												//(\\s) a white space (\\s*) zero or more whitespaces, (\\s+) one or more 
+						
 	/**
 	 * Element constructor
 	 * creates an ElementVisualizer object
@@ -196,24 +198,36 @@ public class Element<E>{
 		this.label = arrangeLabel(label, wordNumber);
 	}
 	
+	/**
+	 * This method formats the label string using a predefine pattern (DIVIDE_KEY) and 
+	 * replaces the pattern with the string characters hold by the INSERT_STRING global variable
+	 * @param label
+	 * @param wordNumber in very long strings in the case where the whitespace \\s is chosen as a key the wordNumber can be set 
+	 * to replace the whitespace with a newline character \\n at a given number of words (every second or third word)
+	 * The default value is 0. In most situations we want to replace all patterns found.
+	 * for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
+	 * (\\w) matches any word
+	 * (\\s) one white space (\\s*) zero or more white spaces, (\\s+) one or more 
+	 * 
+	 * @return
+	 */
 	public String arrangeLabel(String label, int wordNumber){
-		//for more complex patterns the key must be changed like so"(Tt)(Pp)"
 		final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
 		Matcher match= myPattern.matcher(label);
 		if (!match.find())
 			return label;
 		else{
 			match.reset();
-			int counter = 0;
-			StringBuilder str = new StringBuilder();
+			int counter = -1;
+			StringBuffer str = new StringBuffer();
 			while(match.find()){
 				counter++;
 				if (counter == wordNumber){
-					counter = 0;
-					//match.replaceFirst("\\n");
-					str.append(label.substring(0,match.start())).append(INSERT_STRING).append(label.substring((match.end())));
+					counter = -1;
+					match.appendReplacement(str, Matcher.quoteReplacement(INSERT_STRING));
 				}
 			}
+			match.appendTail(str);
 			if (str.length()==0)
 				return label;
 			else
