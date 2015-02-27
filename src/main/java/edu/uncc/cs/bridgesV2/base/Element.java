@@ -26,7 +26,11 @@ public class Element<E>{
 	private String identifier;
 	private ElementVisualizer visualizer;
 	private E value;
-	private final int wordNumber = 1;
+	private final int wordNumber = 1; //this is the number of pattern matches where a line break is inserted
+										// is the pattern is change to white space this index can be changed to 2 words to insert a 
+										//line break every 2 words
+	private final String INSERT_STRING = "\\n"; //this is the string value that replaces the pattern found in the label
+	final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so"(Tt)(Pp)"
 	
 	/**
 	 * Element constructor
@@ -194,7 +198,6 @@ public class Element<E>{
 	
 	public String arrangeLabel(String label, int wordNumber){
 		//for more complex patterns the key must be changed like so"(Tt)(Pp)"
-		final String DIVIDE_KEY ="(\n)";
 		final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
 		Matcher match= myPattern.matcher(label);
 		if (!match.find())
@@ -208,7 +211,7 @@ public class Element<E>{
 				if (counter == wordNumber){
 					counter = 0;
 					//match.replaceFirst("\\n");
-					str.append(label.substring(0,match.start())).append("\\").append("\\").append("n").append(label.substring((match.end())));
+					str.append(label.substring(0,match.start())).append(INSERT_STRING).append(label.substring((match.end())));
 				}
 			}
 			if (str.length()==0)
@@ -240,7 +243,7 @@ public class Element<E>{
 	 */
 	@Override
 	public String toString() {
-		return "Element [label=" + label + ", identifier=" + identifier
+		return "Element [name=" + label + ", identifier=" + identifier
 				+ ", visualizer=" + visualizer + ", value=" + value
 				+ ", getIdentifier()=" + getIdentifier() + ", getVisualizer()="
 				+ getVisualizer()
