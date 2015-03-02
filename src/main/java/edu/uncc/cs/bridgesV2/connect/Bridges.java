@@ -411,7 +411,9 @@ public class Bridges <E> {
         	formatter.getBackend().post("/assignments/" + getAssignment(), visualizer.getGraphAdjList_Representation(visualizer.getAdjacencyList()));
 		} catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. Are you connected to the"
+					+ " representation to the server."
+					+ " First please check the graph's adjaceny list. This may cause errors while trying to interpret the data."
+					+ " Are you connected to the"
 					+ " Internet? Check your network settings. Otherwise, maybe"
 					+ " the central Bridges server is down. Try again later.\n"
 					+ e.getMessage());
@@ -419,8 +421,8 @@ public class Bridges <E> {
 			System.err.println("There was a problem sending the visualization"
 					+ " representation to the server. However, it responded with"
 					+ " an impossible 'RateLimitException'. Please contact"
-					+ " DataFormatters developers and file a bug report; this error"
-					+ " should not be possible.\n"
+					+ " the developers and file a bug report; this error"
+					+ " should not be possible. Also please check the data type for graph's adjacency list.\n"
 					+ e.getMessage());
 		} 
         // Return a URL to the user

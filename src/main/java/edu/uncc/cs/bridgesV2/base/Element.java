@@ -33,7 +33,6 @@ public class Element<E>{
 	private final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
 												//(\\w) matches any word
 												//(\\s) a white space (\\s*) zero or more whitespaces, (\\s+) one or more 
-						
 	/**
 	 * Element constructor
 	 * creates an ElementVisualizer object
@@ -45,13 +44,6 @@ public class Element<E>{
 		this.identifier = ids.toString();
 		this.label = "";
 		ids++;
-		if (ids > MAX_ELEMENTS_SIZE)
-		try {
-			throw new Exception ("No more than 1000 elements can be created!");
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 		this.setVisualizer(new ElementVisualizer());
 	}
 	

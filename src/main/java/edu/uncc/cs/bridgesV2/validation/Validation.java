@@ -10,7 +10,7 @@ public class Validation {
 	public static final Set<String> COLOR_NAMES = new HashSet<>();
 	public static final Set<Pattern> COLOR_PATTERNS = new HashSet<>();
 	public static final Set<String> NODE_SHAPES = new HashSet<>();
-	
+	private static int MAX_ELEMENTS_ALLOWED = 999; //this variable holds the maximum number of nodes allowed starting from 0
 	
 	static {
 		COLOR_PATTERNS.add(Pattern.compile("#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})"));
@@ -242,6 +242,16 @@ public class Validation {
 		}else{
 			throw new InvalidValueException("Invalid value' " + val + "'. Expected"
 					+ " a value between 0.0 and 50.0.");
+		}
+	}
+	
+	public static void validate_ADT_size(int i){
+		if (i > MAX_ELEMENTS_ALLOWED)
+		try {
+				throw new Exception ("No more than 1000 elements can be created!");
+		} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(42);
 		}
 	}
 }

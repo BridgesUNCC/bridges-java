@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import edu.uncc.cs.bridgesV2.validation.InvalidValueException;
+import edu.uncc.cs.bridgesV2.validation.Validation;
 import edu.uncc.cs.bridgesV2.connect.*;
 
 public class ADTVisualizer<E> {
@@ -302,10 +303,12 @@ public
 	
 	StringBuilder nodes_JSON = new StringBuilder();
 	StringBuilder links_JSON = new StringBuilder();
-
 	for (int i = 0; i < adtArray.length; i++){
-		if (adtArray[i]!=null)
+		if (adtArray[i]!=null){
+			Validation.validate_ADT_size(i);
 			nodes_JSON.append(adtArray[i].getRepresentation() + ",");
+		}
+		
 	}
 	
 	// get the JSON string for links
@@ -328,21 +331,8 @@ public
 			str += "},";
 		}
 	}
-	links_JSON.append(str);
-	StringBuilder s = new StringBuilder();
-			
-	s.append("{").append("\"name\": \"edu.uncc.cs.bridges\",")
-		.append("\"version\": \"0.4.0\",")
-		.append("\"visual\": \""+visualizerType+"\",")
-		.append("\"nodes\": [").append(DataFormatter.trimComma(nodes_JSON))
-		.append( "],")
-		.append("\"links\": [").append(DataFormatter.trimComma(links_JSON))
-		.append("]")
-		.append("}");
-	if (this.isVisualizeJSON())
-		System.out.println(s.toString());
-
-	return s.toString();		 
+	links_JSON.append(str);	
+	return build_JSON(nodes_JSON, links_JSON);
 }
 
 
@@ -367,6 +357,7 @@ public
 	int i = 0;
 	while (!nodes.isEmpty()){
 		SLelement<E>  element = nodes.pop();
+		Validation.validate_ADT_size(i);
 		map.put(Integer.parseInt(element.getIdentifier()), i++);
 		nodes_JSON.append(element.getRepresentation() + ",");
 	}
@@ -390,21 +381,15 @@ public
 		str += "},";
 	}
 	links_JSON.append(str);
-	StringBuilder s = new StringBuilder();
-			
-	s.append("{").append("\"name\": \"edu.uncc.cs.bridges\",")
-		.append("\"version\": \"0.4.0\",")
-		.append("\"visual\": \""+visualizerType+"\",")
-		.append("\"nodes\": [").append(DataFormatter.trimComma(nodes_JSON))
-		.append( "],")
-		.append("\"links\": [").append(DataFormatter.trimComma(links_JSON))
-		.append("]")
-		.append("}");
-	if (this.isVisualizeJSON())
-		System.out.println(s.toString());
-
-	return s.toString();		 
+	return build_JSON(nodes_JSON, links_JSON);	 
 }
+
+/**
+ * This method creates the JSON for a doubly linked list
+ * @param nodes - this is the Linked list of DLelements
+ * @param links - this is the list containing the links
+ * @return returns the JSON string for the current ADT
+ */
 public 
 <E> String generateJSON_DLL (LinkedList<DLelement<E>> nodes, 
 				LinkedList<DLelement<E>> links){
@@ -419,6 +404,7 @@ public
 	while (!nodes.isEmpty()){
 		DLelement<E>  element = nodes.pop();
 		map.put(Integer.parseInt(element.getIdentifier()), i++);
+		Validation.validate_ADT_size(i);
 		nodes_JSON.append(element.getRepresentation() + ",");
 	}
 						// get the JSON string for links
@@ -441,22 +427,15 @@ public
 		str += "},";
 	}
 	links_JSON.append(str);
-	StringBuilder s = new StringBuilder();
-			
-	s.append("{").append("\"name\": \"edu.uncc.cs.bridges\",")
-		.append("\"version\": \"0.4.0\",")
-		.append("\"visual\": \""+visualizerType+"\",")
-		.append("\"nodes\": [").append(DataFormatter.trimComma(nodes_JSON))
-		.append( "],")
-		.append("\"links\": [").append(DataFormatter.trimComma(links_JSON))
-		.append("]")
-		.append("}");
-	if (this.isVisualizeJSON())
-		System.out.println(s.toString());
-
-	return s.toString();		 
+	return build_JSON(nodes_JSON, links_JSON);	 
 }
-	 
+
+/**
+ * This method builds the JSON for the Binary Tree
+ * @param nodes - list of the tree nodes
+ * @param links - list of the tree links
+ * @return complete JSON string for the current ADT
+ */
 public String getJSON_BinaryTree(LinkedList<TreeElement<E>> nodes, 
 						LinkedList<TreeElement<E>> links){
 
@@ -467,6 +446,7 @@ public String getJSON_BinaryTree(LinkedList<TreeElement<E>> nodes,
 	while (!nodes.isEmpty()){
 		TreeElement<E> element = nodes.pop();
 		map.put(Integer.parseInt(element.getIdentifier()), i++);
+		Validation.validate_ADT_size(i);
 		nodes_JSON.append(element.getRepresentation() + ",");
 	}
 		 
@@ -487,23 +467,15 @@ public String getJSON_BinaryTree(LinkedList<TreeElement<E>> nodes,
 		str += "},";
 	}
 	links_JSON.append(str);
-	StringBuilder s = new StringBuilder();
-			
-	s.append("{")
-		.append("\"name\": \"edu.uncc.cs.bridges\",")
-		.append("\"version\": \"0.4.0\",")
-		.append("\"visual\": \""+visualizerType+"\",")
-		.append("\"nodes\": [")
-		.append(DataFormatter.trimComma(nodes_JSON))
-		.append( "],")
-		.append("\"links\": [")
-		.append(DataFormatter.trimComma(links_JSON))
-		.append("]")
-		.append("}");
-	if (this.isVisualizeJSON())
-		System.out.println(s.toString());
-	return s.toString();		 
+	return build_JSON(nodes_JSON, links_JSON);		 
 }
+
+/**
+ * This method builds the JSON for the Graph ADT
+ * @param nodes - list of the tree nodes
+ * @param links - list of the tree links
+ * @return complete JSON string for the current ADT
+ */
 public 
 <E> String generateJSON_Graph (LinkedList<SLelement<E>> nodes, 
 				LinkedList<SLelement<E>> links){
@@ -518,6 +490,7 @@ public
 	while (!nodes.isEmpty()){
 		SLelement<E>  element = nodes.pop();
 		map.put(Integer.parseInt(element.getIdentifier()), i++);
+		Validation.validate_ADT_size(i);
 		nodes_JSON.append(element.getRepresentation() + ",");
 	}
 						// get the JSON string for links
@@ -541,20 +514,7 @@ public
 		str += "},";
 	}
 	links_JSON.append(str);
-	StringBuilder s = new StringBuilder();
-			
-	s.append("{").append("\"name\": \"edu.uncc.cs.bridges\",")
-		.append("\"version\": \"0.4.0\",")
-		.append("\"visual\": \""+visualizerType+"\",")
-		.append("\"nodes\": [").append(DataFormatter.trimComma(nodes_JSON))
-		.append( "],")
-		.append("\"links\": [").append(DataFormatter.trimComma(links_JSON))
-		.append("]")
-		.append("}");
-	if (this.isVisualizeJSON())
-		System.out.println(s.toString());
-
-	return s.toString();		 
+	return build_JSON(nodes_JSON, links_JSON);	 
 }
 	 
 	/**
@@ -661,4 +621,26 @@ public
 		this.visualizeJSON = visualizeJSON;
 	}
 	
+	/**
+	 * This method builds the JSON string
+	 * @param nodes_JSON the string builder object of existing nodes 
+	 * @param links_JSON the string builder object of existing links between the nodes
+	 * @return ADT's JSON
+	 */
+	public String build_JSON(StringBuilder nodes_JSON, StringBuilder links_JSON){
+		StringBuilder s = new StringBuilder();
+		
+		s.append("{").append("\"name\": \"edu.uncc.cs.bridges\",")
+			.append("\"version\": \"0.4.0\",")
+			.append("\"visual\": \""+visualizerType+"\",")
+			.append("\"nodes\": [").append(DataFormatter.trimComma(nodes_JSON))
+			.append( "],")
+			.append("\"links\": [").append(DataFormatter.trimComma(links_JSON))
+			.append("]")
+			.append("}");
+		if (this.isVisualizeJSON())
+			System.out.println(s.toString());
+
+		return s.toString();	
+	}	
 }
