@@ -13,6 +13,7 @@ import edu.uncc.cs.bridgesV2.base.*;
 public class ElementTest {
 	static Element<?> e0;
 	static Element<?> e1;
+	static Element<?> e2;
 	static Element<?> e1Cloned;
 	
 	/** use each constructor to make an element
@@ -21,6 +22,7 @@ public class ElementTest {
 	public static void BeforeClass() {
 		e0 = new Element<String>("A");
 		e1 = new Element<String>("A", "a");
+		e2 = new Element<String>("B", "b");
 		e1Cloned = new Element<String>((Element) e1);
 	}
 	
@@ -101,9 +103,18 @@ public class ElementTest {
 	@Test
 	/** test class variable used to assign identifier at construction*/
 	public void testIdentiferAssignmentAtConstruction() {
-		assertEquals("Identifier assigned at construction is not correct", "0", e0.getIdentifier());
-		assertEquals("Identifier assigned at construction is not correct", "1", e1.getIdentifier());
-		assertEquals("Identifier assigned at cloned construction is not correct", "2", e1Cloned.getIdentifier());
+		int e0ID = Integer.parseInt(e0.getIdentifier());
+		int e1ID = Integer.parseInt(e1.getIdentifier());
+		int e2ID = Integer.parseInt(e2.getIdentifier());
+		
+		System.out.println(e1Cloned.getIdentifier());
+		System.out.println(e1.getIdentifier());
+		
+		
+		
+		assertEquals("Identifier assigned at construction is not correct", 1, e2ID - e1ID);
+		assertEquals("Identifier assigned at construction is not correct", 1, e2ID - e1ID);
+		assertTrue("Identifier assigned at cloned construction is not correct", e1.getIdentifier().equals(e1Cloned.getIdentifier()));
 	}
 	
 	@Test

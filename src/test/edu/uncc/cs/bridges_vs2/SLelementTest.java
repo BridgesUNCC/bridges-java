@@ -40,9 +40,12 @@ public class SLelementTest {
 	@Test
 	/** test class variable used to assign sle identifier at construction*/
 	public void testIdentiferAssignmentAtConstruction() {
-		assertEquals("Identifier assigned at construction is not correct", "0", sle0.getIdentifier());
-		assertEquals("Identifier assigned at construction is not correct", "1", sle1.getIdentifier());
-		assertEquals("Identifier assigned at construction is not correct", "2", sle2.getIdentifier());
+		int sle0ID = Integer.parseInt(sle0.getIdentifier());
+		int sle1ID = Integer.parseInt(sle1.getIdentifier());
+		int sle2ID = Integer.parseInt(sle2.getIdentifier());
+				
+		assertEquals("Identifier assigned at construction is not correct", 1, sle1ID - sle0ID);		
+		assertEquals("Identifier assigned at construction is not correct", 1,  sle2ID - sle1ID);
 	}
 	
 	@Test
