@@ -1,4 +1,4 @@
-package testing;
+
 import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
@@ -19,6 +19,7 @@ public class ArrayElementTest {
 	@Test
 	public void testArrayElement() {
 		assertNotNull(a0);
+		assertEquals("a", a0.getValue());
 	}
 
 }

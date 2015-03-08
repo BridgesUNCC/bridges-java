@@ -1,4 +1,4 @@
-package testing; 
+
 
 import static org.junit.Assert.*;
 
@@ -11,15 +11,16 @@ import java.util.Stack;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import demos.JSONValidator;
 import edu.uncc.cs.bridgesV2.base.*;
 
 
 public class SLelementTest {
-	static SLelement<?> sle0;
 	static SLelement<?> sle1;
 	static SLelement<?> sle2;
 	static SLelement<?> sle3;
 	static SLelement<?> sle4;
+	static SLelement<?> sle0;
 	static SLelement<?> sle5clone0;
 	
 
@@ -93,7 +94,7 @@ public class SLelementTest {
 
 	@Test
 	public void testCloneMethodGetsNewIdentifer () {
-		assertEquals("Identifier from clone method is not correct", "5", sle5clone0.getIdentifier());
+		assertNotEquals(sle0.getIdentifier(), sle5clone0.getIdentifier());
 		assertNotEquals(sle5clone0, sle0);
 	}
 	

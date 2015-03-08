@@ -1,4 +1,4 @@
-package testing;
+
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import demos.JSONValidator;
 import edu.uncc.cs.bridgesV2.base.*;
 
 
@@ -108,7 +109,7 @@ public class ElementTest {
 	@Test
 	/** test getLabel() method */
 	public void testGetLabel() {
-		assertEquals("getLabel() did not return the correct value", "A", e0.getLabel());
+		assertEquals("getLabel() did not return the correct value", "", e0.getLabel());
 		assertEquals("getLabel() did not return the correct value", "A", e1.getLabel());
 		assertEquals("getLabel() did not return the correct value for cloned element", e1.getLabel(), e1Cloned.getLabel());
 	}

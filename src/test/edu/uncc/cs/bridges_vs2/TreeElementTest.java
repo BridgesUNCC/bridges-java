@@ -1,4 +1,4 @@
-package testing;
+
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import edu.uncc.cs.bridgesV2.base.TreeElement;
 
-public class TreeEementTest {
+public class TreeElementTest {
 	static TreeElement<String> te0;
 	static TreeElement<String> te1;
 	static TreeElement<String> te2;
