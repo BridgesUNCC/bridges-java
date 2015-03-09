@@ -257,26 +257,30 @@ public class Bridges <E> {
 			java.lang.reflect.Method method = this.getClass().getDeclaredMethod((ADT_UPDATE.get(visualizer.getVisualizerType())));
 			method.invoke(this);
 		} catch (SecurityException e) {
-			//e.printStackTrace();
 			System.err.println("Security Exception. \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the JSON string for errors. It cannot be null nor have line breaks");
+			System.err.println("Please check the JSON string for errors. It cannot be null nor can have line breaks");
+			System.err.println("Please check the error stack below.");
+			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			//e.printStackTrace();
 			System.err.println("Illegal Argument Exception. \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the JSON string for errors. It cannot be null nor have line breaks");
+			System.err.println("Please check the JSON string for errors. It cannot be null nor can have line breaks");
+			System.err.println("Please check the error stack below.");
+			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			//e.printStackTrace();
 			System.err.println("NoSuchMethodException \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
+			System.err.println("Please check the error stack below.");
+			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			//e.printStackTrace();
 			System.err.println("Illegal AccessException. \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the JSON string for errors. It cannot be null nor have line breaks");
+			System.err.println("Please check the JSON string for errors. It cannot be null nor can have line breaks");
+			System.err.println("Please check the error stack below.");
+			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			//e.printStackTrace();
 			System.err.println("Invocation Target Exception \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the JSON string for errors. It cannot be null nor have line breaks");
+			System.err.println("Please check the JSON string for errors. It cannot be null nor can have line breaks");
+			System.err.println("Please check the error stack below.");
+			e.printStackTrace();
 		}
-
 	}
 
 	/**
