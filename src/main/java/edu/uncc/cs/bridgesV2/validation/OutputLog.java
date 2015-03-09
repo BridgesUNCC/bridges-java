@@ -20,26 +20,28 @@ import java.sql.Timestamp;
 import java.util.logging.Logger;
 
 //public class OutputLog extends OutputStream{
-public class OutputLog extends OutputStream{	
-	protected static PrintStream capturedStream;
+public class outputLog extends OutputStream{	
 	protected static PrintStream newOutputStream;
+	protected static PrintStream oldOutputStream;
 	protected static PrintStream logStream;
 	protected static FileOutputStream logFile;
 	protected static ByteArrayOutputStream temp;
+	protected static ByteArrayOutputStream tempEr;
 	protected static String aPathToLog; 	
 			
 	/**
 	 * Constructor
 	 */
-	public OutputLog(){
+	public outputLog(){
 		try{
-			newOutputStream = System.out;
+			newOutputStream = new PrintStream(System.out);
+			oldOutputStream = new PrintStream(newOutputStream);
+			//newOutputStream = System.out;
 			logFile = new FileOutputStream(generatedPath(), true);
 			logStream = new PrintStream(logFile);
 			
 			splitStream();
 			recordLog();
-			
 			
 		}  catch (FileNotFoundException e) {
 			System.out.println("An error occured while logging the output errors. Log file not available.");
@@ -65,9 +67,15 @@ public class OutputLog extends OutputStream{
 	 */
 	public static void splitStream(){
 		temp = new ByteArrayOutputStream();
-		PrintStream Stre = new PrintStream(temp);
-		System.setErr(Stre);
-		System.setOut(Stre);
+		tempEr =  new ByteArrayOutputStream();
+		PrintStream Stre = new PrintStream(temp, false);
+		
+		PrintStream StreEr = new PrintStream(tempEr, false);
+		
+		System.setErr(logStream);
+		System.out.println(tempEr.size());
+		System.setOut(logStream);
+		System.out.println(temp.size());
 	}
 	
 	/**
@@ -93,13 +101,15 @@ public class OutputLog extends OutputStream{
 	 * @return boolean
 	 */
 	public boolean returnStream() throws IOException{
-			//
 		this.write(temp.toString().getBytes());
+		
+		this.write(tempEr.toString().getBytes());
 			this.flush();	
-			this.close();
-			System.setOut(newOutputStream);
+			System.out.println(temp.size());
 			System.setErr(newOutputStream);
+			System.setOut(newOutputStream);
 			System.out.println();
+			this.close();
 			this.logMessage();
 			System.out.println();
 			return true;
@@ -109,6 +119,7 @@ public class OutputLog extends OutputStream{
 	@Override
 	public void write(int b) throws IOException {
 		newOutputStream.write(b);
+		temp.write(b);
 		logStream.write(b);
 		
 	}
@@ -116,6 +127,7 @@ public class OutputLog extends OutputStream{
 	@Override
 	public void write(byte[] b) throws IOException {
 		newOutputStream.write(b);
+		temp.write(b);
 		logStream.write(b);
 		
 	}
@@ -123,6 +135,7 @@ public class OutputLog extends OutputStream{
 	@Override
 	public void write(byte[] b, int a, int lenght) throws IOException {
 		newOutputStream.write(b, a, lenght);
+		temp.write(b, a, lenght);
 		logStream.write(b, a, lenght);
 		
 	}
@@ -134,6 +147,7 @@ public class OutputLog extends OutputStream{
 	
 	@Override
 	public void flush() throws IOException{
+		//this.flush();
 		newOutputStream.flush();
 		logStream.flush();
 	}
