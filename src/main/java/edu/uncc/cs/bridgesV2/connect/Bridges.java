@@ -276,10 +276,7 @@ public class Bridges <E> {
 			System.err.println("Invocation Target Exception \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
 			System.err.println("Please check the JSON string for errors. It cannot be null nor have line breaks");
 		}
-		finally{
-			System.err.println("Please check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the JSON string for errors. It cannot be null nor have line breaks");
-		}
+
 	}
 
 	/**
