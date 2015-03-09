@@ -15,33 +15,32 @@ package edu.uncc.cs.bridgesV2.validation;
  * Warning: You can use the logger on one file at a time.
  */
 
+
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.logging.Logger;
 
 //public class OutputLog extends OutputStream{
-public class outputLog extends OutputStream{	
+public class OutputLog extends OutputStream{	
+	protected static PrintStream capturedStream;
 	protected static PrintStream newOutputStream;
-	protected static PrintStream oldOutputStream;
 	protected static PrintStream logStream;
 	protected static FileOutputStream logFile;
 	protected static ByteArrayOutputStream temp;
-	protected static ByteArrayOutputStream tempEr;
 	protected static String aPathToLog; 	
 			
 	/**
 	 * Constructor
 	 */
-	public outputLog(){
+	public OutputLog(){
 		try{
-			newOutputStream = new PrintStream(System.out);
-			oldOutputStream = new PrintStream(newOutputStream);
-			//newOutputStream = System.out;
+			newOutputStream = System.out;
 			logFile = new FileOutputStream(generatedPath(), true);
 			logStream = new PrintStream(logFile);
 			
 			splitStream();
 			recordLog();
+			
 			
 		}  catch (FileNotFoundException e) {
 			System.out.println("An error occured while logging the output errors. Log file not available.");
@@ -67,15 +66,9 @@ public class outputLog extends OutputStream{
 	 */
 	public static void splitStream(){
 		temp = new ByteArrayOutputStream();
-		tempEr =  new ByteArrayOutputStream();
-		PrintStream Stre = new PrintStream(temp, false);
-		
-		PrintStream StreEr = new PrintStream(tempEr, false);
-		
-		System.setErr(logStream);
-		System.out.println(tempEr.size());
-		System.setOut(logStream);
-		System.out.println(temp.size());
+		PrintStream Stre = new PrintStream(temp);
+		System.setErr(Stre);
+		System.setOut(Stre);
 	}
 	
 	/**
@@ -101,15 +94,13 @@ public class outputLog extends OutputStream{
 	 * @return boolean
 	 */
 	public boolean returnStream() throws IOException{
+			//
 		this.write(temp.toString().getBytes());
-		
-		this.write(tempEr.toString().getBytes());
 			this.flush();	
-			System.out.println(temp.size());
-			System.setErr(newOutputStream);
-			System.setOut(newOutputStream);
-			System.out.println();
 			this.close();
+			System.setOut(newOutputStream);
+			System.setErr(newOutputStream);
+			System.out.println();
 			this.logMessage();
 			System.out.println();
 			return true;
@@ -119,7 +110,6 @@ public class outputLog extends OutputStream{
 	@Override
 	public void write(int b) throws IOException {
 		newOutputStream.write(b);
-		temp.write(b);
 		logStream.write(b);
 		
 	}
@@ -127,7 +117,6 @@ public class outputLog extends OutputStream{
 	@Override
 	public void write(byte[] b) throws IOException {
 		newOutputStream.write(b);
-		temp.write(b);
 		logStream.write(b);
 		
 	}
@@ -135,7 +124,6 @@ public class outputLog extends OutputStream{
 	@Override
 	public void write(byte[] b, int a, int lenght) throws IOException {
 		newOutputStream.write(b, a, lenght);
-		temp.write(b, a, lenght);
 		logStream.write(b, a, lenght);
 		
 	}
@@ -147,7 +135,6 @@ public class outputLog extends OutputStream{
 	
 	@Override
 	public void flush() throws IOException{
-		//this.flush();
 		newOutputStream.flush();
 		logStream.flush();
 	}
@@ -160,3 +147,4 @@ public class outputLog extends OutputStream{
 		 	logger.info("The log file is found here: " + aPathToLog);
 		  }
 }
+
