@@ -15,9 +15,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.uncc.cs.bridgesV2.base.ADTVisualizer;
 import edu.uncc.cs.bridgesV2.base.*;
 import edu.uncc.cs.bridgesV2.validation.RateLimitException;
+import edu.uncc.cs.bridgesV2.validation.Validation;
 
 public class Bridges <E> {
 	
@@ -253,6 +253,7 @@ public class Bridges <E> {
 	 * @throws NoSuchMethodException 
 	 */
 	public void visualize() {
+		//Validation.validate_ADTVisualizer(visualizer, this);
 		try {
 			java.lang.reflect.Method method = this.getClass().getDeclaredMethod((ADT_UPDATE.get(visualizer.getVisualizerType())));
 			method.invoke(this);

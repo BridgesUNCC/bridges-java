@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import edu.uncc.cs.bridgesV2.base.ADTVisualizer;
+import edu.uncc.cs.bridgesV2.connect.Bridges;
+
 public class Validation {
 
 	public static final Set<String> COLOR_NAMES = new HashSet<>();
@@ -253,5 +256,16 @@ public class Validation {
 				e.printStackTrace();
 				System.exit(42);
 		}
+	}
+	
+	public static <E> void validate_ADTVisualizer(ADTVisualizer<E> vis, Bridges<E> br){
+		if (vis.adjacencyList==null &&
+				vis.mapOfLinks==null &&
+				vis.adtArray==null &&
+				br.getRoot()==null){
+			throw new IllegalArgumentException ("\nPlease setDataStructure(..) before calling visualize() or complete(). \nAlso check for null arguments for setDataStructure(..)");
+
+		}
+		
 	}
 }
