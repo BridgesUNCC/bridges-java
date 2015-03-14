@@ -152,7 +152,7 @@ public class Element<E>{
 	 * and a nonZero integer otherwise
 	 */
 	public int compare(Element<E> e1){
-		return e1.getLabel().compareTo(this.getLabel());
+		return this.getLabel().compareTo(e1.getLabel());
 	}
 	
 	/**
