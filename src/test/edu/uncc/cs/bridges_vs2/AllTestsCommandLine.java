@@ -1,3 +1,4 @@
+package edu.uncc.cs.bridges_vs2;
 /**
  * @author mihai mehedint
  * @Description: This class runs all the test classes outside the Eclipse unit test

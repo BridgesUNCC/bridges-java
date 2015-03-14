@@ -3,7 +3,7 @@
  * @Description: this test suite class runs all the test classes in the 
  * Eclipse JUnit test environment
  */
-
+package edu.uncc.cs.bridges_vs2;
 import static org.junit.Assert.*;
 
 import javax.swing.plaf.metal.MetalIconFactory.TreeLeafIcon;

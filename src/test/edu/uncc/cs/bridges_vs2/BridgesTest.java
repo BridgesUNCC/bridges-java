@@ -1,3 +1,4 @@
+package edu.uncc.cs.bridges_vs2;
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;

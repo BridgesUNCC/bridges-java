@@ -1,3 +1,4 @@
+package edu.uncc.cs.bridges_vs2;
 import java.io.IOException;
 
 import org.junit.BeforeClass;

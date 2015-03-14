@@ -25,8 +25,10 @@ public class OutputLog extends OutputStream{
 	protected static PrintStream capturedStream;
 	protected static PrintStream newOutputStream;
 	protected static PrintStream logStream;
+	protected static PrintStream logStream2;
 	protected static FileOutputStream logFile;
-	protected static ByteArrayOutputStream temp;
+	protected static ByteArrayOutputStream temp1;
+	protected static ByteArrayOutputStream temp2;
 	protected static String aPathToLog; 	
 			
 	/**
@@ -36,7 +38,7 @@ public class OutputLog extends OutputStream{
 		try{
 			newOutputStream = System.out;
 			logFile = new FileOutputStream(generatedPath(), true);
-			logStream = new PrintStream(logFile);
+			
 			
 			splitStream();
 			recordLog();
@@ -65,10 +67,38 @@ public class OutputLog extends OutputStream{
 	 *  
 	 */
 	public static void splitStream(){
-		temp = new ByteArrayOutputStream();
-		PrintStream Stre = new PrintStream(temp);
-		System.setErr(Stre);
-		System.setOut(Stre);
+		Runnable r1 = new Runnable() {
+			  public void run() {
+			   // try {
+				  logStream = new PrintStream(logFile);
+			        temp1 = new ByteArrayOutputStream();
+					PrintStream Stre = new PrintStream(temp1);
+					System.setErr(Stre);
+					System.setOut(Stre);
+			        //Thread.sleep(1000L);
+			      
+			    //} catch (InterruptedException iex) {}
+			  }
+			};
+			Runnable r2 = new Runnable() {
+				  public void run() {
+				   // try {
+					  logStream2 = new PrintStream(logFile);
+				        temp2 = new ByteArrayOutputStream();
+						PrintStream Stre2 = new PrintStream(temp2);
+						
+						System.setErr(Stre2);
+						System.setOut(Stre2);
+				        //Thread.sleep(1000L);
+				   
+				   // } catch (InterruptedException iex) {}
+				  }
+				};
+				Thread thr1 = new Thread(r1);
+				Thread thr2 = new Thread(r2);
+				thr1.start();
+				thr2.start();	
+		
 	}
 	
 	/**
@@ -94,8 +124,8 @@ public class OutputLog extends OutputStream{
 	 * @return boolean
 	 */
 	public boolean returnStream() throws IOException{
-			//
-		this.write(temp.toString().getBytes());
+		this.write(temp1.toString().getBytes());
+		this.write(temp2.toString().getBytes());
 			this.flush();	
 			this.close();
 			System.setOut(newOutputStream);

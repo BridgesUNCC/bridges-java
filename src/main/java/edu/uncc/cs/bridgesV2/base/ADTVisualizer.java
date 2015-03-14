@@ -1,13 +1,10 @@
 package edu.uncc.cs.bridgesV2.base;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import edu.uncc.cs.bridgesV2.validation.InvalidValueException;
 import edu.uncc.cs.bridgesV2.validation.Validation;
 import edu.uncc.cs.bridgesV2.connect.*;
 
@@ -15,19 +12,29 @@ public class ADTVisualizer<E> {
 	//public LinkedHashMap<Element<Value, T>, String> LList;
 	public String visualizerType;
 	public String visualizerIdentifier;
-	public final Map<String, String> ADT_TYPE = 
-			new HashMap <String, String>(){{
-				put("graphVis","graph");
-				put("graphVis","graphl");
-				put("stackVis","stack");
-				put("queueVis","queue");
-				put("treeVis","tree");
+	public final Map<String, String> ADT_TYPE = 	   //To update the nomenclature here
+			new HashMap <String, String>(){/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+			{
+				put("graph","graph");
+				put("graphl","graphl");
+				put("stack","stack");
+				put("queue","queue");
+				put("tree","tree");
 				put("llist", "llist");
 				put("Dllist", "Dllist");
-				put("arrayVis", "AList");
+				put("AList", "AList");
 			}};
 	public Map<String, String> linkProperties =  
-			new HashMap<String, String>(){{
+			new HashMap<String, String>(){/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+			{
 				put("color","black");
 				put("opacity","1.0");
 				put("weight","1.0");
@@ -110,18 +117,23 @@ public class ADTVisualizer<E> {
 	 * @throws Exception
 	 */
 	public void setVisualizerType(String visualizerType) {
-		
 		if (ADT_TYPE.keySet().contains(visualizerType))
 			this.visualizerType = ADT_TYPE.get(visualizerType);
 		else if (visualizerType==null){
 			try {
-				throw new Exception("Invalid value '" + visualizerType + "'. Expected "
-						+ " a string value: graph, llist, stack, tree, or queue.");
+				throw new NullPointerException("Invalid value '" + visualizerType + "'. Expected "
+						+ " a string value: graph, llist, AList, stack, tree, or queue.");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else{
+			try {
+				throw new IllegalArgumentException("Invalid value '" + visualizerType + "'. Expected "
+						+ " a string value: graph, llist, AList, stack, tree, or queue.");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		this.visualizerType = visualizerType;
 	}
 	
 	public void setGraph() {
@@ -149,7 +161,7 @@ public class ADTVisualizer<E> {
  * This method creates a JSON representation of the graph - 
  * Adjacency List Representation. 
  * @param Hashmap<String, SLelement<E> represents the list of vertices
- * each of which is a singly linked lists.
+ * each of which is a singly linked list.
  * @return - this method returns the JSON string
  */
 public 

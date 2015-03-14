@@ -1,3 +1,4 @@
+package edu.uncc.cs.bridges_vs2;
 
 public enum BridgesDataStructure {
 	GRAPH("graph"),

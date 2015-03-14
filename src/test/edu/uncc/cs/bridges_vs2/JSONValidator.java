@@ -1,4 +1,6 @@
+package edu.uncc.cs.bridges_vs2;
 /**
+
  * Proper JSON has matching bracket closures. This is tested via a stack where left brackets push
  * onto stack and right brackets pop the stack. The right bracket should be
  * the closure for the pop. If not, JSON is invalid. Only push/pop when

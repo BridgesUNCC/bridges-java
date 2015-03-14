@@ -1,3 +1,4 @@
+package edu.uncc.cs.bridges_vs2;
 import edu.uncc.cs.bridgesV2.validation.InvalidValueException;
 import edu.uncc.cs.bridgesV2.validation.RateLimitException;
 import junit.framework.TestCase;
