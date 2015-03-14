@@ -107,6 +107,12 @@ public class Bridges <E> {
 		return Double.toString(assignment+assignmentDecimal);
 	}
 	public static void setAssignment(int assignment) {
+		if (assignment<0)
+			throw new IllegalArgumentException("\nThe assignment value must be greater than or equal to 0.\n");
+		else if (Bridges.assignment >= 0)
+			Bridges.assignmentDecimal=0.0;
+		else
+			throw new IllegalArgumentException("\nPlease set an assignment value as an integer value greater than 0\n");
 		Bridges.assignment = assignment;
 	}
 	
