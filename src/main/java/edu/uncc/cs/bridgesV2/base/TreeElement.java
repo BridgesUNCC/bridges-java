@@ -29,6 +29,12 @@ public class TreeElement<E> extends Element<E>{
 		this.right = null;
 	}
 	
+	public TreeElement (String label, E e){
+		super(label, e);
+		this.left = null;
+		this.right = null;
+	}
+	
 	public TreeElement(TreeElement<E> left, TreeElement<E> right) {
 		super();
 		this.left = left;

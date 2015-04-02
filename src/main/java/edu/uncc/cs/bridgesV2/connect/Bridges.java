@@ -37,8 +37,8 @@ public class Bridges <E> {
 	{
 		put("graph","updateGraph");
 		put("graphl","updateGraphL");
-		put("stack","stack");
-		put("queue","queue");
+		put("stack","updateSL");
+		put("queue","updateSL");
 		put("tree","updateTree");
 		put("llist", "updateSL");
 		put("Dllist", "updateDL");

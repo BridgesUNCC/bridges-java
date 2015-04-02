@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  */
 
 
-public class Element<E>{
+public class Element<E> implements Comparable{
 	
 	private int MAX_ELEMENTS_SIZE = 1000;
 	static Integer ids = 0;
@@ -30,8 +30,8 @@ public class Element<E>{
 									// is the pattern is change to white space this index can be changed to 2 words to insert a 
 									//line break every 2 words
 	private final String INSERT_STRING = "\\n"; //this is the string value that replaces the pattern found in the label
-	private final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
-												//(\\w) matches any word
+	//private final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
+	private final String DIVIDE_KEY = "(\n)";		//(\\w) matches any word
 												//(\\s) a white space (\\s*) zero or more whitespaces, (\\s+) one or more 
 	/**
 	 * Element constructor
@@ -151,9 +151,20 @@ public class Element<E>{
 	 * @return 0 if the 2 elements have the same label and the same identifier 
 	 * and a nonZero integer otherwise
 	 */
-	public int compare(Element<E> e1){
+	public int compareTo(Element<E> e1){
+		if (e1==null) 
+			throw new NullPointerException("The object you are compare to is null.");
 		return this.getLabel().compareTo(e1.getLabel());
 	}
+	
+	@Override
+	public int compareTo(Object o) {
+		if (o==null) 
+			throw new NullPointerException("The object you are compare to is null.");
+		
+		return 0;
+	}
+	
 	
 	/**
 	 * Internal code for getting the properties of the Element object.
@@ -259,4 +270,5 @@ public class Element<E>{
 				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";
 	}
+
 }
