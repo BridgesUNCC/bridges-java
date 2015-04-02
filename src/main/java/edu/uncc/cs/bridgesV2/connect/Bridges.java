@@ -12,6 +12,9 @@ package edu.uncc.cs.bridgesV2.connect;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +38,7 @@ public class Bridges <E> {
 		private static final long serialVersionUID = 2055228591103348943L;
 
 	{
-		put("graph","updateGraph");
+		put("graph","updateGraphL");
 		put("graphl","updateGraphL");
 		put("stack","updateSL");
 		put("queue","updateSL");
@@ -104,7 +107,7 @@ public class Bridges <E> {
 	
 	/* Accessors and Mutators */
 	public static String getAssignment() {
-		return Double.toString(assignment+assignmentDecimal);
+		return Double.toString(round(assignment+assignmentDecimal,2));
 	}
 	public static void setAssignment(int assignment) {
 		if (assignment<0)
@@ -315,7 +318,7 @@ public class Bridges <E> {
 		} 
         // Return a URL to the user
         System.out.println("Check out your visuals at " + formatter.getBackend().prepare("/assignments/" + getAssignment() + "/" + userName) );
-        assignmentDecimal+=0.01;
+        assignmentDecimal = round(assignmentDecimal+=0.01, 2);
 	}
 */
 	
@@ -342,9 +345,10 @@ public class Bridges <E> {
 					+ e.getMessage());
 		} 
         // Return a URL to the user
-        System.out.println("Check out your visuals at " + formatter.getBackend().prepare("/assignments/" + getAssignment() + "/" + userName) );
+        System.out.println("Check out your visuals at " + formatter.getBackend().prepare("/assignments/" + getAssignment() + "/" + userName) ); 
         assignmentDecimal+=0.01;
 	}
+	
 	
 	/**
 	 * Update visualization metadata of doubly linked list. This may be called many times.
@@ -476,5 +480,13 @@ public class Bridges <E> {
 	 */
 	public void setRoot(Element<E> root) {
 		this.root = root;
-	}	
+	}
+	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
+	}
 }
