@@ -7,13 +7,13 @@ package edu.uncc.cs.bridgesV2.base;
  * @author mihai mehedint
  *
  */
-public class BSTnode<K, E> extends TreeElement<E>{
-	private K key; //this is the BSTnode key 
+public class BSTElement<K, E> extends TreeElement<E>{
+	private K key; //this is the BSTElement key 
 
 	/**
 	 * 
 	 */
-	public BSTnode() {
+	public BSTElement() {
 		super();
 	}
 
@@ -22,7 +22,7 @@ public class BSTnode<K, E> extends TreeElement<E>{
 	 * @param left
 	 * @param right
 	 */
-	public BSTnode(E e, BSTnode<K, E> left, BSTnode<K, E> right) {
+	public BSTElement(E e, BSTElement<K, E> left, BSTElement<K, E> right) {
 		super(e, left, right);
 	}
 	
@@ -32,7 +32,7 @@ public class BSTnode<K, E> extends TreeElement<E>{
 	 * @param left
 	 * @param right
 	 */
-	public BSTnode(K key, E e, BSTnode<K,E> left, BSTnode<K, E> right) {
+	public BSTElement(K key, E e, BSTElement<K,E> left, BSTElement<K, E> right) {
 		super(e, left, right);
 		this.key = key;
 	}
@@ -40,14 +40,14 @@ public class BSTnode<K, E> extends TreeElement<E>{
 	/**
 	 * @param e
 	 */
-	public BSTnode(E e) {
+	public BSTElement(E e) {
 		super(e);
 	}
 	/**
 	 * @param key
 	 * @param e
 	 */
-	public BSTnode(K key, E e) {
+	public BSTElement(K key, E e) {
 		super(e);
 		this.key = key;
 	}
@@ -56,7 +56,7 @@ public class BSTnode<K, E> extends TreeElement<E>{
 	 * @param label
 	 * @param e
 	 */
-	public BSTnode(String label, E e) {
+	public BSTElement(String label, E e) {
 		super(label, e);
 	}
 	
@@ -65,7 +65,7 @@ public class BSTnode<K, E> extends TreeElement<E>{
 	 * @param key
 	 * @param e
 	 */
-	public BSTnode(String label, K key, E e) {
+	public BSTElement(String label, K key, E e) {
 		super(label, e);
 		this.key = key;
 	}
@@ -74,7 +74,7 @@ public class BSTnode<K, E> extends TreeElement<E>{
 	 * @param left
 	 * @param right
 	 */
-	public BSTnode(BSTnode<K, E> left, BSTnode<K, E> right) {
+	public BSTElement(BSTElement<K, E> left, BSTElement<K, E> right) {
 		super(left, right);
 	}
 
