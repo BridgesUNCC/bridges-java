@@ -9,7 +9,7 @@ apply plugin: 'signing'
 /// General
 ///
 group = "edu.uncc.cs.bridges_v2"
-version = "2.0"
+version = "2.0.1"
 
 ///
 /// Artifacts and deployment
@@ -53,7 +53,7 @@ test {
   //systemProperty 'some.prop', 'value'
 
   // explicitly include or exclude tests
-  include 'edu/**'
+  include 'edu/uncc/cs/bridges_vs2/**'
   scanForTestClasses = true
 
   // show standard out and standard error of the test JVM(s) on the console
