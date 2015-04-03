@@ -90,5 +90,23 @@ public class BSTElement<K, E> extends TreeElement<E>{
 	 */
 	public void setKey(K key) {
 		this.key = key;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.uncc.cs.bridgesV2.base.TreeElement#getLeft()
+	 */
+	@Override
+	public BSTElement<?,E> getLeft() {
+		// TODO Auto-generated method stub
+		return (BSTElement<?,E>)super.getLeft();
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.uncc.cs.bridgesV2.base.TreeElement#getRight()
+	 */
+	@Override
+	public BSTElement<?,E> getRight() {
+		// TODO Auto-generated method stub
+		return (BSTElement<?,E>)super.getRight();
 	}	
 }
