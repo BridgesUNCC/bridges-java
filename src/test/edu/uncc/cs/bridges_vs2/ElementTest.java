@@ -84,7 +84,7 @@ public class ElementTest {
 
 		// e1 constructed first, should come first
 		assertEquals("compare() should return 0 for elements with same label",
-				0, e1.compare(e2));
+				0, e1.compareTo(e2));
 	}
 
 	@Test
@@ -96,10 +96,10 @@ public class ElementTest {
 
 		assertEquals(
 				"compare() should return -1 for elements with lesser label",
-				-2, e1.compare(e2));
+				-2, e1.compareTo(e2));
 		assertEquals(
 				"compare() should return 1 for elements with greater label", 1,
-				e3.compare(e1));
+				e3.compareTo(e1));
 
 	}
 
@@ -231,7 +231,7 @@ public class ElementTest {
 		Element<String> e1 = new Element<String>("a");
 		Element<String> e2 = new Element<String>(e1);
 
-		assertEquals(e1.compare(e2), 0);
+		assertEquals(e1.compareTo(e2), 0);
 	}
 
 }
