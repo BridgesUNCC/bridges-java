@@ -11,7 +11,7 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-import edu.uncc.cs.bridgesV2.validation.OutputLog;
+import edu.uncc.cs.brdigesV2.validation.*;
 
 public class AllTestsCommandLine {
 	public static java.lang.Class<?>[] classTests = {ADTVisualizerTest.class,
@@ -27,7 +27,8 @@ public class AllTestsCommandLine {
 		OutputLogTest.class,
 		RateLimitExceptionTest.class,
 		SLelementTest.class,
-		TreeElementTest.class
+		TreeElementTest.class,
+		BSTElementTest.class
 		};
 
 	/**

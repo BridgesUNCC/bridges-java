@@ -1,11 +1,11 @@
 package edu.uncc.cs.bridges_vs2;
-import edu.uncc.cs.bridgesV2.validation.InvalidValueException;
-import edu.uncc.cs.bridgesV2.validation.RateLimitException;
+import edu.uncc.cs.brdigesV2.validation.*;
 import junit.framework.TestCase;
 
 
 public class InvalidValueExceptionTest extends TestCase {
 
+	/** Test InvalidValueException constructs correctly */
 	public void testInvalidValueException() {
 		InvalidValueException e = new InvalidValueException("error message");
 		assertNotNull(e);

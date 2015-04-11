@@ -46,6 +46,7 @@ public class BridgesTest {
 
 	static String[] structureTypes;
 
+	/** Set up static elements to for later tests. */
 	@BeforeClass
 	public static void BeforeClass() throws Exception {
 		sle1 = new SLelement<String>("A", "1");
@@ -60,24 +61,28 @@ public class BridgesTest {
 		bridges3 = new Bridges<String>(99, "691659187196", sle1, "cgrafer");
 	}
 
+	/** Test Bridges null constructor */
 	@Test
 	public void testBridges() throws Exception {
 		Bridges b = new Bridges<String>();
 		assertNotNull(b);
 	}
 
+	/** Test Bridges constructor with assignment, api key, and username. */
 	@Test
 	public void testBridgesIntStringString() throws Exception {
 		Bridges b = new Bridges<String>(99, "691659187196", "cgrafer");
 		assertNotNull(b);
 	}
 
+	/** Test Bridges constructor with assignment, api key, data structure, and username. */
 	@Test
 	public void testBridgesIntStringSLelementOfEString() throws Exception {
 		Bridges b = new Bridges<String>(99, "691659187196", sle1, "cgrafer");
 		assertNotNull(b);
 	}
 
+	/** Test init() sets assignment, api key, and username correctly */
 	@Test
 	public void testInitIntStringString() throws Exception {
 		Bridges<String> b = new Bridges<String>();
@@ -93,6 +98,7 @@ public class BridgesTest {
 
 	}
 
+	/** Test init() sets assignment, api key, data structure and username correctly */
 	@Test
 	public void testInitIntStringElementOfEString() throws Exception {
 		Bridges<String> b = new Bridges<String>();
@@ -108,6 +114,7 @@ public class BridgesTest {
 
 	}
 
+	/** Test whether getAssignment() returns correct assignment */
 	@Test
 	public void testGetAssignment() {
 		assertEquals("Get assignment returns incorrect assignment number",
@@ -118,7 +125,8 @@ public class BridgesTest {
 				"99.0", bridges3.getAssignment());
 	}
 
-	@Test
+	/** Test setAssignment and make sure same value is returned by getAssignment(). */
+	@Test 
 	public void testSetAssignment() {
 		bridges1.setAssignment(98);
 		assertEquals(
@@ -126,6 +134,7 @@ public class BridgesTest {
 				"98.0", bridges1.getAssignment());
 	}
 
+	/** Test whether getUserName() returns correct value */
 	@Test
 	public void testGetUserName() throws Exception {
 		assertEquals("getUserName() returns incorrect name", "cgrafer",
@@ -136,6 +145,7 @@ public class BridgesTest {
 				bridges3.getUserName());
 	}
 
+	/** Test setUserName() and make sure same value is returned by getUserName() */
 	@Test
 	public void testSetUserName() {
 		bridges1.setUserName("a");
@@ -147,6 +157,7 @@ public class BridgesTest {
 
 	}
 
+	/** Test whether getKey() returns correct value */
 	@Test
 	public void testGetKey() {
 		assertEquals("getKey() does not return correct API key",
@@ -157,6 +168,7 @@ public class BridgesTest {
 				"691659187196", bridges3.getKey());
 	}
 
+	/** Test setKey() and make sure same value is returned by getKey() */
 	@Test
 	public void testSetKey() {
 		bridges1.setKey("1234");
@@ -168,11 +180,13 @@ public class BridgesTest {
 
 	}
 
+	/** Not tested here, tested in getVisualizer */
 	@Test
 	public void testGetVisualizer() {
 		// tested in testSetVisualizer();
 	}
 
+	/** Test setVisualizer and make sure same value is returned by getVisualizer */
 	@Test
 	public void testSetVisualizer() {
 		ADTVisualizer<String> visualizer = new ADTVisualizer<String>();
@@ -182,6 +196,7 @@ public class BridgesTest {
 				visualizer, bridges1.getVisualizer());
 	}
 
+	/** Test setDataStructure() with valid structure name */
 	@Test
 	public void testSetDataStructureSLelementOfEStringWithValidStructureName()
 			throws Exception {
@@ -193,21 +208,8 @@ public class BridgesTest {
 		}
 	}
 
-	@Test
-	public void testSetDataStructureSLelementOfEStringWithInvalidStructureName() {
 
-		try {
-			bridges1.setDataStructure(sle1, "abcd");
-			System.out.println(bridges1.getVisualizer().getVisualizerType());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		assertEquals("abcd", bridges1.getVisualizer().getVisualizerType());
-
-	}
-
+	/** Test setDataStructure with DLelement */
 	@Test
 	public void testSetDataStructureDLelementOfEString() {
 		for (String s : structureTypes) {
@@ -217,6 +219,7 @@ public class BridgesTest {
 		}
 	}
 
+	/** Test setDataStructure with TreeElement */
 	@Test
 	public void testSetDataStructureTreeElementOfEString() {
 		for (String s : structureTypes) {
@@ -226,6 +229,7 @@ public class BridgesTest {
 		}
 	}
 
+	/** Test setDataStructure with HashMap */
 	@Test
 	public void testSetDataStructureHashMapOfStringSLelementOfEString() {
 		HashMap<String, SLelement<String>> hash = new HashMap<String, SLelement<String>>();
@@ -239,24 +243,12 @@ public class BridgesTest {
 		
 	}
 
+	/** Not tested - add() does nothing - needs to be deprecated. */
 	@Test
 	public void testAdd() {
-		String oldJSON = bridges1.getVisualizer().visualizerIdentifier;
-		String newJSON;
-
-		try {
-			bridges1.add(new Element<String>("E"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			fail("testAdd throwing exception");
-		}
-
-		newJSON = bridges1.getVisualizer().visualizerIdentifier;
-
-		assertNotEquals("add() does not change JSON representation", oldJSON,
-				newJSON);
 	}
 
+	/** Test whether toggle changes value of isVisualizeJSON */
 	@Test
 	public void testToggleJSONdisplay() {
 		boolean oldValue = bridges1.getVisualizer().isVisualizeJSON();
@@ -270,6 +262,7 @@ public class BridgesTest {
 		bridges1.toggleJSONdisplay();
 	}
 
+	/** Test setDataStructure() with "llist" */
 	@Test
 	public void testVisualizeWhenSetDataStructureToLlist() {
 		// bridges will print an error to System.err if somethign goes wrong
@@ -291,6 +284,7 @@ public class BridgesTest {
 
 	}
 
+	/** Test setDataStructure() with "Dllist" */
 	@Test
 	public void testVisualizeWhenSetDataStructureToDllist() {
 		// bridges will print an error to System.err if somethign goes wrong
@@ -312,6 +306,7 @@ public class BridgesTest {
 
 	}
 
+	/** Test setDataStructure() with "stack" */
 	@Test
 	public void testVisualizeWhenSetDataStructureToStack() {
 		// bridges will print an error to System.err if somethign goes wrong
@@ -332,6 +327,7 @@ public class BridgesTest {
 
 	}
 
+	/** Test setDataStructure() with "queue" */
 	@Test
 	public void testVisualizeWhenSetDataStructureToQueue() {
 		// bridges will print an error to System.err if somethign goes wrong
@@ -353,6 +349,7 @@ public class BridgesTest {
 
 	}
 
+	/** Test setDataStructure() with "tree" */
 	@Test
 	public void testVisualizeWhenSetDataStructureToTree() {
 		// bridges will print an error to System.err if somethign goes wrong
@@ -376,7 +373,7 @@ public class BridgesTest {
 
 	}
 	
-
+	/** Test setDataStructure() with DLelement and type is "graph" */
 	@Test
 	public void testVisualizeWhenSetDataStructureToGraphwithDLelement() {
 		// bridges will print an error to System.err if somethign goes wrong
@@ -400,7 +397,7 @@ public class BridgesTest {
 
 	}
 	
-	
+	/** Test setDataStructure() with "graphl" */	
 	@Test
 	public void testVisualizeWhenSetDataStructureToGraphWithHashMap() {
 		// bridges will print an error to System.err if somethign goes wrong
@@ -417,7 +414,7 @@ public class BridgesTest {
 		System.setErr(new PrintStream(bytes));
 
 		
-		bridges3.setDataStructure(hash, "graph");
+		bridges3.setDataStructure(hash, "graphl");
 		bridges3.visualize();
 
 
@@ -428,7 +425,7 @@ public class BridgesTest {
 
 	}
 	
-	
+	/** Test setDataStructure() with "graphl" */		
 	@Test
 	public void testVisualizeWhenSetDataStructureToGraphL() {
 		// bridges will print an error to System.err if somethign goes wrong
@@ -452,18 +449,21 @@ public class BridgesTest {
 
 	}
 
+	/** Not tested - only calls visualize() */
 	@Test
 	public void testComplete() {
 
 		// this method only calls visualize, tested in visualize
 	}
 
+	/** Test whether correct root is returned */
 	@Test
 	public void testGetRoot() {
 		assertEquals("getRoot() does not return correct root", sle1,
 				bridges3.getRoot());
 	}
 
+	/** Test setRoot and make sure getRoot returns same value */
 	@Test
 	public void testSetRoot() {
 		SLelement<String> sle2 = new SLelement<String>("B", "2");

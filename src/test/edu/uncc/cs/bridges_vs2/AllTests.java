@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import edu.uncc.cs.bridgesV2.base.BSTElement;
 import edu.uncc.cs.bridgesV2.base.SLelement;
 import edu.uncc.cs.bridgesV2.base.TreeElement;
 
@@ -36,10 +37,13 @@ import edu.uncc.cs.bridgesV2.base.TreeElement;
 	OutputLogTest.class,
 	RateLimitExceptionTest.class,
 	SLelementTest.class,
-	TreeElementTest.class
+	TreeElementTest.class,
+	BSTElementTest.class
 	
 	
 })
+
+/** Runs all test classes */
 public class AllTests {
 
 } 

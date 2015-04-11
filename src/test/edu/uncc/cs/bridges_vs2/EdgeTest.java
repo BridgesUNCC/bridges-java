@@ -13,7 +13,7 @@ public class EdgeTest {
 	static Edge e2;
 
 
-	
+	/** Setup static variables for use in later tests. */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		e0 = new Edge();
@@ -22,7 +22,7 @@ public class EdgeTest {
 	}
 
 	@Test
-	/** test setWeight() to integer */
+	/** Test setWeight() correctly sets to new integer */
 	public void testSetWeightToInteger() {
 		e0.setWeight(5);
 		assertEquals("setWeight() did not set weight correctly", 5, e0.getWeight());
@@ -30,7 +30,7 @@ public class EdgeTest {
 	}
 	
 	@Test
-	/** test getWeight() method */
+	/** Test getWeight() returns correct value */
 	public void testGetWeight() {
 		assertEquals("getWeight() does not return correct weight", 0, e0.getWeight());
 		assertEquals("getWeight() does not return correct weight", 10, e1.getWeight());
@@ -38,7 +38,7 @@ public class EdgeTest {
 	}
 
 	@Test
-	/** test setVertex() method on a value*/
+	/** Test setVertex() and make sure getVertex() returns same value*/
 	public void testSetVertexToValue() {
 		e0.setVertex("A");
 		assertEquals("setVertex() did not set vertex to correct value", "A", e0.getVertex());
@@ -46,7 +46,7 @@ public class EdgeTest {
 	}
 
 	@Test
-	/** test setVertex() method to null*/
+	/** Test setVertex() to null*/
 	public void testSetVertexToNull() {
 		e0.setVertex("A");
 		e0.setVertex(null);
@@ -55,7 +55,7 @@ public class EdgeTest {
 
 	
 	@Test
-	/** test getVertex() method */
+	/** Test getVertex() returns correct value */
 	public void testGetVertex() {
 		assertEquals("getVertex() did not return correct value", "A", e2.getVertex());
 		assertNull("getVertex() did not return null", e0.getVertex());
@@ -63,7 +63,7 @@ public class EdgeTest {
 	}
 
 	@Test
-	/** test setEdge() */
+	/** Test setEdge() and make sure getEdge() returns same value*/
 	public void testSetEdge() {
 		Edge e3 = new Edge();
 		
@@ -77,7 +77,7 @@ public class EdgeTest {
 	}
 
 	@Test
-	/** test getEdge() */
+	/** Test getEdge() returns correct value*/
 	public void testGetEdge() {
 		assertEquals("getEdge() not returning correct object", e0, e0.getEdge());
 		assertEquals("getEdge() not returning correct object", e1, e1.getEdge());

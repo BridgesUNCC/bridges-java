@@ -17,7 +17,7 @@ public class TreeElementTest {
 
 
 
-
+	/** Set up static variables to bet tested later */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		te0 = new TreeElement<String>();

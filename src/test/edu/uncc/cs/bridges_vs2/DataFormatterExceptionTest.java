@@ -5,8 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.uncc.cs.bridgesV2.connect.DataFormatter;
-import edu.uncc.cs.bridgesV2.validation.DataFormatterException;
-
+import edu.uncc.cs.brdigesV2.validation.*;
 
 public class DataFormatterExceptionTest {
 	static DataFormatterException df1;
@@ -16,7 +15,7 @@ public class DataFormatterExceptionTest {
 	
 	static String msg = "this is the error message";
 	
-	
+	/** Setup static variables for use in later tests */
 	@BeforeClass
 	static public void BeforeClass(){
 		df1 = new DataFormatterException();
@@ -25,6 +24,7 @@ public class DataFormatterExceptionTest {
 		df4 = new DataFormatterException(msg, new NullPointerException());
 	}
 
+	/** Test getCause() returns correct type of error */
 	@Test
 	public void testGetCause() {
 		assertNull("getCause() did not return null", df1.getCause());
@@ -34,6 +34,7 @@ public class DataFormatterExceptionTest {
 				
 	}
 
+	/** Test getError() returns correct error message */
 	@Test
 	public void testGetError() {
 		assertEquals("getError() did not return correct error message", "Error unknown.", df1.getError());
