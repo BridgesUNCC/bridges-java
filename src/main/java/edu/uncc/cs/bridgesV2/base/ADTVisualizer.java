@@ -8,6 +8,11 @@ import java.util.Map.Entry;
 import edu.uncc.cs.bridgesV2.validation.Validation;
 import edu.uncc.cs.bridgesV2.connect.*;
 
+/** The Bridges object uses this class to keep track of the Visualization representation prior to passing the information to the Bridges Server.
+ * <p>
+ * An end user will generally not need to interact directly with this class.
+ */
+
 public class ADTVisualizer<E> {
 	//public LinkedHashMap<Element<Value, T>, String> LList;
 	public String visualizerType;
@@ -58,13 +63,16 @@ public class ADTVisualizer<E> {
 		//validateType(new Object());
 	}
 	
+	/** Constructor allow visulizations of a graph.
+	 * @param mapOfLinks the HashMap representing a set of Elements mapped to a mapping of strings and Elements
+	 */
 	public ADTVisualizer(HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks){
 		super();
 		this.mapOfLinks = mapOfLinks;
 	}
 	
-	/**
-	 * @param adtArray
+	/** Constructor allow visulizations of an array.
+	 * @param adtArray the array of elements to visualize
 	 */
 	public ADTVisualizer(ArrayElement<E>[] adtArray) {
 		super();
@@ -74,13 +82,17 @@ public class ADTVisualizer<E> {
 	/**
 	 * Any other object type sent to the ADTVisualizer will throw an exception
 	 * example sending a String will throw an error
-	 * @param type
-	 * @throws Exception
+	 * @param type an object
+	 * @throws Exception to indicate that an invalid object was sent to the ADTVisualizer
 	 */
 	public ADTVisualizer(Object type){
 		validateType(type);
 	}
 	
+	/**
+	 * Validates whether the "type" is recognized by ADTVisualizer.
+	 * @param type an object to check whether ADTVisualizer will accept as a valid type
+	 */
 	public void validateType(Object type){
 		if (type.getClass().getSimpleName().equals("HashMap") ||
 			type.getClass().getSimpleName().equals("Element<>[]"))
@@ -105,7 +117,7 @@ public class ADTVisualizer<E> {
 	
 	/**
 	 * This method returns the visualizer type as a string
-	 * @return string visualizer
+	 * @return one the of the strings represented in ADTVisualizer.ADT_TYPE that represents the type of Bridges Visualization (e.g. "graph", "llist", etc.)
 	 */
 	public String getVisualizerType() {
 		return visualizerType;
@@ -113,7 +125,7 @@ public class ADTVisualizer<E> {
 
 	/**
 	 * This method sets the visualizer type
-	 * @param visualizerType
+	 * @param visualizerType a string in ADTVisualizer.ADT_TYPE representing the type of Bridges Visualization (e.g. "graph", "llist", etc.)
 	 * @throws Exception
 	 */
 	public void setVisualizerType(String visualizerType) {

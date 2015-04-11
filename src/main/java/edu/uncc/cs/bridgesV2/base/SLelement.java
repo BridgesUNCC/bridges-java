@@ -18,8 +18,8 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 	/**
 	 * This constructor creates an SLelement object of value "e" and label "label"
 	 * and sets the next pointer to null
-	 * @param label
-	 * @param e
+	 * @param label the label of SLelement that shows up on the Bridges visualization
+	 * @param e the generic object that this SLelement will hold
 	 */
 	public SLelement (String label, E e){
 		super(label, e);
@@ -29,8 +29,8 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 	/**
 	 * Creates a new element with value "e" and sets the next pointer
 	 * to the SLelement referenced by the "next" argument 
-	 * @param e
-	 * @param next
+	 * @param e the generic object that this SLelement will hold
+	 * @param next the SLelement that should be assigned to the next pointer
 	 */
 	public SLelement (E e, SLelement<E> next) {
 		super(e);
@@ -39,8 +39,8 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 
 	/**
 	 * Creates a new element and sets the next pointer
-	 * to  null
-	 * @param next
+	 * to the SLelement "next"
+	 * @param next the SLelement that should be assigned to the next pointer
 	 */
 	public SLelement (SLelement<E> next) {
 		this.setNext(next);
@@ -57,7 +57,7 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 	
 	/**
 	 * Retrieves the next SLelement
-	 * @return SLelement<E>
+	 * @return SLelement<E> assigned to next
 	 */
 	public SLelement<E> getNext() {
 		return next;
@@ -65,19 +65,19 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 	
 	/**
 	 * Sets the pointer to the next SLelement
-	 * @param next SLelement<E>
+	 * @param next SLelement<E> that should be assigned to the next pointer
 	 */
 	public void setNext(SLelement<E> next) {
 		this.next = next;
 	}
 	
-	@Override
 	/**
 	 * Deep copy SLelement, but change identifier to keep all object ids
 	 * unique
-	 * @param original
+	 * @return a copy of the calling SLelement
 	 */
-    public SLelement<E> clone() throws CloneNotSupportedException {
+	@Override
+	public SLelement<E> clone() throws CloneNotSupportedException {
 		try {
 			return (SLelement<E>)super.clone();
 		} 

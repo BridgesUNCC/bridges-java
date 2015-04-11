@@ -1,80 +1,108 @@
 package edu.uncc.cs.bridgesV2.base;
+
 import java.util.Map.Entry;
 
-
 /**
- * Edge class
+ * This class is used to assign a visual connection between two Elements in the
+ * Bridges Visualization. 
+ * <p>
+ * Bridges will represent these as arrows between two
+ * Elements. The starting Element of the arrow will be referred to as the source
+ * Element and the ending Element of the arrow will be referred to as the
+ * terminating Element.
+ * 
  * @author krs
  *
  * @param <E>
  */
-public class Edge{
-	
+public class Edge {
+
 	private int weight;
-	private String vertex;			// refers to a terminating vertex
-	
+	private String vertex; // refers to a terminating vertex
+
 	/**
-	 * Edge constructors - used only for graphs
+	 * Construct an edge with no terminating Element - used only for graphs
 	 */
-	public Edge(){
+	public Edge() {
 		super();
 		this.weight = 0;
 		vertex = null;
 	}
 
-	public  Edge(int wt){
+	/**
+	 * Construct an edge with thickness equal to "wt" and no terminating Element
+	 * - used only for graphs.
+	 * @param wt integer representing the thickness of the arrow in the Bridges Visualization
+	 */
+	public Edge(int wt) {
 		super();
 		this.weight = wt;
 		vertex = null;
 	}
-	public Edge(int wt, String v){
+
+	/**
+	 * Construct an edge with thickness equal to "wt" and a terminating Element with an identifer equal to "v" 
+	 * - used only for graphs 
+	 * @param wt integer representing the thickness of the arrow in the Bridges Visualization
+	 * @param v the string identifier of the terminating Element
+	 */
+	public Edge(int wt, String v) {
 		super();
 		this.weight = wt;
 		vertex = v;
 	}
 
 	/**
-	 * set edge weight
-	 * @param wt 
+	 * Set edge weight to "wt"
+	 * 
+	 * @param wt  integer representing the thickness of the arrow in the Bridges Visualization
 	 */
-	public void setWeight (int wt){
+	public void setWeight(int wt) {
 		this.weight = wt;
 	}
+
 	/**
-	 * get edge weight
-	 * @param 
+	 * Get edge weight
+	 * 
+	 * @return the thickness of the arrow in the Bridges Visualization
 	 */
-	public int getWeight (){
+	public int getWeight() {
 		return this.weight;
 	}
+
 	/**
-	 * set terminating vertex of edge
-	 * @param vertex v 
+	 * Set terminating Element of the edge
+	 * 
+	 * @param v the string identifier of the terminating Element
 	 */
-	public void setVertex (String v){
+	public void setVertex(String v) {
 		this.vertex = v;
 	}
+
 	/**
-	 * get terminating vertex of edge
-	 * @param 
+	 * Get identifer of the terminating Element of edge
+	 * 
+	 * @return the string identifier of the terminating Element
 	 */
-	public String  getVertex (){
+	public String getVertex() {
 		return this.vertex;
 	}
 
 	/**
-	 * set edge
-	 * @param weight
-	 * @param vertex
+	 * Set edge to thickness of "wt" and terminating Elememt of "v".
+	 * 
+	 * @param wt integer representing the thickness of the arrow in the Bridges Visualization
+	 * @param v the string identifier of the terminating Element
 	 */
 	public void setEdge(int wt, String v) {
 		this.weight = wt;
 		this.vertex = v;
-	}	
+	}
+
 	/**
-	 * get edge
+	 * Returns this edge
 	 */
-	public Edge  getEdge() {
+	public Edge getEdge() {
 		return this;
 	}
 };

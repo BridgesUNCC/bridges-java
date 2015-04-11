@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 /**
  * This is the Superclass Element with SLelement, DLelement,
- * ArrayElement, TreeElement, subclasses
+ * ArrayElement, TreeElement, BSTElement subclasses
  * it contains the Element Visualizer object
  * label field derived from the E (application data) value
  * an object of E data type: integer, string, Tweet, Actor, Movie, 
@@ -62,6 +62,7 @@ public class Element<E> implements Comparable{
 	
 	/**
 	 * the constructor of Element
+	 * @param label the string that is visible on the Bridges Visualization
 	 * @param val will be used to construct Element
 	 */
 	public Element (String label, E val){
@@ -71,7 +72,7 @@ public class Element<E> implements Comparable{
 
 	/**
 	 * performing deep copy of an element when needed
-	 * @param original
+	 * @param original the Element that is to be copied
 	 */
 	public Element (Element<E> original){
 		this.identifier = ids.toString();
@@ -139,7 +140,7 @@ public class Element<E> implements Comparable{
 	
 	/**
 	 * This method returns the name of the class
-	 * @return "Element"
+	 * @return the class name "Element"
 	 */
 	public String getClassName(){
 		return this.value.getClass().getName();
@@ -147,7 +148,7 @@ public class Element<E> implements Comparable{
 	
 	/**
 	 * Comparison between 2 elements
-	 * @param e1
+	 * @param e1 the Element to compare this with
 	 * @return 0 if the 2 elements have the same label and the same identifier 
 	 * and a nonZero integer otherwise
 	 */
@@ -187,7 +188,7 @@ public class Element<E> implements Comparable{
 
 	/**
 	 * This method returns the existing value of the label fields
-	 * @return the label
+	 * @return the label of the Element that shows up on the Bridges Visualization
 	 */
 	public String getLabel() {
 		return label;
