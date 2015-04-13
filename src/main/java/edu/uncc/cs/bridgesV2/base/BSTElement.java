@@ -3,6 +3,8 @@
  */
 package edu.uncc.cs.bridgesV2.base;
 
+import java.util.Map.Entry;
+
 /**
  * @author mihai mehedint
  * This class extends the TreeElement class by adding a key property to allow for easier use in a binary search tree implementation. 
@@ -98,7 +100,6 @@ public class BSTElement<K, E> extends TreeElement<E>{
 	 */
 	@Override
 	public BSTElement<?,E> getLeft() {
-		// TODO Auto-generated method stub
 		return (BSTElement<?,E>)super.getLeft();
 	}
 
@@ -107,7 +108,23 @@ public class BSTElement<K, E> extends TreeElement<E>{
 	 */
 	@Override
 	public BSTElement<?,E> getRight() {
-		// TODO Auto-generated method stub
 		return (BSTElement<?,E>)super.getRight();
-	}	
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.uncc.cs.bridgesV2.base.Element#getRepresentation()
+	 */
+	@Override
+	public String getRepresentation() {
+		String json = "{";
+		for (Entry<String, String> entry : super.getVisualizer().properties.entrySet()) {
+			json += String.format("\"%s\": \"%s\", ", entry.getKey(), 
+									entry.getValue());
+		}
+		json += String.format("\"name\": \"%s\", ", super.getLabel());
+		json += String.format("\"key\": \"%s\"", this.getKey());
+		return json + "}";
+	}
+	
+	
 }
