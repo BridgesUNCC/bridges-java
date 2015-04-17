@@ -3,6 +3,7 @@ package edu.uncc.cs.bridgesV2.base;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.HashMap;
 
 /**
  * This is the Superclass Element with SLelement, DLelement,
@@ -25,6 +26,7 @@ public class Element<E> implements Comparable{
 	private String label;
 	private String identifier;
 	private ElementVisualizer visualizer;
+	private HashMap<String, LinkVisualizer>  lvisualizer;
 	private E value;
 	private final int wordNumber = 1; //this is the number of pattern matches where the new string can be inserted; useful in case we insert line breaks at a desired number of characters
 									// is the pattern is change to white space this index can be changed to 2 words to insert a 
@@ -51,6 +53,7 @@ public class Element<E> implements Comparable{
 		this.label = "";
 		ids++;
 		this.setVisualizer(new ElementVisualizer());
+		this.lvisualizer  = new HashMap<String, LinkVisualizer>();
 	}
 	
 	/**
@@ -92,6 +95,7 @@ public class Element<E> implements Comparable{
 		}
 		this.label = new String(original.getLabel());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
+		this.lvisualizer  = new HashMap<String, LinkVisualizer> ();
 		this.setValue(original.getValue());
 	}
 
@@ -110,7 +114,7 @@ public class Element<E> implements Comparable{
 	public ElementVisualizer getVisualizer(){
 		return visualizer;
 	}
-	
+
 	/**
 	 * This method sets the visualizer object for the current 
 	 * element object
@@ -118,6 +122,20 @@ public class Element<E> implements Comparable{
 	 */
 	protected void setVisualizer(ElementVisualizer visualizer) {
 		this.visualizer = visualizer;
+	}
+
+	/**
+	 * Returns the Element's link visualizer object 
+     * that is linked to element el
+	 * @parm Element el -- the element terminating the link 
+	 * @return the link visualizer
+	 */
+	public LinkVisualizer getLinkVisualizer(Element<E> el){
+						// if this is the first time, must create the
+						// link visualizer
+		if (lvisualizer.get(el.getIdentifier()) == null)
+			lvisualizer.put(el.getIdentifier(), new LinkVisualizer() ); 
+		return lvisualizer.get(el.getIdentifier());
 	}
 
 	/**
