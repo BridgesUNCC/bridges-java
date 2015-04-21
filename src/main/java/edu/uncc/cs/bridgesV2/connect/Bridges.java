@@ -482,6 +482,13 @@ public class Bridges <E> {
 		this.root = root;
 	}
 	
+	
+    /**
+	* This methods takes care of the rounding errors in setting the decimal
+	* @param value
+	* @param places
+	* @return
+	*/
 	public static double round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 

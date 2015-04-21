@@ -45,7 +45,7 @@ public class DataFormatter {
 	/**
 	 * Constructor
 	 */
-	public DataFormatter() {
+	protected DataFormatter() {
 		super();
 		this.backend = new Connector();
 	}	

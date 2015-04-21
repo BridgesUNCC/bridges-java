@@ -26,7 +26,7 @@ public class Connector {
     Executor http_connection;
     boolean debug = false;
     
-    public Connector() {
+    protected Connector() {
     	http_connection = Executor.newInstance(
     			HttpClientBuilder
     					.create()

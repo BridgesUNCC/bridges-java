@@ -24,6 +24,7 @@ public class DriverArray {
 	public static void main(String[] args) {
 		//outputLog aLog = new outputLog();
 		Bridges<Tweet> bridge = new Bridges<Tweet>(13, "300587042698", "mmehedin@uncc.edu");
+		//Bridges<Tweet> bridge = new Bridges<Tweet>(13, "1300810923270", "mmehedin@uncc.edu");
 		//creating an array with elements with generic types
 		SLelement<Tweet>[] array = (SLelement<Tweet>[]) new SLelement[1003];
 		

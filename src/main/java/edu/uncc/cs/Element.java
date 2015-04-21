@@ -3,16 +3,15 @@ package edu.uncc.cs.bridgesV2.base;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.HashMap;
 
 /**
  * This is the Superclass Element with SLelement, DLelement,
- * ArrayElement, TreeElement, BSTElement subclasses
+ * ArrayElement, TreeElement, subclasses
  * it contains the Element Visualizer object
  * label field derived from the E (application data) value
  * an object of E data type: integer, string, Tweet, Actor, Movie, 
  * EarthquakeTweet
- * identifier field automatically generated
+ * identifier field automatically generataed
  * @author mihai
  *
  * @param generic <E>
@@ -26,21 +25,17 @@ public class Element<E> implements Comparable{
 	private String label;
 	private String identifier;
 	private ElementVisualizer visualizer;
-	private HashMap<String, LinkVisualizer>  lvisualizer;
 	private E value;
-	private final int wordNumber = 1; //this is the number of pattern matches where the new string can be inserted; useful in case we insert line breaks at a desired number of characters
+	private final int wordNumber = 0; //this is the number of pattern matches where the new string can be inserted; useful in case we insert line breaks at a desired number of characters
 									// is the pattern is change to white space this index can be changed to 2 words to insert a 
 									//line break every 2 words
-	private final String INSERT_STRING = "\\n"; //this is the string value that replaces the pattern found in the label
-	private final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
-	//(\\w) matches any word (\\d) any digit (\\D) any non digit
+	//private final String INSERT_STRING = "\\n"; //this is the string value that replaces the pattern found in the label
+	//private final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
+	private final String DIVIDE_KEY = "(#earthquake )|(,)|(UTC )|((http://)(.*))";		//(\\w) matches any word (\\d) any digit (\\D) any non digit
 												//(\\s) a white space (\\s*) zero or more whitespaces, (\\s+) one or more
-	
-	
-	//public String INSERT_STRING = "\\n";
-	//public String DIVIDE_KEY ="(\n)";  
-	
-	
+	private final String DIVIDE_KEY2 = "(\\s)";
+	private final String INSERT_STRING = "";
+	private final String INSERT_STRING2 = "_";
 	/**
 	 * Element constructor
 	 * creates an ElementVisualizer object
@@ -53,14 +48,13 @@ public class Element<E> implements Comparable{
 		this.label = "";
 		ids++;
 		this.setVisualizer(new ElementVisualizer());
-		this.lvisualizer  = new HashMap<String, LinkVisualizer>();
 	}
 	
 	/**
 	 * the constructor of Element
 	 * @param val will be used to construct Element
 	 */
-	protected Element (E val){
+	public Element (E val){
 		this();	
 					// here we need to check for null values until the 
 					// server will accept JSON containing both 
@@ -71,19 +65,18 @@ public class Element<E> implements Comparable{
 	
 	/**
 	 * the constructor of Element
-	 * @param label the string that is visible on the Bridges Visualization
 	 * @param val will be used to construct Element
 	 */
-	protected Element (String label, E val){
+	public Element (String label, E val){
 		this(val);
 		this.setLabel(label);
 	}
 
 	/**
 	 * performing deep copy of an element when needed
-	 * @param original the Element that is to be copied
+	 * @param original
 	 */
-	protected Element (Element<E> original){
+	public Element (Element<E> original){
 		this.identifier = ids.toString();
 		ids++;
 		if (ids > MAX_ELEMENTS_SIZE)
@@ -95,7 +88,6 @@ public class Element<E> implements Comparable{
 		}
 		this.label = new String(original.getLabel());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
-		this.lvisualizer  = new HashMap<String, LinkVisualizer> ();
 		this.setValue(original.getValue());
 	}
 
@@ -114,7 +106,7 @@ public class Element<E> implements Comparable{
 	public ElementVisualizer getVisualizer(){
 		return visualizer;
 	}
-
+	
 	/**
 	 * This method sets the visualizer object for the current 
 	 * element object
@@ -122,20 +114,6 @@ public class Element<E> implements Comparable{
 	 */
 	protected void setVisualizer(ElementVisualizer visualizer) {
 		this.visualizer = visualizer;
-	}
-
-	/**
-	 * Returns the Element's link visualizer object 
-     * that is linked to element el
-	 * @parm Element el -- the element terminating the link 
-	 * @return the link visualizer
-	 */
-	public LinkVisualizer getLinkVisualizer(Element<E> el){
-						// if this is the first time, must create the
-						// link visualizer
-		if (lvisualizer.get(el.getIdentifier()) == null)
-			lvisualizer.put(el.getIdentifier(), new LinkVisualizer() ); 
-		return lvisualizer.get(el.getIdentifier());
 	}
 
 	/**
@@ -164,7 +142,7 @@ public class Element<E> implements Comparable{
 	
 	/**
 	 * This method returns the name of the class
-	 * @return the class name "Element"
+	 * @return "Element"
 	 */
 	public String getClassName(){
 		return this.value.getClass().getName();
@@ -172,7 +150,7 @@ public class Element<E> implements Comparable{
 	
 	/**
 	 * Comparison between 2 elements
-	 * @param e1 the Element to compare this with
+	 * @param e1
 	 * @return 0 if the 2 elements have the same label and the same identifier 
 	 * and a nonZero integer otherwise
 	 */
@@ -212,7 +190,7 @@ public class Element<E> implements Comparable{
 
 	/**
 	 * This method returns the existing value of the label fields
-	 * @return the label of the Element that shows up on the Bridges Visualization
+	 * @return the label
 	 */
 	public String getLabel() {
 		return label;
@@ -263,7 +241,44 @@ public class Element<E> implements Comparable{
 		}
 	}
 	
-	
+	public String arrangeLabel2(String label, int wordNumber){
+		final Pattern myPattern = Pattern.compile(DIVIDE_KEY2);
+		Matcher match= myPattern.matcher(label);
+		if (!match.find())
+			return label;
+		else{
+			match.reset();
+			int counter = -1;
+			StringBuffer str = new StringBuffer();
+		
+			while(match.find()){
+				System.out.println(match);
+				counter++;
+				if (counter == wordNumber){
+					counter = -1;
+					match.appendReplacement(str, Matcher.quoteReplacement(INSERT_STRING2));
+				}
+			}
+			match.appendTail(str);
+			str.setCharAt(1, ' ');
+			str.setCharAt(5, ' ');	
+			str.setCharAt(str.length()-1, ' ');
+			str.setCharAt(str.length()-10, ' ');
+			str.setCharAt(str.length()-15, ' ');
+
+			str.setCharAt(str.length()-18, ' ');
+			str.setCharAt(str.length()-22, ' ');
+			
+			if ((str.charAt(str.length()-17)=='_'))
+				str.setCharAt(str.length()-17, ' ');
+			
+			if (str.length()==0)
+				return label;
+			else
+				return label = str.toString();
+		}
+	}
+
 	/**
 	 * this method returns the value E for the current Element
 	 * @return the value
