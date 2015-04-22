@@ -225,7 +225,7 @@ public class Bridges <E> {
 	 * this parameter can be set to: "graph", "graphl","stack","queue","tree", "llist" or "Dllist"
 	 * @throws Exception
 	 */
-	public void setDataStructure(HashMap<String,SLelement<E>> adjacencyList,
+	public void setDataStructure(HashMap<String, GraphList<E>> adjacencyList,
 						String visualizerType){
 		visualizer.setAdjacencyList(adjacencyList);
 		visualizer.setVisualizerType(visualizerType);
