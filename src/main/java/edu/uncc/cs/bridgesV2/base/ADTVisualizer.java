@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import edu.uncc.cs.bridgesV2.validation.Validation;
 import edu.uncc.cs.bridgesV2.connect.*;
+import edu.uncc.cs.bridgesV2.base.GraphList;
 
 /** The Bridges object uses this class to keep track of the Visualization representation prior to passing the information to the Bridges Server.
  * <p>
@@ -46,8 +47,9 @@ public class ADTVisualizer<E> {
 				put("width","1.0");
 			}}; 
 	public HashMap<Element<E>, HashMap<String, Element<E>>> mapOfLinks;
-	public HashMap<String, SLelement<E>> adjacencyList;
-	//public Map<Element<E>, Element<E> []> arrayOfLinks;
+
+	public HashMap<String, GraphList<E>> adjacencyList;
+
 	public Element<E> [] adtArray;
 	protected int arrayIndex;
 	protected boolean visualizeJSON = false;
@@ -177,32 +179,36 @@ public class ADTVisualizer<E> {
  * @return - this method returns the JSON string
  */
 public 
-<E>	String getGraphAdjList_Representation(HashMap<String, SLelement<E>> 
+<E>	String getGraphAdjList_Representation(HashMap<String, GraphList<E>> 
 									graph_adj_list){
 							// first gather the nodes and links by
 							// traversing the graph
 	LinkedList<SLelement<E>> nodes = new LinkedList<>(); 
-	LinkedList<SLelement<E>> links = new LinkedList<>();
+	LinkedList<SLelement<E>> links_src = new LinkedList<>();
+	LinkedList<SLelement<E>> links_dest = new LinkedList<>();
 
-
-							//  get the graph vertices
-	for (Entry<String, SLelement<E>> element: graph_adj_list.entrySet()){
-		nodes.push(element.getValue());
-	}
+	for (Entry<String, GraphList<E>> element: graph_adj_list.entrySet()){
+		if (element != null)  {
+							//  get the graph nodes
+			SLelement<E> src_vertex = (element.getValue()).getSourceVertex();
+			nodes.push (src_vertex);
 							//  get the graph links
-	for (Entry<String, SLelement<E>> element: graph_adj_list.entrySet()){
-		SLelement<E> src_vertex = element.getValue();
-		if (src_vertex != null) {
-			SLelement<E> next_element = src_vertex.getNext();	
-			while (next_element != null) {
-				links.push(src_vertex);
-				links.push(next_element);
-				next_element = next_element.getNext();
+			SLelement<Edge> list =  (element.getValue()).getAdjacencyList();
+			while (list != null) {
+				links_src.push(src_vertex);
+							// look up the vertex corresponding to this edge
+							// since only the nodes are used in the graph
+							// for visualization. Edges in adjacency list
+							// are for the graph reprentation only
+				Edge e = list.getValue();
+				SLelement<E> dest_vertex = graph_adj_list.get(e.getVertex()).getSourceVertex();
+				links_dest.push(dest_vertex);
+				list = list.getNext();
 			}
 		}
 	}
 						// use the singly linked list case to get the JSON!
-	return generateJSON_Graph(nodes, links);
+	return generateJSON_Graph(nodes, links_src, links_dest);
 }
 	
 /**
@@ -501,8 +507,7 @@ public String getJSON_BinaryTree(LinkedList<TreeElement<E>> nodes,
  * @return complete JSON string for the current ADT
  */
 public 
-<E> String generateJSON_Graph (LinkedList<SLelement<E>> nodes, 
-				LinkedList<SLelement<E>> links){
+<E> String generateJSON_Graph (LinkedList<SLelement<E>> nodes, LinkedList<SLelement<E>> links_src, LinkedList<SLelement<E>> links_dest){
 
 	HashMap<Integer,Integer> map = new HashMap<>();
 	StringBuilder nodes_JSON = new StringBuilder();
@@ -519,7 +524,7 @@ public
 	}
 						// get the JSON string for links
 	String str = links_JSON.toString();
-	while (!links.isEmpty()){
+	while (!links_src.isEmpty()){
 						// get the link properties
 		str+="{";
 		for (Entry<String,String> entry : linkProperties.entrySet()) {
@@ -527,13 +532,12 @@ public
 								entry.getValue());
 		}
 						// get the link
-		SLelement<E> child = links.pop();
-		SLelement<E> parent = links.pop();
+		SLelement<E> child = links_dest.pop();
+		SLelement<E> parent = links_src.pop();
 		str += String.format("\"source\":%s,", 
 				map.get(Integer.parseInt(parent.getIdentifier())));
 						// get the edge terminating vertex
-		Edge e = (Edge) child.getValue();
-		str += String.format("\"target\":%s", map.get(Integer.parseInt(e.getVertex())));
+		str += String.format("\"target\":%s", map.get(Integer.parseInt(child.getIdentifier())) );
 
 		str += "},";
 	}
@@ -616,14 +620,14 @@ public
 	/**
 	 * @return the adjacencyList
 	 */
-	public HashMap<String, SLelement<E>> getAdjacencyList() {
+	public HashMap<String, GraphList<E>> getAdjacencyList() {
 		return adjacencyList;
 	}
 
 	/**
 	 * @param adjacencyList2 the adjacencyList to set
 	 */
-	public void setAdjacencyList(HashMap<String, SLelement<E>> adjacencyList2) {
+	public void setAdjacencyList(HashMap<String, GraphList<E>> adjacencyList2) {
 		this.adjacencyList = adjacencyList2;
 	}
 	
