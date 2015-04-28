@@ -10,7 +10,7 @@ package edu.uncc.cs.bridgesV2.base;
  *
  */
 
-public class TreeElement<E> extends Element<E>{
+public class TreeElement<E> extends Element<E> implements Comparable<E>{
 	private TreeElement<E> left; //the left pointer
 	private TreeElement<E> right; //the right pointer
 	
@@ -108,4 +108,14 @@ public class TreeElement<E> extends Element<E>{
 	public void setRight(TreeElement<E> right) {
 		this.right = right;
 	}
+
+	/**
+	 * Comparing 2 tree elements
+	 * @param e1
+	 * @return
+	 */
+	public int compareTo(TreeElement<E> e1) {
+		return super.compareTo(e1);
+	}
+	
 }

@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 
 
-public class Element<E> implements Comparable{
+public class Element<E> implements Comparable<E>{
 	
 	private int MAX_ELEMENTS_SIZE = 1000;
 	static Integer ids = 0;
@@ -185,9 +185,8 @@ public class Element<E> implements Comparable{
 	@Override
 	public int compareTo(Object o) {
 		if (o==null) 
-			throw new NullPointerException("The object you are compare to is null.");
-		
-		return 0;
+			throw new NullPointerException("The object you are compare to is null.");	
+		return this.getLabel().compareTo(o.toString());
 	}
 	
 	
