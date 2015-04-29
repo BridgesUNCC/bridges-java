@@ -132,14 +132,29 @@ public class BSTElement<K, E> extends TreeElement<E> implements Comparable<E>{
 	 * @return
 	 */
 	public int compareTo(BSTElement<K, E> e1){		
+		//this can be replaced by a switch block, but it may not be faster
+		//or by the commented code below
 		if (e1.getKey() instanceof String){
 			return this.getKey().toString().compareTo(e1.getKey().toString());
+		}else if (e1.getKey() instanceof Integer){
+			return ((Integer)(int)this.getKey()).compareTo((Integer)(int)e1.getKey());
+		}else if (e1.getKey() instanceof Character){
+			return ((Character)(char)this.getKey()).compareTo((Character)(char)e1.getKey());
+		}else if (e1.getKey() instanceof Double){
+			return ((Double)(double)this.getKey()).compareTo((Double)(double)e1.getKey());
+		}else if (e1.getKey() instanceof Float){
+			return ((Float)(float)this.getKey()).compareTo((Float)(float)e1.getKey());
+		}else if (e1.getKey() instanceof Long){
+			return ((Long)(long)this.getKey()).compareTo((Long)(long)e1.getKey());
 		}
+		//all of the above conditional statements 
+		//for Numeric types can be replaced by this
+		/**
 		else if (Number.class.isAssignableFrom(e1.getKey().getClass()) && 
 				Number.class.isAssignableFrom(this.getKey().getClass())){
 			return ((Double)Double.parseDouble(String.valueOf(this.getKey()))).compareTo
 					((Double)Double.parseDouble(String.valueOf(e1.getKey())));
-		}	
+		}	*/
 		else 
 			return (this.getKey().toString()).compareTo(e1.getKey().toString());
 	}
