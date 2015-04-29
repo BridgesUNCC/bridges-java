@@ -100,16 +100,16 @@ public class BSTElement<K, E> extends TreeElement<E> implements Comparable<E>{
 	 * @see edu.uncc.cs.bridgesV2.base.TreeElement#getLeft()
 	 */
 	@Override
-	public BSTElement<?,E> getLeft() {
-		return (BSTElement<?,E>)super.getLeft();
+	public BSTElement<K,E> getLeft() {
+		return (BSTElement<K,E>)super.getLeft();
 	}
 
 	/* (non-Javadoc)
 	 * @see edu.uncc.cs.bridgesV2.base.TreeElement#getRight()
 	 */
 	@Override
-	public BSTElement<?,E> getRight() {
-		return (BSTElement<?,E>)super.getRight();
+	public BSTElement<K,E> getRight() {
+		return (BSTElement<K,E>)super.getRight();
 	}
 
 	/* (non-Javadoc)

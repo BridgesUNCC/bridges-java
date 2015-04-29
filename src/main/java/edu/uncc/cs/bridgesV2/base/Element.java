@@ -31,7 +31,7 @@ public class Element<E> implements Comparable<E>{
 	private final int wordNumber = 1; //this is the number of pattern matches where the new string can be inserted; useful in case we insert line breaks at a desired number of characters
 									// is the pattern is change to white space this index can be changed to 2 words to insert a 
 									//line break every 2 words
-	private final String INSERT_STRING = "\\n"; //this is the string value that replaces the pattern found in the label
+	private final String INSERT_STRING = "(\\n)"; //this is the string value that replaces the pattern found in the label
 	private final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
 	//(\\w) matches any word (\\d) any digit (\\D) any non digit
 												//(\\s) a white space (\\s*) zero or more whitespaces, (\\s+) one or more
@@ -178,14 +178,14 @@ public class Element<E> implements Comparable<E>{
 	 */
 	public int compareTo(Element<E> e1){
 		if (e1==null) 
-			throw new NullPointerException("The object you are compare to is null.");
+			throw new NullPointerException("The object you are comparing to is null.");
 		return this.getLabel().compareTo(e1.getLabel());
 	}
 	
 	@Override
 	public int compareTo(Object o) {
 		if (o==null) 
-			throw new NullPointerException("The object you are compare to is null.");	
+			throw new NullPointerException("The object you are comparing to is null.");	
 		return this.getLabel().compareTo(o.toString());
 	}
 	
