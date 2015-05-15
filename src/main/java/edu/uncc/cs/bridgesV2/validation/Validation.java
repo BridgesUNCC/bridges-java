@@ -258,7 +258,7 @@ public class Validation {
 		}
 	}
 	
-	public static <E> void validate_ADTVisualizer(ADTVisualizer<E> vis, Bridges<E> br){
+	public static <E extends Comparable<? super E>> void validate_ADTVisualizer(ADTVisualizer<E> vis, Bridges<E> br){
 		if (vis.adjacencyList==null &&
 				vis.mapOfLinks==null &&
 				vis.adtArray==null &&
