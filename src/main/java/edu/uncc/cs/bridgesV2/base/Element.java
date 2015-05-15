@@ -28,11 +28,11 @@ public class Element<E extends Comparable<? super E>>{
 	private ElementVisualizer visualizer;
 	private HashMap<String, LinkVisualizer>  lvisualizer;
 	private E value;
-	private final int wordNumber = 1; //this is the number of pattern matches where the new string can be inserted; useful in case we insert line breaks at a desired number of characters
+	private final int wordNumber = 0; //this is the number of pattern matches where the new string can be inserted; useful in case we insert line breaks at a desired number of characters
 									// is the pattern is change to white space this index can be changed to 2 words to insert a 
 									//line break every 2 words
-	private final String INSERT_STRING = "(\\n)"; //this is the string value that replaces the pattern found in the label
-	private final String DIVIDE_KEY ="(\n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
+	private final String INSERT_STRING = "\\n"; //this is the string value that replaces the pattern found in the label
+	private final String DIVIDE_KEY ="(\r?\n)|(\n)|(\f)|(\r)|(%n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
 	//(\\w) matches any word (\\d) any digit (\\D) any non digit
 												//(\\s) a white space (\\s*) zero or more whitespaces, (\\s+) one or more
 	
