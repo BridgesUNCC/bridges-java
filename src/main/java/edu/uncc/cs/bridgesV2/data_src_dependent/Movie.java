@@ -1,52 +1,35 @@
 package edu.uncc.cs.bridgesV2.data_src_dependent;
 
-public class Movie extends DataSource implements Source{
-	protected String aMovie;
+public class Movie extends DataSource{
 	
 	public Movie(String aMovie){
-		this.aMovie=aMovie;
+		super.setLabel(aMovie);
 	}
 	
 	/**
 	 * This method returns the string name
 	 */
 	public String getName(){
-		return aMovie;
+		return super.getLabel();
 	}
 	
 	/**
 	 * This method sets the string name
 	 */
 	public void setName(String name){
-		this.aMovie = name;
-	}
-	@Override
-	public void setLabel(String label){
-		setName(label);
-	}
-	
-	@Override
-	public String getLabel(){
-		return getName();
-	}
-	
-	/**
-	 * This method implements compareTo for the Movies
-	 */
-	public int compareTo(Movie anotherMovie){
-		return aMovie.compareTo(anotherMovie.getName());
+		this.setLabel(name);
 	}
 	
 	/**
 	 * This method returns the string value
 	 */
 	public String toString(){
-		return aMovie;
+		return this.getName();
 	}
 
 	@Override
 	public int hashCode() {
-		return aMovie.hashCode();
+		return this.getName().hashCode();
 	}
 
 	@Override
@@ -58,26 +41,12 @@ public class Movie extends DataSource implements Source{
 		if (getClass() != obj.getClass())
 			return false;
 		Movie other = (Movie) obj;
-		if (aMovie == null) {
-			if (other.aMovie != null)
+		if (this.getName()== null) {
+			if (other.getName() != null)
 				return false;
-		} else if (!aMovie.equals(other.aMovie))
+		} else if (!this.getName().equals(other.getName()))
 			return false;
 		return true;
-	}
-
-
-	public int compareTo(DataSource anotherMovie){
-		if(anotherMovie instanceof Movie)
-			return this.aMovie.compareTo(((Movie)anotherMovie).getName());
-		else{
-			try {
-				throw new ClassCastException("Expected a Movie object for the compareTo method.");
-			} catch (ClassCastException e) {
-				e.printStackTrace();
-			}
-			return -1;
-		}
 	}
 
 }

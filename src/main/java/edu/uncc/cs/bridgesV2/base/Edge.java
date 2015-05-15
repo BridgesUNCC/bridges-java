@@ -15,7 +15,7 @@ import java.util.Map.Entry;
  *
  * @param <E>
  */
-public class Edge {
+public class Edge implements Comparable<Edge> {
 
 	private int weight;
 	private String vertex; // refers to a terminating vertex
@@ -104,5 +104,9 @@ public class Edge {
 	 */
 	public Edge getEdge() {
 		return this;
+	}
+	
+	public int compareTo(Edge e1){
+		return ((Integer)this.getWeight()).compareTo((Integer)this.getWeight());
 	}
 };

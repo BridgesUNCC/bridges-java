@@ -4,33 +4,29 @@ package edu.uncc.cs.bridgesV2.data_src_dependent;
  * @author mihai mehedint
  *
  */
-public class TwitterAccount implements Comparable<TwitterAccount> {
-		protected String aTwitterAccount;
+public class TwitterAccount extends DataSource{
 		
+		/**
+		 * Constructor
+		 * @param aTwitterAccount
+		 */
 		public TwitterAccount(String aTwitterAccount){
-			this.aTwitterAccount=aTwitterAccount;
+			super();
+			super.setLabel(aTwitterAccount);
 		}
 		
 		/**
 		 * This method returns the account name
 		 */
 		public String getName(){
-			return aTwitterAccount;
+			return this.getLabel();
 		}
-		
-		/**
-		 * This method implements compareTo for the Follower
-		 */
-		public int compareTo(TwitterAccount anotherAccount){
-			return aTwitterAccount.compareTo(anotherAccount.getName());
-		}
-		
 		
 		/**
 		 * This method returns the account value
 		 */
 		public String toString(){
-			return aTwitterAccount;
+			return this.getName();
 		}
 
 		@Override
@@ -38,7 +34,7 @@ public class TwitterAccount implements Comparable<TwitterAccount> {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result
-					+ ((aTwitterAccount == null) ? 0 : aTwitterAccount.hashCode());
+					+ ((this.getName() == null) ? 0 : this.getName().hashCode());
 			return result;
 		}
 
@@ -51,12 +47,11 @@ public class TwitterAccount implements Comparable<TwitterAccount> {
 			if (getClass() != obj.getClass())
 				return false;
 			TwitterAccount other = (TwitterAccount) obj;
-			if (aTwitterAccount == null) {
-				if (other.aTwitterAccount != null)
+			if (this.getName() == null) {
+				if (other.getName() != null)
 					return false;
-			} else if (!aTwitterAccount.equals(other.aTwitterAccount))
+			} else if (!this.getName().equals(other.getName()))
 				return false;
 			return true;
 		}
-
 }

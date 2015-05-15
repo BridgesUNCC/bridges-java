@@ -10,7 +10,7 @@ package edu.uncc.cs.bridgesV2.base;
  * ArrayElement<E>[] myArray = (ArrayElement<E>[]) new ArrayElement[10];
  * Where E is: Tweet, Actor, Movie, Integer, String or other generic type
  */
-public class ArrayElement<E> extends Element<E>{
+public class ArrayElement<E extends Comparable <? super E>> extends Element<E>{
 	public static int index;
 	
 	/** Construct an array labeled "label" and holding elements of "type". 	 

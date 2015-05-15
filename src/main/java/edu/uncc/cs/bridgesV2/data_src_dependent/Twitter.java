@@ -1,29 +1,23 @@
 package edu.uncc.cs.bridgesV2.data_src_dependent;
 
-public class Twitter extends DataSource implements Source{
-	protected String account;
+public class Twitter extends DataSource{
+	
+	/**
+	 * Constructor
+	 */
+	public Twitter(String str) {
+		super();
+		super.setLabel(str);
+	}
+
 	@Override
 	public void setLabel(String label) {
-		this.account = label;
+		super.setLabel(label);
 	}
 
 	@Override
 	public String getLabel() {
-		return account;
-	}
-
-	@Override
-	public int compareTo(DataSource anotherTwitter){
-		if(anotherTwitter instanceof Twitter)
-			return this.getLabel().compareTo(((Twitter)anotherTwitter).getLabel());
-		else{
-			try {
-				throw new ClassCastException("Expected an instance of Twitter for the compareTo method.");
-			} catch (ClassCastException e) {
-				e.printStackTrace();
-			}
-			return -1;
-		}
+		return super.getLabel();
 	}
 
 }

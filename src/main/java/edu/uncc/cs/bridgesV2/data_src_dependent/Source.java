@@ -4,14 +4,16 @@ package edu.uncc.cs.bridgesV2.data_src_dependent;
  * @author mihai mehedint
  *
  */
-public interface Source extends Comparable<DataSource>{
+abstract interface Source extends Comparable<DataSource>{
 	
-	public abstract void setLabel(String label);
+	abstract void setLabel(String label);
 
-	public abstract String getLabel();
+	abstract String getLabel();
 
-	public abstract boolean equals(Object obj);
+	abstract boolean equals(Object obj);
 
-	public abstract String toString();
+	abstract String toString();
+	
+	abstract int compareTo(DataSource src);
 
 }

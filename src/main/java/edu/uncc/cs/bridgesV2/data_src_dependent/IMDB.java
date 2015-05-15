@@ -1,22 +1,23 @@
 package edu.uncc.cs.bridgesV2.data_src_dependent;
 
 
-public class IMDB extends DataSource implements Source{
+public class IMDB {
 	protected String imdb;
-	@Override
+	
+	/**
+	 * @param imdb
+	 */
+	public IMDB(String imdb) {
+		super();
+		this.imdb = imdb;
+	}
+
 	public void setLabel(String label) {
 		this.imdb = label;
 	}
 
-	@Override
 	public String getLabel() {
 		return this.imdb;
-	}
-
-	@Override
-	public int compareTo(DataSource o) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

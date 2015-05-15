@@ -14,7 +14,7 @@ import edu.uncc.cs.bridgesV2.base.GraphList;
  * An end user will generally not need to interact directly with this class.
  */
 
-public class ADTVisualizer<E> {
+public class ADTVisualizer<E extends Comparable<? super E>> {
 	//public LinkedHashMap<Element<Value, T>, String> LList;
 	public String visualizerType;
 	public String visualizerIdentifier;
@@ -179,7 +179,7 @@ public class ADTVisualizer<E> {
  * @return - this method returns the JSON string
  */
 public 
-<E>	String getGraphAdjList_Representation(HashMap<String, GraphList<E>> 
+<E extends Comparable <? super E>>	String getGraphAdjList_Representation(HashMap<String, GraphList<E>> 
 									graph_adj_list){
 							// first gather the nodes and links by
 							// traversing the graph
@@ -233,7 +233,7 @@ public
 */
 
 public
-<E> String getSLRepresentation(SLelement<E> first_element) {
+<E extends Comparable<? super E>> String getSLRepresentation(SLelement<E> first_element) {
 
 		LinkedList<SLelement<E>> nodes = new LinkedList<>(); 
 		LinkedList<SLelement<E>> links = new LinkedList<>();
@@ -258,7 +258,7 @@ public
 	 * @return
 	 */
 public
-<E> String getDLRepresentation(DLelement<E> first_element) {
+<E extends Comparable <? super E>> String getDLRepresentation(DLelement<E> first_element) {
 
 		LinkedList<DLelement<E>> nodes = new LinkedList<>(); 
 		LinkedList<DLelement<E>> links = new LinkedList<>();
@@ -375,7 +375,7 @@ public
 	 * @return string
 */
 public 
-<E> String generateJSON_SLL (LinkedList<SLelement<E>> nodes, 
+<E extends Comparable <? super E>> String generateJSON_SLL (LinkedList<SLelement<E>> nodes, 
 				LinkedList<SLelement<E>> links){
 
 	HashMap<Integer,Integer> map = new HashMap<>();
@@ -421,7 +421,7 @@ public
  * @return returns the JSON string for the current ADT
  */
 public 
-<E> String generateJSON_DLL (LinkedList<DLelement<E>> nodes, 
+<E extends Comparable <? super E>> String generateJSON_DLL (LinkedList<DLelement<E>> nodes, 
 				LinkedList<DLelement<E>> links){
 
 	HashMap<Integer,Integer> map = new HashMap<>();
@@ -507,7 +507,7 @@ public String getJSON_BinaryTree(LinkedList<TreeElement<E>> nodes,
  * @return complete JSON string for the current ADT
  */
 public 
-<E> String generateJSON_Graph (LinkedList<SLelement<E>> nodes, LinkedList<SLelement<E>> links_src, LinkedList<SLelement<E>> links_dest){
+<E extends Comparable <? super E>> String generateJSON_Graph (LinkedList<SLelement<E>> nodes, LinkedList<SLelement<E>> links_src, LinkedList<SLelement<E>> links_dest){
 
 	HashMap<Integer,Integer> map = new HashMap<>();
 	StringBuilder nodes_JSON = new StringBuilder();
@@ -572,7 +572,7 @@ public
 	 * @param target
 	 * @return
 	 */
-	<E> String getLinkRepresentation(Element<E>source, Element<E>target) {
+	<E extends Comparable<? super E>> String getLinkRepresentation(Element<E>source, Element<E>target) {
 		String json = "{";
 		if (source == null || target == null){
 			return json + "}";

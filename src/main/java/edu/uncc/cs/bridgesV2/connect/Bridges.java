@@ -22,7 +22,7 @@ import edu.uncc.cs.bridgesV2.base.*;
 import edu.uncc.cs.bridgesV2.validation.RateLimitException;
 import edu.uncc.cs.bridgesV2.validation.Validation;
 
-public class Bridges <E> {
+public class Bridges <E extends Comparable <? super E>> {
 	
 	private static double assignmentDecimal = 0.0;
 	protected ADTVisualizer<E> visualizer ;

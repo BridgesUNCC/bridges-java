@@ -12,7 +12,7 @@ package edu.uncc.cs.bridgesV2.base;
  *
  * @param <E>
  */
-public class SLelement<E> extends Element<E> implements Cloneable{
+public class SLelement<E extends Comparable <? super E>> extends Element<E> implements Cloneable{
 	protected SLelement<E> next=null; //the link to the next element 
 	
 	/**

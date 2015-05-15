@@ -10,7 +10,7 @@ import java.util.Map.Entry;
  * @author mihai mehedint
  * This class extends the TreeElement class by adding a key property to allow for easier use in a binary search tree implementation. 
  */
-public class BSTElement<K, E> extends TreeElement<E> implements Comparable<E>{
+public class BSTElement<K, E extends Comparable <? super E>> extends TreeElement<E>{
 	private K key; //this is the BSTElement key
 	
 	/**
@@ -93,7 +93,7 @@ public class BSTElement<K, E> extends TreeElement<E> implements Comparable<E>{
 	 * @param key the key to set
 	 */
 	public void setKey(K key) {
-		this.key = key;
+		this.key = (K) key;
 	}
 
 	/* (non-Javadoc)
@@ -126,6 +126,7 @@ public class BSTElement<K, E> extends TreeElement<E> implements Comparable<E>{
 		json += String.format("\"key\": \"%s\"", this.getKey());
 		return json + "}";
 	}
+	
 	/**
 	 * Comparing this key with another BSTElement object's key
 	 * @param e1
@@ -147,15 +148,24 @@ public class BSTElement<K, E> extends TreeElement<E> implements Comparable<E>{
 		}else if (e1.getKey() instanceof Long){
 			return ((Long)(long)this.getKey()).compareTo((Long)(long)e1.getKey());
 		}
-		//all of the above conditional statements 
-		//for Numeric types can be replaced by this
-		/**
-		else if (Number.class.isAssignableFrom(e1.getKey().getClass()) && 
-				Number.class.isAssignableFrom(this.getKey().getClass())){
-			return ((Double)Double.parseDouble(String.valueOf(this.getKey()))).compareTo
-					((Double)Double.parseDouble(String.valueOf(e1.getKey())));
-		}	*/
-		else 
-			return (this.getKey().toString()).compareTo(e1.getKey().toString());
+		else{
+			return ((Integer)(this.getKey().hashCode())).compareTo((Integer)(e1.getKey().hashCode()));
+		}	
 	}
+	
+	
+	/**
+	 * Comparing this BSTElement with another BSTElement
+	 * @param e1
+	 * @return boolean value
+	 */
+	public boolean compare(BSTElement<K,E> e1){
+		return this.getIdentifier().equals(e1.getIdentifier()) &&
+				this.getKey().equals(e1.getKey()) &&
+				this.getLabel().equals(e1.getLabel()) &&
+				this.getLeft().equals(e1.getLeft()) &&
+				this.getRight().equals(e1.getRight()) &&
+				this.getValue().equals(e1.getValue()) &&
+				this.getVisualizer().equals(e1.getVisualizer());
+	} 	
 }

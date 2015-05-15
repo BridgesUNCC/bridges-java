@@ -1,41 +1,23 @@
 package edu.uncc.cs.bridgesV2.data_src_dependent;
 
 public class Follower extends DataSource{
-	protected String aFollower;
 	
 	public Follower(String aFollower){
-		this.aFollower=aFollower;
+		this.setLabel(aFollower);
 	}
 	
 	/**
 	 * This method returns the string name
 	 */
 	public String getName(){
-		return aFollower;
+		return this.getLabel();
 	}
 	
 	/**
 	 * This method sets the string name
 	 */
 	public void setName(String name){
-		this.aFollower = name;
-	}
-	
-	@Override
-	public void setLabel(String label){
-		this.aFollower = label;
-	}
-	
-	@Override
-	public String getLabel(){
-		return getName();
-	}
-	
-	/**
-	 * This method implements compareTo for the Follower
-	 */
-	public int compareTo(Follower anotherFollower){
-		return aFollower.compareTo(anotherFollower.getName());
+		this.setLabel(name);
 	}
 	
 	
@@ -43,7 +25,7 @@ public class Follower extends DataSource{
 	 * This method returns the string value
 	 */
 	public String toString(){
-		return aFollower;
+		return this.getName();
 	}
 
 	@Override
@@ -51,7 +33,7 @@ public class Follower extends DataSource{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((aFollower == null) ? 0 : aFollower.hashCode());
+				+ ((this.getName() == null) ? 0 : this.getName().hashCode());
 		return result;
 	}
 
@@ -64,18 +46,12 @@ public class Follower extends DataSource{
 		if (getClass() != obj.getClass())
 			return false;
 		Follower other = (Follower) obj;
-		if (aFollower == null) {
-			if (other.aFollower != null)
+		if (this.getName() == null) {
+			if (other.getName() != null)
 				return false;
-		} else if (!aFollower.equals(other.aFollower))
+		} else if (!this.getName().equals(other.getName()))
 			return false;
 		return true;
-	}
-
-	@Override
-	public int compareTo(DataSource o) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 	
 }
