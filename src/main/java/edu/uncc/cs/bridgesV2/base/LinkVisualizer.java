@@ -30,7 +30,7 @@ public class LinkVisualizer{
 	public LinkVisualizer() {
 		super();
 		properties = new HashMap<String, String>() {{
-						put("color", "green");
+						put("color", "black");
         				put("opacity", "1.0");
         				put("thickness", "1.0");
 					}};
@@ -90,5 +90,9 @@ public class LinkVisualizer{
 	 */
 	public double getOpacity() {
 		return Double.parseDouble( properties.get("opacity"));
+	}
+
+	public HashMap<String, String> getProperties() {
+		return properties;
 	}
 }

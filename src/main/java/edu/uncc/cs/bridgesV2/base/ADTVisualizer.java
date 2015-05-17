@@ -394,15 +394,19 @@ public
 						// get the JSON string for links
 	String str = links_JSON.toString();
 	while (!links.isEmpty()){
-						// get the link properties
-		str+="{";
-		for (Entry<String,String> entry : linkProperties.entrySet()) {
-			str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
-								entry.getValue());
-		}
 						// get the link
 		SLelement<E> child = links.pop();
 		SLelement<E> parent = links.pop();
+
+						// get the link properties
+		LinkVisualizer lvis = parent.getLinkVisualizer(child.getLabel());
+		str+="{";
+		if (lvis != null) {
+			for (Entry<String,String> entry : lvis.getProperties().entrySet()){
+				str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
+								entry.getValue());
+			}
+		}
 		str += String.format("\"source\":%s,", 
 				map.get(Integer.parseInt(parent.getIdentifier())));
 		str += String.format("\"target\":%s", 
@@ -440,15 +444,18 @@ public
 						// get the JSON string for links
 	String str = links_JSON.toString();
 	while (!links.isEmpty()){
-						// get the link properties
-		str+="{";
-		for (Entry<String,String> entry : linkProperties.entrySet()) {
-			str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
-								entry.getValue());
-		}
 						// get the link
 		DLelement<E> child = links.pop();
 		DLelement<E> parent = links.pop();
+						// get the link properties
+		LinkVisualizer lvis = parent.getLinkVisualizer(child.getLabel());
+		str+="{";
+		if (lvis != null) {
+			for (Entry<String,String> entry : lvis.getProperties().entrySet()){
+				str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
+								entry.getValue());
+			}
+		}
 		str += String.format("\"source\":%s,", 
 				map.get(Integer.parseInt(parent.getIdentifier())));
 		str += String.format("\"target\":%s", 
@@ -482,13 +489,19 @@ public String getJSON_BinaryTree(LinkedList<TreeElement<E>> nodes,
 		 
 	String str = links_JSON.toString();
 	while (!links.isEmpty()){
-		str+="{";
-		for (Entry<String, String> entry : linkProperties.entrySet()) {
-			str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
-								entry.getValue());
-		}
+						// get links
 		TreeElement<E> child = links.pop();
 		TreeElement<E> parent = links.pop();
+
+						// get the link properties
+		LinkVisualizer lvis = parent.getLinkVisualizer(child.getLabel());
+		str+="{";
+		if (lvis != null) {
+			for (Entry<String,String> entry : lvis.getProperties().entrySet()){
+				str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
+								entry.getValue());
+			}
+		}
 					
 		str += String.format("\"source\":%s,", 
 				map.get(Integer.parseInt(parent.getIdentifier())));
@@ -507,7 +520,10 @@ public String getJSON_BinaryTree(LinkedList<TreeElement<E>> nodes,
  * @return complete JSON string for the current ADT
  */
 public 
-<E extends Comparable <? super E>> String generateJSON_Graph (LinkedList<SLelement<E>> nodes, LinkedList<SLelement<E>> links_src, LinkedList<SLelement<E>> links_dest){
+<E extends Comparable <? super E>> String 
+	generateJSON_Graph (LinkedList<SLelement<E>> nodes, 
+			LinkedList<SLelement<E>> links_src, 
+			LinkedList<SLelement<E>> links_dest){
 
 	HashMap<Integer,Integer> map = new HashMap<>();
 	StringBuilder nodes_JSON = new StringBuilder();
@@ -525,15 +541,20 @@ public
 						// get the JSON string for links
 	String str = links_JSON.toString();
 	while (!links_src.isEmpty()){
-						// get the link properties
-		str+="{";
-		for (Entry<String,String> entry : linkProperties.entrySet()) {
-			str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
-								entry.getValue());
-		}
 						// get the link
 		SLelement<E> child = links_dest.pop();
 		SLelement<E> parent = links_src.pop();
+
+						// get the link properties
+		LinkVisualizer lvis = parent.getLinkVisualizer(child.getLabel());
+		str+="{";
+		if (lvis != null) {
+			for (Entry<String,String> entry : lvis.getProperties().entrySet()){
+				str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
+								entry.getValue());
+			}
+		}
+
 		str += String.format("\"source\":%s,", 
 				map.get(Integer.parseInt(parent.getIdentifier())));
 						// get the edge terminating vertex
