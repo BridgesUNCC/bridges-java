@@ -10,7 +10,7 @@ import java.util.Map.Entry;
  * @author mihai mehedint
  * This class extends the TreeElement class by adding a key property to allow for easier use in a binary search tree implementation. 
  */
-public class BSTElement<K, E extends Comparable <? super E>> extends TreeElement<E>{
+public class BSTElement<K extends Comparable <? super K>, E extends Comparable <? super E>> extends TreeElement<E>{
 	private K key; //this is the BSTElement key
 	
 	/**
@@ -125,32 +125,6 @@ public class BSTElement<K, E extends Comparable <? super E>> extends TreeElement
 		json += String.format("\"name\": \"%s\", ", super.getLabel());
 		json += String.format("\"key\": \"%s\"", this.getKey());
 		return json + "}";
-	}
-	
-	/**
-	 * Comparing this key with another BSTElement object's key
-	 * @param e1
-	 * @return
-	 */
-	public int compareTo(BSTElement<K, E> e1){		
-		//this can be replaced by a switch block, but it may not be faster
-		//or by the commented code below
-		if (e1.getKey() instanceof String){
-			return this.getKey().toString().compareTo(e1.getKey().toString());
-		}else if (e1.getKey() instanceof Integer){
-			return ((Integer)(int)this.getKey()).compareTo((Integer)(int)e1.getKey());
-		}else if (e1.getKey() instanceof Character){
-			return ((Character)(char)this.getKey()).compareTo((Character)(char)e1.getKey());
-		}else if (e1.getKey() instanceof Double){
-			return ((Double)(double)this.getKey()).compareTo((Double)(double)e1.getKey());
-		}else if (e1.getKey() instanceof Float){
-			return ((Float)(float)this.getKey()).compareTo((Float)(float)e1.getKey());
-		}else if (e1.getKey() instanceof Long){
-			return ((Long)(long)this.getKey()).compareTo((Long)(long)e1.getKey());
-		}
-		else{
-			return ((Integer)(this.getKey().hashCode())).compareTo((Integer)(e1.getKey().hashCode()));
-		}	
 	}
 	
 	
