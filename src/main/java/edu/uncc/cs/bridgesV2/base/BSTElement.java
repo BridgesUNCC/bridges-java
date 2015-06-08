@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 public class BSTElement<K extends Comparable <? super K>, E extends Comparable <? super E>> extends TreeElement<E>{
 	private K key; //this is the BSTElement key
 	
+
 	/**
 	 * Construct an empty BSTElement with no key assigned and left and right pointers set to null.
 	 */

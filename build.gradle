@@ -8,8 +8,8 @@ apply plugin: 'signing'
 ///
 /// General
 ///
-group = "edu.uncc.cs.bridges_v2"
-version = "2.0.1"
+group = "edu.uncc.cs.bridges"
+version = "2.0"
 
 ///
 /// Artifacts and deployment
@@ -35,7 +35,9 @@ artifacts {
 sourceSets {
     main {
         java {
-			srcDir  'src/main/java/edu/uncc/cs/bridges_v2/'
+            exclude 'edu/uncc/cs/bridgesdrivers/**'
+            exclude 'edu/uncc/cs/bridges/**'
+            exclude 'edu/uncc/cs/bridges_vs1/drivers/**'
         }
     }
     test {
@@ -53,7 +55,7 @@ test {
   //systemProperty 'some.prop', 'value'
 
   // explicitly include or exclude tests
-  include 'edu/uncc/cs/bridges_vs2/**'
+  include 'edu/**'
   scanForTestClasses = true
 
   // show standard out and standard error of the test JVM(s) on the console
@@ -79,13 +81,11 @@ test {
 
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Implementation-Title':'Bridges Jar File', 
+        attributes 'Implementation-Title': 'Bridges Jar File', 
             'Implementation-Version': version
     }
     baseName = project.name + '-all'
-    from {configurations.compile.collect { 
-			it.isDirectory() ? it : zipTree(it)}
-	}
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it)}}
     with jar
 }
 
@@ -154,12 +154,12 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.5'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.1'
-    testCompile "junit:junit:4.11"
 //	compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
 //	compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
-// Declare the dependency for your favourite test framework you want 
-// to use in your tests.
-// TestNG is also supported by the Gradle Test task. Just change the
-// testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
-// 'test.useTestNG()' to your build script.
+    // Declare the dependency for your favourite test framework you want 
+	// to use in your tests.
+    // TestNG is also supported by the Gradle Test task. Just change the
+    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
+    // 'test.useTestNG()' to your build script.
+    testCompile "junit:junit:4.11"
 }
