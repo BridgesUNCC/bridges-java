@@ -399,7 +399,7 @@ public
 		SLelement<E> parent = links.pop();
 
 						// get the link properties
-		LinkVisualizer lvis = parent.getLinkVisualizer(child.getLabel());
+		LinkVisualizer lvis = parent.getLinkVisualizer(child);
 		str+="{";
 		if (lvis != null) {
 			for (Entry<String,String> entry : lvis.getProperties().entrySet()){
@@ -448,7 +448,7 @@ public
 		DLelement<E> child = links.pop();
 		DLelement<E> parent = links.pop();
 						// get the link properties
-		LinkVisualizer lvis = parent.getLinkVisualizer(child.getLabel());
+		LinkVisualizer lvis = parent.getLinkVisualizer(child);
 		str+="{";
 		if (lvis != null) {
 			for (Entry<String,String> entry : lvis.getProperties().entrySet()){
@@ -494,7 +494,7 @@ public String getJSON_BinaryTree(LinkedList<TreeElement<E>> nodes,
 		TreeElement<E> parent = links.pop();
 
 						// get the link properties
-		LinkVisualizer lvis = parent.getLinkVisualizer(child.getLabel());
+		LinkVisualizer lvis = parent.getLinkVisualizer(child);
 		str+="{";
 		if (lvis != null) {
 			for (Entry<String,String> entry : lvis.getProperties().entrySet()){
@@ -546,7 +546,7 @@ public
 		SLelement<E> parent = links_src.pop();
 
 						// get the link properties
-		LinkVisualizer lvis = parent.getLinkVisualizer(child.getLabel());
+		LinkVisualizer lvis = parent.getLinkVisualizer(child);
 		str+="{";
 		if (lvis != null) {
 			for (Entry<String,String> entry : lvis.getProperties().entrySet()){
