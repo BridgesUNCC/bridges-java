@@ -30,9 +30,10 @@ public class LinkVisualizer{
 	public LinkVisualizer() {
 		super();
 		properties = new HashMap<String, String>() {{
-						put("color", "black");
+					put("color", "black");
         				put("opacity", "1.0");
-        				put("thickness", "1.0");
+        				put("width", "1.0");
+        				put("weight", "1.0");
 					}};
 	}
 
@@ -44,7 +45,7 @@ public class LinkVisualizer{
 	 */
 	public void setThickness(double thickness) {
 		Validation.validateSize(thickness);
-		properties.put("thickness", Double.toString(thickness));
+		properties.put("width", Double.toString(thickness));
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class LinkVisualizer{
 	 * @return the size in pixels of the Element in the Bridges Visualization
 	 */
 	public double getThickness() {
-		return Double.parseDouble(properties.get("thickness"));
+		return Double.parseDouble(properties.get("width"));
 	}
 
 	/** Set the color of the link in the Bridges Visualization to "aColor".

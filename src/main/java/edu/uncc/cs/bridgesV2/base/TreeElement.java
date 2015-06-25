@@ -10,7 +10,7 @@ package edu.uncc.cs.bridgesV2.base;
  *
  */
 
-public class TreeElement<E extends Comparable <? super E>> extends Element<E>{
+public class TreeElement<E> extends Element<E>{
 	private TreeElement<E> left; //the left pointer
 	private TreeElement<E> right; //the right pointer
 	

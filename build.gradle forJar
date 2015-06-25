@@ -38,6 +38,8 @@ sourceSets {
             exclude 'edu/uncc/cs/bridgesdrivers/**'
             exclude 'edu/uncc/cs/bridges/**'
             exclude 'edu/uncc/cs/bridges_vs1/drivers/**'
+	    exclude 'edu/uncc/cs/bridgesV2/drivers/**'
+	
         }
     }
     test {

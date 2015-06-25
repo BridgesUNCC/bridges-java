@@ -6,7 +6,7 @@ package edu.uncc.cs.bridgesV2.base;
  *
  */
 
-public class DLelement<E extends Comparable <? super E>> extends Element<E>{
+public class DLelement<E> extends Element<E>{
 	private DLelement<E> next;
 	private DLelement<E> prev;
 

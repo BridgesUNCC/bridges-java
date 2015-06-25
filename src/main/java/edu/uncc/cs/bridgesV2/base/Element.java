@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 
 
-public class Element<E extends Comparable<? super E>>{
+public class Element<E>{
 	
 	private int MAX_ELEMENTS_SIZE = 1000;
 	static Integer ids = 0;

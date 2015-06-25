@@ -10,7 +10,7 @@ import java.util.Map.Entry;
  * @author mihai mehedint
  * This class extends the TreeElement class by adding a key property to allow for easier use in a binary search tree implementation. 
  */
-public class BSTElement<K extends Comparable <? super K>, E extends Comparable <? super E>> extends TreeElement<E>{
+public class BSTElement<K extends Comparable <? super K>, E> extends TreeElement<E>{
 	private K key; //this is the BSTElement key
 	
 

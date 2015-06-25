@@ -14,7 +14,7 @@ import edu.uncc.cs.bridgesV2.base.GraphList;
  * An end user will generally not need to interact directly with this class.
  */
 
-public class ADTVisualizer<E extends Comparable<? super E>> {
+public class ADTVisualizer<E> {
 	//public LinkedHashMap<Element<Value, T>, String> LList;
 	public String visualizerType;
 	public String visualizerIdentifier;

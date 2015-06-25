@@ -11,7 +11,7 @@ import edu.uncc.cs.bridgesV2.base.Edge;
  * @param generic <E>
  */
 
-public class GraphList<E extends Comparable<? super E>>{
+public class GraphList<E>{
 					// vertex of the graph
 	private SLelement<E> src_vertex;
 					// corresponding adjacency list
