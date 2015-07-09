@@ -1,10 +1,10 @@
-package edu.uncc.cs.bridges_vs2;
+
 import static org.junit.Assert.*;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.uncc.cs.brdigesV2.validation.*;
+import edu.uncc.cs.bridgesV2.validation.*;
 
 public class RateLimitExceptionTest {
 	static RateLimitException e;

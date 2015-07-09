@@ -1,10 +1,11 @@
-package edu.uncc.cs.bridges_vs2;
+
 import java.io.IOException;
 
 import org.junit.BeforeClass;
 
-import edu.uncc.cs.brdigesV2.validation.*;
+
 import junit.framework.TestCase;
+import edu.uncc.cs.bridgesV2.validation.*;
 
 
 public class OutputLogTest extends TestCase {
@@ -18,7 +19,7 @@ public class OutputLogTest extends TestCase {
 	
 	/** not tested */
 	public void testWriteInt() throws IOException {
-		System.out.println("outputLog methods have not been tested");
+		System.out.println("**** outputLog methods have not been tested");
 
 	}
 

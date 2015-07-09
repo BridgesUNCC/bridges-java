@@ -1,4 +1,3 @@
-package edu.uncc.cs.bridges_vs2;
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
@@ -13,24 +12,27 @@ import java.lang.reflect.InvocationTargetException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-import org.apache.http.client.entity.InputStreamFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.uncc.cs.bridgesV2.base.ADTVisualizer;
+import edu.uncc.cs.bridgesV2.base.BSTElement;
 import edu.uncc.cs.bridgesV2.base.DLelement;
+import edu.uncc.cs.bridgesV2.base.Edge;
 import edu.uncc.cs.bridgesV2.base.Element;
+import edu.uncc.cs.bridgesV2.base.GraphList;
 import edu.uncc.cs.bridgesV2.base.SLelement;
 import edu.uncc.cs.bridgesV2.base.TreeElement;
 import edu.uncc.cs.bridgesV2.connect.Bridges;
+import edu.uncc.cs.bridgesV2.validation.Validation;
 
 /* Bridges fields are held in class variables, not instance variables, meaning that once a 
  * Bridges object is constructed, any later Bridges object will overwrite the fields of the earlier object.
  */
 public class BridgesTest {
-	static Bridges bridges1;
-	static Bridges bridges2;
-	static Bridges bridges3;
+	static Bridges<String> bridges1;
+	static Bridges<String> bridges2;
+	static Bridges<String> bridges3;
 	static SLelement<String> sle1;
 	static DLelement<String> dle1;
 	static TreeElement<String> te1;
@@ -43,9 +45,16 @@ public class BridgesTest {
 	static String QUEUE = "queue";
 	static String STACK = "stack";
 	static String TREE = "tree";
+	static String ALIST	 = "AList";
 
 	static String[] structureTypes;
 
+	public void resetBridges(){
+		Bridges.setKey("691659187196");
+		Bridges.setUserName("cgrafer");
+		Bridges.setAssignment(99);
+	}
+	
 	/** Set up static elements to for later tests. */
 	@BeforeClass
 	public static void BeforeClass() throws Exception {
@@ -54,7 +63,7 @@ public class BridgesTest {
 		te1 = new TreeElement<String>("T");
 
 		structureTypes = new String[] { DLLIST, GRAPH, GRAPHL, LLIST, QUEUE,
-				STACK, TREE };
+				STACK, TREE, ALIST };
 
 		bridges1 = new Bridges<String>();
 		bridges2 = new Bridges<String>(99, "691659187196", "cgrafer");
@@ -64,21 +73,21 @@ public class BridgesTest {
 	/** Test Bridges null constructor */
 	@Test
 	public void testBridges() throws Exception {
-		Bridges b = new Bridges<String>();
+		Bridges<String> b = new Bridges<String>();
 		assertNotNull(b);
 	}
 
 	/** Test Bridges constructor with assignment, api key, and username. */
 	@Test
 	public void testBridgesIntStringString() throws Exception {
-		Bridges b = new Bridges<String>(99, "691659187196", "cgrafer");
+		Bridges<String> b = new Bridges<String>(99, "691659187196", "cgrafer");
 		assertNotNull(b);
 	}
 
 	/** Test Bridges constructor with assignment, api key, data structure, and username. */
 	@Test
 	public void testBridgesIntStringSLelementOfEString() throws Exception {
-		Bridges b = new Bridges<String>(99, "691659187196", sle1, "cgrafer");
+		Bridges<String> b = new Bridges<String>(99, "691659187196", sle1, "cgrafer");
 		assertNotNull(b);
 	}
 
@@ -89,94 +98,170 @@ public class BridgesTest {
 
 		b.init(1, "abcd", "efgh");
 		assertEquals("init did not set assignment correctly", "1.0",
-				b.getAssignment());
-		assertEquals("init did not set api key correctly", "abcd", b.getKey());
+				Bridges.getAssignment());
+		assertEquals("init did not set api key correctly", "abcd", Bridges.getKey());
 		assertEquals("init did not set user name correctly", "efgh",
-				b.getUserName());
+				Bridges.getUserName());
 
-		b = new Bridges<String>(99, "691659187196", sle1, "cgrafer");
-
+		resetBridges();
 	}
 
 	/** Test init() sets assignment, api key, data structure and username correctly */
 	@Test
-	public void testInitIntStringElementOfEString() throws Exception {
+	public void testInitIntStringSLElementString() throws Exception {
 		Bridges<String> b = new Bridges<String>();
 		SLelement<String> sle = new SLelement<String>("1", "2");
 
 		b.init(2, "xyz", sle, "tuv");
 		assertEquals("init did not set assignment correctly", "2.0",
-				b.getAssignment());
-		assertEquals("init did not set api key correctly", "xyz", b.getKey());
+				Bridges.getAssignment());
+		assertEquals("init did not set api key correctly", "xyz", Bridges.getKey());
 		assertEquals("init did not set user name correctly", "tuv",
-				b.getUserName());
+				Bridges.getUserName());
 		assertEquals("init did not set element correctly", sle, b.getRoot());
+		
+		resetBridges();
 
 	}
+	
+	/** Test init() sets assignment, api key, data structure and username correctly */
+	@Test
+	public void testInitIntStringDLElementString() throws Exception {
+		Bridges<String> b = new Bridges<String>();
+		DLelement<String> dle = new DLelement<String>("1", "2");
+
+		b.init(2, "xyz", dle, "tuv");
+		assertEquals("init did not set assignment correctly", "2.0",
+				Bridges.getAssignment());
+		assertEquals("init did not set api key correctly", "xyz", Bridges.getKey());
+		assertEquals("init did not set user name correctly", "tuv",
+				Bridges.getUserName());
+		assertEquals("init did not set element correctly", dle, b.getRoot());
+		
+		resetBridges();
+
+	}
+	
+	/** Test init() sets assignment, api key, data structure and username correctly */
+	@Test
+	public void testInitIntStringTreeElementString() throws Exception {
+		Bridges<String> b = new Bridges<String>();
+		TreeElement<String> te = new TreeElement<String>("1", "2");
+		
+		
+		b.init(2, "xyz", te, "tuv");
+		assertEquals("init did not set assignment correctly", "2.0",
+				Bridges.getAssignment());
+		assertEquals("init did not set api key correctly", "xyz", Bridges.getKey());
+		assertEquals("init did not set user name correctly", "tuv",
+				Bridges.getUserName());
+		assertEquals("init did not set element correctly", te, b.getRoot());
+		
+		resetBridges();
+
+	}
+	
+	/** Test init() sets assignment, api key, data structure and username correctly */
+	@Test
+	public void testInitIntStringBSTElementString() throws Exception {
+		Bridges<String> b = new Bridges<String>();
+		BSTElement<Integer, String> bst = new BSTElement<Integer, String>("a");
+		
+		
+		b.init(2, "xyz", bst, "tuv");
+		assertEquals("init did not set assignment correctly", "2.0",
+				Bridges.getAssignment());
+		assertEquals("init did not set api key correctly", "xyz", Bridges.getKey());
+		assertEquals("init did not set user name correctly", "tuv",
+				Bridges.getUserName());
+		assertEquals("init did not set element correctly", bst, b.getRoot());
+		
+		resetBridges();
+
+	}
+
 
 	/** Test whether getAssignment() returns correct assignment */
 	@Test
 	public void testGetAssignment() {
+		Bridges.setAssignment(99);
 		assertEquals("Get assignment returns incorrect assignment number",
-				"99.0", bridges1.getAssignment());
-		assertEquals("Get assignment returns incorrect assignment number",
-				"99.0", bridges2.getAssignment());
-		assertEquals("Get assignment returns incorrect assignment number",
-				"99.0", bridges3.getAssignment());
+				"99.0", Bridges.getAssignment());
 	}
 
 	/** Test setAssignment and make sure same value is returned by getAssignment(). */
 	@Test 
 	public void testSetAssignment() {
-		bridges1.setAssignment(98);
+		Bridges.setAssignment(98);
 		assertEquals(
 				"Set assignment did not set bridges to correct assignment number",
-				"98.0", bridges1.getAssignment());
+				"98.0", Bridges.getAssignment());
+		
+		resetBridges();
 	}
+	
+	
+	
+	
+	/** Test setAssignment with zero value. */
+	@Test 
+	public void testSetAssignmentWithNegativeValue() {
+		boolean thrown = false;
+		try {
+			Bridges.setAssignment(-1);			
+		} catch (Exception e) {
+			thrown = true;
+		}
+		
+		if(!thrown) {
+			fail("setAssignment(-1) did not throw error");
+		}
+	}
+	
+	
 
 	/** Test whether getUserName() returns correct value */
 	@Test
 	public void testGetUserName() throws Exception {
+		
+		
 		assertEquals("getUserName() returns incorrect name", "cgrafer",
-				bridges1.getUserName());
-		assertEquals("getUserName() returns incorrect name", "cgrafer",
-				bridges2.getUserName());
-		assertEquals("getUserName() returns incorrect name", "cgrafer",
-				bridges3.getUserName());
+				Bridges.getUserName());
 	}
 
 	/** Test setUserName() and make sure same value is returned by getUserName() */
 	@Test
 	public void testSetUserName() {
-		bridges1.setUserName("a");
+		Bridges.setUserName("a");
 		assertEquals("setUserName() did not set user name correctly", "a",
-				bridges1.getUserName());
+				Bridges.getUserName());
 
 		// return to orignal
-		bridges1.setUserName("cgrafer");
-
+		resetBridges();
 	}
 
 	/** Test whether getKey() returns correct value */
 	@Test
 	public void testGetKey() {
+		
+		Bridges.setKey("hijk");
+		
+		
 		assertEquals("getKey() does not return correct API key",
-				"691659187196", bridges1.getKey());
-		assertEquals("getKey() does not return correct API key",
-				"691659187196", bridges2.getKey());
-		assertEquals("getKey() does not return correct API key",
-				"691659187196", bridges3.getKey());
+				"hijk", Bridges.getKey());
+		
+		resetBridges();
 	}
 
 	/** Test setKey() and make sure same value is returned by getKey() */
 	@Test
 	public void testSetKey() {
-		bridges1.setKey("1234");
+		Bridges.setKey("1234");
 		assertEquals("setKey() does not correctly set the API Key", "1234",
-				bridges1.getKey());
+			Bridges.getKey());
 
 		// return to orignal
-		bridges1.setKey("691659187196");
+		resetBridges();
 
 	}
 
@@ -189,6 +274,8 @@ public class BridgesTest {
 	/** Test setVisualizer and make sure same value is returned by getVisualizer */
 	@Test
 	public void testSetVisualizer() {
+		Bridges.setKey("691659187196");
+
 		ADTVisualizer<String> visualizer = new ADTVisualizer<String>();
 		bridges1.setVisualizer(visualizer);
 
@@ -231,13 +318,17 @@ public class BridgesTest {
 
 	/** Test setDataStructure with HashMap */
 	@Test
-	public void testSetDataStructureHashMapOfStringSLelementOfEString() {
-		HashMap<String, SLelement<String>> hash = new HashMap<String, SLelement<String>>();
-		hash.put("A", new SLelement<String>("Z", "ZZ"));
+	public void testSetDataStructureHashMapOfGraphList() {
+		GraphList<String> adjList = new GraphList<String>();
+		adjList.addEdge(new Edge(1, "A"));
+		
+		
+		HashMap<String, GraphList<String>> hash = new HashMap<String, GraphList<String>>();
+		hash.put("B", adjList);
 		
 		for (String s : structureTypes) {
 			bridges1.setDataStructure(hash, s);
-			assertEquals("setDataStructure did not set %s correctly", s,
+			assertEquals("setDataStructure for hashmap<string, graphlist<E> did not set %s correctly", s,
 					bridges1.getVisualizer().getVisualizerType());
 		}
 		
@@ -294,7 +385,7 @@ public class BridgesTest {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		PrintStream old_out = System.err;
 
-		System.setErr(new PrintStream(bytes));
+		//System.setErr(new PrintStream(bytes));
 
 		bridges3.setDataStructure(dle1, "Dllist");
 		bridges3.visualize();
@@ -339,7 +430,7 @@ public class BridgesTest {
 		PrintStream old_error_stream = System.err;
 		System.setErr(new PrintStream(errorBytes));
 
-		bridges3.setDataStructure(dle1, "queue");
+		bridges3.setDataStructure(sle1, "queue");
 		bridges3.visualize();
 
 		System.setErr(old_error_stream);
@@ -397,6 +488,31 @@ public class BridgesTest {
 
 	}
 	
+	/** Test visualize with invalide data type */
+	@Test
+	public void testVisualizeWithInvalidADTType() {
+		// bridges will print an error to System.err if somethign goes wrong
+		// capture this error stream, if the resulting stream is not size zero,
+		// there was an error
+
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		PrintStream old_out = System.err;
+
+		System.setErr(new PrintStream(bytes));
+
+		
+		bridges3.setDataStructure(dle1, "grap");
+		bridges3.visualize();
+
+
+		System.setErr(old_out);
+
+		assertTrue("visualize() did not throw an error with invalid ADT type",
+				bytes.size() != 0);
+
+	}
+	
+	
 	/** Test setDataStructure() with "graphl" */	
 	@Test
 	public void testVisualizeWhenSetDataStructureToGraphWithHashMap() {
@@ -404,8 +520,14 @@ public class BridgesTest {
 		// capture this error stream, if the resulting stream is not size zero,
 		// there was an error
 
-		HashMap<String, SLelement<String>> hash = new HashMap<String, SLelement<String>>();
-		hash.put("A", new SLelement<String>("Z", "ZZ"));
+		GraphList<String> adjListB = new GraphList<String>();
+		//adjListB.setSourceVertex(new SLelement<String>("B", "B"));
+		//adjListB.addEdge(new Edge(1, "A"));
+	
+		
+		HashMap<String, GraphList<String>> hash = new HashMap<String, GraphList<String>>();
+		hash.put("B", adjListB);
+		
 		
 		
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -419,6 +541,8 @@ public class BridgesTest {
 
 
 		System.setErr(old_out);
+		
+
 
 		assertTrue("visualize() threw an error when making a graph",
 				bytes.size() == 0);
@@ -444,6 +568,7 @@ public class BridgesTest {
 
 		System.setErr(old_out);
 
+		
 		assertTrue("visualize() threw an error when making a graphl",
 				bytes.size() == 0);
 
@@ -475,7 +600,45 @@ public class BridgesTest {
 		// return to original
 		bridges1.setRoot(sle1);
 	}
+	
+	/** Test setRoot and make sure getRoot returns same value */
+	@Test
+	public void testRoundWithNoPlaces() {
+		boolean thrown = false;
+		
+		try{
+			Bridges.round(3.0, -1);
+		} catch (Exception e){
+				thrown = true;
+		}
+		
+		if(!thrown) {
+			fail("round() did not throw exception when passed negative value for places");
+		}
+	}
 
+	/**Test validateADTVisualizer throws exception if data structure not set **/
+	
+	@Test
+	public void testValidate_ADTVisualizerThrowsExceptionWhenDataStructureNotSet(){
+		boolean isThrown = false;
+		
+		Bridges<String> b = new Bridges<String>();
+		
+		try{
+			Validation.validate_ADTVisualizer(b.getVisualizer(), b);
+		} catch (IllegalArgumentException e) {
+			isThrown = true;
+		}
+		
+		if(!isThrown){
+			fail("data structure not set, but error not thrown when Validation.validate_ADTVisualzer() called");
+		}
+		
+				
+	}
+	
+	
 	// all protected methods
 
 	// @Test

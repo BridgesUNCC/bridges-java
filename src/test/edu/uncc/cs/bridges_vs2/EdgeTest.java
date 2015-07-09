@@ -1,4 +1,4 @@
-package edu.uncc.cs.bridges_vs2;
+
 
 import static org.junit.Assert.*;
 
@@ -81,8 +81,18 @@ public class EdgeTest {
 	public void testGetEdge() {
 		assertEquals("getEdge() not returning correct object", e0, e0.getEdge());
 		assertEquals("getEdge() not returning correct object", e1, e1.getEdge());
-		assertEquals("getEdge() not returning correct object", e2, e2.getEdge());
-		
+		assertEquals("getEdge() not returning correct object", e2, e2.getEdge());	
 	}
 
+	@Test
+	/** Test compareTo() for edges compares their weight*/
+	public void testCompareToEdge() {
+		
+		
+		assertTrue("smaller weight compared to larger weight did not return negative value", e1.compareTo(e2) < 0);
+		assertTrue("larger weight compared to smaller weight did not return positive value", e2.compareTo(e1) > 0);
+		assertTrue("same weight compared to same weight did not return zero", e1.compareTo(e1) == 0);
+
+	}
+	
 }

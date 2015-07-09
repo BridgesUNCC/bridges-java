@@ -3,7 +3,6 @@
  * @Description: this test suite class runs all the test classes in the 
  * Eclipse JUnit test environment
  */
-package edu.uncc.cs.bridges_vs2;
 import static org.junit.Assert.*;
 
 import javax.swing.plaf.metal.MetalIconFactory.TreeLeafIcon;
@@ -24,21 +23,25 @@ import edu.uncc.cs.bridgesV2.base.TreeElement;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({ADTVisualizerTest.class,
+@SuiteClasses(
+		{ADTVisualizerTest.class,
 	ArrayElementTest.class,
 	ArrayOfElementTest.class,
 	BridgesTest.class,
-	ConnectorTest.class,
+	BSTElementTest.class,
 	DataFormatterExceptionTest.class,
 	DLelementTest.class,
 	EdgeTest.class,
-	ElementTest.class,
+	ElementVisualizerTest.class,
+	GraphListTest.class,
 	InvalidValueExceptionTest.class,
+	LinkVisualizerTest.class,
 	OutputLogTest.class,
 	RateLimitExceptionTest.class,
 	SLelementTest.class,
 	TreeElementTest.class,
-	BSTElementTest.class
+	BSTElementTest.class,
+	ValidationTest.class
 	
 	
 })
