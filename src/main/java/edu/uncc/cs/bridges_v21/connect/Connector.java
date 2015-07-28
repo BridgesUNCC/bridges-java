@@ -22,8 +22,8 @@ import bridges_v21.validation.RateLimitException;
 
 
 public class Connector {
-//	String server_url = "http://bridges-cs.herokuapp.com";
-	String server_url = "http://127.0.0.1:3000";
+	String server_url = "http://bridges-cs.herokuapp.com";
+//	String server_url = "http://127.0.0.1:3000";
     Executor http_connection;
     boolean debug = false;
     
