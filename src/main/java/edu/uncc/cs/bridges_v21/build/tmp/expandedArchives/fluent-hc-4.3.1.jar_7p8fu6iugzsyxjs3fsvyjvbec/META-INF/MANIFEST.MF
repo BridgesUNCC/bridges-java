@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Implementation-Title: HttpComponents Fluent API for Apache HttpClient
+Implementation-Version: 4.3.1
+Built-By: oleg
+Specification-Vendor: The Apache Software Foundation
+Created-By: Apache Maven 3.0.5
+url: http://hc.apache.org/httpcomponents-client
+X-Compile-Source-JDK: 1.5
+Implementation-Vendor: The Apache Software Foundation
+Implementation-Vendor-Id: org.apache
+Build-Jdk: 1.7.0_21
+Specification-Title: HttpComponents Fluent API for Apache HttpClient
+Specification-Version: 4.3.1
+Implementation-Build: tags/4.3.1-RC2/fluent-hc@r1528975; 2013-10-03 21
+ :42:00+0200
+X-Compile-Target-JDK: 1.5
+Archiver-Version: Plexus Archiver
+
