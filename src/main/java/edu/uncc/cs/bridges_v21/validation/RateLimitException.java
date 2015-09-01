@@ -1,4 +1,4 @@
-package bridges_v21.validation;
+package bridges.validation;
 /**
  * Throws exception to handle overloading the server to allow the student 
  * to stop querying the server and send in their visualizations.

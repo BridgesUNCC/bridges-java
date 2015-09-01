@@ -1,4 +1,4 @@
-package bridges_v21.data_src_dependent;
+package bridges.data_src_dependent;
 /**
  * This interface can be refine later as data sources diversify
  * @author mihai mehedint

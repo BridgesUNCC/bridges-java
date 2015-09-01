@@ -1,10 +1,10 @@
-package bridges_v21.data_src_dependent;
+package bridges.data_src_dependent;
 
 
 import java.util.Date;
 import java.util.Scanner;
 
-import bridges_v21.connect.DataFormatter;
+import bridges.connect.DataFormatter;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package bridges_v21.base;
+package bridges.base;
 
 /**
  * This class can be used to instantiate Singly List Elements

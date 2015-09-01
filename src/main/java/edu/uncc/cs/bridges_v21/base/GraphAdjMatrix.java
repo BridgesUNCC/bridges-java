@@ -1,6 +1,6 @@
-package bridges_v21.base;
+package bridges.base;
 
-import bridges_v21.base.Element;
+import bridges.base.Element;
 
 import java.util.HashMap;
 import java.util.Map.Entry;

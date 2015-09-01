@@ -1,7 +1,7 @@
 /**
  * 
  */
-package bridges_v21.base;
+package bridges.base;
 
 /**
  * @author mihai Mehedint

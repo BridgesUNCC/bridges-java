@@ -1,4 +1,4 @@
-package bridges_v21.data_src_dependent;
+package bridges.data_src_dependent;
 
 public class Twitter extends DataSource{
 	

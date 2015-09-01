@@ -1,4 +1,4 @@
-package bridges_v21.connect;
+package bridges.connect;
 
 /**
  * Connection to the Bridges server.
@@ -17,9 +17,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import bridges_v21.base.*;
-import bridges_v21.validation.RateLimitException;
-import bridges_v21.validation.Validation;
+import bridges.base.*;
+import bridges.validation.RateLimitException;
+import bridges.validation.Validation;
 
 public class Bridges <K, E> {
 	

@@ -1,4 +1,4 @@
-package bridges_v21.connect;
+package bridges.connect;
 
 import java.io.IOException;
 import java.util.Map;
@@ -18,12 +18,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import bridges_v21.validation.RateLimitException;
+import bridges.validation.RateLimitException;
 
 
 public class Connector {
-	String server_url = "http://bridges-cs.herokuapp.com";
-//	String server_url = "http://127.0.0.1:3000";
+//	String server_url = "http://bridges-cs.herokuapp.com";
+	String server_url = "http://127.0.0.1:3000";
     Executor http_connection;
     boolean debug = false;
     

@@ -1,4 +1,4 @@
-package bridges_v21.base;
+package bridges.base;
 /**
  * @author mihai Mehedint
  * This class can be used to create doubly linked element objects

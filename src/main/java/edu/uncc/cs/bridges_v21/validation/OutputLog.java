@@ -1,4 +1,4 @@
-package bridges_v21.validation;
+package bridges.validation;
 /**
  * @Title: Log file generator
  * @author: Mihai Mehedint

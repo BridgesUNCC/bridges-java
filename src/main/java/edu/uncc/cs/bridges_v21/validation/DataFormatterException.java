@@ -1,4 +1,4 @@
-package bridges_v21.validation;
+package bridges.validation;
 
 /**
  * This is an extension of the Exception class

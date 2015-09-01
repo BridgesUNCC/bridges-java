@@ -1,8 +1,8 @@
-package bridges_v21.base;
+package bridges.base;
 
-import bridges_v21.validation.Validation;
-import bridges_v21.connect.*;
-import bridges_v21.base.*;
+import bridges.validation.Validation;
+import bridges.connect.*;
+import bridges.base.*;
 
 import java.util.HashMap;
 import java.util.LinkedList;

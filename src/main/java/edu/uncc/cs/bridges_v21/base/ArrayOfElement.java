@@ -2,7 +2,7 @@
  * This class is created to solve the problem with 
  * generic arrays and type erasure
  */
-package bridges_v21.base;
+package bridges.base;
 
 /**
  * @author mihai

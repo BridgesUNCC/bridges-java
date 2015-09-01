@@ -1,5 +1,5 @@
-package bridges_v21.base;
-import bridges_v21.validation.*;
+package bridges.base;
+import bridges.validation.*;
 
 import java.util.HashMap;
 import java.util.Map;

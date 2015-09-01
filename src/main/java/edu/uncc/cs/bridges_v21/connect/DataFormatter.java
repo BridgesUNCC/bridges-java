@@ -1,4 +1,4 @@
-package bridges_v21.connect;
+package bridges.connect;
 
  
 import java.io.IOException;
@@ -17,9 +17,9 @@ import java.util.Map.Entry;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import bridges_v21.base.*;
-import bridges_v21.validation.*;
-import bridges_v21.data_src_dependent.*;
+import bridges.base.*;
+import bridges.validation.*;
+import bridges.data_src_dependent.*;
 
 
 /**
