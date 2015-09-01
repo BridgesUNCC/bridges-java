@@ -1,4 +1,4 @@
-import edu.uncc.cs.bridgesV2.validation.*;
+import bridges_v21.validation.*;
 import junit.framework.TestCase;
 
 

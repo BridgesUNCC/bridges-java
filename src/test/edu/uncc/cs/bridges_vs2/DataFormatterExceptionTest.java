@@ -4,7 +4,8 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.uncc.cs.bridgesV2.validation.*;
+import bridges_v21.validation.*;
+
 
 public class DataFormatterExceptionTest {
 	static DataFormatterException df1;

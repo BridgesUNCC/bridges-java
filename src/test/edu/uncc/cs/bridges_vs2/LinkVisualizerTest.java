@@ -1,10 +1,9 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.uncc.cs.bridgesV2.base.Edge;
-import edu.uncc.cs.bridgesV2.base.LinkVisualizer;
+import bridges_v21.base.LinkVisualizer;
 
 
 public class LinkVisualizerTest {

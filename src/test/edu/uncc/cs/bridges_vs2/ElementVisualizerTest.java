@@ -4,10 +4,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-import edu.uncc.cs.bridgesV2.base.ElementVisualizer;
-import edu.uncc.cs.bridgesV2.base.GraphList;
-import edu.uncc.cs.bridgesV2.validation.*;
-
+import bridges_v21.base.*;
+import bridges_v21.validation.*;
 
 public class ElementVisualizerTest {
 
@@ -101,6 +99,29 @@ public class ElementVisualizerTest {
 		}
 		
 	}
+	
+	@Test
+	/** test setOpacity with null string throws NullPointerException */
+	public void testSetOpacityWithNullString() {
+		boolean thrown = false;
+		ElementVisualizer ev = new ElementVisualizer();
+		
+		Double d = 2.0;
+		d = null;
+		
+		try{
+			ev.setOpacity(d);
+			ev.getOpacity();
+			
+		} catch(NullPointerException e) {
+			thrown = true;
+		}
+		
+		if(!thrown) {
+			fail("setColor(null) did not throw NullPointerException");
+		}
+		
+	}
 
 	
 	
@@ -154,7 +175,7 @@ public class ElementVisualizerTest {
 		for(int i = 0; i < 100; i++){
 			String color = ev0.randomColor();
 			try{
-				edu.uncc.cs.bridgesV2.validation.Validation.validateColor(color);
+				Validation.validateColor(color);
 			} catch (Exception e) {
 				fail("randomColor() did not return valid color");
 			}

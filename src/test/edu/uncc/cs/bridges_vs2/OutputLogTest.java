@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 
 
 import junit.framework.TestCase;
-import edu.uncc.cs.bridgesV2.validation.*;
+import bridges_v21.validation.*;
 
 
 public class OutputLogTest extends TestCase {

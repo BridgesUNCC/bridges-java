@@ -4,10 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.uncc.cs.bridgesV2.base.ArrayElement;
-import edu.uncc.cs.bridgesV2.base.ArrayOfElement;
-import edu.uncc.cs.bridgesV2.base.Element;
-import edu.uncc.cs.bridgesV2.base.SLelement;
+import bridges_v21.base.*;
 import junit.framework.TestCase;
 
 
