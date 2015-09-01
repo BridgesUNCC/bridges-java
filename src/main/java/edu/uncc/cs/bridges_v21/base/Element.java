@@ -21,7 +21,6 @@ import java.util.HashMap;
 
 public class Element<E>{
 	
-	private int MAX_ELEMENTS_SIZE = 1000;
 	static Integer ids = 0;
 	private String label;
 	private String identifier;
@@ -86,13 +85,6 @@ public class Element<E>{
 	public Element (Element<E> original){
 		this.identifier = ids.toString();
 		ids++;
-		if (ids > MAX_ELEMENTS_SIZE)
-		try {
-			throw new Exception ("No more than 1000 elements can be created!");
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 		this.label = new String(original.getLabel());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
 		this.lvisualizer  = new HashMap<String, LinkVisualizer> ();
