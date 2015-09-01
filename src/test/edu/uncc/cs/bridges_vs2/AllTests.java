@@ -17,10 +17,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import edu.uncc.cs.bridgesV2.base.BSTElement;
-import edu.uncc.cs.bridgesV2.base.SLelement;
-import edu.uncc.cs.bridgesV2.base.TreeElement;
-
 
 @RunWith(Suite.class)
 @SuiteClasses(
@@ -32,8 +28,10 @@ import edu.uncc.cs.bridgesV2.base.TreeElement;
 	DataFormatterExceptionTest.class,
 	DLelementTest.class,
 	EdgeTest.class,
+	ElementTest.class,
 	ElementVisualizerTest.class,
-	GraphListTest.class,
+	GraphAdjListTest.class,
+	GraphAdjMatrixTest.class,
 	InvalidValueExceptionTest.class,
 	LinkVisualizerTest.class,
 	OutputLogTest.class,

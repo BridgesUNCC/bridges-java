@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
@@ -16,21 +17,12 @@ import org.json.simple.parser.ParseException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.uncc.cs.bridgesV2.base.ADTVisualizer;
-import edu.uncc.cs.bridgesV2.base.ArrayElement;
-import edu.uncc.cs.bridgesV2.base.ArrayOfElement;
-import edu.uncc.cs.bridgesV2.base.BSTElement;
-import edu.uncc.cs.bridgesV2.base.DLelement;
-import edu.uncc.cs.bridgesV2.base.Edge;
-import edu.uncc.cs.bridgesV2.base.Element;
-import edu.uncc.cs.bridgesV2.base.GraphList;
-import edu.uncc.cs.bridgesV2.base.SLelement;
-import edu.uncc.cs.bridgesV2.base.TreeElement;
+import bridges_v21.base.*;
 
 public class ADTVisualizerTest {
-	static ADTVisualizer<String> adt0;
-	static ADTVisualizer<String> adt1;
-	static ADTVisualizer<String> adt2;
+	static ADTVisualizer<String, String> adt0;
+	static ADTVisualizer<String, String> adt1;
+	static ADTVisualizer<String, String> adt2;
 
 	static HashMap<String, Element<?>> hash;
 	static ArrayElement<String>[] elementArray;
@@ -96,9 +88,12 @@ public class ADTVisualizerTest {
 			bst1.setRight(bst2);
 					
 
-			adt0 = new ADTVisualizer<String>();
-			adt1 = new ADTVisualizer<String>(elementArrayNull);
-			adt2 = new ADTVisualizer<String>(hash);
+			adt0 = new ADTVisualizer<String, String>();
+			adt1 = new ADTVisualizer<String, String>(elementArrayNull);
+			adt2 = new ADTVisualizer<String, String>(hash);
+			
+			 Map<String, String> adtNames = adt0.adt_names; 
+
 
 			// for graph testing
 			v1 = new SLelement<String>("vertex1", "vertex1");
@@ -115,7 +110,7 @@ public class ADTVisualizerTest {
 	 * <p>Send HashMap to ADTVisualizer constructor. Test that no error is thrown. */
 	@Test
 	public void testValidateTypeWithValidInput() throws Exception {
-		ADTVisualizer<String> adt3 = new ADTVisualizer<String>(hash);
+		ADTVisualizer<String, String> adt3 = new ADTVisualizer<String, String>(hash);
 		assertNotNull(adt3);
 	}
 
@@ -151,43 +146,21 @@ public class ADTVisualizerTest {
 				bytes.size() != 0);
 	}
 	
-	/** Test that getVisualizerType returns a valid type from ADT_TYPE*/
-	@Test
-	public void testGetVisualizerType() {
-		// this constructor gets a default setting to graphl
-		assertTrue(
-				"getVisualizerType() does not return a valid type from ADT_TYPE",
-				adt0.ADT_TYPE.containsValue(adt0.getVisualizerType()));
 
-		// these constructors do not have a default setting
-		try {
-			assertTrue(
-					"getVisualizerType() does not return a valid type from ADT_TYPE",
-					adt1.ADT_TYPE.containsValue(adt1.getVisualizerType()));
-			assertTrue(
-					"getVisualizerType() does not return a valid type from ADT_TYPE",
-					adt2.ADT_TYPE.containsValue(adt2.getVisualizerType()));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			assertTrue("visualizer set to null did not throw error",
-					e instanceof NullPointerException);
-			;
-		}
-
-	}
 
 	/** Tests setVisualizerType() with valid key. <p>Call setVisualizerType and getVisualizerType for all valid ADT_TYPES. Test that input passed to setVisualizerType is equal to return value from getVisualizerType.*/
 	@Test
 	public void testSetVisualizerTypeToValidKey() {
-		Set<String> keys = adt0.ADT_TYPE.keySet();
-
+		Set<String> keys = adt0.adt_names.keySet();
+		
 		try {
 			for (String k : keys) {
+				
 				adt0.setVisualizerType(k);
-
-				assertTrue(
-						"getVisualizerType does not equal string passed to setVisualizerType",
-						adt0.ADT_TYPE.get(k).equals(adt0.getVisualizerType()));
+				
+				String msg = "setVisualizer to " + k + ", but getVisualizer() returned " + adt0.getVisualizerType();
+	
+				assertTrue(msg,	k.equals(adt0.getVisualizerType()));
 			}
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
@@ -230,134 +203,21 @@ public class ADTVisualizerTest {
 				bytes.size() != 0);
 	}
 	
-	/** Tests that ADTVisualizer can be appropriately set to graph visualization. <p>Call setGraph(). Test that getVisualizerType is equal to "graph1" */
-	@Test
-	public void testSetGraph() {		
-		boolean thrown = false;
-		adt0.setGraph();
-		
-		
-		try {
-			assertTrue("setgraph() did not set visualization type to \"graph\"",
-					adt0.getVisualizerType().equals("graphl"));
-		} catch (NullPointerException e) {
-			thrown = true;
-		}
-		
-		if(thrown) {
-			fail("getVisualizer() returned a null value");
-		}
-		
-		adt0.setGraph();
-
-	}
-	
-	/** Tests that ADTVisualizer can be appropriately set to tree visualization. <p>Call setTree(). Test that getVisualizerType is equal to "tree" */
-	@Test
-	public void testSetTree() {		
-		boolean thrown = false;
-		adt0.setTree();
-		
-		
-		try {
-			assertTrue("setTree() did not set visualization type to \"tree\"", adt0
-					.getVisualizerType().equals("tree"));			
-		} catch (NullPointerException e) {
-			thrown = true;
-		}
-		
-		if(thrown) {
-			fail("getVisualizer() returned a null value");
-		}
-		
-		adt0.setGraph();
-	}
-
-	/** Tests that ADTVisualizer can be appropriately set to array visualization. <p>Call setArray(). Test that getVisualizerType is equal to "AList" */
-	@Test
-	public void testSetArray() {		
-		boolean thrown = false;
-		adt0.setArray();
-		
-		
-		try {
-			assertTrue("setArray() did not set visualization type to \"array\"", adt0
-					.getVisualizerType().equals("AList"));			
-		} catch (NullPointerException e) {
-			thrown = true;
-		}
-		
-		if(thrown) {
-			fail("getVisualizer() returned a null value");
-		}
-		
-		adt0.setGraph();
-	}
-	
-	
-	/** 
-	 * Tests that ADTVisualizer can be appropriately set to stack visualization. <p>Call setStack(). Test that getVisualzerType is equal to "stack" 
-	 */
-	@Test
-	public void testSetStack() {
-		boolean thrown = false;
-		adt0.setStack();
-		
-		
-		try {
-			assertTrue("setStack() did not set visualization type to \"tree\"", adt0
-					.getVisualizerType().equals("stack"));			
-		} catch (NullPointerException e) {
-			thrown = true;
-		}
-		
-		if(thrown) {
-			fail("getVisualizer() returned a null value");
-		}
-		
-		adt0.setGraph();
-	}
-
-	/**Tests that ADTVisualizer can be appropriately set to queue visualization. <p> Call setQueue(). Test that getVisualzerType is equal to "queue" */
-	@Test
-	public void testSetQueue() {
-		boolean thrown = false;
-		adt0.setQueue();
-	
-		
-		
-		try {
-			assertTrue("setqueue() did not set visualization type to \"queue\"",
-					adt0.getVisualizerType().equals("queue"));
-		} catch (NullPointerException e) {
-			thrown = true;
-		}
-		
-		if(thrown) {
-			fail("getVisualizer() returned a null value");
-		}
-				adt0.setGraph();
-	}
 
 	/** Tests that getGraphAdjList_Representation returns a valid JSON. <p>Call getGraphAdjList_Representation() with a graph with an edge. Test that valid JSON was returned */
 	@Test
 	public void testGetGraphAdjList_Representation() {
-		ADTVisualizer<String> adt = new ADTVisualizer<String>();
+		ADTVisualizer<String, String> adt = new ADTVisualizer<String, String>();
 		Edge edge = new Edge(1, "A");
 		edge.setVertex("B");
 		
-		GraphList<String> adjList = new GraphList<String>();
-		adjList.setSourceVertex(new SLelement<String>("B", "B"));
-		adjList.addEdge(edge);
+		GraphAdjList<String, String> adjList = new GraphAdjList<String, String>();
+		adjList.addVertex("A", "A");
+		adjList.addEdge("A", "A", 1);
 		
 		
 		
-		HashMap<String, GraphList<String>> hash = new HashMap<String, GraphList<String>>();
-		hash.put("B", adjList);
-		
-		adt.setAdjacencyList(hash);
-		
-		String jsonString = adt.getGraphAdjList_Representation(hash);
+		String jsonString = adt.getGraphAdjList_Representation(adjList);
 
 		try {
 			JSONObject o = (JSONObject) parser.parse(jsonString);
@@ -366,6 +226,30 @@ public class ADTVisualizerTest {
 		}
 
 	}
+	
+	/** Tests that getGraphAdjMatrix_Representation returns a valid JSON. <p>Call getGraphAdjList_Representation() with a graph with an edge. Test that valid JSON was returned */
+	@Test
+	public void testGetGraphAdjMatrix_Representation() {
+		ADTVisualizer<String, String> adt = new ADTVisualizer<String, String>();
+		Edge edge = new Edge(1, "A");
+		edge.setVertex("B");
+		
+		GraphAdjMatrix<String, String> adjMatrix = new GraphAdjMatrix<String, String>(2);
+		adjMatrix.addVertex("A", "A");
+		adjMatrix.addEdge("A", "A", 1);
+		
+		
+		
+		String jsonString = adt.getGraphAdjMatrix_Representation(adjMatrix);
+
+		try {
+			JSONObject o = (JSONObject) parser.parse(jsonString);
+		} catch (ParseException e) {
+			fail("getGraphAdjList_Representation did not create a valid JSON");
+		}
+
+	}
+	
 
 	/** Tests that getSLRepresentation() returns a valid JSON. <p>Call getSLRepresentation() on a valid ADTVisualizer. Test that a valid JSON was returned */
 	@Test
@@ -414,11 +298,11 @@ public class ADTVisualizerTest {
 	@Test
 	public void testGetALRepresentationWithNullArray() {
 		JSONObject o;
-
-		adt1.setArray(elementArrayNull);
+		
+		
 		
 		try {
-			o = (JSONObject) parser.parse(adt1.getALRepresentation());
+			o = (JSONObject) parser.parse(adt1.getArrayRepresentation(elementArrayNull, elementArrayNull.length));
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -431,10 +315,10 @@ public class ADTVisualizerTest {
 	public void testGetALRepresentationWithValidArray() {
 		JSONObject o;
 
-		adt1.setArray(elementArray);
 		
+		adt1.setVisualizerType("Array");
 		try {
-			o = (JSONObject) parser.parse(adt1.getALRepresentation());
+			o = (JSONObject) parser.parse(adt1.getArrayRepresentation(elementArray, elementArray.length));
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -454,6 +338,13 @@ public class ADTVisualizerTest {
 		LinkedList<SLelement<String>> links = new LinkedList<SLelement<String>>();
 		links.add(sle1);
 		links.add(sle2);
+		
+		adt0.setVisualizeJSON(true);
+		
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		PrintStream old_out = System.err;
+
+		System.setOut(new PrintStream(bytes));
 
 		try {
 			JSONObject o = (JSONObject) parser.parse(adt0.generateJSON_SLL(
@@ -462,6 +353,13 @@ public class ADTVisualizerTest {
 			// TODO Auto-generated catch block
 			fail("generateJSON_SLL() did not generate valid JSON");
 		}
+		
+		System.setOut(old_out);
+
+		assertTrue("generate JSON with json_flag set to true did not print JSON to System.out",
+				bytes.size() != 0);
+
+		adt0.setVisualizeJSON(false);
 	}
 
 	/** Tests that generateJSON_DLL() returns a valid JSON. <p>Create linked lists of nodes and links for DLelements. Test that generateJSON_DLL returns valid JSON */
@@ -511,44 +409,7 @@ public class ADTVisualizerTest {
 	/** Not tested here, tested as part of testGetAdjacencyList. */
 	@Test
 	public void testGenerateJSON_Graph() {
-	}
-
-	
-	/** Test compare returns correct ordering for two elements. <p>Create two elements and pass to compare(). Test that compare() returns correct result. */
-	@Test
-	public void testCompareWithDifferentElements() {
-		SLelement<String> sle1 = new SLelement<String>("a", "a");
-		SLelement<String> sle2 = new SLelement<String>("b", "b");
 		
-		assertEquals("compare returns incorrect value", -1,
-				adt0.compare(sle1, sle2));
-	}
-
-
-	
-	/** Not tested here, tested as part of testSetMapOfLinks() */
-	@Test
-	public void testGetMapOfLinks() {
-		// tested in testSetMapOfLinks()
-	}
-
-	/** Test that setMapOfLinks() correctly sets HashMap. <p>Create HashMap and send to setMapOfLinks. Test that getMapOfLinks returns same HashMap */
-	@Test
-	public void testSetMapOfLinks() {
-		HashMap<Element<String>, HashMap<String, Element<String>>> map = new HashMap<Element<String>, HashMap<String,Element<String>>>(); 
-				
-				
-		HashMap<String, Element<String>> link = new HashMap<String, Element<String>>();
-		link.put("1", new SLelement("A", "A"));
-
-		map.put(new SLelement("1", "1"), link);
-
-		adt0.setMapOfLinks(map);
-
-		assertTrue(
-				"getMapOfLinks() does not return same value as setMapOfLinks()",
-				adt0.getMapOfLinks().equals(map));
-
 	}
 
 	/** Not tested here, tested in testSetAdjacencyList */
@@ -557,26 +418,9 @@ public class ADTVisualizerTest {
 		// tested in setAdjacencyList
 	}
 
-	/** Test setAdjacenclyList() correctly sets HashMap. <p>Create send a HashMap<String, SLeLement<String> and send to setAdjacencyList(). Test that same HashMap is resturned from getAdjacencyList() */
-	@Test
-	public void testSetAdjacencyList() {
-		HashMap<String, GraphList<String>> adjList = new HashMap<String, GraphList<String>>();
+	
 
-		adjList.put("A", new GraphList<String>());
 
-		adt0.setAdjacencyList(adjList);
-
-		assertTrue(
-				"getAdjacencyList did not return same value as setAdjacencyList",
-				adjList.equals(adt0.getAdjacencyList()));
-		assertNotNull("getAdjacencyList returned null when should have returned an empty GraphList", adt0.getAdjacencyList());
-	}
-
-	/** Not tested here, tested in testSetVisualizeJSON */
-	@Test
-	public void testIsVisualizeJSON() {
-		// tested in testSetVisualizeJSON()
-	}
 
 	/** Test whether setVisualizeJSON() correctly keeps boolean sent to it. <p>Call setVisualizeJSON with "true" and "false". Test that isVisualizeJSON() returns the same boolean that was called with setVisualizeJSON */
 	@Test
@@ -584,21 +428,22 @@ public class ADTVisualizerTest {
 		adt0.setVisualizeJSON(true);
 
 		assertTrue("setVisualizeJSON() did not set to true",
-				adt0.isVisualizeJSON());
+				adt0.visualizeJSON());
 
 		adt0.setVisualizeJSON(false);
 
 		assertFalse("setVisualizeJSON() did not set to false",
-				adt0.isVisualizeJSON());
+				adt0.visualizeJSON());
 
 	}
 	
 
-	/** NOT TESTED */
-	@Test
-	public void testPreOrder() {
-		fail("ADTVisualizer preOrder() has not been tested. ");
-	}
+	//private
+//	@Test
+//	public void testPreOrder() {
+//		adt0.pre
+//		fail("ADTVisualizer preOrder() has not been tested. ");
+//	}
 
 	
 	// protected

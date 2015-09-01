@@ -9,13 +9,7 @@ import org.json.simple.parser.ParseException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.uncc.cs.bridgesV2.base.ArrayElement;
-import edu.uncc.cs.bridgesV2.base.DLelement;
-import edu.uncc.cs.bridgesV2.base.Element;
-import edu.uncc.cs.bridgesV2.base.ElementVisualizer;
-import edu.uncc.cs.bridgesV2.base.LinkVisualizer;
-import edu.uncc.cs.bridgesV2.base.SLelement;
-
+import bridges_v21.base.*;
 
 public class ArrayElementTest {
 	static ArrayElement<String> a0;
