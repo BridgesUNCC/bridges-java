@@ -290,8 +290,8 @@ System.out.println("url:" + server_url);
          *   (String) ...execute(request).returnResponse().getEntity()
          *   	won't cast
          */
+        String err = asJSONObject(EntityUtils.toString(response.getEntity())).keySet().toString();//this will output the server error as well as parsed from the error message
         String text = EntityUtils.toString(response.getEntity());
-        
         if (response.getStatusLine().getStatusCode() == 503) {
         	throw new RateLimitException("Server responds Service Temporarily"
         			+ " Unavailable. You have probably reached your quota."
