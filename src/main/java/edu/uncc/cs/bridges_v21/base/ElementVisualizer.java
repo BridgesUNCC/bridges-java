@@ -25,6 +25,7 @@ public class ElementVisualizer {
 			put("size", "10.0");
 			put("shape", "circle");
 			put ("key", "");
+			put ("location", "0.0 0.0");
 		}
 	};
 
@@ -218,7 +219,31 @@ public class ElementVisualizer {
 	void setKey(String key) {
 		properties.put("key", key);
 	}
+	/**
+	 *
+	 *  Set the location(X,Y)  of the element - used for displaying elements 
+	 *	in maps
+	 *
+	 * @param location the X,Y location(array of 2 doubles) to be set
+	 *
+     **/
+	public
+	void setLocation(double x, double y) {
+		properties.put ("location", Double.toString(x) + " " +
+						Double.toString(y) );
+	}
 
+	/**
+	 *
+	 *  Get the location(X,Y)  of the element - used for displaying elements 
+	 *	in maps
+	 *
+	 * @return location the X,Y location(array of 2 doubles) to be set
+	 *
+     **/
+	String getLocation() {
+		return properties.get("location");
+	}
 
 	/**
 	 * The randomColor method selects a random color from the available list of
