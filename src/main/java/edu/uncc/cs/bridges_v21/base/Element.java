@@ -199,11 +199,19 @@ public class Element<E>{
 	 * @returns the encoded JSON string
 	 */
 	public String getRepresentation(){
+		String locx = "0.0", locy = "0.0";
 		String json = "{";
 		for (Entry<String, String> entry : visualizer.properties.entrySet()) {
-			json += String.format("\"%s\": \"%s\", ", entry.getKey(), 
+			if (entry.getKey() == "locationX")
+				locx = entry.getValue();
+			else if (entry.getKey() == "locationY")
+				locy = entry.getValue();
+			else
+				json += String.format("\"%s\": \"%s\", ", entry.getKey(), 
 									entry.getValue());
 		}
+							// add in the location attribute as an array
+		json += String.format("\"location\": [ %s , %s ], ", locx, locy);
 		json += String.format("\"name\": \"%s\"", label);
 		return json + "}";
 	}

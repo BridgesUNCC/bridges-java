@@ -25,7 +25,8 @@ public class ElementVisualizer {
 			put("size", "10.0");
 			put("shape", "circle");
 			put ("key", "");
-			put ("location", "[ 0.0 , 0.0 ]");
+			put ("locationX", "0.0");
+			put ("locationY", "0.0");
 		}
 	};
 
@@ -229,8 +230,8 @@ public class ElementVisualizer {
      **/
 	public
 	void setLocation(double x, double y) {
-		properties.put ("location", "[ " + Double.toString(x) + " , " +
-						Double.toString(y) + " ]");
+		properties.put("locationX", Double.toString(x));
+		properties.put("locationY", Double.toString(y));
 	}
 
 	/**
