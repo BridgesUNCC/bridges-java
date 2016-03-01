@@ -299,6 +299,53 @@ public class DataFormatter {
 	    	}
 		}
 	}
+	
+	private static List<Tweet> getUSGSTimeline(int max)
+			throws RateLimitException{
+	    	try {
+			 if (allTweets.isEmpty()){   
+	    			String resp = backend.get("/latest/" + maxRequests);
+			        JSONObject response = backend.asJSONObject(resp);
+			        JSONArray usgs_json = (JSONArray) backend.safeJSONTraverse(
+			        		"['tweets']", response, JSONArray.class);
+				    	for (Object tweet_json : usgs_json) {
+				    		String properties_str = (String) backend.safeJSONTraverse(
+				    				"['properties']", tweet_json, String.class);
+				    		String geometry_str = (String) backend.safeJSONTraverse(
+				    				"['geometry']", tweet_json, String.class);
+				 
+				    		String date_str = (String) backend.safeJSONTraverse(
+				    				"['date']", tweet_json, String.class);
+				    		
+				    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
+				    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+				    		Date date;
+				    		try {
+								date = df.parse(geometry_str);
+							} catch (ParseException e) {
+								date = new Date();
+							}
+				    		allTweets.add(new Tweet(properties_str, date_str, geometry_str));
+				    	}
+			 
+			
+			max = validNumberOfTweets(max);
+		    	List<Tweet> results = new ArrayList<>();
+		    //	results.addAll(allTweets);
+		    	return next(results, max);
+		    	
+	    	} catch (IOException e) {
+	    		// Trigger failsafe.
+	    		System.err.println("Warning: Trouble contacting DataFormatters. Using "
+	    				+ "sample data instead.\n"
+	    				+ e.getMessage());
+	    		failsafe = true;
+	    		return getUSGSTimeline(max);
+	    	}
+		}
+	}
+	
+	
 	/**
 	 * The next(List<Tweet>, int) method retrieves the next batch of tweets
 	 * and adds deep copy of those tweets to the current list 

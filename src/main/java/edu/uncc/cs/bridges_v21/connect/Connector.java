@@ -23,6 +23,7 @@ import bridges.validation.RateLimitException;
 
 public class Connector {
 	String server_url = "http://bridges-cs.herokuapp.com";
+	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";
 //	String server_url = "http://127.0.0.1:3000";
     Executor http_connection;
     boolean debug = false;
@@ -330,6 +331,19 @@ System.out.println("From Connector.get()..\n");
         return executeHTTPRequest(Request.Get(prepare(url)));
     }
     
+    
+    /**
+     * Execute a request of earthquakes to https://earthquakes-uncc.herokuapp.com/eq/
+     * @param url
+     * @return JSON string
+     * @throws RateLimitException
+     * @throws IOException
+     */
+    public String getUSGS(String url) throws RateLimitException, IOException{
+    	System.out.println("\nGetting earthquakes...\n");
+    	return executeHTTPRequest(Request.Get(url));
+    }
+    
     /** Execute a simple POST request with relative paths, taking a Scala Map()
         of request parameters. */
     public void post(String url, Map<String, String> arguments)
@@ -349,6 +363,7 @@ System.out.println("From Connector.post1()..\n");
         		.bodyString(data, ContentType.TEXT_PLAIN));
     }
     
+    
     /**
      * Escape the URL and prepend the base URL.
      * @returns the new url as a String
@@ -361,4 +376,11 @@ System.out.println("From Connector.post1()..\n");
     	out += "?apikey=" + Bridges.getKey();
       	return out;
     }
+    
+    public String prepareUSGS(String url) {
+    	String out = usgs_url;
+    	out += url;
+      	return out;
+    }
+    
 }
