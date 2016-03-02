@@ -277,7 +277,6 @@ public class ADTVisualizer<K, E> {
 		LinkedList<TreeElement<E>> links =new LinkedList<>();
 
 		preOrder(root, nodes, links);
-System.out.println("in getTreeRep..");
 
 		return getJSON_BinaryTree(nodes, links);
 	}

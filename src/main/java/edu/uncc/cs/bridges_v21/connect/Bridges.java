@@ -240,7 +240,6 @@ public class Bridges <K, E> {
 				break;
 			case "BinarySearchTree":
 			case "tree":
-System.out.println("in here..");
 				visualizeBinarySearchTree();
 				break;
 			case "GraphAdjacencyList":
@@ -339,7 +338,7 @@ System.out.println("here..");
 		} 
         // Return a URL to the user
         System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
-        assignmentDecimal+=0.01;
+        assignment_part++;
 	}
 	
 	/**
@@ -368,7 +367,7 @@ System.out.println("here..");
 		} 
         // Return a URL to the user
         System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
-        assignmentDecimal+=0.01;
+        assignment_part++;
 	}
 	
 	/**
@@ -396,7 +395,7 @@ System.out.println("here..");
 		} 
         // Return a URL to the user
         System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
-        assignmentDecimal+=0.01;
+        assignment_part++;
 	}
 	/**
 	 * Visualize a binary searchtree
@@ -423,7 +422,7 @@ System.out.println("here..");
 		} 
         // Return a URL to the user
         System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
-        assignmentDecimal+=0.01;
+        assignment_part++;
 	}
 
 	/**
@@ -455,7 +454,7 @@ System.out.println("here..");
 		} 
         // Return a URL to the user
         System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
-        assignmentDecimal+=0.01;
+        assignment_part++;
 	}
 	protected void visualizeGraphAdjacencyMatrix() {
         try {
@@ -481,7 +480,7 @@ System.out.println("here..");
 		} 
         // Return a URL to the user
         System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
-        assignmentDecimal+=0.01;
+        assignment_part++;
 	}
 
 	/**
