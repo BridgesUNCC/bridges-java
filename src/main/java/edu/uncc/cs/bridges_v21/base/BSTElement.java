@@ -126,7 +126,7 @@ public class BSTElement<K, E> extends TreeElement<E>{
 									entry.getValue());
 		}
 		json += String.format("\"name\": \"%s\", ", super.getLabel());
-		json += String.format("\"key\": \"%s\"", this.getKey());
+		json += String.format("\"key\": \"%8.2f\"", this.getKey());
 		return json + "}";
 	}
 	
