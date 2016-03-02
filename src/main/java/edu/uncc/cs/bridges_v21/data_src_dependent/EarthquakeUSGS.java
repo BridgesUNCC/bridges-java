@@ -13,17 +13,76 @@ import bridges.connect.DataFormatter;
  */
 public class EarthquakeUSGS extends EarthquakeTweet{
 	private double magnitude;
+	private float latit;
+	private float longit;
+	private String location;
+	private String title;
+	private String url;
 	
-	public EarthquakeUSGS(String content, String date2) {
-		super(content, date2);
+	
+	public EarthquakeUSGS(String properties, String geometry) {
+		super(properties, getTime(properties));
+		//method calls to set the fields here
 		setMagnitude();
-		this.setContent(enterCarriageReturn(content));
+		this.setContent(enterCarriageReturn(properties));
 		
+	}
+	public EarthquakeUSGS(String properties, Date time2) {
+		super(properties, time2);
+		setMagnitude();
+		this.setContent(enterCarriageReturn(properties));
+		
+	}
+	
+	private static Date getTime(String properties) {
+		// TODO Auto-generated method stub
+		//here we parse the properties string for the Time:value in milisec since epoch 1970
+		
+		return null;
+	}
+	public float getLatit() {
+		return latit;
+	}
+	public void setLatit(float latit) {
+		this.latit = latit;
+	}
+	public float getLongit() {
+		return longit;
+	}
+	public void setLongit(float longit) {
+		this.longit = longit;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public void setMagnitude(double magnitude) {
+		this.magnitude = magnitude;
 	}
 	public EarthquakeUSGS(Tweet aTweet){
 		this(aTweet.getContent(), aTweet.getDate());
 		this.setContent(enterCarriageReturn(aTweet.getContent()));
 	}
+	
+	public void eqProperties (String prop){
+		Scanner scan = new Scanner(prop);
+		
+	}
+	
 	
 	public void setMagnitude(){
 		Scanner scan = new Scanner(this.getContent());

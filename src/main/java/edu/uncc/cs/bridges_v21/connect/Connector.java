@@ -17,6 +17,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import bridges.validation.RateLimitException;
 
@@ -29,12 +31,14 @@ public class Connector {
     boolean debug = false;
     
     protected Connector() {
+    	
     	http_connection = Executor.newInstance(
     			HttpClientBuilder
     					.create()
     					.setRedirectStrategy(new LaxRedirectStrategy())
     					.build()
     		    );
+    	System.out.println("hello from connector"+http_connection);
     }
     
     /* Accessors and Mutators */
@@ -59,6 +63,82 @@ System.out.println("url:" + server_url);
 			this.server_url = server_url;
 	}
 	
+	/**
+	 * This reformats the coordinates in Earthwuake tweet such that there will be 
+	 * no arrays present when casting to the JSONObject. for  the resons described below
+	 * Mihai
+	 * @param text
+	 * @return
+	 */
+	public String latlongFormatter (String text){
+		Pattern patt = Pattern.compile("-?([0-9]*\\.[0-9]*)");
+		System.out.println("Char seq text: "+text);
+		String c = "{\"lat\":";
+		  Matcher m = patt.matcher(text);
+		  //StringBuffer coordBuffer = new StringBuffer(text.length());
+		  	m.find(); 
+		    String coord = m.group(0);
+		    c+=coord+",\"long\":";
+		    System.out.println("group 0: "+ c);
+		    m.find(); 
+		    coord = m.group(0);
+		    c+=coord+",\"dep\":";
+		    System.out.println("group 0: "+ c);
+		    m.find(); 
+		    coord = m.group(0);
+		    c+=coord+"}";
+		    System.out.println("group 0: "+ c);
+		    //m.appendReplacement(coordBuffer, Matcher.quoteReplacement(coord));
+		    System.out.println("Formatted coordinates: "+coord);
+		  
+		  //m.appendTail(coordBuffer);
+		  return c;
+	}
+	
+	
+	
+	/**
+	 * Find the pattern of the coordinates (as an array) and replace them with {"lat": value, "long":value}
+	 * This is done since it is difficult to cast an JSONArray to a JSON object containing arrays
+	 * Mihai
+	 * @param text
+	 * @return
+	 */
+	public String latlongFinder(String text){
+		Pattern patt = Pattern.compile("\\[-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*\\]");
+		  Matcher m = patt.matcher(text);
+		  StringBuffer coordBuffer = new StringBuffer(text.length());
+		  while (m.find()) {
+		    String coord = m.group(0);
+		   System.out.println("Found coordinates: "+coord);
+		    m.appendReplacement(coordBuffer, Matcher.quoteReplacement(latlongFormatter(coord.toString())));
+		  }
+		  m.appendTail(coordBuffer);
+		  return coordBuffer.toString();
+		
+	}
+	/**
+	 * Trimm the end of the earthquake data:     ,"products":{"String":[]}
+	 * 
+	 * Important: future implementations could combine the above in one single
+	 * method with a hash table for different patters
+	 * Mihai
+	 * @param text
+	 * @return
+	 */
+	public String trimmLast(String text){
+		Pattern patt = Pattern.compile("\\{\"String\":(\\[.*\\]\\})");
+		  Matcher m = patt.matcher(text);
+		  StringBuffer coordBuffer = new StringBuffer(text.length());
+		  while (m.find()) {
+		    String coord = m.group(0);
+		   System.out.println("Found coordinates: "+coord);
+		    m.appendReplacement(coordBuffer, Matcher.quoteReplacement("{}"));
+		  }
+		  m.appendTail(coordBuffer);
+		  return coordBuffer.toString();
+	}
+	
 	/* JSON management */
 	
 	/**
@@ -67,9 +147,24 @@ System.out.println("url:" + server_url);
 	 * @return  A non-null JSON object
 	 */
     public JSONObject asJSONObject(String text) throws IOException {
-    	JSONObject jo;
+    	JSONObject jo=null;
+    	String a =latlongFinder(text);//changing the coordinates format
+    	System.out.println(a);
+    	String b=trimmLast(a);//trimming the end of Earthquake
+    	text =b;
+    	System.out.println(text); 
     	try {
+    		System.out.println("connector asJsonObject after http request check JSONobject: "+ JSONValue.parse(text));
+    		//JSONParser parser = new JSONParser();
+    		
+    		//Object obj  = parser.parse(text);
+    		//System.out.println("Connector line 80 asJSON object parser.parse text: "+obj);
+    		//JSONArray array = new JSONArray();
+    		//array.add(obj);
+    		//System.out.println(array);
+    		
     		jo = (JSONObject) JSONValue.parse(text);
+    		
     	} catch (ClassCastException e) {
     		throw new IOException("Received a malformed JSON response from the"
     				+ " server (expecting a JSON object): " + text);
@@ -168,7 +263,7 @@ System.out.println("url:" + server_url);
     	int cursor = 0;
     	// This holds the object we will be running the next operation on.
     	Object any_json = original;
-    	
+    	System.out.println("Connector safeJSONTraverse line 188 any_JSON: "+any_json);
     	// Parse `sequence`
     	Pattern array_index_p = Pattern.compile("\\[(\\d+)\\]");
 		Matcher array_index_m = array_index_p.matcher(sequence.substring(cursor));
@@ -270,6 +365,7 @@ System.out.println("url:" + server_url);
      */
     public String executeHTTPRequest(Request request)
     		throws ClientProtocolException, IOException, RateLimitException {
+    	System.out.println("execute HTTPRequest in request now: " + request);
         // It's possible we need to reimplement this as a ResponseHandler
     		//System.out.println("Sending request: " + request);
         // Execute the HTTP request
@@ -306,7 +402,7 @@ System.out.println("url:" + server_url);
             /* By convention, the server responds {"error": "message"} */
             
             // Parsing it as an object will throw if the server gave an error.
-            asJSONObject(text);
+           // asJSONObject(text);
             
             // But otherwise, throw something less helpful.
             throw new IOException("Server errored, but gave an invalid"
@@ -325,10 +421,14 @@ System.out.println("url:" + server_url);
         Omit the leading http://hostname, but include the leading /:
         [good]: /api/followgraph/user/sean
         [bad]: api/followgraph/user/sean
-        [bad]: http://myserver:9183/api/followgraph/user/sean  */
+        [bad]: http://myserver:9183/api/followgraph/user/sean   NullPointerException*/
     public String get(String url) throws RateLimitException, IOException {
-System.out.println("From Connector.get()..\n");
-        return executeHTTPRequest(Request.Get(prepare(url)));
+    	
+    	System.out.println("get Connector url before formatting: " + url);
+    	String furl = prepare(url);
+    	System.out.println("From Connector.get()..\n");
+    	Request req = Request.Get(furl);
+        return executeHTTPRequest(req);
     }
     
     
@@ -340,8 +440,8 @@ System.out.println("From Connector.get()..\n");
      * @throws IOException
      */
     public String getUSGS(String url) throws RateLimitException, IOException{
-    	System.out.println("\nGetting earthquakes...\n");
-    	return executeHTTPRequest(Request.Get(url));
+    	System.out.println("\nGetting earthquakes (the backend connection is working)...\n");
+    	return executeHTTPRequest(Request.Get(prepareUSGS(url)));
     }
     
     /** Execute a simple POST request with relative paths, taking a Scala Map()
@@ -370,16 +470,19 @@ System.out.println("From Connector.post1()..\n");
      */
     public String prepare(String url) {
     	String out = server_url;
+    	System.out.println(out);
     	out += url
     			.replace(" ", "%20")
       			.replace("$assignment", Bridges.getAssignment());
     	out += "?apikey=" + Bridges.getKey();
+    	System.out.println(out);
       	return out;
     }
     
     public String prepareUSGS(String url) {
     	String out = usgs_url;
     	out += url;
+    	System.out.println(out);
       	return out;
     }
     

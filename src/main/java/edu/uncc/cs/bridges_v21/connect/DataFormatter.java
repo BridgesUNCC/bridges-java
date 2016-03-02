@@ -35,7 +35,8 @@ public class DataFormatter {
 
 	
 	private static List<Tweet> allTweets = new ArrayList<>();// this is the list off all the tweets retrieved
-	private static int maxRequests = 500; //This is the max number of tweets one can retrieve from the server
+	private static List<EarthquakeUSGS> allUSGS = new ArrayList<>();// this is the list off all the earthquakes retrieved
+	private static int maxRequests = 1; //This is the max number of tweets one can retrieve from the server
 	private static int tweetIterator = -1; //this iterator is used when requesting a new batch of tweets
 	private static boolean failsafe = false;
 	private static Connector backend;
@@ -156,12 +157,30 @@ public class DataFormatter {
          */
         	public static List<Tweet> getAssociations(TwitterAccount identifier, int max) {
             	try {
+            		System.out.println("hello form getAssociations Data formatter");
             		return getTwitterTimeline(identifier, max);
         	    }
             		catch (RateLimitException e) {
             		return new ArrayList<>();
             	}
         }
+        	
+        	/**
+             * This Method returns the list of earthquakes
+             * @param identifier holds the name of the 
+             * @param max holds the max number of earthquakes
+             * @return
+        	 * @throws MyExceptionClass 
+             */
+            	public static List<EarthquakeUSGS> getAssociations(USGSaccount identifier, int max) {
+                	try {
+                		return getUSGSTimeline(identifier, max);
+            	    }
+                		catch (RateLimitException e) {
+                		return new ArrayList<>();
+                	}
+            }
+            
         	/**
         	 * This method change the tweet object into an earthquake tweet object with
         	 * more data extracted from the tweet content, like magnitude
@@ -260,9 +279,13 @@ public class DataFormatter {
 			return SampleDataGenerator.getTwitterTimeline(id.getName(), max);
 		} else {
 	    	try {
-			 if (allTweets.isEmpty()){   
-	    			String resp = backend.get("/streams/twitter.com/timeline/"
+			 if (allTweets.isEmpty()){
+				 	System.out.println("/streams/twitter.com/timeline/"
 			    			+ id.getName() + "/" + maxRequests);
+				 	String partial = "/streams/twitter.com/timeline/"
+			    			+ id.getName() + "/" + maxRequests;
+	    			String resp ="";
+	    			resp= backend.get(partial);
 			        JSONObject response = backend.asJSONObject(resp);
 			        JSONArray tweets_json = (JSONArray) backend.safeJSONTraverse(
 			        		"['tweets']", response, JSONArray.class);
@@ -300,22 +323,26 @@ public class DataFormatter {
 		}
 	}
 	
-	private static List<Tweet> getUSGSTimeline(int max)
+	private static List<EarthquakeUSGS> getUSGSTimeline(USGSaccount id, int max)
 			throws RateLimitException{
 	    	try {
-			 if (allTweets.isEmpty()){   
-	    			String resp = backend.get("/latest/" + maxRequests);
+			 if (allUSGS.isEmpty()){   
+	    			String resp = backend.getUSGS("/latest/" + maxRequests);
+	    			System.out.println("The responds in getUSGST from backend: "+resp);
 			        JSONObject response = backend.asJSONObject(resp);
+			        System.out.println("Getting the first response from the backend COnnector assJSONObject");
 			        JSONArray usgs_json = (JSONArray) backend.safeJSONTraverse(
-			        		"['tweets']", response, JSONArray.class);
+			        		"[]", response, JSONArray.class);
+			        System.out.println("Thys is the first usgs_json array"+usgs_json);
 				    	for (Object tweet_json : usgs_json) {
-				    		String properties_str = (String) backend.safeJSONTraverse(
-				    				"['properties']", tweet_json, String.class);
 				    		String geometry_str = (String) backend.safeJSONTraverse(
-				    				"['geometry']", tweet_json, String.class);
-				 
-				    		String date_str = (String) backend.safeJSONTraverse(
-				    				"['date']", tweet_json, String.class);
+				    				"['geometry']", usgs_json, String.class);
+				    		String properties_str = (String) backend.safeJSONTraverse(
+				    				"['properties']", usgs_json, String.class);
+				    		
+				    		
+				    		String date_str = "\"date\":\"Sat Jul 18 02:46:24 +0000 2015\"";
+				    		date_str = (String) backend.safeJSONTraverse("['date']", tweet_json, String.class);
 				    		
 				    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
 				    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -325,24 +352,25 @@ public class DataFormatter {
 							} catch (ParseException e) {
 								date = new Date();
 							}
-				    		allTweets.add(new Tweet(properties_str, date_str, geometry_str));
+				    		allUSGS.add(new EarthquakeUSGS(properties_str, geometry_str));
 				    	}
 			 
 			
 			max = validNumberOfTweets(max);
-		    	List<Tweet> results = new ArrayList<>();
+		    	List<EarthquakeUSGS> results = new ArrayList<>();
 		    //	results.addAll(allTweets);
-		    	return next(results, max);
+		    	return next(results, max, id);
 		    	
-	    	} catch (IOException e) {
+	    	}
+			 } catch (IOException e) {
 	    		// Trigger failsafe.
 	    		System.err.println("Warning: Trouble contacting DataFormatters. Using "
 	    				+ "sample data instead.\n"
 	    				+ e.getMessage());
 	    		failsafe = true;
-	    		return getUSGSTimeline(max);
+	    		return getUSGSTimeline(id, max);
 	    	}
-		}
+		return allUSGS;
 	}
 	
 	
@@ -361,6 +389,28 @@ public class DataFormatter {
 			try{
 				//aList.add(allTweets.get(tweetIterator));
 				aList.add(new Tweet(allTweets.get(tweetIterator)));
+				} catch(Exception e){
+					System.out.println(e.getMessage());
+				}	
+		}
+		return aList;
+	}
+	
+	/**
+	 * The next(List<EarthquakeUSGS>, int) method retrieves the next batch of eq
+	 * and adds deep copy of those eq to the current list 
+	 * @param aList holds the reference to the current list of eq
+	 * @param max the number of eq in the new batch of eq
+	 * @return the list of eq containing the old and the new batch of tweets
+	 * @throws MyExceptionClass 
+	 */
+	public static List<EarthquakeUSGS> next(List<EarthquakeUSGS> aList, int max, USGSaccount acu){
+		max = validNumberOfTweets(max);//same validator as for the tweets
+		for (int i = 0; i < max; i++){
+			tweetIterator ++; //same iterator as for the tweets
+			try{
+				//aList.add(allTweets.get(tweetIterator));
+				aList.add(new EarthquakeUSGS(allUSGS.get(tweetIterator)));
 				} catch(Exception e){
 					System.out.println(e.getMessage());
 				}	

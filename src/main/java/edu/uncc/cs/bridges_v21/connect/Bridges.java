@@ -15,9 +15,14 @@ package bridges.connect;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import bridges.base.*;
+import bridges.data_src_dependent.EarthquakeUSGS;
+import bridges.data_src_dependent.Tweet;
+import bridges.data_src_dependent.TwitterAccount;
+import bridges.data_src_dependent.USGSaccount;
 import bridges.validation.RateLimitException;
 import bridges.validation.Validation;
 
@@ -34,6 +39,7 @@ public class Bridges <K, E> {
 	private static int assignment;
 	private static int assignment_part;
 	private static String key;
+	private DataFormatter df;
 
 	private static String userName;
 	/**
@@ -44,6 +50,7 @@ public class Bridges <K, E> {
 		super();
 		visualizer = new ADTVisualizer<K,E>();
 		connector = new Connector();
+		df = new DataFormatter();
 		assignment_part = 0;
 	}
 	
@@ -74,6 +81,13 @@ public class Bridges <K, E> {
 		
 	}
 	
+	public static List<Tweet> getAssociations(TwitterAccount name, int maxElements){
+		return DataFormatter.getAssociations(name, maxElements);
+	}
+	
+	public static List<EarthquakeUSGS> getAssociations(USGSaccount name, int maxElements){
+		return DataFormatter.getAssociations(name, maxElements);
+	}
 	/* Accessors and Mutators */
 	public static String getAssignment() {
 		return (assignment_part < 10) 
