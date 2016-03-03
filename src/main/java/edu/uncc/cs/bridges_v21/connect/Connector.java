@@ -25,6 +25,7 @@ import bridges.validation.RateLimitException;
 
 public class Connector {
 	String server_url = "http://bridges-cs.herokuapp.com";
+	//String server_url = "http://bridges-clone.herokuapp.com";
 	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";
 //	String server_url = "http://127.0.0.1:3000";
     Executor http_connection;
@@ -73,16 +74,16 @@ System.out.println("url:" + server_url);
 	public String latlongFormatter (String text){
 		Pattern patt = Pattern.compile("-?([0-9]*\\.[0-9]*)");
 		System.out.println("Char seq text: "+text);
-		String c = "{\"lat\":";
+		String c = "{\"latitude\":";
 		  Matcher m = patt.matcher(text);
 		  //StringBuffer coordBuffer = new StringBuffer(text.length());
 		  	m.find(); 
 		    String coord = m.group(0);
-		    c+=coord+",\"long\":";
+		    c+=coord+",\"longitude\":";
 		    System.out.println("group 0: "+ c);
 		    m.find(); 
 		    coord = m.group(0);
-		    c+=coord+",\"dep\":";
+		    c+=coord+",\"depth\":";
 		    System.out.println("group 0: "+ c);
 		    m.find(); 
 		    coord = m.group(0);
@@ -147,14 +148,15 @@ System.out.println("url:" + server_url);
 	 * @return  A non-null JSON object
 	 */
     public JSONObject asJSONObject(String text) throws IOException {
-    	JSONObject jo=null;
+    	JSONObject jo;
     	String a =latlongFinder(text);//changing the coordinates format
-    	System.out.println(a);
-    	String b=trimmLast(a);//trimming the end of Earthquake
-    	text =b;
+    	//System.out.println(a);
+    	text = a;
+    	//String b=trimmLast(a);//trimming the end of Earthquake
+    	//text =b;
     	System.out.println(text); 
     	try {
-    		System.out.println("connector asJsonObject after http request check JSONobject: "+ JSONValue.parse(text));
+    		System.out.println("line 157 connector asJsonObject after http request check JSONobject: "+ JSONValue.parse(text));
     		//JSONParser parser = new JSONParser();
     		
     		//Object obj  = parser.parse(text);

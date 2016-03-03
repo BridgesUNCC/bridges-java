@@ -154,6 +154,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.5'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.1'
+    compile 'com.google.code.gson:gson:2.6.2'
 //	compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
 //	compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
     // Declare the dependency for your favourite test framework you want 

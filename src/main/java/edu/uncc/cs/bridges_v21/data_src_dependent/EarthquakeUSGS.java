@@ -18,15 +18,28 @@ public class EarthquakeUSGS extends EarthquakeTweet{
 	private String location;
 	private String title;
 	private String url;
+	private String properties;
 	
 	
-	public EarthquakeUSGS(String properties, String geometry) {
-		super(properties, getTime(properties));
-		//method calls to set the fields here
-		setMagnitude();
-		this.setContent(enterCarriageReturn(properties));
-		
+	public EarthquakeUSGS(String content, Date date2, double magnitude,
+			float latit, float longit, String location, String title, String url, String properties) {
+		super(content, date2);
+		this.magnitude = magnitude;
+		this.latit = latit;
+		this.longit = longit;
+		this.location = location;
+		this.title = title;
+		this.url = url;
 	}
+		
+	public String getProperties() {
+		return properties;
+	}
+
+	public void setProperties(String properties) {
+		this.properties = properties;
+	}
+
 	public EarthquakeUSGS(String properties, Date time2) {
 		super(properties, time2);
 		setMagnitude();
@@ -86,8 +99,6 @@ public class EarthquakeUSGS extends EarthquakeTweet{
 	
 	public void setMagnitude(){
 		Scanner scan = new Scanner(this.getContent());
-		scan.next();
-		scan.next();
 		StringBuilder str =  new StringBuilder();
 		str.append(scan.next());
 		DataFormatter.trimComma(str);
