@@ -120,11 +120,18 @@ public class BSTElement<K, E> extends TreeElement<E>{
 	 */
 	@Override
 	public String getRepresentation() {
+		String locx = "0.0", locy = "0.0";
 		String json = "{";
 		for (Entry<String, String> entry : super.getVisualizer().properties.entrySet()) {
-			json += String.format("\"%s\": \"%s\", ", entry.getKey(), 
+			if (entry.getKey() == "locationX")
+				locx = entry.getValue();
+			else if (entry.getKey() == "locationY")
+				locy = entry.getValue();
+            else
+				json += String.format("\"%s\": \"%s\", ", entry.getKey(), 
 									entry.getValue());
 		}
+		json += String.format("\"location\": [ %s , %s ], ", locx, locy);
 		json += String.format("\"name\": \"%s\", ", super.getLabel());
 		json += String.format("\"key\": \"%8.2f\"", this.getKey());
 		return json + "}";
