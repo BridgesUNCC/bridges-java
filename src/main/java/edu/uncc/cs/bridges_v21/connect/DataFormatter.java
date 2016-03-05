@@ -48,7 +48,9 @@ public class DataFormatter {
 	
 	private static List<Tweet> allTweets = new ArrayList<>();// this is the list off all the tweets retrieved
 	private static List<EarthquakeUSGS> allUSGS = new ArrayList<>();// this is the list off all the earthquakes retrieved
-	private static int maxRequests = 2; //This is the max number of tweets one can retrieve from the server
+
+	private static int maxRequests = 100; //This is the max number of tweets one can retrieve from the server
+
 	private static int tweetIterator = -1; //this iterator is used when requesting a new batch of tweets
 	private static boolean failsafe = false;
 	private static Connector backend;
@@ -406,6 +408,7 @@ public class DataFormatter {
 				        	//sdf.format(new Date(myTimeAsLong));
 				    		//String date_str = "\"date\":\"Sat Jul 18 02:46:24 +0000 2015\"";
 				    		//date_str = (String) backend.safeJSONTraverse("['date']", eq_json, String.class);
+
 				    		
 				    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
 				    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");

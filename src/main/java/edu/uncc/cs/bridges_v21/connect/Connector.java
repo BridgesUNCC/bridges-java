@@ -72,6 +72,7 @@ System.out.println("url:" + server_url);
 	 * @return
 	 */
 	public String latlongFormatter (String text){
+
 		Pattern patt2 = Pattern.compile("-?([0-9]*\\.?[0-9]+)");
 		//-?([0-9]*\.?[0-9]+)
 		System.out.println("Char seq text: "+text);
@@ -95,11 +96,14 @@ System.out.println("url:" + server_url);
 		    String coord3 = new String(n.group(1));
 		    c+=coord3+"}";
 		    System.out.println("group 3 "+ c);
+
 		    //m.appendReplacement(coordBuffer, Matcher.quoteReplacement(coord));
 		    System.out.println("Formatted coordinates: "+coord);
 		  
 		  //m.appendTail(coordBuffer);
+
 		  return c.toString();
+
 	}
 	
 	
@@ -112,6 +116,7 @@ System.out.println("url:" + server_url);
 	 * @return
 	 */
 	public String latlongFinder(String text){
+
 		//\\[-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*\\]
 		Pattern patt = Pattern.compile("\\[-?[0-9]*.[0-9]*,.?-?[0-9]*.[0-9]*,.?-?[0-9]*.[0-9]*\\]");
 		  Matcher m = patt.matcher(text);
@@ -136,6 +141,7 @@ System.out.println("url:" + server_url);
 		  m.appendTail(coordBuffer);
 		//}
 		  System.out.println("The coord buffer:"+coordBuffer.toString());
+
 		  return coordBuffer.toString();
 		
 	}
@@ -190,7 +196,8 @@ System.out.println("url:" + server_url);
     	//text =b;
     	System.out.println(text); 
     	try {
-    		System.out.println("line 157 connector asJsonObject after http request check JSONobject: "+ JSONValue.parse(text));
+//    		System.out.println("line 157 connector asJsonObject after http request check JSONobject: "+ JSONValue.parse(text));
+
     		//JSONParser parser = new JSONParser();
     		
     		//Object obj  = parser.parse(text);

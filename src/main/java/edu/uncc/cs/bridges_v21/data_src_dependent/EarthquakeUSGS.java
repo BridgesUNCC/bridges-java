@@ -18,6 +18,7 @@ public class EarthquakeUSGS extends EarthquakeTweet{
 	private String location;
 	private String title;
 	private String url;
+
 	private String properties;
 	
 	
@@ -38,6 +39,17 @@ public class EarthquakeUSGS extends EarthquakeTweet{
 
 	public void setProperties(String properties) {
 		this.properties = properties;
+	}
+
+
+	
+	
+	public EarthquakeUSGS(String properties, String geometry) {
+		super(properties, getTime(properties));
+		//method calls to set the fields here
+		setMagnitude();
+		this.setContent(enterCarriageReturn(properties));
+		
 	}
 
 	public EarthquakeUSGS(String properties, Date time2) {
