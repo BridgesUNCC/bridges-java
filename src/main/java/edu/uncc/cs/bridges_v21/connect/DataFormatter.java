@@ -48,7 +48,7 @@ public class DataFormatter {
 	
 	private static List<Tweet> allTweets = new ArrayList<>();// this is the list off all the tweets retrieved
 	private static List<EarthquakeUSGS> allUSGS = new ArrayList<>();// this is the list off all the earthquakes retrieved
-	private static int maxRequests = 1; //This is the max number of tweets one can retrieve from the server
+	private static int maxRequests = 2; //This is the max number of tweets one can retrieve from the server
 	private static int tweetIterator = -1; //this iterator is used when requesting a new batch of tweets
 	private static boolean failsafe = false;
 	private static Connector backend;
@@ -367,6 +367,7 @@ public class DataFormatter {
 				    		//	"['geometry']", tweet_json, String.class);
 			        	//System.out.println("My reponse: "+response.toJSONString());
 				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq
+				       // System.out.println("The whoel deserialized: "+deserializedEq.);
 				        System.out.println("Latitude: "+ deserializedEq.geometry.coordinates.latitude);
 				    	//	System.out.println(((JSONObject)eq_json));
 				    		//JSONObject jObject = new JSONObject(((JSONObject)eq_json.trim());
