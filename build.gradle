@@ -35,16 +35,17 @@ artifacts {
 sourceSets {
     main {
         java {
-            exclude 'edu/uncc/cs/bridgesdrivers/**'
-            exclude 'edu/uncc/cs/bridges/**'
-            exclude 'edu/uncc/cs/bridges_vs1/drivers/**'
+//			exclude 'edu/uncc/cs/bridgesdrivers/**'
+//			exclude 'edu/uncc/cs/bridges/bridgesV2/**'
+//			exclude 'src/main/test/**'
+			include 'edu/uncc/cs/bridges_v21/**'
         }
-    }
-    test {
-        java {
-            include '**'
-        }
-    }
+	}
+//	test {
+//		java {
+//			include '**'
+//		}
+//	}
 }
 
 test {
@@ -85,7 +86,7 @@ task fatJar(type: Jar) {
             'Implementation-Version': version
     }
     baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it)}}
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it)}}
     with jar
 }
 
@@ -148,7 +149,8 @@ repositories {
     mavenCentral()
 }
 
-// In this section you declare the dependencies for your production and test code
+// 	In this section you declare the dependencies for your production and 
+//	test code
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.5'
@@ -156,10 +158,10 @@ dependencies {
     compile 'org.apache.httpcomponents:fluent-hc:4.3.1'
 //	compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
 //	compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
-    // Declare the dependency for your favourite test framework you want 
+	// Declare the dependency for your favourite test framework you want 
 	// to use in your tests.
-    // TestNG is also supported by the Gradle Test task. Just change the
-    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
+	// TestNG is also supported by the Gradle Test task. Just change the
+	// testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
-    testCompile "junit:junit:4.11"
+	// testCompile "junit:junit:4.11"
 }
