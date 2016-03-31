@@ -25,11 +25,12 @@ import bridges.validation.RateLimitException;
 
 public class Connector {
 	String server_url = "http://bridges-cs.herokuapp.com";
+	//String server_url = "http://bridges-clone.herokuapp.com";
 	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";
 //	String server_url = "http://127.0.0.1:3000";
     Executor http_connection;
     boolean debug = false;
-    
+    int pattern_found=0; //semaphor
     protected Connector() {
     	
     	http_connection = Executor.newInstance(
@@ -71,28 +72,38 @@ System.out.println("url:" + server_url);
 	 * @return
 	 */
 	public String latlongFormatter (String text){
-		Pattern patt = Pattern.compile("-?([0-9]*\\.[0-9]*)");
+
+		Pattern patt2 = Pattern.compile("-?([0-9]*\\.?[0-9]+)");
+		//-?([0-9]*\.?[0-9]+)
 		System.out.println("Char seq text: "+text);
-		String c = "{\"lat\":";
-		  Matcher m = patt.matcher(text);
+		//StringBuilder c = new StringBuilder();
+		String c= "{\"latitude\":";
+		//StringBuffer cBuffer = new StringBuffer(text.length());
+		Matcher n = patt2.matcher(text);
+		//n.find();
+		//System.out.println("Whole coord: "+text+" group1 "+n.group(1));
+		
 		  //StringBuffer coordBuffer = new StringBuffer(text.length());
-		  	m.find(); 
-		    String coord = m.group(0);
-		    c+=coord+",\"long\":";
-		    System.out.println("group 0: "+ c);
-		    m.find(); 
-		    coord = m.group(0);
-		    c+=coord+",\"dep\":";
-		    System.out.println("group 0: "+ c);
-		    m.find(); 
-		    coord = m.group(0);
-		    c+=coord+"}";
-		    System.out.println("group 0: "+ c);
+		  	n.find(); 
+		    String coord = new String(n.group(1));
+		    c+=coord+",\"longitude\":";
+		    System.out.println("group 1: "+ c);
+		    n.find(); 
+		    String coord2 = new String(n.group(1));
+		    c+=coord2+",\"depth\":";
+		    System.out.println("group 2: "+ c);
+		    n.find(); 
+		    String coord3 = new String(n.group(1));
+		    c+=coord3+"}";
+		    System.out.println("group 3 "+ c);
+
 		    //m.appendReplacement(coordBuffer, Matcher.quoteReplacement(coord));
 		    System.out.println("Formatted coordinates: "+coord);
 		  
 		  //m.appendTail(coordBuffer);
-		  return c;
+
+		  return c.toString();
+
 	}
 	
 	
@@ -105,15 +116,32 @@ System.out.println("url:" + server_url);
 	 * @return
 	 */
 	public String latlongFinder(String text){
-		Pattern patt = Pattern.compile("\\[-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*\\]");
+
+		//\\[-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*\\]
+		Pattern patt = Pattern.compile("\\[-?[0-9]*.[0-9]*,.?-?[0-9]*.[0-9]*,.?-?[0-9]*.[0-9]*\\]");
 		  Matcher m = patt.matcher(text);
-		  StringBuffer coordBuffer = new StringBuffer(text.length());
+		  
+		//while (pattern_found!=1){
+			StringBuffer coordBuffer = new StringBuffer(text.length());
+		  pattern_found=1;
+		  int counter=0;
+		  
 		  while (m.find()) {
+			  counter++;
+			  pattern_found=0;
 		    String coord = m.group(0);
-		   System.out.println("Found coordinates: "+coord);
-		    m.appendReplacement(coordBuffer, Matcher.quoteReplacement(latlongFormatter(coord.toString())));
+		    //System.out.println("Groups first loop 0: "+m.group(0) + " 1: "+m.group(1));
+		    String repl = latlongFormatter(coord);
+		    
+		   System.out.println("Found coordinates: "+coord + " counter: "+counter);
+		    //m.appendReplacement(coordBuffer, Matcher.quoteReplacement("{\"latitude\":115.4466,\"longitude\":37.8432,\"depth\":0.6}"));
+		    m.appendReplacement(coordBuffer, Matcher.quoteReplacement(repl));
+		    //coordBuffer.append(Matcher.quoteReplacement(repl));
 		  }
 		  m.appendTail(coordBuffer);
+		//}
+		  System.out.println("The coord buffer:"+coordBuffer.toString());
+
 		  return coordBuffer.toString();
 		
 	}
@@ -147,14 +175,29 @@ System.out.println("url:" + server_url);
 	 * @return  A non-null JSON object
 	 */
     public JSONObject asJSONObject(String text) throws IOException {
-    	JSONObject jo=null;
-    	String a =latlongFinder(text);//changing the coordinates format
-    	System.out.println(a);
-    	String b=trimmLast(a);//trimming the end of Earthquake
-    	text =b;
+    	JSONObject jo;
+    	//pattern_found=true;
+    	
+    	//while (pattern_found==0){
+    		//if (textlatlongFinder(text))
+    		 String a=latlongFinder(text);
+    		 text = a;
+    		 System.out.println("a is: " +text);
+    		 String c=latlongFinder(a);
+    		 //text = c;
+    		 //System.out.println("c is: " +text);
+    	//}
+    	//pattern_found=0;
+    	
+    	//changing the coordinates format
+    	//System.out.println(a);
+    	//text = a;
+    	//String b=trimmLast(a);//trimming the end of Earthquake
+    	//text =b;
     	System.out.println(text); 
     	try {
-    		System.out.println("connector asJsonObject after http request check JSONobject: "+ JSONValue.parse(text));
+//    		System.out.println("line 157 connector asJsonObject after http request check JSONobject: "+ JSONValue.parse(text));
+
     		//JSONParser parser = new JSONParser();
     		
     		//Object obj  = parser.parse(text);
