@@ -133,7 +133,15 @@ public class BSTElement<K, E> extends TreeElement<E>{
 		}
 		json += String.format("\"location\": [ %s , %s ], ", locx, locy);
 		json += String.format("\"name\": \"%s\", ", super.getLabel());
-		json += String.format("\"key\": \"%8.2f\"", this.getKey());
+							// must check type 
+		String s = ((Object) this.getKey()).getClass().getName();
+		if ( (s == "java.lang.Integer") || (s == "java.lang.Long") )
+			json += String.format("\"key\": \"%d\"", this.getKey());
+		else if ( (s == "java.lang.Float") || (s == "java.lang.Double") )
+			json += String.format("\"key\": \"%f\"", this.getKey());
+		else if ( (s == "java.lang.String") )
+			json += String.format("\"key\": \"%s\"", this.getKey());
+			
 		return json + "}";
 	}
 	

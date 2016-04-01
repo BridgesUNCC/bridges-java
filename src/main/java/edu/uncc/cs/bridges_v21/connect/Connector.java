@@ -140,7 +140,7 @@ System.out.println("url:" + server_url);
 		  }
 		  m.appendTail(coordBuffer);
 		//}
-		  System.out.println("The coord buffer:"+coordBuffer.toString());
+//		  System.out.println("The coord buffer:"+coordBuffer.toString());
 
 		  return coordBuffer.toString();
 		
@@ -182,7 +182,6 @@ System.out.println("url:" + server_url);
     		//if (textlatlongFinder(text))
     		 String a=latlongFinder(text);
     		 text = a;
-    		 System.out.println("a is: " +text);
     		 String c=latlongFinder(a);
     		 //text = c;
     		 //System.out.println("c is: " +text);
@@ -194,7 +193,7 @@ System.out.println("url:" + server_url);
     	//text = a;
     	//String b=trimmLast(a);//trimming the end of Earthquake
     	//text =b;
-    	System.out.println(text); 
+    	// System.out.println(text); 
     	try {
 //    		System.out.println("line 157 connector asJsonObject after http request check JSONobject: "+ JSONValue.parse(text));
 
