@@ -352,12 +352,12 @@ public class DataFormatter {
 				 	//Gson x= new Gson();
 				 	
 	    			String resp = backend.getUSGS("/latest/" + maxRequests);
-	    			System.out.println("The responds in getUSGST from backend: "+resp);
+//	    			System.out.println("The responds in getUSGST from backend: "+resp);
 			        JSONObject response = backend.asJSONObject(resp);
-			        System.out.println("Getting the first response from the backend COnnector asJSONObject");
+//			        System.out.println("Getting the first response from the backend COnnector asJSONObject");
 			        JSONArray usgs_json = (JSONArray) backend.safeJSONTraverse(    //these are earthquakes
 			        		"['Earthquakes']", response, JSONArray.class);
-			        System.out.println("Thys is the first usgs_json array"+usgs_json);
+//			        System.out.println("Thys is the first usgs_json array"+usgs_json);
 			        
 			        
 			        
@@ -370,7 +370,7 @@ public class DataFormatter {
 			        	//System.out.println("My reponse: "+response.toJSONString());
 				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq
 				       // System.out.println("The whoel deserialized: "+deserializedEq.);
-				        System.out.println("Latitude: "+ deserializedEq.geometry.coordinates.latitude);
+//				        System.out.println("Latitude: "+ deserializedEq.geometry.coordinates.latitude);
 				    	//	System.out.println(((JSONObject)eq_json));
 				    		//JSONObject jObject = new JSONObject(((JSONObject)eq_json.trim());
 				    	//	JSONObject jObject = new JSONObject((JSONObject)eq_json);

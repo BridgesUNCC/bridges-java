@@ -39,7 +39,7 @@ public class Connector {
     					.setRedirectStrategy(new LaxRedirectStrategy())
     					.build()
     		    );
-    	System.out.println("hello from connector"+http_connection);
+//    	System.out.println("hello from connector"+http_connection);
     }
     
     /* Accessors and Mutators */
@@ -49,7 +49,7 @@ public class Connector {
      * @return
      */
 	public String getServerURL() {
-System.out.println("url:" + server_url);
+//System.out.println("url:" + server_url);
 		return server_url;
 	}
 
@@ -75,7 +75,7 @@ System.out.println("url:" + server_url);
 
 		Pattern patt2 = Pattern.compile("-?([0-9]*\\.?[0-9]+)");
 		//-?([0-9]*\.?[0-9]+)
-		System.out.println("Char seq text: "+text);
+//		System.out.println("Char seq text: "+text);
 		//StringBuilder c = new StringBuilder();
 		String c= "{\"latitude\":";
 		//StringBuffer cBuffer = new StringBuffer(text.length());
@@ -87,18 +87,18 @@ System.out.println("url:" + server_url);
 		  	n.find(); 
 		    String coord = new String(n.group(1));
 		    c+=coord+",\"longitude\":";
-		    System.out.println("group 1: "+ c);
+//		    System.out.println("group 1: "+ c);
 		    n.find(); 
 		    String coord2 = new String(n.group(1));
 		    c+=coord2+",\"depth\":";
-		    System.out.println("group 2: "+ c);
+//		    System.out.println("group 2: "+ c);
 		    n.find(); 
 		    String coord3 = new String(n.group(1));
 		    c+=coord3+"}";
-		    System.out.println("group 3 "+ c);
+//		    System.out.println("group 3 "+ c);
 
 		    //m.appendReplacement(coordBuffer, Matcher.quoteReplacement(coord));
-		    System.out.println("Formatted coordinates: "+coord);
+//		    System.out.println("Formatted coordinates: "+coord);
 		  
 		  //m.appendTail(coordBuffer);
 
@@ -133,7 +133,7 @@ System.out.println("url:" + server_url);
 		    //System.out.println("Groups first loop 0: "+m.group(0) + " 1: "+m.group(1));
 		    String repl = latlongFormatter(coord);
 		    
-		   System.out.println("Found coordinates: "+coord + " counter: "+counter);
+//		   System.out.println("Found coordinates: "+coord + " counter: "+counter);
 		    //m.appendReplacement(coordBuffer, Matcher.quoteReplacement("{\"latitude\":115.4466,\"longitude\":37.8432,\"depth\":0.6}"));
 		    m.appendReplacement(coordBuffer, Matcher.quoteReplacement(repl));
 		    //coordBuffer.append(Matcher.quoteReplacement(repl));
@@ -160,7 +160,7 @@ System.out.println("url:" + server_url);
 		  StringBuffer coordBuffer = new StringBuffer(text.length());
 		  while (m.find()) {
 		    String coord = m.group(0);
-		   System.out.println("Found coordinates: "+coord);
+//		   System.out.println("Found coordinates: "+coord);
 		    m.appendReplacement(coordBuffer, Matcher.quoteReplacement("{}"));
 		  }
 		  m.appendTail(coordBuffer);
@@ -305,7 +305,7 @@ System.out.println("url:" + server_url);
     	int cursor = 0;
     	// This holds the object we will be running the next operation on.
     	Object any_json = original;
-    	System.out.println("Connector safeJSONTraverse line 188 any_JSON: "+any_json);
+//    	System.out.println("Connector safeJSONTraverse line 188 any_JSON: "+any_json);
     	// Parse `sequence`
     	Pattern array_index_p = Pattern.compile("\\[(\\d+)\\]");
 		Matcher array_index_m = array_index_p.matcher(sequence.substring(cursor));
@@ -407,7 +407,7 @@ System.out.println("url:" + server_url);
      */
     public String executeHTTPRequest(Request request)
     		throws ClientProtocolException, IOException, RateLimitException {
-    	System.out.println("execute HTTPRequest in request now: " + request);
+//    	System.out.println("execute HTTPRequest in request now: " + request);
         // It's possible we need to reimplement this as a ResponseHandler
     		//System.out.println("Sending request: " + request);
         // Execute the HTTP request
@@ -482,7 +482,7 @@ System.out.println("url:" + server_url);
      * @throws IOException
      */
     public String getUSGS(String url) throws RateLimitException, IOException{
-    	System.out.println("\nGetting earthquakes (the backend connection is working)...\n");
+//    	System.out.println("\nGetting earthquakes (the backend connection is working)...\n");
     	return executeHTTPRequest(Request.Get(prepareUSGS(url)));
     }
     
@@ -490,7 +490,7 @@ System.out.println("url:" + server_url);
         of request parameters. */
     public void post(String url, Map<String, String> arguments)
     		throws IOException, RateLimitException {
-System.out.println("From Connector.post1()..\n");
+//System.out.println("From Connector.post1()..\n");
         Request req = Request.Post(prepare(url));
         Form form = Form.form();
         for (Entry<String, String> e : DataFormatter.sorted_entries(arguments)) {
@@ -512,19 +512,19 @@ System.out.println("From Connector.post1()..\n");
      */
     public String prepare(String url) {
     	String out = server_url;
-    	System.out.println(out);
+//    	System.out.println(out);
     	out += url
     			.replace(" ", "%20")
       			.replace("$assignment", Bridges.getAssignment());
     	out += "?apikey=" + Bridges.getKey();
-    	System.out.println(out);
+//    	System.out.println(out);
       	return out;
     }
     
     public String prepareUSGS(String url) {
     	String out = usgs_url;
     	out += url;
-    	System.out.println(out);
+//    	System.out.println(out);
       	return out;
     }
     
