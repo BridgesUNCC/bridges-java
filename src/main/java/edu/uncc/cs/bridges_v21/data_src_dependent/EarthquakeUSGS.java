@@ -95,6 +95,7 @@ public class EarthquakeUSGS extends Tweet{
 		this.location = eq.location;
 		this.title = eq.getTitle();
 		this.url = eq.url;
+		this.properties=eq.getProperties();
 		//this(eq.getContent(), eq.getDate());
 		//this.setContent(enterCarriageReturn(aTweet.getContent()));
 	}
