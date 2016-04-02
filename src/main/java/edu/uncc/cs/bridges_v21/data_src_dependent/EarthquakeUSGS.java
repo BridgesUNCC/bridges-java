@@ -1,6 +1,8 @@
 package bridges.data_src_dependent;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -11,7 +13,7 @@ import bridges.connect.DataFormatter;
  * @author mihai mehedint
  *
  */
-public class EarthquakeUSGS extends EarthquakeTweet{
+public class EarthquakeUSGS extends Tweet{
 	private double magnitude;
 	private float latit;
 	private float longit;
@@ -19,45 +21,22 @@ public class EarthquakeUSGS extends EarthquakeTweet{
 	private String title;
 	private String url;
 
-	private String properties;
+	//private String properties;
 	
 	
 	public EarthquakeUSGS(String content, Date date2, double magnitude,
 			float latit, float longit, String location, String title, String url, String properties) {
-		super(content, date2);
+		super("USGSeq magnitude "+ magnitude+" "+title, date2);
 		this.magnitude = magnitude;
 		this.latit = latit;
 		this.longit = longit;
 		this.location = location;
 		this.title = title;
 		this.url = url;
-	}
-		
-	public String getProperties() {
-		return properties;
-	}
-
-	public void setProperties(String properties) {
-		this.properties = properties;
-	}
-
-
-	
-	
-	public EarthquakeUSGS(String properties, String geometry) {
-		super(properties, getTime(properties));
-		//method calls to set the fields here
-		setMagnitude();
-		this.setContent(enterCarriageReturn(properties));
+		//this.properties = properties;	
 		
 	}
-
-	public EarthquakeUSGS(String properties, Date time2) {
-		super(properties, time2);
-		setMagnitude();
-		this.setContent(enterCarriageReturn(properties));
 		
-	}
 	
 	private static Date getTime(String properties) {
 		// TODO Auto-generated method stub
@@ -66,7 +45,7 @@ public class EarthquakeUSGS extends EarthquakeTweet{
 		return null;
 	}
 	public float getLatit() {
-		return latit;
+		return this.latit;
 	}
 	public void setLatit(float latit) {
 		this.latit = latit;
@@ -98,9 +77,16 @@ public class EarthquakeUSGS extends EarthquakeTweet{
 	public void setMagnitude(double magnitude) {
 		this.magnitude = magnitude;
 	}
-	public EarthquakeUSGS(Tweet aTweet){
-		this(aTweet.getContent(), aTweet.getDate());
-		this.setContent(enterCarriageReturn(aTweet.getContent()));
+	public EarthquakeUSGS(EarthquakeUSGS eq){
+		super("USGSeq magnitude "+ eq.magnitude+" "+eq.title, eq.getDate());
+		this.magnitude = eq.magnitude;
+		this.latit = eq.latit;
+		this.longit = eq.longit;
+		this.location = eq.location;
+		this.title = eq.title;
+		this.url = eq.url;
+		//this(eq.getContent(), eq.getDate());
+		//this.setContent(enterCarriageReturn(aTweet.getContent()));
 	}
 	
 	public void eqProperties (String prop){
@@ -109,12 +95,13 @@ public class EarthquakeUSGS extends EarthquakeTweet{
 	}
 	
 	
-	public void setMagnitude(){
-		Scanner scan = new Scanner(this.getContent());
+	public void setMagnitude(Double mag){
+		/*Scanner scan = new Scanner(this.getContent());
 		StringBuilder str =  new StringBuilder();
 		str.append(scan.next());
 		DataFormatter.trimComma(str);
-		magnitude = Double.parseDouble(str.toString());
+		magnitude = Double.parseDouble(str.toString());*/
+		this.magnitude = mag;
 		
 	}
 	
@@ -123,7 +110,7 @@ public class EarthquakeUSGS extends EarthquakeTweet{
 	}
 	
 	public double getMagnitude(){
-		return magnitude;
+		return this.magnitude;
 	}
 	/* (non-Javadoc)
 	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.DataSource#compareTo(edu.uncc.cs.bridgesV2.data_src_dependent.DataSource)

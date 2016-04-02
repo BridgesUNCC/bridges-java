@@ -17,7 +17,7 @@ public class EarthquakeTweet extends Tweet{
 	public EarthquakeTweet(String content, Date date2) {
 		super(content, date2);
 		setMagnitude();
-		this.setContent(enterCarriageReturn(content));
+		//this.setContent(enterCarriageReturn(content));
 		
 	}
 	public EarthquakeTweet(Tweet aTweet){
@@ -36,6 +36,9 @@ public class EarthquakeTweet extends Tweet{
 		
 	}
 	
+	public void setMagnitude(double mag){
+		this.magnitude = mag;
+	}
 	public String enterCarriageReturn(String str){
 		return str = str.replace(" ", "\\n");
 	}

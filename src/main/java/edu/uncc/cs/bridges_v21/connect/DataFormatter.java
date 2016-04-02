@@ -49,7 +49,7 @@ public class DataFormatter {
 	private static List<Tweet> allTweets = new ArrayList<>();// this is the list off all the tweets retrieved
 	private static List<EarthquakeUSGS> allUSGS = new ArrayList<>();// this is the list off all the earthquakes retrieved
 
-	private static int maxRequests = 100; //This is the max number of tweets one can retrieve from the server
+	private static int maxRequests = 500; //This is the max number of tweets one can retrieve from the server
 
 	private static int tweetIterator = -1; //this iterator is used when requesting a new batch of tweets
 	private static boolean failsafe = false;
@@ -370,7 +370,14 @@ public class DataFormatter {
 			        	//System.out.println("My reponse: "+response.toJSONString());
 				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq
 				       // System.out.println("The whoel deserialized: "+deserializedEq.);
+<<<<<<< Updated upstream
 //				        System.out.println("Latitude: "+ deserializedEq.geometry.coordinates.latitude);
+=======
+				        //System.out.println("Latitude: "+ deserializedEq.geometry.coordinates.latitude);
+				        //System.out.println("Longitude: "+ deserializedEq.geometry.coordinates.longitude);
+				        //System.out.println("Magnitude: "+ deserializedEq.properties.mag);
+				        //System.out.println("Url: "+ (deserializedEq.properties.url));
+>>>>>>> Stashed changes
 				    	//	System.out.println(((JSONObject)eq_json));
 				    		//JSONObject jObject = new JSONObject(((JSONObject)eq_json.trim());
 				    	//	JSONObject jObject = new JSONObject((JSONObject)eq_json);
@@ -411,6 +418,7 @@ public class DataFormatter {
 
 				    		
 				    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
+				        	//deserializedEq.geometry.coordinates.latitude
 				    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 				    		Date date;
 				    		try {
@@ -429,7 +437,7 @@ public class DataFormatter {
 				    										deserializedEq.properties.toString()));
 				    	}
 			 
-			
+			System.out.println("allUSGS: " + allUSGS.get(0));
 			max = validNumberOfTweets(max);
 		    	List<EarthquakeUSGS> results = new ArrayList<>();
 		    //	results.addAll(allTweets);

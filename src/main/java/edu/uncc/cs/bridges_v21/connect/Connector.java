@@ -115,7 +115,7 @@ public class Connector {
 	 * @param text
 	 * @return
 	 */
-	public String latlongFinder(String text){
+	private String latlongFinder(String text){
 
 		//\\[-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*\\]
 		Pattern patt = Pattern.compile("\\[-?[0-9]*.[0-9]*,.?-?[0-9]*.[0-9]*,.?-?[0-9]*.[0-9]*\\]");
