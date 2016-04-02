@@ -21,7 +21,7 @@ public class EarthquakeUSGS extends Tweet{
 	private String title;
 	private String url;
 
-	//private String properties;
+	private String properties;
 	
 	
 	public EarthquakeUSGS(String content, Date date2, double magnitude,
@@ -31,13 +31,23 @@ public class EarthquakeUSGS extends Tweet{
 		this.latit = latit;
 		this.longit = longit;
 		this.location = location;
-		this.title = title;
+		this.title = this.enterCarriageReturn(title);
 		this.url = url;
-		//this.properties = properties;	
+		this.properties = properties;	
 		
 	}
 		
 	
+	public String getProperties() {
+		return this.properties;
+	}
+
+
+	public void setProperties(String properties) {
+		this.properties = properties;
+	}
+
+
 	private static Date getTime(String properties) {
 		// TODO Auto-generated method stub
 		//here we parse the properties string for the Time:value in milisec since epoch 1970
@@ -63,7 +73,7 @@ public class EarthquakeUSGS extends Tweet{
 		this.location = location;
 	}
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
@@ -78,12 +88,12 @@ public class EarthquakeUSGS extends Tweet{
 		this.magnitude = magnitude;
 	}
 	public EarthquakeUSGS(EarthquakeUSGS eq){
-		super("USGSeq magnitude "+ eq.magnitude+" "+eq.title, eq.getDate());
+		super("USGSeq magnitude "+ eq.magnitude+" "+eq.getTitle(), eq.getDate());
 		this.magnitude = eq.magnitude;
 		this.latit = eq.latit;
 		this.longit = eq.longit;
 		this.location = eq.location;
-		this.title = eq.title;
+		this.title = eq.getTitle();
 		this.url = eq.url;
 		//this(eq.getContent(), eq.getDate());
 		//this.setContent(enterCarriageReturn(aTweet.getContent()));

@@ -340,77 +340,18 @@ public class DataFormatter {
 	private static List<EarthquakeUSGS> getUSGSTimeline(USGSaccount id, int max)
 			throws RateLimitException{
 	    	try {
-			 if (allUSGS.isEmpty()){   
-				 //String a = "{\"tweets\":[{\"_id\":\"56d2b3aa7688cf03b4a15f5f\",\"type\":\"Feature\",\"id\":\"nn00532132\",\"__v\":\"0\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-115.4466,37.8432,0.6]},\"properties\":{\"mag\":\"1\",\"place\":\"58km NNW of Alamo, Nevada\",\"time\":\"1455842708674\",\"url\":\"http://earthquake.usgs.gov/earthquakes/eventpage/nn00532132\",\"felt\":null,\"products\":{}]}";
-				 
-				 //It works with first not second
-				 //String a = "{\"tweets\": [{\"date\": \"\",\"tweet\": \"\"}]}";
-				// String a = "[{\"date\": \"\",\"tweet\": \"\"}]";
-				 //Object	b = JSONValue.parse(a);
-				 //JSONObject c =  (JSONObject) b;
-				 	
-				 	//Gson x= new Gson();
-				 	
+			 if (allUSGS.isEmpty()){   				 	
 	    			String resp = backend.getUSGS("/latest/" + maxRequests);
-//	    			System.out.println("The responds in getUSGST from backend: "+resp);
 			        JSONObject response = backend.asJSONObject(resp);
-//			        System.out.println("Getting the first response from the backend COnnector asJSONObject");
+
 			        JSONArray usgs_json = (JSONArray) backend.safeJSONTraverse(    //these are earthquakes
 			        		"['Earthquakes']", response, JSONArray.class);
-//			        System.out.println("Thys is the first usgs_json array"+usgs_json);
-			        
-			        
-			        
-			      //  JSONArray egJsons = (JSONArray) backend.safeJSONTraverse(
-			       // 		"['Earthquakes']", usgs_json, JSONArray.class);	
 			        
 			        for (Object eq_json : usgs_json) {
-				    		//String geometry_str = (String) backend.safeJSONTraverse(
-				    		//	"['geometry']", tweet_json, String.class);
-			        	//System.out.println("My reponse: "+response.toJSONString());
-				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq
-				       // System.out.println("The whoel deserialized: "+deserializedEq.);
-				    	//	System.out.println(((JSONObject)eq_json));
-				    		//JSONObject jObject = new JSONObject(((JSONObject)eq_json.trim());
-				    	//	JSONObject jObject = new JSONObject((JSONObject)eq_json);
-				    	//	System.out.println((new JSONObject((JSONObject)jObject.get("geometry"))).get("coordinates"));
-				    	//	JSONObject coordinates = (JSONObject) ((new JSONObject((JSONObject)jObject.get("geometry"))).get("coordinates"));
-				    		
-				    		
-				    		
-				    		
-				    		//we need to fix this and do it like in the next 4 lines
-				    		//String long_str = (String) backend.safeJSONTraverse(
-						    //				"['long']", coordinates, String.class);
-				    		//String lat_str = (String) backend.safeJSONTraverse(
-				    		//		"['lat']", coordinates, String.class);
-				    		//Double long= (double)coordinates.get("long");
-				    		//Double lat= (new JSONObject(coordinates).get("lat"));
-				    		//System.out.println("long: "+ long_json.toJSONString()+ " lat: "+lat_json.toJSONString());
-				    		//Iterator<?> keys = ((JSONObject)eq_json).keySet().iterator();//retrieving the keys of the current eqrthquake
-				    		
-				    		//while(keys.hasNext()){
-				    			
-				    			//JSONArray usgs_json = (JSONArray) backend.safeJSONTraverse(    //these are earthquakes
-						        	//	"['Earthquakes']", response, JSONArray.class);
-				    			
-				    		//}
-				    		//JSONArray geometry_JSON = (JSONArray) backend.safeJSONTraverse(
-						   // 				"['geometry']", tweet_json, JSONArray.class);
-				    					//for (Object geo_json : geometry_JSON) {
-				    						
-				    		
-				    		//String properties_str = (String) backend.safeJSONTraverse(
-				    		//		"['properties']", tweet_json, String.class);
-				    		
-				        	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				        	//sdf.format(new Date(myTimeAsLong));
-				    		//String date_str = "\"date\":\"Sat Jul 18 02:46:24 +0000 2015\"";
-				    		//date_str = (String) backend.safeJSONTraverse("['date']", eq_json, String.class);
 
+				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq
 				    		
-				    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
-				        	//deserializedEq.geometry.coordinates.latitude
+				        	//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 				    		Date date;
 				    		try {
@@ -422,7 +363,7 @@ public class DataFormatter {
 				    										date,
 				    										Double.parseDouble(deserializedEq.properties.mag),
 				    										Float.parseFloat(deserializedEq.geometry.coordinates.latitude), 
-				    										Float.parseFloat(deserializedEq.geometry.coordinates.latitude),
+				    										Float.parseFloat(deserializedEq.geometry.coordinates.longitude),
 				    										deserializedEq.properties.place, 
 				    										deserializedEq.properties.title,
 				    										deserializedEq.properties.url,
