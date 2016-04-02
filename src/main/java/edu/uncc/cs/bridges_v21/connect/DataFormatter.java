@@ -370,14 +370,6 @@ public class DataFormatter {
 			        	//System.out.println("My reponse: "+response.toJSONString());
 				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq
 				       // System.out.println("The whoel deserialized: "+deserializedEq.);
-<<<<<<< Updated upstream
-//				        System.out.println("Latitude: "+ deserializedEq.geometry.coordinates.latitude);
-=======
-				        //System.out.println("Latitude: "+ deserializedEq.geometry.coordinates.latitude);
-				        //System.out.println("Longitude: "+ deserializedEq.geometry.coordinates.longitude);
-				        //System.out.println("Magnitude: "+ deserializedEq.properties.mag);
-				        //System.out.println("Url: "+ (deserializedEq.properties.url));
->>>>>>> Stashed changes
 				    	//	System.out.println(((JSONObject)eq_json));
 				    		//JSONObject jObject = new JSONObject(((JSONObject)eq_json.trim());
 				    	//	JSONObject jObject = new JSONObject((JSONObject)eq_json);
@@ -437,7 +429,7 @@ public class DataFormatter {
 				    										deserializedEq.properties.toString()));
 				    	}
 			 
-			System.out.println("allUSGS: " + allUSGS.get(0));
+			
 			max = validNumberOfTweets(max);
 		    	List<EarthquakeUSGS> results = new ArrayList<>();
 		    //	results.addAll(allTweets);
