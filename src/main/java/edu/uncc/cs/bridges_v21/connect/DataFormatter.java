@@ -352,13 +352,12 @@ public class DataFormatter {
 				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq
 				    		
 				        	//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-				    		Date date;
-				    		try {
-								date = df.parse(deserializedEq.properties.time);
-							} catch (ParseException e) {
-								date = new Date();
-							}
+				    		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+				    		
+				    		
+							Date date = new Date(Long.parseLong((deserializedEq.properties.time)));
+							//formated_date = df.format(date);
+							
 				    		allUSGS.add(new EarthquakeUSGS(deserializedEq.properties.mag, 
 				    										date,
 				    										Double.parseDouble(deserializedEq.properties.mag),

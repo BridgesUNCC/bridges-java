@@ -8,8 +8,8 @@ public class UsgsFoo {
 		public String type;
 		public Coordinates coordinates;
 		public class Coordinates{
-				public String latitude;
-				public String longitude; 
+				public String longitude;
+				public String latitude; 
 				public String depth;
 			}
 		}
