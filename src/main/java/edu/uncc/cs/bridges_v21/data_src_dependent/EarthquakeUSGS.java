@@ -25,7 +25,7 @@ public class EarthquakeUSGS extends Tweet{
 	
 	
 	public EarthquakeUSGS(String content, Date date2, double magnitude,
-			float latit, float longit, String location, String title, String url, String properties) {
+			float longit, float latit, String location, String title, String url, String properties) {
 		super("USGSeq magnitude "+ magnitude+" "+title, date2);
 		this.magnitude = magnitude;
 		this.latit = latit;
