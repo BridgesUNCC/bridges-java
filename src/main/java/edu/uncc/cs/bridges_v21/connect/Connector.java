@@ -73,7 +73,7 @@ public class Connector {
 	 */
 	public String latlongFormatter (String text){
 
-		Pattern patt2 = Pattern.compile("-?([0-9]*\\.?[0-9]+)");
+		Pattern patt2 = Pattern.compile("(-?([0-9]*\\.?[0-9]+))");
 		//-?([0-9]*\.?[0-9]+)
 //		System.out.println("Char seq text: "+text);
 		//StringBuilder c = new StringBuilder();
@@ -87,11 +87,11 @@ public class Connector {
 		  	n.find(); 
 		    String coord = new String(n.group(1));
 		    c+=coord+",\"longitude\":";
-//		    System.out.println("group 1: "+ c);
+		    //System.out.println("group 1: "+ c);
 		    n.find(); 
 		    String coord2 = new String(n.group(1));
 		    c+=coord2+",\"depth\":";
-//		    System.out.println("group 2: "+ c);
+		    //System.out.println("group 2: "+ c);
 		    n.find(); 
 		    String coord3 = new String(n.group(1));
 		    c+=coord3+"}";
