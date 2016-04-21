@@ -46,7 +46,7 @@ public class GraphAdjList<K, E> {
 				// note: it is the user's responsibility to  check
 				// for duplicate vertices
 		vertices.put(k, new Element<E>(e));
-		vertices.get(k).setLabel((String)k);
+		vertices.get(k).setLabel(String.valueOf(k));
 		adj_list.put(k,  null);
 	}
 
