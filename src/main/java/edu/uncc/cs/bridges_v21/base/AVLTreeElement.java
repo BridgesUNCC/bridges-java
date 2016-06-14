@@ -1,3 +1,5 @@
+package bridges.base;
+
 import bridges.base.BSTElement;
 
 public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
