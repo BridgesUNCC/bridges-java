@@ -349,8 +349,7 @@ public class DataFormatter {
 			        
 			        for (Object eq_json : usgs_json) {
 
-				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq
-				    		
+				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq				    		
 				        	//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				    		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 				    		
@@ -369,7 +368,7 @@ public class DataFormatter {
 				    										deserializedEq.properties.toString()));
 				    	}
 			 
-			
+			System.out.println("allUSGS: " + allUSGS.get(0));
 			max = validNumberOfTweets(max);
 		    	List<EarthquakeUSGS> results = new ArrayList<>();
 		    //	results.addAll(allTweets);

@@ -26,6 +26,7 @@ public class EarthquakeUSGS extends Tweet{
 	
 	public EarthquakeUSGS(String content, Date date2, double magnitude,
 			float longit, float latit, String location, String title, String url, String properties) {
+
 		super("USGSeq magnitude "+ magnitude+" "+title, date2);
 		this.magnitude = magnitude;
 		this.latit = latit;
@@ -48,6 +49,7 @@ public class EarthquakeUSGS extends Tweet{
 	}
 
 
+		
 	private static Date getTime(String properties) {
 		// TODO Auto-generated method stub
 		//here we parse the properties string for the Time:value in milisec since epoch 1970

@@ -1,6 +1,6 @@
 package bridges.base;
 
-import bridges.base.BSTElement;
+import bridges.base.*;
 
 public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	private Integer height, balFactor;
