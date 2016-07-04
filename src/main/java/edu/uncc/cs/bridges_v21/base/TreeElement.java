@@ -1,121 +1,176 @@
-/**
- * 
- */
 package bridges.base;
 
 /**
- * @author mihai Mehedint
+ * @author Mihai Mehedint, K.R. Subramanian
  * This class can be used to create tree element objects
  * with left and right pointers
  *
+ * Modified (KRS) - 6/22/16. Generaized to hold any number of children
  */
+import java.util.Vector; 
 
-public class TreeElement<E> extends Element<E>{
-	private TreeElement<E> left; //the left pointer
-	private TreeElement<E> right; //the right pointer
+public class TreeElement<E> extends Element<E> {
+
+						// holds all children of the node
+	private Vector<TreeElement<E>> children; 
 	
-	/** Constructs an empty TreeElement with right and left pointers set to null. */
+	/** 
+	 *
+	 *	Constructs an empty TreeElement with first two children
+	 *	set to null. 
+	 *
+	 **/
 	public TreeElement(){
 		super();
-		this.left = null;
-		this.right = null;
+		children = new Vector<TreeElement <E>> (2, 2);
+		children.add(null);
+		children.add(null);
 	}
 	
-	/** Constructs a TreeElement holding an object "e" with right and left pointers set to null. 
+	/** 
+	 *
+	 *	Constructs a TreeElement holding an object "e" with first two children
+	 *	set to null. 
+	 *
 	 * @param e the generic object that TreeElement will hold 
-	 */
+	 *
+	 **/
 	public TreeElement (E e){
 		super(e);
-		this.left = null;
-		this.right = null;
+		children = new Vector<TreeElement <E>> (2, 2);
+		children.add(null);
+		children.add(null);
 	}
 	
-	/** Constructs a TreeElement with label set to "label", holding an object "e". 
-	 * @param label the label of TreeElement that shows up on the Bridges visualization
-	 * @param e the generic object that TreeElement will hold 
-	 * */
+	/** 
+	 *	Constructs a TreeElement with label set to "label", holding an 
+	 *		object "e". 
+	 * 	@param label the label of TreeElement that shows up on the Bridges 
+	 *		visualization
+	 * 	@param e the generic object that TreeElement will hold 
+	 * 
+	 **/
 	public TreeElement (String label, E e){
 		super(label, e);
-		this.left = null;
-		this.right = null;
+		children = new Vector<TreeElement <E>> (2, 2);
+		children.add(null);
+		children.add(null);
 	}
 	
-	/** Constructs an empty TreeElement left pointer pointing to "left" and right pointer pointing to "right". 
-	 * @param left the TreeElement to be assigned to the left pointer of this TreeElement
-	 * @param right the TreeElement to be assigned to the right pointer of this TreeElement
-	 * */
+	/** 
+	 *
+	 *	Constructs an empty TreeElement left pointer pointing to child 0  
+	 *	and right pointer pointing to child 1.
+	 *
+	 * 	@param left the TreeElement to be assigned to the child 0 of 
+	 *		this TreeElement
+	 * 	@param right the TreeElement to be assigned to the child 1 
+	 *		of this TreeElement
+	 * 
+	 **/
 	public TreeElement(TreeElement<E> left, TreeElement<E> right) {
 		super();
-		this.left = left;
-		this.right = right;
+		children = new Vector<TreeElement <E>> (2, 2);
+		children.add(left);
+		children.add(right);
 	}
 	
-	/** Constructs a TreeElement holding the object "e", left pointer pointing to "left" and right pointer pointing to "right".
+	/** 
+	 *
+	 *	Constructs a TreeElement holding the object "e", left pointer 
+	 *	pointing to first child  and right pointer pointing to second child
+	 *
 	 * @param e the generic object that TreeElement will hold 
-	 * @param left the TreeElement to be assigned to the left pointer of this TreeElement
-	 * @param right the TreeElement to be assigned to the right pointer of this TreeElement
-	 * */
+	 * @param left the TreeElement to be assigned to the first child of 
+	 *		this TreeElement
+	 * @param right the TreeElement to be assigned to the second child 
+	 *		of this TreeElement
+	 * 
+	 **/
 	public TreeElement(E e, TreeElement<E> left, TreeElement<E> right) {
-		super();
-		this.right = right;
-		this.left = left;
+		super(e);
+		children = new Vector<TreeElement <E>> (2, 2);
+		children.add(left);
+		children.add(right);
 	}
-/*
-	/**
-	 * performing deep copy of an element when needed
-	 * @param identifier
-	 */
-/*
-	public void copyTreeElement (TreeElement<E> original){
-		this.setIdentifier(new String(original.getIdentifier()));
-		this.setVisualizer( new ElementVisualizer(original.getVisualizer()));
-		this.left = original.left;
-		this.right = original.right;
-	}
-*/
-	
-	/**
-	 * This method returns the left tree element pointer
-	 * @return the left child of this TreeElement
-	 */
-	public TreeElement<E> getLeft() {
-		return left;
-	}
-	
 
+	/**
+	 *
+	 * 	This method returns the left tree element pointer
+	 *
+	 * 	@return the first child of this TreeElement
+	 *
+	 **/
+	public TreeElement<E> getLeft() {
+		if (children.size() < 1)
+			return null;
+
+		return children.elementAt(0);
+	}
+	
 	/**
 	 * This method sets the left tree element pointer
-	 * @param left the TreeElement that should be assigned to the left child
+	 * Left child is by convention at index 0
+	 * @param left the TreeElement that should be assigned to the first child
 	 */
 	public void setLeft(TreeElement<E> left) {
-		this.left = left;
+		if (children.size() < 1)	// add the element
+			children.add(left);
+		else
+			children.setElementAt(left, 0);
 	}
-	
 
 	/**
+	 *
 	 * This method returns the right tree element pointer
-	 * @return the right child of this TreeElement
+	 *
+	 * @return the second child of this TreeElement
+	 *
 	 */
 	public TreeElement<E> getRight() {
-		return right;
+		if (children.size() < 2)
+			return null;
+
+		return children.elementAt(1);
 	}
 	
-
 	/**
-	 * This method sets the right tree element pointer
+	 *
+	 * This method sets the right tree element pointer(by convention at index 1)
+	 * If the element doesnt exist, it is added to children
 	 * @param right the TreeElement that should be assigned to the right child
+	 *
 	 */
 	public void setRight(TreeElement<E> right) {
-		this.right = right;
+		if (children.size() < 2)
+			children.add(right);
+		else
+			children.setElementAt(right, 1);
 	}
 
 	/**
-	 * Comparing 2 tree elements
-	 * @param e1
-	 * @return
-	 */
-	public int compareTo(TreeElement<E> e1) {
-		return super.compareTo(e1);
+	 *	adds a child to the node - will be added at the next open position
+	 *
+	 * @param  child to be added
+	 *
+	 * @return none
+	 *
+	 **/
+	public void setChild (TreeElement<E> child) {
+		children.add(child);
 	}
-	
+
+	/**
+	 *	gets a child at a particular index 
+	 *
+	 * @param  index into the list of children
+	 *
+	 * @return child to be returned
+	 *
+	 **/
+	public TreeElement<E> getChild(int index) {
+		if (index < children.size()) 
+			return  children.get(index);
+		else return null;
+	}
 }

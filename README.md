@@ -1,4 +1,4 @@
-bridges
+bridges  ![https://travis-ci.org/krs-world/bridges](https://travis-ci.org/krs-world/bridges.svg?branch=version2.0)
 =======
 
 TUES Bridges Project - uniting classrooms for better student engagement
