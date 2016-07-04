@@ -26,7 +26,8 @@ import bridges.validation.RateLimitException;
 public class Connector {
 	String server_url = "http://bridges-cs.herokuapp.com";
 	//String server_url = "http://bridges-clone.herokuapp.com";
-	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";
+	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";  //usgs earthquakes url
+	String airline_url = "https://earthquakes-uncc.herokuapp.com/airline"; //corgis airline data
 //	String server_url = "http://127.0.0.1:3000";
     Executor http_connection;
     boolean debug = false;
@@ -468,7 +469,7 @@ public class Connector {
     	
     	System.out.println("get Connector url before formatting: " + url);
     	String furl = prepare(url);
-    	System.out.println("From Connector.get()..\n");
+    	System.out.println("From Connector.get()..\n"+ furl);
     	Request req = Request.Get(furl);
         return executeHTTPRequest(req);
     }
