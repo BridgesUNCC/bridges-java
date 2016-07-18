@@ -67,6 +67,15 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 	}
 
 	/**
+	 *	This method gets the data structure type
+	 *
+	 *	@return  The date structure type as a string
+	 **/
+	public String getDataStructType() {
+		return "BinarySearchTree";
+	}
+
+	/**
 	 *
 	 *	Construct a BSTElement holding the object "e", with key "key" 
 	 *	assigned and left and right pointers set to null.

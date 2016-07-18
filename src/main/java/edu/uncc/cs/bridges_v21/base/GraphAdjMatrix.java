@@ -18,11 +18,13 @@ import java.util.Map.Entry;
  */
 
 
-public class GraphAdjMatrix<K, E> { // keep track of the graph nodes; useful
-						// to maintain their properties
+public class GraphAdjMatrix<K, E> extends DataStruct { 
 
 	private int maxSize;
+
+						// graph vertices list
 	private final HashMap<K, Element<E> > vertices;
+
 						// holds the adjacency list of edges
 	private final HashMap<K, HashMap<K, Integer> > matrix;
 
@@ -35,6 +37,14 @@ public class GraphAdjMatrix<K, E> { // keep track of the graph nodes; useful
 		matrix = new HashMap<K, HashMap<K, Integer>>(size);
 	}	
 
+	/**
+	 *	This method gets the data structure type
+	 *
+	 *	@return  The date structure type as a string
+	 **/
+	public String getDataStructType() {
+		return "GraphAdjacencyMatrix";
+	}
 	/// 
 	/// Adds a new vertex to the graph, initializes the  adjacency
 	/// list; user is responsible for checking if the vertex already

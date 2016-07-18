@@ -54,6 +54,14 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 		this.setNext(original.getNext());
 	}
 */
+	/**
+	 *	This method gets the data structure type
+	 *
+	 *	@return  The date structure type as a string
+	 **/
+	public String getDataStructType() {
+		return "SinglyLinked List";
+	}
 	
 	/**
 	 * Retrieves the next SLelement

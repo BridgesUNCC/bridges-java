@@ -18,7 +18,7 @@ import java.util.Map;
 ///	@param Element<E>
 ///	
 
-public class GraphAdjList<K, E> {
+public class GraphAdjList<K, E> extends DataStruct {
 						// keep track of the graph nodes; useful
 						// to maintain their properties
 	private final HashMap<K, Element<E> > vertices;
@@ -33,6 +33,14 @@ public class GraphAdjList<K, E> {
 		adj_list = new HashMap<K, SLelement<Edge<K> > >();
 	}	
 
+	/**
+	 *	This method gets the data structure type
+	 *
+	 *	@return  The date structure type as a string
+	 **/
+	public String getDataStructType() {
+		return "GraphAdjacencyList";
+	}
 	/// 
 	/// Adds a new vertex to the graph, initializes the  adjacency
 	/// list; user is responsible for checking if the vertex already

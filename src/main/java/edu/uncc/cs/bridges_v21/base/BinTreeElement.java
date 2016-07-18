@@ -22,8 +22,8 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	 **/
 	public BinTreeElement(){
 		super();
-		super.setLeft(null);
-		super.setRight(null);
+		super.addChild(null);
+		super.addChild(null);
 	}
 	
 	/** 
@@ -35,8 +35,8 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	 **/
 	public BinTreeElement (E e){
 		super(e);
-		super.setLeft(null);
-		super.setRight(null);
+		super.addChild(null);
+		super.addChild(null);
 	}
 	
 	/** Constructs a TreeElement with label set to "label", holding an 
@@ -48,8 +48,8 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	 **/
 	public BinTreeElement (String label, E e){
 		super(label, e);
-		super.setLeft(null);
-		super.setRight(null);
+		super.addChild(null);
+		super.addChild(null);
 	}
 	
 	/** Constructs an empty TreeElement left pointer pointing to 
@@ -63,8 +63,8 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	public BinTreeElement(BinTreeElement<E> left, 
 						BinTreeElement<E> right) {
 		super();
-		super.setLeft(null);
-		super.setRight(null);
+		super.addChild(left);
+		super.addChild(right);
 	}
 	
 	/** 
@@ -80,9 +80,18 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	 **/
 	public BinTreeElement(E e, BinTreeElement<E> left, 
 							BinTreeElement<E> right) {
-		super();
-		super.setLeft(null);
-		super.setRight(null);
+		super(e);
+		super.addChild(null);
+		super.addChild(null);
+	}
+
+	/**
+	 *	This method gets the data structure type
+	 *
+	 *	@return  The date structure type as a string
+	 **/
+	public String getDataStructType() {
+		return "BinaryTree";
 	}
 	
 	/**
@@ -92,7 +101,7 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	 *
 	 */
 	public BinTreeElement<E> getLeft() {
-		return (BinTreeElement<E>) super.getLeft();
+		return (BinTreeElement<E>) super.getChild(0);
 	}
 	
 	/**
@@ -102,7 +111,7 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	 *
 	 */
 	public void setLeft(BinTreeElement<E> left) {
-		super.setLeft(left);
+		super.setChild(0, left);
 	}
 	
 
@@ -113,7 +122,7 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	 *
 	 **/
 	public BinTreeElement<E> getRight() {
-		return (BinTreeElement<E>) super.getRight();
+		return (BinTreeElement<E>) super.getChild(1);
 	}
 	
 	/**
@@ -123,6 +132,6 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	 *
 	 */
 	public void setRight(BinTreeElement<E> right) {
-		super.setRight(right);
+		super.setChild(1, right);
 	}
 }

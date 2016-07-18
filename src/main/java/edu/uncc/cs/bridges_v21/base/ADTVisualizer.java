@@ -33,17 +33,19 @@ public class ADTVisualizer<K, E> {
 				private static final long serialVersionUID = 1L;
 
 				{
-					put("Array", "AList");
-					put("SinglyLinkedList", "llist");
-					put("DoublyLinkedList", "dllist");
-					put("GraphAdjacencyList","graphl");
-					put("GraphAdjacencyMatrix","graphl");
-					put("ArrayStack","llist");
-					put("ArrayQueue","llist");
-					put("LinkedListStack","llist");
-					put("LinkedListQueue","llist");
-					put("BinaryTree","tree");
-					put("BinarySearchTree","tree");
+					put("Array", "Array");
+					put("SinglyLinkedList", "SinglyLinkedList");
+					put("DoublyLinkedList", "DoublyLinkedList");
+					put("GraphAdjacencyList","GraphAdjacencyList");
+					put("GraphAdjacencyMatrix","GraphAdjacencyMatrix");
+					put("ArrayStack","Array");
+					put("ArrayQueue","Array");
+					put("LinkedListStack","SinglyLinkedList");
+					put("LinkedListQueue","SinglyLinkedList");
+					put("Tree","Tree");
+					put("BinaryTree","BinaryTree");
+					put("BinarySearchTree","BinarySearchTree");
+					put("AVLTree","AVLTree");
 				}
 			};
 
@@ -104,7 +106,7 @@ public class ADTVisualizer<K, E> {
 			}
 		}
 	}
-	
+
 	/**
 	 * This method returns the visualizer type as a string
 	 * @return one the of the strings represented in ADTVisualizer.ADT_TYPE 
@@ -275,15 +277,17 @@ public class ADTVisualizer<K, E> {
 	 */
 	public String getTreeRepresentation(TreeElement<E> root) {
 
+System.out.println("here..");
 		LinkedList<TreeElement<E>> nodes = new LinkedList<>(); 
 		LinkedList<TreeElement<E>> links =new LinkedList<>();
 
 	//	preOrder(root, nodes, links);
 
 	//	return getJSON_BinaryTree(nodes, links);
-		String json_str = preOrder2(root);
+		String json_str = build_JSON(preOrder2(root));
 
-		return OPEN_CURLY + json_str + CLOSE_CURLY;
+
+		return json_str;
 	}
 	
 	/**
@@ -295,6 +299,7 @@ public class ADTVisualizer<K, E> {
 	 *
 	 * @return
 	 */
+/*
 	private void preOrder(TreeElement<E> root, LinkedList<TreeElement<E>> 
 						nodes, LinkedList<TreeElement<E>> links){
 		if (root != null){
@@ -311,6 +316,7 @@ public class ADTVisualizer<K, E> {
 			preOrder(root.getRight(), nodes, links);
 		}
 	}
+*/
 	/**
 	 *
 	 *	Use a preorder traversal to directly extract a hierarchical JSON 
@@ -326,9 +332,12 @@ public class ADTVisualizer<K, E> {
 			elem_rep = root.getRepresentation();
 									// remove surrounding curly braces
 			t_str = elem_rep.substring(1, elem_rep.length()-1);
-			json_str += t_str + COMMA;
+System.out.println(t_str);
+			json_str += t_str;
 									// now get the children
-			json_str += QUOTE + "children" + QUOTE + COLON + OPEN_BOX ;
+			if (root.getNumberOfChildren() > 0)
+				json_str += COMMA + QUOTE + "children" + QUOTE + COLON + OPEN_BOX ;
+//			else json_str += CLOSE_CURLY;
 			for (int k = 0; k < root.getNumberOfChildren(); k++) {
 				if (root.getChild(k) == null) {
 					json_str += OPEN_CURLY + QUOTE + "name" + QUOTE + COLON+
@@ -638,8 +647,30 @@ public class ADTVisualizer<K, E> {
 		if (visualizeJSON())
 			System.out.println(s.toString());
 
+System.out.println("DS Type:" + visualizerType);
 		return s.toString();	
-	}	
+	}
+
+	public String build_JSON(String tree_json) {
+
+System.out.println("DS Type:" + visualizerType);
+
+		String final_json = 
+			OPEN_CURLY + 
+				QUOTE + "name" + QUOTE + COLON + 
+					QUOTE + "edu.uncc.cs.bridges" + QUOTE + COMMA +
+				QUOTE + "version" + QUOTE + COLON + 
+					QUOTE + "0.4.0" + QUOTE + COMMA +
+				QUOTE + "visual" + QUOTE + COLON + 
+					QUOTE + adt_names.get(visualizerType)+ QUOTE + COMMA +
+				QUOTE + "nodes" + QUOTE + COLON + OPEN_CURLY + tree_json + CLOSE_CURLY +
+			CLOSE_CURLY;
+			
+		if (visualizeJSON())
+			System.out.println(final_json);
+
+		return final_json;
+	}
 	public static StringBuilder trimComma(StringBuilder in) {
 		if (in.length() > 0 && in.charAt(in.length()-1) == ',')
 			in.deleteCharAt(in.length()-1);

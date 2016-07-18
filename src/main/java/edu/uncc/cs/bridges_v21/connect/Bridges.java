@@ -147,15 +147,16 @@ public class Bridges <K, E> {
 	}
 	
 	/**
-	 * This method sets the array data type 
+	 * 	This method sets the array data type and infers the data structure from the
+	 * 	handle that is passed in, which may be one of SinglyLinkedList, 
+	 *	DoublyLinkedList,Tree, BinaryTree, BinarySearchTree, AVLTree, GraphAdjacencyList, 
+	 *	GraphAdjacencyMatrix
 	 *
-	 * @param e - is a Element<E>[]
-	 * @param visualizerType
+	 * @param e   The array of elements, Element<E>[]
+	 * @param size The size of the array
 	 *
-	 * @throws Exception
 	 */
 	public void setDataStructure(Element<E>[] el_array, int size){
-//		visualizer.setArray(arrayVisualizer);
 		element_array = el_array;
 		element_array_size = size;
 		visualizer.setVisualizerType("Array");
@@ -164,7 +165,6 @@ public class Bridges <K, E> {
 	/**
 	 * This method sets the first element of the singly linked list
 	 * @param head - is a SLelement<E>
-	 * @param visualizerType
 	 *
 	 */
 	public void setDataStructure(SLelement<E> head) {
@@ -176,7 +176,6 @@ public class Bridges <K, E> {
 	 * This method sets the first element of the doubly linked list
 	 *
 	 * @param head - is a DLelement<E>
-	 * @param visualizerType
 	 *
 	 */
 	public void setDataStructure(DLelement<E> head){ 
@@ -185,23 +184,32 @@ public class Bridges <K, E> {
 	}
 	
 	/**
-	 * This method sets the root of the binary tree
+	 * 	This method sets the root of a general  tree (can have 
+	 *	any number of children at each node
 	 *
-	 * @param tree_root - is a TreeElement<E>
+	 * 	@param tree_root The root of the tree
 	 *
-	 * @throws Exception
 	 */
 	public void setDataStructure(TreeElement<E> tree_root){
+		root = tree_root;
+		visualizer.setVisualizerType("Tree");
+	}
+	/**
+	 * This method sets the first element of the binary  tree
+	 * data structure. 
+	 *
+	 * @param tree_root The root of the binary tree
+	 */
+	public void setDataStructure(BinTreeElement<E> tree_root){
 		root = tree_root;
 		visualizer.setVisualizerType("BinaryTree");
 	}
 	
 	/**
-	 * This method sets the first element and the type of ADT for the 
-	 * ADTVisualizer object
+	 * This method sets the first element of the binary search tree
+	 * data structure. 
 	 *
-	 * @param tree_root - is a BSTElement<E>
-	 * @throws Exception
+	 * @param tree_root - The root of the binary search tree 
 	 */
 	public void setDataStructure(BSTElement<K, E> tree_root){
 		root = tree_root;
@@ -209,18 +217,31 @@ public class Bridges <K, E> {
 	}
 	
 	/**
-	 * This method is sets the adjacency list for the Graph ADT
-	 * @param adjacencyList
-	 * @throws Exception
+	 * This method sets the first element of an AVL tree
+	 * data structure. 
+	 *
+	 * @param tree_root The root of the AVL tree
+	 */
+	public void setDataStructure(AVLTreeElement<K, E> tree_root){
+		root = tree_root;
+		visualizer.setVisualizerType("AVLTree");
+	}
+	/**
+	 * This method passes the handle to the input graph
+	 * (represented using adjacency lists)
+	 *
+	 * @param input graph
 	 */
 	public void setDataStructure(GraphAdjList<K, E> graph){
 		graph_adj_list = graph;
 		visualizer.setVisualizerType("GraphAdjacencyList");
 	}
+
 	/**
-	 * This method is sets the adjacency list for the Graph ADT
-	 * @param adjacencyList
-	 * @throws Exception
+	 * This method passes the handle to the input graph (represented
+	 * using adjacency matrix)
+	 *
+	 * @param input graph
 	 */
 	public void setDataStructure(GraphAdjMatrix<K, E> graph){
 		graph_adj_matrix = graph;
@@ -249,11 +270,10 @@ public class Bridges <K, E> {
 			case "dllist":
 				visualizeDoublyLinkedList();
 				break;
+			case "Tree":
 			case "BinaryTree":
-				visualizeBinaryTree();
-				break;
 			case "BinarySearchTree":
-			case "tree":
+			case "AVLTree":
 				visualizeBinarySearchTree();
 				break;
 			case "GraphAdjacencyList":
@@ -389,7 +409,7 @@ System.out.println("here..");
 	 * Visualize a binary tree
 	 *
 	 */
-	protected void visualizeBinaryTree() {
+	protected void visualizeTree() {
         try {
         	connector.post("/assignments/" + getAssignment(), visualizer.getTreeRepresentation((TreeElement<E>)root));
 		}
@@ -418,8 +438,8 @@ System.out.println("here..");
 	 */
 	protected void visualizeBinarySearchTree() {
         try {
-System.out.println (visualizer.getTreeRepresentation((TreeElement<E>)root));
-        	connector.post("/assignments/" + getAssignment(), visualizer.getTreeRepresentation((TreeElement<E>)root));
+        	connector.post("/assignments/" + getAssignment(), 
+					visualizer.getTreeRepresentation((TreeElement<E>)root));
 		}
 		catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"

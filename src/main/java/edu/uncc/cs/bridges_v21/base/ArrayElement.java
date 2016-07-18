@@ -20,4 +20,13 @@ public class ArrayElement<E> extends Element<E>{
 	public ArrayElement(String label, E type){
 		super(label, type);
 	}	
+	/**
+	 *	This method gets the data structure type
+	 *
+	 *	@return  The date structure type as a string
+	 **/
+	public String getDataStructType() {
+		return "Array";
+	}
+
 }

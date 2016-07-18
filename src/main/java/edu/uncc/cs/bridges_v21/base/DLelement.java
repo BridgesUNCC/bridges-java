@@ -48,6 +48,15 @@ public class DLelement<E> extends Element<E>{
 		this.prev = prev;
 	}
 	
+	/**
+	 *	This method gets the data structure type
+	 *
+	 *	@return  The date structure type as a string
+	 **/
+	public String getDataStructType() {
+		return "DoublyLinked List";
+	}
+
 	/*
 	/**
 	 * performing deep copy of an element when needed

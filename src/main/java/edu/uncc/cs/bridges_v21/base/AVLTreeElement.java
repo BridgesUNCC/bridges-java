@@ -15,6 +15,15 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 		height = balFactor = 0;
 	}
 
+	/**
+	 *	This method gets the data structure type
+	 *
+	 *	@return  The date structure type as a string
+	 **/
+	public String getDataStructType() {
+		return "AVLTree";
+	}
+
     public int getHeight() {
         return height;
     }

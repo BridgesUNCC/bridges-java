@@ -18,9 +18,9 @@ import java.util.HashMap;
  * @param generic <E>
  */
 
-
-public class Element<E>{
+public class Element<E> extends DataStruct{
 	
+/*
 	private String
 			QUOTE = "\"",
 			COMMA = ",",
@@ -31,6 +31,7 @@ public class Element<E>{
 			CLOSE_PAREN = ")",
 			OPEN_BOX = "[",
 			CLOSE_BOX = "]";
+*/
 
 	static 	Integer ids = 0;
 	private String label;
@@ -38,18 +39,29 @@ public class Element<E>{
 	private ElementVisualizer visualizer;
 	private HashMap<String, LinkVisualizer>  lvisualizer;
 	private E value;
-	private final int wordNumber = 0; //this is the number of pattern matches where the new string can be inserted; useful in case we insert line breaks at a desired number of characters
-									// is the pattern is change to white space this index can be changed to 2 words to insert a 
-									//line break every 2 words
-	private final String INSERT_STRING = "\\n"; //this is the string value that replaces the pattern found in the label
-	private final String DIVIDE_KEY ="(\r?\n)|(\n)|(\f)|(\r)|(%n)";    //for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
-	//(\\w) matches any word (\\d) any digit (\\D) any non digit
-												//(\\s) a white space (\\s*) zero or more whitespaces, (\\s+) one or more
+					//	this is the number of pattern matches where the new string 
+					// 	can be inserted; useful in case we insert line breaks at a 
+					// 	desired number of characters is the pattern is change to 
+					//	white space this index can be changed to 2 words to insert a 
+					//	line break every 2 words
+	private final int wordNumber = 0; 
+				//this is the string value that replaces the pattern found in the label
+	private final String INSERT_STRING = "\\n"; 
+			//	for more complex patterns the key must be changed 
+			//	like so "((John) (.+?))" returns "John firstWordAfterJohn": 
+			//	John writes, John doe, John eats etc.
+			//	(\\w) matches any word (\\d) any digit (\\D) any non digit
+			//	(\\s) a white space (\\s*) zero or more whitespaces, (\\s+) 
+			//	one or more
+	private final String DIVIDE_KEY ="(\r?\n)|(\n)|(\f)|(\r)|(%n)";    
 	
 	
 	//public String INSERT_STRING = "\\n";
 	//public String DIVIDE_KEY ="(\n)";  
 	
+	protected String getDataStructType() {
+		return "Element";
+	}
 	
 	/**
 	 * Element constructor
@@ -211,31 +223,46 @@ public class Element<E>{
 	 */
 	public String getRepresentation(){
 
-		String json = OPEN_CURLY + 
+								// first get all the attributes common to all 
+								// elements; assumes location is a fundamental 
+								// attribute that may or may not be used
+		String json_str = OPEN_CURLY + 
 			QUOTE + "name" + QUOTE + COLON + QUOTE + label + QUOTE + COMMA +
-			QUOTE + "key" + QUOTE + COLON + QUOTE + visualizer.getKey() +  QUOTE + COMMA +
 			QUOTE + "shape" + QUOTE + COLON + 
-				QUOTE + visualizer.getShape() + QUOTE + COMMA +
+					QUOTE + visualizer.getShape() + QUOTE + COMMA +
 			QUOTE + "size" + QUOTE + COLON + 
-				Double.toString(visualizer.getSize()) + COMMA +
-			QUOTE + "location" + QUOTE + COLON + 
-				OPEN_BOX + Double.toString(visualizer.getLocationX()) + COMMA +
-					Double.toString(visualizer.getLocationY()) 
-					+ CLOSE_BOX + COMMA + 
+					Double.toString(visualizer.getSize()) + COMMA +
 			QUOTE + "color" + QUOTE + COLON +
-// TEMP
-//			QUOTE + "red" + QUOTE + 
-// TEMP
 				OPEN_BOX + 
 					Integer.toString(visualizer.getColor().getRed()) + COMMA +
 					Integer.toString(visualizer.getColor().getGreen()) + COMMA +
 					Integer.toString(visualizer.getColor().getBlue()) + COMMA +
 					Integer.toString(visualizer.getColor().getAlpha()) +
-				CLOSE_BOX + 
-			CLOSE_CURLY;
-			
+				CLOSE_BOX + COMMA + 
+			QUOTE + "location" + QUOTE + COLON + 
+				OPEN_BOX + Double.toString(visualizer.getLocationX()) + COMMA +
+					Double.toString(visualizer.getLocationY()) + 
+				CLOSE_BOX;
 
-		return json;
+			if (getDataStructType().equals("BinarySearchTree")) {
+				json_str += COMMA +  
+					QUOTE + "key" + QUOTE + COLON + 
+						QUOTE + visualizer.getKey() +  QUOTE + COMMA;
+			}
+			else if (getDataStructType().equals("AVLTree")){
+				AVLTreeElement avl = (AVLTreeElement) this;
+				json_str += COMMA +  
+					QUOTE + "key" + QUOTE + COLON + 
+						QUOTE + visualizer.getKey() +  QUOTE + COMMA +
+					QUOTE + "height" + QUOTE + COLON +
+						Integer.toString(avl.getHeight()) + COMMA +
+					QUOTE + "balance_factor" + QUOTE + COLON +	
+						Integer.toString(avl.getBalanceFactor()) + COMMA;
+				;
+			}
+			else json_str += CLOSE_CURLY;
+
+		return json_str;
 /*
 		for (Entry<String, String> entry : visualizer.properties.entrySet()) {
 			if (entry.getKey() == "locationX")
