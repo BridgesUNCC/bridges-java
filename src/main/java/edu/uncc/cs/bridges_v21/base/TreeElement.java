@@ -149,6 +149,17 @@ public class TreeElement<E> extends Element<E> {
 	}
 
 	/**
+	 *
+	 * Returns the number of children at this node
+	 *
+	 * @return  number of children
+	 *
+	 **/
+	public int getNumberOfChildren() {
+		return children.size();
+	}
+
+	/**
 	 *	adds a child to the node - will be added at the next open position
 	 *
 	 * @param  child to be added

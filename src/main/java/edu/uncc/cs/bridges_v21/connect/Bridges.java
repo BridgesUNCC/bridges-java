@@ -321,7 +321,8 @@ public class Bridges <K, E> {
 					+ e.getMessage());
 		} 
         // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) ); 
+		System.out.println("Check out your visuals at " + connector.prepare(
+				"/assignments/" + assignment + "/" + userName) ); 
         assignment_part++;
 	}
 	
@@ -351,7 +352,7 @@ System.out.println("here..");
 					+ e.getMessage());
 		} 
         // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
+        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
         assignment_part++;
 	}
 	
@@ -380,7 +381,7 @@ System.out.println("here..");
 					+ e.getMessage());
 		} 
         // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
+        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
         assignment_part++;
 	}
 	
@@ -408,7 +409,7 @@ System.out.println("here..");
 					+ e.getMessage());
 		} 
         // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
+        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
         assignment_part++;
 	}
 	/**
@@ -417,6 +418,7 @@ System.out.println("here..");
 	 */
 	protected void visualizeBinarySearchTree() {
         try {
+System.out.println (visualizer.getTreeRepresentation((TreeElement<E>)root));
         	connector.post("/assignments/" + getAssignment(), visualizer.getTreeRepresentation((TreeElement<E>)root));
 		}
 		catch (IOException e) {
@@ -435,7 +437,7 @@ System.out.println("here..");
 					+ e.getMessage());
 		} 
         // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
+        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
         assignment_part++;
 	}
 
@@ -467,7 +469,7 @@ System.out.println("here..");
 					+ e.getMessage());
 		} 
         // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
+        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
         assignment_part++;
 	}
 	protected void visualizeGraphAdjacencyMatrix() {
@@ -493,7 +495,7 @@ System.out.println("here..");
 				+ e.getMessage());
 		} 
         // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + getAssignment() + "/" + userName) );
+        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
         assignment_part++;
 	}
 

@@ -23,8 +23,10 @@ public class ADTVisualizer<K, E> {
 			COLON = ":",
 			OPEN_CURLY = "{", 
 			CLOSE_CURLY = "}", 
-			OPEN_PAREN = "[",
-			CLOSE_PAREN = "]";
+			OPEN_PAREN = "(",
+			CLOSE_PAREN = ")",
+			OPEN_BOX = "[",
+			CLOSE_BOX = "]";
 	public String visualizerType;
 	public final Map<String, String> adt_names =
 			new HashMap <String, String>(){
@@ -268,116 +270,29 @@ public class ADTVisualizer<K, E> {
 	/**
 	 * This method returns the JSON string representation of the tree 
 	 * made by using preorder traversal
-	 *
 	 * @param e
-	 *
-	 * @return JSON string
+	 * @return
 	 */
 	public String getTreeRepresentation(TreeElement<E> root) {
 
 		LinkedList<TreeElement<E>> nodes = new LinkedList<>(); 
 		LinkedList<TreeElement<E>> links =new LinkedList<>();
 
-		preOrder(root, nodes, links);
+	//	preOrder(root, nodes, links);
 
-String str =  getTreeRepresentation2(root);
-System.out.println("Test JSON:" + "{ " + str + " }");
-		return getJSON_BinaryTree(nodes, links);
-	}
+	//	return getJSON_BinaryTree(nodes, links);
+		String json_str = preOrder2(root);
 
-	/**
-	 * This method returns the JSON string representation of the tree 
-	 * made by using preorder traversal; creates a hierarchical JSON 
-	 * representation to facilitate a more efficient visualization 
-	 *
-	 * @param e
-	 *
-	 * @return JSON string
-	 *
-	 */
-	public String getTreeRepresentation2(TreeElement<E> root) {
-
-						// generate the JSON via preorder traversal
-		String json_str = "", json_left = "", json_right = "", str;
-
-		if (root != null){
-			str = root.getRepresentation();
-			json_str += 
-				QUOTE + "identifier" + QUOTE + ": " 
-				+ root.getIdentifier() + COMMA +
-				str.substring(1, str.length()-1) + COMMA;
-
-										// check for children
-			if (root.getLeft() != null) {
-				str = root.getLeft().getRepresentation();
-				json_left += 
-					QUOTE + "identifier" + QUOTE + ": " +
-					QUOTE + root.getLeft().getIdentifier() + QUOTE + COMMA +
-					str.substring(1, str.length()-1) + COMMA;
-
-										// get link properties
-				LinkVisualizer lvis = root.getLinkVisualizer(root.getLeft());
-				json_left +=  QUOTE + "linkProperties" + QUOTE + 
-											":" + OPEN_CURLY;
-				if (lvis != null) {
-					for (Entry<String,String> entry : 
-								lvis.getProperties().entrySet()){
-						json_left += 	QUOTE + entry.getKey() + QUOTE 
-								  	+	COLON +
-								QUOTE + entry.getValue() + QUOTE + COMMA;
-					}
-					json_left += CLOSE_CURLY + COMMA;
-				}
-										// recurse
-				json_left+= getTreeRepresentation2(root.getLeft());
-			}
-	
-			if (root.getRight() != null) {
-				str = root.getRight().getRepresentation();
-				json_right += 
-					QUOTE + "identifier" + QUOTE + ": "  +
-					QUOTE + root.getRight().getIdentifier() + QUOTE + COMMA +
-					str.substring(1, str.length()-1) + COMMA;
-										// get link properties
-										// get link properties
-				LinkVisualizer lvis = root.getLinkVisualizer(root.getRight());
-				json_right +=  QUOTE + "linkProperties" + QUOTE + 
-											":" + OPEN_CURLY;
-				if (lvis != null) {
-					for (Entry<String,String> entry : 
-								lvis.getProperties().entrySet()){
-						json_right += 	QUOTE + entry.getKey() + QUOTE 
-								  	+	COLON +
-								QUOTE + entry.getValue() + QUOTE + COMMA;
-					}
-					json_right += CLOSE_CURLY + COMMA;
-				}
-
-										// recurse
-				json_right += getTreeRepresentation2(root.getRight());
-			}
-			
-									// concatenate the two subtrees' strings
-			if ((root.getLeft() != null) &&  (root.getRight() == null)) 
-				json_str += "children:" + OPEN_PAREN +
-					OPEN_CURLY+json_left+CLOSE_CURLY+CLOSE_PAREN ; 
-			else if ((root.getLeft() == null) && (root.getRight() != null))
-				json_str += "children:" + OPEN_PAREN+
-					OPEN_CURLY+json_right+CLOSE_CURLY+CLOSE_PAREN ; 
-			else if ((root.getLeft() != null) && (root.getRight() != null))
-				json_str += "children:" + OPEN_PAREN +
-					OPEN_CURLY + json_left + CLOSE_CURLY + COMMA +
-					OPEN_CURLY + json_right + CLOSE_CURLY + CLOSE_PAREN; 
-
-		}
-		return json_str;
+		return OPEN_CURLY + json_str + CLOSE_CURLY;
 	}
 	
 	/**
 	 * Use a preorder traversal to collect the nodes and links in the tree
-	 * @param root
-	 * @param element_to_index
-	 * @param i
+	 *
+	 * @param root  root of the tree
+	 * @param nodes  tree nodes
+	 * @param links  parent-child links
+	 *
 	 * @return
 	 */
 	private void preOrder(TreeElement<E> root, LinkedList<TreeElement<E>> 
@@ -396,6 +311,61 @@ System.out.println("Test JSON:" + "{ " + str + " }");
 			preOrder(root.getRight(), nodes, links);
 		}
 	}
+	/**
+	 *
+	 *	Use a preorder traversal to directly extract a hierarchical JSON 
+	 *	representation of the tree.
+	 *
+	 */
+	 private String preOrder2(TreeElement<E> root) {
+		String json_str = "", children = "", link_props = "", elem_rep = "";
+		String t_str;
+		int num = root.getNumberOfChildren();
+		if (root != null) {
+									// first get the node representation
+			elem_rep = root.getRepresentation();
+									// remove surrounding curly braces
+			t_str = elem_rep.substring(1, elem_rep.length()-1);
+			json_str += t_str + COMMA;
+									// now get the children
+			json_str += QUOTE + "children" + QUOTE + COLON + OPEN_BOX ;
+			for (int k = 0; k < root.getNumberOfChildren(); k++) {
+				if (root.getChild(k) == null) {
+					json_str += OPEN_CURLY + QUOTE + "name" + QUOTE + COLON+
+						QUOTE + "NULL" + QUOTE + CLOSE_CURLY + COMMA;
+				}
+				else {
+					LinkVisualizer lv = 
+						root.getLinkVisualizer(root.getChild(k));
+					json_str += OPEN_CURLY;
+					if (lv != null) {
+						json_str += 
+							QUOTE +"linkProperties"+QUOTE+COLON+OPEN_CURLY +
+							QUOTE +"color" + QUOTE+ COLON + 
+							OPEN_BOX + 
+								Integer.toString(lv.getColor().getRed()) + COMMA +
+								Integer.toString(lv.getColor().getGreen()) + COMMA+
+								Integer.toString(lv.getColor().getBlue()) + COMMA +
+								Integer.toString(lv.getColor().getAlpha()) +
+							CLOSE_BOX + COMMA +
+							QUOTE + "thickness" + QUOTE + COLON + 
+							String.valueOf(lv.getThickness()) + 
+							CLOSE_CURLY + COMMA;
+					}
+					else json_str += "linkProperties" + COLON + "{}" +COMMA;
+									// process its children
+					json_str +=	preOrder2(root.getChild(k));
+					json_str += CLOSE_CURLY + COMMA;
+				}
+			}
+							// remove last comma
+			json_str = json_str.substring(0, json_str.length()-1);
+							// end of children
+			json_str += CLOSE_BOX;
+		}
+		return json_str;
+	 }
+
 	/**
 	 * Generating the JSON string for an array of elements
 	 *
@@ -454,14 +424,15 @@ System.out.println("Test JSON:" + "{ " + str + " }");
 	
 							// get the link properties
 			LinkVisualizer lvis = parent.getLinkVisualizer(child);
-			str+= OPEN_CURLY;
 			if (lvis != null) {
-				for (Entry<String,String> entry:lvis.getProperties().entrySet())
-																{
-					str += 	QUOTE + entry.getKey() + QUOTE 
-								  +	COLON +
-							QUOTE + entry.getValue() + QUOTE + COMMA;
-				}
+				str += OPEN_CURLY + lvis.getLinkProperties() + COMMA;
+
+//				for (Entry<String,String> entry:lvis.getProperties().entrySet())
+//																{
+//					str += 	QUOTE + entry.getKey() + QUOTE 
+//								  +	COLON +
+//							QUOTE + entry.getValue() + QUOTE + COMMA;
+//				}
 			}
 			str += 	QUOTE + "source" + QUOTE + COLON + 
 					map.get(Integer.parseInt(parent.getIdentifier()))
@@ -504,13 +475,15 @@ System.out.println("Test JSON:" + "{ " + str + " }");
 			DLelement<E> parent = links.pop();
 							// get the link properties
 			LinkVisualizer lvis = parent.getLinkVisualizer(child);
-			str+= OPEN_CURLY;
 			if (lvis != null) {
+				str+= OPEN_CURLY + lvis.getLinkProperties() + COMMA;
+/*
 				for (Entry<String,String> entry : lvis.getProperties().entrySet()){
 					str += 	QUOTE + entry.getKey() + QUOTE 
 								  +	COLON +
 							QUOTE + entry.getValue() + QUOTE + COMMA;
 				}
+*/
 			}
 
 			str += 	QUOTE + "source" + QUOTE + COLON + 
@@ -530,6 +503,7 @@ System.out.println("Test JSON:" + "{ " + str + " }");
 	 * @param links - list of the tree links
 	 * @return complete JSON string for the current ADT
 	 */
+/*
 	public String getJSON_BinaryTree(LinkedList<TreeElement<E>> nodes, 
 							LinkedList<TreeElement<E>> links){
 	
@@ -571,6 +545,7 @@ System.out.println("Test JSON:" + "{ " + str + " }");
 		links_JSON.append(str);
 		return build_JSON(nodes_JSON, links_JSON);		 
 	}
+*/
 	
 	/**
 	 * This method builds the JSON for the Graph ADT
@@ -604,12 +579,14 @@ System.out.println("Test JSON:" + "{ " + str + " }");
 	
 							// get the link properties
 			LinkVisualizer lvis = parent.getLinkVisualizer(child);
-			str+="{";
 			if (lvis != null) {
+				str+= OPEN_CURLY + lvis.getLinkProperties() + COMMA;
+/*
 				for (Entry<String,String> entry : lvis.getProperties().entrySet()){
 					str += String.format("\"%s\": \"%s\", ", entry.getKey(), 
 									entry.getValue());
 				}
+*/
 			}
 	
 			str += String.format("\"source\":%s,", 
@@ -618,7 +595,7 @@ System.out.println("Test JSON:" + "{ " + str + " }");
 			str += String.format("\"target\":%s", 
 					map.get(Integer.parseInt(child.getIdentifier())) );
 	
-			str += "},";
+			str += CLOSE_CURLY + COMMA;
 		}
 		links_JSON.append(str);
 		return build_JSON(nodes_JSON, links_JSON);	 

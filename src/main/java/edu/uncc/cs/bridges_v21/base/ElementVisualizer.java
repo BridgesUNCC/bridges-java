@@ -1,5 +1,7 @@
 package bridges.base;
+
 import bridges.validation.*;
+import bridges.base.Color;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +20,19 @@ import java.util.Random;
 
 public class ElementVisualizer {
 	// Visualization properties for this Node.
+
+	Color color;
+	String shape = "circle",
+			key = "";
+	double	locationX = 0.0, 
+			locationY = 0.0,
+			size = 10.0,
+			opacity = 1.0;
+	
 	Map<String, String> properties = new HashMap<String, String>() {
 		{
-			put("color", "green");
+//			put("color", "green");
+			put("color", "[0, 0, 255, 255]");
 			put("opacity", "1.0");
 			put("size", "10.0");
 			put("shape", "circle");
@@ -37,6 +49,7 @@ public class ElementVisualizer {
 	 */
 	public ElementVisualizer() {
 		super();
+		color = new Color(0, 255, 0, 255);
 	}
 
 	/**
@@ -60,7 +73,7 @@ public class ElementVisualizer {
 	 *            the string that represents one of the Bridges shapes
 	 */
 	public ElementVisualizer(String aColor, String aShape) {
-		this(aColor);
+		setColor(aColor);
 		setShape(aShape);
 	}
 
@@ -94,9 +107,9 @@ public class ElementVisualizer {
 	 *            Bridges Visualization
 	 */
 	public ElementVisualizer(String aColor, String aShape, double opacity,
-			double size) {
-		this(aColor, aShape);
-
+										double size) {
+		setColor(aColor);
+		setShape(aShape);
 		setOpacity(opacity);
 		setSize(size);
 	}
@@ -109,8 +122,10 @@ public class ElementVisualizer {
 	 *            the ElementVisualizer whose settings you want to copy.
 	 */
 	public ElementVisualizer(ElementVisualizer v) {
-		this(v.getColor(), v.getShape(), v.getOpacity(), v.getSize());
-
+		setColor(v.getColor());
+		setShape(v.getShape());
+		setOpacity(v.getOpacity());
+		setSize(v.getSize());
 	}
 
 	/**
@@ -119,8 +134,9 @@ public class ElementVisualizer {
 	 * @param size
 	 *            the pixel size of the Element in the Bridges Visualization
 	 */
-	public void setSize(double size) {
-		Validation.validateSize(size);
+	public void setSize(double sz) {
+		Validation.validateSize(sz);
+		size = sz;
 		properties.put("size", Double.toString(size));
 	}
 
@@ -130,31 +146,68 @@ public class ElementVisualizer {
 	 * @return the size in pixels of the Element in the Bridges Visualization
 	 */
 	public double getSize() {
-		return Double.parseDouble(properties.get("size"));
+		return size;
 	}
 
 	/** Set the color of the Element in the Bridges Visualization to "aColor".
 	 * @param aColor the string reprsenting the color of the Element in 
 	 *  		the Bridges Visualization
 	 */
-	public String setColor(String aColor) {
-		// this.aColor = aColor;
-		aColor = aColor.toLowerCase();
-		if (aColor == null || aColor.isEmpty()) {
-			properties.put("color", aColor);
-		} else {
-			Validation.validateColor(aColor);
-			properties.put("color", aColor);
-		}
-		return aColor;
+	public void setColor(String aColor) 
+				throws InvalidValueException{
+		String col = aColor.toLowerCase();
+						// validates and returns a 4 component RGBA val
+		if (col.equals("red"))
+			color = new Color(255, 0, 0, 255);
+		else if(col.equals("green"))
+			color = new Color(0, 255, 0, 255);
+		else if(col.equals("blue"))
+			color = new Color(0, 0, 255, 255);
+		else if(col.equals("yellow"))
+			color = new Color(255, 255, 0, 255);
+		else if(col.equals("magenta"))
+			color = new Color(255, 0, 255, 255);
+		else if(col.equals("cyan"))
+			color = new Color(0, 255, 255, 255);
+		else if(col.equals("white"))
+			color = new Color(255, 255, 255, 255);
+		else if(col.equals("black"))
+			color = new Color(0, 0, 0, 255);
+		else
+        	throw new InvalidValueException("Invalid color." +
+            " Only named primaries supported now \n");
 	}
 
-	/**Get the color of the Element in the Bridges Visualization
-	 * @return the string reprsenting the color of the Element in the 
-	 *			Bridges Visualization
+	/** Set the color of the Element in the Bridges Visualization to "aColor".
+	 *  give RGBA components
+	 *
+	 * @param r,g, b, a color components
 	 */
-	public String getColor() {
-		return properties.get("color");
+	public void setColor(Integer r, Integer g, Integer b, Integer a) {
+		color.setRed(r);
+		color.setGreen(g);
+		color.setBlue(b);
+		color.setAlpha(a);
+	}
+
+	/** Set the color of the Element in the Bridges Visualization to "aColor".
+	 *  given a Color object 
+	 *
+	 * @param col  object
+	 */
+	public void setColor(Color c)  {
+		setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
+	}
+
+	/**
+	 *	Get the color of the Element in the Bridges Visualization
+	 *
+	 * 	@return Color string representing the color of the Element as an 
+	 *	[R G B A] in the range 0-255 
+	 *
+	 */
+	public Color getColor() {
+		return color;
 	}
 
 	/**
@@ -163,7 +216,7 @@ public class ElementVisualizer {
 	 * 			Bridges Visualization.
 	 */
 	public String getShape() {
-		return properties.get("shape");
+		return shape;
 	}
 
 	/**
@@ -177,7 +230,7 @@ public class ElementVisualizer {
 
 		aShape = aShape.toLowerCase();
 		Validation.validateShape(aShape);
-		properties.put("shape", aShape);
+		shape = aShape;
 	}
 
 	/**
@@ -190,19 +243,14 @@ public class ElementVisualizer {
 	 *      transparency.
 	 */
 	public void setOpacity(double opacity) {
-		Validation.validateOpacity(opacity);
-		properties.put("opacity", Double.toString(opacity));
+		color.setAlpha((int)(opacity*255));
 	}
 
 	/** Get the opacity of the Element in the Bridges Visualization
 	 * @return the opacity value
 	 */
 	public double getOpacity() {
-		String prop = properties.get("opacity");
-		if (prop == null)
-			return 1.0;
-		else
-			return Double.parseDouble(properties.get("opacity"));
+		return ((double) color.getAlpha())/255.;
 	}
 
 	/**	Return the key of the BSTElement
@@ -210,15 +258,15 @@ public class ElementVisualizer {
 	 * 	@return the key of this BSTElement
 	 */
 	String getKey() {
-		return properties.get("key");
+		return key;
 	}
 
 	/**
 	 *  Set the key of the BSTElement to key
 	 *  @param key the key to set
 	 **/
-	void setKey(String key) {
-		properties.put("key", key);
+	void setKey(String k) {
+		key = k;
 	}
 	/**
 	 *
@@ -230,20 +278,32 @@ public class ElementVisualizer {
      **/
 	public
 	void setLocation(double x, double y) {
-		properties.put("locationX", Double.toString(x));
-		properties.put("locationY", Double.toString(y));
+		locationX = x;
+		locationY = y;
 	}
 
 	/**
 	 *
-	 *  Get the location(X,Y)  of the element - used for displaying elements 
+	 *  Get the location X  of the element - used for displaying elements 
 	 *	in maps
 	 *
-	 * @return location the X,Y location(array of 2 doubles) to be set
+	 * @return location X coordinate
 	 *
      **/
-	String getLocation() {
-		return properties.get("location");
+	double getLocationX() {
+		return locationX;
+	}
+
+	/**
+	 *
+	 *  Get the location Y  of the element - used for displaying elements 
+	 *	in maps
+	 *
+	 * @return location Y coordinate
+	 *
+     **/
+	double getLocationY() {
+		return locationY;
 	}
 
 	/**
@@ -252,9 +312,9 @@ public class ElementVisualizer {
 	 * 
 	 * @return a color name as a string value
 	 */
-	public String randomColor() {
-		Object[] a = Validation.COLOR_NAMES.toArray();
-		return setColor(a[new Random().nextInt(a.length)].toString());
-	}
+//	public String randomColor() {
+//		Object[] a = Validation.COLOR_NAMES.toArray();
+//		return setColor(a[new Random().nextInt(a.length)].toString());
+//	}
 
 }

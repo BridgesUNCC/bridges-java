@@ -3,11 +3,17 @@ package bridges.validation;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Validation {
 
 	public static final Set<String> COLOR_NAMES = new HashSet<String>();
+//	public static final Map<String, String> COLOR_NAMES;
+//						new HashMap<String, String>();
+//	public static final Map<String, ArrayList<Integer> > COLOR_NAMES;
 	public static final Set<Pattern> COLOR_PATTERNS = new HashSet<Pattern>();
 	public static final Set<String> NODE_SHAPES = new HashSet<String>();
 			//	this variable holds the maximum number of allowed elements
@@ -15,6 +21,35 @@ public class Validation {
 	
 	static {
 		COLOR_PATTERNS.add(Pattern.compile("#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})"));
+/*
+		COLOR_NAMES = new HashMap<String,ArrayList<Integer>>(){{
+			put("red",  new ArrayList<>(Arrays.asList(255, 0, 0, 255)));
+			put("green",  new ArrayList<>(Arrays.asList(0, 255, 0, 255)));
+			put("blue",  new ArrayList<>(Arrays.asList(0, 0, 255, 255)));
+			put("yellow",  new ArrayList<>(Arrays.asList(255, 255, 0, 255)));
+			put("magenta",  new ArrayList<>(Arrays.asList(255, 0, 255, 255)));
+			put("black",  new ArrayList<>(Arrays.asList(0, 0, 0, 255)));
+			put("white",  new ArrayList<>(Arrays.asList(255, 255, 255, 255)));
+			put("purple",  new ArrayList<>(Arrays.asList(128, 0, 128, 255)));
+			put("brown",  new ArrayList<>(Arrays.asList(255, 165, 0, 255)));
+		}};
+		
+		COLOR_NAMES = new HashMap<String,String>(){{
+			put("red",   "[255,0,0,255)]"); //Primary
+			put("green", "[0,255,0,255]");	//Secondary(full 255 is considered lime by CSS)
+			put("blue", "[0,0,255,255]"); //Primary
+			put("yellow","[255,255,0,255]"); //subtractive Primary
+			put("cyan","[0,255,255,255]");   //subtractive primary
+			put("magenta","[255,0,255,255]"); //subtractive primary
+			put("orange","[255,165,0,255]"); //Secondary
+			put("purple","[128,0,128,255]"); //Secondary
+			put("brown","[165,42,42,255]"); //Neutral
+			put("black","[0,0,0,255]"); //Monochrome
+			put("grey","[192,192,192,255]"); //Monochrome
+			put("white","[255,255,255,255]");//Monochrome
+		}};
+*/
+
 		COLOR_NAMES.addAll(Arrays.asList(new String[] {
 				"aliceblue",
 				"antiquewhite",
@@ -164,6 +199,7 @@ public class Validation {
 				"yellow",
 				"yellowgreen"
 		}));
+
 		NODE_SHAPES.addAll(Arrays.asList(new String[]{
 				"circle",
 				"square",
@@ -187,21 +223,33 @@ public class Validation {
 	 * 
 	 * @return whether the color is valid
 	 */
-	public static void validateColor(String color) throws InvalidValueException{
+	public static void validateColor(String color) throws 
+							InvalidValueException{
 		if (COLOR_NAMES.contains(color)) {
-			// Named color
-			return;
-		} else {
-			for (Pattern p : COLOR_PATTERNS) {
-				if (p.matcher(color).matches()) {
-					return;
-				}
+									// Named color
+			switch (color) {
+            	case "red": 	color =  "[255, 0, 0, 255]"; break;
+            	case "green": 	color =  "[0, 255, 0, 255]"; break;
+            	case "blue":  	color =  "[0, 0, 255, 255]"; break;
+            	case "yellow": 	color =  "[255, 0, 255, 255]"; break;
+            	case "cyan": 	color =  "[0, 255, 255, 255]"; break;
+            	case "magenta": color =  "[255, 255, 0, 255]"; break;
+            	case "white": 	color =  "[255, 255, 255, 255]"; break;
+            	case "black": 	color =  "[0, 0, 0, 255]"; break;
 			}
+			return;
 		}
-		throw new InvalidValueException("Invalid color' " + color + "'. Expected"
-				+ "CSS color name, or #RRGGBB or #RGB formats.");
+//		else {
+//			for (Pattern p : COLOR_PATTERNS) {
+//				if (p.matcher(color).matches()) {
+//					return color;
+//				}
+//			}
+//		}
+		throw new InvalidValueException("Invalid color' " + color + 
+			"'. Expected" + "CSS color name, or #RRGGBB or #RGB formats.");
 	}
-	
+
 	/**
 	 * Determines if the shape is supported.
 	 * 

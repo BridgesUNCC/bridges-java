@@ -158,6 +158,7 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 	/* (non-Javadoc)
 	 * @see edu.uncc.cs.bridgesV2.base.Element#getRepresentation()
 	 */
+/*
 	@Override
 	public String getRepresentation() {
 		String locx = "0.0", locy = "0.0";
@@ -184,4 +185,5 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 			
 		return json + "}";
 	}
+*/
 }

@@ -21,7 +21,18 @@ import java.util.HashMap;
 
 public class Element<E>{
 	
-	static Integer ids = 0;
+	private String
+			QUOTE = "\"",
+			COMMA = ",",
+			COLON = ":",
+			OPEN_CURLY = "{", 
+			CLOSE_CURLY = "}", 
+			OPEN_PAREN = "(",
+			CLOSE_PAREN = ")",
+			OPEN_BOX = "[",
+			CLOSE_BOX = "]";
+
+	static 	Integer ids = 0;
 	private String label;
 	private String identifier;
 	private ElementVisualizer visualizer;
@@ -199,8 +210,33 @@ public class Element<E>{
 	 * @returns the encoded JSON string
 	 */
 	public String getRepresentation(){
-		String locx = "0.0", locy = "0.0";
-		String json = "{";
+
+		String json = OPEN_CURLY + 
+			QUOTE + "name" + QUOTE + COLON + QUOTE + label + QUOTE + COMMA +
+			QUOTE + "key" + QUOTE + COLON + QUOTE + visualizer.getKey() +  QUOTE + COMMA +
+			QUOTE + "shape" + QUOTE + COLON + 
+				QUOTE + visualizer.getShape() + QUOTE + COMMA +
+			QUOTE + "size" + QUOTE + COLON + 
+				Double.toString(visualizer.getSize()) + COMMA +
+			QUOTE + "location" + QUOTE + COLON + 
+				OPEN_BOX + Double.toString(visualizer.getLocationX()) + COMMA +
+					Double.toString(visualizer.getLocationY()) 
+					+ CLOSE_BOX + COMMA + 
+			QUOTE + "color" + QUOTE + COLON +
+// TEMP
+//			QUOTE + "red" + QUOTE + 
+// TEMP
+				OPEN_BOX + 
+					Integer.toString(visualizer.getColor().getRed()) + COMMA +
+					Integer.toString(visualizer.getColor().getGreen()) + COMMA +
+					Integer.toString(visualizer.getColor().getBlue()) + COMMA +
+					Integer.toString(visualizer.getColor().getAlpha()) +
+				CLOSE_BOX + 
+			CLOSE_CURLY;
+			
+
+		return json;
+/*
 		for (Entry<String, String> entry : visualizer.properties.entrySet()) {
 			if (entry.getKey() == "locationX")
 				locx = entry.getValue();
@@ -214,6 +250,7 @@ public class Element<E>{
 		json += String.format("\"location\": [ %s , %s ], ", locx, locy);
 		json += String.format("\"name\": \"%s\"", label);
 		return json + "}";
+*/
 	}
 
 	/**
