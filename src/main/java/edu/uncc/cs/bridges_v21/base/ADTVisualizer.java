@@ -355,7 +355,7 @@ System.out.println(t_str);
 								Integer.toString(lv.getColor().getRed()) + COMMA +
 								Integer.toString(lv.getColor().getGreen()) + COMMA+
 								Integer.toString(lv.getColor().getBlue()) + COMMA +
-								Integer.toString(lv.getColor().getAlpha()) +
+								Float.toString(lv.getColor().getAlpha()) +
 							CLOSE_BOX + COMMA +
 							QUOTE + "thickness" + QUOTE + COLON + 
 							String.valueOf(lv.getThickness()) + 

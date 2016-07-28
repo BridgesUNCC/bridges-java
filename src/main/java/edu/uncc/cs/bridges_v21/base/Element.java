@@ -237,7 +237,7 @@ public class Element<E> extends DataStruct{
 					Integer.toString(visualizer.getColor().getRed()) + COMMA +
 					Integer.toString(visualizer.getColor().getGreen()) + COMMA +
 					Integer.toString(visualizer.getColor().getBlue()) + COMMA +
-					Integer.toString(visualizer.getColor().getAlpha()) +
+					Float.toString(visualizer.getColor().getAlpha()) +
 				CLOSE_BOX + COMMA + 
 			QUOTE + "location" + QUOTE + COLON + 
 				OPEN_BOX + Double.toString(visualizer.getLocationX()) + COMMA +

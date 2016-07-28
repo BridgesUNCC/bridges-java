@@ -26,13 +26,13 @@ public class ElementVisualizer {
 			key = "";
 	double	locationX = 0.0, 
 			locationY = 0.0,
-			size = 10.0,
-			opacity = 1.0;
+			size = 10.0;
+	float   opacity = 1.0f;
 	
 	Map<String, String> properties = new HashMap<String, String>() {
 		{
 //			put("color", "green");
-			put("color", "[0, 0, 255, 255]");
+			put("color", "[70, 130, 180, 1.0]");
 			put("opacity", "1.0");
 			put("size", "10.0");
 			put("shape", "circle");
@@ -49,7 +49,7 @@ public class ElementVisualizer {
 	 */
 	public ElementVisualizer() {
 		super();
-		color = new Color(0, 255, 0, 255);
+		color = new Color(70, 130, 180, 1.0f);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class ElementVisualizer {
 	 *            the double that represents the size of the Element on the
 	 *            Bridges Visualization
 	 */
-	public ElementVisualizer(String aColor, String aShape, double opacity,
+	public ElementVisualizer(String aColor, String aShape, float opacity,
 										double size) {
 		setColor(aColor);
 		setShape(aShape);
@@ -158,21 +158,21 @@ public class ElementVisualizer {
 		String col = aColor.toLowerCase();
 						// validates and returns a 4 component RGBA val
 		if (col.equals("red"))
-			color = new Color(255, 0, 0, 255);
+			color = new Color(255, 0, 0, 1.0f);
 		else if(col.equals("green"))
-			color = new Color(0, 255, 0, 255);
+			color = new Color(0, 255, 0, 1.0f);
 		else if(col.equals("blue"))
-			color = new Color(0, 0, 255, 255);
+			color = new Color(0, 0, 255, 1.0f);
 		else if(col.equals("yellow"))
-			color = new Color(255, 255, 0, 255);
+			color = new Color(255, 255, 0, 1.0f);
 		else if(col.equals("magenta"))
-			color = new Color(255, 0, 255, 255);
+			color = new Color(255, 0, 255, 1.0f);
 		else if(col.equals("cyan"))
-			color = new Color(0, 255, 255, 255);
+			color = new Color(0, 255, 255, 1.0f);
 		else if(col.equals("white"))
-			color = new Color(255, 255, 255, 255);
+			color = new Color(255, 255, 255, 1.0f);
 		else if(col.equals("black"))
-			color = new Color(0, 0, 0, 255);
+			color = new Color(0, 0, 0, 1.0f);
 		else
         	throw new InvalidValueException("Invalid color." +
             " Only named primaries supported now \n");
@@ -183,7 +183,7 @@ public class ElementVisualizer {
 	 *
 	 * @param r,g, b, a color components
 	 */
-	public void setColor(Integer r, Integer g, Integer b, Integer a) {
+	public void setColor(Integer r, Integer g, Integer b, float a) {
 		color.setRed(r);
 		color.setGreen(g);
 		color.setBlue(b);
@@ -242,15 +242,15 @@ public class ElementVisualizer {
 	 *      fully visible, a decimal between 0 and 1 for varying
 	 *      transparency.
 	 */
-	public void setOpacity(double opacity) {
-		color.setAlpha((int)(opacity*255));
+	public void setOpacity(float opacity) {
+		color.setAlpha((int)(opacity));
 	}
 
 	/** Get the opacity of the Element in the Bridges Visualization
 	 * @return the opacity value
 	 */
-	public double getOpacity() {
-		return ((double) color.getAlpha())/255.;
+	public float getOpacity() {
+		return (color.getAlpha());
 	}
 
 	/**	Return the key of the BSTElement

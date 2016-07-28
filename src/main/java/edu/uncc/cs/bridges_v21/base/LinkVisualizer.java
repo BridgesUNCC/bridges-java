@@ -48,7 +48,7 @@ public class LinkVisualizer{
 
 	public LinkVisualizer() {
 		super();
-		color = new Color(0, 0, 0, 255);
+		color = new Color(70, 130, 180, 1.0f);
 		setThickness(1.0);
 		setWeight(1.0);
 /*
@@ -111,21 +111,21 @@ public class LinkVisualizer{
 		String col = aColor.toLowerCase();
                         // validates and returns a 4 component RGBA val
 		if (col.equals("red"))
-			color = new Color(255, 0, 0, 255);
+			color = new Color(255, 0, 0, 1.0f);
 		else if(col.equals("green"))
-			color = new Color(0, 255, 0, 255);
+			color = new Color(0, 255, 0, 1.0f);
 		else if(col.equals("blue"))
-			color = new Color(0, 0, 255, 255);
+			color = new Color(0, 0, 255, 1.0f);
 		else if(col.equals("yellow"))
-			color = new Color(255, 255, 0, 255);
+			color = new Color(255, 255, 0, 1.0f);
 		else if(col.equals("magenta"))
-			color = new Color(255, 0, 255, 255);
+			color = new Color(255, 0, 255, 1.0f);
 		else if(col.equals("cyan"))
-			color = new Color(0, 255, 255, 255);
+			color = new Color(0, 255, 255, 1.0f);
 		else if(col.equals("white"))
-			color = new Color(255, 255, 255, 255);
+			color = new Color(255, 255, 255, 1.0f);
 		else if(col.equals("black"))
-			color = new Color(0, 0, 0, 255);
+			color = new Color(0, 0, 0, 1.0f);
 		else
 			throw new InvalidValueException("Invalid color " + "'" + aColor + "'" +"."
 			+ " Only named primaries supported now \n");
@@ -140,7 +140,7 @@ public class LinkVisualizer{
 	 * 
 	 * @return the size in pixels of the Element in the Bridges Visualization
 	 */
-    public void setColor(Integer r, Integer g, Integer b, Integer a)  throws
+    public void setColor(Integer r, Integer g, Integer b, Float a)  throws
 									InvalidValueException {
 		color.setRed(r);
 		color.setGreen(g);
@@ -160,22 +160,22 @@ public class LinkVisualizer{
 	/**
 	 * Sets the opacity of the link in the Bridges Visualization
 	 * 
-	 * @param opacity a double between 0 and 1 representing how transparent 
+	 * @param opacity a float between 0 and 1 representing how transparent 
 	 *	the node
 	 *            should be on the Bridges Visualization. 0 for invisible, 1 for
 	 *            fully visible, a decimal between 0 and 1 for varying
 	 *            transparency.
 	 */
-	public void setOpacity(double opacity) {
-		color.setAlpha((int) (opacity*255));
+	public void setOpacity(float opacity) {
+		color.setAlpha(opacity);
 	}
 
 	/** 
 	 * 	Get the opacity of the link in the Bridges Visualization
 	 * 	@return the opacity value (in the range 0.0-1.0
 	 */
-	public double getOpacity() {
-		return ((double) color.getAlpha())/255.;
+	public float getOpacity() {
+		return (color.getAlpha());
 	}
 
 	public String getLinkProperties() {
@@ -187,7 +187,7 @@ public class LinkVisualizer{
 					Integer.toString(this.getColor().getRed()) + COMMA +
 					Integer.toString(this.getColor().getGreen()) + COMMA +
 					Integer.toString(this.getColor().getBlue()) + COMMA +
-					Integer.toString(this.getColor().getAlpha()) +
+					Float.toString(this.getColor().getAlpha()) +
 				CLOSE_BOX + COMMA + 
 			QUOTE + "thickness" + QUOTE + COLON + 
 				Double.toString(this.getThickness()) + COMMA +

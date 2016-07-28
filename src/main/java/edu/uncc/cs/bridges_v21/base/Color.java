@@ -18,14 +18,18 @@ import bridges.validation.InvalidValueException;
  */
 public class Color {
 
-    private int red, green, blue, alpha; // alpha represents opacity
+    private int red, green, blue; 
+	private float alpha; // alpha represents opacity from 0.0-1.0
 	private static final Map<String, String> ColorNames 
 					= new HashMap<String,String>();
     /**
      * Constructors
      */
     public Color() {
-		red = green = blue = 0; alpha = 255;  // default is Black
+		red = 70; 
+		green = 130;
+		blue = 180; 
+		alpha = 1.0f;  // default is Steel Blue
     }
 
 	/**
@@ -34,7 +38,7 @@ public class Color {
 	 * @param r, g, b, a  - checked to be in the range 0-255
 	 *
 	 */
-	public Color(int r, int g, int b, int a) {
+	public Color(int r, int g, int b, float a) {
 		setColor (r, g, b, a);
 	}
 
@@ -46,7 +50,7 @@ public class Color {
 	 *
 	 */
 	public Color(int r, int g, int b) {
-		setColor (r, g, b, 255);
+		setColor (r, g, b, 1.0f);
 	}
 
 	/**
@@ -55,15 +59,14 @@ public class Color {
 	 * @param r, g, b, a  - checked to be in the range 0-255
 	 *
 	 */
-	public void setColor(int r, int g, int b, int a) {
+	public void setColor(int r, int g, int b, float a) {
 							// check color component ranges
 		if (r >= 0 &&  r <= 255 && g >= 0 &&  g <= 255 && 
-				b >= 0 && b <= 255 && a >= 0 && a <= 255) {
+				b >= 0 && b <= 255 && a >= 0.0f && a <= 1.0f) {
 			red = r; green = g; blue = b; alpha = a;
 			return;
 		}
-		throw new InvalidValueException("Invalid color range: each component" +
-			 " must be in the range 0-255\n");
+		throw new InvalidValueException("Invalid color range (r,g,b must be 0-255, alpha in 0-1)\n");
 	}
 
 	/**
@@ -147,13 +150,13 @@ public class Color {
 	 * 	@param a  - checked to be in the range 0-255
 	 *
 	 */
-	public void setAlpha(int a) {
-		if (a >= 0 && a <= 255) {
+	public void setAlpha(float a) {
+		if (a >= 0.0f && a <= 1.0f) {
 			alpha = a;
 			return;
 		}
 		throw new InvalidValueException("Invalid color range(alpha):" +
-			 " must be in the range 0-255\n");
+			 " must be in the range 0.0-1.0\n");
 	}
 
 	/**
@@ -162,28 +165,28 @@ public class Color {
 	 * 	@return  alpha - returns the alpha(opacity) component of the color
 	 *
 	 */
-	public int getAlpha() {
+	public float getAlpha() {
 		return alpha;
 	}
 
 
 	public void setColor(String col_name) {
 		switch (col_name) {
-			case "red": red = 255; green = blue = 0; alpha = 255; 
+			case "red": red = 255; green = blue = 0; alpha = 1.0f; 
 				break;
-			case "green": red = 0; green = 255; blue = 0; alpha = 255; 
+			case "green": red = 0; green = 255; blue = 0; alpha = 1.0f; 
 				break;
-			case "blue": red = 0; green = 0; blue = 255; alpha = 255; 
+			case "blue": red = 0; green = 0; blue = 255; alpha = 1.0f; 
 				break;
-			case "yellow": red = 255; green = 255; blue = 0; alpha = 255; 
+			case "yellow": red = 255; green = 255; blue = 0; alpha = 1.0f; 
 				break;
-			case "cyan": red = 0; green = 255; blue = 255; alpha = 255; 
+			case "cyan": red = 0; green = 255; blue = 255; alpha = 1.0f; 
 				break;
-			case "magenta": red = 255; green = 255; blue = 0; alpha = 255; 
+			case "magenta": red = 255; green = 255; blue = 0; alpha = 1.0f; 
 				break;
-			case "white": red = 255; green = 255; blue = 255; alpha = 255; 
+			case "white": red = 255; green = 255; blue = 255; alpha = 1.0f; 
 				break;
-			case "black": red = 0; green = 0; blue = 0; alpha = 255; 
+			case "black": red = 0; green = 0; blue = 0; alpha = 1.0f; 
 				break;
 		}
 	}
