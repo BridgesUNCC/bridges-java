@@ -680,6 +680,10 @@ public class ADTVisualizer<K, E> {
 					QUOTE + "0.4.0" + QUOTE + COMMA +
 				QUOTE + "visual" + QUOTE + COLON + 
 					QUOTE + adt_names.get(visualizerType)+ QUOTE + COMMA +
+				QUOTE + "title" + QUOTE + COLON + 
+					QUOTE + title + QUOTE + COMMA +
+				QUOTE + "description" + QUOTE + COLON + 
+					QUOTE + description + QUOTE + COMMA +
 				QUOTE + "nodes" + QUOTE + COLON + OPEN_CURLY + tree_json + CLOSE_CURLY +
 			CLOSE_CURLY;
 			
