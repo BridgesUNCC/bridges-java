@@ -27,6 +27,7 @@ public class ADTVisualizer<K, E> {
 			CLOSE_PAREN = ")",
 			OPEN_BOX = "[",
 			CLOSE_BOX = "]";
+	private String title = "", description = "";
 	public String visualizerType;
 	public final Map<String, String> adt_names =
 			new HashMap <String, String>(){
@@ -61,7 +62,25 @@ public class ADTVisualizer<K, E> {
 	public ADTVisualizer(){
 		super();
 	}
-	
+
+	/**
+	 * 
+	 * @param title title used in the visualization;
+	 *
+	 */
+	public void setTitle(String titl) {
+		title = titl;
+	}
+
+	/**
+	 * 
+	 * @param descr description to annotate the visualization;
+	 *
+	 */
+	public void setDescription(String descr) {
+		description = descr;
+	}
+
 	/** Constructor allow visulizations of an array.
 	 * @param adtArray the array of elements to visualize
 	 */
@@ -277,7 +296,6 @@ public class ADTVisualizer<K, E> {
 	 */
 	public String getTreeRepresentation(TreeElement<E> root) {
 
-System.out.println("here..");
 		LinkedList<TreeElement<E>> nodes = new LinkedList<>(); 
 		LinkedList<TreeElement<E>> links =new LinkedList<>();
 
@@ -332,7 +350,6 @@ System.out.println("here..");
 			elem_rep = root.getRepresentation();
 									// remove surrounding curly braces
 			t_str = elem_rep.substring(1, elem_rep.length()-1);
-System.out.println(t_str);
 			json_str += t_str;
 									// now get the children
 			if (root.getNumberOfChildren() > 0)
@@ -638,6 +655,8 @@ System.out.println(t_str);
 		s.append("{").append("\"name\": \"edu.uncc.cs.bridges\",")
 			.append("\"version\": \"0.4.0\",")
 			.append("\"visual\": \""+adt_names.get(visualizerType)+"\",")
+			.append("\"title\": \""+ title +"\",")
+			.append("\"description\": \""+ description +"\",")
 			.append("\"nodes\": [").append(trimComma(nodes_JSON))
 			.append( "],")
 			.append("\"links\": [").append(trimComma(links_JSON))
@@ -647,13 +666,11 @@ System.out.println(t_str);
 		if (visualizeJSON())
 			System.out.println(s.toString());
 
-System.out.println("DS Type:" + visualizerType);
 		return s.toString();	
 	}
 
 	public String build_JSON(String tree_json) {
 
-System.out.println("DS Type:" + visualizerType);
 
 		String final_json = 
 			OPEN_CURLY + 

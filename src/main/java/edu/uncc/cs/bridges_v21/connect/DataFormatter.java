@@ -369,7 +369,7 @@ public class DataFormatter {
 				    										deserializedEq.properties.toString()));
 				    	}
 			 
-			System.out.println("allUSGS: " + allUSGS.get(0));
+//			System.out.println("allUSGS: " + allUSGS.get(0));
 			max = validNumberOfTweets(max);
 		    	List<EarthquakeUSGS> results = new ArrayList<>();
 		    //	results.addAll(allTweets);

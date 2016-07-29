@@ -39,7 +39,7 @@ public class Bridges <K, E> {
 	private static int assignment;
 	private static int assignment_part;
 	private static String key;
-	private DataFormatter df;
+	private static DataFormatter df;
 
 	private static String userName;
 	/**
@@ -65,6 +65,24 @@ public class Bridges <K, E> {
 		this();
 		init(assignment, appl_id, username);
 	}
+
+	/**
+	 * 
+	 * @param title title used in the visualization;
+	 *
+	 */
+	public void setTitle(String title) {
+		visualizer.setTitle(title);
+	}
+
+	/**
+	 * 
+	 * @param descr description to annotate the visualization;
+	 *
+	 */
+	public void setDescription(String descr) {
+		visualizer.setDescription(descr);
+	}
 	
 	/**
 	 * Initialize DataFormatters with Visualizer
@@ -78,7 +96,6 @@ public class Bridges <K, E> {
 		Bridges.setAssignment(assignment);
 		Bridges.key = appl_id;
 		Bridges.userName = username;
-		
 	}
 	
 	public static List<Tweet> getAssociations(TwitterAccount name, int maxElements){
