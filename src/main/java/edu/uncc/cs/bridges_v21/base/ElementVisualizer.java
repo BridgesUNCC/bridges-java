@@ -243,7 +243,7 @@ public class ElementVisualizer {
 	 *      transparency.
 	 */
 	public void setOpacity(float opacity) {
-		color.setAlpha((int)(opacity));
+		color.setAlpha(opacity);
 	}
 
 	/** Get the opacity of the Element in the Bridges Visualization
