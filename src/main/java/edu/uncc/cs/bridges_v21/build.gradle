@@ -9,7 +9,7 @@ apply plugin: 'signing'
 /// General
 ///
 //group = "bridges"
-version = "2.0.3"
+version = "2.2.0"
 
 ///
 /// Artifacts and deployment
@@ -147,7 +147,8 @@ uploadArchives {
 repositories {
     // Use 'maven central' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    mavenCentral()
+//	mavenCentral()
+	jcenter()
 }
 
 // In this section you declare the dependencies for your production and test code
@@ -155,6 +156,8 @@ dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.5'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
+	compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+//	compile 'com.google.code.gson:Gson:2.2.+'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.1'
 //	compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
 //	compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
