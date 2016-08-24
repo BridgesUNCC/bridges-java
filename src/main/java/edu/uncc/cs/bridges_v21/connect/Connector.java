@@ -24,8 +24,8 @@ import bridges.validation.RateLimitException;
 
 
 public class Connector {
+//	String server_url = "http://bridges-clone.herokuapp.com";
 	String server_url = "http://bridges-cs.herokuapp.com";
-	//String server_url = "http://bridges-clone.herokuapp.com";
 	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";  //usgs earthquakes url
 	String airline_url = "https://earthquakes-uncc.herokuapp.com/airline"; //corgis airline data
 //	String server_url = "http://127.0.0.1:3000";

@@ -27,6 +27,8 @@ public class ADTVisualizer<K, E> {
 			CLOSE_PAREN = ")",
 			OPEN_BOX = "[",
 			CLOSE_BOX = "]";
+	private Integer MaxTitleSize = 50,
+			MaxDescrSize = 250;
 	private String title = "", description = "";
 	public String visualizerType;
 	public final Map<String, String> adt_names =
@@ -69,7 +71,12 @@ public class ADTVisualizer<K, E> {
 	 *
 	 */
 	public void setTitle(String titl) {
-		title = titl;
+		if (titl.length() > MaxTitleSize) {
+			System.out.println ("Visualization Title restricted to 50 characters." 
+				+ " Truncating title..");
+			title = titl.substring(0, 49);
+		}
+		else title = titl;
 	}
 
 	/**
@@ -78,7 +85,12 @@ public class ADTVisualizer<K, E> {
 	 *
 	 */
 	public void setDescription(String descr) {
-		description = descr;
+		if (descr.length() > MaxDescrSize) {
+            System.out.println ("Visualization Description restricted to 250 characters."
+                + " Truncating description..");
+            description = descr.substring(0, 249);
+        }
+		else description = descr;
 	}
 
 	/** Constructor allow visulizations of an array.
