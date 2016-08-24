@@ -369,7 +369,6 @@ public class Bridges <K, E> {
 	 *
 	 **/
 	protected void visualizeDoublyLinkedList() {
-System.out.println("here..");
         try {
         	connector.post("/assignments/" + getAssignment(), visualizer.getDLRepresentation((DLelement<E>)root));
 		} 
