@@ -199,6 +199,29 @@ public class Bridges <K, E> {
 		root = head;
 		visualizer.setVisualizerType("DoublyLinkedList");
 	}
+
+	/**
+	 * This method sets the first element of the singly linked circular list
+	 *
+	 * @param head - start node of the circular singly linked list
+	 *
+	 */
+	public void setDataStructure(CircSLelement<E> head) {
+		root = head;
+		visualizer.setVisualizerType("CircularSinglyLinkedList");
+	}
+	
+	/**
+	 * This method sets the first element of the doubly linked circular list
+	 *
+	 * @param head - is a CircDLelement<E>
+	 *
+	 */
+	public void setDataStructure(CircDLelement<E> head) {
+		root = head;
+		visualizer.setVisualizerType("CircularDoublyLinkedList");
+System.out.println("in setDataStruct(): " + visualizer.getVisualizerType());
+	}
 	
 	/**
 	 * 	This method sets the root of a general  tree (can have 
@@ -281,10 +304,12 @@ public class Bridges <K, E> {
 				break;
 			case "SinglyLinkedList":
 			case "llist":
+			case "CircularSinglyLinkedList":
 				visualizeLinkedList();
 				break;
 			case "DoublyLinkedList":
 			case "dllist":
+			case "CircularDoublyLinkedList":
 				visualizeDoublyLinkedList();
 				break;
 			case "Tree":
@@ -370,14 +395,15 @@ public class Bridges <K, E> {
 	 **/
 	protected void visualizeDoublyLinkedList() {
         try {
-        	connector.post("/assignments/" + getAssignment(), visualizer.getDLRepresentation((DLelement<E>)root));
+        	connector.post("/assignments/" + getAssignment(), 
+				visualizer.getDLRepresentation((DLelement<E>)root));
 		} 
 		catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central DataFormatters server is down. Try again later.\n"
-					+ e.getMessage());
+				+ " representation to the server. Are you connected to the"
+				+ " Internet? Check your network settings. Otherwise, maybe"
+				+ " the central DataFormatters server is down. Try again later.\n"
+				+ e.getMessage());
 		} 
 		catch (RateLimitException e) {
 			System.err.println("There was a problem sending the visualization"
