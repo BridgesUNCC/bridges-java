@@ -39,6 +39,8 @@ public class ADTVisualizer<K, E> {
 					put("Array", "Array");
 					put("SinglyLinkedList", "SinglyLinkedList");
 					put("DoublyLinkedList", "DoublyLinkedList");
+					put("CircularSinglyLinkedList", "CircularSinglyLinkedList");
+					put("CircularDoublyLinkedList", "CircularDoublyLinkedList");
 					put("GraphAdjacencyList","GraphAdjacencyList");
 					put("GraphAdjacencyMatrix","GraphAdjacencyMatrix");
 					put("ArrayStack","Array");
@@ -252,17 +254,33 @@ public class ADTVisualizer<K, E> {
 	public String getSLRepresentation(SLelement<E> first_element) {
 		LinkedList<SLelement<E>> nodes = new LinkedList<>(); 
 		LinkedList<SLelement<E>> links = new LinkedList<>();
+
+									// distinguish between singly linked
+									// circular singly linked lists
+		if (getVisualizerType().equals("SinglyLinkedList")) {
 										// first get the nodes and links
-		SLelement<E> sle = first_element;
-		for (sle = first_element; sle!= null; sle = sle.getNext()) {
-			nodes.push(sle);
-			if (sle.getNext() != null) {	// link exists
-				links.push(sle);
-				links.push(sle.getNext());
+			SLelement<E> sle = first_element;
+			for (sle = first_element; sle!= null; sle = sle.getNext()) {
+				nodes.push(sle);
+				if (sle.getNext() != null) {	// link exists
+					links.push(sle);
+					links.push(sle.getNext());
+				}
+			}
+		}
+		else { // circular list
+			SLelement<E> sle = first_element;
+			if (sle != null) {
+				do {
+					nodes.push(sle);
+					links.push(sle);
+					links.push(sle.getNext());
+					sle = sle.getNext();
+				} while (sle != first_element);
 			}
 		}
 									// generate the JSON string
-		String str =  generateJSON_SLL(nodes, links);
+		String str = generateJSON_SLL(nodes, links);
 
 		return str;
 	}
@@ -278,15 +296,32 @@ public class ADTVisualizer<K, E> {
 		LinkedList<DLelement<E>> links = new LinkedList<>();
 										// first get the nodes and links
 		DLelement<E> dle = first_element;
-		for (dle = first_element; dle!= null; dle = dle.getNext()) {
-			nodes.push(dle);
-			if (dle.getNext() != null) {	// link exists
-				links.push(dle);
-				links.push(dle.getNext());
+									// distinguish between singly linked
+									// circular singly linked lists
+		if (getVisualizerType().equals("DoublyLinkedList")) {
+System.out.println("iterating.."); 
+			for (dle = first_element; dle!= null; dle = dle.getNext()) {
+				nodes.push(dle);
+				if (dle.getNext() != null) {	// link exists
+					links.push(dle);
+					links.push(dle.getNext());
+				}
+				if (dle.getPrev() != null) {	// link exists
+					links.push(dle);
+					links.push(dle.getPrev());
+				}
 			}
-			if (dle.getPrev() != null) {	// link exists
-				links.push(dle);
-				links.push(dle.getPrev());
+		}
+		else {	// circular doubly linked list
+			if (dle != null) {
+				do {
+					nodes.push(dle);
+					links.push(dle);
+					links.push(dle.getNext());
+					links.push(dle);
+					links.push(dle.getPrev());
+					dle = dle.getNext();
+				} while( dle != first_element); 
 			}
 		}
 										// generate the JSON string

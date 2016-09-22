@@ -12,8 +12,20 @@ package bridges.base;
  *
  * @param <E>
  */
-public class SLelement<E> extends Element<E> implements Cloneable{
+public class SLelement<E> extends Element<E> {
 	protected SLelement<E> next=null; //the link to the next element 
+
+	/**
+	 * 
+	 * This constructor creates an SLelement object
+	 * and sets the next pointer to null
+	 * 
+	 */
+
+	public SLelement() {
+		super();
+		this.next = null;
+	}
 	
 	/**
 	 * This constructor creates an SLelement object of value "e" and label "label"
@@ -60,7 +72,7 @@ public class SLelement<E> extends Element<E> implements Cloneable{
 	 *	@return  The date structure type as a string
 	 **/
 	public String getDataStructType() {
-		return "SinglyLinked List";
+		return "SinglyLinkedList";
 	}
 	
 	/**
