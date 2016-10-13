@@ -37,6 +37,9 @@ public class ADTVisualizer<K, E> {
 
 				{
 					put("Array", "Array");
+					put("1D_Array", "1D_Array");
+					put("2D_Array", "2D_Array");
+					put("3D_Array", "3D_Array");
 					put("SinglyLinkedList", "SinglyLinkedList");
 					put("DoublyLinkedList", "DoublyLinkedList");
 					put("CircularSinglyLinkedList", "CircularSinglyLinkedList");
@@ -330,6 +333,17 @@ System.out.println("iterating..");
 		return str;
 	}
 
+	/**
+	 * This method returns the JSON representation of an array
+	 *
+	 * @param br_array  a Bridges array object, which is an array of Element<E>
+	 */
+
+	public String getArrayRepresentation(Array<E> br_array) {
+		
+								// generate the JSON string
+		return generateJSON_Array(br_array);
+	}
 	public String getArrayRepresentation(Element<E>[] el_array, int size) {
 		
 								// generate the JSON string
@@ -439,6 +453,28 @@ System.out.println("iterating..");
 		return json_str;
 	 }
 
+	/**
+	 * Generating the JSON string for a Bridge array object (Array<E>[])
+	 *
+	 * @param Bridges Array object
+	 *
+	 * @return JSON string
+	*/
+
+	public String generateJSON_Array(Array<E> br_array){
+
+		StringBuilder nodes_JSON = new StringBuilder();
+		StringBuilder links_JSON = new StringBuilder();
+		Validation.validate_ADT_size(br_array.getSize());
+		for (int i = 0; i < br_array.getSize(); i++){
+			if (br_array.getValue(i) != null){
+				nodes_JSON.append(br_array.getValue(i).getRepresentation() + ",");
+			}
+		}
+					// note: there are no links for an array, order is 
+					// by index
+		return build_JSON(nodes_JSON, links_JSON);
+	}
 	/**
 	 * Generating the JSON string for an array of elements
 	 *

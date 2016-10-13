@@ -25,6 +25,7 @@ import bridges.data_src_dependent.TwitterAccount;
 import bridges.data_src_dependent.USGSaccount;
 import bridges.validation.RateLimitException;
 import bridges.validation.Validation;
+import bridges.validation.InvalidValueException;
 
 public class Bridges <K, E> {
 	
@@ -35,6 +36,7 @@ public class Bridges <K, E> {
 	private GraphAdjList<K, E>  graph_adj_list;
 	private GraphAdjMatrix<K, E>  graph_adj_matrix;
 	private Element<E>[]  element_array;
+	private Array<E>  br_array;
 	private int element_array_size;
 	private static int assignment;
 	private static int assignment_part;
@@ -178,6 +180,23 @@ public class Bridges <K, E> {
 		element_array_size = size;
 		visualizer.setVisualizerType("Array");
 	}
+	/**
+	 * 	This method sets the array data type(1D, 2D and 3D arrays supported) 
+	 *
+	 * @param Array   The array of elements, of type Element<E>[]
+	 *
+	 */
+	public void setDataStructure(Array<E>  arr) {
+		br_array = arr;	
+		int num_dims = br_array.getNumDimensions();
+		if (num_dims == 1)
+			visualizer.setVisualizerType ("1D_Array");
+		else if (num_dims == 2)
+			visualizer.setVisualizerType ("2D_Array");
+		else if (num_dims == 3)
+			visualizer.setVisualizerType ("3D_Array");
+		else throw  new InvalidValueException("Invalid number of dimensions. Only 1D, 2D  and 3D arrays supported at this time");
+	}
 	
 	/**
 	 * This method sets the first element of the singly linked list
@@ -302,6 +321,11 @@ System.out.println("in setDataStruct(): " + visualizer.getVisualizerType());
 			case "Array":
 				visualizeArray();
 				break;
+			case "1D_Array":
+			case "2D_Array":
+			case "3D_Array":
+				visualizeArrayObj();
+				break;
 			case "SinglyLinkedList":
 			case "llist":
 			case "CircularSinglyLinkedList":
@@ -418,6 +442,34 @@ System.out.println("in setDataStruct(): " + visualizer.getVisualizerType());
         assignment_part++;
 	}
 	
+	/**
+	 *  Visualize  an array
+	 *
+	 **/
+	protected void visualizeArrayObj() {
+        try {
+        	connector.post("/assignments/" + getAssignment(), 
+				visualizer.getArrayRepresentation(br_array));
+		} 
+		catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+		} 
+		catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+		} 
+        // Return a URL to the user
+        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
+        assignment_part++;
+	}
 	/**
 	 *  Visualize  an array
 	 *
