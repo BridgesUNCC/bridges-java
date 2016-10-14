@@ -29,17 +29,14 @@ public class ADTVisualizer<K, E> {
 			CLOSE_BOX = "]";
 	private Integer MaxTitleSize = 50,
 			MaxDescrSize = 250;
+	private int arrayDims[] = {1, 1, 1};
 	private String title = "", description = "";
 	public String visualizerType;
 	public final Map<String, String> adt_names =
 			new HashMap <String, String>(){
 				private static final long serialVersionUID = 1L;
-
 				{
 					put("Array", "Array");
-					put("1D_Array", "1D_Array");
-					put("2D_Array", "2D_Array");
-					put("3D_Array", "3D_Array");
 					put("SinglyLinkedList", "SinglyLinkedList");
 					put("DoublyLinkedList", "DoublyLinkedList");
 					put("CircularSinglyLinkedList", "CircularSinglyLinkedList");
@@ -466,6 +463,7 @@ System.out.println("iterating..");
 		StringBuilder nodes_JSON = new StringBuilder();
 		StringBuilder links_JSON = new StringBuilder();
 		Validation.validate_ADT_size(br_array.getSize());
+		br_array.getDimensions(arrayDims);
 		for (int i = 0; i < br_array.getSize(); i++){
 			if (br_array.getValue(i) != null){
 				nodes_JSON.append(br_array.getValue(i).getRepresentation() + ",");
@@ -740,6 +738,10 @@ System.out.println("iterating..");
 			.append("\"visual\": \""+adt_names.get(visualizerType)+"\",")
 			.append("\"title\": \""+ title +"\",")
 			.append("\"description\": \""+ description +"\",")
+			.append((visualizerType == "Array") 
+					?  "\"dims\":[" + arrayDims[0] + "," + arrayDims[1] + "," 
+						+ arrayDims[2] + "],"
+					: "")
 			.append("\"nodes\": [").append(trimComma(nodes_JSON))
 			.append( "],")
 			.append("\"links\": [").append(trimComma(links_JSON))

@@ -16,7 +16,7 @@ import bridges.validation.InvalidValueException;
 public class Array<E> extends DataStruct {
 	private Element<E>[] array_data;
 	private int num_dims;					// only 2D and 3D arrays supported
-	private int[] dims = {0, 0, 0};					// array dimensions
+	private int[] dims = {1, 1, 1};					// array dimensions
 	private int size;						// array size
 	
 	/*
@@ -145,5 +145,29 @@ public class Array<E> extends DataStruct {
 	 **/
 	public void setValue(int indx, Element<E> el) {
 		array_data[indx] = el;
+	}
+	/**
+	 *	
+	 *	2D array: Get the object at 'indx1, indx2' 
+	 *
+	 *	@param col  col index into the array
+	 *	@param row  row index into the array
+	 *	@return Element<E>  object at 'col, row'
+	 */
+	public Element<E> getValue(int col, int row) {
+		return array_data[row*dims[0] + col];
+	}
+
+	/**
+	 *	
+	 *	Set the input object at 'indx' 
+	 *	@param col  column index into the array
+	 *	@param row  row index into the array
+	 *	@param el  element object to be assigned at 'indx'
+	 *
+	 *
+	 **/
+	public void setValue(int col, int row, Element<E> el) {
+		array_data[row*dims[0]+col] = el;
 	}
 }

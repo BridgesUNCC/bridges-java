@@ -189,12 +189,8 @@ public class Bridges <K, E> {
 	public void setDataStructure(Array<E>  arr) {
 		br_array = arr;	
 		int num_dims = br_array.getNumDimensions();
-		if (num_dims == 1)
-			visualizer.setVisualizerType ("1D_Array");
-		else if (num_dims == 2)
-			visualizer.setVisualizerType ("2D_Array");
-		else if (num_dims == 3)
-			visualizer.setVisualizerType ("3D_Array");
+		if (num_dims <= 3)
+			visualizer.setVisualizerType ("Array");
 		else throw  new InvalidValueException("Invalid number of dimensions. Only 1D, 2D  and 3D arrays supported at this time");
 	}
 	
@@ -318,12 +314,10 @@ System.out.println("in setDataStruct(): " + visualizer.getVisualizerType());
 	 */
 	public void visualize() {
 		switch (visualizer.getVisualizerType()) {
+//			case "Array":
+//				visualizeArray();
+//				break;
 			case "Array":
-				visualizeArray();
-				break;
-			case "1D_Array":
-			case "2D_Array":
-			case "3D_Array":
 				visualizeArrayObj();
 				break;
 			case "SinglyLinkedList":
