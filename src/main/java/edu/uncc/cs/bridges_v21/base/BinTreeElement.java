@@ -81,8 +81,8 @@ public class BinTreeElement<E> extends TreeElement<E>{
 	public BinTreeElement(E e, BinTreeElement<E> left, 
 							BinTreeElement<E> right) {
 		super(e);
-		super.addChild(null);
-		super.addChild(null);
+		super.addChild(left);
+		super.addChild(left);
 	}
 
 	/**

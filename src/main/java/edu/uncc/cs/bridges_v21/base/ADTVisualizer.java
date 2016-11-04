@@ -261,10 +261,10 @@ public class ADTVisualizer<K, E> {
 										// first get the nodes and links
 			SLelement<E> sle = first_element;
 			for (sle = first_element; sle!= null; sle = sle.getNext()) {
-				nodes.push(sle);
+				nodes.addLast(sle);
 				if (sle.getNext() != null) {	// link exists
-					links.push(sle);
-					links.push(sle.getNext());
+					links.addLast(sle);
+					links.addLast(sle.getNext());
 				}
 			}
 		}
@@ -272,9 +272,9 @@ public class ADTVisualizer<K, E> {
 			SLelement<E> sle = first_element;
 			if (sle != null) {
 				do {
-					nodes.push(sle);
-					links.push(sle);
-					links.push(sle.getNext());
+					nodes.addLast(sle);
+					links.addLast(sle);
+					links.addLast(sle.getNext());
 					sle = sle.getNext();
 				} while (sle != first_element);
 			}
@@ -299,27 +299,26 @@ public class ADTVisualizer<K, E> {
 									// distinguish between singly linked
 									// circular singly linked lists
 		if (getVisualizerType().equals("DoublyLinkedList")) {
-System.out.println("iterating.."); 
 			for (dle = first_element; dle!= null; dle = dle.getNext()) {
-				nodes.push(dle);
+				nodes.addLast(dle);
 				if (dle.getNext() != null) {	// link exists
-					links.push(dle);
-					links.push(dle.getNext());
+					links.addLast(dle);
+					links.addLast(dle.getNext());
 				}
 				if (dle.getPrev() != null) {	// link exists
-					links.push(dle);
-					links.push(dle.getPrev());
+					links.addLast(dle);
+					links.addLast(dle.getPrev());
 				}
 			}
 		}
 		else {	// circular doubly linked list
 			if (dle != null) {
 				do {
-					nodes.push(dle);
-					links.push(dle);
-					links.push(dle.getNext());
-					links.push(dle);
-					links.push(dle.getPrev());
+					nodes.addLast(dle);
+					links.addLast(dle);
+					links.addLast(dle.getNext());
+					links.addLast(dle);
+					links.addLast(dle.getPrev());
 					dle = dle.getNext();
 				} while( dle != first_element); 
 			}
@@ -517,7 +516,7 @@ System.out.println("iterating..");
 							// then get the JSON string for nodes
 		int i = 0;
 		while (!nodes.isEmpty()){
-			SLelement<E>  element = nodes.pop();
+			SLelement<E>  element = nodes.removeFirst();
 			Validation.validate_ADT_size(i);
 			map.put(Integer.parseInt(element.getIdentifier()), i++);
 			nodes_JSON.append(element.getRepresentation() + COMMA);
@@ -526,8 +525,8 @@ System.out.println("iterating..");
 		String str = links_JSON.toString();
 		while (!links.isEmpty()){
 							// get the link
-			SLelement<E> child = links.pop();
-			SLelement<E> parent = links.pop();
+			SLelement<E> parent = links.removeFirst();
+			SLelement<E> child = links.removeFirst();
 	
 							// get the link properties
 			LinkVisualizer lvis = parent.getLinkVisualizer(child);
@@ -569,7 +568,7 @@ System.out.println("iterating..");
 							// then get the JSON string for nodes
 		int i = 0;
 		while (!nodes.isEmpty()){
-			DLelement<E>  element = nodes.pop();
+			DLelement<E>  element = nodes.removeFirst();
 			map.put(Integer.parseInt(element.getIdentifier()), i++);
 			Validation.validate_ADT_size(i);
 			nodes_JSON.append(element.getRepresentation() + COMMA);
@@ -578,8 +577,8 @@ System.out.println("iterating..");
 		String str = links_JSON.toString();
 		while (!links.isEmpty()){
 							// get the link
-			DLelement<E> child = links.pop();
-			DLelement<E> parent = links.pop();
+			DLelement<E> parent = links.removeFirst();
+			DLelement<E> child = links.removeFirst();
 							// get the link properties
 			LinkVisualizer lvis = parent.getLinkVisualizer(child);
 			if (lvis != null) {
