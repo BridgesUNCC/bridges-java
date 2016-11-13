@@ -299,7 +299,7 @@ public class Validation {
 		try {
 			if (i > MAX_ELEMENTS_ALLOWED)
 				throw new Exception(
-						"No more than 1000 elements can be created!");
+						"No more than " + MAX_ELEMENTS_ALLOWED + " elements can be created!");
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
