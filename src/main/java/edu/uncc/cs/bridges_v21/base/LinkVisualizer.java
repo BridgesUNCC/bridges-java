@@ -70,7 +70,7 @@ public class LinkVisualizer{
 	 */
 	public void setThickness(double th) {
 
-		Validation.validateSize(th);
+		Validation.validateThickness(th);
 		thickness  = th;
 	}
 
@@ -127,8 +127,9 @@ public class LinkVisualizer{
 		else if(col.equals("black"))
 			color = new Color(0, 0, 0, 1.0f);
 		else
-			throw new InvalidValueException("Invalid color " + "'" + aColor + "'" +"."
-			+ " Only named primaries supported now \n");
+			throw new InvalidValueException("Invalid color " + "'" + 
+				aColor + "'" +"."
+				+ " Only named primaries supported now \n");
     }
 
 	/**
@@ -191,7 +192,7 @@ public class LinkVisualizer{
 				CLOSE_BOX + COMMA + 
 			QUOTE + "thickness" + QUOTE + COLON + 
 				Double.toString(this.getThickness()) + COMMA +
-			QUOTE + "weight" + QUOTE + COLON + 
+			QUOTE + "name" + QUOTE + COLON + 
 				Double.toString(this.getWeight());
 			
 

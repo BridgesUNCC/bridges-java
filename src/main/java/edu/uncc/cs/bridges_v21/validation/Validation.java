@@ -281,25 +281,43 @@ public class Validation {
 	}
 	
 	/**
-	 * Determines if the value passed is an acceptable value to set the size to.
+	 * Determines if the size value passed is an acceptable value to set 
+	 * the size to.
 	 * 
 	 * @param val
 	 */
-	//Temporary Values
 	public static void validateSize(double val){
 		if(val >= 0.0 && val <= 50.0){
 			return;
 		}
 		else{
 			throw new InvalidValueException("Invalid value' " + val + 
-				".  Expected" + " a value between 0.0 and 50.0.");
+				".  Expected" + " a size value between 0.0 and 50.0.");
 		}
 	}
+
+	/**
+	 * Determines if the link thickness value passed is an acceptable 
+	 * value to set the size to.
+	 * 
+	 * @param val
+	 */
+	public static void validateThickness(double val){
+		if(val >= 0.0 && val <= 50.0){
+			return;
+		}
+		else{
+			throw new InvalidValueException("Invalid value' " + val + 
+				".  Expected" + " a thickness value between 0.0 and 50.0.");
+		}
+	}
+
 	public static void validate_ADT_size(int i){
 		try {
 			if (i > MAX_ELEMENTS_ALLOWED)
 				throw new Exception(
-						"No more than " + MAX_ELEMENTS_ALLOWED + " elements can be created!");
+					"No more than " + MAX_ELEMENTS_ALLOWED + 
+						" elements can be created!");
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
