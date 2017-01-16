@@ -1,8 +1,10 @@
 package bridges.base;
 /**
- * @author mihai Mehedint
- * This class can be used to create doubly linked element objects
- * with next and previous (prev) pointers
+ *	
+ * 	@author Mihai Mehedint
+ *
+ * 	This class can be used to create doubly linked element objects
+ * 	with next and previous prevous pointers
  *
  */
 

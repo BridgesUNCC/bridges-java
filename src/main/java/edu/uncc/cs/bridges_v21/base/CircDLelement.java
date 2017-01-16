@@ -1,11 +1,27 @@
 package bridges.base;
 /**
- * @author Kalpathi Subramanian
- * @date  7/17/16
+ *  This class can be used to instantiate Circular Doubly Linked 
+ *  List Elements; structurally they are the same as doubly linked elements
+ *  except that each node constructed with the next and the previous pointers 
+ *	pointing to itself;
  *
- * This class can be used to create circular doubly linked element objects
- * with next and previous (prev) pointers
+ *  User's implementation of the circularly linked list needs to ensure that
+ *  the last node's next pointer points to the first node and the first node's
+ *	previous pointer points to the last node, as the visualization generation 
+ *	is dependent on this.
+ *  
+ *  Elements have labels (string) that are displayed on the visualization
+ *  Elements take an generic object as a user defined parameter, any native
+ *  type or object.
  *
+ *  Elements contain a visualizer object for setting visual attributes (color, 
+ *  shape, opacity, size), necessary for displaying them in a web browser
+ *      
+ *      
+ *  @author Kalpathi Subramanian
+ *	@date   7/17/16, 1/16/17
+ *  
+ *  @param <E>  the generic parameter that is defined by the application
  */
 
 public class CircDLelement<E> extends DLelement<E>{
@@ -19,11 +35,14 @@ public class CircDLelement<E> extends DLelement<E>{
 		this.prev = this;
 	}
 	
-	/** Constructs a CircDLelement labeled "label", holding an object "e", 
+	/** 
+	 *	Constructs a CircDLelement labeled "label", holding an object "e", 
 	 *	with next and prev pointers set to itself
+	 *
 	 * 	@param label the label for this CircDLelement that shows up on the 
 	 *		Bridges visualization
 	 * 	@param e the genereic object that this CircDLelement is holding
+	 *
 	 */
 	public CircDLelement (String label, E e){
 		super(label, e);
@@ -50,7 +69,7 @@ public class CircDLelement<E> extends DLelement<E>{
 	 *	set to the DLelement "next" and the prev pointer set to DLelement 
 	 *	"prev". 
 	 *
-	 *	@param e the genereic object that this CircDLelement is holding
+	 *	@param e the generic object that this CircDLelement is holding
 	 *	@param next the CircDLelement that should be assigned to the next 
 	 *		pointer
 	 *	@param prev the CircDLelement that should be assigned to the prev 
@@ -72,6 +91,7 @@ public class CircDLelement<E> extends DLelement<E>{
 
 	/**
 	 * This method returns the pointer to the next DLelement
+	 *
 	 * @return the DLelement assigned to the next pointer
 	 */
 	public CircDLelement<E> getNext() {
@@ -81,7 +101,8 @@ public class CircDLelement<E> extends DLelement<E>{
 	/**
 	 * This method sets the pointer to the next DLelement
 	 *
-	 * @param next the DLelement that should be assigned to the next pointer
+	 * @param next The CircDLelement that should be assigned to the next 
+	 *	pointer
 	 *
 	 */
 	public void setNext(CircDLelement<E> next) {
@@ -91,6 +112,7 @@ public class CircDLelement<E> extends DLelement<E>{
 
 	/**
 	 * This method returns the pointer to the previous DLelement
+	 *
 	 * @return the DLelement assigned to the prev pointer
 	 */
 	public CircDLelement<E> getPrev() {
@@ -99,6 +121,7 @@ public class CircDLelement<E> extends DLelement<E>{
 
 	/**
 	 * This method sets the pointer to the previous DLelement
+	 *
 	 * @param prev the DLelement that should be assigned to the prev pointer
 	 */
 	public void setPrev(CircDLelement<E> prev) {

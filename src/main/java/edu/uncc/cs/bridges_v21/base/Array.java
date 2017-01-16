@@ -5,12 +5,18 @@ import bridges.validation.InvalidValueException;
 /**
  * 
  * @author Kalpathi Subramanian
+ *
  * @param <E>
  *
- * @Description This class can be used to create arrays of type Element<E>
- * 	where E is a generic type representation application specific data
- *	Arrays are internally represented as 1D arrays; currently 1D and 2D arrays
- *	supported.
+ * 	@description This class can be used to create arrays of type 
+ *	Element<E> where E is a generic type representation application 
+ *	specific data
+ *
+ *	Arrays are internally represented as 1D arrays; currently 1D, 2D  and
+ *	3D arrays are supported.
+ *
+ * @author 	Kalpathi Subramanian
+ * @date  	10/8/16
  *
  */
 public class Array<E> extends DataStruct {
@@ -42,12 +48,10 @@ public class Array<E> extends DataStruct {
 	 *	This method gets the data structure type
 	 *
 	 *	@return  The date structure type as a string
-	 **/
+	 */
 	public String getDataStructType() {
-		if (num_dims == 1) 
-			return "1D_Array";
-		else if (num_dims == 2)
-			return "2D_Array";
+		if ((num_dims >= 1) && (num_dims <= 3))
+			return "Array";
 		else {
 			throw new InvalidValueException("Invalid number of dimensions. Only 1D, 2D and 3D arrays supported at this time");			
 		}
@@ -148,10 +152,11 @@ public class Array<E> extends DataStruct {
 	}
 	/**
 	 *	
-	 *	2D array: Get the object at 'indx1, indx2' 
+	 *	2D array: Get the object at 'col, row' 
 	 *
 	 *	@param col  col index into the array
 	 *	@param row  row index into the array
+	 *
 	 *	@return Element<E>  object at 'col, row'
 	 */
 	public Element<E> getValue(int col, int row) {
@@ -166,8 +171,36 @@ public class Array<E> extends DataStruct {
 	 *	@param el  element object to be assigned at 'indx'
 	 *
 	 *
-	 **/
+	 */
 	public void setValue(int col, int row, Element<E> el) {
 		array_data[row*dims[0]+col] = el;
+	}
+
+	/**
+	 *	
+	 *	3D array: Get the object at 'col, row, slice' 
+	 *
+	 *	@param col col index into the array
+	 *	@param row  row index into the array
+	 *	@param slice  slice index into the array
+	 *
+	 *	@return Element<E>  object at 'col, row'
+	 */
+	public Element<E> getValue(int col, int row, int slice) {
+		return array_data[slice*dims[0]*dims[1] + row*dims[0] + col];
+	}
+	/**
+	 *	
+	 *	Set the input object at 'col, row, slice' 
+	 *
+	 *	@param col  column index into the array
+	 *	@param row  row index into the array
+	 *	@param slice  slice index into the array
+	 *
+	 *	@param el  element object to be assigned at 'indx'
+	 *
+	 */
+	public void setValue(int col, int row, int slice, Element<E> el) {
+		array_data[slice*dims[0]*dims[1] + row*dims[0] +col] = el;
 	}
 }
