@@ -1,22 +1,22 @@
 package bridges.base;
 
 /**
- * 	This class can be used to instantiate Circular (Singly) Linked 
- *	List Elements; structurally they are the same as singly linked elements
+ * 	@brief This class can be used to instantiate Singly Linked 
+ *	Circular List Elements. 
+
+ *	Structurally they are the same as singly linked elements
  *  except that each node constructed with the next point pointing to itself;
  *  User's implementation of the circularly linked list needs to ensure that
  *	the last node points to itself, as the visualization generation is 
  *	dependent on this.
  *  
- * 	Elements have labels (string) that are displayed on the visualization
- *  Elements take an generic object as a user defined parameter, any native
- *	type or object.
+ * 	Elements have labels (string) that are displayed on the visualization.
+ *  Elements take an generic object as a user defined parameter, E, which 
+ *	can be any native type or object.
  *
- * 	Element contains a visualizer object for setting visual attributes (color, 
+ * 	Elements contains a visualizer object for setting visual attributes (color, 
  *	shape, opacity, size), necessary for displaying them in a web browser
  *	
- *  Used to build circularly singly linked lists
- *
  *	@author Kalpathi Subramanian
  *
  *	@param <E>  the generic parameter that is defined by the application

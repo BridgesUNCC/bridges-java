@@ -3,8 +3,11 @@ package bridges.base;
  *	
  * 	@author Mihai Mehedint
  *
- * 	This class can be used to create doubly linked element objects
- * 	with next and previous prevous pointers
+ * 	@brief This class is used to create doubly linked element objects.
+
+ * 	It is derived from Element, and and has two links, next and previous,
+ *	pointing to the previous and succeeding nodes.
+
  *
  */
 

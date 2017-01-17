@@ -6,14 +6,16 @@ import java.util.regex.Pattern;
 import java.util.HashMap;
 
 /**
- * This is the Superclass Element with SLelement, DLelement,
- * ArrayElement, TreeElement, BSTElement subclasses
- * it contains the Element Visualizer object
- * label field derived from the E (application data) value
- * an object of E data type: integer, string, Tweet, Actor, Movie, 
- * EarthquakeTweet
- * identifier field automatically generated
- * @author mihai
+ * @brief This is the main superclass in BRIDGES for  deriving a number of
+ * 	objects used  in building arrays, lists, trees and graph data structures.
+
+ * DLelement, CircSLelement, CircDLelement, TreeElement, BinTreeElement, 
+ *	BSTElement, AVLTreeElement are all subclasses. Element contains 
+ *	visualizer objects (ElementVisualizer, LinkVisualizer) for specifying
+ *	visual attributes. It also contains a label that is used in the 
+ *	visualization.
+ *
+ * @author Mihai Mehedint, Kalpathi Subramanian
  *
  * @param generic <E>
  */

@@ -9,13 +9,13 @@ import java.util.Random;
 
 
 /**
- * This class is used to store the visualization elements on the for the Bridges
- * Visualiztion, including the color, shape, opacity, and size of the node.
- * <p>
- * Objects of this class are stored as properties of all Element subclasses.
- * Generally, you will manipulating the ElementVisualizer returned from the
- * Element getVisualizer() method, and then call the setVisualizer() method on
- * the Element after changes have been made.
+ * @brief This class is used to store the visual attributes of BRIDGES 
+ * 	elements.
+
+ * Visual properties include color, shape, opacity, and size.
+ * Objects of this class are stored as part of the Element class.
+ * Generally, a user will manipulate the ElementVisualizer returned from the
+ * Element's getVisualizer() method, and then set attributes using its methods. 
  */
 
 public class ElementVisualizer {

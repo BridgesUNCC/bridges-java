@@ -6,11 +6,10 @@ import java.util.Map.Entry;
 /**
  * @author Mihai Mehedint, K.R.Subramanian
  *
- * 	This class extends the BinTreeElement class by adding a 'key' value 
- *	for use in a binary search tree implementations. 
+ * @date 6/22/16
  *
- * 	Modified by KRS(6-22-16) - to inherit from BinaryTreeElement, which 
- *	inherits from TreeElement
+ * 	@brief This class extends the BinTreeElement class by adding a 'key' value 
+ *	for use in a binary search tree implementations. 
  *
  */
 public class BSTElement<K, E> extends BinTreeElement<E> {

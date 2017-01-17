@@ -40,9 +40,9 @@ package bridges.base;
  **/
 
 /**
- *	This is an abstract super class that is extended by all Bridges subclasses and
- *	provides some methods that are used universally across Bridges.
- *
+ *	@brief This is an abstract super class that is extended by all Bridges 
+ *	subclasses and provides some methods that are used universally across 
+ *  BRIDGES.
  *
  */
 

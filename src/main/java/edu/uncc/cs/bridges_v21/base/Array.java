@@ -8,10 +8,8 @@ import bridges.validation.InvalidValueException;
  *
  * @param <E>
  *
- * 	@description This class can be used to create arrays of type 
- *	Element<E> where E is a generic type representation application 
- *	specific data
- *
+ * @brief This class can be used to create arrays of type Element<E> where E 
+ *	is a generic type representation application specific data.  
  *	Arrays are internally represented as 1D arrays; currently 1D, 2D  and
  *	3D arrays are supported.
  *

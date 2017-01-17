@@ -10,15 +10,20 @@ import java.util.Random;
 
 
 /**
- * This class is used to keep the visual properties of links that art of 
- *  data structures such as linked lists, pointer based trees, link based
- *  graph representations, etc.  Relevant attributes include
- *  color, thickness, opacity, line end point attributes.
- * <p>
+ * @brief  This class maintains visual properties of links in all relevant
+	data structures using BRIDGES.
+
+ * This class is used to keep the visual properties of links 
+ * in data structures such as linked lists, tree structures, and graphs.
+ * Relevant attributes include color, thickness, opacity, line end point 
+ * attributes.
+
  * Objects of this class are stored as properties of all Element subclasses.
- * Generally, you will manipulating the LinkVisualizer returned from the
- * Element getLinkVisualizer() method, and then call the setLinkVisualizer() 
- * method on the Element after changes have been made.
+ * Generally, a user will manipulate the LinkVisualizer returned from the
+ * Element's getLinkVisualizer() method. 
+ *
+ * @author Mihai Mehedint, Kalpathi Subramanian
+ * @date   2015, 1/16/17
  */
 
 public class LinkVisualizer{

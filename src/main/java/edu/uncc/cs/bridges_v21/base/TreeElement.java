@@ -1,14 +1,18 @@
 package bridges.base;
 
-/**
- * @author Mihai Mehedint, K.R. Subramanian
- * This class can be used to create tree element objects
- * with left and right pointers
- *
- * Modified (KRS) - 6/22/16. Generaized to hold any number of children
- */
 import java.util.Vector; 
+/**
+ * @brief This class extends Element to represent general trees with 
+ *	arbitrary number of children.
 
+ * TreeElement nodes can have an arbitrary number of child nodes(held in
+ * in a vector in the order in which they were added). The 
+ * visualization of trees assumes that the children are drawn in order
+ * from left to right.
+ *
+ * @author Kalpathi  Subramanian
+ * @date  6/22/16
+ */
 public class TreeElement<E> extends Element<E> {
 
 						// holds all children of the node

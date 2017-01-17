@@ -1,13 +1,14 @@
 package bridges.base;
 
 /**
- * @author mihai Mehedint, K.R. Subramanian
  *
- * This class can be used to create tree element objects
+ * @brief This class can be used to create tree element objects
  * with left and right pointers
  *
- * Added to be a subclass of TreeElement (6/22/16), KRS
- *
+ * Added to be a subclass of TreeElement 
+
+ * @date 6/22/16, 
+ * @author Kalpathi Subramanian, Mihai Mehedint
  */
 
 public class BinTreeElement<E> extends TreeElement<E>{

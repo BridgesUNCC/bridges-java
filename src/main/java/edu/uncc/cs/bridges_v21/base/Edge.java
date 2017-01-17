@@ -3,13 +3,13 @@ package bridges.base;
 import java.util.Map.Entry;
 
 /**
- * This class is used to represent the edges in a graph and will appear as
- * links in the BRIDGES graph visualization
- * <p>
- * Bridges will represent these as arrows between pairs of elements
- * The starting Element of the arrow will be referred to as the source
- * Element and the ending Element of the arrow will be referred to as the
- * terminating Element.
+ * @brief This class is used to represent the edges in a graph and will 
+ * 	appear as links in the BRIDGES graph visualization. 
+
+ * This object is used in graph algorithms, such as DFS, BFS and shortest 
+ * path algorithms that need to visit graph edges.  The adjacency list
+ * representation uses them as the generic paramter,  as SLelement<Edge>
+ * Bridges will represent Edges as links between pairs of elements
  * 
  * @author K.R. Subramanian
  *

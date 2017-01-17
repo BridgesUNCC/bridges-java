@@ -6,14 +6,17 @@ import bridges.validation.InvalidValueException;
 
 
 /**
- * This class is used to represent colors in BRIDGES. We use an RGBA model
- * to represent colors, with each component in the range 0-255. BRIDGES 
+ * @brief This class is used to represent colors in BRIDGES. 
+
+ *	We use an RGBA model
+ *  to represent colors, with each component in the range 0-255. BRIDGES 
  * also supports named colors for user convenience, but these are converted 
  * into [RGBA] prior to transmission to the server for visualization.
  * 
  * <p>
  *
- * @author K.R. Subramanian, 7/14/16
+ * @author K.R. Subramanian, 
+ * @date 7/14/16
  *
  */
 public class Color {

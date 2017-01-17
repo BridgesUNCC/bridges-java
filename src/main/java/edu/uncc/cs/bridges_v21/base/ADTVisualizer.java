@@ -10,9 +10,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 
-/** The Bridges object uses this class to keep track of the Visualization representation prior to passing the information to the Bridges Server.
- * <p>
- * An end user will generally not need to interact directly with this class.
+/** 
+ *	@brief The Bridges object uses this class to keep track of the Visualization 
+ *	representation prior to passing the information to the Bridges Server.
+ * 	<p>
+ * 	An end user will generally not need to interact directly with this class.
  */
 
 public class ADTVisualizer<K, E> {

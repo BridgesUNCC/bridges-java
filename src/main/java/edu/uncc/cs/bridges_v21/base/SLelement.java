@@ -1,14 +1,12 @@
 package bridges.base;
 
 /**
- * This class can be used to instantiate Singly List Elements
- * with identifiers (automatically generated), 
- * labels (derived from the values of E or manually set)
- * next pointers
- * an object of E data type: integer, string, Tweet, Actor, Movie, EarthquakeTweet
- * element visualizer objects containing all the CSS atributes 
- * (color, shape, opacity, size) necessary for displaying them in a web browser
- * @author mihai
+ * @brief This class can be used to instantiate Singly List Elements.
+
+ * This class extends Element and takes a generic parameter <E> for 
+ *	representing application specific data.
+ *
+ * @author Mihai Mehedint, Kalpathi Subramanian
  *
  * @param <E>
  */

@@ -1,22 +1,18 @@
 package bridges.base;
-
-
-/**
- *
- *  This class extends the BSTElement class by adding a 'height' value 
- *	and a 'balFactor' value, representing the height of the tree node and
- *  balance factor of the node, respectively. This is useful in representing
- *	AVL trees
- *
- *  generic paramaters: K - key value, E - appl dependent data component
- *
- * @author Kalpathi Subramanian
- * @date   8/8/16
- *
- */
-
 import bridges.base.*;
+/**
+ *  @brief This class extends the BSTElement class for use in building AVL 
+ *	trees.
+ *	AVL tree elements include a 'height' and a 'balFactor' value, 
+ *	representing the height and balance factor of the AVL tree at 
+ *  that node, respectively. This is useful in representing
+ *	AVL trees.
 
+ *  Generic paramaters: K - key value, E - appl dependent data component
+ *
+ * 	@author Kalpathi Subramanian
+ * 	@date   8/8/16
+ **/
 public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	private Integer height, balFactor;
 

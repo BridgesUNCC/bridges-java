@@ -7,13 +7,17 @@ import java.util.Map.Entry;
 
 /**
  *
- * The GraphAdjMatrix class can be used to represent adjacency matrix based 
- * graphs in BRIDGES, with T representing a data specific generic parameter
- * The class is simply a wrapper  around the C++ STL  unordered_map class
- * and, thus, derives all its operations from it
+ * @brief The GraphAdjMatrix class can be used to represent adjacency matrix 
+ * based * graphs in BRIDGES. 
+
+ * E represents a application data specific generic parameter, and K a key value
+ *  (not used now)
+ * The class uses Java Hashmaps  to implement a 2D array representation, 
+ * near constant time access to the graph vertices and edges.
  * BRIDGES provides methods to visualize the graph  and its contents
  *
- * Author: Kalpathi Subramanian, 7/120/15
+ * @author Kalpathi Subramanian, Mihai Mehedint 
+ * @date 7/12/15
  *
  */
 

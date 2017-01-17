@@ -7,13 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 ///
-/// The GraphAdjList class can be used to represent adjacency list based 
-/// graphs in BRIDGEs, with E represnting a data specific generic parameter.
+/// @brief The GraphAdjList class can be used to represent adjacency list based 
+/// graphs in BRIDGES
+///  with E represnting a data specific generic parameter.
 ///	The class is simply a wrapper  around the C++ STL  unordered_map class
 ///	and, thus, derives all its operations from it.
 ///	BRIDGES provides methods to visualize the graph  and its contents. 
 ///	
-///	Author: Kalpathi Subramanian, 6/29/15
+///	@author Kalpathi Subramanian 
+/// @date 6/29/15
 ///	
 ///	@param Element<E>
 ///	
