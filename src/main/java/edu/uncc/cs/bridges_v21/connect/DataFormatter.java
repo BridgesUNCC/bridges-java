@@ -2,6 +2,7 @@ package bridges.connect;
 
  
 import java.io.IOException;
+import java.lang.Exception;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +30,11 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 
 import com.google.gson.Gson;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 //import com.google.code.gson.Gson;
 
 
@@ -560,5 +566,78 @@ public class DataFormatter {
 	 */
 	protected void setBackend(Connector backend) {
 		DataFormatter.backend = backend;
+	}
+
+	public static ArrayList<EarthquakeUSGS> getEarthquakeUSGSData(
+					USGSaccount acctName, int maxElem) throws Exception {
+
+		String url = "http://earthquakes-uncc.herokuapp.com/eq/latest/"+maxElem;
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+		HttpResponse response = client.execute(request);
+
+		int status = response.getStatusLine().getStatusCode();
+
+		if (status == 200) 	{
+			String result = EntityUtils.toString(response.getEntity());
+			JSONObject full = (JSONObject)JSONValue.parse(result);
+			JSONArray json = (JSONArray)full.get("Earthquakes");
+         
+			ArrayList<EarthquakeUSGS> eq_list = 
+					new ArrayList<EarthquakeUSGS>(json.size());
+			for (int i=0; i<json.size(); i++) {
+				JSONObject item = (JSONObject)json.get(i);
+				JSONObject props = (JSONObject)item.get("properties");
+				JSONArray coords = (JSONArray)
+						((JSONObject)item.get("geometry")).get("coordinates");
+
+				EarthquakeUSGS eq = new EarthquakeUSGS();
+
+				eq.setMagnitude(((Number)props.get("mag")).doubleValue());
+				eq.setLatit(((Number)coords.get(0)).doubleValue());
+				eq.setLongit(((Number)coords.get(1)).doubleValue());
+				eq.setLocation((String)props.get("place"));
+				eq.setTitle((String)props.get("title"));
+				eq.setUrl((String)props.get("url"));
+				eq.setTime ((String)props.get("time"));
+				eq_list.add(eq);
+			}
+			return eq_list;
+		}
+		else {
+			throw new Exception("HTTP Request Failed. Error Code: "+status);
+		}
+	}
+	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData(
+					String name, int maxElem) throws Exception {
+
+		String url = "https://bridgesdata.herokuapp.com/api/imdb";
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+		HttpResponse response = client.execute(request);
+
+		int status = response.getStatusLine().getStatusCode();
+
+		if (status == 200) 	{
+			String result = EntityUtils.toString(response.getEntity());
+			JSONObject full = (JSONObject)JSONValue.parse(result);
+			JSONArray json = (JSONArray)full.get("data");
+         
+			ArrayList<ActorMovieIMDB> am_list = 
+					new ArrayList<ActorMovieIMDB>(json.size());
+			for (int i = 0; i < json.size(); i++) {
+				JSONObject item = (JSONObject)json.get(i);
+
+				ActorMovieIMDB am_pair = new ActorMovieIMDB();
+
+				am_pair.setActor((String) item.get("actor"));
+				am_pair.setMovie((String) item.get("movie"));
+				am_list.add(am_pair);
+			}
+			return am_list;
+		}
+		else {
+			throw new Exception("HTTP Request Failed. Error Code: "+status);
+		}
 	}
 }

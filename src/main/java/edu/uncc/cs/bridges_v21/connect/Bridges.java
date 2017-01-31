@@ -16,10 +16,12 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 import bridges.base.*;
 import bridges.data_src_dependent.EarthquakeUSGS;
+import bridges.data_src_dependent.ActorMovieIMDB;
 import bridges.data_src_dependent.Tweet;
 import bridges.data_src_dependent.TwitterAccount;
 import bridges.data_src_dependent.USGSaccount;
@@ -100,12 +102,23 @@ public class Bridges <K, E> {
 		Bridges.userName = username;
 	}
 	
-	public static List<Tweet> getAssociations(TwitterAccount name, int maxElements){
+	public static List<Tweet> getAssociations(TwitterAccount name, 
+									int maxElements){
 		return DataFormatter.getAssociations(name, maxElements);
 	}
 	
-	public static List<EarthquakeUSGS> getAssociations(USGSaccount name, int maxElements){
+	public static List<EarthquakeUSGS> getAssociations(USGSaccount name, 
+									int maxElements){
 		return DataFormatter.getAssociations(name, maxElements);
+	}
+
+	public static List<EarthquakeUSGS> getEarthquakeUSGSData(USGSaccount name,
+									int maxElements) throws Exception {
+		return DataFormatter.getEarthquakeUSGSData(name, maxElements);
+	}
+	public static List<ActorMovieIMDB> getActorMovieIMDBData(String name, 
+								int maxElements) throws Exception {
+		return DataFormatter.getActorMovieIMDBData(name, maxElements);
 	}
 	/* Accessors and Mutators */
 	public static String getAssignment() {

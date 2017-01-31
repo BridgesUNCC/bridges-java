@@ -3,6 +3,7 @@ package bridges.data_src_dependent;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -15,17 +16,29 @@ import bridges.connect.DataFormatter;
  */
 public class EarthquakeUSGS extends Tweet{
 	private double magnitude;
-	private float latit;
-	private float longit;
+	private double latit;
+	private double longit;
 	private String location;
 	private String title;
 	private String url;
+	private String time;
 
 	private String properties;
 	
 	
+	public EarthquakeUSGS() {
+		super ("", null);
+		this.magnitude = 0.0;
+		this.latit = 0.0;
+		this.longit = 0.0;
+		this.location = "";
+		this.title = "";
+		this.url = "";
+		this.properties = "";	
+	}
+
 	public EarthquakeUSGS(String content, Date date2, double magnitude,
-			float longit, float latit, String location, String title, String url, String properties) {
+			double longit, double latit, String location, String title, String url, String properties) {
 
 		super("USGSeq magnitude "+ magnitude+" "+title, date2);
 		this.magnitude = magnitude;
@@ -35,7 +48,6 @@ public class EarthquakeUSGS extends Tweet{
 		this.title = this.enterCarriageReturn(title);
 		this.url = url;
 		this.properties = properties;	
-		
 	}
 		
 	
@@ -50,22 +62,22 @@ public class EarthquakeUSGS extends Tweet{
 
 
 		
-	private static Date getTime(String properties) {
-		// TODO Auto-generated method stub
-		//here we parse the properties string for the Time:value in milisec since epoch 1970
+//	private static Date getTime(String properties) {
+//		// TODO Auto-generated method stub
+//		//here we parse the properties string for the Time:value in milisec since epoch 1970
 		
-		return null;
-	}
-	public float getLatit() {
+//		return null;
+//	}
+	public double getLatit() {
 		return this.latit;
 	}
-	public void setLatit(float latit) {
+	public void setLatit(double latit) {
 		this.latit = latit;
 	}
-	public float getLongit() {
+	public double getLongit() {
 		return longit;
 	}
-	public void setLongit(float longit) {
+	public void setLongit(double longit) {
 		this.longit = longit;
 	}
 	public String getLocation() {
@@ -88,6 +100,22 @@ public class EarthquakeUSGS extends Tweet{
 	}
 	public void setMagnitude(double magnitude) {
 		this.magnitude = magnitude;
+	}
+	public void setTime (String t) {
+							// convert this to a sane format
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		Date date;
+		try {
+			date = df.parse(t);
+		} 
+		catch (ParseException e) {
+			date = new Date();
+		}
+
+		this.time = date.toString();
+	}
+	public String getTime () {
+		return this.time;
 	}
 	public EarthquakeUSGS(EarthquakeUSGS eq){
 		super("USGSeq magnitude "+ eq.magnitude+" "+eq.getTitle(), eq.getDate());
