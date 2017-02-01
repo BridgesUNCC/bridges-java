@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Vector;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -635,6 +636,88 @@ public class DataFormatter {
 				am_list.add(am_pair);
 			}
 			return am_list;
+		}
+		else {
+			throw new Exception("HTTP Request Failed. Error Code: "+status);
+		}
+	}
+	public static ArrayList<GutenbergBook> getGutenbergBookMetaData () 
+									throws Exception {
+
+		String url = "https://bridgesdata.herokuapp.com/api/books";
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+		HttpResponse response = client.execute(request);
+
+		int status = response.getStatusLine().getStatusCode();
+
+		if (status == 200) 	{
+			String result = EntityUtils.toString(response.getEntity());
+			JSONObject full = (JSONObject)JSONValue.parse(result);
+			JSONArray json = (JSONArray)full.get("data");
+
+			ArrayList<GutenbergBook> gb_list = 
+					new ArrayList<GutenbergBook>(json.size());
+			for (int i = 0; i < json.size(); i++) {
+				JSONObject item = (JSONObject)json.get(i);
+				JSONObject author = (JSONObject)item.get("author");
+				JSONObject metrics = (JSONObject)item.get("metrics");
+				JSONArray lang = (JSONArray) item.get("languages");
+				JSONArray genres = (JSONArray)item.get("genres");
+				JSONArray subjects = (JSONArray)item.get("subjects");
+				Vector<String> gb_tmp = new Vector(100);;
+
+				GutenbergBook gb = new GutenbergBook();
+
+				gb.setAuthorName ((String) author.get("name"));
+				gb.setAuthorBirth(((Number) (author.get("birth"))).intValue());
+				gb.setAuthorDeath(((Number) (author.get("death"))).intValue());
+				gb.setTitle((String) item.get("title"));
+				gb.setURL((String) item.get("url"));
+				gb.setNumDownloads(((Number) item.get("downloads")).intValue());
+				for (int k = 0; k < lang.size(); k++) {
+					gb_tmp.add((String)lang.get(k));
+}
+				gb.setLanguages(gb_tmp);
+				gb_tmp.clear();
+
+				gb.setNumChars(((Number) (metrics.get("characters"))).intValue());
+				gb.setNumWords(((Number) (metrics.get("words"))).intValue());
+				gb.setNumSentences(((Number) (metrics.get("sentences"))).intValue());
+				gb.setNumDifficultWords(((Number) (metrics.get("difficultWords"))).intValue());
+				for (int k = 0; k < genres.size(); k++)
+					gb_tmp.add((String)genres.get(k));
+				gb.setGenres(gb_tmp);
+				gb_tmp.clear();
+				for (int k = 0; k < subjects.size(); k++)
+					gb_tmp.add((String)subjects.get(k));
+				gb.setSubjects(gb_tmp);
+				gb_tmp.clear();
+				
+
+				
+if (i == 0){
+System.out.println("Author:" + gb.getAuthorName() + "," + 
+		gb.getAuthorBirth() + "," + gb.getAuthorDeath() + "," + gb.getTitle()+
+		gb.getNumChars() + "," +
+		gb.getNumWords() + "," +
+		gb.getNumSentences() + "," +
+		gb.getNumDifficultWords() + "," + 
+		gb.getURL() + "," + 
+		gb.getNumDownloads());
+		Vector<String> v = gb.getLanguages();
+		for (int l = 0; l < v.size(); l++)
+			System.out.println("Languages: " + v.get(l));
+		v = gb.getGenres();
+		for (int l = 0; l < v.size(); l++)
+			System.out.println("Genres: " + v.get(l));
+		v = gb.getSubjects();
+		for (int l = 0; l < v.size(); l++)
+			System.out.println("Subjects: " + v.get(l));
+}
+				gb_list.add(gb);
+			}
+			return gb_list;
 		}
 		else {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);

@@ -22,6 +22,7 @@ import java.util.Map;
 import bridges.base.*;
 import bridges.data_src_dependent.EarthquakeUSGS;
 import bridges.data_src_dependent.ActorMovieIMDB;
+import bridges.data_src_dependent.GutenbergBook;
 import bridges.data_src_dependent.Tweet;
 import bridges.data_src_dependent.TwitterAccount;
 import bridges.data_src_dependent.USGSaccount;
@@ -120,7 +121,11 @@ public class Bridges <K, E> {
 								int maxElements) throws Exception {
 		return DataFormatter.getActorMovieIMDBData(name, maxElements);
 	}
-	/* Accessors and Mutators */
+	public static List<GutenbergBook> getGutenbergBookMetaData() 
+										throws Exception{
+		return DataFormatter.getGutenbergBookMetaData();
+	}
+									/* Accessors and Mutators */
 	public static String getAssignment() {
 		return (assignment_part < 10) 
                 ? String.valueOf(assignment) + ".0" + 
