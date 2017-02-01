@@ -23,6 +23,8 @@ import bridges.base.*;
 import bridges.data_src_dependent.EarthquakeUSGS;
 import bridges.data_src_dependent.ActorMovieIMDB;
 import bridges.data_src_dependent.GutenbergBook;
+import bridges.data_src_dependent.Game;
+import bridges.data_src_dependent.Shakespeare;
 import bridges.data_src_dependent.Tweet;
 import bridges.data_src_dependent.TwitterAccount;
 import bridges.data_src_dependent.USGSaccount;
@@ -124,6 +126,12 @@ public class Bridges <K, E> {
 	public static List<GutenbergBook> getGutenbergBookMetaData() 
 										throws Exception{
 		return DataFormatter.getGutenbergBookMetaData();
+	}
+	public static List<Game> getGameData() throws Exception {
+		return DataFormatter.getGameData();
+	}
+	public static List<Shakespeare> getShakespeareData() throws Exception {
+		return DataFormatter.getShakespeareData();
 	}
 									/* Accessors and Mutators */
 	public static String getAssignment() {

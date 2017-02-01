@@ -696,6 +696,7 @@ public class DataFormatter {
 				
 
 				
+/*
 if (i == 0){
 System.out.println("Author:" + gb.getAuthorName() + "," + 
 		gb.getAuthorBirth() + "," + gb.getAuthorDeath() + "," + gb.getTitle()+
@@ -715,9 +716,92 @@ System.out.println("Author:" + gb.getAuthorName() + "," +
 		for (int l = 0; l < v.size(); l++)
 			System.out.println("Subjects: " + v.get(l));
 }
+*/
 				gb_list.add(gb);
 			}
 			return gb_list;
+		}
+		else {
+			throw new Exception("HTTP Request Failed. Error Code: "+status);
+		}
+	}
+	public static ArrayList<Game> getGameData() throws Exception {
+
+		String url = "https://bridgesdata.herokuapp.com/api/games";
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+		HttpResponse response = client.execute(request);
+
+		int status = response.getStatusLine().getStatusCode();
+
+		if (status == 200) 	{
+			String result = EntityUtils.toString(response.getEntity());
+			JSONObject full = (JSONObject)JSONValue.parse(result);
+			JSONArray json = (JSONArray)full.get("data");
+         
+			ArrayList<Game> game_list = 
+					new ArrayList<Game>(json.size());
+// System.out.println("Num of game records: " + json.size());
+			for (int i = 0; i < json.size(); i++) {
+				JSONObject item = (JSONObject)json.get(i);
+
+				Game game = new Game();
+
+				game.setTitle((String) item.get("game"));
+				game.setPlatformType((String) item.get("platform"));
+				game.setRating(((Number) item.get("rating")).doubleValue());
+				JSONArray genre = (JSONArray) item.get("genre");
+
+				Vector<String> v = new Vector();
+				for (int k = 0; k < genre.size(); k++)
+					v.add((String)genre.get(k));
+				game.setGenre(v);
+
+				game_list.add(game);
+
+			}
+/*
+	System.out.println("Game:" + game_list.get(1).getTitle() + "," +
+				game_list.get(1).getPlatformType() + "," +
+				game_list.get(1).getRating());
+			Vector<String> v  = game_list.get(1).getGenre();
+			for (int k = 0; k < v.size(); k++)
+				System.out.println(v.get(k));
+*/
+
+			return game_list;
+		}
+		else {
+			throw new Exception("HTTP Request Failed. Error Code: "+status);
+		}
+	}
+	public static ArrayList<Shakespeare> getShakespeareData() throws Exception {
+
+		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+		HttpResponse response = client.execute(request);
+
+		int status = response.getStatusLine().getStatusCode();
+
+		if (status == 200) 	{
+			String result = EntityUtils.toString(response.getEntity());
+			JSONObject full = (JSONObject)JSONValue.parse(result);
+			JSONArray json = (JSONArray)full.get("data");
+         
+			ArrayList<Shakespeare> shksp_list = 
+					new ArrayList<Shakespeare>(json.size());
+			for (int i = 0; i < json.size(); i++) {
+				JSONObject item = (JSONObject)json.get(i);
+
+				Shakespeare shksp = new Shakespeare();
+
+				shksp.setTitle((String) item.get("title"));
+				shksp.setType((String) item.get("type"));
+				shksp.setText((String) item.get("text"));
+				shksp_list.add(shksp);
+			}
+			return shksp_list;
 		}
 		else {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
