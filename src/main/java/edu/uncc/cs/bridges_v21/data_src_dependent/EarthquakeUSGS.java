@@ -103,16 +103,10 @@ public class EarthquakeUSGS extends Tweet{
 	}
 	public void setTime (String t) {
 							// convert this to a sane format
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		Date date;
-		try {
-			date = df.parse(t);
-		} 
-		catch (ParseException e) {
-			date = new Date();
-		}
+		DateFormat df = new SimpleDateFormat("MMM dd yyyy  HH:mm:ss.SSS zzz");
 
-		this.time = date.toString();
+		Date date = new Date(Long.parseLong(t));
+		this.time = df.format(date);
 	}
 	public String getTime () {
 		return this.time;

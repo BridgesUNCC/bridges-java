@@ -191,6 +191,12 @@ public class Color {
 				break;
 			case "black": red = 0; green = 0; blue = 0; alpha = 1.0f; 
 				break;
+			case "orange": red = 255; green = 155; blue = 0; alpha = 1.0f; 
+				break;
+			case "turquoise": red = 173; green = 234; blue = 234; alpha = 1.0f; 
+				break;
+			case "maroon": red = 176; green = 48; blue = 96; alpha = 1.0f; 
+				break;
 		}
 	}
 }

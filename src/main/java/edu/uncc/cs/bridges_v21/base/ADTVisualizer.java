@@ -97,14 +97,6 @@ public class ADTVisualizer<K, E> {
 		else description = descr;
 	}
 
-	/** Constructor allow visulizations of an array.
-	 * @param adtArray the array of elements to visualize
-	 */
-	public ADTVisualizer(ArrayElement<E>[] elementArray) {
-		super();
-		this.elementArray = elementArray;
-	}
-	
 	/**
 	 * Any other object type sent to the ADTVisualizer will throw an exception
 	 * example sending a String will throw an error

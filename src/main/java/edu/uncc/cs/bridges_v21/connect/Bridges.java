@@ -261,7 +261,6 @@ public class Bridges <K, E> {
 	public void setDataStructure(CircDLelement<E> head) {
 		root = head;
 		visualizer.setVisualizerType("CircularDoublyLinkedList");
-System.out.println("in setDataStruct(): " + visualizer.getVisualizerType());
 	}
 	
 	/**

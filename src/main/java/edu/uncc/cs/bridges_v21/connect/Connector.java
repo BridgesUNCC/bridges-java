@@ -205,7 +205,6 @@ public class Connector {
     		//JSONArray array = new JSONArray();
     		//array.add(obj);
     		//System.out.println(array);
-    		
     		jo = (JSONObject) JSONValue.parse(text);
     		
     	} catch (ClassCastException e) {
@@ -424,19 +423,25 @@ public class Connector {
             throw e;
         }
             
+//  System.out.println(request);  		
+//	System.out.println(response);  		
         /* This is somewhat complicated for getting a string, but:
          *   ...execute(request).returnContent().asString()
          *   	won't give error codes
          *   (String) ...execute(request).returnResponse().getEntity()
          *   	won't cast
          */
-        String err = asJSONObject(EntityUtils.toString(response.getEntity())).keySet().toString();//this will output the server error as well as parsed from the error message
+				//	this will output the server error as well as 
+				// 	parsed from the error message
+        String err = asJSONObject(EntityUtils.toString(
+					response.getEntity())).keySet().toString();
         String text = EntityUtils.toString(response.getEntity());
         if (response.getStatusLine().getStatusCode() == 503) {
         	throw new RateLimitException("Server responds Service Temporarily"
         			+ " Unavailable. You have probably reached your quota."
         			+ " Try again after waiting at least 15 minutes.");
-        } else if (response.getStatusLine().getStatusCode() >= 400) {
+        } 
+		else if (response.getStatusLine().getStatusCode() >= 400) {
         	// The request succeeded but the server threw an error
             System.err.println("Server returned error response: HTTP " +
             		response.getStatusLine().getStatusCode() + " while"
@@ -451,7 +456,7 @@ public class Connector {
             throw new IOException("Server errored, but gave an invalid"
             		+ " report: " + text + ". Consider filing a bug report"
     				+ " about this at http://github.com/SeanTater/bridges.");
-        }
+		}
         
         // Handle empty responses
         if (text == null || text.isEmpty())
