@@ -643,7 +643,7 @@ public class DataFormatter {
 	}
 	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData2 () throws Exception {
 
-		String url = "https://bridgesdata.herokuapp.com/api/imdb";
+		String url = "https://bridgesdata.herokuapp.com/api/imdb2";
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
 		HttpResponse response = client.execute(request);
@@ -664,18 +664,13 @@ public class DataFormatter {
 
 				am_pair.setActor((String) item.get("actor"));
 				am_pair.setMovie((String) item.get("movie"));
- System.out.println("Movie Rating: " + item.get("rating"));
-//				double v = ((Number) item.get("rating")).doubleValue();
-//				am_pair.setMovieRating(((Number) item.get("rating")).doubleValue());
-//				System.out.println("Rating:" + v);
-/*
-				JSONArray genre = (JSONArray) item.get("genre");
+				am_pair.setMovieRating(((Number) item.get("rating")).doubleValue());
+				JSONArray genre = (JSONArray) item.get("genres");
 
 				Vector<String> v = new Vector();
 				for (int k = 0; k < genre.size(); k++)
 					v.add((String)genre.get(k));
 				am_pair.setGenres(v);
-*/
 				am_list.add(am_pair);
 			}
 			return am_list;
@@ -794,7 +789,6 @@ System.out.println("Author:" + gb.getAuthorName() + "," +
 				game.setTitle((String) item.get("game"));
 				game.setPlatformType((String) item.get("platform"));
 				game.setRating(((Number) item.get("rating")).doubleValue());
- System.out.println("Game Rating: " + ((Number) item.get("rating")).doubleValue());
 				JSONArray genre = (JSONArray) item.get("genre");
 
 				Vector<String> v = new Vector();
