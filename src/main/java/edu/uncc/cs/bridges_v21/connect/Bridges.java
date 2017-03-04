@@ -123,6 +123,10 @@ public class Bridges <K, E> {
 								int maxElements) throws Exception {
 		return DataFormatter.getActorMovieIMDBData(name, maxElements);
 	}
+	public static List<ActorMovieIMDB> getActorMovieIMDBData2() throws 
+											Exception {
+		return DataFormatter.getActorMovieIMDBData2();
+	}
 	public static List<GutenbergBook> getGutenbergBookMetaData() 
 										throws Exception{
 		return DataFormatter.getGutenbergBookMetaData();

@@ -165,6 +165,8 @@ public class ElementVisualizer {
 			color = new Color(0, 0, 255, 1.0f);
 		else if(col.equals("yellow"))
 			color = new Color(255, 255, 0, 1.0f);
+		else if(col.equals("orange"))
+			color = new Color(255, 165, 0, 1.0f);
 		else if(col.equals("magenta"))
 			color = new Color(255, 0, 255, 1.0f);
 		else if(col.equals("cyan"))

@@ -641,6 +641,51 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
 		}
 	}
+	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData2 () throws Exception {
+
+		String url = "https://bridgesdata.herokuapp.com/api/imdb";
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+		HttpResponse response = client.execute(request);
+
+		int status = response.getStatusLine().getStatusCode();
+
+		if (status == 200) 	{
+			String result = EntityUtils.toString(response.getEntity());
+			JSONObject full = (JSONObject)JSONValue.parse(result);
+			JSONArray json = (JSONArray)full.get("data");
+         
+			ArrayList<ActorMovieIMDB> am_list = 
+					new ArrayList<ActorMovieIMDB>(json.size());
+			for (int i = 0; i < json.size(); i++) {
+				JSONObject item = (JSONObject)json.get(i);
+
+				ActorMovieIMDB am_pair = new ActorMovieIMDB();
+
+				am_pair.setActor((String) item.get("actor"));
+				am_pair.setMovie((String) item.get("movie"));
+ System.out.println("Movie Rating: " + item.get("rating"));
+//				double v = ((Number) item.get("rating")).doubleValue();
+//				am_pair.setMovieRating(((Number) item.get("rating")).doubleValue());
+//				System.out.println("Rating:" + v);
+/*
+				JSONArray genre = (JSONArray) item.get("genre");
+
+				Vector<String> v = new Vector();
+				for (int k = 0; k < genre.size(); k++)
+					v.add((String)genre.get(k));
+				am_pair.setGenres(v);
+*/
+				am_list.add(am_pair);
+			}
+			return am_list;
+		}
+		else {
+			throw new Exception("HTTP Request Failed. Error Code: "+status);
+		}
+	}
+
+
 	public static ArrayList<GutenbergBook> getGutenbergBookMetaData () 
 									throws Exception {
 
@@ -741,7 +786,6 @@ System.out.println("Author:" + gb.getAuthorName() + "," +
          
 			ArrayList<Game> game_list = 
 					new ArrayList<Game>(json.size());
-// System.out.println("Num of game records: " + json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
@@ -750,6 +794,7 @@ System.out.println("Author:" + gb.getAuthorName() + "," +
 				game.setTitle((String) item.get("game"));
 				game.setPlatformType((String) item.get("platform"));
 				game.setRating(((Number) item.get("rating")).doubleValue());
+ System.out.println("Game Rating: " + ((Number) item.get("rating")).doubleValue());
 				JSONArray genre = (JSONArray) item.get("genre");
 
 				Vector<String> v = new Vector();

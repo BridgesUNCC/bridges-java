@@ -1,11 +1,15 @@
 package bridges.data_src_dependent;
 
+import java.util.Vector;
+
 public class ActorMovieIMDB extends DataSource{
 
 	/**
 	 * The constructor
 	 */
 	private String actor, movie;
+	private double rating;
+	private Vector<String> genres;
 
 	public ActorMovieIMDB () {
 		super.setLabel("");
@@ -35,11 +39,28 @@ public class ActorMovieIMDB extends DataSource{
 	public void setActor (String a) {
 		actor = a;
 	}
+
 	public String getMovie() {
 		return movie;
 	}
 	public void setMovie (String m) {
 		movie = m;
+	}
+
+	public double getMovieRating() {
+		return rating;
+	}
+
+	public void setMovieRating(double r) {
+		this.rating = r;
+	}
+
+	public Vector<String> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(Vector<String> g) {
+		this.genres = g;
 	}
 	
 	@Override
