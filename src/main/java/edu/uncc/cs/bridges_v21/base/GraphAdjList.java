@@ -95,6 +95,16 @@ public class GraphAdjList<K, E> extends DataStruct {
 	public HashMap<K, Element<E> > getVertices() {
 		return vertices;
 	}
+	/// 
+	/// This is a convenience method to retrieve a vertex given 
+	/// its key
+	/// 
+	///@return -- graph vertex corresponding to its key
+	///
+	///
+	public Element<E> getVertex(K key) {
+		return vertices.get(key);
+	}
 
 	/// 
 	/// Gets the adjacency list (of type SLelement<Edge> )

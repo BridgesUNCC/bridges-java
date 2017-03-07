@@ -197,6 +197,34 @@ public class Color {
 				break;
 			case "maroon": red = 176; green = 48; blue = 96; alpha = 1.0f; 
 				break;
+			case "aquamarine": red = 127; green = 255; blue = 212; alpha = 1.0f;
+				break;
+			case "azure": red = 240; green = 255; blue = 255; alpha = 1.0f;
+				break;
+			case "beige": red = 245; green = 245; blue = 220; alpha = 1.0f;
+				break;
+			case "brown": red = 166; green = 42; blue = 42; alpha = 1.0f;
+				break;
+			case "tan": red = 210; green = 180; blue = 140; alpha = 1.0f;
+				break;
+			case "olive": red = 128; green = 128; blue = 0; alpha = 1.0f;
+				break;
+			case "chartreuse": red = 127; green = 255; blue = 0; alpha = 1.0f;
+				break;
+			case "khaki": red = 240; green = 230; blue = 140; alpha = 1.0f;
+				break;
+			case "bisque": red = 255; green = 228; blue = 196; alpha = 1.0f;
+				break;
+			case "coral": red = 255; green = 127; blue = 0; alpha = 1.0f;
+				break;
+			case "pink": red = 255; green = 192; blue = 203; alpha = 1.0f;
+				break;
+			case "lavender": red = 230; green = 230; blue = 250; alpha = 1.0f;
+				break;
+			case "purple": red = 160; green = 32; blue = 240; alpha = 1.0f;
+				break;
+			case "gold": red = 255; green = 215; blue = 0; alpha = 1.0f;
+				break;
 		}
 	}
 }

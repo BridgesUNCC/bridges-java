@@ -153,31 +153,70 @@ public class ElementVisualizer {
 	 * @param aColor the string reprsenting the color of the Element in 
 	 *  		the Bridges Visualization
 	 */
-	public void setColor(String aColor) 
-				throws InvalidValueException{
-		String col = aColor.toLowerCase();
-						// validates and returns a 4 component RGBA val
-		if (col.equals("red"))
-			color = new Color(255, 0, 0, 1.0f);
-		else if(col.equals("green"))
-			color = new Color(0, 255, 0, 1.0f);
-		else if(col.equals("blue"))
-			color = new Color(0, 0, 255, 1.0f);
-		else if(col.equals("yellow"))
-			color = new Color(255, 255, 0, 1.0f);
-		else if(col.equals("orange"))
-			color = new Color(255, 165, 0, 1.0f);
-		else if(col.equals("magenta"))
-			color = new Color(255, 0, 255, 1.0f);
-		else if(col.equals("cyan"))
-			color = new Color(0, 255, 255, 1.0f);
-		else if(col.equals("white"))
-			color = new Color(255, 255, 255, 1.0f);
-		else if(col.equals("black"))
-			color = new Color(0, 0, 0, 1.0f);
-		else
-        	throw new InvalidValueException("Invalid color." +
-            " Only named primaries supported now \n");
+	public void setColor(String col_name) throws InvalidValueException{
+
+		String col = col_name.toLowerCase();
+                        // validates and returns a 4 component RGBA val
+		int red, green, blue;
+		float  alpha = 1.0f;
+
+		switch (col_name) {
+			case "red": red = 255; green = blue = 0; 
+				break;
+			case "green": red = 0; green = 255; blue = 0; 
+				break;
+			case "blue": red = 0; green = 0; blue = 255; 
+				break;
+			case "yellow": red = 255; green = 255; blue = 0; 
+				break;
+			case "cyan": red = 0; green = 255; blue = 255; 
+				break;
+			case "magenta": red = 255; green = 255; blue = 0; 
+				break;
+			case "white": red = 255; green = 255; blue = 255; 
+				break;
+			case "black": red = 0; green = 0; blue = 0; 
+				break;
+			case "orange": red = 255; green = 155; blue = 0; 
+				break;
+			case "turquoise": red = 173; green = 234; blue = 234; 
+				break;
+			case "maroon": red = 176; green = 48; blue = 96; 
+				break;
+			case "aquamarine": red = 127; green = 255; blue = 212; 
+				break;
+			case "azure": red = 240; green = 255; blue = 255; 
+				break;
+			case "beige": red = 245; green = 245; blue = 220; 
+				break;
+			case "brown": red = 166; green = 42; blue = 42; 
+				break;
+			case "tan": red = 210; green = 180; blue = 140; 
+				break;
+			case "olive": red = 128; green = 128; blue = 0; 
+				break;
+			case "chartreuse": red = 127; green = 255; blue = 0; 
+				break;
+			case "khaki": red = 240; green = 230; blue = 140; 
+				break;
+			case "bisque": red = 255; green = 228; blue = 196; 
+				break;
+			case "coral": red = 255; green = 127; blue = 0; 
+				break;
+			case "pink": red = 255; green = 192; blue = 203; 
+				break;
+			case "lavender": red = 230; green = 230; blue = 250; 
+				break;
+			case "purple": red = 160; green = 32; blue = 240; 
+				break;
+			case "gold": red = 255; green = 215; blue = 0; 
+				break;
+			default:
+				throw new InvalidValueException("Invalid color " + "'" + 
+					col_name + "'" +"."
+					+ " Only named primaries supported now \n");
+		}
+		color = new Color (red, green, blue, alpha);
 	}
 
 	/** Set the color of the Element in the Bridges Visualization to "aColor".
