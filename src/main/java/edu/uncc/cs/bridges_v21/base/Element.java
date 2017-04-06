@@ -240,11 +240,18 @@ public class Element<E> extends DataStruct{
 					Integer.toString(visualizer.getColor().getGreen()) + COMMA +
 					Integer.toString(visualizer.getColor().getBlue()) + COMMA +
 					Float.toString(visualizer.getColor().getAlpha()) +
-				CLOSE_BOX + COMMA + 
-			QUOTE + "location" + QUOTE + COLON + 
-				OPEN_BOX + Double.toString(visualizer.getLocationX()) + COMMA +
-					Double.toString(visualizer.getLocationY()) + 
 				CLOSE_BOX;
+								// only include location if it was set by user
+								// check against default values
+			Boolean loc_flag = 
+				!((visualizer.getLocationX() == Double.POSITIVE_INFINITY) || 
+			 	(visualizer.getLocationY() == Double.POSITIVE_INFINITY));
+			if (loc_flag)
+				json_str += COMMA + QUOTE + "location" + QUOTE + COLON + 
+					OPEN_BOX + 
+						Double.toString(visualizer.getLocationX()) + COMMA +
+						Double.toString(visualizer.getLocationY()) + 
+					CLOSE_BOX;
 
 			if (getDataStructType().equals("BinarySearchTree")) {
 				json_str += COMMA +  

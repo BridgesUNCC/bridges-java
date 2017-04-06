@@ -109,8 +109,14 @@ public class LinkVisualizer{
 	}
 
 	/** Set the color of the link in the Bridges Visualization to "aColor".
-	 * @param aColor the string reprsenting the color of the Element in 
-	 *		the Bridges Visualization
+	 * @param col_name the string reprsenting the color of the Element in 
+	 *		the Bridges Visualization; supported named colors are
+ 	 *  	"red", "green", "blue", "yellow", "cyan", "magenta", "white", 
+	 *		"black",
+ 	 *  	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
+ 	 *  	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
+ 	 *  	"pink", "lavender", "purple", "gold"
+ 	 *
 	 */
 	public void setColor(String col_name) {
 

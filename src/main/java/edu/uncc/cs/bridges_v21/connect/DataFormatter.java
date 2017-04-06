@@ -569,6 +569,18 @@ public class DataFormatter {
 		DataFormatter.backend = backend;
 	}
 
+	/**
+     *  Get USGS earthquake data
+     *  USGS Tweet data (https://earthquake.usgs.gov/earthquakes/map/)
+     *  retrieved, formatted into a list of EarthquakeUSGS objects
+     *
+     *  @param name   USGS account name - must be "earthquake" to create account
+     *  @param maxElements  the number of earthquake records retrieved, limited to 5000
+     *  @throws Exception if the request fails
+     *
+     *  @return a list of earthquake records
+     */
+
 	public static ArrayList<EarthquakeUSGS> getEarthquakeUSGSData(
 					USGSaccount acctName, int maxElem) throws Exception {
 
@@ -609,6 +621,19 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
 		}
 	}
+
+	/**
+	 *  Get ActorMovie IMDB Data
+	 *  retrieved, formatted into a list of ActorMovieIMDB objects
+	 *
+	 *  @param name   should be "IMDB"
+	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
+	 *	 	returns all records. 
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of ActorMovieIMDB objects, but only actor and movie fields
+	 * 				in this version
+	 */
 	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData(
 					String name, int maxElem) throws Exception {
 
@@ -641,7 +666,21 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
 		}
 	}
-	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData2 () throws Exception {
+
+	/**
+	 *  Get ActorMovie IMDB Data
+	 *  retrieved, formatted into a list of ActorMovieIMDB objects
+	 *
+	 *  @param name   should be "IMDB"
+	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
+	 *	 	returns all records. 
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of ActorMovieIMDB objects, but only actor,  movie, movie genre
+	 *			and movie rating are returned. 
+	 */
+	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData2 () 
+									throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb2";
 		DefaultHttpClient client = new DefaultHttpClient();

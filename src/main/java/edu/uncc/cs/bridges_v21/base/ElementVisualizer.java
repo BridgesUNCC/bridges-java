@@ -16,6 +16,7 @@ import java.util.Random;
  * Objects of this class are stored as part of the Element class.
  * Generally, a user will manipulate the ElementVisualizer returned from the
  * Element's getVisualizer() method, and then set attributes using its methods. 
+ *
  */
 
 public class ElementVisualizer {
@@ -24,8 +25,8 @@ public class ElementVisualizer {
 	Color color;
 	String shape = "circle",
 			key = "";
-	double	locationX = 0.0, 
-			locationY = 0.0,
+	double	locationX = Double.POSITIVE_INFINITY, 
+			locationY = Double.POSITIVE_INFINITY,
 			size = 10.0;
 	float   opacity = 1.0f;
 	
@@ -37,8 +38,8 @@ public class ElementVisualizer {
 			put("size", "10.0");
 			put("shape", "circle");
 			put ("key", "");
-			put ("locationX", "0.0");
-			put ("locationY", "0.0");
+			put ("locationX", String.valueOf(locationX));
+			put ("locationY", String.valueOf(locationY));
 		}
 	};
 
@@ -150,15 +151,20 @@ public class ElementVisualizer {
 	}
 
 	/** Set the color of the Element in the Bridges Visualization to "aColor".
-	 * @param aColor the string reprsenting the color of the Element in 
-	 *  		the Bridges Visualization
+	 * @param col_name the string reprsenting the color of the Element in 
+	 *  		the Bridges Visualization; supported named colors are
+ 	 * 	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
+ 	 *	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
+ 	 *	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
+ 	 *	"pink", "lavender", "purple", "gold"
+ 	 *
 	 */
 	public void setColor(String col_name) throws InvalidValueException{
 
 		String col = col_name.toLowerCase();
                         // validates and returns a 4 component RGBA val
 		int red, green, blue;
-		float  alpha = 1.0f;
+		float  alpha = this.getOpacity();
 
 		switch (col_name) {
 			case "red": red = 255; green = blue = 0; 

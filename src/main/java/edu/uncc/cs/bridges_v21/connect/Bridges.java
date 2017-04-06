@@ -115,14 +115,49 @@ public class Bridges <K, E> {
 		return DataFormatter.getAssociations(name, maxElements);
 	}
 
+	/**
+	 *  Get USGS earthquake data
+	 *  USGS Tweet data (https://earthquake.usgs.gov/earthquakes/map/)
+     *  retrieved, formatted into a list of EarthquakeUSGS objects
+	 *
+	 *  @param name   USGS account name - must be "earthquake" to create account
+	 *	@param maxElements  the number of earthquake records retrieved, limited to 5000
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of earthquake records
+	 */
 	public static List<EarthquakeUSGS> getEarthquakeUSGSData(USGSaccount name,
 									int maxElements) throws Exception {
 		return DataFormatter.getEarthquakeUSGSData(name, maxElements);
 	}
+	/**
+	 *  Get ActorMovie IMDB Data
+	 *  retrieved, formatted into a list of ActorMovieIMDB objects
+	 *
+	 *  @param name   should be "IMDB"
+	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
+	 *	 	returns all records. 
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of ActorMovieIMDB objects, but only actor,  movie, movie genre
+	 *			and movie rating are returned. 
+	 */
 	public static List<ActorMovieIMDB> getActorMovieIMDBData(String name, 
 								int maxElements) throws Exception {
 		return DataFormatter.getActorMovieIMDBData(name, maxElements);
 	}
+	/**
+	 *  Get ActorMovie IMDB Data
+	 *  retrieved, formatted into a list of ActorMovieIMDB objects
+	 *
+	 *  @param name   should be "IMDB"
+	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
+	 *	 	returns all records. 
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of ActorMovieIMDB objects, but only actor and movie fields
+	 * 				in this version
+	 */
 	public static List<ActorMovieIMDB> getActorMovieIMDBData2() throws 
 											Exception {
 		return DataFormatter.getActorMovieIMDBData2();
