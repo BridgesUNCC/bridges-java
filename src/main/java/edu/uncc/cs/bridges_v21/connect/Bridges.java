@@ -464,9 +464,10 @@ public class Bridges <K, E> {
 					+ " should not be possible.\n"
 					+ e.getMessage());
 		} 
-        // Return a URL to the user
-		System.out.println("Check out your visuals at " + connector.prepare(
-				"/assignments/" + assignment + "/" + userName) ); 
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
         assignment_part++;
 	}
 	
@@ -495,8 +496,10 @@ public class Bridges <K, E> {
 					+ " should not be possible.\n"
 					+ e.getMessage());
 		} 
-        // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
         assignment_part++;
 	}
 	
@@ -524,8 +527,10 @@ public class Bridges <K, E> {
 					+ " should not be possible.\n"
 					+ e.getMessage());
 		} 
-        // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
         assignment_part++;
 	}
 	/**
@@ -552,8 +557,10 @@ public class Bridges <K, E> {
 					+ " should not be possible.\n"
 					+ e.getMessage());
 		} 
-        // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
         assignment_part++;
 	}
 	
@@ -580,8 +587,10 @@ public class Bridges <K, E> {
 					+ " should not be possible.\n"
 					+ e.getMessage());
 		} 
-        // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
         assignment_part++;
 	}
 	/**
@@ -608,8 +617,10 @@ public class Bridges <K, E> {
 					+ " should not be possible.\n"
 					+ e.getMessage());
 		} 
-        // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
         assignment_part++;
 	}
 
@@ -640,8 +651,10 @@ public class Bridges <K, E> {
 				+ " should not be possible. Also please check the data type for graph's adjacency list.\n"
 					+ e.getMessage());
 		} 
-        // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
         assignment_part++;
 	}
 	protected void visualizeGraphAdjacencyMatrix() {
@@ -666,8 +679,10 @@ public class Bridges <K, E> {
 				+ " should not be possible. Also please check the data type for graph's adjacency list.\n"
 				+ e.getMessage());
 		} 
-        // Return a URL to the user
-        System.out.println("Check out your visuals at " + connector.prepare("/assignments/" + assignment + "/" + userName) );
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
         assignment_part++;
 	}
 
