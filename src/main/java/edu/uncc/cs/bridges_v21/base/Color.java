@@ -6,17 +6,17 @@ import bridges.validation.InvalidValueException;
 
 
 /**
- * @brief This class is used to represent colors in BRIDGES. 
-
- *	We use an RGBA model
- *  to represent colors, with each component in the range 0-255. BRIDGES 
- * also supports named colors for user convenience, but these are converted 
- * into [RGBA] prior to transmission to the server for visualization.
- * 
- * <p>
+ *	@brief This class is used to represent colors in BRIDGES. 
  *
- * @author K.R. Subramanian, 
- * @date 7/14/16
+ *	We use an RGBA model
+ *	to represent colors, with each component in the range 0-255. BRIDGES 
+ *	also supports named colors for user convenience, but these are converted 
+ *	into [RGBA] prior to transmission to the server for visualization.
+ * 
+ * 	<p>
+ *
+ *	@author K.R. Subramanian, 
+ *	@date 7/14/16
  *
  */
 public class Color {
@@ -36,6 +36,7 @@ public class Color {
     }
 
 	/**
+	 *
 	 * Constructor, given r, g, b, a components
 	 *
 	 * @param r, g, b, a  - checked to be in the range 0-255
@@ -46,10 +47,11 @@ public class Color {
 	}
 
 	/**
+	 *
 	 * 	Constructor, given r, g, b components
 	 *	alpha (opacity) defaults to 255
 	 *
-	 * @param r, g, b, a  - checked to be in the range 0-255
+	 *	@param r, g, b, a  - checked to be in the range 0-255
 	 *
 	 */
 	public Color(int r, int g, int b) {
@@ -57,9 +59,10 @@ public class Color {
 	}
 
 	/**
+	 *
 	 * 	sets color to the given r, g, b, a components
 	 *
-	 * @param r, g, b, a  - checked to be in the range 0-255
+	 *	@param r, g, b, a  - checked to be in the range 0-255
 	 *
 	 */
 	public void setColor(int r, int g, int b, float a) {
@@ -69,10 +72,12 @@ public class Color {
 			red = r; green = g; blue = b; alpha = a;
 			return;
 		}
-		throw new InvalidValueException("Invalid color range (r,g,b must be 0-255, alpha in 0-1)\n");
+		throw new InvalidValueException(
+					"Invalid color range (r,g,b must be 0-255, alpha in 0-1)\n");
 	}
 
 	/**
+	 *
 	 * 	sets the red component
 	 *
 	 * @param r  - checked to be in the range 0-255
@@ -88,6 +93,7 @@ public class Color {
 	}
 
 	/**
+	 *
 	 * 	gets the red component
 	 *
 	 * 	@return  red - returns the red component of the color
@@ -98,6 +104,7 @@ public class Color {
 	}
 
 	/**
+	 *
 	 * 	sets the green component
 	 *
 	 * 	@param g  - checked to be in the range 0-255
@@ -113,6 +120,7 @@ public class Color {
 	}
 
 	/**
+	 *
 	 * 	gets the green component
 	 *
 	 * 	@return  green - returns the green component of the color
@@ -123,6 +131,7 @@ public class Color {
 	}
 
 	/**
+	 *
 	 * 	sets the blue component
 	 *
 	 * 	@param b  - checked to be in the range 0-255
@@ -138,6 +147,7 @@ public class Color {
 	}
 
 	/**
+	 *
 	 * 	gets the blue component
 	 *
 	 * 	@return  blue - returns the blue component of the color
@@ -148,6 +158,7 @@ public class Color {
 	}
 
 	/**
+	 *
 	 * 	sets the alpha(opacity) component
 	 *
 	 * 	@param a  - checked to be in the range 0-255
@@ -163,6 +174,7 @@ public class Color {
 	}
 
 	/**
+	 *
 	 * 	gets the alpha component
 	 *
 	 * 	@return  alpha - returns the alpha(opacity) component of the color
@@ -173,6 +185,13 @@ public class Color {
 	}
 
 
+	/**
+	 *
+	 * 	sets the color to the RGBA components given the color name
+	 *
+	 *  @param col_name  color name
+	 *
+	 */
 	public void setColor(String col_name) {
 		switch (col_name) {
 			case "red": red = 255; green = blue = 0; alpha = 1.0f; 

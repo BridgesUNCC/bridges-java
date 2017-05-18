@@ -1,16 +1,34 @@
 package bridges.base;
 
 /**
- * @brief This class can be used to instantiate Singly List Elements.
+ * 	@brief This class can be used to instantiate Singly Linked Elements.
 
- * This class extends Element and takes a generic parameter <E> for 
- *	representing application specific data.
+ * 	This class extends Element and takes a generic parameter <E> 
+ *	representing application specific data. This element forms the basic
+ *	building block for singly linked lists. Singly linked elements have a field
+ *	pointing to the next element along the list.
+ *
+ *
+ * 	Elements contain a visualizer (ElementVisualizer) object for setting visual 
+ *	attributes (color, shape, opacity, size), necessary for displaying them in a 
+ *	web browser.
+ *
+ *	Elements also have a LinkVisualizer object, that is used when they are linked to 
+ *	another element, appropriate for setting link attributes, for instance, between 
+ *	the current element and its next element.
  *
  * @author Mihai Mehedint, Kalpathi Subramanian
  *
- * @param <E>
+ * @date 6/22/16, 1/7/17, 5/17/17
+ *
+ * @param <E> The generic parameter object that is part of this element, representing
+ *			application specific data.
+ *
+ *	\sa Example Tutorial at <br> http://bridgesuncc.github.io/Hello_World_Tutorials/SLL.html
  */
+
 public class SLelement<E> extends Element<E> {
+
 	protected SLelement<E> next=null; //the link to the next element 
 
 	/**
@@ -26,10 +44,13 @@ public class SLelement<E> extends Element<E> {
 	}
 	
 	/**
-	 * This constructor creates an SLelement object of value "e" and label "label"
-	 * and sets the next pointer to null
+	 *
+	 * This constructor creates an SLelement object of generic parameter object E, 
+	 *	and label "label" and sets the next pointer to null
+ 	 *
 	 * @param label the label of SLelement that shows up on the Bridges visualization
 	 * @param e the generic object that this SLelement will hold
+ 	 *
 	 */
 	public SLelement (String label, E e){
 		super(label, e);
@@ -37,10 +58,13 @@ public class SLelement<E> extends Element<E> {
 	}
 	
 	/**
+ 	 *
 	 * Creates a new element with value "e" and sets the next pointer
 	 * to the SLelement referenced by the "next" argument 
-	 * @param e the generic object that this SLelement will hold
-	 * @param next the SLelement that should be assigned to the next pointer
+	 *
+	 * @param e the generic object that this element will hold
+	 * @param next the element that should be assigned to the next pointer
+ 	 *
 	 */
 	public SLelement (E e, SLelement<E> next) {
 		super(e);
@@ -68,21 +92,25 @@ public class SLelement<E> extends Element<E> {
 	 *	This method gets the data structure type
 	 *
 	 *	@return  The date structure type as a string
-	 **/
+	 *
+	 */
 	public String getDataStructType() {
 		return "SinglyLinkedList";
 	}
 	
 	/**
-	 * Retrieves the next SLelement
+	 * Retrieves the element following this element 
+	 *
 	 * @return SLelement<E> assigned to next
+	 *
 	 */
 	public SLelement<E> getNext() {
 		return next;
 	}
 	
 	/**
-	 * Sets the pointer to the next SLelement
+	 * Sets the element to point to the next SLelement
+	 *
 	 * @param next SLelement<E> that should be assigned to the next pointer
 	 */
 	public void setNext(SLelement<E> next) {

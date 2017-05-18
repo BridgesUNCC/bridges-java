@@ -1,18 +1,36 @@
 package bridges.base;
 import bridges.base.*;
 /**
- *  @brief This class extends the BSTElement class for use in building AVL 
- *	trees.
+ *  @brief This class extends the BSTElement class by adding a height and balance factor
+ *	fields that are useful in AVL trees.
+ *
  *	AVL tree elements include a 'height' and a 'balFactor' value, 
  *	representing the height and balance factor of the AVL tree at 
  *  that node, respectively. This is useful in representing
  *	AVL trees.
-
- *  Generic paramaters: K - key value, E - appl dependent data component
  *
- * 	@author Kalpathi Subramanian
- * 	@date   8/8/16
- **/
+ *	AVLTree elements contain a visualizer (ElementVisualizer) object for setting visual
+ *  attributes (color, shape, opacity, size), necessary for displaying them in a
+ *  web browser.
+ *
+ *  AVLTree elements also have a LinkVisualizer object, that is used when they are 
+ *	linked to another element, appropriate for setting link attributes, for instance, 
+ *	between *  the current element and its left or right child
+ *
+ *  @param E he generic parameter object that is part of this element, representing
+ *      application specific data.
+ *  @param K is the search key parameter in the AVL tree node; K must be orderable, such
+ *      as integer, float, string, etc., on which relational operators work.
+ *
+ *  @author Kalpathi Subramanian, Mihai Mehedint
+ *
+ *  @date 6/22/16, 1/7/17, 5/17/17
+ *
+ *  \sa Example tutorial using AVLTreeElement at <br>
+ *      http://bridgesuncc.github.io/Hello_World_Tutorials/AVL.html
+ *
+ */
+
 public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	private Integer height, balFactor;
 
