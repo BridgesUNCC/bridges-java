@@ -41,7 +41,7 @@ public class TreeElement<E> extends Element<E> {
 	 *	Constructs an empty TreeElement with first two children
 	 *	set to null. 
 	 *
-	 **/
+	 */
 	public TreeElement(){
 		super();
 		children = new Vector<TreeElement <E>> (2);
@@ -54,7 +54,7 @@ public class TreeElement<E> extends Element<E> {
 	 *
 	 * @param e the generic object that TreeElement will hold 
 	 *
-	 **/
+	 */
 	public TreeElement (E e){
 		super(e);
 		children = new Vector<TreeElement <E>> (2);
@@ -67,7 +67,7 @@ public class TreeElement<E> extends Element<E> {
 	 *		visualization
 	 * 	@param e the generic object that TreeElement will hold 
 	 * 
-	 **/
+	 */
 	public TreeElement (String label, E e){
 		super(label, e);
 		children = new Vector<TreeElement <E>> (2);
@@ -83,7 +83,7 @@ public class TreeElement<E> extends Element<E> {
 	 * 	@param right the TreeElement to be assigned to the child 1 
 	 *		of this TreeElement
 	 * 
-	 **/
+	 */
 	public TreeElement(TreeElement<E> left, TreeElement<E> right) {
 		super();
 		children = new Vector<TreeElement <E>> (2);
@@ -102,7 +102,7 @@ public class TreeElement<E> extends Element<E> {
 	 * @param right the TreeElement to be assigned to the second child 
 	 *		of this TreeElement
 	 * 
-	 **/
+	 */
 	public TreeElement(E e, TreeElement<E> left, TreeElement<E> right) {
 		super(e);
 		children = new Vector<TreeElement <E>> (2);
@@ -114,7 +114,7 @@ public class TreeElement<E> extends Element<E> {
 	 *	This method gets the data structure type
 	 *
 	 *	@return  The date structure type as a string
-	 **/
+	 */
 	public String getDataStructType() {
 		return "Tree";
 	}
@@ -133,7 +133,7 @@ public class TreeElement<E> extends Element<E> {
 	 *
 	 * @return  number of children
 	 *
-	 **/
+	 */
 	public int getNumberOfChildren() {
 		return children.size();
 	}
@@ -145,7 +145,7 @@ public class TreeElement<E> extends Element<E> {
 	 *
 	 * @return none
 	 *
-	 **/
+	 */
 	public void setChild (int index, TreeElement<E> child) {
 		if (index < children.size())
 			children.set(index, child);
@@ -158,7 +158,7 @@ public class TreeElement<E> extends Element<E> {
 	 *
 	 * @return child to be returned
 	 *
-	 **/
+	 */
 	public TreeElement<E> getChild(int index) {
 		if (index < children.size()) 
 			return  children.get(index);

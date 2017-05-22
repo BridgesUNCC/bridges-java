@@ -84,6 +84,32 @@ public class GraphAdjList<K, E> extends DataStruct {
 		vertices.get(k).setLabel(String.valueOf(k));
 		adj_list.put(k,  null);
 	}
+	/** 
+	 *	Adds a new edge to the graph, adds it to that vertex's 
+	 *	adjacency list; user is responsible for checking if the 
+	 *	vertex already exists. This version assumes a default edge
+	 * 	weight of 1.
+	 *
+	 *	@param src - source vertex of edge
+	 *	@param dest - destination  vertex of edge
+	 *
+	 */
+	public void addEdge(K src, K dest) {
+					// check to see if the two vertices exist, else 
+					// throw an exception
+
+		try {
+			if (vertices.get(src) == null || vertices.get(dest) == null) {
+				throw new NullPointerException("Vertex "+ src + " or " + dest +
+				" does not exist! Add the vertex before creating the edge.");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		adj_list.put(src, new SLelement<Edge<K>>(new Edge<K>(1, dest), 
+							adj_list.get(src) ) ); 
+	}
 
 	/** 
 	 *	Adds a new edge to the graph, adds it to that vertex's 
@@ -149,6 +175,51 @@ public class GraphAdjList<K, E> extends DataStruct {
 	 */
 	public SLelement<Edge<K> >  getAdjacencyList(K vertex) {
 		return adj_list.get(vertex); 
+	}
+	/**
+	 *
+	 *	 This is a convenience method to simplify access to the link visualizer;
+	 *	 the method assumes the vertex names point to existing vertices, else an exception
+	 *	 is thrown
+	 *
+	 */
+	public LinkVisualizer getLinkVisualizer (K src, K dest) throws Exception {
+							// get the source and destination vertex elements
+							// and check to see if they exist
+		Element<E> v1 = vertices.get(src);
+		Element<E> v2 = vertices.get(dest);
+		try {
+			if (v1 == null || v2 == null) {
+				throw new NullPointerException("Vertex "+ src + " or " + dest +
+				" does not exist! First add the vertices to the graph.");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return v1.getLinkVisualizer(v2);
+	}
+	/**
+	 *
+	 *	This is a convenience method to simplify access to the element visualizer;
+	 *	the method assumes the vertex name points to an existing vertice, else an 
+	 *	exception is thrown
+	 *
+	 */
+	public ElementVisualizer getVisualizer (K vertex) throws Exception {
+							// get the source and destination vertex elements
+							// and check to see if they exist
+		Element<E> v = vertices.get(vertex);
+		try {
+			if (v == null) {
+				throw new NullPointerException("Vertex " + vertex  +
+				" does not exist! First add the vertices to the graph.");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return v.getVisualizer();
 	}
 };
 

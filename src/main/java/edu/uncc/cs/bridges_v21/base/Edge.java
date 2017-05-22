@@ -19,7 +19,7 @@ import java.util.Map.Entry;
 public class Edge<K> {
 
 	private int weight;
-	private Key vertex; // refers to a terminating vertex
+	private K vertex; // refers to a terminating vertex
 	private String edge_data;
 
 	/**
@@ -53,7 +53,7 @@ public class Edge<K> {
 	 * @param v the terminating vertex of the edge
 	 * 
 	 */
-	public Edge(int wt, Key v) {
+	public Edge(int wt, K v) {
 		weight = wt;
 		vertex = v;
 		edge_data = "";
@@ -88,7 +88,7 @@ public class Edge<K> {
 	 * @param v the identifier of the terminating Element
 	 * 
 	 */
-	public void setVertex(Key v) {
+	public void setVertex(K v) {
 		vertex = v;
 	}
 
@@ -99,7 +99,7 @@ public class Edge<K> {
 	 * @return the string identifier of the terminating Element
 	 * 
 	 */
-	public Key getVertex() {
+	public K getVertex() {
 		return vertex;
 	}
 
@@ -111,7 +111,7 @@ public class Edge<K> {
 	 * @param v the identifier of the terminating Element
 	 * 
 	 */
-	public void setEdge(int wt, Key v) {
+	public void setEdge(int wt, K v) {
 		this.weight = wt;
 		this.vertex = v;
 	}
@@ -137,7 +137,7 @@ public class Edge<K> {
 	/**
 	 * Returns this edge
 	 */
-	public Edge<Key> getEdge() {
+	public Edge<K> getEdge() {
 		return this;
 	}
 	

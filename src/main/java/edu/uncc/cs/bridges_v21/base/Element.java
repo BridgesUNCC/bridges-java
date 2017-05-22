@@ -35,19 +35,6 @@ import java.util.HashMap;
 
 public class Element<E> extends DataStruct{
 	
-/*
-	private String
-			QUOTE = "\"",
-			COMMA = ",",
-			COLON = ":",
-			OPEN_CURLY = "{", 
-			CLOSE_CURLY = "}", 
-			OPEN_PAREN = "(",
-			CLOSE_PAREN = ")",
-			OPEN_BOX = "[",
-			CLOSE_BOX = "]";
-*/
-
 	static 	Integer ids = 0;
 	private String label;
 	private String identifier;
@@ -277,15 +264,16 @@ public class Element<E> extends DataStruct{
 					CLOSE_BOX;
 
 			if (getDataStructType().equals("BinarySearchTree")) {
+				BSTElement bst = (BSTElement) this;
 				json_str += COMMA +  
 					QUOTE + "key" + QUOTE + COLON + 
-						QUOTE + visualizer.getKey() +  QUOTE + COMMA;
+						QUOTE + bst.getKey().toString() +  QUOTE + COMMA;
 			}
 			else if (getDataStructType().equals("AVLTree")){
 				AVLTreeElement avl = (AVLTreeElement) this;
 				json_str += COMMA +  
 					QUOTE + "key" + QUOTE + COLON + 
-						QUOTE + visualizer.getKey() +  QUOTE + COMMA +
+						QUOTE + avl.getKey().toString() +  QUOTE + COMMA +
 					QUOTE + "height" + QUOTE + COLON +
 						Integer.toString(avl.getHeight()) + COMMA +
 					QUOTE + "balance_factor" + QUOTE + COLON +	

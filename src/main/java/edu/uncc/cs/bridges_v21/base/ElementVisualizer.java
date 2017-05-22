@@ -349,13 +349,11 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 *
 	 *  Set the location (x, y)  of the element - used for displaying elements 
 	 *	in maps
 	 *
-	 * @param location the X,Y location(array of 2 doubles) to be set
-	 *
-     */
+	 *	@param location the X,Y location(array of 2 doubles) to be set
+	 */
 	public void setLocation(double x, double y) {
 		locationX = x;
 		locationY = y;

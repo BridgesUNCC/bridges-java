@@ -165,8 +165,6 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 	 **/
 	public void setKey(K key) {
 		this.key = key;
-					// add this property to the element representation 
-		this.getVisualizer().setKey(key.toString());
 	}
 
 	/* (non-Javadoc)
