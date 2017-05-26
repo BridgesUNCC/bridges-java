@@ -40,6 +40,7 @@ public class ADTVisualizer<K, E> {
 				{
 					put("Array", "Array");
 					put("SinglyLinkedList", "SinglyLinkedList");
+					put("MultiList", "MultiList");
 					put("DoublyLinkedList", "DoublyLinkedList");
 					put("CircularSinglyLinkedList", "CircularSinglyLinkedList");
 					put("CircularDoublyLinkedList", "CircularDoublyLinkedList");
@@ -278,6 +279,42 @@ public class ADTVisualizer<K, E> {
 
 		return str;
 	}
+	/**
+	 * This method returns the JSON string of a multi-list
+	 *
+	 * @return JSON string
+	 */
+	public String getMLRepresentation(MLelement<E> first_element) {
+		LinkedList<MLelement<E>> nodes = new LinkedList<>(); 
+		LinkedList<MLelement<E>> links = new LinkedList<>();
+
+		getMLRepresentation_R(first_element, nodes, links);
+
+									// generate the JSON string
+		String str = generateJSON_ML(nodes, links);
+
+		return str;
+	}
+
+	public void getMLRepresentation_R (MLelement<E> first_el, 
+						LinkedList<MLelement<E>> nodes, 
+						LinkedList<MLelement<E>> links) {
+
+		for (MLelement<E> mle = first_el; mle!= null; mle = mle.getNext()) {
+			nodes.addLast(mle);
+			if (mle.getTag()) {	// follow the sublist
+								// first add the link from this node to the sublist
+				links.addLast(mle);
+				links.addLast(mle.getSubList());
+								// now generate nodes and links of the sublist	
+				getMLRepresentation_R(mle.getSubList(), nodes, links);
+			}
+			if (mle.getNext() != null) {	// link exists
+				links.addLast(mle);
+				links.addLast(mle.getNext());
+			}
+		}
+	}
 	
 	/**
 	 * This method returns the JSON string of a doubly linked list 
@@ -492,13 +529,15 @@ public class ADTVisualizer<K, E> {
 	
 	
 	/**
-		 * Generating the JSON string given a set of nodes 
-		 * and links for the singly linked list
-		 * @param nodes
-		 * @param links
-		 * @param data structure type
-		 * @return string
-	*/
+	 * Generating the JSON string of a singly linked list, given a set of nodes 
+	 * and links 
+	 *
+	 * @param nodes
+	 * @param links
+	 *
+	 * @return JSON string
+	 *
+	 */
 	public String generateJSON_SLL (LinkedList<SLelement<E>> nodes, 
 					LinkedList<SLelement<E>> links){
 	
@@ -542,6 +581,63 @@ public class ADTVisualizer<K, E> {
                     CLOSE_CURLY + COMMA;
 		}
 		links_JSON.append(str);
+		return build_JSON(nodes_JSON, links_JSON);	 
+	}
+
+	/**
+	 * Generating the JSON string of a multi list, given a set of nodes 
+	 * and links. 
+	 *
+	 * @param nodes
+	 * @param links
+	 *
+	 * @return JSON string
+	 *
+	 */
+	public String generateJSON_ML (LinkedList<MLelement<E>> nodes, 
+					LinkedList<MLelement<E>> links){
+	
+		HashMap<Integer,Integer> map = new HashMap<>();
+		StringBuilder nodes_JSON = new StringBuilder();
+		StringBuilder links_JSON = new StringBuilder();
+	
+							// map the nodes to a sequence of ids, 0...N-1
+							// then get the JSON string for nodes
+		int i = 0;
+		while (!nodes.isEmpty()){
+			MLelement<E>  element = nodes.removeFirst();
+			Validation.validate_ADT_size(i);
+			map.put(Integer.parseInt(element.getIdentifier()), i++);
+			nodes_JSON.append(element.getRepresentation() + COMMA);
+		}
+							// get the JSON string for links
+		String str = links_JSON.toString();
+		while (!links.isEmpty()){
+							// get the link
+			SLelement<E> parent = links.removeFirst();
+			SLelement<E> child = links.removeFirst();
+	
+							// get the link properties
+			LinkVisualizer lvis = parent.getLinkVisualizer(child);
+			if (lvis != null) {
+				str += OPEN_CURLY + lvis.getLinkProperties() + COMMA;
+
+//				for (Entry<String,String> entry:lvis.getProperties().entrySet())
+//																{
+//					str += 	QUOTE + entry.getKey() + QUOTE 
+//								  +	COLON +
+//							QUOTE + entry.getValue() + QUOTE + COMMA;
+//				}
+			}
+			str += 	QUOTE + "source" + QUOTE + COLON + 
+					map.get(Integer.parseInt(parent.getIdentifier()))
+						+ COMMA + 
+                    QUOTE + "target" + QUOTE + COLON + 
+					map.get(Integer.parseInt(child.getIdentifier())) +
+                    CLOSE_CURLY + COMMA;
+		}
+		links_JSON.append(str);
+
 		return build_JSON(nodes_JSON, links_JSON);	 
 	}
 	

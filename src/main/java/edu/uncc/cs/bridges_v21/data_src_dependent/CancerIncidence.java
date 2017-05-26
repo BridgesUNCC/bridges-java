@@ -19,9 +19,9 @@ public class CancerIncidence extends DataSource{
 
 	private double 
 			age_adjusted_rate,		 // expected cancer rate, adjusted for age
-			age_adjusted_rate_ci[2], // confidence interval-lower,upper
+			age_adjusted_rate_ci[], // confidence interval-lower,upper
 			crude_rate,				 // cancer rate adjusted by population 	
-			crude_rate_ci[2];		 // confidence interval
+			crude_rate_ci[];		 // confidence interval
 
 	private int  
 			count,					 // incidence count

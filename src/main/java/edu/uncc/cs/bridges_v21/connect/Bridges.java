@@ -366,6 +366,17 @@ public class Bridges <K, E> {
 	}
 	
 	/**
+	 * This method sets the first element of the multi list
+	 *
+	 * @param head  first element of the multi-list
+	 *
+	 */
+	public void setDataStructure(MLelement<E> head) {
+		root = head;
+		visualizer.setVisualizerType("MultiList");
+	}
+	
+	/**
 	 * This method sets the first element of the doubly linked list
 	 *
 	 * @param head - first element of the  list  
@@ -482,6 +493,9 @@ public class Bridges <K, E> {
 			case "CircularSinglyLinkedList":
 				visualizeLinkedList();
 				break;
+			case "MultiList":
+				visualizeMultiList();
+				break;
 			case "DoublyLinkedList":
 			case "dllist":
 			case "CircularDoublyLinkedList":
@@ -541,6 +555,38 @@ public class Bridges <K, E> {
         try {
         	connector.post("/assignments/" + getAssignment(), 
 				visualizer.getSLRepresentation((SLelement<E>)root));
+		} 
+		catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+		}
+		catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+		} 
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
+        assignment_part++;
+	}
+
+	/**
+	 *
+	 * visualize a multi list. 
+	 *
+	 **/
+	protected void visualizeMultiList() {
+        try {
+        	connector.post("/assignments/" + getAssignment(), 
+				visualizer.getMLRepresentation((MLelement<E>)root));
 		} 
 		catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
