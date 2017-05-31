@@ -157,7 +157,7 @@ public class LinkVisualizer{
 				break;
 			case "cyan": red = 0; green = 255; blue = 255; 
 				break;
-			case "magenta": red = 255; green = 255; blue = 0; 
+			case "magenta": red = 255; green = 0; blue = 255; 
 				break;
 			case "white": red = 255; green = 255; blue = 255; 
 				break;
