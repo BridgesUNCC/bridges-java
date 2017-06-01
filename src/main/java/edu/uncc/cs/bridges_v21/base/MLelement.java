@@ -5,10 +5,10 @@ package bridges.base;
 
  * 	This class extends SLelement (singly linked list element) to build multi-lists;
  *	Multilist elements contain a tag that indicates if the element is a sublist or not;
- *	If the element points to a sublist, then the data field is the beginning of this 
- *	sublist. If not, the data field contains the user specified data item. As in 
- *	singly linked elements, the next pointer points to the following list element.
- *
+ *	If the element points to a sublist, then the sublist field is the beginning of 
+ *	this sublist. If not, the data field contains the user specified data item and 
+ *	list continues (getNext()/setNext()). As in singly linked elements, the next pointer 
+ *	points to the following list element of the list or sublist. 
  *
  * 	Multi-list elements contain a visualizer (ElementVisualizer) object for setting 
  *	visual attributes (color, shape, opacity, size), necessary for displaying 

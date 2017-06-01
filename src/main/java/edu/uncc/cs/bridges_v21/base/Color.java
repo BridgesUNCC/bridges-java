@@ -204,7 +204,7 @@ public class Color {
 				break;
 			case "cyan": red = 0; green = 255; blue = 255; alpha = 1.0f; 
 				break;
-			case "magenta": red = 255; green = 255; blue = 0; alpha = 1.0f; 
+			case "magenta": red = 255; green = 0; blue = 255; alpha = 1.0f; 
 				break;
 			case "white": red = 255; green = 255; blue = 255; alpha = 1.0f; 
 				break;
