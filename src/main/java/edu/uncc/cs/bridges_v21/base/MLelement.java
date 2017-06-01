@@ -32,7 +32,6 @@ package bridges.base;
 
 public class MLelement<E> extends SLelement<E> {
 
-	protected MLelement<E> next=null; //the link to the next element 
 	protected MLelement<E> sub_list = null; // link to a sublist
 	boolean tag = false; 
 
@@ -82,9 +81,11 @@ public class MLelement<E> extends SLelement<E> {
 	 * to the SLelement "next"
 	 * @param next the SLelement that should be assigned to the next pointer
 	 */
-	public MLelement (MLelement<E> next) {
+	public MLelement (MLelement<E> sublist, MLelement<E> next) {
 		this.setNext(next);
-		this.sub_list = null;
+		this.sub_list = sublist;
+		if (sublist != null)
+			tag = true;
 	}
 
 	/**
@@ -96,6 +97,7 @@ public class MLelement<E> extends SLelement<E> {
 	public void setSubList(MLelement<E> sl) {
 		this.sub_list = sl;
 		this.tag = true;
+					// by default, color and shape sublist nodes to distinguish them 
 		this.getVisualizer().setColor("red");
 		this.getVisualizer().setShape("square");
 	}

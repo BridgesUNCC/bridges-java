@@ -72,6 +72,19 @@ public class SLelement<E> extends Element<E> {
 	}
 
 	/**
+ 	 *
+	 * Creates a new element with value "e" 
+	 *
+	 * @param e the generic object that this element will hold
+ 	 *
+	 */
+	public SLelement (E e) {
+		super(e);
+		this.next = null;
+	}
+
+
+	/**
 	 * Creates a new element and sets the next pointer
 	 * to the SLelement "next"
 	 * @param next the SLelement that should be assigned to the next pointer

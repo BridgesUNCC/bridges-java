@@ -1,4 +1,5 @@
 package bridges.base;
+
 /**
  *	
  * 	@author Mihai Mehedint, Kalpathi Subramanian
@@ -27,8 +28,7 @@ package bridges.base;
  *		http://bridgesuncc.github.io/Hello_World_Tutorials/DLL.html
  */
 
-public class DLelement<E> extends Element<E>{
-	protected DLelement<E> next;
+public class DLelement<E> extends SLelement<E>{
 	protected DLelement<E> prev;
 
 	/** 
@@ -36,7 +36,6 @@ public class DLelement<E> extends Element<E>{
 	 */
 	public DLelement(){
 		super();
-		this.next = null;
 		this.prev = null;
 	}
 	
@@ -51,7 +50,6 @@ public class DLelement<E> extends Element<E>{
 	 */
 	public DLelement (String label, E e){
 		super(label, e);
-		this.next = null;
 		this.prev = null;
 	}
 
@@ -102,7 +100,7 @@ public class DLelement<E> extends Element<E>{
 	 * @return the DLelement assigned to the next pointer
 	 */
 	public DLelement<E> getNext() {
-		return next;
+		return (DLelement<E>) next;
 	}
 	
 	/**
