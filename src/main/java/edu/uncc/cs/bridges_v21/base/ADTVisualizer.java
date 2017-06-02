@@ -30,7 +30,7 @@ public class ADTVisualizer<K, E> {
 			OPEN_BOX = "[",
 			CLOSE_BOX = "]";
 	private Integer MaxTitleSize = 50,
-			MaxDescrSize = 250;
+			MaxDescrSize = 1000;
 	private int arrayDims[] = {1, 1, 1};
 	private String title = "", description = "";
 	public String visualizerType;
@@ -91,9 +91,9 @@ public class ADTVisualizer<K, E> {
 	 */
 	public void setDescription(String descr) {
 		if (descr.length() > MaxDescrSize) {
-            System.out.println ("Visualization Description restricted to 250 characters."
+            System.out.println ("Visualization Description restricted to " + MaxDescrSize + " characters."
                 + " Truncating description..");
-            description = descr.substring(0, 249);
+            description = descr.substring(0, MaxDescrSize);
         }
 		else description = descr;
 	}
