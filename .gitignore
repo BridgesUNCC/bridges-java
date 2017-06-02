@@ -3,4 +3,5 @@
 .gradle
 .classpath
 .project
+.DS_Store
 src/main/java/edu/uncc/cs/bridgesV2/drivers/
