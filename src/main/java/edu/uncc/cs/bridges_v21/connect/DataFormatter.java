@@ -773,29 +773,6 @@ public class DataFormatter {
 				gb.setSubjects(gb_tmp);
 				gb_tmp.clear();
 				
-
-				
-/*
-if (i == 0){
-System.out.println("Author:" + gb.getAuthorName() + "," + 
-		gb.getAuthorBirth() + "," + gb.getAuthorDeath() + "," + gb.getTitle()+
-		gb.getNumChars() + "," +
-		gb.getNumWords() + "," +
-		gb.getNumSentences() + "," +
-		gb.getNumDifficultWords() + "," + 
-		gb.getURL() + "," + 
-		gb.getNumDownloads());
-		Vector<String> v = gb.getLanguages();
-		for (int l = 0; l < v.size(); l++)
-			System.out.println("Languages: " + v.get(l));
-		v = gb.getGenres();
-		for (int l = 0; l < v.size(); l++)
-			System.out.println("Genres: " + v.get(l));
-		v = gb.getSubjects();
-		for (int l = 0; l < v.size(); l++)
-			System.out.println("Subjects: " + v.get(l));
-}
-*/
 				gb_list.add(gb);
 			}
 			return gb_list;
@@ -838,15 +815,6 @@ System.out.println("Author:" + gb.getAuthorName() + "," +
 				game_list.add(game);
 
 			}
-/*
-	System.out.println("Game:" + game_list.get(1).getTitle() + "," +
-				game_list.get(1).getPlatformType() + "," +
-				game_list.get(1).getRating());
-			Vector<String> v  = game_list.get(1).getGenre();
-			for (int k = 0; k < v.size(); k++)
-				System.out.println(v.get(k));
-*/
-
 			return game_list;
 		}
 		else {

@@ -1,17 +1,5 @@
 package bridges.connect;
 
-/**
- * Connection to the Bridges server.
- * 
- * Initialize this class before using it, and call complete() afterward.
- * 
- * @author Sean Gallagher
- * @param <E>
- * @secondAuthor Mihai Mehedint
- * @ third author K.R. Subramanian -- revisions to Bridges to sync with
- *   the C++ version
- */
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -20,17 +8,40 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import bridges.base.*;
-import bridges.data_src_dependent.EarthquakeUSGS;
-import bridges.data_src_dependent.ActorMovieIMDB;
-import bridges.data_src_dependent.GutenbergBook;
-import bridges.data_src_dependent.Game;
-import bridges.data_src_dependent.Shakespeare;
-import bridges.data_src_dependent.Tweet;
-import bridges.data_src_dependent.TwitterAccount;
-import bridges.data_src_dependent.USGSaccount;
-import bridges.validation.RateLimitException;
-import bridges.validation.Validation;
-import bridges.validation.InvalidValueException;
+import bridges.data_src_dependent.*;
+import bridges.validation.*;
+
+
+/**
+ * 	@brief The Bridges class is the main class that provides interfaces to datasets,
+ *	maintains user and assignment information, and connects to the Bridges server. 
+ * 
+ * 	The Bridges class is responsible  for initializing the Bridges system, specifying
+ * 	parameters (user id, assignment id, title, description, data structure 
+ *	type, etc) for the student assignment, generating the data structure representation 
+ *	and transmission to the Bridges server. In addition, it provides interfaces to  
+ *	a number of real-world datasets, that makes it easy to access the data for use
+ * 	algorithms/data structure assignments. <br>
+ *
+ *  <b>Datasets.</b> The datasets that are currently supported through the BRIDGES API 
+ *	include USGS Earthquake Data, IMDB Actor/Movie Data (2 versions), Gutenberg Book 
+ *	Collection Meta Data, a Video Game Dataset and Shakespeare Dataset. More information
+ *	is found in the respective methods (below) and at <p> 
+ *	http://bridgesuncc.github.io/datasets.html <p>
+ *
+ *	A typical Bridges program includes creating the Bridges object, followed by creation
+ *  of the data structure by the user, assigning visual attributes to elements of the 
+ *	data structure, followed by specification of teh data structure type  and the 
+ *	call to visualize the data structure (Bridges::setDataStructure() and visualize() 
+ *	methods).
+ * 
+ * 	@author Sean Gallagher, Kalpathi Subramanaian, Mihai Mehedint.
+ *
+ * 	@date  1/16/17, 5/19/17
+ *
+ *	\sa Tutorial examples at <br> 
+ *	http://bridgesuncc.github.io/Hello_World_Tutorials/Overview.html
+ */
 
 public class Bridges <K, E> {
 	
@@ -47,11 +58,12 @@ public class Bridges <K, E> {
 	private static int assignment_part;
 	private static String key;
 	private static DataFormatter df;
-
 	private static String userName;
+
 	/**
-	 * Constructors
-	 * @throws Exception 
+	 *
+	 *	Constructors
+	 *
 	 */
 	public Bridges() {
 		super();
@@ -62,11 +74,12 @@ public class Bridges <K, E> {
 	}
 	
 	/**
-	 * 
-	 * @param assignment this is an integer value;
-	 * @param key
-	 * @param username
-	 * @throws Exception
+	 * Initialize Bridges (Constructor) 
+	 *
+	 * @param assignment this is the assignmen id (integer)
+	 * @param appl_id    this is the appl authentication key(from the Bridges account)
+	 * @param username   this is the username (from the Bridges account)
+	 *
 	 */
 	public Bridges(int assignment, String appl_id, String username){
 		this();
@@ -92,12 +105,14 @@ public class Bridges <K, E> {
 	}
 	
 	/**
-	 * Initialize DataFormatters with Visualizer
+	 *
+	 * Initialize Bridges
+	 *
 	 * @param <E>
-	 * @param assignment  The assignment number, for grading
-	 * @param visualizer  The visualizer, for assignment
-	 * @param username 
-	 * @throws Exception 
+	 * @param assignment this is the assignmen id (integer)
+	 * @param appl_id    this is the appl authentication key(from the Bridges account)
+	 * @param username   this is the username (from the Bridges account)
+	 *
 	 */
 	public <E> void init(int assignment, String appl_id, String username){
 		Bridges.setAssignment(assignment);
@@ -116,9 +131,12 @@ public class Bridges <K, E> {
 	}
 
 	/**
-	 *  Get USGS earthquake data
-	 *  USGS Tweet data (https://earthquake.usgs.gov/earthquakes/map/)
-     *  retrieved, formatted into a list of EarthquakeUSGS objects
+	 *  This helper function provides a simple API to retrieve current USGS earthquake 
+	 *	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
+     *  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
+	 *  
+	 *  More information on the dataset can be found at <p>
+     *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *
 	 *  @param name   USGS account name - must be "earthquake" to create account
 	 *	@param maxElements  the number of earthquake records retrieved, limited to 5000
@@ -130,13 +148,18 @@ public class Bridges <K, E> {
 									int maxElements) throws Exception {
 		return DataFormatter.getEarthquakeUSGSData(name, maxElements);
 	}
+
 	/**
-	 *  Get ActorMovie IMDB Data
-	 *  retrieved, formatted into a list of ActorMovieIMDB objects
+	 *  This helper function provides access to a small curated IMDB dataset. The data is
+	 *  retrieved, formatted into a list of ActorMovieIMDB objects (about 1800 pairs).
+	 *
+	 *  This curated data set has only actor and movie name pairs. refer to <p>
+     *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+     *  for more information and to look at the dataset.
 	 *
 	 *  @param name   should be "IMDB"
-	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
-	 *	 	returns all records. 
+	 *  @param maxElements  the number of actor/movie pairs(but currently unused),
+	 *	 							returns all records. 
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of ActorMovieIMDB objects, but only actor,  movie, movie genre
@@ -147,32 +170,86 @@ public class Bridges <K, E> {
 		return DataFormatter.getActorMovieIMDBData(name, maxElements);
 	}
 	/**
-	 *  Get ActorMovie IMDB Data
+	 *  This helper function provides access to a second curated IMDB dataset; the data is
 	 *  retrieved, formatted into a list of ActorMovieIMDB objects
+	 *
+	 *  This version of the IMDB Actor/Movie data contains for each record, 
+	 *	actor name, movie name, movie genres, movie rating; refer to <p>
+     *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *  for more information and to look at the dataset.
 	 *
 	 *  @param name   should be "IMDB"
 	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
 	 *	 	returns all records. 
 	 *  @throws Exception if the request fails
 	 *
-	 *  @return a list of ActorMovieIMDB objects, but only actor and movie fields
-	 * 				in this version
+	 *  @return a list of ActorMovieIMDB objects
 	 */
 	public static List<ActorMovieIMDB> getActorMovieIMDBData2() throws 
 											Exception {
 		return DataFormatter.getActorMovieIMDBData2();
 	}
+	/**
+	 *  This helper function provides access to the meta-data of the Gutenberg book
+	 *	collection (about 1000 books); the data is retrieved, formatted into a 
+	 *	list of GutenbergBook objects.
+	 *
+	 *  Each book in this collection has  for each record, 
+	 *	information on author (name, birth, death), title, languages, genres,
+	 *  subjects, metrics(number of chars, words, sentences, difficult words), url
+	 *	downloads. More information and commands to access the data can be found at <p>
+     *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <br>
+	 *  for more information and to look at the dataset.
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of GutenbergBook objects
+	 */
 	public static List<GutenbergBook> getGutenbergBookMetaData() 
 										throws Exception{
 		return DataFormatter.getGutenbergBookMetaData();
 	}
+	/**
+	 *  This helper function provides access to the meta-data of the video game 
+	 *	collection.
+	 *
+	 *  Each record in this collection has  
+	 *	information on game title, platform, rating, and genre. For more information
+	 *	and to look at the data, refer to <p>
+     *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of Game objects.
+	 */
 	public static List<Game> getGameData() throws Exception {
 		return DataFormatter.getGameData();
 	}
+
+	/**
+	 *  This helper function provides access to a collection of Shakespeare plays,
+	 * 	poems and plays.
+	 *
+	 *  Each record in this collection has  
+	 *	information on title, type (poem, Sonnet, play) and text. <br>
+	 *
+	 *	For more information and to look at the data, refer to <p>
+     *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of Shakespeare objects.
+	 */
 	public static List<Shakespeare> getShakespeareData() throws Exception {
 		return DataFormatter.getShakespeareData();
 	}
-									/* Accessors and Mutators */
+	
+	/**
+	 *	Get the assignment id
+	 *
+	 *  @return assignment as a string
+	 *
+	 */
 	public static String getAssignment() {
 		return (assignment_part < 10) 
                 ? String.valueOf(assignment) + ".0" + 
@@ -188,7 +265,7 @@ public class Bridges <K, E> {
 	 *
 	 **/
 	public static void setAssignment(int assignment) {
-		if (assignment<0)
+		if (assignment  <  0)
 			throw new IllegalArgumentException(
 				"\n Assignment value must be >=  0.\n");
 		else if (Bridges.assignment >= 0)
@@ -197,58 +274,76 @@ public class Bridges <K, E> {
 		Bridges.assignment = assignment;
 	}
 	
-	// This exists to prevent duplicate error traces.
+	/**
+	 *
+	 *	This exists to prevent duplicate error traces.
+	 *
+	 *	@return user id (string)
+	 */
 	public static String getUserName() {
 		return userName;
 	}
 
+	/**
+	 *	set User id 
+	 *
+	 *	@param userName (string)
+	 *
+	 */
 	public static void setUserName(String userName) {
 		Bridges.userName = userName;
 	}
 	
+	/**
+	 *
+	 *	Get application key
+	 *
+	 *	@return application key value (string)
+	 *
+	 */
 	public static String getKey() {
 		return key;
 	}
 	
+	/**
+	 *
+	 *	Set application key
+	 *
+	 *	@param  key application key value (string)
+	 *
+	 */
 	public static void setKey(String key) {
 		Bridges.key = key;
 	}
 
 	/**
-	 * This method returns the current visualizer
+	 *
+	 * This method returns the current visualizer (for internal use only)
+	 *
 	 * @return visualizer
+	 *
 	 */
 	public ADTVisualizer<K, E> getVisualizer() {
 		return visualizer;
 	}
 	
 	/**
-	 * This method sets the new DataFormatter visualizer
+	 *
+	 * This method sets visualizer (for internal use only)
+	 *
 	 * @param visualizer
+	 *
 	 */
 	public void setVisualizer(ADTVisualizer<K, E> visualizer) {
 		this.visualizer = visualizer;
 	}
 	
 	/**
-	 * 	This method sets the array data type and infers the data structure from the
-	 * 	handle that is passed in, which may be one of SinglyLinkedList, 
-	 *	DoublyLinkedList,Tree, BinaryTree, BinarySearchTree, AVLTree, GraphAdjacencyList, 
-	 *	GraphAdjacencyMatrix
 	 *
-	 * @param e   The array of elements, Element<E>[]
-	 * @param size The size of the array
+	 * 	This method sets the array data type as the current data structure.
+	 *	Arrays of upto 3 dimensions are suppported.
 	 *
-	 */
-	public void setDataStructure(Element<E>[] el_array, int size){
-		element_array = el_array;
-		element_array_size = size;
-		visualizer.setVisualizerType("Array");
-	}
-	/**
-	 * 	This method sets the array data type(1D, 2D and 3D arrays supported) 
-	 *
-	 * @param Array   The array of elements, of type Element<E>[]
+	 * @param Array<E>   The array of elements, Array<E>
 	 *
 	 */
 	public void setDataStructure(Array<E>  arr) {
@@ -261,7 +356,8 @@ public class Bridges <K, E> {
 	
 	/**
 	 * This method sets the first element of the singly linked list
-	 * @param head - is a SLelement<E>
+	 *
+	 * @param head  first element of the list
 	 *
 	 */
 	public void setDataStructure(SLelement<E> head) {
@@ -270,9 +366,20 @@ public class Bridges <K, E> {
 	}
 	
 	/**
+	 * This method sets the first element of the multi list
+	 *
+	 * @param head  first element of the multi-list
+	 *
+	 */
+	public void setDataStructure(MLelement<E> head) {
+		root = head;
+		visualizer.setVisualizerType("MultiList");
+	}
+	
+	/**
 	 * This method sets the first element of the doubly linked list
 	 *
-	 * @param head - is a DLelement<E>
+	 * @param head - first element of the  list  
 	 *
 	 */
 	public void setDataStructure(DLelement<E> head){ 
@@ -283,7 +390,7 @@ public class Bridges <K, E> {
 	/**
 	 * This method sets the first element of the singly linked circular list
 	 *
-	 * @param head - start node of the circular singly linked list
+	 * @param head - first element of  the circular singly linked list
 	 *
 	 */
 	public void setDataStructure(CircSLelement<E> head) {
@@ -294,7 +401,7 @@ public class Bridges <K, E> {
 	/**
 	 * This method sets the first element of the doubly linked circular list
 	 *
-	 * @param head - is a CircDLelement<E>
+	 * @param head - first element of  the circular doubly linked list
 	 *
 	 */
 	public void setDataStructure(CircDLelement<E> head) {
@@ -306,7 +413,7 @@ public class Bridges <K, E> {
 	 * 	This method sets the root of a general  tree (can have 
 	 *	any number of children at each node
 	 *
-	 * 	@param tree_root The root of the tree
+	 * 	@param tree_root The root of the generalized tree
 	 *
 	 */
 	public void setDataStructure(TreeElement<E> tree_root){
@@ -314,7 +421,7 @@ public class Bridges <K, E> {
 		visualizer.setVisualizerType("Tree");
 	}
 	/**
-	 * This method sets the first element of the binary  tree
+	 * This method sets the root of the binary  tree
 	 * data structure. 
 	 *
 	 * @param tree_root The root of the binary tree
@@ -325,7 +432,7 @@ public class Bridges <K, E> {
 	}
 	
 	/**
-	 * This method sets the first element of the binary search tree
+	 * This method sets the root of the binary search tree
 	 * data structure. 
 	 *
 	 * @param tree_root - The root of the binary search tree 
@@ -336,7 +443,7 @@ public class Bridges <K, E> {
 	}
 	
 	/**
-	 * This method sets the first element of an AVL tree
+	 * This method sets the root of an AVL tree
 	 * data structure. 
 	 *
 	 * @param tree_root The root of the AVL tree
@@ -349,7 +456,7 @@ public class Bridges <K, E> {
 	 * This method passes the handle to the input graph
 	 * (represented using adjacency lists)
 	 *
-	 * @param input graph
+	 * @param graph adjacency list based graph
 	 */
 	public void setDataStructure(GraphAdjList<K, E> graph){
 		graph_adj_list = graph;
@@ -360,7 +467,7 @@ public class Bridges <K, E> {
 	 * This method passes the handle to the input graph (represented
 	 * using adjacency matrix)
 	 *
-	 * @param input graph
+	 * @param graph adjacency matrix based graph
 	 */
 	public void setDataStructure(GraphAdjMatrix<K, E> graph){
 		graph_adj_matrix = graph;
@@ -368,19 +475,16 @@ public class Bridges <K, E> {
 	}
 	
 	/**
-	 * This method calls the updateGraph() or updateSL() methods
-	 * depending upon the type of ADT being created.
-	 * These methods send the JSON to post() which ultimately executes the http request
-	 * from the server
+	 *
+	 * This method generates the representation of the current data structure (JSON)
+	 * and sends that to the Bridges server.
+	 *
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 * @throws NoSuchMethodException 
 	 */
 	public void visualize() {
 		switch (visualizer.getVisualizerType()) {
-//			case "Array":
-//				visualizeArray();
-//				break;
 			case "Array":
 				visualizeArrayObj();
 				break;
@@ -388,6 +492,9 @@ public class Bridges <K, E> {
 			case "llist":
 			case "CircularSinglyLinkedList":
 				visualizeLinkedList();
+				break;
+			case "MultiList":
+				visualizeMultiList();
 				break;
 			case "DoublyLinkedList":
 			case "dllist":
@@ -448,6 +555,38 @@ public class Bridges <K, E> {
         try {
         	connector.post("/assignments/" + getAssignment(), 
 				visualizer.getSLRepresentation((SLelement<E>)root));
+		} 
+		catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+		}
+		catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+		} 
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
+        assignment_part++;
+	}
+
+	/**
+	 *
+	 * visualize a multi list. 
+	 *
+	 **/
+	protected void visualizeMultiList() {
+        try {
+        	connector.post("/assignments/" + getAssignment(), 
+				visualizer.getMLRepresentation((MLelement<E>)root));
 		} 
 		catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"

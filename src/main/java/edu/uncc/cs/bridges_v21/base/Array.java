@@ -4,17 +4,25 @@ import bridges.validation.InvalidValueException;
 
 /**
  * 
- * @author Kalpathi Subramanian
+ * @brief This class can be used to create arrays of type Element<E>. 
  *
- * @param <E>
+ * @author 	Kalpathi Subramanian
  *
- * @brief This class can be used to create arrays of type Element<E> where E 
- *	is a generic type representation application specific data.  
+ * @date  	10/8/16, 5/17/17
+ *
+ *	This class can be used to create arrays of type Element<E>  where E 
+ *	is a generic object representing application specific data.  
+ *
  *	Arrays are internally represented as 1D arrays; currently 1D, 2D  and
  *	3D arrays are supported.
  *
- * @author 	Kalpathi Subramanian
- * @date  	10/8/16
+ * @param <E> The generic parameter object that is part of this element, representing
+ *          application specific data.
+ *
+ *  \sa Example Tutorial at <br>
+ *		http://bridgesuncc.github.io/Hello_World_Tutorials/ARRAY1D.html (1D Array)<br> 
+ *		http://bridgesuncc.github.io/Hello_World_Tutorials/ARRAY2D.html (2D Array)<br> 
+ *		http://bridgesuncc.github.io/Hello_World_Tutorials/ARRAY3D.html (3D Array)
  *
  */
 public class Array<E> extends DataStruct {

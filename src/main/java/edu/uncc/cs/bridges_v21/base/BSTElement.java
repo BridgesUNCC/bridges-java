@@ -4,12 +4,34 @@ import java.security.Key;
 import java.util.Map.Entry;
 
 /**
- * @author Mihai Mehedint, K.R.Subramanian
+ *  @brief The BSTElement class is the building block for creating binary search trees.
  *
- * @date 6/22/16
+ *	The BSTElement class is the building block for creating binary search tree structures.
+ *  It contains two children (viz., left, right), and a search key, to be used
+ *  in search operations .
  *
- * 	@brief This class extends the BinTreeElement class by adding a 'key' value 
+ *  BSTElement contains a visualizer (ElementVisualizer) object for setting visual
+ *  attributes (color, shape, opacity, size), necessary for displaying them in a
+ *  web browser.
+ *
+ *  BST Elements also have a LinkVisualizer object, that is used when they are linked to
+ *  another element, appropriate for setting link attributes, for instance, between
+ *  the current element and its left or right child
+ *
+ *	@param E he generic parameter object that is part of this element, representing
+ *      application specific data.
+ *	@param K is the search key parameter in the BST node; K must be orderable, such 
+ *		as integer, float, string, etc., on which relational operators work.
+ *
+ *	@author Kalpathi Subramanian, Mihai Mehedint
+ *
+ *	@date 6/22/16, 1/7/17, 5/17/17
+ *
+ *	@brief This class extends the BinTreeElement class by adding a 'key' value 
  *	for use in a binary search tree implementations. 
+ *
+ *	\sa Example tutorial using BSTElement at  <br>
+ *		http://bridgesuncc.github.io/Hello_World_Tutorials/BST.html
  *
  */
 public class BSTElement<K, E> extends BinTreeElement<E> {
@@ -143,8 +165,6 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 	 **/
 	public void setKey(K key) {
 		this.key = key;
-					// add this property to the element representation 
-		this.getVisualizer().setKey(key.toString());
 	}
 
 	/* (non-Javadoc)

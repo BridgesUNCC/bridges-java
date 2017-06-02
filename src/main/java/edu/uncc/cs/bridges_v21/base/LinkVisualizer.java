@@ -8,22 +8,39 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-
 /**
- * @brief  This class maintains visual properties of links in all relevant
-	data structures using BRIDGES.
-
- * This class is used to keep the visual properties of links 
- * in data structures such as linked lists, tree structures, and graphs.
- * Relevant attributes include color, thickness, opacity, line end point 
- * attributes.
-
- * Objects of this class are stored as properties of all Element subclasses.
- * Generally, a user will manipulate the LinkVisualizer returned from the
- * Element's getLinkVisualizer() method. 
+ *  @brief This class maintains the visual attributes of links that join
+ *  Bridges elements.
  *
- * @author Mihai Mehedint, Kalpathi Subramanian
- * @date   2015, 1/16/17
+ *  Visual properties include color, thickness, and opacity.
+ *  Objects of this class are stored as part of the Element class.
+ *  Generally, a user will manipulate the LinkVisualizer returned from the
+ *  Element's getLinkVisualizer(Element it) method (which it is the Bridges element
+ *	this element is linked to), and then set attributes using its methods. Links are
+ *  utilized in all types of linked lists, tree and graph structures.
+ *
+ *  Supported attribute values are as follows:<p>
+ *
+ *  <b>Supported Colors (by name)</b>: <p>
+ *  "red", "green", "blue","yellow","cyan","magenta",
+ *  "white",, "black", "orange",  "turquoise",  "maroon",  <br>
+ *  "aquamarine",  "azure",  "beige", "brown",  "tan",  "olive",
+ *  "chartreuse", "khaki", "bisque",  "coral", <br>
+ *  "pink",  "lavender",  "purple",  "gold" <p>
+ *
+ *  <b> Color by RGBA Specification :</b>  Range: 0-255 for each component <p>
+ *
+ *  <b> Thickness: </b> Range : 0.0-50.0
+ *
+ *  <b> Opacity: </b> Range (0.0-1.0) </p>
+ *
+ *  @author Mihai Mehedint, Kalpathi Subramanian
+ *
+ *  @date 6/22/16, 1/16/17, 5/17/17
+ *
+ *  \sa Example Tutorial at <br>
+ *  http://bridgesuncc.github.io/Hello_World_Tutorials/SLL.html
+ *
  */
 
 public class LinkVisualizer{
@@ -44,11 +61,11 @@ public class LinkVisualizer{
             CLOSE_BOX = "]";
 
 					// link color
-	Color color;
+	private Color color;
 					// link thickness
-	double thickness;
+	private double thickness;
 					// link weight
-	double weight;
+	private double weight;
 
 
 	public LinkVisualizer() {
@@ -68,7 +85,8 @@ public class LinkVisualizer{
 	}
 
 	/**
-	 * Set the thickness of the link in the Bridge Visualization in pixels
+	 * Set the thickness of the link in the Bridge Visualization in pixels; thickness
+	 * shoudl be in the range 0-50.0
 	 * 
 	 * @param thickness
 	 *
@@ -89,7 +107,8 @@ public class LinkVisualizer{
 	}
 
 	/**
-	 * Set the weight of the link, useful in graph algorithms, for example
+	 * Set the weight of the link, useful in graph algorithms, for example.
+     * weight value is user defined, and determined by the input graph specification.
 	 * 
 	 * @param weight
 	 *
@@ -102,17 +121,19 @@ public class LinkVisualizer{
 	/**
 	 * Get the weight of the link 
 	 * 
-	 * @return the size in pixels of the Element in the Bridges Visualization
+	 * @return the stored edge weight 
 	 */
 	public double getWeight() {
 		return weight;
 	}
 
-	/** Set the color of the link in the Bridges Visualization to "aColor".
-	 * @param col_name the string reprsenting the color of the Element in 
+	/** 
+	 * 
+	 *	Set the color of the link in the Bridges Visualization to "aColor".
+	 * 
+	 * 	@param col_name the string reprsenting the color of the Element in 
 	 *		the Bridges Visualization; supported named colors are
- 	 *  	"red", "green", "blue", "yellow", "cyan", "magenta", "white", 
-	 *		"black",
+ 	 *  	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
  	 *  	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
  	 *  	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
  	 *  	"pink", "lavender", "purple", "gold"
@@ -136,7 +157,7 @@ public class LinkVisualizer{
 				break;
 			case "cyan": red = 0; green = 255; blue = 255; 
 				break;
-			case "magenta": red = 255; green = 255; blue = 0; 
+			case "magenta": red = 255; green = 0; blue = 255; 
 				break;
 			case "white": red = 255; green = 255; blue = 255; 
 				break;
@@ -179,19 +200,19 @@ public class LinkVisualizer{
 			default:
 				throw new InvalidValueException("Invalid color " + "'" + 
 					col_name + "'" +"."
-					+ " Only named primaries supported now \n");
+					+ " Only named primaries supported now. \n");
 		}
 		color = new Color (red, green, blue, alpha);
     }
 
 	/**
-	 * Set the color of the link given RGBA components
+	 * 
+	 * 	Set the color of the link given RGBA components
 	 *
-	 * @param r, g, b, a components 
+	 * 	@param r, g, b, a components 
 	 *
 	 *	check to ensure they are in 0-255 range, else throw exception
 	 * 
-	 * @return the size in pixels of the Element in the Bridges Visualization
 	 */
     public void setColor(Integer r, Integer g, Integer b, Float a)  throws
 									InvalidValueException {
@@ -201,10 +222,12 @@ public class LinkVisualizer{
 		color.setAlpha(a);
     }
 
-
-	/**   Get the color of the link in the Bridges Visualization
-	 *    @return the string reprsenting the color of the Element in the 
-     *    Bridges Visualization
+	/**   
+	 *
+	 *	Get the color of the link in the Bridges Visualization
+	 *
+	 *	@return the Color object representing the color of the link
+	 *
 	 */
 	public Color getColor() {
 		return color;
@@ -224,8 +247,11 @@ public class LinkVisualizer{
 	}
 
 	/** 
+	 *
 	 * 	Get the opacity of the link in the Bridges Visualization
+	 *
 	 * 	@return the opacity value (in the range 0.0-1.0
+	 *
 	 */
 	public float getOpacity() {
 		return (color.getAlpha());
@@ -234,8 +260,6 @@ public class LinkVisualizer{
 	public String getLinkProperties() {
 		String link_props = 
 			QUOTE + "color" + QUOTE + COLON + 
-// TEMP
-//			QUOTE + "cyan" + QUOTE + COMMA +
 				OPEN_BOX + 
 					Integer.toString(this.getColor().getRed()) + COMMA +
 					Integer.toString(this.getColor().getGreen()) + COMMA +

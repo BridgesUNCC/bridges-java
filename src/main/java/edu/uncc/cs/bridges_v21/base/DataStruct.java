@@ -8,7 +8,8 @@ package bridges.base;
  *	The Bridging Real-world Infrastructure Designed to Goal-align, Engage, and 
  * 	Stimulate (BRIDGES) project is directed at improving the retention of sophomore 
  *	students in Computer Science by (1) introducing real-world datasets (Facebook, 
- *	Twitter, etc) into course projects involving computer science data structures, 
+ *	Twitter, IMDB (Actor/Movie), Earthquake, Stock Charts, etc) into course projects 
+ *	involving computer science data structures, 
  *	and (2) facilitating peer mentoring of sophomores by senior CS students in 
  *	shared lab experiences that involve the use of the BRIDGES infrastructure in 
  *	software development.
@@ -28,12 +29,13 @@ package bridges.base;
  *	meaningful error messages to the user in case problems are encountered in the process.
  *	\section api_sec API Descriptions.
  *	See the accompanying pages for detailed description of the BRIDGES classes
- *	\subsection sponsor_sec Sponsorship/Funding.
- * 	BRIDGES is an NSF TUES Project.
+ *	\section sponsor_sec Sponsorship/Funding.
+ * 	BRIDGES is funded by the National Science Foundation (an NSF TUES Project).
  *
  *	\section contacts_sec Contacts: 
  *	"Kalpathi Subramanian, krs@uncc.edu, Jamie Payton, payton@uncc.edu, 
- *	Michael Youngblood, gmyoungblood@gmail.com, Robert Kosara, rkosara@tableau.com"
+ *	Michael Youngblood, gmyoungblood@gmail.com, Robert Kosara, rkosara@tableau.com,
+ *	Paula Goolkasian, pagoolka@uncc.edu"
 
  *	Department of Computer Science, The University of North Carolina at Charlotte, 
  *	Charlotte, NC.

@@ -9,32 +9,32 @@ import java.util.HashMap;
  * @brief This is the main superclass in BRIDGES for  deriving a number of
  * 	objects used  in building arrays, lists, trees and graph data structures.
 
- * DLelement, CircSLelement, CircDLelement, TreeElement, BinTreeElement, 
- *	BSTElement, AVLTreeElement are all subclasses. Element contains 
+ *  SLelement, DLelement, CircSLelement, CircDLelement, TreeElement, BinTreeElement, 
+ *	BSTElement, CircSLelement, CircDLelement, AVLTreeElement are all subclasses
+ *  (see class hierarchy above).  Element contains  two 
  *	visualizer objects (ElementVisualizer, LinkVisualizer) for specifying
- *	visual attributes. It also contains a label that is used in the 
- *	visualization.
+ *	visual attributes for nodes and links respectively. It also contains a label that 
+ *	that can be displayed in BRIDGES visualizations.
+ *
+ *  All the tutorials under 
+ *
+ *	http://bridgesuncc.github.io/Hello_World_Tutorials/Overview.html
+ * 
+ *  illustrate examples of using different types of Element objects and how to 
+ *	manipulate their visual attributes.
  *
  * @author Mihai Mehedint, Kalpathi Subramanian
  *
- * @param generic <E>
+ * @param generic <E>  Elements are defined with an application specific  generic 
+ *	parameter, that is defined by the user. These can be any legal Java type
+ *	and manipulated using setValue()/getValue() methods. 
+ *	For more information on Java generics, see 
+ *	for example, https://docs.oracle.com/javase/tutorial/java/generics/types.html
+ *
  */
 
 public class Element<E> extends DataStruct{
 	
-/*
-	private String
-			QUOTE = "\"",
-			COMMA = ",",
-			COLON = ":",
-			OPEN_CURLY = "{", 
-			CLOSE_CURLY = "}", 
-			OPEN_PAREN = "(",
-			CLOSE_PAREN = ")",
-			OPEN_BOX = "[",
-			CLOSE_BOX = "]";
-*/
-
 	static 	Integer ids = 0;
 	private String label;
 	private String identifier;
@@ -82,7 +82,8 @@ public class Element<E> extends DataStruct{
 	
 	/**
 	 * the constructor of Element
-	 * @param val will be used to construct Element
+	 *
+	 * @param val generic parameter value used to construct Element
 	 */
 	public Element (E val){
 		this();	
@@ -96,7 +97,7 @@ public class Element<E> extends DataStruct{
 	/**
 	 * the constructor of Element
 	 * @param label the string that is visible on the Bridges Visualization
-	 * @param val will be used to construct Element
+	 * @param val generic parameter value used to construct Element
 	 */
 	public Element (String label, E val){
 		this(val);
@@ -105,6 +106,7 @@ public class Element<E> extends DataStruct{
 
 	/**
 	 * performing deep copy of an element when needed
+	 *
 	 * @param original the Element that is to be copied
 	 */
 	public Element (Element<E> original){
@@ -126,7 +128,8 @@ public class Element<E> extends DataStruct{
 	
 	/**
 	 * Returns the Element's visualizer object
-	 * @return the visualizer
+	 *
+	 * @return the visualizer object
 	 */
 	public ElementVisualizer getVisualizer(){
 		return visualizer;
@@ -135,6 +138,7 @@ public class Element<E> extends DataStruct{
 	/**
 	 * This method sets the visualizer object for the current 
 	 * element object
+	 *
 	 * @param visualizer the visualizer to set
 	 */
 	public void setVisualizer(ElementVisualizer visualizer) {
@@ -143,8 +147,14 @@ public class Element<E> extends DataStruct{
 
 	/**
 	 * Returns the Element's link visualizer object 
-     * that is linked to element el
+	 *
+     * The link visualizer object links this element to another element, which
+	 * is specified by the argument to this method. This method is typically used
+	 * to set the visual attributes of the links, such as in graphs or binary tree
+	 * structures.
+	 *
 	 * @parm Element el -- the element terminating the link 
+	 *
 	 * @return the link visualizer
 	 */
 	public LinkVisualizer getLinkVisualizer(Element<E> el){
@@ -165,7 +175,7 @@ public class Element<E> extends DataStruct{
 		try{
 			if (value == null){
 				throw new NullPointerException(
-				"\nInvalid value set to SLelement<E> '" + value + "'. Expected"
+				"\nInvalid value set to Element<E> '" + value + "'. Expected"
 						+ " non null E value.\n");
 			} else if (value.getClass().getCanonicalName().isEmpty()){
 				throw new IllegalArgumentException(
@@ -254,15 +264,16 @@ public class Element<E> extends DataStruct{
 					CLOSE_BOX;
 
 			if (getDataStructType().equals("BinarySearchTree")) {
+				BSTElement bst = (BSTElement) this;
 				json_str += COMMA +  
 					QUOTE + "key" + QUOTE + COLON + 
-						QUOTE + visualizer.getKey() +  QUOTE + COMMA;
+						QUOTE + bst.getKey().toString() +  QUOTE + COMMA;
 			}
 			else if (getDataStructType().equals("AVLTree")){
 				AVLTreeElement avl = (AVLTreeElement) this;
 				json_str += COMMA +  
 					QUOTE + "key" + QUOTE + COLON + 
-						QUOTE + visualizer.getKey() +  QUOTE + COMMA +
+						QUOTE + avl.getKey().toString() +  QUOTE + COMMA +
 					QUOTE + "height" + QUOTE + COLON +
 						Integer.toString(avl.getHeight()) + COMMA +
 					QUOTE + "balance_factor" + QUOTE + COLON +	
@@ -291,7 +302,9 @@ public class Element<E> extends DataStruct{
 
 	/**
 	 * This method returns the existing value of the label fields
-	 * @return the label of the Element that shows up on the Bridges Visualization
+	 *
+	 * @return the label of the Element; the label is typically displayed on BRIDGES
+	 *			visualizations.
 	 */
 	public String getLabel() {
 		return label;
@@ -299,6 +312,7 @@ public class Element<E> extends DataStruct{
 
 	/**
 	 * This method sets the label
+	 *
 	 * @param label the label to set
 	 */
 	public void setLabel(String label) {
@@ -307,16 +321,22 @@ public class Element<E> extends DataStruct{
 	
 	/**
 	 * This method formats the label string using a predefine pattern (DIVIDE_KEY) and 
-	 * replaces the pattern with the string characters hold by the INSERT_STRING global variable
-	 * @param label
-	 * @param wordNumber in very long strings in the case where the whitespace \\s is chosen as a key the wordNumber can be set 
-	 * to replace the whitespace with a newline character \\n at a given number of words (every second or third word)
-	 * The default value is 0. In most situations we want to replace all patterns found.
-	 * for more complex patterns the key must be changed like so "((John) (.+?))" returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
-	 * (\\w) matches any word
-	 * (\\s) one white space (\\s*) zero or more white spaces, (\\s+) one or more 
+	 * replaces the pattern with the string characters hold by the INSERT_STRING global 
+	 *	variable
+	 *
+	 * @param label  the input label string
+	 *
+	 * @param wordNumber in very long strings in the case where the whitespace 
+	 *	\\s is chosen as a key the wordNumber can be set 
+	 * 	to replace the whitespace with a newline character \\n at a given number of 
+	 *	words (every second or third word)
+	 * 	The default value is 0. In most situations we want to replace all patterns found.
+	 *	for more complex patterns the key must be changed like so "((John) (.+?))" 
+	 *	returns "John firstWordAfterJohn": John writes, John doe, John eats etc.
+	 * (\\w) matches any word (\\s) one white space (\\s*) zero or more white spaces, 
+	 *	(\\s+) one or more 
 	 * 
-	 * @return
+	 * @return  the formatted label
 	 */
 	public String arrangeLabel(String label, int wordNumber){
 		final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
@@ -342,9 +362,9 @@ public class Element<E> extends DataStruct{
 		}
 	}
 	
-	
 	/**
-	 * this method returns the value E for the current Element
+	 * This method returns the generic parameter value held in the element. 
+	 *
 	 * @return the value
 	 */
 	public E getValue() {
@@ -352,7 +372,8 @@ public class Element<E> extends DataStruct{
 	}
 
 	/**
-	 * This method sets the value field to the E argument value
+	 * This method sets the generic parameter value for  this element.
+	 *
 	 * @param value the value to set
 	 */
 	public void setValue(E value) {
