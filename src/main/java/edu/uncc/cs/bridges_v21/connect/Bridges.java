@@ -349,6 +349,7 @@ public class Bridges <K, E> {
 	public void setDataStructure(DataStruct ds) {
 //		SLelement<E> head = ds;
 		String vis_type =  ((SLelement<E>) ds).getDataStructType();
+		String vis_type =   ds.getDataStructType();
 		System.out.println("Matched.." + ((SLelement<E>) ds).getDataStructType());
 		visualizer.setVisualizerType( ((SLelement<E>) ds).getDataStructType() );
 		root = (Element<E>) ds;

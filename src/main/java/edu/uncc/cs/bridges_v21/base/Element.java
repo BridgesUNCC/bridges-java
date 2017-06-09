@@ -166,6 +166,16 @@ public class Element<E> extends DataStruct{
 	}
 
 	/**
+	 *	Sets the link from this element to a new incoming element
+	 *
+	 *	@param el the element to be linked to.
+	 *
+	 */
+	protected void setLinkVisualizer(Element<E> el) {
+		lvisualizer.put(el.getIdentifier(), new LinkVisualizer() ); 
+	}
+						
+	/**
 	 * Validates the Element's value when the Element is created
 	 * A non null value is expected 
 	 * this will be unnecessary after we modify the server
@@ -233,7 +243,7 @@ public class Element<E> extends DataStruct{
 	 * }
 	 * @returns the encoded JSON string
 	 */
-	public String getRepresentation(){
+	public String getElementRepresentation(){
 
 								// first get all the attributes common to all 
 								// elements; assumes location is a fundamental 
@@ -283,21 +293,59 @@ public class Element<E> extends DataStruct{
 			else json_str += CLOSE_CURLY;
 
 		return json_str;
-/*
-		for (Entry<String, String> entry : visualizer.properties.entrySet()) {
-			if (entry.getKey() == "locationX")
-				locx = entry.getValue();
-			else if (entry.getKey() == "locationY")
-				locy = entry.getValue();
-			else
-				json += String.format("\"%s\": \"%s\", ", entry.getKey(), 
-									entry.getValue());
+	}
+	/**
+	 *	Generate string representing the data structure of a list
+	 *
+	 *	@param nodes   the list of nodes in the list
+	 *
+	 */
+	public static String generateListJSON(Vector<E> nodes) {
+
+		HashMap<Element<E>, Integer> node_map;
+		StringBuilder nodes_JSON = new StringBuilder, 
+					  links_JSON = new StringBuilder; 
+
+						// create the nodes JSON string
+		for (int k = 0; k < nodes.size(); k++) {
+			node_map.put(nodes.get(k), k);
+			nodes_JSON.append(nodes.get(k).getElementRepresentation() + COMMA);
 		}
-							// add in the location attribute as an array
-		json += String.format("\"location\": [ %s , %s ], ", locx, locy);
-		json += String.format("\"name\": \"%s\"", label);
-		return json + "}";
-*/
+						// remove the last comma
+		nodes_JSON.setLength(nodes_JSON.length()-1);
+
+						// now create the links JSON string
+
+						// iterate over the node map entries - these are the parent nodes
+		for (Entry<Element<E>, Integer> pmap_entry : node_map.entrySet()) {
+			Element<E> parent = pmap_entry.getKey();
+						// iterate over the link vis entries - these are the child nodes
+			for (Entry<Element<E>, LinkVisualizer> cmap_entry : parent.lvisualizer.entrySet()) {
+						// find the child corresponding the parent
+				Element<E> child = cmap_entry.getKey();
+				if (node_map.get(child != null) {
+					links_JSON.append(getLinkRepresentation(node_map.get(cmap_entry.getValue()
+							parent.getIdentifier(), child.getIdentifier()) + COMMA;
+				}
+			}
+		}
+						// remove the last comma
+		links_JSON.setLength(nodes_JSON.length()-1);
+	}
+
+	/**
+	 *
+	 *	Get  the link visualizer representation, iterating through
+	 *	the link properties
+	 *
+	 */
+	public static String getLinkRepresentation(LinkVisualizer lv, String src, String dest) {
+
+		return	OPEN_CURLY + 
+					lv.getLinkProperties() + COMMA +
+					QUOTE + "source"    + QUOTE + COLON + src  + COMMA +
+					QUOTE + "target"    + QUOTE + COLON + dest +
+				CLOSE_CURLY;
 	}
 
 	/**
@@ -380,6 +428,7 @@ public class Element<E> extends DataStruct{
 		validateVal(value);
 		this.value = value;
 	}
+
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

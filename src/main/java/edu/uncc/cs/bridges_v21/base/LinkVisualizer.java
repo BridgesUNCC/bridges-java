@@ -268,7 +268,7 @@ public class LinkVisualizer{
 				CLOSE_BOX + COMMA + 
 			QUOTE + "thickness" + QUOTE + COLON + 
 				Double.toString(this.getThickness()) + COMMA +
-			QUOTE + "name" + QUOTE + COLON + 
+			QUOTE + "weight" + QUOTE + COLON + 
 				Double.toString(this.getWeight());
 			
 

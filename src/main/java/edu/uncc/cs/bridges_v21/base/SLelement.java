@@ -69,6 +69,7 @@ public class SLelement<E> extends Element<E> {
 	public SLelement (E e, SLelement<E> next) {
 		super(e);
 		this.setNext(next);
+		this.setLinkVisualizer(next);
 	}
 
 	/**
@@ -91,6 +92,7 @@ public class SLelement<E> extends Element<E> {
 	 */
 	public SLelement (SLelement<E> next) {
 		this.setNext(next);
+		this.setLinkVisualizer(next);
 	}
 	
 /*
@@ -128,6 +130,7 @@ public class SLelement<E> extends Element<E> {
 	 */
 	public void setNext(SLelement<E> next) {
 		this.next = next;
+		this.setLinkVisualizer(next);
 	}
 	
 	/* (non-Javadoc)
@@ -143,5 +146,29 @@ public class SLelement<E> extends Element<E> {
 				+ ", getLabel()=" + getLabel() + ", getValue()=" + getValue()
 				+ ", toString()=" + super.toString() + ", getClass()="
 				+ getClass() + ", hashCode()=" + hashCode() + "]";
+	}
+
+	/*
+	 *	Get the JSON representation of the the data structure
+	 */
+	public static String getDataStructureRepresentation() {
+		Vector<Element<E> > nodes;
+		getListElements(nodes);
+				// generate the JSON of the list
+		generateListJSON (nodes);
+	}
+
+	/*
+	 *	Get the elements of the list
+	 *
+	 *	@param nodes  a vector of the ndoes in the list
+	 *
+	 */
+	protected void getListElements(Vector<E> nodes) {
+		Element<E> el = this;
+					// try to handld all lists in subclasses, except multilists
+		nodes.clear();
+		whil (el != null && el.next != el)
+			nodes.add(el);
 	}
 }
