@@ -346,6 +346,13 @@ public class Bridges <K, E> {
 	 * @param Array<E>   The array of elements, Array<E>
 	 *
 	 */
+	public void setDataStructure(DataStruct ds) {
+//		SLelement<E> head = ds;
+		String vis_type =  ((SLelement<E>) ds).getDataStructType();
+		System.out.println("Matched.." + ((SLelement<E>) ds).getDataStructType());
+		visualizer.setVisualizerType( ((SLelement<E>) ds).getDataStructType() );
+		root = (Element<E>) ds;
+	}
 	public void setDataStructure(Array<E>  arr) {
 		br_array = arr;	
 		int num_dims = br_array.getNumDimensions();
@@ -360,10 +367,11 @@ public class Bridges <K, E> {
 	 * @param head  first element of the list
 	 *
 	 */
-	public void setDataStructure(SLelement<E> head) {
-		root = head;
-		visualizer.setVisualizerType("SinglyLinkedList");
-	}
+//	public void setDataStructure(SLelement<E> head) {
+//		System.out.println("Matched.." + head.getDataStructType());
+//		root = head;
+//		visualizer.setVisualizerType("SinglyLinkedList");
+//	}
 	
 	/**
 	 * This method sets the first element of the multi list
