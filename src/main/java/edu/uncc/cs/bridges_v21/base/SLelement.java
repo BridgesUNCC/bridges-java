@@ -1,5 +1,6 @@
 package bridges.base;
 
+import java.util.Vector;
 /**
  * 	@brief This class can be used to instantiate Singly Linked Elements.
 
@@ -142,7 +143,7 @@ public class SLelement<E> extends Element<E> {
 				+ ", getIdentifier()=" + getIdentifier() + ", getVisualizer()="
 				+ getVisualizer()
 				+ ", getClassName()=" + getClassName()
-				+ ", getRepresentation()=" + getRepresentation()
+				+ ", getElementRepresentation()=" + getElementRepresentation()
 				+ ", getLabel()=" + getLabel() + ", getValue()=" + getValue()
 				+ ", toString()=" + super.toString() + ", getClass()="
 				+ getClass() + ", hashCode()=" + hashCode() + "]";
@@ -151,11 +152,11 @@ public class SLelement<E> extends Element<E> {
 	/*
 	 *	Get the JSON representation of the the data structure
 	 */
-	public static String getDataStructureRepresentation() {
-		Vector<Element<E> > nodes;
+	public String[] getDataStructureRepresentation() {
+		Vector<Element<E> > nodes = new Vector<Element<E>> ();
 		getListElements(nodes);
 				// generate the JSON of the list
-		generateListJSON (nodes);
+		return generateListJSON (nodes);
 	}
 
 	/*
@@ -164,11 +165,13 @@ public class SLelement<E> extends Element<E> {
 	 *	@param nodes  a vector of the ndoes in the list
 	 *
 	 */
-	protected void getListElements(Vector<E> nodes) {
-		Element<E> el = this;
+	protected void getListElements(Vector<Element<E>> nodes) {
+		SLelement<E> el = this;
 					// try to handld all lists in subclasses, except multilists
 		nodes.clear();
-		whil (el != null && el.next != el)
+		while (el != null && el.getNext() != el) {
 			nodes.add(el);
+			el = el.getNext();
+		}
 	}
 }

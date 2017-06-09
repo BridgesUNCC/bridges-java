@@ -58,8 +58,23 @@ public class Bridges <K, E> {
 	private static int assignment_part;
 	private static String key;
 	private static DataFormatter df;
-	private static String userName;
+	private static String userName, vis_type;
 
+	private static DataStruct ds_handle = null;		// data structure handle
+
+	//  string constants  for use in constructing JSON
+    //  representation of the data structure
+
+	private String
+			QUOTE = "\"",
+			COMMA = ",",
+			COLON = ":",
+			OPEN_CURLY = "{",
+			CLOSE_CURLY = "}",
+			OPEN_PAREN = "(",
+			CLOSE_PAREN = ")",
+			OPEN_BOX = "[",
+			CLOSE_BOX = "]";
 	/**
 	 *
 	 *	Constructors
@@ -347,13 +362,15 @@ public class Bridges <K, E> {
 	 *
 	 */
 	public void setDataStructure(DataStruct ds) {
+		ds_handle = ds;
+		vis_type =   ds.getDataStructType();
 //		SLelement<E> head = ds;
-		String vis_type =  ((SLelement<E>) ds).getDataStructType();
-		String vis_type =   ds.getDataStructType();
-		System.out.println("Matched.." + ((SLelement<E>) ds).getDataStructType());
-		visualizer.setVisualizerType( ((SLelement<E>) ds).getDataStructType() );
-		root = (Element<E>) ds;
+//		String vis_type =  ((SLelement<E>) ds).getDataStructType();
+//		System.out.println("Matched.." + ((SLelement<E>) ds).getDataStructType());
+//		visualizer.setVisualizerType( ((SLelement<E>) ds).getDataStructType() );
+//		root = (Element<E>) ds;
 	}
+/*
 	public void setDataStructure(Array<E>  arr) {
 		br_array = arr;	
 		int num_dims = br_array.getNumDimensions();
@@ -361,6 +378,7 @@ public class Bridges <K, E> {
 			visualizer.setVisualizerType ("Array");
 		else throw  new InvalidValueException("Invalid number of dimensions. Only 1D, 2D  and 3D arrays supported at this time");
 	}
+*/
 	
 	/**
 	 * This method sets the first element of the singly linked list
@@ -380,32 +398,38 @@ public class Bridges <K, E> {
 	 * @param head  first element of the multi-list
 	 *
 	 */
+/*
 	public void setDataStructure(MLelement<E> head) {
 		root = head;
 		visualizer.setVisualizerType("MultiList");
 	}
 	
+*/
 	/**
 	 * This method sets the first element of the doubly linked list
 	 *
 	 * @param head - first element of the  list  
 	 *
 	 */
+/*
 	public void setDataStructure(DLelement<E> head){ 
 		root = head;
 		visualizer.setVisualizerType("DoublyLinkedList");
 	}
 
+*/
 	/**
 	 * This method sets the first element of the singly linked circular list
 	 *
 	 * @param head - first element of  the circular singly linked list
 	 *
 	 */
+/*
 	public void setDataStructure(CircSLelement<E> head) {
 		root = head;
 		visualizer.setVisualizerType("CircularSinglyLinkedList");
 	}
+*/
 	
 	/**
 	 * This method sets the first element of the doubly linked circular list
@@ -413,10 +437,12 @@ public class Bridges <K, E> {
 	 * @param head - first element of  the circular doubly linked list
 	 *
 	 */
+/*
 	public void setDataStructure(CircDLelement<E> head) {
 		root = head;
 		visualizer.setVisualizerType("CircularDoublyLinkedList");
 	}
+*/
 	
 	/**
 	 * 	This method sets the root of a general  tree (can have 
@@ -425,20 +451,24 @@ public class Bridges <K, E> {
 	 * 	@param tree_root The root of the generalized tree
 	 *
 	 */
+/*
 	public void setDataStructure(TreeElement<E> tree_root){
 		root = tree_root;
 		visualizer.setVisualizerType("Tree");
 	}
+*/
 	/**
 	 * This method sets the root of the binary  tree
 	 * data structure. 
 	 *
 	 * @param tree_root The root of the binary tree
 	 */
+/*
 	public void setDataStructure(BinTreeElement<E> tree_root){
 		root = tree_root;
 		visualizer.setVisualizerType("BinaryTree");
 	}
+*/
 	
 	/**
 	 * This method sets the root of the binary search tree
@@ -446,10 +476,12 @@ public class Bridges <K, E> {
 	 *
 	 * @param tree_root - The root of the binary search tree 
 	 */
+/*
 	public void setDataStructure(BSTElement<K, E> tree_root){
 		root = tree_root;
 		visualizer.setVisualizerType("BinarySearchTree");
 	}
+*/
 	
 	/**
 	 * This method sets the root of an AVL tree
@@ -457,31 +489,37 @@ public class Bridges <K, E> {
 	 *
 	 * @param tree_root The root of the AVL tree
 	 */
+/*
 	public void setDataStructure(AVLTreeElement<K, E> tree_root){
 		root = tree_root;
 		visualizer.setVisualizerType("AVLTree");
 	}
+*/
 	/**
 	 * This method passes the handle to the input graph
 	 * (represented using adjacency lists)
 	 *
 	 * @param graph adjacency list based graph
 	 */
+/*
 	public void setDataStructure(GraphAdjList<K, E> graph){
 		graph_adj_list = graph;
 		visualizer.setVisualizerType("GraphAdjacencyList");
 	}
 
+*/
 	/**
 	 * This method passes the handle to the input graph (represented
 	 * using adjacency matrix)
 	 *
 	 * @param graph adjacency matrix based graph
 	 */
+/*
 	public void setDataStructure(GraphAdjMatrix<K, E> graph){
 		graph_adj_matrix = graph;
 		visualizer.setVisualizerType("GraphAdjacencyMatrix");
 	}
+*/
 	
 	/**
 	 *
@@ -493,7 +531,69 @@ public class Bridges <K, E> {
 	 * @throws NoSuchMethodException 
 	 */
 	public void visualize() {
+System.out.println("In visualize..." + vis_type);
+		switch (vis_type) {
+			case "Array":
+				break;
+			case "SinglyLinkedList":
+			case "DoublyLinkedList":
+			case "CircularSinglyLinkedList":
+			case "CircularDoublyLinkedList":
+				String[] nodes_links = 
+					((SLelement)ds_handle).getDataStructureRepresentation();
+				break;
+			case "MultiList":
+				break;
+			case "Tree":
+			case "BinTree":
+			case "BinarySearchTree":
+			case "AVLTree":
+				break;
+		}
+			
+		String ds_json = 
+			OPEN_CURLY +
+				QUOTE + "version" + QUOTE + COLON + QUOTE + "0.4.0" + QUOTE + COMMA +
+				QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
+                QUOTE + "title"   + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
+                QUOTE + "description" + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA;
+
+
+							// get the nodes and link representations
+		
+//		String nodes_json = new String(), links_json = new String();
+		String[] nodes_links = ((SLelement)ds_handle).getDataStructureRepresentation();
+
+		ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
+							"[" + nodes_links[0] + "]" + COMMA + 
+					QUOTE + "links" + QUOTE + COLON + 
+							"[" + nodes_links[1] + "]" + 
+				CLOSE_CURLY;
+
+System.out.println("JSON String: " + ds_json);
+        try {
+			connector.post("/assignments/" + getAssignment(), ds_json); 
+		} 
+		catch (IOException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. \n"
+					+ e.getMessage());
+		}
+		catch (RateLimitException e) {
+			System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. "
+					+ e.getMessage());
+		} 
+								// Return a URL to the user
+		System.out.println("\nCheck Your Visualization at \n\n" +
+			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
+						+ userName + "\n\n");
+
+	}
+/*
 		switch (visualizer.getVisualizerType()) {
+			case "SinglyLinkedList":
 			case "Array":
 				visualizeArrayObj();
 				break;
@@ -523,6 +623,7 @@ public class Bridges <K, E> {
 				visualizeGraphAdjacencyMatrix();
 				break;
 		}
+*/
 /*
 		try {
 			java.lang.reflect.Method method = this.getClass().getDeclaredMethod((ADT_UPDATE.get(visualizer.getVisualizerType())));
@@ -552,8 +653,8 @@ public class Bridges <K, E> {
 			System.err.println("Please check the error stack below.");
 			e.printStackTrace();
 		}
-*/
 	}
+*/
 
 	/**
 	 *

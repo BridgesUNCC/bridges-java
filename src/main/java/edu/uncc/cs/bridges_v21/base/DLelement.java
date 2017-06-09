@@ -66,6 +66,8 @@ public class DLelement<E> extends SLelement<E>{
 		super();
 		this.next = next;
 		this.prev = prev;
+		this.setLinkVisualizer(next);
+		this.setLinkVisualizer(prev);
 	}
 
 	/** 
@@ -83,6 +85,8 @@ public class DLelement<E> extends SLelement<E>{
 		super(e);
 		this.next = next;
 		this.prev = prev;
+		this.setLinkVisualizer(next);
+		this.setLinkVisualizer(prev);
 	}
 	
 	/**

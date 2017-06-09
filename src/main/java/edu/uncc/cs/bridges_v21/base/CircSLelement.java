@@ -128,7 +128,7 @@ public class CircSLelement<E> extends SLelement<E> {
 				+ ", getIdentifier()=" + getIdentifier() + ", getVisualizer()="
 				+ getVisualizer()
 				+ ", getClassName()=" + getClassName()
-				+ ", getRepresentation()=" + getRepresentation()
+				+ ", getElementRepresentation()=" + getElementRepresentation()
 				+ ", getLabel()=" + getLabel() + ", getValue()=" + getValue()
 				+ ", toString()=" + super.toString() + ", getClass()="
 				+ getClass() + ", hashCode()=" + hashCode() + "]";

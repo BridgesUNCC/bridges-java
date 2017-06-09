@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * @brief This is the main superclass in BRIDGES for  deriving a number of
@@ -39,7 +40,7 @@ public class Element<E> extends DataStruct{
 	private String label;
 	private String identifier;
 	private ElementVisualizer visualizer;
-	private HashMap<String, LinkVisualizer>  lvisualizer;
+	private HashMap<Element<E>, LinkVisualizer>  lvisualizer;
 	private E value;
 					//	this is the number of pattern matches where the new string 
 					// 	can be inserted; useful in case we insert line breaks at a 
@@ -61,7 +62,7 @@ public class Element<E> extends DataStruct{
 	//public String INSERT_STRING = "\\n";
 	//public String DIVIDE_KEY ="(\n)";  
 	
-	protected String getDataStructType() {
+	public String getDataStructType() {
 		return "Element";
 	}
 	
@@ -77,7 +78,7 @@ public class Element<E> extends DataStruct{
 		this.label = "";
 		ids++;
 		this.setVisualizer(new ElementVisualizer());
-		this.lvisualizer  = new HashMap<String, LinkVisualizer>();
+		this.lvisualizer  = new HashMap<Element<E>, LinkVisualizer>();
 	}
 	
 	/**
@@ -114,7 +115,7 @@ public class Element<E> extends DataStruct{
 		ids++;
 		this.label = new String(original.getLabel());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
-		this.lvisualizer  = new HashMap<String, LinkVisualizer> ();
+		this.lvisualizer  = new HashMap<Element<E>, LinkVisualizer> ();
 		this.setValue(original.getValue());
 	}
 
@@ -160,9 +161,10 @@ public class Element<E> extends DataStruct{
 	public LinkVisualizer getLinkVisualizer(Element<E> el){
 						// if this is the first time, must create the
 						// link visualizer
-		if (lvisualizer.get(el.getIdentifier()) == null)
-			lvisualizer.put(el.getIdentifier(), new LinkVisualizer() ); 
-		return lvisualizer.get(el.getIdentifier());
+		if (lvisualizer.get(el) == null)
+			lvisualizer.put(el, new LinkVisualizer() ); 
+
+		return lvisualizer.get(el);
 	}
 
 	/**
@@ -172,7 +174,7 @@ public class Element<E> extends DataStruct{
 	 *
 	 */
 	protected void setLinkVisualizer(Element<E> el) {
-		lvisualizer.put(el.getIdentifier(), new LinkVisualizer() ); 
+		lvisualizer.put(el, new LinkVisualizer() ); 
 	}
 						
 	/**
@@ -300,16 +302,17 @@ public class Element<E> extends DataStruct{
 	 *	@param nodes   the list of nodes in the list
 	 *
 	 */
-	public static String generateListJSON(Vector<E> nodes) {
+	public String[] generateListJSON(Vector<Element<E>> nodes) {
 
-		HashMap<Element<E>, Integer> node_map;
-		StringBuilder nodes_JSON = new StringBuilder, 
-					  links_JSON = new StringBuilder; 
+		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
+		StringBuilder nodes_JSON = new StringBuilder(), 
+					  links_JSON = new StringBuilder(); 
 
 						// create the nodes JSON string
 		for (int k = 0; k < nodes.size(); k++) {
 			node_map.put(nodes.get(k), k);
-			nodes_JSON.append(nodes.get(k).getElementRepresentation() + COMMA);
+			nodes_JSON.append(nodes.get(k).getElementRepresentation());
+			nodes_JSON.append(COMMA);
 		}
 						// remove the last comma
 		nodes_JSON.setLength(nodes_JSON.length()-1);
@@ -320,17 +323,31 @@ public class Element<E> extends DataStruct{
 		for (Entry<Element<E>, Integer> pmap_entry : node_map.entrySet()) {
 			Element<E> parent = pmap_entry.getKey();
 						// iterate over the link vis entries - these are the child nodes
-			for (Entry<Element<E>, LinkVisualizer> cmap_entry : parent.lvisualizer.entrySet()) {
+			for (Entry<Element<E>, LinkVisualizer> 
+					cmap_entry : parent.lvisualizer.entrySet()) {
 						// find the child corresponding the parent
 				Element<E> child = cmap_entry.getKey();
-				if (node_map.get(child != null) {
-					links_JSON.append(getLinkRepresentation(node_map.get(cmap_entry.getValue()
-							parent.getIdentifier(), child.getIdentifier()) + COMMA;
+				if (node_map.get(child) != null) {
+					links_JSON.append(getLinkRepresentation(
+							cmap_entry.getValue(),
+							Integer.toString(node_map.get(parent)), 
+							Integer.toString(node_map.get(child))) );
+					links_JSON.append(COMMA);
 				}
 			}
 		}
 						// remove the last comma
-		links_JSON.setLength(nodes_JSON.length()-1);
+		links_JSON.setLength(links_JSON.length()-1);
+
+		String nodes_str = nodes_JSON.toString();
+		String links_str = links_JSON.toString();
+
+System.out.println (nodes_str + links_str);
+		String[] nodes_links = new String[2];
+		nodes_links[0] = nodes_str;
+		nodes_links[1] = links_str;
+
+		return nodes_links;
 	}
 
 	/**
@@ -339,7 +356,7 @@ public class Element<E> extends DataStruct{
 	 *	the link properties
 	 *
 	 */
-	public static String getLinkRepresentation(LinkVisualizer lv, String src, String dest) {
+	public String getLinkRepresentation(LinkVisualizer lv, String src, String dest) {
 
 		return	OPEN_CURLY + 
 					lv.getLinkProperties() + COMMA +
@@ -440,7 +457,7 @@ public class Element<E> extends DataStruct{
 				+ ", getIdentifier()=" + getIdentifier() + ", getVisualizer()="
 				+ getVisualizer()
 				+ ", getClassName()=" + getClassName()
-				+ ", getRepresentation()=" + getRepresentation()
+				+ ", getElementRepresentation()=" + getElementRepresentation()
 				+ ", getLabel()=" + getLabel() + ", getValue()=" + getValue()
 				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";

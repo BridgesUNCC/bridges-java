@@ -435,7 +435,7 @@ public class ADTVisualizer<K, E> {
 		int num = root.getNumberOfChildren();
 		if (root != null) {
 									// first get the node representation
-			elem_rep = root.getRepresentation();
+			elem_rep = root.getElementRepresentation();
 									// remove surrounding curly braces
 			t_str = elem_rep.substring(1, elem_rep.length()-1);
 			json_str += t_str;
@@ -496,7 +496,7 @@ public class ADTVisualizer<K, E> {
 		br_array.getDimensions(arrayDims);
 		for (int i = 0; i < br_array.getSize(); i++){
 			if (br_array.getValue(i) != null){
-				nodes_JSON.append(br_array.getValue(i).getRepresentation() + ",");
+				nodes_JSON.append(br_array.getValue(i).getElementRepresentation() + ",");
 			}
 		}
 					// note: there are no links for an array, order is 
@@ -518,7 +518,7 @@ public class ADTVisualizer<K, E> {
 		Validation.validate_ADT_size(size);
 		for (int i = 0; i < size; i++){
 			if (el_array[i] != null){
-				nodes_JSON.append(el_array[i].getRepresentation() + ",");
+				nodes_JSON.append(el_array[i].getElementRepresentation() + ",");
 			}
 			
 		}
@@ -552,7 +552,7 @@ public class ADTVisualizer<K, E> {
 			SLelement<E>  element = nodes.removeFirst();
 			Validation.validate_ADT_size(i);
 			map.put(Integer.parseInt(element.getIdentifier()), i++);
-			nodes_JSON.append(element.getRepresentation() + COMMA);
+			nodes_JSON.append(element.getElementRepresentation() + COMMA);
 		}
 							// get the JSON string for links
 		String str = links_JSON.toString();
@@ -608,7 +608,7 @@ public class ADTVisualizer<K, E> {
 			MLelement<E>  element = nodes.removeFirst();
 			Validation.validate_ADT_size(i);
 			map.put(Integer.parseInt(element.getIdentifier()), i++);
-			nodes_JSON.append(element.getRepresentation() + COMMA);
+			nodes_JSON.append(element.getElementRepresentation() + COMMA);
 		}
 							// get the JSON string for links
 		String str = links_JSON.toString();
@@ -661,7 +661,7 @@ public class ADTVisualizer<K, E> {
 			DLelement<E>  element = nodes.removeFirst();
 			map.put(Integer.parseInt(element.getIdentifier()), i++);
 			Validation.validate_ADT_size(i);
-			nodes_JSON.append(element.getRepresentation() + COMMA);
+			nodes_JSON.append(element.getElementRepresentation() + COMMA);
 		}
 							// get the JSON string for links
 		String str = links_JSON.toString();
@@ -764,7 +764,7 @@ public class ADTVisualizer<K, E> {
 			Element<E>  element = nodes.pop();
 			map.put(Integer.parseInt(element.getIdentifier()), i++);
 			Validation.validate_ADT_size(i);
-			nodes_JSON.append(element.getRepresentation() + ",");
+			nodes_JSON.append(element.getElementRepresentation() + ",");
 		}
 							// get the JSON string for links
 		String str = links_JSON.toString();

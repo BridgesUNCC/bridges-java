@@ -61,6 +61,6 @@ public abstract class DataStruct {
 			OPEN_BOX = "[",
 			CLOSE_BOX = "]";
 
-	protected abstract  String getDataStructType();
+	public  abstract  String getDataStructType();
 };
 
