@@ -532,6 +532,7 @@ public class Bridges <K, E> {
 	 */
 	public void visualize() {
 System.out.println("In visualize..." + vis_type);
+		String[] nodes_links = new String[2];
 		switch (vis_type) {
 			case "Array":
 				break;
@@ -539,10 +540,12 @@ System.out.println("In visualize..." + vis_type);
 			case "DoublyLinkedList":
 			case "CircularSinglyLinkedList":
 			case "CircularDoublyLinkedList":
-				String[] nodes_links = 
+				nodes_links = 
 					((SLelement)ds_handle).getDataStructureRepresentation();
 				break;
 			case "MultiList":
+				nodes_links = 
+					((MLelement)ds_handle).getDataStructureRepresentation();
 				break;
 			case "Tree":
 			case "BinTree":
@@ -562,7 +565,7 @@ System.out.println("In visualize..." + vis_type);
 							// get the nodes and link representations
 		
 //		String nodes_json = new String(), links_json = new String();
-		String[] nodes_links = ((SLelement)ds_handle).getDataStructureRepresentation();
+//		String[] nodes_links = ((SLelement)ds_handle).getDataStructureRepresentation();
 
 		ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
 							"[" + nodes_links[0] + "]" + COMMA + 

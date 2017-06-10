@@ -64,10 +64,8 @@ public class DLelement<E> extends SLelement<E>{
 	 */
 	public DLelement(DLelement<E> next, DLelement<E> prev) {
 		super();
-		this.next = next;
-		this.prev = prev;
-		this.setLinkVisualizer(next);
-		this.setLinkVisualizer(prev);
+		this.setNext(next);
+		this.setPrev(prev);
 	}
 
 	/** 
@@ -83,10 +81,8 @@ public class DLelement<E> extends SLelement<E>{
 	 */
 	public DLelement(E e, DLelement<E> next, DLelement<E> prev) {
 		super(e);
-		this.next = next;
-		this.prev = prev;
-		this.setLinkVisualizer(next);
-		this.setLinkVisualizer(prev);
+		this.setNext(next);
+		this.setPrev(prev);
 	}
 	
 	/**
@@ -113,8 +109,10 @@ public class DLelement<E> extends SLelement<E>{
 	 * @param next the DLelement that should be assigned to the next pointer
 	 *
 	 */
-	public void setNext(DLelement<E> next) {
-		this.next = next;
+	public void setNext(DLelement<E> nxt) {
+		this.next = nxt;
+		if (nxt != null)
+			this.setLinkVisualizer(nxt);
 	}
 	
 
@@ -132,7 +130,9 @@ public class DLelement<E> extends SLelement<E>{
 	 *
 	 * @param prev the DLelement that should be assigned to the prev pointer
 	 */
-	public void setPrev(DLelement<E> prev) {
-		this.prev = prev;
+	public void setPrev(DLelement<E> prv) {
+		this.prev = prv;
+		if (prv != null)
+			this.setLinkVisualizer(prv);
 	}
 }

@@ -41,7 +41,7 @@ public class SLelement<E> extends Element<E> {
 
 	public SLelement() {
 		super();
-		this.next = null;
+		next = null;
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class SLelement<E> extends Element<E> {
 	 */
 	public SLelement (String label, E e){
 		super(label, e);
-		this.next = null;
+		this.setNext(null);
 	}
 	
 	/**
@@ -70,7 +70,6 @@ public class SLelement<E> extends Element<E> {
 	public SLelement (E e, SLelement<E> next) {
 		super(e);
 		this.setNext(next);
-		this.setLinkVisualizer(next);
 	}
 
 	/**
@@ -82,7 +81,7 @@ public class SLelement<E> extends Element<E> {
 	 */
 	public SLelement (E e) {
 		super(e);
-		this.next = null;
+		next = null;
 	}
 
 
@@ -93,7 +92,6 @@ public class SLelement<E> extends Element<E> {
 	 */
 	public SLelement (SLelement<E> next) {
 		this.setNext(next);
-		this.setLinkVisualizer(next);
 	}
 	
 /*
@@ -131,7 +129,8 @@ public class SLelement<E> extends Element<E> {
 	 */
 	public void setNext(SLelement<E> next) {
 		this.next = next;
-		this.setLinkVisualizer(next);
+		if (next != null)
+			this.setLinkVisualizer(next);
 	}
 	
 	/* (non-Javadoc)

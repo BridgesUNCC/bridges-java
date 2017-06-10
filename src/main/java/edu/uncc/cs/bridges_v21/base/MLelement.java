@@ -1,5 +1,6 @@
 package bridges.base;
 
+import java.util.Vector;
 /**
  * 	@brief This class can be used to instantiate Multi-list Elements.
 
@@ -84,8 +85,10 @@ public class MLelement<E> extends SLelement<E> {
 	public MLelement (MLelement<E> sublist, MLelement<E> next) {
 		this.setNext(next);
 		this.sub_list = sublist;
-		if (sublist != null)
+		if (sublist != null) {
 			tag = true;
+			this.setLinkVisualizer(sublist);
+		}
 	}
 
 	/**
@@ -96,8 +99,12 @@ public class MLelement<E> extends SLelement<E> {
 	 */
 	public void setSubList(MLelement<E> sl) {
 		this.sub_list = sl;
-		this.tag = true;
-					// by default, color and shape sublist nodes to distinguish them 
+		if (sl != null) {
+			tag = true;
+			this.setLinkVisualizer(sl);
+		}
+					// by default, color and shape sublist nodes to distinguish them  from 
+					//	remaining nodes
 		this.getVisualizer().setColor("red");
 		this.getVisualizer().setShape("square");
 	}
@@ -131,14 +138,6 @@ public class MLelement<E> extends SLelement<E> {
 		return (MLelement<E>) next;
 	}
 	
-	/**
-	 * Sets the element to point to the next MLelement
-	 *
-	 * @param next SLelement<E> that should be assigned to the next pointer
-	 */
-	public void setNext(MLelement<E> next) {
-		this.next = next;
-	}
 
 	/** 
 	 *
@@ -159,5 +158,36 @@ public class MLelement<E> extends SLelement<E> {
 	 */
 	public boolean getTag() {
 		return tag;
+	}
+
+	/*
+	 *	Get the JSON representation of the the data structure
+	 */
+	public String[] getDataStructureRepresentation() {
+
+		Vector<Element<E> > nodes = new Vector<Element<E>> ();
+		nodes.clear();
+		getListElements(this, nodes);
+				// generate the JSON of the list
+		return generateListJSON (nodes);
+	}
+
+	/*
+	 *	Get the elements of the list
+	 *
+	 *	@param nodes  a vector of the ndoes in the list
+	 *
+	 */
+	protected void getListElements(MLelement<E> list, Vector<Element<E>> nodes) {
+System.out.println("Entered MLelement::getListElements");
+		MLelement<E> el = list;
+					// try to handld all lists in subclasses, except multilists
+		while (el != null) {
+			nodes.add(el);
+			if (el.tag) {
+				getListElements(el.sub_list, nodes);
+			}
+			el = el.getNext();
+		}
 	}
 }
