@@ -168,8 +168,9 @@ public class MLelement<E> extends SLelement<E> {
 		Vector<Element<E> > nodes = new Vector<Element<E>> ();
 		nodes.clear();
 		getListElements(nodes);
+
 				// generate the JSON of the list
-		return generateListJSON (nodes);
+		return  super.getDataStructureRepresentation();
 	}
 
 	/*

@@ -306,6 +306,7 @@ public class Element<E> extends DataStruct{
 	 *	@param nodes   the list of nodes in the list
 	 *
 	 */
+/*
 	public String[] generateListJSON(Vector<Element<E>> nodes) {
 
 		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
@@ -356,6 +357,7 @@ System.out.println (nodes_str + links_str);
 
 		return nodes_links;
 	}
+*/
 
 	/**
 	 *

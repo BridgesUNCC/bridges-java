@@ -130,15 +130,13 @@ public class SLelement<E> extends Element<E> {
 	 */
 	public void setNext(SLelement<E> next) {
 					// remove any existing link visualizer from this node
-		if (this.next != null) {
-			this.removeLinkVisualizer(this.next);
-			System.out.println("[next]removing "+ this.getLabel() +"-"+this.next.getLabel());
-		}
+//		if (this.next != null) {
+//			this.removeLinkVisualizer(this.next);
+//		}
 
 		this.next = next;
 		if (next != null) {
 			this.setLinkVisualizer(next);
-			System.out.println("[next]adding "+ this.getLabel() +"-"+this.next.getLabel());
 		}
 	}
 	
@@ -181,7 +179,7 @@ public class SLelement<E> extends Element<E> {
 		for (int k = 0; k < nodes.size(); k++) {
 			SLelement<E> par = (SLelement<E>) nodes.get(k); 
 			SLelement<E> chld = par.next;
-			if (chld.next != null) { 		// add the link
+			if (chld != null) { 		// add the link
 				links_JSON.append(getLinkRepresentation(
 						par.getLinkVisualizer(chld),
 						Integer.toString(node_map.get(par)), 

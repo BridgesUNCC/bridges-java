@@ -136,18 +136,15 @@ public class DLelement<E> extends SLelement<E>{
 	 * @param prev the DLelement that should be assigned to the prev pointer
 	 */
 	public void setPrev(DLelement<E> prv) {
-				// first remove any existing link visualizer from this node
-//		if (this.prev != prv && this.next != prv) {
-		if (this.prev != null) {
+				// first remove any existing link visualizer from this node 
+				//	to its next node
+		if (this.prev != null) 
 			this.removeLinkVisualizer(this.prev);
-			System.out.println("[prev]removing "+ this.getLabel() +"-"+this.prev.getLabel());
-		}
 
 		this.prev = prv;
-		if (prv != null) {
-			System.out.println("[prev]adding "+ this.getLabel() +"-"+this.prev.getLabel());
+				// add a new link visualizer
+		if (prv != null) 
 			this.setLinkVisualizer(prv);
-		}
 	}
 	/*
 	 *	Get the JSON representation of the the data structure
