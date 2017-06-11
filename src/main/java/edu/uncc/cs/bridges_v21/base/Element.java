@@ -176,6 +176,10 @@ public class Element<E> extends DataStruct{
 	protected void setLinkVisualizer(Element<E> el) {
 		lvisualizer.put(el, new LinkVisualizer() ); 
 	}
+
+	protected void removeLinkVisualizer(Element<E> el) {
+		lvisualizer.remove(el);
+	}
 						
 	/**
 	 * Validates the Element's value when the Element is created
@@ -322,17 +326,20 @@ public class Element<E> extends DataStruct{
 						// iterate over the node map entries - these are the parent nodes
 		for (Entry<Element<E>, Integer> pmap_entry : node_map.entrySet()) {
 			Element<E> parent = pmap_entry.getKey();
+System.out.println("Processing " + parent.getLabel());
 						// iterate over the link vis entries - these are the child nodes
 			for (Entry<Element<E>, LinkVisualizer> 
 					cmap_entry : parent.lvisualizer.entrySet()) {
 						// find the child corresponding the parent
 				Element<E> child = cmap_entry.getKey();
+System.out.println("\t Child " + child.getLabel());
 				if (node_map.get(child) != null) {
 					links_JSON.append(getLinkRepresentation(
 							cmap_entry.getValue(),
 							Integer.toString(node_map.get(parent)), 
 							Integer.toString(node_map.get(child))) );
 					links_JSON.append(COMMA);
+System.out.println("from " + node_map.get(parent) + "to " + node_map.get(child) );
 				}
 			}
 		}

@@ -55,7 +55,7 @@ public class SLelement<E> extends Element<E> {
 	 */
 	public SLelement (String label, E e){
 		super(label, e);
-		this.setNext(null);
+		next = null;
 	}
 	
 	/**
@@ -128,9 +128,17 @@ public class SLelement<E> extends Element<E> {
 	 * @param next SLelement<E> that should be assigned to the next pointer
 	 */
 	public void setNext(SLelement<E> next) {
+					// remove any existing link visualizer from this node
+		if (this.next != null) {
+			this.removeLinkVisualizer(this.next);
+			System.out.println("removing "+ this.getLabel() +"-"+this.next.getLabel());
+		}
+
 		this.next = next;
-		if (next != null)
+		if (next != null) {
 			this.setLinkVisualizer(next);
+			System.out.println("adding "+ this.getLabel() +"-"+this.next.getLabel());
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -164,13 +172,17 @@ public class SLelement<E> extends Element<E> {
 	 *	@param nodes  a vector of the ndoes in the list
 	 *
 	 */
+static int k = 0;
 	protected void getListElements(Vector<Element<E>> nodes) {
 		SLelement<E> el = this;
 					// try to handld all lists in subclasses, except multilists
 		nodes.clear();
-		while (el != null && el.getNext() != el) {
+		while (el != null) {
 			nodes.add(el);
 			el = el.getNext();
+					// handle circular lists
+			if (el == this)
+				break;
 		}
 	}
 }

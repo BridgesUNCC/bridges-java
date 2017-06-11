@@ -109,11 +109,13 @@ public class DLelement<E> extends SLelement<E>{
 	 * @param next the DLelement that should be assigned to the next pointer
 	 *
 	 */
+/*
 	public void setNext(DLelement<E> nxt) {
 		this.next = nxt;
 		if (nxt != null)
 			this.setLinkVisualizer(nxt);
 	}
+*/
 	
 
 	/**
@@ -131,8 +133,16 @@ public class DLelement<E> extends SLelement<E>{
 	 * @param prev the DLelement that should be assigned to the prev pointer
 	 */
 	public void setPrev(DLelement<E> prv) {
+				// first remove any existing link visualizer from this node
+		if (this.prev != null) {
+			this.removeLinkVisualizer(this.prev);
+			System.out.println("removing "+ this.getLabel() +"-"+this.prev.getLabel());
+		}
+
 		this.prev = prv;
-		if (prv != null)
+		if (prv != null) {
+			System.out.println("adding "+ this.getLabel() +"-"+this.prev.getLabel());
 			this.setLinkVisualizer(prv);
+		}
 	}
 }
