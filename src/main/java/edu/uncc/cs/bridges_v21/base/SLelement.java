@@ -1,6 +1,7 @@
 package bridges.base;
 
 import java.util.Vector;
+import java.util.HashMap;
 /**
  * 	@brief This class can be used to instantiate Singly Linked Elements.
 
@@ -131,13 +132,13 @@ public class SLelement<E> extends Element<E> {
 					// remove any existing link visualizer from this node
 		if (this.next != null) {
 			this.removeLinkVisualizer(this.next);
-			System.out.println("removing "+ this.getLabel() +"-"+this.next.getLabel());
+			System.out.println("[next]removing "+ this.getLabel() +"-"+this.next.getLabel());
 		}
 
 		this.next = next;
 		if (next != null) {
 			this.setLinkVisualizer(next);
-			System.out.println("adding "+ this.getLabel() +"-"+this.next.getLabel());
+			System.out.println("[next]adding "+ this.getLabel() +"-"+this.next.getLabel());
 		}
 	}
 	
@@ -160,10 +161,41 @@ public class SLelement<E> extends Element<E> {
 	 *	Get the JSON representation of the the data structure
 	 */
 	public String[] getDataStructureRepresentation() {
+					// map to reorder the nodes for building JSON
+		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
+					// get teh list nodes
 		Vector<Element<E> > nodes = new Vector<Element<E>> ();
 		getListElements(nodes);
-				// generate the JSON of the list
-		return generateListJSON (nodes);
+
+					// generate the JSON of the list nodes
+		StringBuilder nodes_JSON = new StringBuilder();
+		for (int k = 0; k < nodes.size(); k++) {
+			node_map.put(nodes.get(k), k);
+			nodes_JSON.append(nodes.get(k).getElementRepresentation());
+			nodes_JSON.append(COMMA);
+		}
+					// remove the last comma
+		nodes_JSON.setLength(nodes_JSON.length()-1);
+
+		StringBuilder links_JSON = new StringBuilder();
+		for (int k = 0; k < nodes.size(); k++) {
+			SLelement<E> par = (SLelement<E>) nodes.get(k); 
+			SLelement<E> chld = par.next;
+			if (chld.next != null) { 		// add the link
+				links_JSON.append(getLinkRepresentation(
+						par.getLinkVisualizer(chld),
+						Integer.toString(node_map.get(par)), 
+						Integer.toString(node_map.get(chld))) );
+				links_JSON.append(COMMA);
+			}
+		}
+		links_JSON.setLength(links_JSON.length()-1);
+
+		String[] nodes_links = new String[2];
+		nodes_links[0] = nodes_JSON.toString();
+		nodes_links[1] = links_JSON.toString();
+
+		return nodes_links;
 	}
 
 	/*
@@ -172,14 +204,13 @@ public class SLelement<E> extends Element<E> {
 	 *	@param nodes  a vector of the ndoes in the list
 	 *
 	 */
-static int k = 0;
 	protected void getListElements(Vector<Element<E>> nodes) {
 		SLelement<E> el = this;
 					// try to handld all lists in subclasses, except multilists
 		nodes.clear();
 		while (el != null) {
 			nodes.add(el);
-			el = el.getNext();
+			el = ((SLelement<E>) el).getNext();
 					// handle circular lists
 			if (el == this)
 				break;

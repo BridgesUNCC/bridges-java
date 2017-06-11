@@ -167,7 +167,7 @@ public class MLelement<E> extends SLelement<E> {
 
 		Vector<Element<E> > nodes = new Vector<Element<E>> ();
 		nodes.clear();
-		getListElements(this, nodes);
+		getListElements(nodes);
 				// generate the JSON of the list
 		return generateListJSON (nodes);
 	}
@@ -178,14 +178,17 @@ public class MLelement<E> extends SLelement<E> {
 	 *	@param nodes  a vector of the ndoes in the list
 	 *
 	 */
-	protected void getListElements(MLelement<E> list, Vector<Element<E>> nodes) {
-System.out.println("Entered MLelement::getListElements");
+	protected void getListElements(Vector<Element<E>> nodes) {
+		getListElements_R (this, nodes);
+	}
+
+	void getListElements_R (MLelement<E> list, Vector<Element<E>> nodes) {
 		MLelement<E> el = list;
 					// try to handld all lists in subclasses, except multilists
 		while (el != null) {
 			nodes.add(el);
 			if (el.tag) {
-				getListElements(el.sub_list, nodes);
+				getListElements_R (el.sub_list, nodes);
 			}
 			el = el.getNext();
 		}
