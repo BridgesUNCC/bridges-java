@@ -24,16 +24,18 @@ import bridges.validation.RateLimitException;
 
 
 public class Connector {
-//	String server_url = "http://bridges-clone.herokuapp.com";
-	String server_url = "http://bridges-cs.herokuapp.com";
+	String server_url, server_live = "http://bridges-cs.herokuapp.com";	// default live server
+	String server_dev = "http://bridges-clone.herokuapp.com";	// live dev server
+	String server_local = "http://127.0.0.1:3000"; // localhost server
+
 	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";  //usgs earthquakes url
 	String airline_url = "https://earthquakes-uncc.herokuapp.com/airline"; //corgis airline data
-//	String server_url = "http://127.0.0.1:3000";
+
     Executor http_connection;
     boolean debug = false;
     int pattern_found=0; //semaphor
     protected Connector() {
-    	
+
     	http_connection = Executor.newInstance(
     			HttpClientBuilder
     					.create()
@@ -42,9 +44,9 @@ public class Connector {
     		    );
 //    	System.out.println("hello from connector"+http_connection);
     }
-    
+
     /* Accessors and Mutators */
-    
+
     /**
      * Get the current  base URL for the DataFormatters server (with no ending/)
      * @return
@@ -63,10 +65,31 @@ public class Connector {
 			server_url = server_url.substring(0, server_url.length()-1);
 		if (server_url.length() > 0)
 			this.server_url = server_url;
+		System.out.println(server_url);
 	}
-	
+
 	/**
-	 * This reformats the coordinates in Earthwuake tweet such that there will be 
+	 * Set the current DataFormatters server to live, dev, or local, or throw an error;
+	 * @param server
+	 */
+	public void setServer(String server) throws IllegalArgumentException {
+		switch(server) {
+				case "live":
+					setServerURL(server_live);
+					break;
+				case "dev":
+					setServerURL(server_dev);
+					break;
+				case "local":
+					setServerURL(server_local);
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'dev', 'local'].");
+		}
+	}
+
+	/**
+	 * This reformats the coordinates in Earthwuake tweet such that there will be
 	 * no arrays present when casting to the JSONObject. for  the resons described below
 	 * Mihai
 	 * @param text
@@ -83,32 +106,32 @@ public class Connector {
 		Matcher n = patt2.matcher(text);
 		//n.find();
 		//System.out.println("Whole coord: "+text+" group1 "+n.group(1));
-		
+
 		  //StringBuffer coordBuffer = new StringBuffer(text.length());
-		  	n.find(); 
+		  	n.find();
 		    String coord = new String(n.group(1));
 		    c+=coord+",\"longitude\":";
 		    //System.out.println("group 1: "+ c);
-		    n.find(); 
+		    n.find();
 		    String coord2 = new String(n.group(1));
 		    c+=coord2+",\"depth\":";
 		    //System.out.println("group 2: "+ c);
-		    n.find(); 
+		    n.find();
 		    String coord3 = new String(n.group(1));
 		    c+=coord3+"}";
 //		    System.out.println("group 3 "+ c);
 
 		    //m.appendReplacement(coordBuffer, Matcher.quoteReplacement(coord));
 //		    System.out.println("Formatted coordinates: "+coord);
-		  
+
 		  //m.appendTail(coordBuffer);
 
 		  return c.toString();
 
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Find the pattern of the coordinates (as an array) and replace them with {"lat": value, "long":value}
 	 * This is done since it is difficult to cast an JSONArray to a JSON object containing arrays
@@ -121,19 +144,19 @@ public class Connector {
 		//\\[-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*,-?[0-9]*\\.[0-9]*\\]
 		Pattern patt = Pattern.compile("\\[-?[0-9]*.[0-9]*,.?-?[0-9]*.[0-9]*,.?-?[0-9]*.[0-9]*\\]");
 		  Matcher m = patt.matcher(text);
-		  
+
 		//while (pattern_found!=1){
 			StringBuffer coordBuffer = new StringBuffer(text.length());
 		  pattern_found=1;
 		  int counter=0;
-		  
+
 		  while (m.find()) {
 			  counter++;
 			  pattern_found=0;
 		    String coord = m.group(0);
 		    //System.out.println("Groups first loop 0: "+m.group(0) + " 1: "+m.group(1));
 		    String repl = latlongFormatter(coord);
-		    
+
 //		   System.out.println("Found coordinates: "+coord + " counter: "+counter);
 		    //m.appendReplacement(coordBuffer, Matcher.quoteReplacement("{\"latitude\":115.4466,\"longitude\":37.8432,\"depth\":0.6}"));
 		    m.appendReplacement(coordBuffer, Matcher.quoteReplacement(repl));
@@ -144,11 +167,11 @@ public class Connector {
 //		  System.out.println("The coord buffer:"+coordBuffer.toString());
 
 		  return coordBuffer.toString();
-		
+
 	}
 	/**
 	 * Trimm the end of the earthquake data:     ,"products":{"String":[]}
-	 * 
+	 *
 	 * Important: future implementations could combine the above in one single
 	 * method with a hash table for different patters
 	 * Mihai
@@ -167,9 +190,9 @@ public class Connector {
 		  m.appendTail(coordBuffer);
 		  return coordBuffer.toString();
 	}
-	
+
 	/* JSON management */
-	
+
 	/**
 	 * Decode a String containing JSON into a JSON Object, or throw an error.
 	 * @param text  The input JSON text
@@ -178,7 +201,7 @@ public class Connector {
     public JSONObject asJSONObject(String text) throws IOException {
     	JSONObject jo;
     	//pattern_found=true;
-    	
+
     	//while (pattern_found==0){
     		//if (textlatlongFinder(text))
     		 String a=latlongFinder(text);
@@ -188,25 +211,25 @@ public class Connector {
     		 //System.out.println("c is: " +text);
     	//}
     	//pattern_found=0;
-    	
+
     	//changing the coordinates format
     	//System.out.println(a);
     	//text = a;
     	//String b=trimmLast(a);//trimming the end of Earthquake
     	//text =b;
-    	// System.out.println(text); 
+    	// System.out.println(text);
     	try {
 //    		System.out.println("line 157 connector asJsonObject after http request check JSONobject: "+ JSONValue.parse(text));
 
     		//JSONParser parser = new JSONParser();
-    		
+
     		//Object obj  = parser.parse(text);
     		//System.out.println("Connector line 80 asJSON object parser.parse text: "+obj);
     		//JSONArray array = new JSONArray();
     		//array.add(obj);
     		//System.out.println(array);
     		jo = (JSONObject) JSONValue.parse(text);
-    		
+
     	} catch (ClassCastException e) {
     		throw new IOException("Received a malformed JSON response from the"
     				+ " server (expecting a JSON object): " + text);
@@ -221,7 +244,7 @@ public class Connector {
         }
         return jo;
     }
-    
+
     /**
      * Decode a String containing JSON into a JSON Array, or throw an error.
      * @param text  The JSON Array as a string
@@ -246,7 +269,7 @@ public class Connector {
     	}
     	return ja;
     }
-    
+
     /**
      * Form and throw a helpful error report as part of JSON traversal.
      * @param sequence   The traversal we wanted to make
@@ -272,17 +295,17 @@ public class Connector {
     	System.err.println(original_obj);
 		throw new IOException(report);
     }
-    
+
     /**
      * Traverse JSON in a type-safe manner.
      * This is somewhat complicated, but comes with the advantage that the
      * debugging reports are far clearer when you know the whole path you are
      * searching for.
-     * 
+     *
      * Use this syntax:
      * [ number ] to access an array element,
      * ["quoted string"] to get an object attribute
-     * 
+     *
      * @param sequence
      * @param o
      */
@@ -298,9 +321,9 @@ public class Connector {
     	}
     	// Make sure the input is not null
     	if (original == null)
-    		safeJSONTraverseErrorReport(sequence, 0, original, 
+    		safeJSONTraverseErrorReport(sequence, 0, original,
     				"Input JSON is null.");
-    	
+
     	// The cursor is where we are in `sequence`
     	int cursor = 0;
     	// This holds the object we will be running the next operation on.
@@ -311,7 +334,7 @@ public class Connector {
 		Matcher array_index_m = array_index_p.matcher(sequence.substring(cursor));
 		Pattern object_p = Pattern.compile("\\['([^']+)'\\]");
 		Matcher object_m = object_p.matcher(sequence.substring(cursor));
-		
+
 		// startsWith()..
 		while (cursor < sequence.length()) {
 	    	if (array_index_m.find() && array_index_m.start() == 0) {
@@ -322,19 +345,19 @@ public class Connector {
 	        		ja = (JSONArray) any_json;
 	        	} catch (ClassCastException e) {
 	        		// This is not an array.
-	        		safeJSONTraverseErrorReport(sequence, cursor, original, 
+	        		safeJSONTraverseErrorReport(sequence, cursor, original,
 	        				"Cannot access array element: not an array.");
 	        	}
 	    		if (ja == null) {
 	    			// This array is null
-	    			safeJSONTraverseErrorReport(sequence, cursor, original, 
+	    			safeJSONTraverseErrorReport(sequence, cursor, original,
 	        				"Cannot access array element: array is null.");
 	    		} else {
-		    		try { 
+		    		try {
 		    			any_json = ja.get(index);
 		    		} catch (IndexOutOfBoundsException e) {
 		    			// This array does not have enough elements.
-		        		safeJSONTraverseErrorReport(sequence, cursor, original, 
+		        		safeJSONTraverseErrorReport(sequence, cursor, original,
 		        				"Cannot get element " + index + " from array.");
 		    		}
 	    		}
@@ -347,26 +370,26 @@ public class Connector {
 	        		jo = (JSONObject) any_json;
 	        	} catch (ClassCastException e) {
 	        		// This is not an object.
-	        		safeJSONTraverseErrorReport(sequence, cursor, original, 
+	        		safeJSONTraverseErrorReport(sequence, cursor, original,
 	        				"Cannot get an object attribute: not an object.");
 	        	}
 	    		if (jo == null) {
 	    			// This object is null
-	    			safeJSONTraverseErrorReport(sequence, cursor, original, 
+	    			safeJSONTraverseErrorReport(sequence, cursor, original,
 	        				"Cannot access object attribute: "
 	        				+ "object is null.");
 	    		} else {
 	    			any_json = jo.get(attribute_name);
 		    		if (any_json == null) {
 		    			// The object doesn't have this attribute.
-		        		safeJSONTraverseErrorReport(sequence, cursor, original, 
+		        		safeJSONTraverseErrorReport(sequence, cursor, original,
 		        				"Cannot get attribute "+ attribute_name +
 		        				" from object");
 		    		}
 	    		}
 	    		cursor += object_m.end();
 	    	} else {
-	    		throw new RuntimeException("BUG: Malformed traversal " + 
+	    		throw new RuntimeException("BUG: Malformed traversal " +
 	    				sequence + " passed regex.");
 	    	}
 		}
@@ -388,9 +411,9 @@ public class Connector {
 					" but received a " + any_json.getClass().getSimpleName());
 			// Impossible return to make javac happy:
 			return null;
-		}	
+		}
     }
-    
+
     /**
      * Execute an Apache Fluent Request.
      * Decorates HTTP error tracebacks with urls and server {"error": "..."}
@@ -422,16 +445,16 @@ public class Connector {
             		+ request + "\n");
             throw e;
         }
-            
-//  System.out.println(request);  		
-//	System.out.println(response);  		
+
+//  System.out.println(request);
+//	System.out.println(response);
         /* This is somewhat complicated for getting a string, but:
          *   ...execute(request).returnContent().asString()
          *   	won't give error codes
          *   (String) ...execute(request).returnResponse().getEntity()
          *   	won't cast
          */
-				//	this will output the server error as well as 
+				//	this will output the server error as well as
 				// 	parsed from the error message
         String err = asJSONObject(EntityUtils.toString(
 					response.getEntity())).keySet().toString();
@@ -440,46 +463,46 @@ public class Connector {
         	throw new RateLimitException("Server responds Service Temporarily"
         			+ " Unavailable. You have probably reached your quota."
         			+ " Try again after waiting at least 15 minutes.");
-        } 
+        }
 		else if (response.getStatusLine().getStatusCode() >= 400) {
         	// The request succeeded but the server threw an error
             System.err.println("Server returned error response: HTTP " +
             		response.getStatusLine().getStatusCode() + " while"
     				+ " processing the request " + request);
-          
+
             /* By convention, the server responds {"error": "message"} */
-            
+
             // Parsing it as an object will throw if the server gave an error.
            // asJSONObject(text);
-            
+
             // But otherwise, throw something less helpful.
             throw new IOException("Server errored, but gave an invalid"
             		+ " report: " + text + ". Consider filing a bug report"
     				+ " about this at http://github.com/SeanTater/bridges.");
 		}
-        
+
         // Handle empty responses
         if (text == null || text.isEmpty())
             throw new IOException("Server returned empty response for '"
         			+ request + "'");
         return text;
     }
-    
+
     /** Execute a simple GET request relative to the server root.
         Omit the leading http://hostname, but include the leading /:
         [good]: /api/followgraph/user/sean
         [bad]: api/followgraph/user/sean
         [bad]: http://myserver:9183/api/followgraph/user/sean   NullPointerException*/
     public String get(String url) throws RateLimitException, IOException {
-    	
+
     	System.out.println("get Connector url before formatting: " + url);
     	String furl = prepare(url);
     	System.out.println("From Connector.get()..\n"+ furl);
     	Request req = Request.Get(furl);
         return executeHTTPRequest(req);
     }
-    
-    
+
+
     /**
      * Execute a request of earthquakes to https://earthquakes-uncc.herokuapp.com/eq/
      * @param url
@@ -491,7 +514,7 @@ public class Connector {
 //    	System.out.println("\nGetting earthquakes (the backend connection is working)...\n");
     	return executeHTTPRequest(Request.Get(prepareUSGS(url)));
     }
-    
+
     /** Execute a simple POST request with relative paths, taking a Scala Map()
         of request parameters. */
     public void post(String url, Map<String, String> arguments)
@@ -504,14 +527,14 @@ public class Connector {
         }
         executeHTTPRequest(req.bodyForm(form.build()));
     }
-    
-    public void post(String url, String data) throws IOException, 
+
+    public void post(String url, String data) throws IOException,
 								RateLimitException {
         executeHTTPRequest(Request.Post(prepare(url))
         		.bodyString(data, ContentType.TEXT_PLAIN));
     }
-    
-    
+
+
     /**
      * Escape the URL and prepend the base URL.
      * @returns the new url as a String
@@ -526,12 +549,12 @@ public class Connector {
 //    	System.out.println(out);
       	return out;
     }
-    
+
     public String prepareUSGS(String url) {
     	String out = usgs_url;
     	out += url;
 //    	System.out.println(out);
       	return out;
     }
-    
+
 }
