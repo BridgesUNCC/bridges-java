@@ -40,7 +40,7 @@ public class CircSLelement<E> extends SLelement<E> {
 	 */
 	public CircSLelement() {
 		super();
-		this.next = this;
+		this.setNext(this);
 	}
 	/**
 	 * 	
@@ -56,7 +56,7 @@ public class CircSLelement<E> extends SLelement<E> {
 	 */
 	public CircSLelement (String label, E e){
 		super(label, e);
-		this.next = this;
+		this.setNext(this);
 	}
 
 	/**
@@ -106,16 +106,6 @@ public class CircSLelement<E> extends SLelement<E> {
 		return (CircSLelement<E>) next;
 	}
 	
-	/**
- 	 *
-	 * Sets the pointer to the next CircSLelement
-	 *
-	 * @param next CircSLelement<E> that should be assigned to the next pointer
- 	 *
-	 */
-	public void setNext(CircSLelement<E> next) {
-		this.next = next;
-	}
 	
 	/** (non-Javadoc)
  	 *
@@ -128,7 +118,7 @@ public class CircSLelement<E> extends SLelement<E> {
 				+ ", getIdentifier()=" + getIdentifier() + ", getVisualizer()="
 				+ getVisualizer()
 				+ ", getClassName()=" + getClassName()
-				+ ", getRepresentation()=" + getRepresentation()
+				+ ", getElementRepresentation()=" + getElementRepresentation()
 				+ ", getLabel()=" + getLabel() + ", getValue()=" + getValue()
 				+ ", toString()=" + super.toString() + ", getClass()="
 				+ getClass() + ", hashCode()=" + hashCode() + "]";

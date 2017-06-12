@@ -1,5 +1,8 @@
 package bridges.base;
 
+import java.util.Vector;
+import java.util.HashMap;
+
 /**
  *	
  * 	@author Mihai Mehedint, Kalpathi Subramanian
@@ -64,8 +67,8 @@ public class DLelement<E> extends SLelement<E>{
 	 */
 	public DLelement(DLelement<E> next, DLelement<E> prev) {
 		super();
-		this.next = next;
-		this.prev = prev;
+		this.setNext(next);
+		this.setPrev(prev);
 	}
 
 	/** 
@@ -81,8 +84,8 @@ public class DLelement<E> extends SLelement<E>{
 	 */
 	public DLelement(E e, DLelement<E> next, DLelement<E> prev) {
 		super(e);
-		this.next = next;
-		this.prev = prev;
+		this.setNext(next);
+		this.setPrev(prev);
 	}
 	
 	/**
@@ -109,9 +112,13 @@ public class DLelement<E> extends SLelement<E>{
 	 * @param next the DLelement that should be assigned to the next pointer
 	 *
 	 */
-	public void setNext(DLelement<E> next) {
-		this.next = next;
+/*
+	public void setNext(DLelement<E> nxt) {
+		this.next = nxt;
+		if (nxt != null)
+			this.setLinkVisualizer(nxt);
 	}
+*/
 	
 
 	/**
@@ -128,7 +135,64 @@ public class DLelement<E> extends SLelement<E>{
 	 *
 	 * @param prev the DLelement that should be assigned to the prev pointer
 	 */
-	public void setPrev(DLelement<E> prev) {
-		this.prev = prev;
+	public void setPrev(DLelement<E> prv) {
+				// first remove any existing link visualizer from this node 
+				//	to its next node
+		if (this.prev != null) 
+			this.removeLinkVisualizer(this.prev);
+
+		this.prev = prv;
+				// add a new link visualizer
+		if (prv != null) 
+			this.setLinkVisualizer(prv);
+	}
+	/*
+	 *	Get the JSON representation of the the data structure
+	 */
+	public String[] getDataStructureRepresentation() {
+					// map to reorder the nodes for building JSON
+		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
+					// get teh list nodes
+		Vector<Element<E> > nodes = new Vector<Element<E>> ();
+		this.getListElements(nodes);
+
+					// generate the JSON of the list nodes
+		StringBuilder nodes_JSON = new StringBuilder();
+		for (int k = 0; k < nodes.size(); k++) {
+			node_map.put(nodes.get(k), k);
+			nodes_JSON.append(nodes.get(k).getElementRepresentation());
+			nodes_JSON.append(COMMA);
+		}
+					// remove the last comma
+		nodes_JSON.setLength(nodes_JSON.length()-1);
+
+		StringBuilder links_JSON = new StringBuilder();
+		for (int k = 0; k < nodes.size(); k++) {
+			DLelement<E> par = (DLelement<E>) nodes.get(k);
+            DLelement<E> nxt = (DLelement<E>) par.next;
+            DLelement<E> prv = par.prev;
+			if (nxt != null) { 		// add the link
+				links_JSON
+					.append(getLinkRepresentation( par.getLinkVisualizer(nxt), 
+								Integer.toString(node_map.get(par)),
+								Integer.toString(node_map.get(nxt))))
+					.append(COMMA);
+			}
+			if (prv != null) { 		// add the link
+				links_JSON
+					.append(getLinkRepresentation(
+								par.getLinkVisualizer(prv), 
+								Integer.toString(node_map.get(par)),
+								Integer.toString(node_map.get(prv))))
+					.append(COMMA);
+			}
+		}
+		links_JSON.setLength(links_JSON.length()-1);
+
+		String[] nodes_links = new String[2];
+		nodes_links[0] = nodes_JSON.toString();
+		nodes_links[1] = links_JSON.toString();
+
+		return nodes_links;
 	}
 }

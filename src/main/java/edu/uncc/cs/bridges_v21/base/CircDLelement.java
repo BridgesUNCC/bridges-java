@@ -60,8 +60,8 @@ public class CircDLelement<E> extends DLelement<E>{
 	 */
 	public CircDLelement (String label, E e){
 		super(label, e);
-		this.next = this;
-		this.prev = this;
+		this.setNext(this);
+		this.setPrev(this);
 	}
 
 	/** 
@@ -74,8 +74,8 @@ public class CircDLelement<E> extends DLelement<E>{
 	 */
 	public CircDLelement(CircDLelement<E> next, CircDLelement<E> prev) {
 		super();
-		this.next = next;
-		this.prev = prev;
+		this.setNext(this);
+		this.setPrev(this);
 	}
 
 	/** 
@@ -118,19 +118,6 @@ public class CircDLelement<E> extends DLelement<E>{
 	
 	/**
 	 *
-	 * This method sets the pointer to the next DLelement
-	 *
-	 * @param next The CircDLelement that should be assigned to the next 
-	 *	pointer
-	 *
-	 */
-	public void setNext(CircDLelement<E> next) {
-		this.next = next;
-	}
-	
-
-	/**
-	 *
 	 * This method returns the pointer to the previous DLelement
 	 *
 	 * @return the DLelement assigned to the prev pointer
@@ -138,16 +125,5 @@ public class CircDLelement<E> extends DLelement<E>{
 	 */
 	public CircDLelement<E> getPrev() {
 		return (CircDLelement<E>) prev;
-	}
-
-	/**
-	 *
-	 * This method sets the pointer to the previous DLelement
-	 *
-	 * @param prev the DLelement that should be assigned to the prev pointer
-	 *
-	 */
-	public void setPrev(CircDLelement<E> prev) {
-		this.prev = prev;
 	}
 }

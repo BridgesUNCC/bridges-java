@@ -5,6 +5,8 @@ import bridges.base.Edge;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Vector;
 
 /**
  *
@@ -42,10 +44,14 @@ import java.util.Map;
  *
  */		
 public class GraphAdjList<K, E> extends DataStruct {
+
 						// keep track of the graph nodes; useful
 						// to maintain their properties
+
 	private final HashMap<K, Element<E> > vertices;
+
 						// holds the adjacency list of edges
+
 	private final HashMap<K, SLelement<Edge<K> > > adj_list;
 
 	/**
@@ -221,5 +227,57 @@ public class GraphAdjList<K, E> extends DataStruct {
 		}
 		return v.getVisualizer();
 	}
-};
 
+
+	/*
+	 *	Get the JSON representation of the the data structure
+	 */
+	public String[] getDataStructureRepresentation() {
+					// map to reorder the nodes for building JSON
+		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
+					// get teh list nodes
+		Vector<Element<E> > nodes = new Vector<Element<E>> ();
+
+		for (Entry<K, Element<E>> element : vertices.entrySet())
+			nodes.add(element.getValue());
+
+						// remap  map these nodes to  0...MaxNodes-1
+						// and build the nodes JSON
+		StringBuilder nodes_JSON = new StringBuilder();
+		for (int k = 0; k < nodes.size(); k++) {
+			node_map.put(nodes.get(k), k);
+			nodes_JSON.append(nodes.get(k).getElementRepresentation());
+			nodes_JSON.append(COMMA);
+		}
+						// remove the last comma
+		nodes_JSON.setLength(nodes_JSON.length()-1);
+
+						// build the links JSON - traverse the adj. lists
+		StringBuilder links_JSON = new StringBuilder();
+		for (Entry<K, SLelement<Edge<K>>> a_list : adj_list.entrySet()){
+			SLelement<Edge<K>> list = a_list.getValue();
+						// get the source vertex index for the JSON (int)
+			Element<E> src_vert = vertices.get(a_list.getKey());
+			while (list != null) {
+				Integer src_indx = node_map.get(src_vert);
+						// get the destination vertex index for the JSON (int)
+				Edge<K> edge = list.getValue();
+				Element<E> dest_vert = vertices.get(edge.getVertex());
+				Integer dest_indx = node_map.get(dest_vert);
+						// get link representation
+				links_JSON	.append(list.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert), 
+										Integer.toString(src_indx), Integer.toString(dest_indx)))
+							.append(COMMA);
+				list = list.getNext();
+			}
+		}
+						// remove the last comma
+		links_JSON.setLength(links_JSON.length()-1);
+
+		String[] nodes_links = new String[2];
+		nodes_links[0] = nodes_JSON.toString();
+		nodes_links[1] = links_JSON.toString();
+
+		return nodes_links;
+	}
+}

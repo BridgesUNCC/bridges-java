@@ -1,5 +1,7 @@
 package bridges.base;
 
+import java.util.HashMap;
+import java.util.Vector;
 /**
  * 	@brief This class can be used to instantiate Multi-list Elements.
 
@@ -84,8 +86,10 @@ public class MLelement<E> extends SLelement<E> {
 	public MLelement (MLelement<E> sublist, MLelement<E> next) {
 		this.setNext(next);
 		this.sub_list = sublist;
-		if (sublist != null)
+		if (sublist != null) {
 			tag = true;
+			this.setLinkVisualizer(sublist);
+		}
 	}
 
 	/**
@@ -96,8 +100,12 @@ public class MLelement<E> extends SLelement<E> {
 	 */
 	public void setSubList(MLelement<E> sl) {
 		this.sub_list = sl;
-		this.tag = true;
-					// by default, color and shape sublist nodes to distinguish them 
+		if (sl != null) {
+			tag = true;
+			this.setLinkVisualizer(sl);
+		}
+					// by default, color and shape sublist nodes to distinguish them  from 
+					//	remaining nodes
 		this.getVisualizer().setColor("red");
 		this.getVisualizer().setShape("square");
 	}
@@ -131,14 +139,6 @@ public class MLelement<E> extends SLelement<E> {
 		return (MLelement<E>) next;
 	}
 	
-	/**
-	 * Sets the element to point to the next MLelement
-	 *
-	 * @param next SLelement<E> that should be assigned to the next pointer
-	 */
-	public void setNext(MLelement<E> next) {
-		this.next = next;
-	}
 
 	/** 
 	 *
@@ -159,5 +159,82 @@ public class MLelement<E> extends SLelement<E> {
 	 */
 	public boolean getTag() {
 		return tag;
+	}
+
+	/*
+	 *	Get the JSON representation of the the data structure
+	 */
+	public String[] getDataStructureRepresentation() {
+
+		Vector<Element<E> > nodes = new Vector<Element<E>> ();
+		nodes.clear();
+		getListElements(nodes);
+
+					// generate the JSON of the list nodes
+		StringBuilder nodes_JSON = new StringBuilder();
+		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
+
+		for (int k = 0; k < nodes.size(); k++) {
+			node_map.put(nodes.get(k), k);
+			nodes_JSON.append(nodes.get(k).getElementRepresentation());
+			nodes_JSON.append(COMMA);
+		}
+					// remove the last comma
+		nodes_JSON.setLength(nodes_JSON.length()-1);
+
+		StringBuilder links_JSON = new StringBuilder();
+
+		for (int k = 0; k < nodes.size(); k++) {
+			MLelement<E> par = (MLelement<E>) nodes.get(k); 
+			if (par.tag) { 	// sub list
+				MLelement<E> chld = par.sub_list; 
+				if (chld != null) { 		// add the link
+					links_JSON
+							.append(getLinkRepresentation(
+								par.getLinkVisualizer(chld),
+								Integer.toString(node_map.get(par)), 
+								Integer.toString(node_map.get(chld))))
+							.append(COMMA);
+				}
+			}
+			SLelement<E> chld = par.next;
+			if (chld != null) { 		// add the link
+				links_JSON
+						.append(getLinkRepresentation(
+							par.getLinkVisualizer(chld),
+							Integer.toString(node_map.get(par)), 
+							Integer.toString(node_map.get(chld))))
+						.append(COMMA);
+			}
+		}
+		links_JSON.setLength(links_JSON.length()-1);
+
+		String[] nodes_links = new String[2];
+		nodes_links[0] = nodes_JSON.toString();
+		nodes_links[1] = links_JSON.toString();
+
+		return nodes_links;
+	}
+
+	/*
+	 *	Get the elements of the list
+	 *
+	 *	@param nodes  a vector of the ndoes in the list
+	 *
+	 */
+	protected void getListElements(Vector<Element<E>> nodes) {
+		getListElements_R (this, nodes);
+	}
+
+	void getListElements_R (MLelement<E> list, Vector<Element<E>> nodes) {
+		MLelement<E> el = list;
+					// try to handld all lists in subclasses, except multilists
+		while (el != null) {
+			nodes.add(el);
+			if (el.tag) {
+				getListElements_R (el.sub_list, nodes);
+			}
+			el = el.getNext();
+		}
 	}
 }

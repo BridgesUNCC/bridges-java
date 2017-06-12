@@ -4,6 +4,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * @brief This is the main superclass in BRIDGES for  deriving a number of
@@ -39,7 +40,7 @@ public class Element<E> extends DataStruct{
 	private String label;
 	private String identifier;
 	private ElementVisualizer visualizer;
-	private HashMap<String, LinkVisualizer>  lvisualizer;
+	private HashMap<Element<E>, LinkVisualizer>  lvisualizer;
 	private E value;
 					//	this is the number of pattern matches where the new string 
 					// 	can be inserted; useful in case we insert line breaks at a 
@@ -61,7 +62,7 @@ public class Element<E> extends DataStruct{
 	//public String INSERT_STRING = "\\n";
 	//public String DIVIDE_KEY ="(\n)";  
 	
-	protected String getDataStructType() {
+	public String getDataStructType() {
 		return "Element";
 	}
 	
@@ -77,7 +78,7 @@ public class Element<E> extends DataStruct{
 		this.label = "";
 		ids++;
 		this.setVisualizer(new ElementVisualizer());
-		this.lvisualizer  = new HashMap<String, LinkVisualizer>();
+		this.lvisualizer  = new HashMap<Element<E>, LinkVisualizer>();
 	}
 	
 	/**
@@ -114,7 +115,7 @@ public class Element<E> extends DataStruct{
 		ids++;
 		this.label = new String(original.getLabel());
 		this.visualizer = new ElementVisualizer(original.getVisualizer());
-		this.lvisualizer  = new HashMap<String, LinkVisualizer> ();
+		this.lvisualizer  = new HashMap<Element<E>, LinkVisualizer> ();
 		this.setValue(original.getValue());
 	}
 
@@ -160,11 +161,26 @@ public class Element<E> extends DataStruct{
 	public LinkVisualizer getLinkVisualizer(Element<E> el){
 						// if this is the first time, must create the
 						// link visualizer
-		if (lvisualizer.get(el.getIdentifier()) == null)
-			lvisualizer.put(el.getIdentifier(), new LinkVisualizer() ); 
-		return lvisualizer.get(el.getIdentifier());
+		if (lvisualizer.get(el) == null)
+			lvisualizer.put(el, new LinkVisualizer() ); 
+
+		return lvisualizer.get(el);
 	}
 
+	/**
+	 *	Sets the link from this element to a new incoming element
+	 *
+	 *	@param el the element to be linked to.
+	 *
+	 */
+	protected void setLinkVisualizer(Element<E> el) {
+		lvisualizer.put(el, new LinkVisualizer() ); 
+	}
+
+	protected void removeLinkVisualizer(Element<E> el) {
+		lvisualizer.remove(el);
+	}
+						
 	/**
 	 * Validates the Element's value when the Element is created
 	 * A non null value is expected 
@@ -233,7 +249,7 @@ public class Element<E> extends DataStruct{
 	 * }
 	 * @returns the encoded JSON string
 	 */
-	public String getRepresentation(){
+	public String getElementRepresentation(){
 
 								// first get all the attributes common to all 
 								// elements; assumes location is a fundamental 
@@ -283,21 +299,79 @@ public class Element<E> extends DataStruct{
 			else json_str += CLOSE_CURLY;
 
 		return json_str;
+	}
+	/**
+	 *	Generate string representing the data structure of a list
+	 *
+	 *	@param nodes   the list of nodes in the list
+	 *
+	 */
 /*
-		for (Entry<String, String> entry : visualizer.properties.entrySet()) {
-			if (entry.getKey() == "locationX")
-				locx = entry.getValue();
-			else if (entry.getKey() == "locationY")
-				locy = entry.getValue();
-			else
-				json += String.format("\"%s\": \"%s\", ", entry.getKey(), 
-									entry.getValue());
+	public String[] generateListJSON(Vector<Element<E>> nodes) {
+
+		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
+		StringBuilder nodes_JSON = new StringBuilder(), 
+					  links_JSON = new StringBuilder(); 
+
+						// create the nodes JSON string
+		for (int k = 0; k < nodes.size(); k++) {
+			node_map.put(nodes.get(k), k);
+			nodes_JSON.append(nodes.get(k).getElementRepresentation());
+			nodes_JSON.append(COMMA);
 		}
-							// add in the location attribute as an array
-		json += String.format("\"location\": [ %s , %s ], ", locx, locy);
-		json += String.format("\"name\": \"%s\"", label);
-		return json + "}";
+						// remove the last comma
+		nodes_JSON.setLength(nodes_JSON.length()-1);
+
+						// now create the links JSON string
+
+						// iterate over the node map entries - these are the parent nodes
+		for (Entry<Element<E>, Integer> pmap_entry : node_map.entrySet()) {
+			Element<E> parent = pmap_entry.getKey();
+//System.out.println("Processing " + parent.getLabel());
+						// iterate over the link vis entries - these are the child nodes
+			for (Entry<Element<E>, LinkVisualizer> 
+					cmap_entry : parent.lvisualizer.entrySet()) {
+						// find the child corresponding the parent
+				Element<E> child = cmap_entry.getKey();
+//System.out.println("\t Child " + child.getLabel());
+				if (node_map.get(child) != null) {
+					links_JSON.append(getLinkRepresentation(
+							cmap_entry.getValue(),
+							Integer.toString(node_map.get(parent)), 
+							Integer.toString(node_map.get(child))) );
+					links_JSON.append(COMMA);
+//System.out.println("from " + node_map.get(parent) + "to " + node_map.get(child) );
+				}
+			}
+		}
+						// remove the last comma
+		links_JSON.setLength(links_JSON.length()-1);
+
+		String nodes_str = nodes_JSON.toString();
+		String links_str = links_JSON.toString();
+
+System.out.println (nodes_str + links_str);
+		String[] nodes_links = new String[2];
+		nodes_links[0] = nodes_str;
+		nodes_links[1] = links_str;
+
+		return nodes_links;
+	}
 */
+
+	/**
+	 *
+	 *	Get  the link visualizer representation, iterating through
+	 *	the link properties
+	 *
+	 */
+	public String getLinkRepresentation(LinkVisualizer lv, String src, String dest) {
+
+		return	OPEN_CURLY + 
+					lv.getLinkProperties() + COMMA +
+					QUOTE + "source"    + QUOTE + COLON + src  + COMMA +
+					QUOTE + "target"    + QUOTE + COLON + dest +
+				CLOSE_CURLY;
 	}
 
 	/**
@@ -381,6 +455,7 @@ public class Element<E> extends DataStruct{
 		this.value = value;
 	}
 
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -391,7 +466,7 @@ public class Element<E> extends DataStruct{
 				+ ", getIdentifier()=" + getIdentifier() + ", getVisualizer()="
 				+ getVisualizer()
 				+ ", getClassName()=" + getClassName()
-				+ ", getRepresentation()=" + getRepresentation()
+				+ ", getElementRepresentation()=" + getElementRepresentation()
 				+ ", getLabel()=" + getLabel() + ", getValue()=" + getValue()
 				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";
