@@ -554,6 +554,11 @@ System.out.println("In visualize..." + vis_type);
 				nodes_links = 
 					((TreeElement) ds_handle).getDataStructureRepresentation();
 				break;
+			case "GraphAdjacencyList":
+System.out.println("In ..." + vis_type);
+				nodes_links = 
+					((GraphAdjList) ds_handle).getDataStructureRepresentation();
+				break;
 		}
 			
 		String ds_json = 
