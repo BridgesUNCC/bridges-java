@@ -541,16 +541,18 @@ System.out.println("In visualize..." + vis_type);
 			case "CircularSinglyLinkedList":
 			case "CircularDoublyLinkedList":
 				nodes_links = 
-					((SLelement)ds_handle).getDataStructureRepresentation();
+					((SLelement) ds_handle).getDataStructureRepresentation();
 				break;
 			case "MultiList":
 				nodes_links = 
-					((MLelement)ds_handle).getDataStructureRepresentation();
+					((MLelement) ds_handle).getDataStructureRepresentation();
 				break;
 			case "Tree":
-			case "BinTree":
+			case "BinaryTree":
 			case "BinarySearchTree":
 			case "AVLTree":
+				nodes_links = 
+					((TreeElement) ds_handle).getDataStructureRepresentation();
 				break;
 		}
 			
@@ -563,15 +565,20 @@ System.out.println("In visualize..." + vis_type);
 
 
 							// get the nodes and link representations
-		
-//		String nodes_json = new String(), links_json = new String();
-//		String[] nodes_links = ((SLelement)ds_handle).getDataStructureRepresentation();
 
-		ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
-							"[" + nodes_links[0] + "]" + COMMA + 
-					QUOTE + "links" + QUOTE + COLON + 
-							"[" + nodes_links[1] + "]" + 
-				CLOSE_CURLY;
+		if (vis_type == "Tree" || vis_type == "BinaryTree" || vis_type ==  "BinarySearchTree" ||
+												vis_type == "AVLTree") {
+			ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
+							OPEN_CURLY  + nodes_links[0] + CLOSE_CURLY + CLOSE_CURLY; 
+		}
+		else {
+		
+			ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
+								"[" + nodes_links[0] + "]" + COMMA + 
+						QUOTE + "links" + QUOTE + COLON + 
+								"[" + nodes_links[1] + "]" + 
+						CLOSE_CURLY;
+		}
 
 System.out.println("JSON String: " + ds_json);
         try {

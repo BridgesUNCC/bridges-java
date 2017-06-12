@@ -1,5 +1,6 @@
 package bridges.base;
 
+import java.util.HashMap;
 import java.util.Vector;
 /**
  * 	@brief This class can be used to instantiate Multi-list Elements.
@@ -169,8 +170,50 @@ public class MLelement<E> extends SLelement<E> {
 		nodes.clear();
 		getListElements(nodes);
 
-				// generate the JSON of the list
-		return  super.getDataStructureRepresentation();
+					// generate the JSON of the list nodes
+		StringBuilder nodes_JSON = new StringBuilder();
+		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
+
+		for (int k = 0; k < nodes.size(); k++) {
+			node_map.put(nodes.get(k), k);
+			nodes_JSON.append(nodes.get(k).getElementRepresentation());
+			nodes_JSON.append(COMMA);
+		}
+					// remove the last comma
+		nodes_JSON.setLength(nodes_JSON.length()-1);
+
+		StringBuilder links_JSON = new StringBuilder();
+
+		for (int k = 0; k < nodes.size(); k++) {
+			MLelement<E> par = (MLelement<E>) nodes.get(k); 
+			if (par.tag) { 	// sub list
+				MLelement<E> chld = par.sub_list; 
+				if (chld != null) { 		// add the link
+					links_JSON
+							.append(getLinkRepresentation(
+								par.getLinkVisualizer(chld),
+								Integer.toString(node_map.get(par)), 
+								Integer.toString(node_map.get(chld))))
+							.append(COMMA);
+				}
+			}
+			SLelement<E> chld = par.next;
+			if (chld != null) { 		// add the link
+				links_JSON
+						.append(getLinkRepresentation(
+							par.getLinkVisualizer(chld),
+							Integer.toString(node_map.get(par)), 
+							Integer.toString(node_map.get(chld))))
+						.append(COMMA);
+			}
+		}
+		links_JSON.setLength(links_JSON.length()-1);
+
+		String[] nodes_links = new String[2];
+		nodes_links[0] = nodes_JSON.toString();
+		nodes_links[1] = links_JSON.toString();
+
+		return nodes_links;
 	}
 
 	/*

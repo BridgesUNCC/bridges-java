@@ -164,4 +164,76 @@ public class TreeElement<E> extends Element<E> {
 			return  children.get(index);
 		else return null;
 	}
+
+	/** 
+	 *	Get  hierarchical JSON of the tree representation
+	 *
+	 *	@return the JSON string
+	 */
+	public String[] getDataStructureRepresentation() {
+	//	String[] nodes_links = new String[2];
+	//	nodes_links[0] = preOrder(this);
+	//	nodes_links[1] = "";
+
+		String[] nodes_links = {preOrder(this), ""};
+
+		return nodes_links;
+	}
+
+	/**
+	 *
+	 *	Use a preorder traversal to directly extract a hierarchical JSON 
+	 *	representation of the tree.
+	 *
+	 */
+	 private String preOrder(TreeElement<E> root) {
+		String json_str = "", children = "", link_props = "", elem_rep = "";
+		String t_str;
+		int num = root.getNumberOfChildren();
+		if (root != null) {
+									// first get the node representation
+			elem_rep = root.getElementRepresentation();
+									// remove surrounding curly braces
+			t_str = elem_rep.substring(1, elem_rep.length()-1);
+			json_str += t_str;
+									// now get the children
+			if (root.getNumberOfChildren() > 0)
+				json_str += COMMA + QUOTE + "children" + QUOTE + COLON + OPEN_BOX ;
+//			else json_str += CLOSE_CURLY;
+			for (int k = 0; k < root.getNumberOfChildren(); k++) {
+				if (root.getChild(k) == null) {
+					json_str += OPEN_CURLY + QUOTE + "name" + QUOTE + COLON+
+						QUOTE + "NULL" + QUOTE + CLOSE_CURLY + COMMA;
+				}
+				else {
+					LinkVisualizer lv = 
+						root.getLinkVisualizer(root.getChild(k));
+					json_str += OPEN_CURLY;
+					if (lv != null) {
+						json_str += 
+							QUOTE +"linkProperties"+QUOTE+COLON+OPEN_CURLY +
+							QUOTE +"color" + QUOTE+ COLON + 
+							OPEN_BOX + 
+								Integer.toString(lv.getColor().getRed()) + COMMA +
+								Integer.toString(lv.getColor().getGreen()) + COMMA+
+								Integer.toString(lv.getColor().getBlue()) + COMMA +
+								Float.toString(lv.getColor().getAlpha()) +
+							CLOSE_BOX + COMMA +
+							QUOTE + "thickness" + QUOTE + COLON + 
+							String.valueOf(lv.getThickness()) + 
+							CLOSE_CURLY + COMMA;
+					}
+					else json_str += "linkProperties" + COLON + "{}" +COMMA;
+									// process its children
+					json_str +=	preOrder(root.getChild(k));
+					json_str += CLOSE_CURLY + COMMA;
+				}
+			}
+							// remove last comma
+			json_str = json_str.substring(0, json_str.length()-1);
+							// end of children
+			json_str += CLOSE_BOX;
+		}
+		return json_str;
+	 }
 }
