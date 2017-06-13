@@ -67,16 +67,16 @@ public class Bridges {
 	//  string constants  for use in constructing JSON
 	//  representation of the data structure
 
-	private String
-	QUOTE = "\"",
-	COMMA = ",",
-	COLON = ":",
-	OPEN_CURLY = "{",
-	CLOSE_CURLY = "}",
-	OPEN_PAREN = "(",
-	CLOSE_PAREN = ")",
-	OPEN_BOX = "[",
-	CLOSE_BOX = "]";
+	private static String
+		QUOTE = "\"",
+		COMMA = ",",
+		COLON = ":",
+		OPEN_CURLY = "{",
+		CLOSE_CURLY = "}",
+		OPEN_PAREN = "(",
+		CLOSE_PAREN = ")",
+		OPEN_BOX = "[",
+		CLOSE_BOX = "]";
 	/**
 	 *
 	 *	Constructors
@@ -84,7 +84,6 @@ public class Bridges {
 	 */
 	public Bridges() {
 		super();
-		//		visualizer = new ADTVisualizer<K, E>();
 		connector = new Connector();
 		df = new DataFormatter();
 		assignment_part = 0;
@@ -143,7 +142,7 @@ public class Bridges {
 	 * @param username   this is the username (from the Bridges account)
 	 *
 	 */
-	public <E> void init(int assignment, String appl_id, String username) {
+	public void init(int assignment, String appl_id, String username) {
 		Bridges.setAssignment(assignment);
 		Bridges.key = appl_id;
 		Bridges.userName = username;
@@ -156,20 +155,11 @@ public class Bridges {
 	}
 
 	/**
-	 * 	@param set the flag to output the JSON
+	 * 	@param set the flag to print the JSON represenation of the data structure 
+	 *		to standard output
 	 **/
-	public void setVisualizeJSON(boolean flag) {
+	public void setVisualizeJSON (boolean flag) {
 		json_flag = flag;
-	}
-
-	public static List<Tweet> getAssociations(TwitterAccount name,
-		int maxElements) {
-		return DataFormatter.getAssociations(name, maxElements);
-	}
-
-	public static List<EarthquakeUSGS> getAssociations(USGSaccount name,
-		int maxElements) {
-		return DataFormatter.getAssociations(name, maxElements);
 	}
 
 	/**
@@ -227,8 +217,7 @@ public class Bridges {
 	 *
 	 *  @return a list of ActorMovieIMDB objects
 	 */
-	public static List<ActorMovieIMDB> getActorMovieIMDBData2() throws
-		Exception {
+	public static List<ActorMovieIMDB> getActorMovieIMDBData2() throws Exception {
 		return DataFormatter.getActorMovieIMDBData2();
 	}
 	/**
@@ -247,8 +236,7 @@ public class Bridges {
 	 *
 	 *  @return a list of GutenbergBook objects
 	 */
-	public static List<GutenbergBook> getGutenbergBookMetaData()
-	throws Exception {
+	public static List<GutenbergBook> getGutenbergBookMetaData() throws Exception {
 		return DataFormatter.getGutenbergBookMetaData();
 	}
 	/**
@@ -360,203 +348,29 @@ public class Bridges {
 
 	/**
 	 *
-	 * This method returns the current visualizer (for internal use only)
+	 * 	This method sets  the handle to the current data structure; this can 
+	 *	be an array, the head of a linked list, root of a tree structure, a graph
+	 *	Arrays of upto 3 dimensions are suppported. It can be any of the data
+	 *	structures supported by BRIDGES. Polymorphism and type casting is used
+	 *	to determine the actual data structure and extract its representtion.
 	 *
-	 * @return visualizer
-	 *
-	 */
-	/*
-		public ADTVisualizer<K, E> getVisualizer() {
-			return visualizer;
-		}
-	*/
-
-	/**
-	 *
-	 * This method sets visualizer (for internal use only)
-	 *
-	 * @param visualizer
-	 *
-	 */
-	/*
-		public void setVisualizer(ADTVisualizer<K, E> visualizer) {
-			this.visualizer = visualizer;
-		}
-	*/
-
-	/**
-	 *
-	 * 	This method sets the array data type as the current data structure.
-	 *	Arrays of upto 3 dimensions are suppported.
-	 *
-	 * @param Array<E>   The array of elements, Array<E>
+	 * @param ds   The data structure to set (any of the subclasses of DataStruct)
 	 *
 	 */
 	public void setDataStructure(DataStruct ds) {
 		ds_handle = ds;
 		vis_type =   ds.getDataStructType();
 	}
-	/*
-		public void setDataStructure(Array<E>  arr) {
-			br_array = arr;
-			int num_dims = br_array.getNumDimensions();
-			if (num_dims <= 3)
-				visualizer.setVisualizerType ("Array");
-			else throw  new InvalidValueException("Invalid number of dimensions. Only 1D, 2D  and 3D arrays supported at this time");
-		}
-	*/
-
-	/**
-	 * This method sets the first element of the singly linked list
-	 *
-	 * @param head  first element of the list
-	 *
-	 */
-	//	public void setDataStructure(SLelement<E> head) {
-	//		System.out.println("Matched.." + head.getDataStructType());
-	//		root = head;
-	//		visualizer.setVisualizerType("SinglyLinkedList");
-	//	}
-
-	/**
-	 * This method sets the first element of the multi list
-	 *
-	 * @param head  first element of the multi-list
-	 *
-	 */
-	/*
-		public void setDataStructure(MLelement<E> head) {
-			root = head;
-			visualizer.setVisualizerType("MultiList");
-		}
-
-	*/
-	/**
-	 * This method sets the first element of the doubly linked list
-	 *
-	 * @param head - first element of the  list
-	 *
-	 */
-	/*
-		public void setDataStructure(DLelement<E> head){
-			root = head;
-			visualizer.setVisualizerType("DoublyLinkedList");
-		}
-
-	*/
-	/**
-	 * This method sets the first element of the singly linked circular list
-	 *
-	 * @param head - first element of  the circular singly linked list
-	 *
-	 */
-	/*
-		public void setDataStructure(CircSLelement<E> head) {
-			root = head;
-			visualizer.setVisualizerType("CircularSinglyLinkedList");
-		}
-	*/
-
-	/**
-	 * This method sets the first element of the doubly linked circular list
-	 *
-	 * @param head - first element of  the circular doubly linked list
-	 *
-	 */
-	/*
-		public void setDataStructure(CircDLelement<E> head) {
-			root = head;
-			visualizer.setVisualizerType("CircularDoublyLinkedList");
-		}
-	*/
-
-	/**
-	 * 	This method sets the root of a general  tree (can have
-	 *	any number of children at each node
-	 *
-	 * 	@param tree_root The root of the generalized tree
-	 *
-	 */
-	/*
-		public void setDataStructure(TreeElement<E> tree_root){
-			root = tree_root;
-			visualizer.setVisualizerType("Tree");
-		}
-	*/
-	/**
-	 * This method sets the root of the binary  tree
-	 * data structure.
-	 *
-	 * @param tree_root The root of the binary tree
-	 */
-	/*
-		public void setDataStructure(BinTreeElement<E> tree_root){
-			root = tree_root;
-			visualizer.setVisualizerType("BinaryTree");
-		}
-	*/
-
-	/**
-	 * This method sets the root of the binary search tree
-	 * data structure.
-	 *
-	 * @param tree_root - The root of the binary search tree
-	 */
-	/*
-		public void setDataStructure(BSTElement<K, E> tree_root){
-			root = tree_root;
-			visualizer.setVisualizerType("BinarySearchTree");
-		}
-	*/
-
-	/**
-	 * This method sets the root of an AVL tree
-	 * data structure.
-	 *
-	 * @param tree_root The root of the AVL tree
-	 */
-	/*
-		public void setDataStructure(AVLTreeElement<K, E> tree_root){
-			root = tree_root;
-			visualizer.setVisualizerType("AVLTree");
-		}
-	*/
-	/**
-	 * This method passes the handle to the input graph
-	 * (represented using adjacency lists)
-	 *
-	 * @param graph adjacency list based graph
-	 */
-	/*
-		public void setDataStructure(GraphAdjList<K, E> graph){
-			graph_adj_list = graph;
-			visualizer.setVisualizerType("GraphAdjacencyList");
-		}
-
-	*/
-	/**
-	 * This method passes the handle to the input graph (represented
-	 * using adjacency matrix)
-	 *
-	 * @param graph adjacency matrix based graph
-	 */
-	/*
-		public void setDataStructure(GraphAdjMatrix<K, E> graph){
-			graph_adj_matrix = graph;
-			visualizer.setVisualizerType("GraphAdjacencyMatrix");
-		}
-	*/
 
 	/**
 	 *
 	 * This method generates the representation of the current data structure (JSON)
-	 * and sends that to the Bridges server.
+	 * and sends that to the Bridges server for generating a visualization.
 	 *
-	 * @throws InvocationTargetException
-	 * @throws IllegalAccessException
-	 * @throws NoSuchMethodException
+	 * @throws RateLimitException
+	 * @throws IOException
 	 */
-	public void visualize() {
+	public void visualize()  throws IOException, RateLimitException { 
 		String[] nodes_links = new String[2];
 		String nodes_links_str = "";
 		switch (vis_type) {
@@ -596,8 +410,8 @@ public class Bridges {
 			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
 			QUOTE + "title"   + QUOTE + COLON + QUOTE + title + QUOTE + COMMA +
 			QUOTE + "description" + QUOTE + COLON + QUOTE + description + QUOTE + COMMA +
-			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + "Cartesian" + QUOTE + COMMA;
-
+			QUOTE + "coord_system_type" + QUOTE + COLON + 
+				QUOTE + "Cartesian" + QUOTE + COMMA;
 
 		// get the nodes and link representations
 
@@ -612,16 +426,14 @@ public class Bridges {
 			ds_json +=  nodes_links_str;
 
 		}
-		else if (vis_type == "Tree" || vis_type == "BinaryTree" || vis_type ==  "BinarySearchTree" ||
-			vis_type == "AVLTree") {
-			ds_json +=  nodes_links_str;
-		}
 		else {
 			ds_json += nodes_links_str;
 		}
-		if (json_flag)
+							
+		if (json_flag)		// print the JSON (mostly for debugging)
 			System.out.println("\nJSON String:\n" + ds_json);
 
+							// send the data structure to the server and visualize
 		try {
 			connector.post("/assignments/" + getAssignment(), ds_json);
 		}
@@ -640,318 +452,5 @@ public class Bridges {
 		System.out.println("\nCheck Your Visualization at the following link:\n\n" +
 			connector.getServerURL() + "/assignments/" + assignment + "/"
 			+ userName + "\n\n");
-
 	}
-	/**
-	 *
-	 * visualize a singly linked list.
-	 *
-	 **/
-	/*
-		protected void visualizeLinkedList() {
-			try {
-				connector.post("/assignments/" + getAssignment(),
-					visualizer.getSLRepresentation((SLelement<E>)root));
-			}
-			catch (IOException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central DataFormatters server is down. Try again later.\n"
-					+ e.getMessage());
-			}
-			catch (RateLimitException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. However, it responded with"
-					+ " an impossible 'RateLimitException'. Please contact"
-					+ " DataFormatters developers and file a bug report; this error"
-					+ " should not be possible.\n"
-					+ e.getMessage());
-			}
-			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at \n\n" +
-				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-				+ userName + "\n\n");
-			assignment_part++;
-		}
-	*/
-
-	/**
-	 *
-	 * visualize a multi list.
-	 *
-	 **/
-	/*
-		protected void visualizeMultiList() {
-			try {
-				connector.post("/assignments/" + getAssignment(),
-					visualizer.getMLRepresentation((MLelement<E>)root));
-			}
-			catch (IOException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central DataFormatters server is down. Try again later.\n"
-					+ e.getMessage());
-			}
-			catch (RateLimitException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. However, it responded with"
-					+ " an impossible 'RateLimitException'. Please contact"
-					+ " DataFormatters developers and file a bug report; this error"
-					+ " should not be possible.\n"
-					+ e.getMessage());
-			}
-			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at \n\n" +
-				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-				+ userName + "\n\n");
-			assignment_part++;
-		}
-
-	*/
-
-	/**
-	 *  Visualization  a doubly linked list.
-	 *
-	 **/
-	/*
-		protected void visualizeDoublyLinkedList() {
-			try {
-				connector.post("/assignments/" + getAssignment(),
-					visualizer.getDLRepresentation((DLelement<E>)root));
-			}
-			catch (IOException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central DataFormatters server is down. Try again later.\n"
-					+ e.getMessage());
-			}
-			catch (RateLimitException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. However, it responded with"
-					+ " an impossible 'RateLimitException'. Please contact"
-					+ " DataFormatters developers and file a bug report; this error"
-					+ " should not be possible.\n"
-					+ e.getMessage());
-			}
-			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at \n\n" +
-				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-				+ userName + "\n\n");
-			assignment_part++;
-		}
-	*/
-
-	/**
-	 *  Visualize  an array
-	 *
-	 **/
-	/*
-		protected void visualizeArrayObj() {
-			try {
-				connector.post("/assignments/" + getAssignment(),
-					visualizer.getArrayRepresentation(br_array));
-			}
-			catch (IOException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central DataFormatters server is down. Try again later.\n"
-					+ e.getMessage());
-			}
-			catch (RateLimitException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. However, it responded with"
-					+ " an impossible 'RateLimitException'. Please contact"
-					+ " DataFormatters developers and file a bug report; this error"
-					+ " should not be possible.\n"
-					+ e.getMessage());
-			}
-			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at \n\n" +
-				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-				+ userName + "\n\n");
-			assignment_part++;
-		}
-	*/
-	/**
-	 *  Visualize  an array
-	 *
-	 **/
-	/*
-		protected void visualizeArray() {
-			try {
-				connector.post("/assignments/" + getAssignment(),
-					visualizer.getArrayRepresentation(element_array, element_array_size));
-			}
-			catch (IOException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central DataFormatters server is down. Try again later.\n"
-					+ e.getMessage());
-			}
-			catch (RateLimitException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. However, it responded with"
-					+ " an impossible 'RateLimitException'. Please contact"
-					+ " DataFormatters developers and file a bug report; this error"
-					+ " should not be possible.\n"
-					+ e.getMessage());
-			}
-			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at \n\n" +
-				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-				+ userName + "\n\n");
-			assignment_part++;
-		}
-	*/
-
-	/**
-	 * Visualize a binary tree
-	 *
-	 */
-	/*
-		protected void visualizeTree() {
-			try {
-				connector.post("/assignments/" + getAssignment(), visualizer.getTreeRepresentation((TreeElement<E>)root));
-			}
-			catch (IOException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central Bridges server is down. Try again later.\n"
-					+ e.getMessage());
-			}
-			catch (RateLimitException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. However, it responded with"
-					+ " an impossible 'RateLimitException'. Please contact"
-					+ " Bridgess developers and file a bug report; this error"
-					+ " should not be possible.\n"
-					+ e.getMessage());
-			}
-			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at \n\n" +
-				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-				+ userName + "\n\n");
-			assignment_part++;
-		}
-	*/
-	/**
-	 * Visualize a binary searchtree
-	 *
-	 */
-	/*
-		protected void visualizeBinarySearchTree() {
-			try {
-				connector.post("/assignments/" + getAssignment(),
-					visualizer.getTreeRepresentation((TreeElement<E>)root));
-			}
-			catch (IOException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central Bridges server is down. Try again later.\n"
-					+ e.getMessage());
-			}
-			catch (RateLimitException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. However, it responded with"
-					+ " an impossible 'RateLimitException'. Please contact"
-					+ " Bridgess developers and file a bug report; this error"
-					+ " should not be possible.\n"
-					+ e.getMessage());
-			}
-			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at \n\n" +
-				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-				+ userName + "\n\n");
-			assignment_part++;
-		}
-	*/
-
-	/**
-	 * Update visualization metadata of Graph with Adjacency List. This may be called many times.
-	 * This is usually an expensive operation and involves connecting to the network.
-	 * Calling this method is optional provided you call complete()
-	 */
-	/*
-		protected void visualizeGraphAdjacencyList() {
-			try {
-				connector.post("/assignments/" + getAssignment(),
-					visualizer.getGraphAdjList_Representation(graph_adj_list) );
-			}
-			catch (IOException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server."
-					+ " First please check the graph's adjaceny list. This may cause errors while trying to interpret the data."
-					+ " Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central Bridges server is down. Try again later.\n"
-					+ e.getMessage());
-			}
-			catch (RateLimitException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. However, it responded with"
-					+ " an impossible 'RateLimitException'. Please contact"
-					+ " the developers and file a bug report; this error"
-					+ " should not be possible. Also please check the data type for graph's adjacency list.\n"
-					+ e.getMessage());
-			}
-			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at \n\n" +
-				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-				+ userName + "\n\n");
-			assignment_part++;
-		}
-		protected void visualizeGraphAdjacencyMatrix() {
-			try {
-				connector.post("/assignments/" + getAssignment(),
-					visualizer.getGraphAdjMatrix_Representation(graph_adj_matrix) );
-			}
-			catch (IOException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server."
-					+ " First please check the graph's adjaceny list. This may cause errors while trying to interpret the data."
-					+ " Are you connected to the"
-					+ " Internet? Check your network settings. Otherwise, maybe"
-					+ " the central Bridges server is down. Try again later.\n"
-					+ e.getMessage());
-			}
-			catch (RateLimitException e) {
-				System.err.println("There was a problem sending the visualization"
-					+ " representation to the server. However, it responded with"
-					+ " an impossible 'RateLimitException'. Please contact"
-					+ " the developers and file a bug report; this error"
-					+ " should not be possible. Also please check the data type for graph's adjacency list.\n"
-					+ e.getMessage());
-			}
-			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at \n\n" +
-				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-				+ userName + "\n\n");
-			assignment_part++;
-		}
-	*/
-
-	/**
-	 * @return the root
-	 */
-	/*
-		public Element<E> getRoot() {
-			return root;
-		}
-	*/
-
-	/**
-	 * @param root the root to set
-	 */
-	/*
-		public void setRoot(Element<E> root) {
-			this.root = root;
-		}
-	*/
 }
