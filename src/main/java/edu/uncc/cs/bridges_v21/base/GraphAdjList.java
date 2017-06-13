@@ -232,7 +232,7 @@ public class GraphAdjList<K, E> extends DataStruct {
 	/*
 	 *	Get the JSON representation of the the data structure
 	 */
-	public String[] getDataStructureRepresentation() {
+	public String getDataStructureRepresentation() {
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
 		// get teh list nodes
@@ -274,10 +274,15 @@ public class GraphAdjList<K, E> extends DataStruct {
 		// remove the last comma
 		links_JSON.setLength(links_JSON.length() - 1);
 
-		String[] nodes_links = new String[2];
-		nodes_links[0] = nodes_JSON.toString();
-		nodes_links[1] = links_JSON.toString();
 
-		return nodes_links;
+		String json_str =
+				QUOTE + "nodes"  + QUOTE + COLON +
+				OPEN_BOX + nodes_JSON.toString()  + CLOSE_BOX + COMMA +
+				QUOTE + "links" + QUOTE + COLON +
+				OPEN_BOX + links_JSON.toString() + CLOSE_BOX +
+				CLOSE_CURLY;
+
+		return json_str;
+
 	}
 }

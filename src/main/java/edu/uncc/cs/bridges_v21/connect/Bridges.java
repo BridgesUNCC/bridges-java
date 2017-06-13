@@ -556,45 +556,45 @@ public class Bridges <K, E> {
 	 */
 	public void visualize() {
 		String[] nodes_links = new String[2];
+		String nodes_links_str = "";
 		switch (vis_type) {
 			case "Array":
-					nodes_links = ((Array) ds_handle).getDataStructureRepresentation();
+					nodes_links_str = ((Array) ds_handle).getDataStructureRepresentation();
 				break;
 			case "SinglyLinkedList":
 			case "DoublyLinkedList":
 			case "CircularSinglyLinkedList":
 			case "CircularDoublyLinkedList":
-				nodes_links =
+				nodes_links_str =
 					((SLelement) ds_handle).getDataStructureRepresentation();
 				break;
 			case "MultiList":
-				nodes_links =
+				nodes_links_str =
 					((MLelement) ds_handle).getDataStructureRepresentation();
 				break;
 			case "Tree":
 			case "BinaryTree":
 			case "BinarySearchTree":
 			case "AVLTree":
-				nodes_links =
+				nodes_links_str =
 					((TreeElement) ds_handle).getDataStructureRepresentation();
 				break;
 			case "GraphAdjacencyList":
-				nodes_links =
+				nodes_links_str =
 					((GraphAdjList) ds_handle).getDataStructureRepresentation();
 				break;
 			case "GraphAdjacencyMatrix":
-				nodes_links =
+				nodes_links_str =
 					((GraphAdjMatrix) ds_handle).getDataStructureRepresentation();
 				break;
 		}
 
 		String ds_json =
 			OPEN_CURLY +
-			//				QUOTE + "version" + QUOTE + COLON + QUOTE + "0.4.0" + QUOTE + COMMA +
-			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
-			QUOTE + "title"   + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
-			QUOTE + "description" + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA + 
-			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + "Cartesian" + QUOTE + COMMA;
+				QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
+				QUOTE + "title"   + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
+				QUOTE + "description" + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA + 
+				QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + "Cartesian" + QUOTE + COMMA;
 
 
 		// get the nodes and link representations
@@ -607,22 +607,15 @@ public class Bridges <K, E> {
 			ds_json += QUOTE + "dims" + QUOTE + COLON + 
 				OPEN_BOX + dims[0] + COMMA + dims[1] + COMMA + dims[2] + CLOSE_BOX + COMMA;
 
-			ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
-				OPEN_BOX  + nodes_links[0] + CLOSE_BOX + CLOSE_CURLY;
+			ds_json +=  nodes_links_str;
 			
 		}
 		else if (vis_type == "Tree" || vis_type == "BinaryTree" || vis_type ==  "BinarySearchTree" ||
 			vis_type == "AVLTree") {
-			ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
-				OPEN_CURLY  + nodes_links[0] + CLOSE_CURLY + CLOSE_CURLY;
+			ds_json +=  nodes_links_str;
 		}
 		else {
-
-			ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
-				"[" + nodes_links[0] + "]" + COMMA +
-				QUOTE + "links" + QUOTE + COLON +
-				"[" + nodes_links[1] + "]" +
-				CLOSE_CURLY;
+			ds_json += nodes_links_str;
 		}
 		if (json_flag)
 			System.out.println("\nJSON String:\n" + ds_json);

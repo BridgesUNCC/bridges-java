@@ -171,14 +171,12 @@ public class TreeElement<E> extends Element<E> {
 	 *
 	 *	@return the JSON string
 	 */
-	public String[] getDataStructureRepresentation() {
-		//	String[] nodes_links = new String[2];
-		//	nodes_links[0] = preOrder(this);
-		//	nodes_links[1] = "";
+	public String getDataStructureRepresentation() {
 
-		String[] nodes_links = {preOrder(this), ""};
+		String json_str = QUOTE + "nodes"  + QUOTE + COLON +
+                OPEN_CURLY  + preOrder(this) + CLOSE_CURLY + CLOSE_CURLY;
 
-		return nodes_links;
+		return json_str;
 	}
 
 	/**

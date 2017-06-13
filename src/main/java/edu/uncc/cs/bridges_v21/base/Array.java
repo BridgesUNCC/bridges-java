@@ -219,7 +219,7 @@ public class Array<E> extends DataStruct {
 	 * @return JSON string
 	*/
 
-	public String[] getDataStructureRepresentation () {
+	public String getDataStructureRepresentation () {
 
 		StringBuilder nodes_JSON = new StringBuilder();
 		StringBuilder links_JSON = new StringBuilder();
@@ -232,12 +232,9 @@ public class Array<E> extends DataStruct {
 						// remove last comma
 		nodes_JSON.setLength(nodes_JSON.length() - 1);
 
-		// note: there are no links for an array, order is
-		// by index
-		String[] nodes_links = new String[2];
-		nodes_links[0] = nodes_JSON.toString();
-		nodes_links[1] = "";
+		String json_str = QUOTE + "nodes"  + QUOTE + COLON +
+                OPEN_BOX  + nodes_JSON + CLOSE_BOX + CLOSE_CURLY;
 
-		return nodes_links;
+		return json_str;
 	}
 }
