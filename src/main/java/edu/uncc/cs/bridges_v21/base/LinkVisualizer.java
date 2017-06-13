@@ -43,28 +43,28 @@ import java.util.Random;
  *
  */
 
-public class LinkVisualizer{
-					// Link visualization properties for this element.
-					// maintains mapping from the terminating vertex to its
-					// visual properties
-					// implemented as a hashmap mapping into properties, which
-					// is als a hashmap, to keep the accesses constant time.
+public class LinkVisualizer {
+	// Link visualization properties for this element.
+	// maintains mapping from the terminating vertex to its
+	// visual properties
+	// implemented as a hashmap mapping into properties, which
+	// is als a hashmap, to keep the accesses constant time.
 	private String
-            QUOTE = "\"",
-            COMMA = ",",
-            COLON = ":",
-            OPEN_CURLY = "{", 
-            CLOSE_CURLY = "}", 
-            OPEN_PAREN = "(",
-            CLOSE_PAREN = ")",
-            OPEN_BOX = "[",
-            CLOSE_BOX = "]";
+	QUOTE = "\"",
+	COMMA = ",",
+	COLON = ":",
+	OPEN_CURLY = "{",
+	CLOSE_CURLY = "}",
+	OPEN_PAREN = "(",
+	CLOSE_PAREN = ")",
+	OPEN_BOX = "[",
+	CLOSE_BOX = "]";
 
-					// link color
+	// link color
 	private Color color;
-					// link thickness
+	// link thickness
 	private double thickness;
-					// link weight
+	// link weight
 	private double weight;
 
 
@@ -73,21 +73,21 @@ public class LinkVisualizer{
 		color = new Color(70, 130, 180, 1.0f);
 		setThickness(1.0);
 		setWeight(1.0);
-/*
-	HashMap<String,String> properties; 
-		properties = new HashMap<String, String>() {{
-					put("color", "black");
-        				put("opacity", "1.0");
-        				put("width", "1.0");
-        				put("weight", "1.0");
-					}};
-*/
+		/*
+			HashMap<String,String> properties;
+				properties = new HashMap<String, String>() {{
+							put("color", "black");
+		        				put("opacity", "1.0");
+		        				put("width", "1.0");
+		        				put("weight", "1.0");
+							}};
+		*/
 	}
 
 	/**
 	 * Set the thickness of the link in the Bridge Visualization in pixels; thickness
 	 * shoudl be in the range 0-50.0
-	 * 
+	 *
 	 * @param thickness
 	 *
 	 */
@@ -99,7 +99,7 @@ public class LinkVisualizer{
 
 	/**
 	 * Get the thickness of the link in the Bridges Visualiation
-	 * 
+	 *
 	 * @return the size in pixels of the Element in the Bridges Visualization
 	 */
 	public double getThickness() {
@@ -108,121 +108,195 @@ public class LinkVisualizer{
 
 	/**
 	 * Set the weight of the link, useful in graph algorithms, for example.
-     * weight value is user defined, and determined by the input graph specification.
-	 * 
+	 * weight value is user defined, and determined by the input graph specification.
+	 *
 	 * @param weight
 	 *
 	 */
 	public void setWeight(double wt) {
-						// is user defined so no checking
+		// is user defined so no checking
 		weight = wt;
 	}
 
 	/**
-	 * Get the weight of the link 
-	 * 
-	 * @return the stored edge weight 
+	 * Get the weight of the link
+	 *
+	 * @return the stored edge weight
 	 */
 	public double getWeight() {
 		return weight;
 	}
 
-	/** 
-	 * 
+	/**
+	 *
 	 *	Set the color of the link in the Bridges Visualization to "aColor".
-	 * 
-	 * 	@param col_name the string reprsenting the color of the Element in 
+	 *
+	 * 	@param col_name the string reprsenting the color of the Element in
 	 *		the Bridges Visualization; supported named colors are
- 	 *  	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
- 	 *  	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
- 	 *  	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
- 	 *  	"pink", "lavender", "purple", "gold"
- 	 *
+	 *  	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
+	 *  	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
+	 *  	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
+	 *  	"pink", "lavender", "purple", "gold"
+	 *
 	 */
 	public void setColor(String col_name) {
 
 		String col = col_name.toLowerCase();
-                        // validates and returns a 4 component RGBA val
+		// validates and returns a 4 component RGBA val
 		int red, green, blue;
 		float  alpha = 1.0f;
 
 		switch (col_name) {
-			case "red": red = 255; green = blue = 0; 
+			case "red":
+				red = 255;
+				green = blue = 0;
 				break;
-			case "green": red = 0; green = 255; blue = 0; 
+			case "green":
+				red = 0;
+				green = 255;
+				blue = 0;
 				break;
-			case "blue": red = 0; green = 0; blue = 255; 
+			case "blue":
+				red = 0;
+				green = 0;
+				blue = 255;
 				break;
-			case "yellow": red = 255; green = 255; blue = 0; 
+			case "yellow":
+				red = 255;
+				green = 255;
+				blue = 0;
 				break;
-			case "cyan": red = 0; green = 255; blue = 255; 
+			case "cyan":
+				red = 0;
+				green = 255;
+				blue = 255;
 				break;
-			case "magenta": red = 255; green = 0; blue = 255; 
+			case "magenta":
+				red = 255;
+				green = 0;
+				blue = 255;
 				break;
-			case "white": red = 255; green = 255; blue = 255; 
+			case "white":
+				red = 255;
+				green = 255;
+				blue = 255;
 				break;
-			case "black": red = 0; green = 0; blue = 0; 
+			case "black":
+				red = 0;
+				green = 0;
+				blue = 0;
 				break;
-			case "orange": red = 255; green = 155; blue = 0; 
+			case "orange":
+				red = 255;
+				green = 155;
+				blue = 0;
 				break;
-			case "turquoise": red = 173; green = 234; blue = 234; 
+			case "turquoise":
+				red = 173;
+				green = 234;
+				blue = 234;
 				break;
-			case "maroon": red = 176; green = 48; blue = 96; 
+			case "maroon":
+				red = 176;
+				green = 48;
+				blue = 96;
 				break;
-			case "aquamarine": red = 127; green = 255; blue = 212; 
+			case "aquamarine":
+				red = 127;
+				green = 255;
+				blue = 212;
 				break;
-			case "azure": red = 240; green = 255; blue = 255; 
+			case "azure":
+				red = 240;
+				green = 255;
+				blue = 255;
 				break;
-			case "beige": red = 245; green = 245; blue = 220; 
+			case "beige":
+				red = 245;
+				green = 245;
+				blue = 220;
 				break;
-			case "brown": red = 166; green = 42; blue = 42; 
+			case "brown":
+				red = 166;
+				green = 42;
+				blue = 42;
 				break;
-			case "tan": red = 210; green = 180; blue = 140; 
+			case "tan":
+				red = 210;
+				green = 180;
+				blue = 140;
 				break;
-			case "olive": red = 128; green = 128; blue = 0; 
+			case "olive":
+				red = 128;
+				green = 128;
+				blue = 0;
 				break;
-			case "chartreuse": red = 127; green = 255; blue = 0; 
+			case "chartreuse":
+				red = 127;
+				green = 255;
+				blue = 0;
 				break;
-			case "khaki": red = 240; green = 230; blue = 140; 
+			case "khaki":
+				red = 240;
+				green = 230;
+				blue = 140;
 				break;
-			case "bisque": red = 255; green = 228; blue = 196; 
+			case "bisque":
+				red = 255;
+				green = 228;
+				blue = 196;
 				break;
-			case "coral": red = 255; green = 127; blue = 0; 
+			case "coral":
+				red = 255;
+				green = 127;
+				blue = 0;
 				break;
-			case "pink": red = 255; green = 192; blue = 203; 
+			case "pink":
+				red = 255;
+				green = 192;
+				blue = 203;
 				break;
-			case "lavender": red = 230; green = 230; blue = 250; 
+			case "lavender":
+				red = 230;
+				green = 230;
+				blue = 250;
 				break;
-			case "purple": red = 160; green = 32; blue = 240; 
+			case "purple":
+				red = 160;
+				green = 32;
+				blue = 240;
 				break;
-			case "gold": red = 255; green = 215; blue = 0; 
+			case "gold":
+				red = 255;
+				green = 215;
+				blue = 0;
 				break;
 			default:
-				throw new InvalidValueException("Invalid color " + "'" + 
-					col_name + "'" +"."
+				throw new InvalidValueException("Invalid color " + "'" +
+					col_name + "'" + "."
 					+ " Only named primaries supported now. \n");
 		}
 		color = new Color (red, green, blue, alpha);
-    }
+	}
 
 	/**
-	 * 
+	 *
 	 * 	Set the color of the link given RGBA components
 	 *
-	 * 	@param r, g, b, a components 
+	 * 	@param r, g, b, a components
 	 *
 	 *	check to ensure they are in 0-255 range, else throw exception
-	 * 
+	 *
 	 */
-    public void setColor(Integer r, Integer g, Integer b, Float a)  throws
-									InvalidValueException {
+	public void setColor(Integer r, Integer g, Integer b, Float a)  throws
+		InvalidValueException {
 		color.setRed(r);
 		color.setGreen(g);
 		color.setBlue(b);
 		color.setAlpha(a);
-    }
+	}
 
-	/**   
+	/**
 	 *
 	 *	Get the color of the link in the Bridges Visualization
 	 *
@@ -235,8 +309,8 @@ public class LinkVisualizer{
 
 	/**
 	 * Sets the opacity of the link in the Bridges Visualization
-	 * 
-	 * @param opacity a float between 0 and 1 representing how transparent 
+	 *
+	 * @param opacity a float between 0 and 1 representing how transparent
 	 *	the node
 	 *            should be on the Bridges Visualization. 0 for invisible, 1 for
 	 *            fully visible, a decimal between 0 and 1 for varying
@@ -246,7 +320,7 @@ public class LinkVisualizer{
 		color.setAlpha(opacity);
 	}
 
-	/** 
+	/**
 	 *
 	 * 	Get the opacity of the link in the Bridges Visualization
 	 *
@@ -258,19 +332,19 @@ public class LinkVisualizer{
 	}
 
 	public String getLinkProperties() {
-		String link_props = 
-			QUOTE + "color" + QUOTE + COLON + 
-				OPEN_BOX + 
-					Integer.toString(this.getColor().getRed()) + COMMA +
-					Integer.toString(this.getColor().getGreen()) + COMMA +
-					Integer.toString(this.getColor().getBlue()) + COMMA +
-					Float.toString(this.getColor().getAlpha()) +
-				CLOSE_BOX + COMMA + 
-			QUOTE + "thickness" + QUOTE + COLON + 
-				Double.toString(this.getThickness()) + COMMA +
-			QUOTE + "weight" + QUOTE + COLON + 
-				Double.toString(this.getWeight());
-			
+		String link_props =
+			QUOTE + "color" + QUOTE + COLON +
+			OPEN_BOX +
+			Integer.toString(this.getColor().getRed()) + COMMA +
+			Integer.toString(this.getColor().getGreen()) + COMMA +
+			Integer.toString(this.getColor().getBlue()) + COMMA +
+			Float.toString(this.getColor().getAlpha()) +
+			CLOSE_BOX + COMMA +
+			QUOTE + "thickness" + QUOTE + COLON +
+			Double.toString(this.getThickness()) + COMMA +
+			QUOTE + "weight" + QUOTE + COLON +
+			Double.toString(this.getWeight());
+
 
 		return link_props;
 	}

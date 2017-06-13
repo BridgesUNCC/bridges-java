@@ -23,8 +23,8 @@ import java.util.Map.Entry;
  *  The vertices of the graph are held in a Java hashmap, for near constant time access;
  *  this lets us use strings or integral ids for vertices. The edges are accessed
  *	by a second hashmap from each vertex, again assuring near constant access time.
- *  Each edge contains the terminating vertex id and weight, as defined by  the Edge 
- *	class structure. 
+ *  Each edge contains the terminating vertex id and weight, as defined by  the Edge
+ *	class structure.
  *
  *  Convenience methods are provided to add vertices and edges to the graph. Edges
  *  are retrieved by using the dual hashmap, given the vertex ids of the edge.
@@ -42,24 +42,24 @@ import java.util.Map.Entry;
  *
  */
 
-public class GraphAdjMatrix<K, E> extends DataStruct { 
+public class GraphAdjMatrix<K, E> extends DataStruct {
 
 	private int maxSize;
 
-						// graph vertices list
+	// graph vertices list
 	private final HashMap<K, Element<E> > vertices;
 
-						// holds the adjacency list of edges
+	// holds the adjacency list of edges
 	private final HashMap<K, HashMap<K, Integer> > matrix;
 
 	/**
-	 *	Constructor 
-	 */ 
+	 *	Constructor
+	 */
 	public GraphAdjMatrix(int size) {
 		maxSize = size;
 		vertices = new HashMap<K, Element<E> >(size);
 		matrix = new HashMap<K, HashMap<K, Integer>>(size);
-	}	
+	}
 
 	/**
 	 *
@@ -71,88 +71,88 @@ public class GraphAdjMatrix<K, E> extends DataStruct {
 	public String getDataStructType() {
 		return "GraphAdjacencyMatrix";
 	}
-	
+
 	/**
 	 *	Adds a new vertex to the graph, initializes the  adjacency
 	 *	list; user is responsible for checking if the vertex already
 	 *	exists. This method will replace the value for this key
- 	 *	
-	 *	@param k - vertex key value 
+	 *
+	 *	@param k - vertex key value
 	 *	@param 3 - user specified data, part of the vertex data
 	 *
 	 */
 	public void addVertex(K k, E e) {
-					// note: it is the user's responsibility to  check
-					// for duplicate vertices
+		// note: it is the user's responsibility to  check
+		// for duplicate vertices
 		try {
 			if (vertices.size() == maxSize) {
 				throw new IndexOutOfBoundsException();
 			}
 		}
 		catch (IndexOutOfBoundsException ex) {
-    		System.err.println(
-			"IndexOutOfBoundsException: Max Vertices exceeded!"+ex.getMessage());
+			System.err.println(
+				"IndexOutOfBoundsException: Max Vertices exceeded!" + ex.getMessage());
 		}
 		vertices.put(k, new Element<E>(e));
 		vertices.get(k).setLabel((String) k);
-								// create a hashmap for this vertex
+		// create a hashmap for this vertex
 		matrix.put(k, new HashMap<K, Integer>(maxSize));
-								// fill up this vertex's row and column elements
-		for (Entry<K, Element<E>> el: vertices.entrySet()) {
+		// fill up this vertex's row and column elements
+		for (Entry<K, Element<E>> el : vertices.entrySet()) {
 			(matrix.get(k)).put(el.getKey(), 0); // row
 			(matrix.get(el.getKey())).put(k, 0); // col
 		}
 	}
 
 	/**
-	 *	Adds a new edge to the graph, adds it to the index corresponding to 
-     *	the source, destination vertex ids;  this version of the method assumes
-	 *	an edge weight of 1 (unweighted graph); user is responsible for checking if the 
+	 *	Adds a new edge to the graph, adds it to the index corresponding to
+	 *	the source, destination vertex ids;  this version of the method assumes
+	 *	an edge weight of 1 (unweighted graph); user is responsible for checking if the
 	 *	vertices already exist, else an exception is thrown.
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *
 	 */
 	public void addEdge(K src, K dest) {
-				// check to see if the two vertices exist, else 
-				// throw an exception
+		// check to see if the two vertices exist, else
+		// throw an exception
 		try {
 			if (vertices.get(src) == null || vertices.get(dest) == null) {
-            	throw new NullPointerException("Vertex "+ src + " or " + dest +
-               	" does not exist! Add the vertex before creating the edge.");
+				throw new NullPointerException("Vertex " + src + " or " + dest +
+					" does not exist! Add the vertex before creating the edge.");
 			}
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		(matrix.get(src)).put(dest, 1);
 	}
 	/**
-	 *	Adds a new edge of weight 'weight' to the graph, adds it to the index 
-	 *	corresponding to the source, destination vertex ids;  user is responsible 
+	 *	Adds a new edge of weight 'weight' to the graph, adds it to the index
+	 *	corresponding to the source, destination vertex ids;  user is responsible
 	 *	for checking if the vertices already exist, else an exception is thrown.
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *	@param weight - edge weight
 	 *
 	 */
 	public void addEdge(K src, K dest, int weight) {
-				// check to see if the two vertices exist, else 
-				// throw an exception
+		// check to see if the two vertices exist, else
+		// throw an exception
 		try {
 			if (vertices.get(src) == null || vertices.get(dest) == null) {
-            	throw new NullPointerException("Vertex "+ src + " or " + dest +
-               	" does not exist! Add the vertex before creating the edge.");
+				throw new NullPointerException("Vertex " + src + " or " + dest +
+					" does not exist! Add the vertex before creating the edge.");
 			}
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		(matrix.get(src)).put(dest, weight);
 	}
-	/** 
+	/**
 	 *
 	 *	This method returns the graph nodes
 	 *
@@ -163,14 +163,14 @@ public class GraphAdjMatrix<K, E> extends DataStruct {
 		return vertices;
 	}
 
-	/** 
+	/**
 	 *
-	 *	Gets the adjacency matrix 
+	 *	Gets the adjacency matrix
 	 *
-	 *	@return - the graph's adjacency matrix 
+	 *	@return - the graph's adjacency matrix
 	 */
 	public HashMap<K, HashMap<K, Integer>> getAdjacencyMatrix() {
-		return matrix; 
+		return matrix;
 	}
 	/**
 	 *
@@ -180,14 +180,14 @@ public class GraphAdjMatrix<K, E> extends DataStruct {
 	 *
 	 */
 	public LinkVisualizer getLinkVisualizer (K src, K dest) throws Exception {
-							// get the source and destination vertex elements
-							// and check to see if they exist
+		// get the source and destination vertex elements
+		// and check to see if they exist
 		Element<E> v1 = vertices.get(src);
 		Element<E> v2 = vertices.get(dest);
 		try {
 			if (v1 == null || v2 == null) {
-				throw new NullPointerException("Vertex "+ src + " or " + dest +
-				" does not exist! First add the vertices to the graph.");
+				throw new NullPointerException("Vertex " + src + " or " + dest +
+					" does not exist! First add the vertices to the graph.");
 			}
 		}
 		catch (Exception e) {
@@ -198,18 +198,18 @@ public class GraphAdjMatrix<K, E> extends DataStruct {
 	/**
 	 *
 	 *	This is a convenience method to simplify access to the element visualizer;
-	 *	the method assumes the vertex name points to an existing vertice, else an 
+	 *	the method assumes the vertex name points to an existing vertice, else an
 	 *	exception is thrown
 	 *
 	 */
 	public ElementVisualizer getVisualizer (K vertex) throws Exception {
-							// get the source and destination vertex elements
-							// and check to see if they exist
+		// get the source and destination vertex elements
+		// and check to see if they exist
 		Element<E> v = vertices.get(vertex);
 		try {
 			if (v == null) {
 				throw new NullPointerException("Vertex " + vertex  +
-				" does not exist! First add the vertices to the graph.");
+					" does not exist! First add the vertices to the graph.");
 			}
 		}
 		catch (Exception e) {
@@ -222,26 +222,26 @@ public class GraphAdjMatrix<K, E> extends DataStruct {
 	 *	Get the JSON representation of the the data structure
 	 */
 	public String[] getDataStructureRepresentation() {
-					// map to reorder the nodes for building JSON
+		// map to reorder the nodes for building JSON
 		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
-					// get teh list nodes
+		// get teh list nodes
 		Vector<Element<E> > nodes = new Vector<Element<E>> ();
 
 		for (Entry<K, Element<E>> element : vertices.entrySet())
 			nodes.add(element.getValue());
 
-						// remap  map these nodes to  0...MaxNodes-1
-						// and build the nodes JSON
+		// remap  map these nodes to  0...MaxNodes-1
+		// and build the nodes JSON
 		StringBuilder nodes_JSON = new StringBuilder();
 		for (int k = 0; k < nodes.size(); k++) {
 			node_map.put(nodes.get(k), k);
 			nodes_JSON.append(nodes.get(k).getElementRepresentation());
 			nodes_JSON.append(COMMA);
 		}
-						// remove the last comma
-		nodes_JSON.setLength(nodes_JSON.length()-1);
+		// remove the last comma
+		nodes_JSON.setLength(nodes_JSON.length() - 1);
 
-						// build the links JSON - traverse the adj. lists
+		// build the links JSON - traverse the adj. lists
 		StringBuilder links_JSON = new StringBuilder();
 		for (Entry<K, HashMap<K, Integer> > el_src : matrix.entrySet()) {
 
@@ -249,18 +249,18 @@ public class GraphAdjMatrix<K, E> extends DataStruct {
 			Integer src_indx = node_map.get(src_vert);
 
 			for (Entry<K, Integer> el_dest : el_src.getValue().entrySet()) {
-				Element<E> dest_vert = vertices.get(el_dest.getKey());	
+				Element<E> dest_vert = vertices.get(el_dest.getKey());
 				if (el_dest.getValue() > 0) {
 					Integer dest_indx = node_map.get(dest_vert);
 
 					links_JSON.append(src_vert.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert),
 							Integer.toString(src_indx), Integer.toString(dest_indx)))
-							.append(COMMA);
+					.append(COMMA);
 				}
 			}
 		}
-						// remove the last comma
-		links_JSON.setLength(links_JSON.length()-1);
+		// remove the last comma
+		links_JSON.setLength(links_JSON.length() - 1);
 
 		String[] nodes_links = new String[2];
 		nodes_links[0] = nodes_JSON.toString();

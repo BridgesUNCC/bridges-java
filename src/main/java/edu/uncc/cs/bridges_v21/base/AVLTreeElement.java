@@ -4,8 +4,8 @@ import bridges.base.*;
  *  @brief This class extends the BSTElement class by adding a height and balance factor
  *	fields that are useful in AVL trees.
  *
- *	AVL tree elements include a 'height' and a 'balFactor' value, 
- *	representing the height and balance factor of the AVL tree at 
+ *	AVL tree elements include a 'height' and a 'balFactor' value,
+ *	representing the height and balance factor of the AVL tree at
  *  that node, respectively. This is useful in representing
  *	AVL trees.
  *
@@ -13,8 +13,8 @@ import bridges.base.*;
  *  attributes (color, shape, opacity, size), necessary for displaying them in a
  *  web browser.
  *
- *  AVLTree elements also have a LinkVisualizer object, that is used when they are 
- *	linked to another element, appropriate for setting link attributes, for instance, 
+ *  AVLTree elements also have a LinkVisualizer object, that is used when they are
+ *	linked to another element, appropriate for setting link attributes, for instance,
  *	between *  the current element and its left or right child
  *
  *  @param E he generic parameter object that is part of this element, representing
@@ -35,8 +35,8 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	private Integer height, balFactor;
 
 	/**
- 	 *
- 	 *  Construct an AVLTreeElement with default values 
+	 *
+	 *  Construct an AVLTreeElement with default values
 	 *
 	 */
 	public AVLTreeElement() {
@@ -44,13 +44,13 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 		height = balFactor = 0;
 	}
 	/**
- 	 *
- 	 *  Construct an AVLTreeElement holding a key value  "k" and an object "e" 
 	 *
- 	 *  @param k the search key
- 	 *  @param e the appl specific object that Element is holding
- 	 *
- 	 */
+	 *  Construct an AVLTreeElement holding a key value  "k" and an object "e"
+	 *
+	 *  @param k the search key
+	 *  @param e the appl specific object that Element is holding
+	 *
+	 */
 	public AVLTreeElement(K k, E e) {
 		super(e);
 		setKey(k);
@@ -73,9 +73,9 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	 *	@return  height
 	 *
 	 */
-    public int getHeight() {
-        return height;
-    }
+	public int getHeight() {
+		return height;
+	}
 
 	/**
 	 *	This method sets the height of the tree at this node
@@ -83,9 +83,9 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	 *  @param   height h
 	 *
 	 */
-    public void setHeight(int h) {
-        height = h;
-    }
+	public void setHeight(int h) {
+		height = h;
+	}
 
 	/**
 	 *	This method returns the balance factor  of the tree at this node
@@ -93,18 +93,18 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	 *	@return  balance factor
 	 *
 	 */
-    public int getBalanceFactor() {
-        return balFactor;
-    }
+	public int getBalanceFactor() {
+		return balFactor;
+	}
 
 	/**
 	 *	This method sets the balance factor of the tree at this node
 	 *
 	 *  @param   balance factor  bf
 	 */
-    public void setBalanceFactor(int bf) {
-        balFactor = bf;
-    }
+	public void setBalanceFactor(int bf) {
+		balFactor = bf;
+	}
 
 	/**
 	 *
