@@ -59,7 +59,8 @@ public class Bridges {
 	private static int assignment_part;
 	private static String key;
 	private static DataFormatter df;
-	private static String userName, vis_type;
+	private static String userName, vis_type,
+				title, description;
 
 	private static DataStruct ds_handle = null;		// data structure handle
 
@@ -87,6 +88,8 @@ public class Bridges {
 		connector = new Connector();
 		df = new DataFormatter();
 		assignment_part = 0;
+		title = new String();
+		description = new String();
 	}
 
 	/**
@@ -108,7 +111,7 @@ public class Bridges {
 	 *
 	 */
 	public void setTitle(String title) {
-		//		visualizer.setTitle(title);
+		this.title = title;
 	}
 
 	/**
@@ -116,14 +119,14 @@ public class Bridges {
 	 * @param descr description to annotate the visualization;
 	 *
 	 */
-	public void setDescription(String descr) {
-		//		visualizer.setDescription(descr);
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
 	 *
-	 * 	@param  server server to which to connect. Options are: ['live', 'local', 'clone'],
-	 *			and 'live' is the default;
+	 * 	@param  server server to which to connect. 
+	 *		Options are: ['live', 'local', 'clone'], and 'live' is the default;
 	 *
 	 */
 	public void setServer(String server) {
@@ -591,8 +594,8 @@ public class Bridges {
 		String ds_json =
 			OPEN_CURLY +
 			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
-			QUOTE + "title"   + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
-			QUOTE + "description" + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
+			QUOTE + "title"   + QUOTE + COLON + QUOTE + title + QUOTE + COMMA +
+			QUOTE + "description" + QUOTE + COLON + QUOTE + description + QUOTE + COMMA +
 			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + "Cartesian" + QUOTE + COMMA;
 
 
