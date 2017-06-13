@@ -46,13 +46,13 @@ import bridges.validation.*;
 public class Bridges {
 
 	private static int assignmentDecimal = 0;
-//	protected ADTVisualizer<K, E> visualizer;
+	//	protected ADTVisualizer<K, E> visualizer;
 	private  Connector connector;
-//	private Element<E> root;
-//	private GraphAdjList<K, E>  graph_adj_list;
-//	private GraphAdjMatrix<K, E>  graph_adj_matrix;
-//	private Element<E>[]  element_array;
-//	private Array<E>  br_array;
+	//	private Element<E> root;
+	//	private GraphAdjList<K, E>  graph_adj_list;
+	//	private GraphAdjMatrix<K, E>  graph_adj_matrix;
+	//	private Element<E>[]  element_array;
+	//	private Array<E>  br_array;
 	private int element_array_size;
 	private static boolean json_flag = false;
 	private static int assignment;
@@ -83,7 +83,7 @@ public class Bridges {
 	 */
 	public Bridges() {
 		super();
-//		visualizer = new ADTVisualizer<K, E>();
+		//		visualizer = new ADTVisualizer<K, E>();
 		connector = new Connector();
 		df = new DataFormatter();
 		assignment_part = 0;
@@ -108,7 +108,7 @@ public class Bridges {
 	 *
 	 */
 	public void setTitle(String title) {
-//		visualizer.setTitle(title);
+		//		visualizer.setTitle(title);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class Bridges {
 	 *
 	 */
 	public void setDescription(String descr) {
-//		visualizer.setDescription(descr);
+		//		visualizer.setDescription(descr);
 	}
 
 	/**
@@ -362,11 +362,11 @@ public class Bridges {
 	 * @return visualizer
 	 *
 	 */
-/*
-	public ADTVisualizer<K, E> getVisualizer() {
-		return visualizer;
-	}
-*/
+	/*
+		public ADTVisualizer<K, E> getVisualizer() {
+			return visualizer;
+		}
+	*/
 
 	/**
 	 *
@@ -375,11 +375,11 @@ public class Bridges {
 	 * @param visualizer
 	 *
 	 */
-/*
-	public void setVisualizer(ADTVisualizer<K, E> visualizer) {
-		this.visualizer = visualizer;
-	}
-*/
+	/*
+		public void setVisualizer(ADTVisualizer<K, E> visualizer) {
+			this.visualizer = visualizer;
+		}
+	*/
 
 	/**
 	 *
@@ -558,7 +558,7 @@ public class Bridges {
 		String nodes_links_str = "";
 		switch (vis_type) {
 			case "Array":
-					nodes_links_str = ((Array) ds_handle).getDataStructureRepresentation();
+				nodes_links_str = ((Array) ds_handle).getDataStructureRepresentation();
 				break;
 			case "SinglyLinkedList":
 			case "DoublyLinkedList":
@@ -590,10 +590,10 @@ public class Bridges {
 
 		String ds_json =
 			OPEN_CURLY +
-				QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
-				QUOTE + "title"   + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
-				QUOTE + "description" + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA + 
-				QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + "Cartesian" + QUOTE + COMMA;
+			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
+			QUOTE + "title"   + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
+			QUOTE + "description" + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
+			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + "Cartesian" + QUOTE + COMMA;
 
 
 		// get the nodes and link representations
@@ -603,11 +603,11 @@ public class Bridges {
 			Array ds_array = (Array) ds_handle;
 			int num_dims = ds_array.getNumDimensions();
 			ds_array.getDimensions(dims);
-			ds_json += QUOTE + "dims" + QUOTE + COLON + 
+			ds_json += QUOTE + "dims" + QUOTE + COLON +
 				OPEN_BOX + dims[0] + COMMA + dims[1] + COMMA + dims[2] + CLOSE_BOX + COMMA;
 
 			ds_json +=  nodes_links_str;
-			
+
 		}
 		else if (vis_type == "Tree" || vis_type == "BinaryTree" || vis_type ==  "BinarySearchTree" ||
 			vis_type == "AVLTree") {
@@ -635,7 +635,7 @@ public class Bridges {
 		}
 		// Return a URL to the user
 		System.out.println("\nCheck Your Visualization at the following link:\n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+			connector.getServerURL() + "/assignments/" + assignment + "/"
 			+ userName + "\n\n");
 
 	}
@@ -644,311 +644,311 @@ public class Bridges {
 	 * visualize a singly linked list.
 	 *
 	 **/
-/*
-	protected void visualizeLinkedList() {
-		try {
-			connector.post("/assignments/" + getAssignment(),
-				visualizer.getSLRepresentation((SLelement<E>)root));
+	/*
+		protected void visualizeLinkedList() {
+			try {
+				connector.post("/assignments/" + getAssignment(),
+					visualizer.getSLRepresentation((SLelement<E>)root));
+			}
+			catch (IOException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+			}
+			catch (RateLimitException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+			}
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at \n\n" +
+				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+			assignment_part++;
 		}
-		catch (IOException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. Are you connected to the"
-				+ " Internet? Check your network settings. Otherwise, maybe"
-				+ " the central DataFormatters server is down. Try again later.\n"
-				+ e.getMessage());
-		}
-		catch (RateLimitException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. However, it responded with"
-				+ " an impossible 'RateLimitException'. Please contact"
-				+ " DataFormatters developers and file a bug report; this error"
-				+ " should not be possible.\n"
-				+ e.getMessage());
-		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-			+ userName + "\n\n");
-		assignment_part++;
-	}
-*/
+	*/
 
 	/**
 	 *
 	 * visualize a multi list.
 	 *
 	 **/
-/*
-	protected void visualizeMultiList() {
-		try {
-			connector.post("/assignments/" + getAssignment(),
-				visualizer.getMLRepresentation((MLelement<E>)root));
+	/*
+		protected void visualizeMultiList() {
+			try {
+				connector.post("/assignments/" + getAssignment(),
+					visualizer.getMLRepresentation((MLelement<E>)root));
+			}
+			catch (IOException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+			}
+			catch (RateLimitException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+			}
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at \n\n" +
+				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+			assignment_part++;
 		}
-		catch (IOException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. Are you connected to the"
-				+ " Internet? Check your network settings. Otherwise, maybe"
-				+ " the central DataFormatters server is down. Try again later.\n"
-				+ e.getMessage());
-		}
-		catch (RateLimitException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. However, it responded with"
-				+ " an impossible 'RateLimitException'. Please contact"
-				+ " DataFormatters developers and file a bug report; this error"
-				+ " should not be possible.\n"
-				+ e.getMessage());
-		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-			+ userName + "\n\n");
-		assignment_part++;
-	}
 
-*/
+	*/
 
 	/**
 	 *  Visualization  a doubly linked list.
 	 *
 	 **/
-/*
-	protected void visualizeDoublyLinkedList() {
-		try {
-			connector.post("/assignments/" + getAssignment(),
-				visualizer.getDLRepresentation((DLelement<E>)root));
+	/*
+		protected void visualizeDoublyLinkedList() {
+			try {
+				connector.post("/assignments/" + getAssignment(),
+					visualizer.getDLRepresentation((DLelement<E>)root));
+			}
+			catch (IOException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+			}
+			catch (RateLimitException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+			}
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at \n\n" +
+				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+			assignment_part++;
 		}
-		catch (IOException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. Are you connected to the"
-				+ " Internet? Check your network settings. Otherwise, maybe"
-				+ " the central DataFormatters server is down. Try again later.\n"
-				+ e.getMessage());
-		}
-		catch (RateLimitException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. However, it responded with"
-				+ " an impossible 'RateLimitException'. Please contact"
-				+ " DataFormatters developers and file a bug report; this error"
-				+ " should not be possible.\n"
-				+ e.getMessage());
-		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-			+ userName + "\n\n");
-		assignment_part++;
-	}
-*/
+	*/
 
 	/**
 	 *  Visualize  an array
 	 *
 	 **/
-/*
-	protected void visualizeArrayObj() {
-		try {
-			connector.post("/assignments/" + getAssignment(),
-				visualizer.getArrayRepresentation(br_array));
+	/*
+		protected void visualizeArrayObj() {
+			try {
+				connector.post("/assignments/" + getAssignment(),
+					visualizer.getArrayRepresentation(br_array));
+			}
+			catch (IOException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+			}
+			catch (RateLimitException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+			}
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at \n\n" +
+				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+			assignment_part++;
 		}
-		catch (IOException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. Are you connected to the"
-				+ " Internet? Check your network settings. Otherwise, maybe"
-				+ " the central DataFormatters server is down. Try again later.\n"
-				+ e.getMessage());
-		}
-		catch (RateLimitException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. However, it responded with"
-				+ " an impossible 'RateLimitException'. Please contact"
-				+ " DataFormatters developers and file a bug report; this error"
-				+ " should not be possible.\n"
-				+ e.getMessage());
-		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-			+ userName + "\n\n");
-		assignment_part++;
-	}
-*/
+	*/
 	/**
 	 *  Visualize  an array
 	 *
 	 **/
-/*
-	protected void visualizeArray() {
-		try {
-			connector.post("/assignments/" + getAssignment(),
-				visualizer.getArrayRepresentation(element_array, element_array_size));
+	/*
+		protected void visualizeArray() {
+			try {
+				connector.post("/assignments/" + getAssignment(),
+					visualizer.getArrayRepresentation(element_array, element_array_size));
+			}
+			catch (IOException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central DataFormatters server is down. Try again later.\n"
+					+ e.getMessage());
+			}
+			catch (RateLimitException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " DataFormatters developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+			}
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at \n\n" +
+				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+			assignment_part++;
 		}
-		catch (IOException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. Are you connected to the"
-				+ " Internet? Check your network settings. Otherwise, maybe"
-				+ " the central DataFormatters server is down. Try again later.\n"
-				+ e.getMessage());
-		}
-		catch (RateLimitException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. However, it responded with"
-				+ " an impossible 'RateLimitException'. Please contact"
-				+ " DataFormatters developers and file a bug report; this error"
-				+ " should not be possible.\n"
-				+ e.getMessage());
-		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-			+ userName + "\n\n");
-		assignment_part++;
-	}
-*/
+	*/
 
 	/**
 	 * Visualize a binary tree
 	 *
 	 */
-/*
-	protected void visualizeTree() {
-		try {
-			connector.post("/assignments/" + getAssignment(), visualizer.getTreeRepresentation((TreeElement<E>)root));
+	/*
+		protected void visualizeTree() {
+			try {
+				connector.post("/assignments/" + getAssignment(), visualizer.getTreeRepresentation((TreeElement<E>)root));
+			}
+			catch (IOException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central Bridges server is down. Try again later.\n"
+					+ e.getMessage());
+			}
+			catch (RateLimitException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " Bridgess developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+			}
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at \n\n" +
+				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+			assignment_part++;
 		}
-		catch (IOException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. Are you connected to the"
-				+ " Internet? Check your network settings. Otherwise, maybe"
-				+ " the central Bridges server is down. Try again later.\n"
-				+ e.getMessage());
-		}
-		catch (RateLimitException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. However, it responded with"
-				+ " an impossible 'RateLimitException'. Please contact"
-				+ " Bridgess developers and file a bug report; this error"
-				+ " should not be possible.\n"
-				+ e.getMessage());
-		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-			+ userName + "\n\n");
-		assignment_part++;
-	}
-*/
+	*/
 	/**
 	 * Visualize a binary searchtree
 	 *
 	 */
-/*
-	protected void visualizeBinarySearchTree() {
-		try {
-			connector.post("/assignments/" + getAssignment(),
-				visualizer.getTreeRepresentation((TreeElement<E>)root));
+	/*
+		protected void visualizeBinarySearchTree() {
+			try {
+				connector.post("/assignments/" + getAssignment(),
+					visualizer.getTreeRepresentation((TreeElement<E>)root));
+			}
+			catch (IOException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central Bridges server is down. Try again later.\n"
+					+ e.getMessage());
+			}
+			catch (RateLimitException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " Bridgess developers and file a bug report; this error"
+					+ " should not be possible.\n"
+					+ e.getMessage());
+			}
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at \n\n" +
+				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+			assignment_part++;
 		}
-		catch (IOException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. Are you connected to the"
-				+ " Internet? Check your network settings. Otherwise, maybe"
-				+ " the central Bridges server is down. Try again later.\n"
-				+ e.getMessage());
-		}
-		catch (RateLimitException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. However, it responded with"
-				+ " an impossible 'RateLimitException'. Please contact"
-				+ " Bridgess developers and file a bug report; this error"
-				+ " should not be possible.\n"
-				+ e.getMessage());
-		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-			+ userName + "\n\n");
-		assignment_part++;
-	}
-*/
+	*/
 
 	/**
 	 * Update visualization metadata of Graph with Adjacency List. This may be called many times.
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
-/*
-	protected void visualizeGraphAdjacencyList() {
-		try {
-			connector.post("/assignments/" + getAssignment(),
-				visualizer.getGraphAdjList_Representation(graph_adj_list) );
+	/*
+		protected void visualizeGraphAdjacencyList() {
+			try {
+				connector.post("/assignments/" + getAssignment(),
+					visualizer.getGraphAdjList_Representation(graph_adj_list) );
+			}
+			catch (IOException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server."
+					+ " First please check the graph's adjaceny list. This may cause errors while trying to interpret the data."
+					+ " Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central Bridges server is down. Try again later.\n"
+					+ e.getMessage());
+			}
+			catch (RateLimitException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " the developers and file a bug report; this error"
+					+ " should not be possible. Also please check the data type for graph's adjacency list.\n"
+					+ e.getMessage());
+			}
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at \n\n" +
+				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+			assignment_part++;
 		}
-		catch (IOException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server."
-				+ " First please check the graph's adjaceny list. This may cause errors while trying to interpret the data."
-				+ " Are you connected to the"
-				+ " Internet? Check your network settings. Otherwise, maybe"
-				+ " the central Bridges server is down. Try again later.\n"
-				+ e.getMessage());
+		protected void visualizeGraphAdjacencyMatrix() {
+			try {
+				connector.post("/assignments/" + getAssignment(),
+					visualizer.getGraphAdjMatrix_Representation(graph_adj_matrix) );
+			}
+			catch (IOException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server."
+					+ " First please check the graph's adjaceny list. This may cause errors while trying to interpret the data."
+					+ " Are you connected to the"
+					+ " Internet? Check your network settings. Otherwise, maybe"
+					+ " the central Bridges server is down. Try again later.\n"
+					+ e.getMessage());
+			}
+			catch (RateLimitException e) {
+				System.err.println("There was a problem sending the visualization"
+					+ " representation to the server. However, it responded with"
+					+ " an impossible 'RateLimitException'. Please contact"
+					+ " the developers and file a bug report; this error"
+					+ " should not be possible. Also please check the data type for graph's adjacency list.\n"
+					+ e.getMessage());
+			}
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at \n\n" +
+				"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+			assignment_part++;
 		}
-		catch (RateLimitException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. However, it responded with"
-				+ " an impossible 'RateLimitException'. Please contact"
-				+ " the developers and file a bug report; this error"
-				+ " should not be possible. Also please check the data type for graph's adjacency list.\n"
-				+ e.getMessage());
-		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-			+ userName + "\n\n");
-		assignment_part++;
-	}
-	protected void visualizeGraphAdjacencyMatrix() {
-		try {
-			connector.post("/assignments/" + getAssignment(),
-				visualizer.getGraphAdjMatrix_Representation(graph_adj_matrix) );
-		}
-		catch (IOException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server."
-				+ " First please check the graph's adjaceny list. This may cause errors while trying to interpret the data."
-				+ " Are you connected to the"
-				+ " Internet? Check your network settings. Otherwise, maybe"
-				+ " the central Bridges server is down. Try again later.\n"
-				+ e.getMessage());
-		}
-		catch (RateLimitException e) {
-			System.err.println("There was a problem sending the visualization"
-				+ " representation to the server. However, it responded with"
-				+ " an impossible 'RateLimitException'. Please contact"
-				+ " the developers and file a bug report; this error"
-				+ " should not be possible. Also please check the data type for graph's adjacency list.\n"
-				+ e.getMessage());
-		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
-			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/"
-			+ userName + "\n\n");
-		assignment_part++;
-	}
-*/
+	*/
 
 	/**
 	 * @return the root
 	 */
-/*
-	public Element<E> getRoot() {
-		return root;
-	}
-*/
+	/*
+		public Element<E> getRoot() {
+			return root;
+		}
+	*/
 
 	/**
 	 * @param root the root to set
 	 */
-/*
-	public void setRoot(Element<E> root) {
-		this.root = root;
-	}
-*/
+	/*
+		public void setRoot(Element<E> root) {
+			this.root = root;
+		}
+	*/
 }

@@ -174,7 +174,7 @@ public class TreeElement<E> extends Element<E> {
 	public String getDataStructureRepresentation() {
 
 		String json_str = QUOTE + "nodes"  + QUOTE + COLON +
-                OPEN_CURLY  + preOrder(this) + CLOSE_CURLY + CLOSE_CURLY;
+			OPEN_CURLY  + preOrder(this) + CLOSE_CURLY + CLOSE_CURLY;
 
 		return json_str;
 	}

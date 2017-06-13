@@ -229,11 +229,11 @@ public class Array<E> extends DataStruct {
 				nodes_JSON.append(array_data[i].getElementRepresentation() + ",");
 			}
 		}
-						// remove last comma
+		// remove last comma
 		nodes_JSON.setLength(nodes_JSON.length() - 1);
 
 		String json_str = QUOTE + "nodes"  + QUOTE + COLON +
-                OPEN_BOX  + nodes_JSON + CLOSE_BOX + CLOSE_CURLY;
+			OPEN_BOX  + nodes_JSON + CLOSE_BOX + CLOSE_CURLY;
 
 		return json_str;
 	}

@@ -24,12 +24,15 @@ import bridges.validation.RateLimitException;
 
 
 public class Connector {
-	//	String server_url = "http://bridges-clone.herokuapp.com";
+	String server_live = "http://bridges-cs.herokuapp.com";
+	String server_clone = "http://bridges-clone.herokuapp.com";
+	String server_local = "http://127.0.0.1:3000";
+
 	String server_type = "application";
 	String server_url = "http://bridges-cs.herokuapp.com";
 	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";  //usgs earthquakes url
 	String airline_url = "https://earthquakes-uncc.herokuapp.com/airline"; //corgis airline data
-	//	String server_url = "http://127.0.0.1:3000";
+
 	Executor http_connection;
 	boolean debug = false;
 	int pattern_found = 0; //semaphor
@@ -46,13 +49,23 @@ public class Connector {
 
 	/* Accessors and Mutators */
 	/**
-	 * Set the server type
-	 *
-	 *	@param server_type  Server type can be "local", "clone" or "application" (the main application server);
-	 *			default is "application"
+	 * Set the current DataFormatters server to live, clone, or local, or throw an error;
+	 * @param server
 	 */
-	public void setServer(String srv) {
-		server_type = srv;
+	public void setServer(String server) throws IllegalArgumentException {
+		switch(server) {
+				case "live":
+					setServerURL(server_live);
+					break;
+				case "clone":
+					setServerURL(server_clone);
+					break;
+				case "local":
+					setServerURL(server_local);
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'local'].");
+		}
 	}
 
 	/**

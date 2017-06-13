@@ -263,11 +263,11 @@ public class GraphAdjMatrix<K, E> extends DataStruct {
 		links_JSON.setLength(links_JSON.length() - 1);
 
 		String json_str =
-				QUOTE + "nodes"  + QUOTE + COLON +
-				OPEN_BOX + nodes_JSON.toString()  + CLOSE_BOX + COMMA +
-				QUOTE + "links" + QUOTE + COLON +
-				OPEN_BOX + links_JSON.toString() + CLOSE_BOX +
-				CLOSE_CURLY;
+			QUOTE + "nodes"  + QUOTE + COLON +
+			OPEN_BOX + nodes_JSON.toString()  + CLOSE_BOX + COMMA +
+			QUOTE + "links" + QUOTE + COLON +
+			OPEN_BOX + links_JSON.toString() + CLOSE_BOX +
+			CLOSE_CURLY;
 
 		return json_str;
 	}

@@ -276,11 +276,11 @@ public class GraphAdjList<K, E> extends DataStruct {
 
 
 		String json_str =
-				QUOTE + "nodes"  + QUOTE + COLON +
-				OPEN_BOX + nodes_JSON.toString()  + CLOSE_BOX + COMMA +
-				QUOTE + "links" + QUOTE + COLON +
-				OPEN_BOX + links_JSON.toString() + CLOSE_BOX +
-				CLOSE_CURLY;
+			QUOTE + "nodes"  + QUOTE + COLON +
+			OPEN_BOX + nodes_JSON.toString()  + CLOSE_BOX + COMMA +
+			QUOTE + "links" + QUOTE + COLON +
+			OPEN_BOX + links_JSON.toString() + CLOSE_BOX +
+			CLOSE_CURLY;
 
 		return json_str;
 
