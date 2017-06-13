@@ -558,6 +558,7 @@ public class Bridges <K, E> {
 		String[] nodes_links = new String[2];
 		switch (vis_type) {
 			case "Array":
+					nodes_links = ((Array) ds_handle).getDataStructureRepresentation();
 				break;
 			case "SinglyLinkedList":
 			case "DoublyLinkedList":
@@ -592,12 +593,25 @@ public class Bridges <K, E> {
 			//				QUOTE + "version" + QUOTE + COLON + QUOTE + "0.4.0" + QUOTE + COMMA +
 			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
 			QUOTE + "title"   + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
-			QUOTE + "description" + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA;
+			QUOTE + "description" + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA + 
+			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + "Cartesian" + QUOTE + COMMA;
 
 
 		// get the nodes and link representations
 
-		if (vis_type == "Tree" || vis_type == "BinaryTree" || vis_type ==  "BinarySearchTree" ||
+		if (vis_type == "Array") {
+			int dims[] = new int[3];
+			Array ds_array = (Array) ds_handle;
+			int num_dims = ds_array.getNumDimensions();
+			ds_array.getDimensions(dims);
+			ds_json += QUOTE + "dims" + QUOTE + COLON + 
+				OPEN_BOX + dims[0] + COMMA + dims[1] + COMMA + dims[2] + CLOSE_BOX + COMMA;
+
+			ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
+				OPEN_BOX  + nodes_links[0] + CLOSE_BOX + CLOSE_CURLY;
+			
+		}
+		else if (vis_type == "Tree" || vis_type == "BinaryTree" || vis_type ==  "BinarySearchTree" ||
 			vis_type == "AVLTree") {
 			ds_json +=  QUOTE + "nodes"  + QUOTE + COLON +
 				OPEN_CURLY  + nodes_links[0] + CLOSE_CURLY + CLOSE_CURLY;

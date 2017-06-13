@@ -25,6 +25,7 @@ import bridges.validation.RateLimitException;
 
 public class Connector {
 	//	String server_url = "http://bridges-clone.herokuapp.com";
+	String server_type = "application";
 	String server_url = "http://bridges-cs.herokuapp.com";
 	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";  //usgs earthquakes url
 	String airline_url = "https://earthquakes-uncc.herokuapp.com/airline"; //corgis airline data
@@ -44,6 +45,15 @@ public class Connector {
 	}
 
 	/* Accessors and Mutators */
+	/**
+	 * Set the server type
+	 *
+	 *	@param server_type  Server type can be "local", "clone" or "application" (the main application server);
+	 *			default is "application"
+	 */
+	public void setServer(String srv) {
+		server_type = srv;
+	}
 
 	/**
 	 * Get the current  base URL for the DataFormatters server (with no ending/)

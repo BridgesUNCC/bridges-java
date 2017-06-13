@@ -1,6 +1,7 @@
 package bridges.base;
 
 import bridges.validation.InvalidValueException;
+import bridges.validation.Validation;
 
 /**
  *
@@ -208,5 +209,35 @@ public class Array<E> extends DataStruct {
 	 */
 	public void setValue(int col, int row, int slice, Element<E> el) {
 		array_data[slice * dims[0] * dims[1] + row * dims[0] + col] = el;
+	}
+
+	/**
+	 * Generating the JSON string for a Bridges array object (Array<E>[])
+	 *
+	 * @param Bridges Array object
+	 *
+	 * @return JSON string
+	*/
+
+	public String[] getDataStructureRepresentation () {
+
+		StringBuilder nodes_JSON = new StringBuilder();
+		StringBuilder links_JSON = new StringBuilder();
+		Validation.validate_ADT_size(size);
+		for (int i = 0; i < size; i++) {
+			if (array_data[i] != null) {
+				nodes_JSON.append(array_data[i].getElementRepresentation() + ",");
+			}
+		}
+						// remove last comma
+		nodes_JSON.setLength(nodes_JSON.length() - 1);
+
+		// note: there are no links for an array, order is
+		// by index
+		String[] nodes_links = new String[2];
+		nodes_links[0] = nodes_JSON.toString();
+		nodes_links[1] = "";
+
+		return nodes_links;
 	}
 }
