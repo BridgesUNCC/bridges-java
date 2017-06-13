@@ -9,13 +9,13 @@ import java.util.Random;
 
 
 /**
- * 	@brief This class maintains the visual attributes of each BRIDGES 
+ * 	@brief This class maintains the visual attributes of each BRIDGES
  * 	element.
  *
  *	Visual properties include color, shape, opacity, size and location.
  *	Objects of this class are stored as part of the Element class.
  *	Generally, a user will manipulate the ElementVisualizer returned from the
- *	Element's getVisualizer() method, and then set attributes using its methods. 
+ *	Element's getVisualizer() method, and then set attributes using its methods.
  *  Supported attributed values are as follows:<br>
  *
  *  <b>Supported Colors (by name)</b>: <p>
@@ -29,7 +29,7 @@ import java.util.Random;
  *
  *	<b>Supported Shapes: </b>
  *
- *	"square", "circle", "square","diamond","cross", 
+ *	"square", "circle", "square","diamond","cross",
  *	"triangle-down",  triangle-up" <p>
  *
  *	<b> Shape Size</b> : Range (0-50) </p>
@@ -40,7 +40,7 @@ import java.util.Random;
  *
  *	@date 6/22/16, 1/7/17, 5/17/17
  *
- *  \sa Example Tutorial at <br> 
+ *  \sa Example Tutorial at <br>
  *	http://bridgesuncc.github.io/Hello_World_Tutorials/SLL.html
  *
  */
@@ -50,15 +50,15 @@ public class ElementVisualizer {
 
 	private Color color;
 	private String shape = "circle",
-				key = "";
-	private	double	locationX = Double.POSITIVE_INFINITY, 
-				locationY = Double.POSITIVE_INFINITY,
-				size = 10.0;
+				   key = "";
+	private	double	locationX = Double.POSITIVE_INFINITY,
+					locationY = Double.POSITIVE_INFINITY,
+					size = 10.0;
 	private float   opacity = 1.0f;
-	
+
 	private Map<String, String> properties = new HashMap<String, String>() {
 		{
-//			put("color", "green");
+			//			put("color", "green");
 			put("color", "[70, 130, 180, 1.0]");
 			put("opacity", "1.0");
 			put("size", "10.0");
@@ -73,7 +73,7 @@ public class ElementVisualizer {
 	 *
 	 *	Construct an ElementVisualizer with the default visualization settings.
 	 *
-	 *	The default settings are color = green, opacity = 1.0, size = 10.0, 
+	 *	The default settings are color = green, opacity = 1.0, size = 10.0,
 	 *	shape = circle.
 	 *
 	 */
@@ -83,11 +83,11 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 * 
+	 *
 	 * Construct an ElementVisualizer with its color set to "aColor".
-	 * 
+	 *
 	 * @param aColor the string that represents one of the Bridges colors.
-	 * 
+	 *
 	 */
 	public ElementVisualizer(String aColor) {
 		super();
@@ -95,13 +95,13 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 * 
+	 *
 	 * Construct an ElementVisualizer with its color set to "aColor" and shape
 	 * set to "aShape".
-	 * 
+	 *
 	 * @param aColor the string that represents one of the Bridges colors.
 	 * @param aShape the string that represents one of the Bridges shapes
-	 * 
+	 *
 	 */
 	public ElementVisualizer(String aColor, String aShape) {
 		setColor(aColor);
@@ -109,11 +109,11 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 * 
+	 *
 	 * Construct an ElementVisualizer with its size set to "size".
-	 * 
+	 *
 	 * @param size the value that represents the size in pixels of the Bridges Element
-	 * 
+	 *
 	 */
 	public ElementVisualizer(double size) {
 		super();
@@ -121,10 +121,10 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 * 
+	 *
 	 * Construct an ElementVisualizer with its color set to "aColor", its shape
 	 * set to "aShape", its opacity set to "opacity" and size set to "size".
-	 * 
+	 *
 	 * @param aColor the string that represents one of the Bridges colors.
 	 * @param aShape the string that represents one of the Bridges shapes
 	 * @param opacity a double between 0 and 1 representing how transparent the node
@@ -135,7 +135,7 @@ public class ElementVisualizer {
 	 *            Bridges Visualization
 	 */
 	public ElementVisualizer(String aColor, String aShape, float opacity,
-										double size) {
+		double size) {
 		setColor(aColor);
 		setShape(aShape);
 		setOpacity(opacity);
@@ -143,12 +143,12 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 * 
+	 *
 	 * Construct a new ElementVisualizer with the same color, shape, opacity,
 	 * and size as "v"
-	 * 
+	 *
 	 * @param v the ElementVisualizer whose settings you want to copy.
-	 * 
+	 *
 	 */
 	public ElementVisualizer(ElementVisualizer v) {
 		setColor(v.getColor());
@@ -159,7 +159,7 @@ public class ElementVisualizer {
 
 	/**
 	 * Set the size of the Element in the Bridge Visualization (in pixel units)
-	 * 
+	 *
 	 * @param size the pixel size of the Element in the Bridges Visualization
 	 */
 	public void setSize(double sz) {
@@ -169,95 +169,169 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 * 
+	 *
 	 * Get the size of the Element in the Bridges Visualiation
-	 * 
+	 *
 	 * @return the size in pixels of the Element in the Bridges Visualization
-	 * 
+	 *
 	 */
 	public double getSize() {
 		return size;
 	}
 
-	/** 
- 	 *	
+	/**
+	 *
 	 *	Set the color of the Element in the Bridges Visualization to "aColor".
- 	 *
-	 * @param col_name the string reprsenting the color of the Element in 
+	 *
+	 * @param col_name the string reprsenting the color of the Element in
 	 *  	the Bridges Visualization; supported named colors are
- 	 * 	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
- 	 *	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
- 	 *	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
- 	 *	"pink", "lavender", "purple", "gold"
- 	 *
+	 * 	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
+	 *	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
+	 *	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
+	 *	"pink", "lavender", "purple", "gold"
+	 *
 	 */
-	public void setColor(String col_name) throws InvalidValueException{
+	public void setColor(String col_name) throws InvalidValueException {
 
 		String col = col_name.toLowerCase();
-                        // validates and returns a 4 component RGBA val
+		// validates and returns a 4 component RGBA val
 		int red, green, blue;
 		float  alpha = this.getOpacity();
 
 		switch (col_name) {
-			case "red": red = 255; green = blue = 0; 
+			case "red":
+				red = 255;
+				green = blue = 0;
 				break;
-			case "green": red = 0; green = 255; blue = 0; 
+			case "green":
+				red = 0;
+				green = 255;
+				blue = 0;
 				break;
-			case "blue": red = 0; green = 0; blue = 255; 
+			case "blue":
+				red = 0;
+				green = 0;
+				blue = 255;
 				break;
-			case "yellow": red = 255; green = 255; blue = 0; 
+			case "yellow":
+				red = 255;
+				green = 255;
+				blue = 0;
 				break;
-			case "cyan": red = 0; green = 255; blue = 255; 
+			case "cyan":
+				red = 0;
+				green = 255;
+				blue = 255;
 				break;
-			case "magenta": red = 255; green = 0; blue = 255; 
+			case "magenta":
+				red = 255;
+				green = 0;
+				blue = 255;
 				break;
-			case "white": red = 255; green = 255; blue = 255; 
+			case "white":
+				red = 255;
+				green = 255;
+				blue = 255;
 				break;
-			case "black": red = 0; green = 0; blue = 0; 
+			case "black":
+				red = 0;
+				green = 0;
+				blue = 0;
 				break;
-			case "orange": red = 255; green = 155; blue = 0; 
+			case "orange":
+				red = 255;
+				green = 155;
+				blue = 0;
 				break;
-			case "turquoise": red = 173; green = 234; blue = 234; 
+			case "turquoise":
+				red = 173;
+				green = 234;
+				blue = 234;
 				break;
-			case "maroon": red = 176; green = 48; blue = 96; 
+			case "maroon":
+				red = 176;
+				green = 48;
+				blue = 96;
 				break;
-			case "aquamarine": red = 127; green = 255; blue = 212; 
+			case "aquamarine":
+				red = 127;
+				green = 255;
+				blue = 212;
 				break;
-			case "azure": red = 240; green = 255; blue = 255; 
+			case "azure":
+				red = 240;
+				green = 255;
+				blue = 255;
 				break;
-			case "beige": red = 245; green = 245; blue = 220; 
+			case "beige":
+				red = 245;
+				green = 245;
+				blue = 220;
 				break;
-			case "brown": red = 166; green = 42; blue = 42; 
+			case "brown":
+				red = 166;
+				green = 42;
+				blue = 42;
 				break;
-			case "tan": red = 210; green = 180; blue = 140; 
+			case "tan":
+				red = 210;
+				green = 180;
+				blue = 140;
 				break;
-			case "olive": red = 128; green = 128; blue = 0; 
+			case "olive":
+				red = 128;
+				green = 128;
+				blue = 0;
 				break;
-			case "chartreuse": red = 127; green = 255; blue = 0; 
+			case "chartreuse":
+				red = 127;
+				green = 255;
+				blue = 0;
 				break;
-			case "khaki": red = 240; green = 230; blue = 140; 
+			case "khaki":
+				red = 240;
+				green = 230;
+				blue = 140;
 				break;
-			case "bisque": red = 255; green = 228; blue = 196; 
+			case "bisque":
+				red = 255;
+				green = 228;
+				blue = 196;
 				break;
-			case "coral": red = 255; green = 127; blue = 0; 
+			case "coral":
+				red = 255;
+				green = 127;
+				blue = 0;
 				break;
-			case "pink": red = 255; green = 192; blue = 203; 
+			case "pink":
+				red = 255;
+				green = 192;
+				blue = 203;
 				break;
-			case "lavender": red = 230; green = 230; blue = 250; 
+			case "lavender":
+				red = 230;
+				green = 230;
+				blue = 250;
 				break;
-			case "purple": red = 160; green = 32; blue = 240; 
+			case "purple":
+				red = 160;
+				green = 32;
+				blue = 240;
 				break;
-			case "gold": red = 255; green = 215; blue = 0; 
+			case "gold":
+				red = 255;
+				green = 215;
+				blue = 0;
 				break;
 			default:
-				throw new InvalidValueException("Invalid color " + "'" + 
-					col_name + "'" +"."
+				throw new InvalidValueException("Invalid color " + "'" +
+					col_name + "'" + "."
 					+ " Only named primaries supported now \n");
 		}
 		color = new Color (red, green, blue, alpha);
 	}
 
-	/** 
+	/**
 	 *
 	 *	Set the color of the Element in the Bridges Visualization given
 	 *	RGBA components (0-255 range)
@@ -272,10 +346,10 @@ public class ElementVisualizer {
 		color.setAlpha(a);
 	}
 
-	/** 
+	/**
 	 *
 	 *	Set the color of the Element in the Bridges Visualization to "aColor".
-	 *  	given a Color object 
+	 *  	given a Color object
 	 *
 	 * @param col  Color object
 	 *
@@ -288,8 +362,8 @@ public class ElementVisualizer {
 	 *
 	 *	Get the color of the Element in the Bridges Visualization
 	 *
-	 * 	@return Color object representing the color of the Element as 
-	 *	R,G,B,A components, each in the range 0-255 
+	 * 	@return Color object representing the color of the Element as
+	 *	R,G,B,A components, each in the range 0-255
 	 *
 	 */
 	public Color getColor() {
@@ -300,7 +374,7 @@ public class ElementVisualizer {
 	 *
 	 * Get the shape of the Element in the Bridges Visualization.
 	 *
-	 * @return the string that represents the Element's shape in the 
+	 * @return the string that represents the Element's shape in the
 	 * 			Bridges Visualization.
 	 *
 	 */
@@ -309,11 +383,11 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 * Sets the shape of the Element in the Bridges Visualization. Supported 
-	 * 		shapes include "square", "circle", "square", "diamond", "cross", 
+	 * Sets the shape of the Element in the Bridges Visualization. Supported
+	 * 		shapes include "square", "circle", "square", "diamond", "cross",
 	 *		"triangle-down", "triangle-up".
-	 * 
-	 * @param aShape the string representing the shape of the Element in 
+	 *
+	 * @param aShape the string representing the shape of the Element in
 	 *			the Bridges Visualization
 	 */
 	public void setShape(String aShape) {
@@ -327,8 +401,8 @@ public class ElementVisualizer {
 	/**
 	 *
 	 * 	Sets the opacity of the Element in the Bridges Visualization
-	 * 
-	 * 	@param opacity a double between 0 and 1 representing how 
+	 *
+	 * 	@param opacity a double between 0 and 1 representing how
 	 *		transparent the node
 	 *      should be on the Bridges Visualization. 0 for invisible, 1 for
 	 *      fully visible, a decimal between 0 and 1 for varying
@@ -338,7 +412,7 @@ public class ElementVisualizer {
 		color.setAlpha(opacity);
 	}
 
-	/** 
+	/**
 	 *
 	 * 	Get the opacity of the Element in the Bridges Visualization
 	 *	@return the opacity value
@@ -349,7 +423,7 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 *  Set the location (x, y)  of the element - used for displaying elements 
+	 *  Set the location (x, y)  of the element - used for displaying elements
 	 *	in maps
 	 *
 	 *	@param location the X,Y location(array of 2 doubles) to be set
@@ -361,22 +435,22 @@ public class ElementVisualizer {
 
 	/**
 	 *
-	 *  Get the X coordinate position of the element 
+	 *  Get the X coordinate position of the element
 	 *
 	 * @return location X coordinate
 	 *
-     **/
+	 **/
 	double getLocationX() {
 		return locationX;
 	}
 
 	/**
 	 *
-	 *  Get the Y coordinate  position  of the element 
+	 *  Get the Y coordinate  position  of the element
 	 *
 	 * @return location Y coordinate
 	 *
-     **/
+	 **/
 	double getLocationY() {
 		return locationY;
 	}
