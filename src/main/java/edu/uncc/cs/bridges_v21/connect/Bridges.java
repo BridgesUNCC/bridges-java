@@ -43,16 +43,16 @@ import bridges.validation.*;
  *	http://bridgesuncc.github.io/Hello_World_Tutorials/Overview.html
  */
 
-public class Bridges <K, E> {
+public class Bridges {
 
 	private static int assignmentDecimal = 0;
-	protected ADTVisualizer<K, E> visualizer;
+//	protected ADTVisualizer<K, E> visualizer;
 	private  Connector connector;
-	private Element<E> root;
-	private GraphAdjList<K, E>  graph_adj_list;
-	private GraphAdjMatrix<K, E>  graph_adj_matrix;
-	private Element<E>[]  element_array;
-	private Array<E>  br_array;
+//	private Element<E> root;
+//	private GraphAdjList<K, E>  graph_adj_list;
+//	private GraphAdjMatrix<K, E>  graph_adj_matrix;
+//	private Element<E>[]  element_array;
+//	private Array<E>  br_array;
 	private int element_array_size;
 	private static boolean json_flag = false;
 	private static int assignment;
@@ -83,7 +83,7 @@ public class Bridges <K, E> {
 	 */
 	public Bridges() {
 		super();
-		visualizer = new ADTVisualizer<K, E>();
+//		visualizer = new ADTVisualizer<K, E>();
 		connector = new Connector();
 		df = new DataFormatter();
 		assignment_part = 0;
@@ -108,7 +108,7 @@ public class Bridges <K, E> {
 	 *
 	 */
 	public void setTitle(String title) {
-		visualizer.setTitle(title);
+//		visualizer.setTitle(title);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class Bridges <K, E> {
 	 *
 	 */
 	public void setDescription(String descr) {
-		visualizer.setDescription(descr);
+//		visualizer.setDescription(descr);
 	}
 
 	/**
@@ -362,9 +362,11 @@ public class Bridges <K, E> {
 	 * @return visualizer
 	 *
 	 */
+/*
 	public ADTVisualizer<K, E> getVisualizer() {
 		return visualizer;
 	}
+*/
 
 	/**
 	 *
@@ -373,9 +375,11 @@ public class Bridges <K, E> {
 	 * @param visualizer
 	 *
 	 */
+/*
 	public void setVisualizer(ADTVisualizer<K, E> visualizer) {
 		this.visualizer = visualizer;
 	}
+*/
 
 	/**
 	 *
@@ -388,11 +392,6 @@ public class Bridges <K, E> {
 	public void setDataStructure(DataStruct ds) {
 		ds_handle = ds;
 		vis_type =   ds.getDataStructType();
-		//		SLelement<E> head = ds;
-		//		String vis_type =  ((SLelement<E>) ds).getDataStructType();
-		//		System.out.println("Matched.." + ((SLelement<E>) ds).getDataStructType());
-		//		visualizer.setVisualizerType( ((SLelement<E>) ds).getDataStructType() );
-		//		root = (Element<E>) ds;
 	}
 	/*
 		public void setDataStructure(Array<E>  arr) {
@@ -645,6 +644,7 @@ public class Bridges <K, E> {
 	 * visualize a singly linked list.
 	 *
 	 **/
+/*
 	protected void visualizeLinkedList() {
 		try {
 			connector.post("/assignments/" + getAssignment(),
@@ -671,12 +671,14 @@ public class Bridges <K, E> {
 			+ userName + "\n\n");
 		assignment_part++;
 	}
+*/
 
 	/**
 	 *
 	 * visualize a multi list.
 	 *
 	 **/
+/*
 	protected void visualizeMultiList() {
 		try {
 			connector.post("/assignments/" + getAssignment(),
@@ -704,11 +706,13 @@ public class Bridges <K, E> {
 		assignment_part++;
 	}
 
+*/
 
 	/**
 	 *  Visualization  a doubly linked list.
 	 *
 	 **/
+/*
 	protected void visualizeDoublyLinkedList() {
 		try {
 			connector.post("/assignments/" + getAssignment(),
@@ -735,11 +739,13 @@ public class Bridges <K, E> {
 			+ userName + "\n\n");
 		assignment_part++;
 	}
+*/
 
 	/**
 	 *  Visualize  an array
 	 *
 	 **/
+/*
 	protected void visualizeArrayObj() {
 		try {
 			connector.post("/assignments/" + getAssignment(),
@@ -766,10 +772,12 @@ public class Bridges <K, E> {
 			+ userName + "\n\n");
 		assignment_part++;
 	}
+*/
 	/**
 	 *  Visualize  an array
 	 *
 	 **/
+/*
 	protected void visualizeArray() {
 		try {
 			connector.post("/assignments/" + getAssignment(),
@@ -796,11 +804,13 @@ public class Bridges <K, E> {
 			+ userName + "\n\n");
 		assignment_part++;
 	}
+*/
 
 	/**
 	 * Visualize a binary tree
 	 *
 	 */
+/*
 	protected void visualizeTree() {
 		try {
 			connector.post("/assignments/" + getAssignment(), visualizer.getTreeRepresentation((TreeElement<E>)root));
@@ -826,10 +836,12 @@ public class Bridges <K, E> {
 			+ userName + "\n\n");
 		assignment_part++;
 	}
+*/
 	/**
 	 * Visualize a binary searchtree
 	 *
 	 */
+/*
 	protected void visualizeBinarySearchTree() {
 		try {
 			connector.post("/assignments/" + getAssignment(),
@@ -856,12 +868,14 @@ public class Bridges <K, E> {
 			+ userName + "\n\n");
 		assignment_part++;
 	}
+*/
 
 	/**
 	 * Update visualization metadata of Graph with Adjacency List. This may be called many times.
 	 * This is usually an expensive operation and involves connecting to the network.
 	 * Calling this method is optional provided you call complete()
 	 */
+/*
 	protected void visualizeGraphAdjacencyList() {
 		try {
 			connector.post("/assignments/" + getAssignment(),
@@ -918,18 +932,23 @@ public class Bridges <K, E> {
 			+ userName + "\n\n");
 		assignment_part++;
 	}
+*/
 
 	/**
 	 * @return the root
 	 */
+/*
 	public Element<E> getRoot() {
 		return root;
 	}
+*/
 
 	/**
 	 * @param root the root to set
 	 */
+/*
 	public void setRoot(Element<E> root) {
 		this.root = root;
 	}
+*/
 }
