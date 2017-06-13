@@ -54,6 +54,7 @@ public class Bridges <K, E> {
 	private Element<E>[]  element_array;
 	private Array<E>  br_array;
 	private int element_array_size;
+	private static boolean json_flag = false;
 	private static int assignment;
 	private static int assignment_part;
 	private static String key;
@@ -118,6 +119,16 @@ public class Bridges <K, E> {
 	public void setDescription(String descr) {
 		visualizer.setDescription(descr);
 	}
+
+	/**
+	 *
+	 * 	@param  server server to which to connect. Options are: ['live', 'local', 'clone'], 
+	 *			and 'live' is the default;
+	 *
+	 */
+	public void setServer(String server) {
+		connector.setServer(server);
+	}
 	
 	/**
 	 *
@@ -133,6 +144,19 @@ public class Bridges <K, E> {
 		Bridges.setAssignment(assignment);
 		Bridges.key = appl_id;
 		Bridges.userName = username;
+	}
+	/**
+	 * 	@param check if the flag to output the JSON is set
+	**/
+	public boolean visualizeJSON() {
+		return json_flag;
+	}
+
+	/**
+	 * 	@param set the flag to output the JSON
+	 **/
+	public void setVisualizeJSON(boolean flag) {
+		json_flag = flag;
 	}
 	
 	public static List<Tweet> getAssociations(TwitterAccount name, 
@@ -531,7 +555,6 @@ public class Bridges <K, E> {
 	 * @throws NoSuchMethodException 
 	 */
 	public void visualize() {
-System.out.println("In visualize..." + vis_type);
 		String[] nodes_links = new String[2];
 		switch (vis_type) {
 			case "Array":
@@ -555,12 +578,10 @@ System.out.println("In visualize..." + vis_type);
 					((TreeElement) ds_handle).getDataStructureRepresentation();
 				break;
 			case "GraphAdjacencyList":
-System.out.println("In ..." + vis_type);
 				nodes_links = 
 					((GraphAdjList) ds_handle).getDataStructureRepresentation();
 				break;
 			case "GraphAdjacencyMatrix":
-System.out.println("In ..." + vis_type);
 				nodes_links = 
 					((GraphAdjMatrix) ds_handle).getDataStructureRepresentation();
 				break;
@@ -568,7 +589,7 @@ System.out.println("In ..." + vis_type);
 			
 		String ds_json = 
 			OPEN_CURLY +
-				QUOTE + "version" + QUOTE + COLON + QUOTE + "0.4.0" + QUOTE + COMMA +
+//				QUOTE + "version" + QUOTE + COLON + QUOTE + "0.4.0" + QUOTE + COMMA +
 				QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
                 QUOTE + "title"   + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA +
                 QUOTE + "description" + QUOTE + COLON + QUOTE + "" + QUOTE + COMMA;
@@ -589,8 +610,9 @@ System.out.println("In ..." + vis_type);
 								"[" + nodes_links[1] + "]" + 
 						CLOSE_CURLY;
 		}
+		if (json_flag)
+			System.out.println("\nJSON String:\n" + ds_json);
 
-System.out.println("JSON String: " + ds_json);
         try {
 			connector.post("/assignments/" + getAssignment(), ds_json); 
 		} 
@@ -606,76 +628,11 @@ System.out.println("JSON String: " + ds_json);
 					+ e.getMessage());
 		} 
 								// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at \n\n" +
+		System.out.println("\nCheck Your Visualization at the following link:\n\n" +
 			"http://bridges-cs.herokuapp.com/assignments/" + assignment + "/" 
 						+ userName + "\n\n");
 
 	}
-/*
-		switch (visualizer.getVisualizerType()) {
-			case "SinglyLinkedList":
-			case "Array":
-				visualizeArrayObj();
-				break;
-			case "SinglyLinkedList":
-			case "llist":
-			case "CircularSinglyLinkedList":
-				visualizeLinkedList();
-				break;
-			case "MultiList":
-				visualizeMultiList();
-				break;
-			case "DoublyLinkedList":
-			case "dllist":
-			case "CircularDoublyLinkedList":
-				visualizeDoublyLinkedList();
-				break;
-			case "Tree":
-			case "BinaryTree":
-			case "BinarySearchTree":
-			case "AVLTree":
-				visualizeBinarySearchTree();
-				break;
-			case "GraphAdjacencyList":
-				visualizeGraphAdjacencyList();
-				break;
-			case "GraphAdjacencyMatrix":
-				visualizeGraphAdjacencyMatrix();
-				break;
-		}
-*/
-/*
-		try {
-			java.lang.reflect.Method method = this.getClass().getDeclaredMethod((ADT_UPDATE.get(visualizer.getVisualizerType())));
-			method.invoke(this);
-		} catch (SecurityException e) {
-			System.err.println("Security Exception. \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the JSON string for errors. It cannot be null nor can have line breaks");
-			System.err.println("Please check the error stack below.");
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			System.err.println("Illegal Argument Exception. \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the JSON string for errors. It cannot be null nor can have line breaks");
-			System.err.println("Please check the error stack below.");
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			System.err.println("NoSuchMethodException \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the error stack below.");
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			System.err.println("Illegal AccessException. \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the JSON string for errors. It cannot be null nor can have line breaks");
-			System.err.println("Please check the error stack below.");
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			System.err.println("Invocation Target Exception \nPlease check your ADT type. Expected values are: \"graph\", \"graphl\",\"stack\",\"queue\",\"tree\", \"llist\", \"AList\" or \"Dllist\"");
-			System.err.println("Please check the JSON string for errors. It cannot be null nor can have line breaks");
-			System.err.println("Please check the error stack below.");
-			e.printStackTrace();
-		}
-	}
-*/
-
 	/**
 	 *
 	 * visualize a singly linked list. 
