@@ -559,6 +559,11 @@ System.out.println("In ..." + vis_type);
 				nodes_links = 
 					((GraphAdjList) ds_handle).getDataStructureRepresentation();
 				break;
+			case "GraphAdjacencyMatrix":
+System.out.println("In ..." + vis_type);
+				nodes_links = 
+					((GraphAdjMatrix) ds_handle).getDataStructureRepresentation();
+				break;
 		}
 			
 		String ds_json = 
