@@ -60,7 +60,9 @@ public class Bridges {
 	private static String key;
 	private static DataFormatter df;
 	private static String userName, vis_type,
-				title, description;
+			title, description;
+	private static Integer MaxTitleSize = 50,
+						   MaxDescrSize = 1000;
 
 	private static DataStruct ds_handle = null;		// data structure handle
 
@@ -111,7 +113,13 @@ public class Bridges {
 	 *
 	 */
 	public void setTitle(String title) {
-		this.title = title;
+		if (title.length() > MaxTitleSize) {
+			System.out.println ("Visualization Title restricted to " + MaxTitleSize + " characters."
+				+ " Truncating title..");
+			this.title = title.substring(0, MaxTitleSize);
+		}
+		else
+			this.title = title;
 	}
 
 	/**
@@ -120,12 +128,18 @@ public class Bridges {
 	 *
 	 */
 	public void setDescription(String description) {
-		this.description = description;
+		if (description.length() > MaxDescrSize) {
+			System.out.println ("Visualization Description restricted to " + MaxDescrSize + " characters."
+				+ " Truncating description..");
+			this.description = description.substring(0, MaxDescrSize);
+		}
+		else
+			this.description = description;
 	}
 
 	/**
 	 *
-	 * 	@param  server server to which to connect. 
+	 * 	@param  server server to which to connect.
 	 *		Options are: ['live', 'local', 'clone'], and 'live' is the default;
 	 *
 	 */
