@@ -250,7 +250,8 @@ public class GraphAdjList<K, E> extends DataStruct {
 			nodes_JSON.append(COMMA);
 		}
 		// remove the last comma
-		nodes_JSON.setLength(nodes_JSON.length() - 1);
+		if (nodes.size() != 0) 		// only if there is at least one node
+			nodes_JSON.setLength(nodes_JSON.length() - 1);
 
 		// build the links JSON - traverse the adj. lists
 		StringBuilder links_JSON = new StringBuilder();
@@ -265,14 +266,14 @@ public class GraphAdjList<K, E> extends DataStruct {
 				Element<E> dest_vert = vertices.get(edge.getVertex());
 				Integer dest_indx = node_map.get(dest_vert);
 				// get link representation
-				links_JSON	.append(list.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert),
-						Integer.toString(src_indx), Integer.toString(dest_indx)))
-				.append(COMMA);
+				links_JSON.append(list.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert),
+						Integer.toString(src_indx), Integer.toString(dest_indx))).append(COMMA);
 				list = list.getNext();
 			}
 		}
 		// remove the last comma
-		links_JSON.setLength(links_JSON.length() - 1);
+		if (links_JSON.length() > 0) // if there is at least one link
+			links_JSON.setLength(links_JSON.length() - 1);
 
 
 		String json_str =

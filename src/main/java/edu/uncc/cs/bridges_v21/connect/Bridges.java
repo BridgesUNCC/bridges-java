@@ -371,9 +371,16 @@ public class Bridges {
 	 * @param ds   The data structure to set (any of the subclasses of DataStruct)
 	 *
 	 */
-	public void setDataStructure(DataStruct ds) {
-		ds_handle = ds;
-		vis_type =   ds.getDataStructType();
+	public void setDataStructure(DataStruct ds) throws NullPointerException {
+		try {
+			ds_handle = ds;
+			vis_type =   ds.getDataStructType();
+			System.out.println("Here..");
+		}
+		catch (NullPointerException e) {
+			System.out.println("Exception Thrown: Data structure passed to BRIDGES is null!\n" + e);
+			return ;
+		}
 	}
 
 	/**

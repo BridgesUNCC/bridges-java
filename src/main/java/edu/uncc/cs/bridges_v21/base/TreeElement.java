@@ -230,7 +230,8 @@ public class TreeElement<E> extends Element<E> {
 				}
 			}
 			// remove last comma
-			json_str = json_str.substring(0, json_str.length() - 1);
+			if (json_str.length() > 0) 	// deal with null tree case
+				json_str = json_str.substring(0, json_str.length() - 1);
 			// end of children
 			json_str += CLOSE_BOX;
 		}

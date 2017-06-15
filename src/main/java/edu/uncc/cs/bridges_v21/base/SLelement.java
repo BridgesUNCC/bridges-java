@@ -173,7 +173,8 @@ public class SLelement<E> extends Element<E> {
 			nodes_JSON.append(COMMA);
 		}
 		// remove the last comma
-		nodes_JSON.setLength(nodes_JSON.length() - 1);
+		if (nodes.size() != 0)	// only if there is at least one node
+			nodes_JSON.setLength(nodes_JSON.length() - 1);
 
 		StringBuilder links_JSON = new StringBuilder();
 		for (int k = 0; k < nodes.size(); k++) {
@@ -187,7 +188,8 @@ public class SLelement<E> extends Element<E> {
 				links_JSON.append(COMMA);
 			}
 		}
-		links_JSON.setLength(links_JSON.length() - 1);
+		if (links_JSON.length() > 0) // if there is at least one link
+			links_JSON.setLength(links_JSON.length() - 1);
 
 		String json_str =
 			QUOTE + "nodes"  + QUOTE + COLON +
