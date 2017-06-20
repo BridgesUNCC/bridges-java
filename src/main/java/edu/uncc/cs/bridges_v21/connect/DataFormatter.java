@@ -853,4 +853,60 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
 		}
 	}
-}
+	
+	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws Exception {
+	
+		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations?limit=10";
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+		HttpResponse response = client.execute(request);
+
+		int status = response.getStatusLine().getStatusCode();
+
+		if (status == 200) 	{
+			String result = EntityUtils.toString(response.getEntity());
+			JSONObject j_obj = (JSONObject)JSONValue.parse(result);
+			JSONArray json = (JSONArray) j_obj.get("data");
+         
+			ArrayList<CancerIncidence> canc_objs = 
+					new ArrayList<CancerIncidence>(json.size());
+			for (int i = 0; i < 10; i++) {
+				JSONObject item = (JSONObject) json.get(i);
+
+				CancerIncidence c = new CancerIncidence();
+
+				JSONObject age = (JSONObject) item.get("Age");
+					c.setAgeAdjustedRate(((Number) 
+							age.get("Age Adjusted Rate")).doubleValue());
+					c.setAgeAdjustedCI_Lower(((Number) 
+							age.get("Age Adjusted CI Lower")).doubleValue());
+					c.setAgeAdjustedCI_Upper(((Number) 
+							age.get("Age Adjusted CI Upper")).doubleValue());
+					
+				JSONObject data = (JSONObject) item.get("Data");
+					c.setCrudeRate(((Number) data.get("Crude Rate")).doubleValue());
+					c.setCrudeRate_CI_Lower(
+						((Number) data.get("Crude CI Lower")).doubleValue());
+					c.setCrudeRate_CI_Upper(
+						((Number) data.get("Crude CI Upper")).doubleValue());
+					c.setRace((String) data.get("Race"));
+					c.setGender((String) data.get("Sex"));
+					c.setYear(((Number) item.get("Year")).intValue());
+					c.setEventType((String) data.get("Event Type"));
+					c.setPopulation(((Number) data.get("Population")).intValue());
+					c.setAffectedArea((String) item.get("Area"));
+				JSONArray loc = (JSONArray) item.get("loc");
+					c.setLocationX (((Number) loc.get(0)).doubleValue());
+					c.setLocationY (((Number) loc.get(1)).doubleValue());
+				
+				canc_objs.add(c);
+			}
+			return canc_objs;
+		}
+		else {
+			throw new Exception("HTTP Request Failed. Error Code: "+status);
+		}
+	}
+
+} // end of DataFormatter
+

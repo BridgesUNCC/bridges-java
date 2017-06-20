@@ -289,6 +289,26 @@ public class Bridges {
 	}
 
 	/**
+	 *  This helper function provides access to a cancer dataset from CDC
+	 *  https://www.cdc.gov/cancer/npcr/uscs/download_data.htm and curated
+	 *  by Austin (Cory) Bart as part of the Corgis data collection
+	 *	https://think.cs.vt.edu/corgis/
+	 *
+	 *  Each record in this collection has a number of fields detailed in the 
+	 *	CancerIncidence class.
+	 *
+	 *	For more information and to look at the data, refer to <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of Cancer incidence objects.
+	 */
+	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws Exception {
+		return DataFormatter.getCancerIncidenceData();
+	}
+
+	/**
 	 *	Get the assignment id
 	 *
 	 *  @return assignment as a string

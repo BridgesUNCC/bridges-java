@@ -33,7 +33,8 @@ public class CancerIncidence extends DataSource{
 			race,					
 			event_type,				 // incidence, mortality
 			affected_area;			 // location, typically, state
-			
+
+	private double loc[];		 	// location (cartesian coords
 			
 
 	/**
@@ -41,6 +42,9 @@ public class CancerIncidence extends DataSource{
 	 */
 	public CancerIncidence () {
 		super.setLabel("Cancer Incidence Data");
+		loc  = new double[] {0.0, 0.0};
+		age_adjusted_rate_ci = new double[] {0.0, 0.0};
+		crude_rate_ci = new double[] {0.0, 0.0};
 	}
 
 	public CancerIncidence(String canc_label){
@@ -81,6 +85,47 @@ public class CancerIncidence extends DataSource{
 	}
 		
 	/*
+	 * Get the expected cancer rate confidence interval(lower), 
+	 *	adjusted for age of participants.
+	 *
+	 * @return cancer conf interval (lower) rate
+	 *
+	 */
+	public double getAgeAdjustedCI_Lower() {
+		return age_adjusted_rate_ci[0];
+	}
+
+	/**
+	 * Set age adjusted cancer conf interval (lower) 
+	 *
+	 * @param double ci_l
+	 *
+	 */
+	public void setAgeAdjustedCI_Lower(double ci_l) {
+		age_adjusted_rate_ci[0] = ci_l;
+	}
+	/*
+	 * Get the expected cancer rate confidence interval(upper), 
+	 *	adjusted for age of participants.
+	 *
+	 * @return cancer conf interval (lower) rate
+	 *
+	 */
+	public double getAgeAdjustedCI_Upper() {
+		return age_adjusted_rate_ci[1];
+	}
+
+	/**
+	 * Set age adjusted cancer conf interval (upper) 
+	 *
+	 * @param double ci_u
+	 *
+	 */
+	public void setAgeAdjustedCI_Upper(double ci_u) {
+		age_adjusted_rate_ci[1] = ci_u;
+	}
+		
+	/*
 	 * Get the cancer rate, adjusted for population
 	 *
 	 * @return crude cancer rate
@@ -96,7 +141,64 @@ public class CancerIncidence extends DataSource{
 	public void setCrudeRate(double cr) {
 		crude_rate = cr;
 	}
+	/*
+	 * Get the expected cancer crude rate confidence interval(lower), 
+	 * adjusted for age of participants.
+	 *
+	 * @return cancer conf interval (lower) rate
+	 *
+	 */
+	public double getCrudeRate_CI_Lower() {
+		return crude_rate_ci[0];
+	}
 
+	/**
+	 * Set age adjusted cancer crude conf interval (lower) 
+	 *
+	 * @param double cr_l
+	 *
+	 */
+	public void setCrudeRate_CI_Lower(double cr_l) {
+		crude_rate_ci[0] = cr_l;
+	}
+	/*
+	 * Get the expected cancer crude rate confidence interval(upper), 
+	 * adjusted for age of participants.
+	 *
+	 * @return cancer crude rate CI (upper) rate
+	 *
+	 */
+	public double getCrudeRate_CI_Upper() {
+		return crude_rate_ci[1];
+	}
+
+	/**
+	 * Set crude rate CI (upper) 
+	 *
+	 * @param double cr_u
+	 *
+	 */
+	public void setCrudeRate_CI_Upper(double cr_u) {
+		crude_rate_ci[1] = cr_u;
+	}
+
+	/*
+	 * Get the year of this cancer record
+	 *
+	 * @return year
+	 */
+	public int getYear() {
+		return year;
+	}
+
+	/*
+	 * Set the year of this cancer record
+	 *
+	 * @param y  year 
+	 */
+	public void setYear(int y) {
+		year = y;
+	}
 	/*
 	 * Get the gender of the group
 	 *
@@ -197,5 +299,41 @@ public class CancerIncidence extends DataSource{
 	 */
 	public void setCount(int c) {
 		count = c;
+	}
+
+	/*
+	 * Get the X coordinate of location
+	 *
+	 * @return x coordinate
+	 */
+	public double getLocationX() {
+		return loc[0];
+	}
+	/**
+	 *	Set location (X coord)
+	 *
+	 *	@param locX  X coordinate of location 
+	 *
+	 */
+	 public void setLocationX (double locX) {
+		loc[0] = locX;
+	}
+
+	/*
+	 * Get the Y coordinate of location
+	 *
+	 * @return y coordinate
+	 */
+	public double getLocationY() {
+		return loc[1];
+	}
+	/**
+	 *	Set location (Y coord)
+	 *
+	 *	@param locX  Y coordinate of location 
+	 *
+	 */
+	 public void setLocationY (double locY) {
+		loc[1] = locY;
 	}
 };
