@@ -63,6 +63,7 @@ public class Bridges {
 			title, description;
 	private static Integer MaxTitleSize = 50,
 						   MaxDescrSize = 1000;
+	private static Boolean map_overlay = false;
 
 	private static DataStruct ds_handle = null;		// data structure handle
 
@@ -70,15 +71,15 @@ public class Bridges {
 	//  representation of the data structure
 
 	private static String
-		QUOTE = "\"",
-		COMMA = ",",
-		COLON = ":",
-		OPEN_CURLY = "{",
-		CLOSE_CURLY = "}",
-		OPEN_PAREN = "(",
-		CLOSE_PAREN = ")",
-		OPEN_BOX = "[",
-		CLOSE_BOX = "]";
+	QUOTE = "\"",
+	COMMA = ",",
+	COLON = ":",
+	OPEN_CURLY = "{",
+	CLOSE_CURLY = "}",
+	OPEN_PAREN = "(",
+	CLOSE_PAREN = ")",
+	OPEN_BOX = "[",
+	CLOSE_BOX = "]";
 	/**
 	 *
 	 *	Constructors
@@ -161,6 +162,14 @@ public class Bridges {
 		Bridges.key = appl_id;
 		Bridges.userName = username;
 	}
+
+	/**
+	 * 	@param set the flag to add a map overlay to the assignment
+	 **/
+	public void setMapOverlay (boolean flag) {
+		map_overlay = flag;
+	}
+
 	/**
 	 * 	@param check if the flag to output the JSON is set
 	**/
@@ -169,7 +178,7 @@ public class Bridges {
 	}
 
 	/**
-	 * 	@param set the flag to print the JSON represenation of the data structure 
+	 * 	@param set the flag to print the JSON represenation of the data structure
 	 *		to standard output
 	 **/
 	public void setVisualizeJSON (boolean flag) {
@@ -294,7 +303,7 @@ public class Bridges {
 	 *  by Austin (Cory) Bart as part of the Corgis data collection
 	 *	https://think.cs.vt.edu/corgis/
 	 *
-	 *  Each record in this collection has a number of fields detailed in the 
+	 *  Each record in this collection has a number of fields detailed in the
 	 *	CancerIncidence class.
 	 *
 	 *	For more information and to look at the data, refer to <p>
@@ -382,7 +391,7 @@ public class Bridges {
 
 	/**
 	 *
-	 * 	This method sets  the handle to the current data structure; this can 
+	 * 	This method sets  the handle to the current data structure; this can
 	 *	be an array, the head of a linked list, root of a tree structure, a graph
 	 *	Arrays of upto 3 dimensions are suppported. It can be any of the data
 	 *	structures supported by BRIDGES. Polymorphism and type casting is used
@@ -395,7 +404,6 @@ public class Bridges {
 		try {
 			ds_handle = ds;
 			vis_type =   ds.getDataStructType();
-			System.out.println("Here..");
 		}
 		catch (NullPointerException e) {
 			System.out.println("Exception Thrown: Data structure passed to BRIDGES is null!\n" + e);
@@ -411,7 +419,7 @@ public class Bridges {
 	 * @throws RateLimitException
 	 * @throws IOException
 	 */
-	public void visualize()  throws IOException, RateLimitException { 
+	public void visualize()  throws IOException, RateLimitException {
 		String[] nodes_links = new String[2];
 		String nodes_links_str = "";
 		switch (vis_type) {
@@ -451,8 +459,9 @@ public class Bridges {
 			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
 			QUOTE + "title"   + QUOTE + COLON + QUOTE + title + QUOTE + COMMA +
 			QUOTE + "description" + QUOTE + COLON + QUOTE + description + QUOTE + COMMA +
-			QUOTE + "coord_system_type" + QUOTE + COLON + 
-				QUOTE + "Cartesian" + QUOTE + COMMA;
+			QUOTE + "coord_system_type" + QUOTE + COLON +
+			QUOTE + "Cartesian" + QUOTE + COMMA +
+			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA;
 
 		// get the nodes and link representations
 
@@ -470,11 +479,11 @@ public class Bridges {
 		else {
 			ds_json += nodes_links_str;
 		}
-							
+
 		if (json_flag)		// print the JSON (mostly for debugging)
 			System.out.println("\nJSON String:\n" + ds_json);
 
-							// send the data structure to the server and visualize
+		// send the data structure to the server and visualize
 		try {
 			connector.post("/assignments/" + getAssignment(), ds_json);
 		}
