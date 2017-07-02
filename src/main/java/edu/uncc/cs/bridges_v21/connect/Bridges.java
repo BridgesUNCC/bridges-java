@@ -63,7 +63,9 @@ public class Bridges {
 			title, description;
 	private static Integer MaxTitleSize = 50,
 						   MaxDescrSize = 1000;
+	private static String[] projection_options = {"Cartesian", "albersUsa"};
 	private static Boolean map_overlay = false;
+	private static String coord_system_type = projection_options[0];
 
 	private static DataStruct ds_handle = null;		// data structure handle
 
@@ -164,11 +166,25 @@ public class Bridges {
 	}
 
 	/**
-	 * 	@param set the flag to add a map overlay to the assignment
+	 * 	@param flag 	this is the flag to add a map overlay to the assignment
 	 **/
 	public void setMapOverlay (boolean flag) {
 		map_overlay = flag;
 	}
+
+	/**
+	 * 	@param coord 	this is the desired coordinate space argument
+	 **/
+	public void setCoordSystemType (String coord) {
+		if (java.util.Arrays.asList(projection_options).indexOf(coord) >= 0) {
+			coord_system_type = coord;
+		}
+		else  {
+			System.err.println("Unrecognized coordinate system \'" + coord + "\'. Defaulting to Cartesian");
+			coord_system_type = "Cartesian";
+		}
+	}
+
 
 	/**
 	 * 	@param check if the flag to output the JSON is set
@@ -459,8 +475,7 @@ public class Bridges {
 			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
 			QUOTE + "title"   + QUOTE + COLON + QUOTE + title + QUOTE + COMMA +
 			QUOTE + "description" + QUOTE + COLON + QUOTE + description + QUOTE + COMMA +
-			QUOTE + "coord_system_type" + QUOTE + COLON +
-			QUOTE + "Cartesian" + QUOTE + COMMA +
+			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
 			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA;
 
 		// get the nodes and link representations
