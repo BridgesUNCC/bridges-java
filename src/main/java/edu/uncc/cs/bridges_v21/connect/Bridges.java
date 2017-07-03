@@ -35,7 +35,7 @@ import bridges.validation.*;
  *	call to visualize the data structure (Bridges::setDataStructure() and visualize()
  *	methods).
  *
- * 	@author Sean Gallagher, Kalpathi Subramanaian, Mihai Mehedint.
+ * 	@author Sean Gallagher, Kalpathi Subramanaian, Mihai Mehedint, David Burlinson.
  *
  * 	@date  1/16/17, 5/19/17
  *
@@ -63,9 +63,10 @@ public class Bridges {
 			title, description;
 	private static Integer MaxTitleSize = 50,
 						   MaxDescrSize = 1000;
-	private static String[] projection_options = {"Cartesian", "albersUsa"};
-	private static Boolean map_overlay = false;
-	private static String coord_system_type = projection_options[0];
+	private static String[] projection_options = {"Cartesian", "albersUsa", "equirectangular"};
+
+	private static Boolean map_overlay = false;	// default to no map overlay
+	private static String coord_system_type = projection_options[0];	// default to Cartesian space
 
 	private static DataStruct ds_handle = null;		// data structure handle
 
@@ -111,6 +112,29 @@ public class Bridges {
 
 	/**
 	 *
+	 * Initialize Bridges
+	 *
+	 * @param <E>
+	 * @param assignment this is the assignmen id (integer)
+	 * @param appl_id    this is the appl authentication key(from the Bridges account)
+	 * @param username   this is the username (from the Bridges account)
+	 *
+	 */
+	public void init(int assignment, String appl_id, String username) {
+		Bridges.setAssignment(assignment);
+		Bridges.key = appl_id;
+		Bridges.userName = username;
+	}
+
+
+	/**
+	 *
+	 *	Bridges JSON Parameters
+	 *
+	 */
+
+	/**
+	 *
 	 * @param title title used in the visualization;
 	 *
 	 */
@@ -150,41 +174,28 @@ public class Bridges {
 	}
 
 	/**
-	 *
-	 * Initialize Bridges
-	 *
-	 * @param <E>
-	 * @param assignment this is the assignmen id (integer)
-	 * @param appl_id    this is the appl authentication key(from the Bridges account)
-	 * @param username   this is the username (from the Bridges account)
-	 *
-	 */
-	public void init(int assignment, String appl_id, String username) {
-		Bridges.setAssignment(assignment);
-		Bridges.key = appl_id;
-		Bridges.userName = username;
-	}
-
-	/**
-	 * 	@param flag 	this is the flag to add a map overlay to the assignment
+	 * 	@param flag 	this is the boolean flag for displaying a map overlay
 	 **/
-	public void setMapOverlay (boolean flag) {
+	public void setMapOverlay (Boolean flag) {
 		map_overlay = flag;
 	}
 
 	/**
 	 * 	@param coord 	this is the desired coordinate space argument
+	 *		Options are: ['Cartesian', 'albersUsa', 'equirectangular'], and 'Cartesian' is the default;
 	 **/
 	public void setCoordSystemType (String coord) {
 		if (java.util.Arrays.asList(projection_options).indexOf(coord) >= 0) {
 			coord_system_type = coord;
 		}
 		else  {
-			System.err.println("Unrecognized coordinate system \'" + coord + "\'. Defaulting to Cartesian");
+			System.err.println("Unrecognized coordinate system \'" + coord + "\', defaulting to Cartesian. Options:");
+			for (String prj : projection_options) {
+				System.err.print(prj + "\t");
+			}
 			coord_system_type = "Cartesian";
 		}
 	}
-
 
 	/**
 	 * 	@param check if the flag to output the JSON is set
