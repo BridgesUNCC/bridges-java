@@ -19,7 +19,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from 'build/docs/javadoc'
 }
- 
+
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
@@ -83,7 +83,7 @@ test {
 
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Implementation-Title': 'Bridges Jar File', 
+        attributes 'Implementation-Title': 'Bridges Jar File',
             'Implementation-Version': version
     }
     baseName = project.name + '-all'
@@ -161,7 +161,11 @@ dependencies {
     compile 'org.apache.httpcomponents:fluent-hc:4.3.1'
 //	compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
 //	compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
-    // Declare the dependency for your favourite test framework you want 
+    compile ('io.socket:socket.io-client:1.0.0') {
+      // excluding org.json which is provided by Android
+      exclude group: 'org.json', module: 'json'
+    }     
+    // Declare the dependency for your favourite test framework you want
 	// to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add

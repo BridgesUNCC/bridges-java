@@ -444,6 +444,7 @@ public class Connector {
 		// It's possible we need to reimplement this as a ResponseHandler
 		//System.out.println("Sending request: " + request);
 		// Execute the HTTP request
+
 		HttpResponse response;
 		if (debug)
 			System.out.println("Sending request: " + request);
@@ -567,5 +568,29 @@ public class Connector {
 		//    	System.out.println(out);
 		return out;
 	}
+
+
+	socket = IO.socket("http://localhost/3000");
+	socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+
+	  @Override
+	  public void call(Object... args) {
+	    socket.emit("foo", "hi");
+	    socket.disconnect();
+	  }
+
+	}).on("event", new Emitter.Listener() {
+
+	  @Override
+	  public void call(Object... args) {}
+
+	}).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+
+	  @Override
+	  public void call(Object... args) {}
+
+	});
+	socket.connect();
+
 
 }
