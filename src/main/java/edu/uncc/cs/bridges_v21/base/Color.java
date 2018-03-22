@@ -67,10 +67,6 @@ public class Color {
 	 */
 	public Color(String color) {
 		setColor (color);
-		// } catch ( Exception err ) {
-		// 	throw new InvalidValueException("Invalid color name: " + color +
-		// 		"\n");
-		// }
 	}
 
 
