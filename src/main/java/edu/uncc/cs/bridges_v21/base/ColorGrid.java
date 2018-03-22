@@ -9,7 +9,6 @@ import java.util.*;
  * @author David Burlinson
  * @param
 **/
-
 public class ColorGrid extends Grid<Color> {
 
   private static Color baseColor = new Color(0,0,0,1.0f);
@@ -19,45 +18,72 @@ public class ColorGrid extends Grid<Color> {
 	}
 
   /**
-	 * Grid constructors
+   * Grid constructors
    *
-	 */
-	public ColorGrid() {
+  **/
+  public ColorGrid() {
     this(gridSize, baseColor);
-	}
+  }
 
+  /**
+   * Grid constructor with color string argument
+   *
+   * @param color - String representing the base color for the grid
+   *
+  **/
   public ColorGrid (String color)  {
     this(gridSize, color);
   }
 
+  /**
+   * Grid constructor with size argument
+   *
+   * @param size - Integer representing the number of rows (and columns) of the grid
+   *
+  **/
   public ColorGrid (Integer size) {
     this(size, baseColor);
   }
 
+  /**
+   * Grid constructor with size and color string argument
+   *
+   * @param size, color - The number of rows (and columns) and the base color of the grid
+   *
+  **/
   public ColorGrid (Integer size, String color)  {
     if(size <= 0 || size > maxGridSize) {
       throw new IllegalArgumentException(
         "\nInvalid size (" + size + "): please use a value between 0 and " + maxGridSize + "!\n");
     }
-
     baseColor.setColor(color);
     gridSize = size;
 
     initializeGrid();
   }
 
+  /**
+   * Grid constructor with size and color object argument
+   *
+   * @param size, color - The number of rows (and columns) and the base color of the grid
+   *
+  **/
   public ColorGrid (Integer size, Color color)  {
     if(size <= 0 || size > maxGridSize) {
       throw new IllegalArgumentException(
         "\nInvalid size (" + size + "): please use a value between 0 and " + maxGridSize + "!\n");
     }
-
     baseColor = color;
     gridSize = size;
 
     initializeGrid();
   }
 
+
+  /**
+   * Populate the 2x2 grid with the base color
+   *
+  **/
   private void initializeGrid() {
     // set up outer list capacity (rows)
     grid = new ArrayList<ArrayList<Color>>(gridSize);
@@ -73,7 +99,13 @@ public class ColorGrid extends Grid<Color> {
     }
   }
 
-  // get the (row, col) element in the grid
+
+  /**
+   * get the (row, col) element in the grid
+   *
+   * @param row, col - indices into the grid
+   * @return Color - returns the Color object stored at the [row,col] location
+  **/
   public Color get(Integer row, Integer col) {
     try {
       return grid.get(row).get(col);
@@ -83,7 +115,10 @@ public class ColorGrid extends Grid<Color> {
 		}
   }
 
-  // set the (row, col) element in the grid
+  /**
+   * set the (row, col) element in the grid
+   *
+  **/
   public void set(Integer row, Integer col, Color color) {
     try {
       grid.get(row).set(col, color);
@@ -92,6 +127,11 @@ public class ColorGrid extends Grid<Color> {
     }
   }
 
+  /**
+   * get the JSON representation of the color grid
+   *
+   * @return the JSON representation of the color grid
+  **/
   public String getDataStructureRepresentation () {
 
     StringBuilder nodes_JSON = new StringBuilder();
@@ -119,12 +159,10 @@ public class ColorGrid extends Grid<Color> {
         }
       }
     }
-    // remove last comma
+
+    // remove last commas
     nodes_JSON.setLength(nodes_JSON.length() - 1);
-
-    // remove last comma
     colors_JSON.setLength(colors_JSON.length() - 1);
-
 
     String json_str = QUOTE + "nodes" + QUOTE + COLON +
       OPEN_BOX  + nodes_JSON + CLOSE_BOX + COMMA + QUOTE + "colors" + QUOTE + COLON + OPEN_BOX + colors_JSON + CLOSE_BOX + CLOSE_CURLY;
