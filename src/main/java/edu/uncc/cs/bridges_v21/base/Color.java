@@ -60,6 +60,22 @@ public class Color {
 
 	/**
 	 *
+	 * 	Constructor, given color name
+	 *
+	 *	@param color - checked to be in the list of possible color names
+	 *
+	 */
+	public Color(String color) {
+		setColor (color);
+		// } catch ( Exception err ) {
+		// 	throw new InvalidValueException("Invalid color name: " + color +
+		// 		"\n");
+		// }
+	}
+
+
+	/**
+	 *
 	 * 	sets color to the given r, g, b, a components
 	 *
 	 *	@param r, g, b, a  - checked to be in the range 0-255
@@ -346,6 +362,8 @@ public class Color {
 				blue = 0;
 				alpha = 1.0f;
 				break;
+			default:
+				throw new InvalidValueException("Invalid color name: " + col_name + "\n");
 		}
 	}
 }
