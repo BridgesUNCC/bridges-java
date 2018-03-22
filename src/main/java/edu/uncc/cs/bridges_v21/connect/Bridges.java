@@ -479,6 +479,9 @@ public class Bridges {
 				nodes_links_str =
 					((GraphAdjMatrix) ds_handle).getDataStructureRepresentation();
 				break;
+			case "ColorGrid":
+				nodes_links_str = ((ColorGrid) ds_handle).getDataStructureRepresentation();
+				break;
 		}
 
 		String ds_json =
