@@ -203,6 +203,16 @@ public class Color {
 		return alpha;
 	}
 
+	/**
+	 *
+	 * 	gets the Color representation as a String
+	 *
+	 * 	@return - returns the color as a String with an RGBA array format
+	 *
+	 */
+	public String getRepresentation() {
+		return "[" + red + "," + green + "," + blue + "," + alpha + "]";
+	}
 
 	/**
 	 *
