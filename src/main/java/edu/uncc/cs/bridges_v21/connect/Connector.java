@@ -528,7 +528,7 @@ public class Connector {
 
 	/** Execute a simple POST request with relative paths, taking a Scala Map()
 	    of request parameters. */
-	public void post(String url, Map<String, String> arguments)
+	public String post(String url, Map<String, String> arguments)
 	throws IOException, RateLimitException {
 		//System.out.println("From Connector.post1()..\n");
 		Request req = Request.Post(prepare(url));
@@ -536,12 +536,12 @@ public class Connector {
 		for (Entry<String, String> e : DataFormatter.sorted_entries(arguments)) {
 			form.add(e.getKey(), e.getValue());
 		}
-		executeHTTPRequest(req.bodyForm(form.build()));
+		return executeHTTPRequest(req.bodyForm(form.build()));
 	}
 
-	public void post(String url, String data) throws IOException,
+	public String post(String url, String data) throws IOException,
 		RateLimitException {
-		executeHTTPRequest(Request.Post(prepare(url))
+		return executeHTTPRequest(Request.Post(prepare(url))
 			.bodyString(data, ContentType.TEXT_PLAIN));
 	}
 
