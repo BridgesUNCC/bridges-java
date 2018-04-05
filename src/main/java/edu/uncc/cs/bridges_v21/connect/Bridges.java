@@ -528,5 +528,6 @@ public class Bridges {
 		System.out.println("\nCheck Your Visualization at the following link:\n\n" +
 			connector.getServerURL() + "/assignments/" + assignment + "/"
 			+ userName + "\n\n");
+		assignment_part++;
 	}
 }
