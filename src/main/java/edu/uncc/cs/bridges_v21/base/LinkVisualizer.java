@@ -60,10 +60,15 @@ public class LinkVisualizer {
 	OPEN_BOX = "[",
 	CLOSE_BOX = "]";
 
+	// link label
+	private String label;
+
 	// link color
 	private Color color;
+
 	// link thickness
 	private double thickness;
+
 	// link weight
 	private double weight;
 
@@ -82,6 +87,25 @@ public class LinkVisualizer {
 		        				put("weight", "1.0");
 							}};
 		*/
+	}
+
+	/**
+	 * This method returns the existing value of the label fields
+	 *
+	 * @return the label of the Element; the label is typically displayed on BRIDGES
+	 *          visualizations.
+	 */
+	public String getLabel() {
+		return label;
+    }
+
+	/**
+	 * This method sets the label
+	 *
+	 * @param label the link label to set
+	 */
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	/**
