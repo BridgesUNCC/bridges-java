@@ -27,7 +27,10 @@ import java.util.Map.Entry;
  *	class structure.
  *
  *  Convenience methods are provided to add vertices and edges to the graph. Edges
- *  are retrieved by using the dual hashmap, given the vertex ids of the edge.
+ *  are retrieved by using the dual hashmap, given the vertex ids of the edge. 
+ *	Methods to access the element and link visualizer are now provided, indexed
+ *  vertex ids, making it easier to set visual attributes to graph nodes and 
+ *	links.
  *
  *  @author Kalpathi Subramanian, Mihai Mehedint
  *

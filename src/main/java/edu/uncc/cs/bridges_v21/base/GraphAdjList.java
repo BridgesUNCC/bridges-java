@@ -28,12 +28,15 @@ import java.util.Vector;
  *	vertex id, weight) in the Edge structure, defined separately. Adjacency lists
  *	are singly linked lists using the BRIDGES SLelement.
  *
- *	Convenience methods are provided to add vertices and edges to the graph as well as
- *	retrieve the adjacency list of a vertex, given its id.
+ *	Convenience methods are provided to add vertices and edges to the graph. Edges
+ *  are retrieved by using the dual hashmap, given the vertex ids of the edge.
+ *  Methods to access the element and link visualizer are now provided, indexed
+ *  vertex ids, making it easier to set visual attributes to graph nodes and
+ *  links.
  *
  *	@author Kalpathi Subramanian
  *
- *	@date 6/29/15, 5/18/17
+ *	@date 6/29/15, 5/18/17, 4/24/18
  *
  *	@param <K>  orderable key (string, int, etc) that is used to index into vertex
  *	@param <E1> holds vertex specific information, defined by application
