@@ -2,15 +2,15 @@ package bridges.base;
 
 import bridges.base.Color;
 import java.util.*;
-
+import java.nio.ByteBuffer;
+import org.apache.commons.codec.binary.Base64;
 
 /**
- * @brief This is a class in BRIDGES for representing a 2x2 grid.
+ * @brief This is a class in BRIDGES for representing an (n x n) grid.
  * @author David Burlinson
  * @param
 **/
 public class ColorGrid extends Grid<Color> {
-
   private static Color baseColor = new Color(0,0,0,1.0f);
 
   public String getDataStructType() {
@@ -22,109 +22,52 @@ public class ColorGrid extends Grid<Color> {
    *
   **/
   public ColorGrid() {
-    this(gridSize, baseColor);
+    this(gridSize[0], gridSize[1], baseColor);
   }
 
   /**
-   * Grid constructor with color string argument
+   * Grid constructor with size arguments
    *
-   * @param color - String representing the base color for the grid
-   *
-  **/
-  public ColorGrid (String color)  {
-    this(gridSize, color);
-  }
-
-  /**
-   * Grid constructor with size argument
-   *
-   * @param size - Integer representing the number of rows (and columns) of the grid
+   * @param rows - int representing the number of rows of the grid
+   * @param cols - int representing the number of columns of the grid
    *
   **/
-  public ColorGrid (Integer size) {
-    this(size, baseColor);
+  public ColorGrid (int rows, int cols) {
+    this(rows, cols, baseColor);
   }
 
   /**
    * Grid constructor with size and color string argument
    *
-   * @param size, color - The number of rows (and columns) and the base color of the grid
+   * @param rows - int representing the number of rows of the grid
+   * @param cols - int representing the number of columns of the grid
+   * @param color - Color object
    *
   **/
-  public ColorGrid (Integer size, String color)  {
-    if(size <= 0 || size > maxGridSize) {
-      throw new IllegalArgumentException(
-        "\nInvalid size (" + size + "): please use a value between 0 and " + maxGridSize + "!\n");
-    }
-    baseColor.setColor(color);
-    gridSize = size;
+  public ColorGrid (int rows, int cols, Color color)  {
+    super(new int[] {rows, cols});
 
-    initializeGrid();
-  }
-
-  /**
-   * Grid constructor with size and color object argument
-   *
-   * @param size, color - The number of rows (and columns) and the base color of the grid
-   *
-  **/
-  public ColorGrid (Integer size, Color color)  {
-    if(size <= 0 || size > maxGridSize) {
-      throw new IllegalArgumentException(
-        "\nInvalid size (" + size + "): please use a value between 0 and " + maxGridSize + "!\n");
-    }
     baseColor = color;
-    gridSize = size;
+    gridSize = new int[] {rows, cols};
 
     initializeGrid();
   }
 
-
   /**
-   * Populate the 2x2 grid with the base color
+   * Populate the grid with the base color
    *
   **/
   private void initializeGrid() {
-    // set up outer list capacity (rows)
-    grid = new ArrayList<ArrayList<Color>>(gridSize);
-
-    // set up inner list capacities (cols)
-    for(int i = 0; i < gridSize; i++) {
-      grid.add(new ArrayList<Color>(gridSize));
-
-      // initialize inner lists
-      for(int j = 0; j < gridSize; j++) {
-        grid.get(i).add(baseColor);
+    for(int i = 0; i < gridSize[0]; i++) {
+      for(int j = 0; j < gridSize[1]; j++) {
+        this.set(i, j, baseColor);
       }
     }
   }
 
-
-  /**
-   * get the (row, col) element in the grid
-   *
-   * @param row, col - indices into the grid
-   * @return Color - returns the Color object stored at the [row,col] location
-  **/
-  public Color get(Integer row, Integer col) {
-    try {
-      return grid.get(row).get(col);
-    } catch (Exception e) {
-			e.printStackTrace();
-      return null;
-		}
-  }
-
-  /**
-   * set the (row, col) element in the grid
-   *
-  **/
+  // set the (row, col) element in the ColorGrid
   public void set(Integer row, Integer col, Color color) {
-    try {
-      grid.get(row).set(col, color);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    super.set(row, col, color);
   }
 
   /**
@@ -134,38 +77,28 @@ public class ColorGrid extends Grid<Color> {
   **/
   public String getDataStructureRepresentation () {
 
-    StringBuilder nodes_JSON = new StringBuilder();
-    StringBuilder colors_JSON = new StringBuilder();
-    String color;
-    Map<String, Integer> color_index = new HashMap<String, Integer>();
-    Integer color_count = 0;
+    // Maintain a bytebuffer for the byte representations of each grid color
+    ByteBuffer imageBytes = ByteBuffer.allocate(4 * gridSize[0] * gridSize[1]);
+    Color color;
 
-    for (int i = 0; i < gridSize; i++) {
+    for (int i = 0; i < gridSize[0]; i++) {
       if (grid.get(i) != null) {
-        for (int j = 0; j < gridSize; j++) {
+        for (int j = 0; j < gridSize[1]; j++) {
           if (grid.get(i).get(j) != null) {
-            color = grid.get(i).get(j).getRepresentation();
-
-            // we have already seen this color
-            if(color_index.containsKey(color)) {
-              nodes_JSON.append(color_index.get(color) + COMMA);
-            } else { // new color
-              color_index.put(color, color_count);
-              nodes_JSON.append(color_count + COMMA);
-              colors_JSON.append(color + COMMA);
-              color_count++;
-            }
+            color = grid.get(i).get(j);
+            imageBytes.put(color.getByteRepresentation());
           }
         }
       }
     }
 
-    // remove last commas
-    nodes_JSON.setLength(nodes_JSON.length() - 1);
-    colors_JSON.setLength(colors_JSON.length() - 1);
-
+    // Add the byte representation of the grid
     String json_str = QUOTE + "nodes" + QUOTE + COLON +
-      OPEN_BOX  + nodes_JSON + CLOSE_BOX + COMMA + QUOTE + "colors" + QUOTE + COLON + OPEN_BOX + colors_JSON + CLOSE_BOX + CLOSE_CURLY;
+      OPEN_BOX  + QUOTE + Base64.encodeBase64String(imageBytes.array()) + QUOTE + CLOSE_BOX + COMMA;
+
+    // Specify the dimensions of the grid
+    json_str += QUOTE + "dimensions" + QUOTE + COLON +
+        OPEN_BOX + gridSize[0] + "," + gridSize[1] + CLOSE_BOX + CLOSE_CURLY;
 
     return json_str;
   }
