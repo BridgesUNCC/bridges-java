@@ -13,14 +13,14 @@ import java.util.Map.Entry;
  *
  * @author K.R. Subramanian
  *
- * @param generic parameter <K>  usually an Element<E> type used to hold the
- *		terminating vertex
+ * @param generic parameter <K>  holds the terminating vertex of the edge
+ * @param generic parameter <E2> holds edge specific information
  */
-public class Edge<K> {
+public class Edge<K, E2> {
 
 	private int weight;
 	private K vertex; // refers to a terminating vertex
-	private String edge_data;
+	private E2 edge_data;
 
 	/**
 	 *
@@ -29,7 +29,6 @@ public class Edge<K> {
 	 */
 	public Edge() {
 		weight = 0;
-		edge_data = "";
 	}
 
 	/**
@@ -41,7 +40,6 @@ public class Edge<K> {
 	 */
 	public Edge(int wt) {
 		weight = wt;
-		edge_data = "";
 	}
 
 	/**
@@ -56,7 +54,21 @@ public class Edge<K> {
 	public Edge(int wt, K v) {
 		weight = wt;
 		vertex = v;
-		edge_data = "";
+	}
+	/**
+	 *
+	 * Construct an edge with weight "wt" and a terminating
+	 * Element with an identifer equal to "v" - used only for graphs
+	 *
+	 * @param wt integer, representing  edge weight
+	 * @param v the terminating vertex of the edge
+	 * @param d is the  edge information object
+	 *
+	 */
+	public Edge(int wt, K v, E2 e) {
+		weight = wt;
+		vertex = v;
+		edge_data = e;
 	}
 
 	/**
@@ -105,6 +117,26 @@ public class Edge<K> {
 
 	/**
 	 *
+	 * Set edge specific data.
+	 *
+	 * @param data edge data
+	 *
+	 */
+	public void setEdgeData(E2 data) {
+		this.edge_data = data;
+	}
+	/**
+	 *
+	 * Get edge specific data.
+	 *
+	 * @return  edge data
+	 *
+	 */
+	public E2 getEdgeData() {
+		return this.edge_data;
+	}
+	/**
+	 *
 	 * Set edge to weight  of "wt" and terminating Elememt of "v".
 	 *
 	 * @param wt edge weight
@@ -117,27 +149,9 @@ public class Edge<K> {
 	}
 
 	/**
-	 * Set Edge data (represented as a string for now)
-	 *
-	 * @param string: application data
-	 **/
-	void setEdgeData(String data) {
-		edge_data = data;
-	}
-
-	/**
-	 * Get edge data
-	 *
-	 * @return the edge data
-	 **/
-	String getEdgeData() {
-		return edge_data;
-	}
-
-	/**
 	 * Returns this edge
 	 */
-	public Edge<K> getEdge() {
+	public Edge<K, E2> getEdge() {
 		return this;
 	}
 
