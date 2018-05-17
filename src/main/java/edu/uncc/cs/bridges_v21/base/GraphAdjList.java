@@ -28,39 +28,42 @@ import java.util.Vector;
  *	vertex id, weight) in the Edge structure, defined separately. Adjacency lists
  *	are singly linked lists using the BRIDGES SLelement.
  *
- *	Convenience methods are provided to add vertices and edges to the graph as well as
- *	retrieve the adjacency list of a vertex, given its id.
+ *	Convenience methods are provided to add vertices and edges to the graph. Edges
+ *  are retrieved by using the dual hashmap, given the vertex ids of the edge.
+ *  Methods to access the element and link visualizer are now provided, indexed
+ *  vertex ids, making it easier to set visual attributes to graph nodes and
+ *  links.
  *
  *	@author Kalpathi Subramanian
  *
- *	@date 6/29/15, 5/18/17
+ *	@date 6/29/15, 5/18/17, 4/24/18
  *
- *	@param <E> application/user defined type used as part of vertices and edges
- *	@param <K> orderable key (string, int, etc) that is used to index into vertex
- *		structure, for fast access
+ *	@param <K>  orderable key (string, int, etc) that is used to index into vertex
+ *	@param <E1> holds vertex specific information, defined by application
+ *	@param <E2> holds edge specific information, defined by application
  *
  *	\sa Example tutorial at <p>
  *		http://bridgesuncc.github.io/Hello_World_Tutorials/Graph.html
  *
  */
-public class GraphAdjList<K, E> extends DataStruct {
+public class GraphAdjList<K, E1, E2> extends DataStruct {
 
 	// keep track of the graph nodes; useful
 	// to maintain their properties
 
-	private final HashMap<K, Element<E> > vertices;
+	private final HashMap<K, Element<E1> > vertices;
 
 	// holds the adjacency list of edges
 
-	private final HashMap<K, SLelement<Edge<K> > > adj_list;
+	private final HashMap < K, SLelement < Edge< K,E2 > > > adj_list;
 
 	/**
 	 *
 	 *	Constructor
 	 */
 	public GraphAdjList() {
-		vertices = new HashMap<K, Element<E> >();
-		adj_list = new HashMap<K, SLelement<Edge<K> > >();
+		vertices = new HashMap<K, Element<E1> >();
+		adj_list = new HashMap<K, SLelement<Edge<K, E2> > >();
 	}
 
 	/**
@@ -83,10 +86,10 @@ public class GraphAdjList<K, E> extends DataStruct {
 	 *	@return none
 	 */
 
-	public void addVertex(K k, E e) {
+	public void addVertex(K k, E1 e) {
 		// note: it is the user's responsibility to  check
 		// for duplicate vertices
-		vertices.put(k, new Element<E>(e));
+		vertices.put(k, new Element<E1>(e));
 		vertices.get(k).setLabel(String.valueOf(k));
 		adj_list.put(k,  null);
 	}
@@ -113,7 +116,7 @@ public class GraphAdjList<K, E> extends DataStruct {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		adj_list.put(src, new SLelement<Edge<K>>(new Edge<K>(1, dest),
+		adj_list.put(src, new SLelement<Edge<K, E2>>(new Edge<K, E2>(1, dest),
 				adj_list.get(src) ) );
 	}
 
@@ -140,8 +143,121 @@ public class GraphAdjList<K, E> extends DataStruct {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		adj_list.put(src, new SLelement<Edge<K>>(new Edge<K>(weight, dest),
-				adj_list.get(src) ) );
+		adj_list.put(src, new SLelement<Edge<K, E2>>(
+				new Edge<K, E2>(weight, dest), adj_list.get(src) ) );
+	}
+	/**
+	 *	Sets data for a graph vertex
+	 *	
+	 *	@param src - source vertex of edge
+	 *	@param dest - destination  vertex of edge
+	 *	@param data - vertex data
+	 *
+	 */
+	public void setVertexData(K src, E1 vertex_data) {
+		// check to see if the vertex  exists, else throw an exception
+		try {
+			if (vertices.get(src) == null) {
+				throw new NullPointerException("Vertex " + src + " does not exist!");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		vertices.get(src).setValue(vertex_data);
+	}
+	/**
+	 *	Gets data for an edge
+	 *	
+	 *	@param src - source vertex of edge
+	 *	@param dest - destination  vertex of edge
+	 *
+	 */
+	public E1 getVertexData(K src) {
+		// check to see if the vertex  exists, else throw an exception
+
+		try {
+			if (vertices.get(src) == null) {
+				throw new NullPointerException("Vertex " + src + 
+					" does not exist!");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return  vertices.get(src).getValue();
+	}
+	/**
+	 *	Sets data for an edge
+	 *	
+	 *	@param src - source vertex of edge
+	 *	@param dest - destination  vertex of edge
+	 *	@param data - edge data
+	 *
+	 */
+	public void setEdgeData(K src, K dest, E2 edge_data) {
+		// check to see if the two vertices exist, else
+		// throw an exception
+
+		try {
+			if (vertices.get(src) == null || vertices.get(dest) == null) {
+				throw new NullPointerException("Vertex " + src + " or " + dest +
+					" does not exist! Add the vertex before creating the edge.");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+							// look for the edge
+
+		SLelement<Edge<K, E2>> sle = adj_list.get(src);
+		while (sle != null) {
+			K edge_dest = ((Edge<K, E2>) sle.getValue()).getVertex();
+			if (edge_dest.equals(dest)) {	// found
+				sle.getValue().setEdgeData(edge_data);
+				return;
+			}
+			sle = sle.getNext();
+		}
+		if (sle == null)
+			throw new NullPointerException("Edge from " + src  + " to " 
+						+ dest + " does not exist!");
+	}
+	/**
+	 *	Gets data for an edge
+	 *	
+	 *	@param src - source vertex of edge
+	 *	@param dest - destination  vertex of edge
+	 *
+	 */
+	public E2 getEdgeData(K src, K dest) {
+		// check to see if the two vertices exist, else
+		// throw an exception
+
+		try {
+			if (vertices.get(src) == null || vertices.get(dest) == null) {
+				throw new NullPointerException("Vertex " + src + " or " + dest +
+					" does not exist! Add the vertex before creating the edge.");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+							// look for the edge
+		SLelement<Edge<K, E2>> sle = adj_list.get(src);
+		while (sle != null) {
+			K edge_dest = ((Edge<K, E2>) sle.getValue()).getVertex();
+			if (edge_dest.equals(dest)) 	// found
+				return sle.getValue().getEdgeData();
+			sle = sle.getNext();
+		}
+		if (sle == null)
+			throw new NullPointerException("Edge from " + src + " to " + dest +
+				" does not exist!");
+
+				// should never reach here
+		return null;
 	}
 	/**
 	 *	This method returns the graph nodes
@@ -149,7 +265,7 @@ public class GraphAdjList<K, E> extends DataStruct {
 	 *	return -- vertices held in  in the hashmap
 	 *
 	 */
-	public HashMap<K, Element<E> > getVertices() {
+	public HashMap<K, Element<E1> > getVertices() {
 		return vertices;
 	}
 	/**
@@ -159,7 +275,7 @@ public class GraphAdjList<K, E> extends DataStruct {
 	 *	return -- graph vertex corresponding to its key
 	 *
 	 */
-	public Element<E> getVertex(K key) {
+	public Element<E1> getVertex(K key) {
 		return vertices.get(key);
 	}
 
@@ -169,7 +285,7 @@ public class GraphAdjList<K, E> extends DataStruct {
 	 *	@return - the graph's adjacency lists
 	 *
 	 */
-	public HashMap<K, SLelement<Edge<K> > > getAdjacencyList() {
+	public HashMap<K, SLelement<Edge<K, E2> > > getAdjacencyList() {
 		return adj_list;
 	}
 	/**
@@ -179,7 +295,7 @@ public class GraphAdjList<K, E> extends DataStruct {
 	 *
 	 *	@return - the graph's adjacency list  corresponding to this vertex
 	 */
-	public SLelement<Edge<K> >  getAdjacencyList(K vertex) {
+	public SLelement<Edge<K, E2> >  getAdjacencyList(K vertex) {
 		return adj_list.get(vertex);
 	}
 	/**
@@ -192,8 +308,8 @@ public class GraphAdjList<K, E> extends DataStruct {
 	public LinkVisualizer getLinkVisualizer (K src, K dest) throws Exception {
 		// get the source and destination vertex elements
 		// and check to see if they exist
-		Element<E> v1 = vertices.get(src);
-		Element<E> v2 = vertices.get(dest);
+		Element<E1> v1 = vertices.get(src);
+		Element<E1> v2 = vertices.get(dest);
 		try {
 			if (v1 == null || v2 == null) {
 				throw new NullPointerException("Vertex " + src + " or " + dest +
@@ -215,7 +331,7 @@ public class GraphAdjList<K, E> extends DataStruct {
 	public ElementVisualizer getVisualizer (K vertex) throws Exception {
 		// get the source and destination vertex elements
 		// and check to see if they exist
-		Element<E> v = vertices.get(vertex);
+		Element<E1> v = vertices.get(vertex);
 		try {
 			if (v == null) {
 				throw new NullPointerException("Vertex " + vertex  +
@@ -234,11 +350,11 @@ public class GraphAdjList<K, E> extends DataStruct {
 	 */
 	public String getDataStructureRepresentation() {
 		// map to reorder the nodes for building JSON
-		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
+		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
 		// get teh list nodes
-		Vector<Element<E> > nodes = new Vector<Element<E>> ();
+		Vector<Element<E1> > nodes = new Vector<Element<E1>> ();
 
-		for (Entry<K, Element<E>> element : vertices.entrySet())
+		for (Entry<K, Element<E1>> element : vertices.entrySet())
 			nodes.add(element.getValue());
 
 		// remap  map these nodes to  0...MaxNodes-1
@@ -255,15 +371,15 @@ public class GraphAdjList<K, E> extends DataStruct {
 
 		// build the links JSON - traverse the adj. lists
 		StringBuilder links_JSON = new StringBuilder();
-		for (Entry<K, SLelement<Edge<K>>> a_list : adj_list.entrySet()) {
-			SLelement<Edge<K>> list = a_list.getValue();
+		for (Entry<K, SLelement<Edge<K, E2>>> a_list : adj_list.entrySet()) {
+			SLelement<Edge<K, E2>> list = a_list.getValue();
 			// get the source vertex index for the JSON (int)
-			Element<E> src_vert = vertices.get(a_list.getKey());
+			Element<E1> src_vert = vertices.get(a_list.getKey());
 			while (list != null) {
 				Integer src_indx = node_map.get(src_vert);
 				// get the destination vertex index for the JSON (int)
-				Edge<K> edge = list.getValue();
-				Element<E> dest_vert = vertices.get(edge.getVertex());
+				Edge<K, E2> edge = list.getValue();
+				Element<E1> dest_vert = vertices.get(edge.getVertex());
 				Integer dest_indx = node_map.get(dest_vert);
 				// get link representation
 				links_JSON.append(list.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert),

@@ -449,6 +449,7 @@ public class Bridges {
 	public void visualize()  throws IOException, RateLimitException {
 		String[] nodes_links = new String[2];
 		String nodes_links_str = "";
+		String response = "";
 		switch (vis_type) {
 			case "Array":
 				nodes_links_str = ((Array) ds_handle).getDataStructureRepresentation();
@@ -478,6 +479,9 @@ public class Bridges {
 			case "GraphAdjacencyMatrix":
 				nodes_links_str =
 					((GraphAdjMatrix) ds_handle).getDataStructureRepresentation();
+				break;
+			case "ColorGrid":
+				nodes_links_str = ((ColorGrid) ds_handle).getDataStructureRepresentation();
 				break;
 		}
 
@@ -511,7 +515,7 @@ public class Bridges {
 
 		// send the data structure to the server and visualize
 		try {
-			connector.post("/assignments/" + getAssignment(), ds_json);
+			response = connector.post("/assignments/" + getAssignment(), ds_json);
 		}
 		catch (IOException e) {
 			System.err.println("There was a problem sending the visualization"
@@ -524,9 +528,16 @@ public class Bridges {
 				+ " an impossible 'RateLimitException'. "
 				+ e.getMessage());
 		}
-		// Return a URL to the user
-		System.out.println("\nCheck Your Visualization at the following link:\n\n" +
-			connector.getServerURL() + "/assignments/" + assignment + "/"
-			+ userName + "\n\n");
+
+		// Only print a url and increment assignment part when a successful upload has completed
+		if(response.length() > 0) {
+			// Return a URL to the user
+			System.out.println("\nCheck Your Visualization at the following link:\n\n" +
+				connector.getServerURL() + "/assignments/" + assignment + "/"
+				+ userName + "\n\n");
+
+			// Increment the subassignment counter
+			assignment_part++;
+		}
 	}
 }

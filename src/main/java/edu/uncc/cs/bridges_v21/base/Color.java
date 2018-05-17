@@ -2,6 +2,7 @@ package bridges.base;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.nio.ByteBuffer;
 import bridges.validation.InvalidValueException;
 
 
@@ -57,6 +58,18 @@ public class Color {
 	public Color(int r, int g, int b) {
 		setColor (r, g, b, 1.0f);
 	}
+
+	/**
+	 *
+	 * 	Constructor, given color name
+	 *
+	 *	@param color - checked to be in the list of possible color names
+	 *
+	 */
+	public Color(String color) {
+		setColor (color);
+	}
+
 
 	/**
 	 *
@@ -187,6 +200,56 @@ public class Color {
 		return alpha;
 	}
 
+	/**
+	 *
+	 * 	gets the Color representation as a String
+	 *
+	 * 	@return - returns the color as a String with an RGBA array format
+	 *
+	 */
+	public String getRepresentation() {
+		return "[" + red + "," + green + "," + blue + "," + alpha + "]";
+	}
+
+	/**
+	 *
+	 * 	gets the RGB Color representation as a Hex String
+	 *
+	 * 	@return - returns the RGB color as hexadecimal String
+	 *
+	 */
+	public String getHexRepresentation() {
+		String hex = String.format("%02x%02x%02x", red, green, blue);
+		// hex += Float.toHexString(alpha);
+		return hex;
+	}
+
+	/**
+	 *
+	 * 	gets a Byte array representation of a Color
+	 *
+	 * 	@return - returns the RGBA color as a byte array
+	 *
+	 */
+	public byte[] getByteRepresentation() {
+		int r = red;
+		int g = green;
+		int b = blue;
+		int a  = Math.round(255 * alpha);
+
+		// keep lowest byte of each int 
+		byte rd = (byte) r;
+		byte gn = (byte) g;
+		byte bl = (byte) b;
+		byte al = (byte) a;
+
+		return ByteBuffer.allocate(4)
+				.put(rd)
+				.put(gn)
+				.put(bl)
+				.put(al)
+				.array();
+	}
 
 	/**
 	 *
@@ -346,6 +409,8 @@ public class Color {
 				blue = 0;
 				alpha = 1.0f;
 				break;
+			default:
+				throw new InvalidValueException("Invalid color name: " + col_name + "\n");
 		}
 	}
 }

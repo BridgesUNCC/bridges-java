@@ -706,7 +706,7 @@ public class DataFormatter {
 				am_pair.setMovieRating(((Number) item.get("rating")).doubleValue());
 				JSONArray genre = (JSONArray) item.get("genres");
 
-				Vector<String> v = new Vector();
+				Vector<String> v = new Vector<String>();
 				for (int k = 0; k < genre.size(); k++)
 					v.add((String)genre.get(k));
 				am_pair.setGenres(v);
@@ -744,7 +744,7 @@ public class DataFormatter {
 				JSONArray lang = (JSONArray) item.get("languages");
 				JSONArray genres = (JSONArray)item.get("genres");
 				JSONArray subjects = (JSONArray)item.get("subjects");
-				Vector<String> gb_tmp = new Vector(100);;
+				Vector<String> gb_tmp = new Vector<String>(100);;
 
 				GutenbergBook gb = new GutenbergBook();
 
@@ -807,7 +807,7 @@ public class DataFormatter {
 				game.setRating(((Number) item.get("rating")).doubleValue());
 				JSONArray genre = (JSONArray) item.get("genre");
 
-				Vector<String> v = new Vector();
+				Vector<String> v = new Vector<String>();
 				for (int k = 0; k < genre.size(); k++)
 					v.add((String)genre.get(k));
 				game.setGenre(v);

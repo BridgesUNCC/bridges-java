@@ -6,6 +6,8 @@ import bridges.base.Color;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Random;
 
 /**
@@ -60,12 +62,20 @@ public class LinkVisualizer {
 	OPEN_BOX = "[",
 	CLOSE_BOX = "]";
 
+	// link label
+	private String label;
+
 	// link color
 	private Color color;
+
 	// link thickness
 	private double thickness;
+
 	// link weight
 	private double weight;
+
+	private final String INSERT_STRING = "\\n";
+	private final String DIVIDE_KEY = "(\r?\n)|(\n)|(\f)|(\r)|(%n)";
 
 
 	public LinkVisualizer() {
@@ -82,6 +92,53 @@ public class LinkVisualizer {
 		        				put("weight", "1.0");
 							}};
 		*/
+	}
+
+	/**
+	 * This method returns the existing value of the label fields
+	 *
+	 * @return the label of the Element; the label is typically displayed on BRIDGES
+	 *          visualizations.
+	 */
+	public String getLabel() {
+		return label;
+    }
+
+	/**
+	 * This method sets the label
+	 *
+	 * @param label the link label to set
+	 */
+	public void setLabel(String label) {
+		this.label = arrangeLabel(label);
+	}
+
+	/**
+	 * This method formats the label string using a predefine pattern (DIVIDE_KEY) and
+	 * replaces the pattern with the string characters hold by the INSERT_STRING global
+	 *	variable
+	 *
+	 * @param label  the input label string
+	 *
+	 * @return  the formatted label
+	 */
+	public String arrangeLabel(String label) {
+		final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
+		Matcher match = myPattern.matcher(label);
+		if (!match.find())
+			return label;
+		else {
+			match.reset();
+			StringBuffer str = new StringBuffer();
+			while (match.find()) {
+				match.appendReplacement(str, Matcher.quoteReplacement(INSERT_STRING));
+			}
+			match.appendTail(str);
+			if (str.length() == 0)
+				return label;
+			else
+				return label = str.toString();
+		}
 	}
 
 	/**
@@ -345,6 +402,12 @@ public class LinkVisualizer {
 			QUOTE + "weight" + QUOTE + COLON +
 			Double.toString(this.getWeight());
 
+		String label = this.getLabel();
+		if(label != null && !label.isEmpty()) {
+			link_props += COMMA +
+			QUOTE + "label" + QUOTE + COLON +
+			QUOTE + this.getLabel() + QUOTE;
+		}
 
 		return link_props;
 	}
