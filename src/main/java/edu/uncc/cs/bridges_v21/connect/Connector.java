@@ -21,14 +21,14 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import bridges.validation.RateLimitException;
+//
+// import io.socket.IOAcknowledge;
+// import io.socket.IOCallback;
+// import io.socket.SocketIO;
+// import io.socket.SocketIOException;
 
-import io.socket.IOAcknowledge;
-import io.socket.IOCallback;
-import io.socket.SocketIO;
-import io.socket.SocketIOException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+// import org.json.JSONException;
+// import org.json.JSONObject;
 
 
 public class Connector {
@@ -576,31 +576,31 @@ public class Connector {
 		//    	System.out.println(out);
 		return out;
 	}
-
-	public Socket getBridgesConnection(String tmp) {
-		socket = IO.socket("http://localhost/3000");
-		socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-
-			@Override
-			public void call(Object... args) {
-				socket.emit("foo", "hi");
-				socket.disconnect();
-			}
-
-		}).on("event", new Emitter.Listener() {
-
-			@Override
-			public void call(Object... args) {}
-
-		}).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
-
-			@Override
-			public void call(Object... args) {}
-
-		});
-		socket.connect();
-		return socket;
-	}
+	//
+	// public Socket getBridgesConnection(String tmp) {
+	// 	socket = IO.socket("http://localhost/3000");
+	// 	socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+	//
+	// 		@Override
+	// 		public void call(Object... args) {
+	// 			socket.emit("foo", "hi");
+	// 			socket.disconnect();
+	// 		}
+	//
+	// 	}).on("event", new Emitter.Listener() {
+	//
+	// 		@Override
+	// 		public void call(Object... args) {}
+	//
+	// 	}).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
+	//
+	// 		@Override
+	// 		public void call(Object... args) {}
+	//
+	// 	});
+	// 	socket.connect();
+	// 	return socket;
+	// }
 
 
 
