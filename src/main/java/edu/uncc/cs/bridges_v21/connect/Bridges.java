@@ -318,10 +318,20 @@ public class Bridges {
 	 *
 	 *  @throws Exception if the request fails
 	 *
+	 *  @param {String} [works] Valid input: "Plays" or "Poems". The works flag is optional.
+	 *
+	 *  @param {Boolean} [textOnly] True returns only words, no punctuation. The textOnly flag is optional.
+	 *
 	 *  @return a list of Shakespeare objects.
 	 */
 	public static List<Shakespeare> getShakespeareData() throws Exception {
-		return DataFormatter.getShakespeareData();
+		return DataFormatter.getShakespeareData("", false);
+	}
+	public static List<Shakespeare> getShakespeareData(String works) throws Exception {
+		return DataFormatter.getShakespeareData(works, false);
+	}
+	public static List<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
+		return DataFormatter.getShakespeareData(works, textOnly);
 	}
 
 	/**

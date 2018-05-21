@@ -821,9 +821,18 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
 		}
 	}
-	public static ArrayList<Shakespeare> getShakespeareData() throws Exception {
 
+	public static ArrayList<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
 		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";
+
+		if(works == "plays" || works == "poems") {
+			url += "/" + works;
+		}
+
+		if(textOnly) {
+			url += "?format=simple";
+		}
+
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
 		HttpResponse response = client.execute(request);
@@ -909,4 +918,3 @@ public class DataFormatter {
 	}
 
 } // end of DataFormatter
-
