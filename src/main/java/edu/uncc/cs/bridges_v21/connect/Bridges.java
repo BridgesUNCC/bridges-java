@@ -307,6 +307,23 @@ public class Bridges {
 	}
 
 	/**
+	 *  This helper function provides access to the meta-data of the lyrics
+	 *	collection.
+	 *
+	 *  Each record in this collection has
+	 *	information on song title, artist, album, year, lyrics, and genre. For more information
+	 *	and to look at the data, refer to <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/lyrics <p>
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of Song objects.
+	 */
+	public static List<Song> getSongData() throws Exception {
+		return DataFormatter.getSongData();
+	}
+
+	/**
 	 *  This helper function provides access to a collection of Shakespeare plays,
 	 * 	poems and plays.
 	 *
@@ -318,10 +335,20 @@ public class Bridges {
 	 *
 	 *  @throws Exception if the request fails
 	 *
+	 *  @param {String} [works] Valid input: "Plays" or "Poems". The works flag is optional.
+	 *
+	 *  @param {Boolean} [textOnly] True returns only words, no punctuation. The textOnly flag is optional.
+	 *
 	 *  @return a list of Shakespeare objects.
 	 */
 	public static List<Shakespeare> getShakespeareData() throws Exception {
-		return DataFormatter.getShakespeareData();
+		return DataFormatter.getShakespeareData("", false);
+	}
+	public static List<Shakespeare> getShakespeareData(String works) throws Exception {
+		return DataFormatter.getShakespeareData(works, false);
+	}
+	public static List<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
+		return DataFormatter.getShakespeareData(works, textOnly);
 	}
 
 	/**
