@@ -821,6 +821,48 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
 		}
 	}
+  public static ArrayList<Song> getSongData() throws Exception {
+
+		String url = "https://bridgesdata.herokuapp.com/api/songs";
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+		HttpResponse response = client.execute(request);
+
+		int status = response.getStatusLine().getStatusCode();
+
+		if (status == 200) 	{
+			String result = EntityUtils.toString(response.getEntity());
+			JSONObject full = (JSONObject)JSONValue.parse(result);
+			JSONArray json = (JSONArray)full.get("data");
+
+			ArrayList<Song> song_list =
+					new ArrayList<Song>(json.size());
+			for (int i = 0; i < json.size(); i++) {
+				JSONObject item = (JSONObject)json.get(i);
+
+				Song song = new Song();
+
+				song.setArtist((String) item.get("artist"));
+				song.setSongTitle((String) item.get("song"));
+        song.setAlbumTitle((String) item.get("album"));
+        song.setLyrics((String) item.get("lyrics"));
+				song.setYear(((Number) item.get("year")).intValue());
+				JSONArray genre = (JSONArray) item.get("genre");
+
+				Vector<String> v = new Vector<String>();
+				for (int k = 0; k < genre.size(); k++)
+					v.add((String)genre.get(k));
+				song.setGenre(v);
+
+				song_list.add(song);
+
+			}
+			return song_list;
+		}
+		else {
+			throw new Exception("HTTP Request Failed. Error Code: "+status);
+		}
+	}
 
 	public static ArrayList<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
 		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";

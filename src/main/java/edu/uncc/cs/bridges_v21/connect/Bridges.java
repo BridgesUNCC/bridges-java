@@ -307,6 +307,23 @@ public class Bridges {
 	}
 
 	/**
+	 *  This helper function provides access to the meta-data of the lyrics
+	 *	collection.
+	 *
+	 *  Each record in this collection has
+	 *	information on song title, artist, album, year, lyrics, and genre. For more information
+	 *	and to look at the data, refer to <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/lyrics <p>
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of Song objects.
+	 */
+	public static List<Song> getSongData() throws Exception {
+		return DataFormatter.getSongData();
+	}
+
+	/**
 	 *  This helper function provides access to a collection of Shakespeare plays,
 	 * 	poems and plays.
 	 *
