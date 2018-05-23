@@ -415,6 +415,7 @@ public class Element<E> extends DataStruct {
 	 * @return  the formatted label
 	 */
 	public String arrangeLabel(String label, int wordNumber) {
+		label = label.replaceAll("\"", ""); // replace all double quotes
 		final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
 		Matcher match = myPattern.matcher(label);
 		if (!match.find())

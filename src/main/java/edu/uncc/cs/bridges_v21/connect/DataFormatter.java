@@ -31,8 +31,10 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 
 import com.google.gson.Gson;
+import com.google.common.net.UrlEscapers;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -846,13 +848,7 @@ public class DataFormatter {
 				song.setSongTitle((String) item.get("song"));
         song.setAlbumTitle((String) item.get("album"));
         song.setLyrics((String) item.get("lyrics"));
-				song.setYear(((Number) item.get("year")).intValue());
-				JSONArray genre = (JSONArray) item.get("genre");
-
-				Vector<String> v = new Vector<String>();
-				for (int k = 0; k < genre.size(); k++)
-					v.add((String)genre.get(k));
-				song.setGenre(v);
+				song.setReleaseDate(((String) item.get("release_date")));
 
 				song_list.add(song);
 
@@ -861,6 +857,45 @@ public class DataFormatter {
 		}
 		else {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
+		}
+	}
+  public static Song getSong(String songTitle, String artistName) throws Exception {
+    String url = "https://bridgesdata.herokuapp.com/api/songs/find/";
+
+    // add the song title to the query url
+    if(songTitle.length() > 0) {
+        url += songTitle;
+    } else {
+      throw new Exception("Must provide a valid song title.");
+    }
+    // add the artist name as a query variable where appropriate
+    if(artistName.length() > 0) {
+        url += "?artistName=" + artistName;
+    }
+
+		// Create and execute the HTTP request
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(UrlEscapers.urlFragmentEscaper().escape(url));
+		HttpResponse response = client.execute(request);
+		String res = new String();
+
+		int status = response.getStatusLine().getStatusCode();
+		String result = EntityUtils.toString(response.getEntity());
+
+		if (status == 200) 	{
+			JSONObject songJSON = (JSONObject)JSONValue.parse(result);
+
+			Song song = new Song();
+			song.setArtist((String) songJSON.get("artist"));
+			song.setSongTitle((String) songJSON.get("song"));
+		  song.setAlbumTitle((String) songJSON.get("album"));
+		  song.setLyrics((String) songJSON.get("lyrics"));
+			song.setReleaseDate(((String) songJSON.get("release_date")));
+
+			return song;
+		}
+		else {
+			throw new Exception("HTTP Request Failed. Error Code: "+status+". Message: " + result);
 		}
 	}
 

@@ -313,7 +313,7 @@ public class Bridges {
 	 *  Each record in this collection has
 	 *	information on song title, artist, album, year, lyrics, and genre. For more information
 	 *	and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/lyrics <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
 	 *
 	 *  @throws Exception if the request fails
 	 *
@@ -321,6 +321,23 @@ public class Bridges {
 	 */
 	public static List<Song> getSongData() throws Exception {
 		return DataFormatter.getSongData();
+	}
+	/**
+	 *  These helper functions provides access to a particular song.
+	 *
+	 *  The record has information such as song title, artist, album, year, lyrics, and genre. For more information
+	 *	and to look at the data, refer to <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a Song object.
+	 */
+	public static Song getSong(String songTitle) throws Exception {
+		return DataFormatter.getSong(songTitle, "");
+	}
+	public static Song getSong(String songTitle, String artistName) throws Exception {
+		return DataFormatter.getSong(songTitle, artistName);
 	}
 
 	/**

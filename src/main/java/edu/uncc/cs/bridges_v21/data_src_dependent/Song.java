@@ -1,6 +1,6 @@
 package bridges.data_src_dependent;
 /**
- * @brief  A Lyrics object, used along with the Lyrics data source.
+ * @brief  A Song object, used along with the Songs data source.
  *
  * This is a convenience class provided for  users who wish to use this
  * data source as part of their application. It provides an API that makes
@@ -23,27 +23,19 @@ public class Song extends DataSource {
 	private	String artist,
 		song,	// song title
 		album,	// album title
-		lyrics;	// full lyrics
-	private	int year;		// year published
-	Vector<String> genre;		// song genres
+		lyrics,	// full lyrics
+		release_date;
 
 	public	Song() {
-		artist = song = album = lyrics = "";
-		year = 0;
-		genre = new Vector<String>();
+		artist = song = album = lyrics = release_date = "";
 	}
 
-	public Song(String artist, String song, String album, String lyrics, int rating,
-						Vector<String> genre) {
+	public Song(String artist, String song, String album, String lyrics, String release_date) {
 		this.artist = artist;
 		this.song = song;
 		this.album = album;
 		this.lyrics = lyrics;
-		this.year = year;
-
-		// copy vector
-		for (int k = 0; k < genre.size(); k++)
-			this.genre.add(genre.get(k));
+		this.release_date = release_date;
 	}
 
 	public String getArtist() {
@@ -74,19 +66,10 @@ public class Song extends DataSource {
 		this.lyrics = lyrics;
 	}
 
-	public int getYear() {
-		return year;
+	public String getReleaseDate() {
+		return release_date;
 	}
-	public void setYear(int year) {
-		this.year = year;
-	}
-
-	public 	Vector<String> getGenre() {
-		return genre;
-	}
-	public 	void setGenre(Vector<String> genre) {
-		// copy vector
-		for (int k = 0; k < genre.size(); k++)
-			this.genre.add(genre.get(k));
+	public void setReleaseDate(String release_date) {
+		this.release_date = release_date;
 	}
 };
