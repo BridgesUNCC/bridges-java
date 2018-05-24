@@ -557,6 +557,7 @@ public class Connector {
 			.replace(" ", "%20")
 			.replace("$assignment", Bridges.getAssignment());
 		out += "?apikey=" + Bridges.getKey();
+		out += "&username=" + Bridges.getUserName();
 		//    	System.out.println(out);
 		return out;
 	}
