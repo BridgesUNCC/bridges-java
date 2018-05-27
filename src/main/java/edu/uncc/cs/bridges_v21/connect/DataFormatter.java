@@ -673,13 +673,11 @@ public class DataFormatter {
 	 *  Get ActorMovie IMDB Data
 	 *  retrieved, formatted into a list of ActorMovieIMDB objects
 	 *
-	 *  @param name   should be "IMDB"
-	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
-	 *	 	returns all records. 
 	 *  @throws Exception if the request fails
 	 *
-	 *  @return a list of ActorMovieIMDB objects, but only actor,  movie, movie genre
-	 *			and movie rating are returned. 
+	 *  @return a list of ActorMovieIMDB objects, consisting of  actor name,  
+	 *		movie name, movie genre and movie rating is returned. 
+	 *
 	 */
 	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData2 () 
 									throws Exception {
@@ -721,7 +719,17 @@ public class DataFormatter {
 		}
 	}
 
-
+	/**
+	 *
+	 *  Get meta data of the Gutenberg book collection (1000 books)
+	 *  This function retrieves,  and formats the data into a list of 
+	 *	GutenbergBook objects
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of GutenbergBook objects, 
+	 *
+	 */
 	public static ArrayList<GutenbergBook> getGutenbergBookMetaData () 
 									throws Exception {
 
@@ -783,6 +791,18 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
 		}
 	}
+	/**
+	 *
+	 *  Get meta data of the IGN games collection.
+	 *
+	 *  This function retrieves  and formats the data into a list of 
+	 *	Game objects
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of Game objects, 
+	 *
+	 */
 	public static ArrayList<Game> getGameData() throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/games";
@@ -823,7 +843,21 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
 		}
 	}
-  public static ArrayList<Song> getSongData() throws Exception {
+	/**
+	 *
+	 *  Get data of the songs (including lyrics) using the Genius API
+	 *	https://docs.genius.com/
+	 *
+	 *  This function retrieves  and formats the data into a list of 
+	 *	Song objects. This version of the API retrieves all the cached
+	 *	songs in the local DB.
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of Song objects, 
+	 *
+	 */
+	public static ArrayList<Song> getSongData() throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/songs";
 		DefaultHttpClient client = new DefaultHttpClient();
@@ -859,6 +893,20 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: "+status);
 		}
 	}
+	/**
+	 *
+	 *  Get data of a particular songs (including lyrics) using the Genius API
+	 *	(https://docs.genius.com/), given the song title and artist name.
+	 *
+	 *  This function retrieves  and formats the data into a 
+	 *	Song object. The song if not cached in the local DB is queried
+	 *	and added to the DB
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a Song object, 
+	 *
+	 */
   public static Song getSong(String songTitle, String artistName) throws Exception {
     String url = "https://bridgesdata.herokuapp.com/api/songs/find/";
 
@@ -873,7 +921,7 @@ public class DataFormatter {
         url += "?artistName=" + artistName;
     }
 
-		// Create and execute the HTTP request
+	// Create and execute the HTTP request
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(UrlEscapers.urlFragmentEscaper().escape(url));
 		HttpResponse response = client.execute(request);
@@ -899,6 +947,21 @@ public class DataFormatter {
 		}
 	}
 
+	/**
+	 *
+	 *  Get data of Shakespeare works (plays, poems)
+	 *
+	 *  This function retrieves  and formats the data into a 
+	 *	a list of Shakespeare objects. 
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *	@param works  can be either "plays" or "poems". If this is specified,
+	 *		then only these types of works are retrieved.
+	 *	@param textOnly  if this is set, then only the text is retrieved.
+	 *  @return an array of Shakespeare objects
+	 *
+	 */
 	public static ArrayList<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
 		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";
 

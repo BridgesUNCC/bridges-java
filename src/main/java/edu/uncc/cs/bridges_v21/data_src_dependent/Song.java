@@ -1,6 +1,7 @@
 package bridges.data_src_dependent;
 /**
- * @brief  A Song object, used along with the Songs data source.
+ * @brief  A Song object, used along with the Songs data source (using the 
+ *			Genius API.
  *
  * This is a convenience class provided for  users who wish to use this
  * data source as part of their application. It provides an API that makes
@@ -26,6 +27,11 @@ public class Song extends DataSource {
 		lyrics,	// full lyrics
 		release_date;
 
+	/**
+	 *
+	 *	 Song constructors
+	 *
+	 */
 	public	Song() {
 		artist = song = album = lyrics = release_date = "";
 	}
