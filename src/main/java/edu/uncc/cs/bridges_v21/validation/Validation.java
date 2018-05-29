@@ -205,8 +205,9 @@ public class Validation {
 				"square",
 				"diamond",
 				"cross",
-				"triangle-down",
-				"triangle-up"
+				"triangle",
+				"star",
+				"wye"
 		}));
 	}
 	
@@ -261,7 +262,7 @@ public class Validation {
 		} 
 		else {
 			throw new InvalidValueException("Invalid shape' " + 
-				shape + "'. Expected " + "one of: " + NODE_SHAPES);
+				shape + "'. Expected one of: " + NODE_SHAPES);
 		}
 	}
 	

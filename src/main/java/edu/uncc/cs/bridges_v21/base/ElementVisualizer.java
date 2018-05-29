@@ -29,8 +29,8 @@ import java.util.Random;
  *
  *	<b>Supported Shapes: </b>
  *
- *	"square", "circle", "square","diamond","cross",
- *	"triangle-down",  triangle-up" <p>
+ *	"circle", "square", "diamond", "cross",
+ *	"triangle", "star", "wye" <p>
  *
  *	<b> Shape Size</b> : Range (0-50) </p>
  *
@@ -384,8 +384,8 @@ public class ElementVisualizer {
 
 	/**
 	 * Sets the shape of the Element in the Bridges Visualization. Supported
-	 * 		shapes include "square", "circle", "square", "diamond", "cross",
-	 *		"triangle-down", "triangle-up".
+	 * 		shapes include "star", "circle", "square", "diamond", "cross",
+	 *		"triangle", "wye".
 	 *
 	 * @param aShape the string representing the shape of the Element in
 	 *			the Bridges Visualization
