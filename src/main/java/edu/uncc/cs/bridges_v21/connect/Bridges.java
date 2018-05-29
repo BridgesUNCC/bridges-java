@@ -105,9 +105,9 @@ public class Bridges {
 	 * @param username   this is the username (from the Bridges account)
 	 *
 	 */
-	public Bridges(int assignment, String appl_id, String username) {
+	public Bridges(int assignment, String username, String appl_id) {
 		this();
-		init(assignment, appl_id, username);
+		init(assignment, username, appl_id);
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class Bridges {
 	 * @param username   this is the username (from the Bridges account)
 	 *
 	 */
-	public void init(int assignment, String appl_id, String username) {
+	public void init(int assignment, String username, String appl_id) {
 		Bridges.setAssignment(assignment);
 		Bridges.key = appl_id;
 		Bridges.userName = username;
