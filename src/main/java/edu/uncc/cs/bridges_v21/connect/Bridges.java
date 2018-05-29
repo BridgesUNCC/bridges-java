@@ -226,9 +226,9 @@ public class Bridges {
 	 *
 	 *  @return a list of earthquake records
 	 */
-	public static List<EarthquakeUSGS> getEarthquakeUSGSData(USGSaccount name,
+	public static List<EarthquakeUSGS> getEarthquakeUSGSData(
 		int maxElements) throws Exception {
-		return DataFormatter.getEarthquakeUSGSData(name, maxElements);
+		return DataFormatter.getEarthquakeUSGSData(maxElements);
 	}
 
 	/**

@@ -584,7 +584,7 @@ public class DataFormatter {
      */
 
 	public static ArrayList<EarthquakeUSGS> getEarthquakeUSGSData(
-					USGSaccount acctName, int maxElem) throws Exception {
+					int maxElem) throws Exception {
 
 		String url = "http://earthquakes-uncc.herokuapp.com/eq/latest/"+maxElem;
 		DefaultHttpClient client = new DefaultHttpClient();
