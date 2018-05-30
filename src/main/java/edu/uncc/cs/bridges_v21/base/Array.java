@@ -9,7 +9,7 @@ import bridges.validation.Validation;
  *
  * @author 	Kalpathi Subramanian
  *
- * @date  	10/8/16, 5/17/17
+ * @date  	10/8/16, 5/17/17, 5/30/18
  *
  *	This class can be used to create arrays of type Element<E>  where E
  *	is a generic object representing application specific data.
@@ -49,6 +49,42 @@ public class Array<E> extends DataStruct {
 	 */
 	public Array(int num_dims, int[] dims) {
 		setNumDimensions(num_dims);
+		setDimensions(dims);
+	}
+	/**
+	 *  Create an 1D array object 
+	 *
+	 *  @param num_elements in the array
+	 *
+	 */
+	public Array(int num_elements) {
+		setNumDimensions(1);
+		dims[0] = num_elements; dims[1] = dims[2] = 1;
+		setDimensions(dims);
+	}
+	/**
+	 *  Create an 2D array object 
+	 *
+	 *  @param x_dim number of elements along dimension 1
+	 *  @param y_dim number of elements along dimension 1
+	 *
+	 */
+	public Array(int x_dim, int y_dim) {
+		setNumDimensions(2);
+		dims[0] = x_dim; dims[1] = y_dim; dims[2] = 1;
+		setDimensions(dims);
+	}
+	/**
+	 *  Create an 3D array object 
+	 *
+	 *  @param x_dim number of elements along dimension 1
+	 *  @param y_dim number of elements along dimension 1
+	 *  @param z_dim number of elements along dimension 1
+	 *
+	 */
+	public Array(int x_dim, int y_dim, int z_dim) {
+		setNumDimensions(3);
+		dims[0] = x_dim; dims[1] = y_dim; dims[2] = z_dim;
 		setDimensions(dims);
 	}
 	/**
@@ -141,74 +177,73 @@ public class Array<E> extends DataStruct {
 	 *	@param indx  index into the array
 	 *	@return Element<E>  object at 'indx'
 	 */
-	public Element<E> getValue(int indx) {
+	public Element<E> getElement (int indx) {
 		return array_data[indx];
+	}
+	/**
+	 *
+	 *	Get the object at index x, y -- for 2D arrays
+	 *
+	 *	@param x  - column index
+	 *	@param y  - row index
+	 *	@return Element<E>  object at x, y
+	 */
+	public Element<E> getElement(int x, int y) {
+		return array_data[y*dims[1]+ x];
+	}
+	/**
+	 *
+	 *	Get the object at x, y, z -- for 3D arrays
+	 *
+	 *	@param x  - column index
+	 *	@param y  - row index
+	 *	@param z  - slice index 
+ 	 *
+	 *	@return Element<E>  object at x, y, z
+	 */
+	public Element<E> getElement(int x, int y, int z) {
+		return array_data[z*dims[0]*dims[1] + y*dims[0] + x];
 	}
 
 	/**
 	 *
-	 *	Set the input object at 'indx'
+	 *	Set the input object at 'indx' - for 1D array
 	 *
 	 *	@param indx  index into the array
 	 *	@param el  element object to be assigned at 'indx'
 	 *
 	 *
 	 **/
-	public void setValue(int indx, Element<E> el) {
+	public void setElement(int indx, Element<E> el) {
 		array_data[indx] = el;
 	}
-	/**
-	 *
-	 *	2D array: Get the object at 'col, row'
-	 *
-	 *	@param col  col index into the array
-	 *	@param row  row index into the array
-	 *
-	 *	@return Element<E>  object at 'col, row'
-	 */
-	public Element<E> getValue(int col, int row) {
-		return array_data[row * dims[0] + col];
-	}
 
 	/**
 	 *
-	 *	Set the input object at 'indx'
-	 *	@param col  column index into the array
-	 *	@param row  row index into the array
+	 *	Set the input object at x, y - 2D arrays
+	 *
+	 *	@param x  column index into the array
+	 *	@param y  row index into the array
 	 *	@param el  element object to be assigned at 'indx'
 	 *
-	 *
 	 */
-	public void setValue(int col, int row, Element<E> el) {
-		array_data[row * dims[0] + col] = el;
+	public void setElement(int x, int y, Element<E> el) {
+		array_data[y * dims[0] + x] = el;
 	}
 
-	/**
-	 *
-	 *	3D array: Get the object at 'col, row, slice'
-	 *
-	 *	@param col col index into the array
-	 *	@param row  row index into the array
-	 *	@param slice  slice index into the array
-	 *
-	 *	@return Element<E>  object at 'col, row'
-	 */
-	public Element<E> getValue(int col, int row, int slice) {
-		return array_data[slice * dims[0] * dims[1] + row * dims[0] + col];
-	}
 	/**
 	 *
 	 *	Set the input object at 'col, row, slice'
 	 *
-	 *	@param col  column index into the array
-	 *	@param row  row index into the array
-	 *	@param slice  slice index into the array
+	 *	@param x  column index into the array
+	 *	@param y  row index into the array
+	 *	@param z  slice index into the array
 	 *
 	 *	@param el  element object to be assigned at 'indx'
 	 *
 	 */
-	public void setValue(int col, int row, int slice, Element<E> el) {
-		array_data[slice * dims[0] * dims[1] + row * dims[0] + col] = el;
+	public void setElement(int x, int y, int z, Element<E> el) {
+		array_data[z * dims[0] * dims[1] + y * dims[0] + x] = el;
 	}
 
 	/**

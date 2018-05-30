@@ -173,9 +173,15 @@ public class Bridges {
 		connector.setServer(server);
 	}
 
+
 	/**
-	 * 	@param flag 	this is the boolean flag for displaying a map overlay
+	 *  Turns on map overlay for subsequent visualizations - used with location specific
+	 *  datasets
+	 *
+	 *  @param flag     this is the boolean flag for displaying a map overlay
+	 *
 	 **/
+
 	public void setMapOverlay (Boolean flag) {
 		map_overlay = flag;
 	}
