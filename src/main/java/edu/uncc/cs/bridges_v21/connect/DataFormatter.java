@@ -370,8 +370,8 @@ public class DataFormatter {
 				    		allUSGS.add(new EarthquakeUSGS(deserializedEq.properties.mag, 
 				    										date,
 				    										Double.parseDouble(deserializedEq.properties.mag),
-				    										Float.parseFloat(deserializedEq.geometry.coordinates.latitude), 
 				    										Float.parseFloat(deserializedEq.geometry.coordinates.longitude),
+				    										Float.parseFloat(deserializedEq.geometry.coordinates.latitude),
 				    										deserializedEq.properties.place, 
 				    										deserializedEq.properties.title,
 				    										deserializedEq.properties.url,
@@ -609,8 +609,8 @@ public class DataFormatter {
 				EarthquakeUSGS eq = new EarthquakeUSGS();
 
 				eq.setMagnitude(((Number)props.get("mag")).doubleValue());
-				eq.setLatit(((Number)coords.get(0)).doubleValue());
-				eq.setLongit(((Number)coords.get(1)).doubleValue());
+				eq.setLatit(((Number)coords.get(1)).doubleValue());
+				eq.setLongit(((Number)coords.get(0)).doubleValue());
 				eq.setLocation((String)props.get("place"));
 				eq.setTitle((String)props.get("title"));
 				eq.setUrl((String)props.get("url"));
