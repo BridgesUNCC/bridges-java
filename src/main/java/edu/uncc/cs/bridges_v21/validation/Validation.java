@@ -288,12 +288,12 @@ public class Validation {
 	 * @param val
 	 */
 	public static void validateSize(double val){
-		if(val >= 0.0 && val <= 50.0){
+		if(val >= 1.0 && val <= 50.0){
 			return;
 		}
 		else{
 			throw new InvalidValueException("Invalid value' " + val + 
-				".  Expected" + " a size value between 0.0 and 50.0.");
+				".  Expected" + " a size value between 1.0 and 50.0.");
 		}
 	}
 
@@ -304,12 +304,12 @@ public class Validation {
 	 * @param val
 	 */
 	public static void validateThickness(double val){
-		if(val >= 0.0 && val <= 50.0){
+		if(val >= 1.0 && val <= 10.0){
 			return;
 		}
 		else{
 			throw new InvalidValueException("Invalid value' " + val + 
-				".  Expected" + " a thickness value between 0.0 and 50.0.");
+				".  Expected" + " a thickness value between 1.0 and 10.0.");
 		}
 	}
 
