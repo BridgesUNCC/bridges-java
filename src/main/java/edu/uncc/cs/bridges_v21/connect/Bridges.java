@@ -63,7 +63,7 @@ public class Bridges {
 			title, description;
 	private static Integer MaxTitleSize = 50,
 						   MaxDescrSize = 1000;
-	private static String[] projection_options = {"Cartesian", "albersUsa", "equirectangular"};
+	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular"};
 
 	private static Boolean map_overlay = false;	// default to no map overlay
 	private static String coord_system_type = projection_options[0];	// default to Cartesian space
@@ -188,18 +188,18 @@ public class Bridges {
 
 	/**
 	 * 	@param coord 	this is the desired coordinate space argument
-	 *		Options are: ['Cartesian', 'albersUsa', 'equirectangular'], and 'Cartesian' is the default;
+	 *		Options are: ['cartesian', 'albersusa', 'equirectangular'], and 'cartesian' is the default;
 	 **/
 	public void setCoordSystemType (String coord) {
 		if (java.util.Arrays.asList(projection_options).indexOf(coord) >= 0) {
 			coord_system_type = coord;
 		}
 		else  {
-			System.err.println("Unrecognized coordinate system \'" + coord + "\', defaulting to Cartesian. Options:");
+			System.err.println("Unrecognized coordinate system \'" + coord + "\', defaulting to cartesian. Options:");
 			for (String prj : projection_options) {
 				System.err.print(prj + "\t");
 			}
-			coord_system_type = "Cartesian";
+			coord_system_type = "cartesian";
 		}
 	}
 
