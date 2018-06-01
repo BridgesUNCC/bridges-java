@@ -8,7 +8,7 @@ apply plugin: 'signing'
 ///
 /// General
 ///
-group = "bridges"
+group = "edu.uncc.cs.bridges"
 version = "2.3.0"
 
 ///
@@ -33,23 +33,20 @@ artifacts {
 
 // Ignore the drivers
 sourceSets {
- 
+    main {
+        java {
 //			exclude 'edu/uncc/cs/bridgesdrivers/**'
 //			exclude 'edu/uncc/cs/bridges/bridgesV2/**'
 //			exclude 'src/main/test/**'
-	main  {
-		java {
-	
-			include 'bridges/**'
-		}
+			include 'edu/uncc/cs/bridges/**'
         }
-}
+	}
 //	test {
 //		java {
 //			include '**'
 //		}
 //	}
-
+}
 
 test {
   // enable TestNG support (default is JUnit)
