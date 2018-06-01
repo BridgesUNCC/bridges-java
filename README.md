@@ -1,5 +1,5 @@
 
-# BRIDGES Project - uniting classrooms for better student engagement
+# BRIDGES an NSF TUES Project
 
 ## Getting Started
 
