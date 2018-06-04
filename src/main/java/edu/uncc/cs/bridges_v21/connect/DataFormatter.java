@@ -628,18 +628,22 @@ public class DataFormatter {
 	 *  Get ActorMovie IMDB Data
 	 *  retrieved, formatted into a list of ActorMovieIMDB objects
 	 *
-	 *  @param name   should be "IMDB"
-	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
-	 *	 	returns all records. 
+	 *  @param maxElements  the number of actor/movie pairs
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of ActorMovieIMDB objects, but only actor and movie fields
 	 * 				in this version
 	 */
-	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData(
-					String name, int maxElem) throws Exception {
+	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData(int maxElem) throws Exception, IllegalArgumentException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb";
+
+    if(maxElem > 0) {
+      url += "?limit=" + maxElem;
+    } else {
+      throw new IllegalArgumentException("Must provide a valid number of Actor/Movie pairs to return.");
+    }
+
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
 		HttpResponse response = client.execute(request);

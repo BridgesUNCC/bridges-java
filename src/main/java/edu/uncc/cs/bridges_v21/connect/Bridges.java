@@ -245,7 +245,6 @@ public class Bridges {
 	 *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *  for more information and to look at the dataset.
 	 *
-	 *  @param name   should be "IMDB"
 	 *  @param maxElements  the number of actor/movie pairs(but currently unused),
 	 *	 							returns all records.
 	 *  @throws Exception if the request fails
@@ -253,9 +252,11 @@ public class Bridges {
 	 *  @return a list of ActorMovieIMDB objects, but only actor,  movie, movie genre
 	 *			and movie rating are returned.
 	 */
-	public static List<ActorMovieIMDB> getActorMovieIMDBData(String name,
-		int maxElements) throws Exception {
-		return DataFormatter.getActorMovieIMDBData(name, maxElements);
+ 	public static List<ActorMovieIMDB> getActorMovieIMDBData() throws Exception {
+		return DataFormatter.getActorMovieIMDBData(Integer.MAX_VALUE);
+	}
+	public static List<ActorMovieIMDB> getActorMovieIMDBData(int maxElements) throws Exception {
+		return DataFormatter.getActorMovieIMDBData(maxElements);
 	}
 	/**
 	 *  This helper function provides access to a second curated IMDB dataset; the data is
