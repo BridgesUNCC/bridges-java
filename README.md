@@ -13,4 +13,5 @@
 
 - Clone this repository
 - Install [Gradle](http://gradle.org)
-- Run ```gradle fatjar``` in your bridges directory the resulting jar can be found in ```./build/libs/*.jar```
+- Run ```gradle fatjar``` in your bridges directory.
+- The resulting jar can be found in ```./build/libs/*.jar```
