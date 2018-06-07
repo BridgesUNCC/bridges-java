@@ -8,8 +8,8 @@ apply plugin: 'signing'
 ///
 /// General
 ///
-group = "bridges"
-version = "2.3.0"
+group = "edu.uncc.cs.bridges"
+version = "2.3.3"
 
 ///
 /// Artifacts and deployment
