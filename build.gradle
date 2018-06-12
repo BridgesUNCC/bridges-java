@@ -9,7 +9,7 @@ apply plugin: 'signing'
 /// General
 ///
 group = "edu.uncc.cs.bridges"
-version = "2.3.0"
+version = "2.3.3"
 
 ///
 /// Artifacts and deployment
@@ -33,20 +33,23 @@ artifacts {
 
 // Ignore the drivers
 sourceSets {
-    main {
-        java {
+ 
 //			exclude 'edu/uncc/cs/bridgesdrivers/**'
 //			exclude 'edu/uncc/cs/bridges/bridgesV2/**'
 //			exclude 'src/main/test/**'
-			include 'edu/uncc/cs/bridges_v21/**'
+	main  {
+		java {
+	
+			include 'bridges/**'
+		}
         }
-	}
+}
 //	test {
 //		java {
 //			include '**'
 //		}
 //	}
-}
+
 
 test {
   // enable TestNG support (default is JUnit)
@@ -157,6 +160,7 @@ dependencies {
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.1'
     compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.google.guava:guava:16+'
 //	compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
 //	compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
 	// Declare the dependency for your favourite test framework you want
