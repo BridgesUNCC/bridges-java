@@ -259,6 +259,19 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	public HashMap<K, HashMap<K, Integer>> getAdjacencyMatrix() {
 		return matrix;
 	}
+
+	/**
+	 *
+	 *	Gets the row of the adjacency matrix corresponding to the key
+	 *
+	 *  @param key key value
+	 *
+	 *	@return - the graph's adjacency matrix
+	 */
+	public HashMap<K, Integer> getAdjacencyMatrix(K key) {
+		return matrix.get(key);
+	}
+
 	/**
 	 *
 	 *	 This is a convenience method to simplify access to the link visualizer;
