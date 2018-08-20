@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import org.json.simple.JSONValue;
 
 import bridges.base.*;
 import bridges.data_src_dependent.*;
@@ -139,6 +140,7 @@ public class Bridges {
 	 *
 	 */
 	public void setTitle(String title) {
+		title = JSONValue.escape(title);
 		if (title.length() > MaxTitleSize) {
 			System.out.println ("Visualization Title restricted to " + MaxTitleSize + " characters."
 				+ " Truncating title..");
@@ -154,6 +156,7 @@ public class Bridges {
 	 *
 	 */
 	public void setDescription(String description) {
+		description = JSONValue.escape(description);
 		if (description.length() > MaxDescrSize) {
 			System.out.println ("Visualization Description restricted to " + MaxDescrSize + " characters."
 				+ " Truncating description..");
