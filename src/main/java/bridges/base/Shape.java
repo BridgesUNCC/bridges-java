@@ -109,6 +109,9 @@ public class Shape extends Symbol {
     return this;
   }
 
+  public Shape addPoint(Integer x, Integer y) {
+    return addPoint((float) x, (float) y);
+  }
   public Shape addPoint(Float x, Float y) {
     if(this.shape.compareTo("polygon") == 0) {
       if((x > Float.NEGATIVE_INFINITY && x < Float.POSITIVE_INFINITY) &&
@@ -138,7 +141,7 @@ public class Shape extends Symbol {
 	 * }
 	 * @returns the encoded JSON string
 	 */
-  public String getElementRepresentation() {
+  public JSONObject getJSONRepresentation() {
   JSONObject json_builder = super.getJSONRepresentation();
 
     json_builder.put("name", JSONValue.escape(super.label));
@@ -159,6 +162,6 @@ public class Shape extends Symbol {
       json_builder.put("points", points);
     }
 
-    return json_builder.toString();
+    return json_builder;
   }
 }

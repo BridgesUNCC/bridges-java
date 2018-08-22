@@ -16,9 +16,11 @@ import org.json.simple.JSONObject;
  *
 */
 public class Label extends Symbol {
+  static final Integer DEFAULT_FONTSIZE = 12;
 
-  private Integer width = 0;
-  private Integer height = 0;
+  private Integer width = 100;
+  private Integer height = 50;
+  private Integer fontSize = DEFAULT_FONTSIZE;
 
   public String getDataStructType() {
 		return "Label";
@@ -32,15 +34,6 @@ public class Label extends Symbol {
     this();
     this.setLabel(label);
   }
-  //
-  // /**
-	//  * This method sets the label
-	//  *
-	//  * @param label the label to set
-	//  */
-	// public void setLabel(String label) {
-	// 	this.label = label;
-	// }
 
   // size method for width and height arguments
   public Label setSize(Integer width, Integer height) {
@@ -49,6 +42,15 @@ public class Label extends Symbol {
     } else {
       this.width = width;
       this.height = height;
+    }
+    return this;
+  }
+
+  public Label setFontSize(Integer size) {
+    if(size <= 0 || size > 200) {
+      throw new IllegalArgumentException("Please use font size between 0 and 200");
+    } else {
+      fontSize = size;
     }
     return this;
   }
@@ -62,12 +64,16 @@ public class Label extends Symbol {
 	 * }
 	 * @returns the encoded JSON string
 	 */
-  public String getElementRepresentation() {
+  public JSONObject getJSONRepresentation() {
     JSONObject json_builder = super.getJSONRepresentation();
 
     json_builder.put("name", JSONValue.escape(super.label));
     json_builder.put("shape", "text");
-  
-    return json_builder.toString();
+
+    if(fontSize != DEFAULT_FONTSIZE) {
+        json_builder.put("font-size", fontSize);
+    }
+
+    return json_builder;
   }
 }

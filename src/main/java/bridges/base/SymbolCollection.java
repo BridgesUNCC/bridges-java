@@ -52,7 +52,7 @@ public class SymbolCollection extends DataStruct {
   public String getDataStructureRepresentation() {
     JSONArray symbol_json = new JSONArray();
     for(Entry<String, Symbol> symbol : symbols.entrySet()) {
-      symbol_json.add(symbol.getValue().getElementRepresentation());
+      symbol_json.add(symbol.getValue().getJSONRepresentation());
     }
     return "\"symbols\":" + symbol_json + "}";
   }

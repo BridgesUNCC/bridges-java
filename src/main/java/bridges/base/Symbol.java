@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import bridges.base.Color;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 
 /*
  * @brief This is a class BRIDGES for deriving a
@@ -24,17 +25,16 @@ public class Symbol extends DataStruct {
   // Static default attribute values for all Symbols
   static final Color DEFAULT_FILLCOLOR = new Color("blue");
   static final Float DEFAULT_OPACITY = 1.0f;
-  static final Color DEFAULT_STROKECOLOR = new Color("black");
+  static final Color DEFAULT_STROKECOLOR = new Color("white");
   static final Float DEFAULT_STROKEWIDTH = 1.0f;
   static final Integer DEFAULT_STROKEDASH = 1;
   static final Float DEFAULT_LOCATIONX = 0.0f;
   static final Float DEFAULT_LOCATIONY = 0.0f;
 
-
   // default css attributes for Symbols
   protected Color fillColor = new Color("blue");
   protected Float opacity = DEFAULT_OPACITY;
-  protected Color strokeColor = new Color("black");
+  protected Color strokeColor = new Color("white");
   protected Float strokeWidth = DEFAULT_STROKEWIDTH;
   protected Integer strokeDash = DEFAULT_STROKEDASH;
 
@@ -163,9 +163,15 @@ public class Symbol extends DataStruct {
   public JSONObject getJSONRepresentation() {
     JSONObject json_builder = new JSONObject();
     JSONObject location = new JSONObject();
+    JSONArray myColor;
 
     if(fillColor.getRepresentation().compareTo(DEFAULT_FILLCOLOR.getRepresentation()) != 0) {
-        json_builder.put("fill", fillColor.getRepresentation());
+      myColor = new JSONArray();
+      myColor.add(fillColor.getRed());
+      myColor.add(fillColor.getGreen());
+      myColor.add(fillColor.getBlue());
+      myColor.add(fillColor.getAlpha());
+      json_builder.put("fill", myColor);
     }
 
     if(opacity != DEFAULT_OPACITY) {
@@ -173,7 +179,12 @@ public class Symbol extends DataStruct {
     }
 
     if(strokeColor.getRepresentation().compareTo(DEFAULT_STROKECOLOR.getRepresentation()) != 0) {
-      json_builder.put("stroke", strokeColor.getRepresentation());
+      myColor = new JSONArray();
+      myColor.add(strokeColor.getRed());
+      myColor.add(strokeColor.getGreen());
+      myColor.add(strokeColor.getBlue());
+      myColor.add(strokeColor.getAlpha());
+      json_builder.put("stroke", myColor);
     }
 
     if(strokeWidth != DEFAULT_STROKEWIDTH) {
