@@ -22,7 +22,7 @@ public class Shape extends Symbol {
   private String shape = "circle";
 
   // css attributes and defaults
-  private Integer size = 5;
+  private Integer size = 10;
 
   private ArrayList<Float> points = null;
   private Integer radius = size;
@@ -60,7 +60,7 @@ public class Shape extends Symbol {
     switch(shape.toLowerCase()) {
       case "circle":
         this.shape = "circle";
-        this.radius = this.size;
+        this.radius = this.size/2;
         break;
       case "rectangle":
         this.shape = "rect";
@@ -78,12 +78,13 @@ public class Shape extends Symbol {
 
   // size method for radius or square rectangle argument
   public Shape setSize(Integer size) {
-    if(size <= 0 || size > 50) {
-      throw new IllegalArgumentException("Please enter a size value between 0 and 50");
+    if(size <= 0 || size > 300) {
+      throw new IllegalArgumentException("Please enter a size value between 0 and 300");
     } else {
+      this.size = size;
       switch(this.shape) {
         case "circle":
-          this.radius = size;
+          this.radius = size/2;
           break;
         case "rect":
           this.width = size;
@@ -96,8 +97,8 @@ public class Shape extends Symbol {
 
   // size method for width and height arguments
   public Shape setSize(Integer width, Integer height) {
-    if(size <= 0 || size > 50) {
-      throw new IllegalArgumentException("Please enter a size value between 0 and 50");
+    if(size <= 0 || size > 300) {
+      throw new IllegalArgumentException("Please enter a size value between 0 and 300");
     } else {
       switch(this.shape) {
         case "rect":

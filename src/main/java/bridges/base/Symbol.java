@@ -53,11 +53,6 @@ public class Symbol extends DataStruct {
 		ids++;
   }
 
-  // public Symbol(String shape) {
-  //   this();
-  //   this.setSymbol(shape);
-  // }
-
   /**
 	 * This method sets the label
 	 *
