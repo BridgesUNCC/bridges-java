@@ -19,6 +19,10 @@ public class SymbolCollection extends DataStruct {
   // to maintain their properties
   private final HashMap<String, Symbol> symbols;
 
+  // default domain axes
+  protected Float[] domainX = {-100.0f, 100.0f};
+  protected Float[] domainY = {-100.0f, 100.0f};
+
   /**
 	 *
 	 *	Constructor
@@ -46,14 +50,43 @@ public class SymbolCollection extends DataStruct {
     symbols.put(s.getIdentifier(), s);
   }
 
+  public void updateAxisDomains(Symbol s) {
+    Float[] loc = s.getLocation();
+    Float[] size = s.getDimensions();
+
+    // check min x
+    if(loc[0] - size[0] < domainX[0]) {
+      domainX[0] = loc[0]-size[0];
+    }
+    // check max x
+    if(loc[0] + size[2] > domainX[1]) {
+      domainX[1] = loc[0]+size[2];
+    }
+    // check min y
+    if(loc[1] - size[1] < domainY[0]) {
+      System.out.println(size[1]);
+      domainY[0] = loc[1]-size[1];
+    }
+    // check max y
+    if(loc[1] + size[3] > domainY[1]) {
+      domainY[1] = loc[1]+size[3];
+    }
+  }
+
   /*
    *	Get the JSON representation of the the data structure
    */
   public String getDataStructureRepresentation() {
     JSONArray symbol_json = new JSONArray();
     for(Entry<String, Symbol> symbol : symbols.entrySet()) {
+
+      // assess axis domains
+      updateAxisDomains(symbol.getValue());
+
       symbol_json.add(symbol.getValue().getJSONRepresentation());
     }
-    return "\"symbols\":" + symbol_json + "}";
+    // System.out.println("dimensions: " + domainX[0] + "," + domainX[1] + " -- " + domainY[0] + "," + domainY[1]);
+
+    return "\"domainX\":[" + domainX[0] + "," + domainX[1] + "],\"domainY\":[" + domainY[0] + "," + domainY[1] + "]," + "\"symbols\":" + symbol_json + "}";
   }
 }

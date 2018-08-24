@@ -26,8 +26,8 @@ public class Shape extends Symbol {
 
   private ArrayList<Float> points = null;
   private Integer radius = size;
-  private Integer width = 0;
-  private Integer height = 0;
+  private Integer width = 10;
+  private Integer height = 10;
 
   public String getDataStructType() {
 		return "Shape";
@@ -93,6 +93,35 @@ public class Shape extends Symbol {
       }
     }
     return this;
+  }
+
+  // return four points: min x value, min y value, max x value, max y value
+  // to help determine domains for overall collection
+  public Float[] getDimensions() {
+    switch(this.shape) {
+      case "circle":
+        return new Float[]{(float)this.radius, (float)this.radius, (float)this.radius, (float)this.radius};
+      case "rect":
+        return new Float[]{(float)this.width, (float)this.height, (float)this.width, (float)this.height};
+      case "polygon":
+        Float minx = Float.POSITIVE_INFINITY;
+        Float miny = Float.POSITIVE_INFINITY;
+        Float maxx = Float.NEGATIVE_INFINITY;
+        Float maxy = Float.NEGATIVE_INFINITY;
+        Float x = 0.0f;
+        Float y = 0.0f;
+        for(int i = 0; i < this.points.size(); i+=2) {
+          x = this.points.get(i);
+          y = this.points.get(i+1);
+          if(x < minx) minx = x;
+          if(x > maxx) maxx = x;
+          if(y < miny) miny = y;
+          if(y > maxy) maxy = y;
+        }
+        return new Float[]{minx, miny, maxx, maxy};
+      default:
+        return new Float[]{0.0f,0.0f,0.0f,0.0f};
+    }
   }
 
   // size method for width and height arguments

@@ -145,6 +145,9 @@ public class Symbol extends DataStruct {
   public Float[] getLocation() {
     return new Float[]{this.locationX, this.locationY};
   }
+  public Float[] getDimensions() {
+    return new Float[]{0.0f,0.0f,0.0f,0.0f};
+  }
 
   /**
 	 * Internal code for getting the properties of the Symbol object.

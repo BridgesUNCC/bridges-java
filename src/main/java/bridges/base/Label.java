@@ -55,6 +55,10 @@ public class Label extends Symbol {
     return this;
   }
 
+  public Float[] getDimensions() {
+    return new Float[]{(float)this.width/2, (float)this.height/2, (float)this.width/2, (float)this.height/2};
+  }
+
   /**
 	 * Internal code for getting the properties of the Shape object.
 	 * It produces (without the spaces or newlines):
