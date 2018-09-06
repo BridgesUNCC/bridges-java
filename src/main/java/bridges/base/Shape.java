@@ -95,14 +95,15 @@ public class Shape extends Symbol {
     return this;
   }
 
-  // return four points: min x value, min y value, max x value, max y value
+  // return four points: min x value, max x value, min y value, max y value
   // to help determine domains for overall collection
   public Float[] getDimensions() {
+    Float[] loc = this.getLocation();
     switch(this.shape) {
       case "circle":
-        return new Float[]{(float)this.radius, (float)this.radius, (float)this.radius, (float)this.radius};
+        return new Float[]{(float)(loc[0] - this.radius), (float)(loc[0] + this.radius), (float)(loc[1] - this.radius), (float)(loc[1] + this.radius)};
       case "rect":
-        return new Float[]{(float)this.width, (float)this.height, (float)this.width, (float)this.height};
+        return new Float[]{(float)(loc[0] - this.width/2), (float)(loc[0] - this.width/2), (float)(loc[1] - this.height/2), (float)(loc[1] + this.height/2)};
       case "polygon":
         Float minx = Float.POSITIVE_INFINITY;
         Float miny = Float.POSITIVE_INFINITY;
@@ -118,7 +119,7 @@ public class Shape extends Symbol {
           if(y < miny) miny = y;
           if(y > maxy) maxy = y;
         }
-        return new Float[]{minx, miny, maxx, maxy};
+        return new Float[]{minx, maxx, miny, maxy};
       default:
         return new Float[]{0.0f,0.0f,0.0f,0.0f};
     }

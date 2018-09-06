@@ -23,6 +23,9 @@ public class SymbolCollection extends DataStruct {
   protected Float[] domainX = {-100.0f, 100.0f};
   protected Float[] domainY = {-100.0f, 100.0f};
 
+  protected Float xAbsDomain = 100.0f;
+  protected Float yAbsDomain = 100.0f;
+
   /**
 	 *
 	 *	Constructor
@@ -50,26 +53,28 @@ public class SymbolCollection extends DataStruct {
     symbols.put(s.getIdentifier(), s);
   }
 
+  /*
+   *   This method examines whether the axes should be expanded to ensure all shapes are shown
+   */
   public void updateAxisDomains(Symbol s) {
-    Float[] loc = s.getLocation();
-    Float[] size = s.getDimensions();
+    // Float[] loc = s.getLocation();
+    // Float[] size = s.getDimensions();
+    Float[] dims = s.getDimensions();
 
-    // check min x
-    if(loc[0] - size[0] < domainX[0]) {
-      domainX[0] = loc[0]-size[0];
+    // check x axis
+    if(Math.abs(dims[0]) > xAbsDomain) {
+      xAbsDomain = Math.abs(dims[0]);
     }
-    // check max x
-    if(loc[0] + size[2] > domainX[1]) {
-      domainX[1] = loc[0]+size[2];
+    if(Math.abs(dims[1]) > xAbsDomain) {
+      xAbsDomain = Math.abs(dims[1]);
     }
-    // check min y
-    if(loc[1] - size[1] < domainY[0]) {
-      System.out.println(size[1]);
-      domainY[0] = loc[1]-size[1];
+
+    // check y axis
+    if(Math.abs(dims[2]) > yAbsDomain) {
+      yAbsDomain = Math.abs(dims[2]);
     }
-    // check max y
-    if(loc[1] + size[3] > domainY[1]) {
-      domainY[1] = loc[1]+size[3];
+    if(Math.abs(dims[3]) > yAbsDomain) {
+      yAbsDomain = Math.abs(dims[3]);
     }
   }
 
@@ -80,13 +85,14 @@ public class SymbolCollection extends DataStruct {
     JSONArray symbol_json = new JSONArray();
     for(Entry<String, Symbol> symbol : symbols.entrySet()) {
 
-      // assess axis domains
+      // update axis domains where appropriate for each shape
       updateAxisDomains(symbol.getValue());
 
       symbol_json.add(symbol.getValue().getJSONRepresentation());
     }
     // System.out.println("dimensions: " + domainX[0] + "," + domainX[1] + " -- " + domainY[0] + "," + domainY[1]);
 
-    return "\"domainX\":[" + domainX[0] + "," + domainX[1] + "],\"domainY\":[" + domainY[0] + "," + domainY[1] + "]," + "\"symbols\":" + symbol_json + "}";
+    // return "\"domainX\":[" + domainX[0] + "," + domainX[1] + "],\"domainY\":[" + domainY[0] + "," + domainY[1] + "]," + "\"symbols\":" + symbol_json + "}";
+    return "\"domainX\":[" + -xAbsDomain + "," + xAbsDomain + "],\"domainY\":[" + -yAbsDomain + "," + yAbsDomain + "]," + "\"symbols\":" + symbol_json + "}";
   }
 }
