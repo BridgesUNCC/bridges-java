@@ -140,7 +140,6 @@ public class Bridges {
 	 *
 	 */
 	public void setTitle(String title) {
-		title = JSONValue.escape(title);
 		if (title.length() > MaxTitleSize) {
 			System.out.println ("Visualization Title restricted to " + MaxTitleSize + " characters."
 				+ " Truncating title..");
@@ -156,7 +155,6 @@ public class Bridges {
 	 *
 	 */
 	public void setDescription(String description) {
-		description = JSONValue.escape(description);
 		if (description.length() > MaxDescrSize) {
 			System.out.println ("Visualization Description restricted to " + MaxDescrSize + " characters."
 				+ " Truncating description..");
@@ -542,8 +540,8 @@ public class Bridges {
 		String ds_json =
 			OPEN_CURLY +
 			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
-			QUOTE + "title"   + QUOTE + COLON + QUOTE + title + QUOTE + COMMA +
-			QUOTE + "description" + QUOTE + COLON + QUOTE + description + QUOTE + COMMA +
+			QUOTE + "title"   + QUOTE + COLON + QUOTE + JSONValue.escape(title) + QUOTE + COMMA +
+			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) + QUOTE + COMMA +
 			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
 			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA;
 
