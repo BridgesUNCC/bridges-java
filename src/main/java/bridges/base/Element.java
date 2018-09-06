@@ -238,7 +238,7 @@ public class Element<E> extends DataStruct {
 		// elements; assumes location is a fundamental
 		// attribute that may or may not be used
 		String json_str = OPEN_CURLY +
-			QUOTE + "name" + QUOTE + COLON + QUOTE + label + QUOTE + COMMA +
+			QUOTE + "name" + QUOTE + COLON + QUOTE + JSONValue.escape(label) + QUOTE + COMMA +
 			QUOTE + "shape" + QUOTE + COLON +
 			QUOTE + visualizer.getShape() + QUOTE + COMMA +
 			QUOTE + "size" + QUOTE + COLON +
@@ -374,7 +374,7 @@ public class Element<E> extends DataStruct {
 	 * @param label the label to set
 	 */
 	public void setLabel(String label) {
-		this.label = JSONValue.escape(label);
+		this.label = label;
 	}
 
 	/**
@@ -402,13 +402,13 @@ public class Element<E> extends DataStruct {
 	 */
 	@Override
 	public String toString() {
-		return "Element [name=" + label + ", identifier=" + identifier
+		return "Element [name=" + JSONValue.escape(label) + ", identifier=" + identifier
 			+ ", visualizer=" + visualizer + ", value=" + value
 			+ ", getIdentifier()=" + getIdentifier() + ", getVisualizer()="
 			+ getVisualizer()
 			+ ", getClassName()=" + getClassName()
 			+ ", getElementRepresentation()=" + getElementRepresentation()
-			+ ", getLabel()=" + getLabel() + ", getValue()=" + getValue()
+			+ ", getLabel()=" + JSONValue.escape(getLabel()) + ", getValue()=" + getValue()
 			+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 			+ ", toString()=" + super.toString() + "]";
 	}
