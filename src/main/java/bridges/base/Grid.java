@@ -2,7 +2,7 @@ package bridges.base;
 import java.util.*;
 
 /**
- * @brief This is a class in BRIDGES for representing an (n x n) grid.
+ * @brief This is a class in BRIDGES for representing an (m x n) grid.
  * @author David Burlinson
  * @param
 **/
@@ -11,7 +11,7 @@ public class Grid<E> extends DataStruct {
 
   protected ArrayList<ArrayList<E>> grid;
   protected static int[] gridSize = {10, 10};
-  protected static int[] maxGridSize = {480, 640};
+  protected static int[] maxGridSize = {1920, 1080};
 
   public String getDataStructType() {
 		return "Grid";
