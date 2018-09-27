@@ -170,15 +170,51 @@ public class GameGrid extends Grid<GameCell> {
       System.out.print(symbols[i]);
     }
 
-    // // Add the byte representation of the grid
-    // String json_str = QUOTE + "nodes" + QUOTE + COLON +
-    //   OPEN_BOX  + QUOTE + Base64.encodeBase64String(imageBytes.array()) + QUOTE + CLOSE_BOX + COMMA;
-    //
-    // // Specify the dimensions of the grid
-    // json_str += QUOTE + "dimensions" + QUOTE + COLON +
-    //     OPEN_BOX + gridSize[0] + "," + gridSize[1] + CLOSE_BOX + CLOSE_CURLY;
-    //
-    // return json_str;
-    return ":)";
+
+    // run length encode each array
+    System.out.println("\nrun length");
+    System.out.println(runlength(bg));
+    System.out.println(runlength(fg));
+    System.out.println(runlength(symbols));
+
+
+
+    // Add the byte representation of the grid
+    String json_str = QUOTE + "bg" + QUOTE + COLON + QUOTE + runlength(bg) + QUOTE + COMMA;
+    json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + runlength(fg) + QUOTE + COMMA;
+    json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + runlength(symbols) + QUOTE + COMMA;
+
+    // Specify the dimensions of the grid
+    json_str += QUOTE + "dimensions" + QUOTE + COLON +
+        OPEN_BOX + gridSize[0] + "," + gridSize[1] + CLOSE_BOX + CLOSE_CURLY;
+
+    return json_str;
   }
+
+
+  /**
+   *  Perform run length encoding on an array of integers
+   *  @param arr - an array of integers
+   *  @return a string with the run length encoding
+   */
+  private String runlength(int[] arr) {
+    StringBuilder out = new StringBuilder();
+    int count = 1;
+    for(int i = 1; i < arr.length; i++) {
+      if(arr[i-1] == arr[i]) { // if same as prev, keep counting
+        count++;
+        if(arr.length - i == 1) { // append if last value
+          out.append(arr[i] + "x" + count);
+        }
+      } else { // otherwise, add to output
+        out.append(arr[i-1] + "x" + count + ",");
+        count = 1;
+        if(arr.length - i == 1) { // append if last value
+          out.append(arr[i] + "x" + count);
+        }
+      }
+    }
+    return out.toString();
+  }
+
 }

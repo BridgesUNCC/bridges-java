@@ -237,7 +237,7 @@ public class Color {
 		int b = blue;
 		int a  = Math.round(255 * alpha);
 
-		// keep lowest byte of each int 
+		// keep lowest byte of each int
 		byte rd = (byte) r;
 		byte gn = (byte) g;
 		byte bl = (byte) b;

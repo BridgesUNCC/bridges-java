@@ -40,6 +40,8 @@ public class Grid<E> extends DataStruct {
         "\nInvalid size: [" + size[0] + "," + size[1] + "]... please use values between (0 and " + maxGridSize[0] + "] for rows and values between (0 and " + maxGridSize[1] + "] for columns!\n");
     }
 
+    gridSize = size;
+
     // set up outer list capacity (rows)
     grid = new ArrayList<ArrayList<E>>(size[0]);
 
