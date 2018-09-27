@@ -34,7 +34,6 @@ public class Connector {
 	String airline_url = "https://earthquakes-uncc.herokuapp.com/airline"; //corgis airline data
 
 	Executor http_connection;
-	boolean debug = false;
 	int pattern_found = 0; //semaphor
 	protected Connector() {
 
@@ -44,7 +43,6 @@ public class Connector {
 				.setRedirectStrategy(new LaxRedirectStrategy())
 				.build()
 			);
-		//    	System.out.println("hello from connector"+http_connection);
 	}
 
 	/* Accessors and Mutators */
@@ -53,6 +51,9 @@ public class Connector {
 	 * @param server
 	 */
 	public void setServer(String server) throws IllegalArgumentException {
+		if (Bridges.getDebugFlag()) {
+			System.err.println("Connector.setServer("+server+")");
+		}
 		switch(server) {
 				case "live":
 					setServerURL(server_live);
@@ -445,8 +446,8 @@ public class Connector {
 		//System.out.println("Sending request: " + request);
 		// Execute the HTTP request
 		HttpResponse response;
-		if (debug)
-			System.out.println("Sending request: " + request);
+		if (Bridges.getDebugFlag())
+			System.err.println("Sending request: " + request);
 		try {
 			response = http_connection.execute(request).returnResponse();
 		}
@@ -505,10 +506,11 @@ public class Connector {
 	    [bad]: api/followgraph/user/sean
 	    [bad]: http://myserver:9183/api/followgraph/user/sean   NullPointerException*/
 	public String get(String url) throws RateLimitException, IOException {
-
-		System.out.println("get Connector url before formatting: " + url);
+		if (Bridges.getDebugFlag())
+			System.err.println("get Connector url before formatting: " + url);
 		String furl = prepare(url);
-		System.out.println("From Connector.get()..\n" + furl);
+		if (Bridges.getDebugFlag())
+			System.err.println("From Connector.get()..\n" + furl);
 		Request req = Request.Get(furl);
 		return executeHTTPRequest(req);
 	}
@@ -531,6 +533,10 @@ public class Connector {
 	public String post(String url, Map<String, String> arguments)
 	throws IOException, RateLimitException {
 		//System.out.println("From Connector.post1()..\n");
+		if (Bridges.getDebugFlag()) {
+			System.err.println("Connector.post-StringMap("+url+", "+arguments.toString()+")");
+			System.err.println("prepare(url)="+prepare(url));
+		}
 		Request req = Request.Post(prepare(url));
 		Form form = Form.form();
 		for (Entry<String, String> e : DataFormatter.sorted_entries(arguments)) {
@@ -541,6 +547,10 @@ public class Connector {
 
 	public String post(String url, String data) throws IOException,
 		RateLimitException {
+        if (Bridges.getDebugFlag()) {
+            System.err.println("Connector.post-StringString("+url+", "+data+")");
+            System.err.println("prepare(url)="+prepare(url));
+        }
 		return executeHTTPRequest(Request.Post(prepare(url))
 			.bodyString(data, ContentType.TEXT_PLAIN));
 	}
