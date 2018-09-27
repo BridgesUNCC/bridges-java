@@ -36,15 +36,15 @@ public class Label extends Symbol {
   }
 
   // size method for width and height arguments
-  public Label setSize(Integer width, Integer height) {
-    if((width <= 0 || width > 100) || (height <= 0 || height > 100)) {
-      throw new IllegalArgumentException("Please enter dimensions between 0 and 100");
-    } else {
-      this.width = width;
-      this.height = height;
-    }
-    return this;
-  }
+  // public Label setSize(Integer width, Integer height) {
+  //   if((width <= 0 || width > 100) || (height <= 0 || height > 100)) {
+  //     throw new IllegalArgumentException("Please enter dimensions between 0 and 100");
+  //   } else {
+  //     this.width = width;
+  //     this.height = height;
+  //   }
+  //   return this;
+  // }
 
   public Label setFontSize(Integer size) {
     if(size <= 0 || size > 200) {
@@ -55,8 +55,15 @@ public class Label extends Symbol {
     return this;
   }
 
+  // return four points: min x value, max x value, min y value, max y value
   public Float[] getDimensions() {
-    return new Float[]{(float)this.width/2, (float)this.height/2, (float)this.width/2, (float)this.height/2};
+    float length = (float) 0.09 * this.fontSize * this.getLabel().length();
+    float x = this.getLocation()[0];
+    float y = this.getLocation()[1];
+
+    return new Float[]{(float) x - length/2, (float) x + length/2, (float) y, (float) y};
+
+    // return new Float[]{(float)this.width/2, (float)this.height/2, (float)this.width/2, (float)this.height/2};
   }
 
   /**
