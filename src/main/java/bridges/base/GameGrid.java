@@ -154,37 +154,12 @@ public class GameGrid extends Grid<GameCell> {
       }
     }
 
-    System.out.println("\nSANITY CHEEEEECK:");
-    System.out.println(bg.length + ", " + fg.length + ", " + symbols.length);
-
-    System.out.print("bgcolors: ");
-    for(int i = 0; i < bg.length; i++) {
-      System.out.print(bg[i]);
-    }
-    System.out.print("\nfgcolors: ");
-    for(int i = 0; i < fg.length; i++) {
-      System.out.print(fg[i]);
-    }
-    System.out.print("\nsymbols: ");
-    for(int i = 0; i < symbols.length; i++) {
-      System.out.print(symbols[i]);
-    }
-
-
-    // run length encode each array
-    System.out.println("\nrun length");
-    System.out.println(runlength(bg));
-    System.out.println(runlength(fg));
-    System.out.println(runlength(symbols));
-
-
-
-    // Add the byte representation of the grid
+    // Add the representation of the gamegrid
     String json_str = QUOTE + "bg" + QUOTE + COLON + QUOTE + runlength(bg) + QUOTE + COMMA;
     json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + runlength(fg) + QUOTE + COMMA;
     json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + runlength(symbols) + QUOTE + COMMA;
 
-    // Specify the dimensions of the grid
+    // Specify the dimensions of the gamegrid
     json_str += QUOTE + "dimensions" + QUOTE + COLON +
         OPEN_BOX + gridSize[0] + "," + gridSize[1] + CLOSE_BOX + CLOSE_CURLY;
 
