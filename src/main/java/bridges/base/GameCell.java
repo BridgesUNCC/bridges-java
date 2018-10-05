@@ -98,4 +98,25 @@ public class GameCell {
   public int getSymbol() {
     return this.symbol;
   }
+
+  /**
+   *  @return background color as byte (index of value in NamedColor)
+   */
+  public byte getBGByte() {
+    return (byte) this.bg.ordinal();
+  }
+
+  /**
+   *  @return foreground color as byte (index of value in NamedColor)
+   */
+  public byte getFGByte() {
+    return (byte) this.fg.ordinal();
+  }
+
+  /**
+   *  @return symbol as byte
+   */
+  public byte getSymbolByte() {
+    return (byte) this.symbol;
+  }
 }

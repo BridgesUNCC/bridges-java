@@ -139,6 +139,10 @@ public class GameGrid extends Grid<GameCell> {
     int[] fg = new int[totalCells];
     int[] symbols = new int[totalCells];
 
+    ByteBuffer bgBytes = ByteBuffer.allocate(gridSize[0] * gridSize[1]);
+    ByteBuffer fgBytes = ByteBuffer.allocate(gridSize[0] * gridSize[1]);
+    ByteBuffer symbolBytes = ByteBuffer.allocate(gridSize[0] * gridSize[1]);
+
     // populate int arrays
     for (int i = 0; i < gridSize[0]; i++) {
       if (grid.get(i) != null) {
@@ -148,16 +152,26 @@ public class GameGrid extends Grid<GameCell> {
             bg[count] = gc.getBGColor();
             fg[count] = gc.getFGColor();
             symbols[count] = gc.getSymbol();
+            bgBytes.put(gc.getBGByte());
+            fgBytes.put(gc.getFGByte());
+            symbolBytes.put(gc.getSymbolByte());
             count++;
           }
         }
       }
     }
 
+
+    // System.out.println(bgBytes.array());
+
+    // // Add the representation of the gamegrid
+    // String json_str = QUOTE + "bg" + QUOTE + COLON + QUOTE + runlength(bg) + QUOTE + COMMA;
+    // json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + runlength(fg) + QUOTE + COMMA;
+    // json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + runlength(symbols) + QUOTE + COMMA;
     // Add the representation of the gamegrid
-    String json_str = QUOTE + "bg" + QUOTE + COLON + QUOTE + runlength(bg) + QUOTE + COMMA;
-    json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + runlength(fg) + QUOTE + COMMA;
-    json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + runlength(symbols) + QUOTE + COMMA;
+    String json_str = QUOTE + "bg" + QUOTE + COLON + QUOTE + bg + QUOTE + COMMA;
+    json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + fg + QUOTE + COMMA;
+    json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + symbols + QUOTE + COMMA;
 
     // Specify the dimensions of the gamegrid
     json_str += QUOTE + "dimensions" + QUOTE + COLON +
