@@ -11,7 +11,7 @@ public class Grid<E> extends DataStruct {
 
   protected ArrayList<ArrayList<E>> grid;
   protected static int[] gridSize = {10, 10};
-  protected static int[] maxGridSize = {480, 640};
+  protected static int[] maxGridSize = {1080, 1920};
 
   public String getDataStructType() {
 		return "Grid";
@@ -42,7 +42,6 @@ public class Grid<E> extends DataStruct {
 
     // set up outer list capacity (rows)
     grid = new ArrayList<ArrayList<E>>(size[0]);
-
 
     for(int i = 0; i < size[0]; i++) {
       // set up inner lists (columns)
