@@ -12,6 +12,25 @@ import org.apache.commons.codec.binary.Base64;
 **/
 public class GameGrid extends Grid<GameCell> {
 
+    ByteBuffer bf_bg;
+    ByteBuffer bf_fg;
+    ByteBuffer bf_symbols;
+    String encoding = "raw";
+
+
+  /** Enable to change the encoding used internally when nbuilding JSON representation.
+	 *  @param type of encoding. Supports "raw" and "rle"
+  **/
+  public void setEncoding(String encoding) {
+    if(encoding.equals("raw") || encoding.equals("rle")) {
+      this.encoding = encoding;
+    }
+		else  {
+			System.err.println("Unrecognized encoding \'" + encoding + "\', defaulting to raw. Options: raw, rle");
+			this.encoding = "raw";
+		}
+  }
+
   public String getDataStructType() {
 		return "GameGrid";
 	}
@@ -46,6 +65,10 @@ public class GameGrid extends Grid<GameCell> {
         this.set(i, j, new GameCell());
       }
     }
+    bf_bg = ByteBuffer.allocate(gridSize[0]*gridSize[1]);
+    bf_fg = ByteBuffer.allocate(gridSize[0]*gridSize[1]);
+    bf_symbols = ByteBuffer.allocate(gridSize[0]*gridSize[1]);
+
   }
 
   /**
@@ -135,49 +158,67 @@ public class GameGrid extends Grid<GameCell> {
     GameCell gc;
     int totalCells = gridSize[0] * gridSize[1];
     int count = 0;
-    int[] bg = new int[totalCells];
-    int[] fg = new int[totalCells];
-    int[] symbols = new int[totalCells];
 
-    ByteBuffer bgBytes = ByteBuffer.allocate(gridSize[0] * gridSize[1]);
-    ByteBuffer fgBytes = ByteBuffer.allocate(gridSize[0] * gridSize[1]);
-    ByteBuffer symbolBytes = ByteBuffer.allocate(gridSize[0] * gridSize[1]);
+    String json_str = "";
 
-    // populate int arrays
-    for (int i = 0; i < gridSize[0]; i++) {
-      if (grid.get(i) != null) {
-        for (int j = 0; j < gridSize[1]; j++) {
-          if (grid.get(i).get(j) != null) {
-            gc = grid.get(i).get(j);
-            bg[count] = gc.getBGColor();
-            fg[count] = gc.getFGColor();
-            symbols[count] = gc.getSymbol();
-            bgBytes.put(gc.getBGByte());
-            fgBytes.put(gc.getFGByte());
-            symbolBytes.put(gc.getSymbolByte());
-            count++;
+    // specify the encoding
+    json_str = QUOTE + "encoding" + QUOTE + COLON + QUOTE + encoding + QUOTE + COMMA;
+
+    // specify the dimensions of the gamegrid
+    json_str += QUOTE + "dimensions" + QUOTE + COLON +
+        OPEN_BOX + gridSize[0] + "," + gridSize[1] + CLOSE_BOX + COMMA;
+
+    if (encoding.equals("rle") ) {
+    	int[] bg = new int[totalCells];
+    	int[] fg = new int[totalCells];
+    	int[] symbols = new int[totalCells];
+
+    	// populate int arrays
+      for (int i = 0; i < gridSize[0]; i++) {
+  	    if (grid.get(i) != null) {
+      		for (int j = 0; j < gridSize[1]; j++) {
+    		    if (grid.get(i).get(j) != null) {
+        			gc = grid.get(i).get(j);
+        			bg[count] = gc.getBGColor();
+        			fg[count] = gc.getFGColor();
+        			symbols[count] = gc.getSymbol();
+        			count++;
+        		}
           }
         }
       }
+
+    	// Add the representation of the gamegrid
+    	json_str += QUOTE + "bg" + QUOTE + COLON + QUOTE + runlength(bg) + QUOTE + COMMA;
+    	json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + runlength(fg) + QUOTE + COMMA;
+    	json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + runlength(symbols) + QUOTE;
+    }
+    if (encoding.equals("raw") ) {
+    	bf_bg.clear();
+    	bf_fg.clear();
+    	bf_symbols.clear();
+
+    	// populate int arrays
+    	for (int i = 0; i < gridSize[0]; i++) {
+        if (grid.get(i) != null) {
+          for (int j = 0; j < gridSize[1]; j++) {
+            if (grid.get(i).get(j) != null) {
+            	gc = grid.get(i).get(j);
+            	bf_bg.put((byte)gc.getBGColor());
+            	bf_fg.put((byte)gc.getFGColor());
+            	bf_symbols.put((byte)gc.getSymbol());
+            }
+          }
+        }
+  	   }
+
+    	// Add the representation of the gamegrid
+    	json_str += QUOTE + "bg" + QUOTE + COLON + QUOTE + Base64.encodeBase64String(bf_bg.array()) + QUOTE + COMMA;
+    	json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + Base64.encodeBase64String(bf_fg.array()) + QUOTE + COMMA;
+    	json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + Base64.encodeBase64String(bf_symbols.array()) + QUOTE;
     }
 
-
-    // System.out.println(bgBytes.array());
-
-    // // Add the representation of the gamegrid
-    // String json_str = QUOTE + "bg" + QUOTE + COLON + QUOTE + runlength(bg) + QUOTE + COMMA;
-    // json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + runlength(fg) + QUOTE + COMMA;
-    // json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + runlength(symbols) + QUOTE + COMMA;
-    // Add the representation of the gamegrid
-    String json_str = QUOTE + "bg" + QUOTE + COLON + QUOTE + bg + QUOTE + COMMA;
-    json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + fg + QUOTE + COMMA;
-    json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + symbols + QUOTE + COMMA;
-
-    // Specify the dimensions of the gamegrid
-    json_str += QUOTE + "dimensions" + QUOTE + COLON +
-        OPEN_BOX + gridSize[0] + "," + gridSize[1] + CLOSE_BOX + CLOSE_CURLY;
-
-    return json_str;
+    return json_str + CLOSE_CURLY;
   }
 
 
