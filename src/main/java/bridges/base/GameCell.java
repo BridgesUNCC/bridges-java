@@ -11,8 +11,9 @@ import bridges.base.NamedColor;
  *
  */
 public class GameCell {
-  private int symbol;
+  private NamedSymbol symbol;
   private NamedColor bg, fg;
+  protected static NamedSymbol[] symbolArray = NamedSymbol.values();
 
   /*
    * Default Constructor
@@ -20,7 +21,7 @@ public class GameCell {
   public GameCell() {
     bg = NamedColor.black;
     fg = NamedColor.white;
-    symbol = 0;
+    symbol = NamedSymbol.none;
   }
 
   /**
@@ -30,7 +31,7 @@ public class GameCell {
   * @param symbol - symbol index from range 0-255
   *
   */
-  public GameCell(NamedColor bg, NamedColor fg, int symbol) {
+  public GameCell(NamedColor bg, NamedColor fg, NamedSymbol symbol) {
     this.bg = bg;
     this.fg = fg;
     this.symbol = symbol;
@@ -75,6 +76,14 @@ public class GameCell {
    */
   public void setSymbol(int s) {
     if(s < 0 || s > 255) throw new IllegalArgumentException("Symbol " + s + " is invalid; symbols must be specified from the range (0, 255)\n");
+    this.symbol = symbolArray[s];
+  }
+
+  /**
+   *  Set symbol using int argument
+   *  @param s - Named symbol
+   */
+  public void setSymbol(NamedSymbol s) {
     this.symbol = s;
   }
 
@@ -96,7 +105,7 @@ public class GameCell {
    *  @return symbol as integer
    */
   public int getSymbol() {
-    return this.symbol;
+    return this.symbol.ordinal();
   }
 
   /**
@@ -117,6 +126,6 @@ public class GameCell {
    *  @return symbol as byte
    */
   public byte getSymbolByte() {
-    return (byte) this.symbol;
+    return (byte) this.symbol.ordinal();
   }
 }

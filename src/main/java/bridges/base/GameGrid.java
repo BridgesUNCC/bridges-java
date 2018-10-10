@@ -12,13 +12,12 @@ import org.apache.commons.codec.binary.Base64;
 **/
 public class GameGrid extends Grid<GameCell> {
 
-    ByteBuffer bf_bg;
-    ByteBuffer bf_fg;
-    ByteBuffer bf_symbols;
-    String encoding = "raw";
+  ByteBuffer bf_bg;
+  ByteBuffer bf_fg;
+  ByteBuffer bf_symbols;
+  String encoding = "raw";
 
-
-  /** Enable to change the encoding used internally when nbuilding JSON representation.
+  /** Enable changing the game grid encoding when building JSON representation.
 	 *  @param type of encoding. Supports "raw" and "rle"
   **/
   public void setEncoding(String encoding) {
@@ -124,10 +123,29 @@ public class GameGrid extends Grid<GameCell> {
   /**
    *  Draw a symbol at the specified location
    *  @param row, col - integer indices specifying the position to modify
+   *  @param symbol - Named symbol enum argument to set the symbol at the chosen position
+   */
+  public void drawObject(Integer row, Integer col, NamedSymbol symbol) {
+    this.get(row, col).setSymbol(symbol);
+  }
+
+  /**
+   *  Draw a symbol at the specified location
+   *  @param row, col - integer indices specifying the position to modify
    *  @param symbol - Integer symbol argument to set the symbol at the chosen position
    *  @param color - String color argument to set the background at the chosen position
    */
   public void drawObject(Integer row, Integer col, Integer symbol, String color) {
+    this.drawObject(row, col, symbol, NamedColor.valueOf(color));
+  }
+
+  /**
+   *  Draw a symbol at the specified location
+   *  @param row, col - integer indices specifying the position to modify
+   *  @param symbol - Named Symbol enum argument to set the symbol at the chosen position
+   *  @param color - String color argument to set the background at the chosen position
+   */
+  public void drawObject(Integer row, Integer col, NamedSymbol symbol, String color) {
     this.drawObject(row, col, symbol, NamedColor.valueOf(color));
   }
 
@@ -142,19 +160,26 @@ public class GameGrid extends Grid<GameCell> {
     this.get(row, col).setFGColor(color);
   }
 
+  /**
+   *  Draw a symbol at the specified location
+   *  @param row, col - integer indices specifying the position to modify
+   *  @param symbol - Named Symbol enum argument to set the symbol at the chosen position
+   *  @param color - Named Color enum argument to set the foreground at the chosen position
+   */
+  public void drawObject(Integer row, Integer col, NamedSymbol symbol, NamedColor color) {
+    this.get(row, col).setSymbol(symbol);
+    this.get(row, col).setFGColor(color);
+  }
+
 
   /**
    * get the JSON representation of the game grid. Contains separate foreground, background, and symbol arrays
-
-        ***each of which can be run length encoded then base64'd***
-
    *
    * @return the JSON representation of the game grid
   **/
   public String getDataStructureRepresentation() {
 
-    // Maintain a bytebuffer for the byte representations of each grid color
-    // ByteBuffer imageBytes = ByteBuffer.allocate(4 * gridSize[0] * gridSize[1]);
+    // Maintain a bytebuffer for the byte representations of each game cell attribute
     GameCell gc;
     int totalCells = gridSize[0] * gridSize[1];
     int count = 0;
@@ -193,6 +218,7 @@ public class GameGrid extends Grid<GameCell> {
     	json_str += QUOTE + "fg" + QUOTE + COLON + QUOTE + runlength(fg) + QUOTE + COMMA;
     	json_str += QUOTE + "symbols" + QUOTE + COLON + QUOTE + runlength(symbols) + QUOTE;
     }
+
     if (encoding.equals("raw") ) {
     	bf_bg.clear();
     	bf_fg.clear();
@@ -246,5 +272,4 @@ public class GameGrid extends Grid<GameCell> {
     }
     return out.toString();
   }
-
 }
