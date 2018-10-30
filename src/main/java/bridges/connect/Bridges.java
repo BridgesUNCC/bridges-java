@@ -547,6 +547,9 @@ public class Bridges {
 			case "ColorGrid":
 				nodes_links_str = ((ColorGrid) ds_handle).getDataStructureRepresentation();
 				break;
+			case "SymbolCollection":
+				nodes_links_str = ((SymbolCollection) ds_handle).getDataStructureRepresentation();
+				break;
 		}
 
 		String ds_json =
