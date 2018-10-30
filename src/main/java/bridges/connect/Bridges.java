@@ -433,7 +433,7 @@ public class Bridges {
 	 *	@return user id (string)
 	 */
 	public static String getUserName() {
-		return userName;
+		return userName.replace(" ", "+");
 	}
 
 	/**
