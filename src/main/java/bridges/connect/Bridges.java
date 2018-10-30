@@ -59,6 +59,7 @@ public class Bridges {
 	private static int assignment;
 	private static int assignment_part;
 	private static String key;
+	private static Boolean debug_flag = false;   // debug mode
 	private static DataFormatter df;
 	private static String userName, vis_type,
 			title, description;
@@ -125,6 +126,10 @@ public class Bridges {
 		Bridges.setAssignment(assignment);
 		Bridges.key = appl_id;
 		Bridges.userName = username;
+
+		if (debug_flag) {
+			System.err.println ("Bridges.init: assignment="+Bridges.assignment+" username="+Bridges.userName+" apikey="+Bridges.key);
+		}
 	}
 
 
@@ -174,6 +179,13 @@ public class Bridges {
 		connector.setServer(server);
 	}
 
+	public static void setDebugFlag (Boolean flag) {
+		debug_flag = flag;
+	}
+
+	public static Boolean getDebugFlag () {
+		return debug_flag;
+	}
 
 	/**
 	 *  Turns on map overlay for subsequent visualizations - used with location specific

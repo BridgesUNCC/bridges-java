@@ -43,7 +43,6 @@ public class Grid<E> extends DataStruct {
     // set up outer list capacity (rows)
     grid = new ArrayList<ArrayList<E>>(size[0]);
 
-
     for(int i = 0; i < size[0]; i++) {
       // set up inner lists (columns)
       grid.add(new ArrayList<E>(size[1]));
