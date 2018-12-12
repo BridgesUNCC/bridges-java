@@ -146,8 +146,12 @@ public class ColorGrid extends Grid<Color> {
   **/
   public String getDataStructureRepresentation () {
     ByteBuffer byte_buff = getRLE();
+
+    // store length of bytes in buffer and allocate new byte array of same size
     int len = byte_buff.remaining();
-    byte[] byte_arr = new byte[byte_buff.remaining()];
+    byte[] byte_arr = new byte[len];
+
+    // transfer bytes from buffer to array
     byte_buff.get(byte_arr);
     String encoding = "RLE";
 
