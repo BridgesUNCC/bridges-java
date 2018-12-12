@@ -251,6 +251,23 @@ public class Color {
 				.array();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+	
+		if (obj == null)
+			return false;
+
+		if (!(obj instanceof Color))
+			return false;
+
+		Color other = (Color)obj;
+		return (this.red == other.red &&
+				this.green == other.green &&
+				this.blue == other.blue &&
+				Float.compare(this.alpha, other.alpha) == 0);
+	}
 	/**
 	 *
 	 * 	sets the color to the RGBA components given the color name

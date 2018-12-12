@@ -1,7 +1,6 @@
 package bridges.base;
-
-import bridges.base.Color;
 import java.util.*;
+import bridges.base.Color;
 import java.nio.ByteBuffer;
 import org.apache.commons.codec.binary.Base64;
 
@@ -70,6 +69,76 @@ public class ColorGrid extends Grid<Color> {
     super.set(row, col, color);
   }
 
+  // get the Run Length Encoding of the ColorGrid
+  private ByteBuffer getRLE() {
+	  ByteBuffer imageBytes = ByteBuffer.allocate(5 * gridSize[0] * gridSize[1]);
+	  int count = 0;
+	  int totalCount = 0;
+	  int pos = 0;
+	  Color last = grid.get(0).get(0);
+
+	  while (pos < gridSize[0] * gridSize[1]) {
+		int posY = pos / gridSize[1];
+		int posX = pos % gridSize[1];
+		Color current = grid.get(posY).get(posX);
+
+		if (count == 0) {
+			count = 1;
+			last = current;
+		} else {
+			if (last.equals(current)) {
+				count++;
+			} else {
+				totalCount += count;
+				imageBytes.put((byte)(count - 1));
+				imageBytes.put(last.getByteRepresentation());
+				count = 1;
+				last = current;
+			}
+		}
+
+		if (count == 256) {
+			totalCount += count;
+			imageBytes.put((byte)(count - 1));
+			imageBytes.put(last.getByteRepresentation());
+			count = 0;
+		}
+		pos++;
+	  }
+	  totalCount += count;
+	  imageBytes.put((byte)(count - 1));
+	  imageBytes.put(last.getByteRepresentation());
+	  
+	  if (totalCount != gridSize[0] * gridSize[1]) {
+		  System.err.println("Something broke in getRLE construction");
+	  }
+
+	  // trim the buffer down and reset position to 0
+	  imageBytes.flip();
+		
+	  return imageBytes;
+  }
+
+  // get raw encoding of ColorGrid
+  private ByteBuffer getRAW() {
+	  // Maintain a bytebuffer for the byte representations of each grid color
+	  ByteBuffer imageBytes = ByteBuffer.allocate(4 * gridSize[0] * gridSize[1]);
+	  Color color;
+
+	  for (int i = 0; i < gridSize[0]; i++) {
+		  if (grid.get(i) != null) {
+			  for (int j = 0; j < gridSize[1]; j++) {
+				  if (grid.get(i).get(j) != null) {
+					  color = grid.get(i).get(j);
+					  imageBytes.put(color.getByteRepresentation());
+				  }
+			  }
+		  }
+	  }
+
+	  return imageBytes;
+  }
+
   /**
    * get the JSON representation of the color grid
    *
@@ -78,23 +147,19 @@ public class ColorGrid extends Grid<Color> {
   public String getDataStructureRepresentation () {
 
     // Maintain a bytebuffer for the byte representations of each grid color
-    ByteBuffer imageBytes = ByteBuffer.allocate(4 * gridSize[0] * gridSize[1]);
-    Color color;
+    ByteBuffer byte_buff = getRLE();
+    String encoding = "RLE";
 
-    for (int i = 0; i < gridSize[0]; i++) {
-      if (grid.get(i) != null) {
-        for (int j = 0; j < gridSize[1]; j++) {
-          if (grid.get(i).get(j) != null) {
-            color = grid.get(i).get(j);
-            imageBytes.put(color.getByteRepresentation());
-          }
-        }
-      }
+    // if RLE encoding is larger than RAW, use RAW
+    if (byte_buff.remaining() > gridSize[0] * gridSize[1] * 4) {
+	encoding = "RAW";
+	byte_buff = getRAW();
     }
 
     // Add the byte representation of the grid
-    String json_str = QUOTE + "nodes" + QUOTE + COLON +
-      OPEN_BOX  + QUOTE + Base64.encodeBase64String(imageBytes.array()) + QUOTE + CLOSE_BOX + COMMA;
+    String json_str =  QUOTE + "encoding" + QUOTE + COLON + QUOTE + encoding + 
+	    QUOTE + COMMA + QUOTE + "nodes" + QUOTE + COLON + OPEN_BOX  + QUOTE +
+	    Base64.encodeBase64String(byte_buff.array()) + QUOTE + CLOSE_BOX + COMMA;
 
     // Specify the dimensions of the grid
     json_str += QUOTE + "dimensions" + QUOTE + COLON +
