@@ -145,8 +145,6 @@ public class ColorGrid extends Grid<Color> {
    * @return the JSON representation of the color grid
   **/
   public String getDataStructureRepresentation () {
-
-    // Maintain a bytebuffer for the byte representations of each grid color
     ByteBuffer byte_buff = getRLE();
     String encoding = "RLE";
 
