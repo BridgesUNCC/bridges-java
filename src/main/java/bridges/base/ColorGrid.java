@@ -146,18 +146,21 @@ public class ColorGrid extends Grid<Color> {
   **/
   public String getDataStructureRepresentation () {
     ByteBuffer byte_buff = getRLE();
+    byte[] byte_arr = new byte[byte_buff.remaining()];
+    byte_buff.get(byte_arr);
     String encoding = "RLE";
 
     // if RLE encoding is larger than RAW, use RAW
     if (byte_buff.remaining() > gridSize[0] * gridSize[1] * 4) {
 	encoding = "RAW";
 	byte_buff = getRAW();
+	byte_arr = byte_buff.array();
     }
 
     // Add the byte representation of the grid
     String json_str =  QUOTE + "encoding" + QUOTE + COLON + QUOTE + encoding + 
 	    QUOTE + COMMA + QUOTE + "nodes" + QUOTE + COLON + OPEN_BOX  + QUOTE +
-	    Base64.encodeBase64String(byte_buff.array()) + QUOTE + CLOSE_BOX + COMMA;
+	    Base64.encodeBase64String(byte_arr) + QUOTE + CLOSE_BOX + COMMA;
 
     // Specify the dimensions of the grid
     json_str += QUOTE + "dimensions" + QUOTE + COLON +
