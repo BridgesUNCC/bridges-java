@@ -68,6 +68,7 @@ public class Bridges {
 	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular"};
 
 	private static Boolean map_overlay = false;	// default to no map overlay
+	private static String display_mode = "slide"; // default to slide (vs stack)
 	private static String coord_system_type = projection_options[0];	// default to Cartesian space
 
 	private static DataStruct ds_handle = null;		// data structure handle
@@ -194,10 +195,25 @@ public class Bridges {
 	 *  @param flag     this is the boolean flag for displaying a map overlay
 	 *
 	 **/
-
 	public void setMapOverlay (Boolean flag) {
 		map_overlay = flag;
 	}
+
+	/**
+	 * Set the current assignment display mode to slide or stack, or throw an error;
+	 * @param mode	One of: ['slide', 'stack'].
+	 */
+	public void setDisplayMode(String mode) throws IllegalArgumentException {
+		switch(mode) {
+				case "stack":
+				case "slide":
+					display_mode = mode;
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid display mode '" + mode + "'. Please use one of the following options: ['slide', 'stack'].");
+		}
+	}
+
 
 	/**
 	 * 	@param coord 	this is the desired coordinate space argument
@@ -558,7 +574,8 @@ public class Bridges {
 			QUOTE + "title"   + QUOTE + COLON + QUOTE + JSONValue.escape(title) + QUOTE + COMMA +
 			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) + QUOTE + COMMA +
 			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
-			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA;
+			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
+			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
 
 		// get the nodes and link representations
 
