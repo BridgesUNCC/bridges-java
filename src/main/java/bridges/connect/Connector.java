@@ -555,6 +555,18 @@ public class Connector {
 			.bodyString(data, ContentType.TEXT_PLAIN));
 	}
 
+	/*
+	 *  Send a delete request to the server for the given user and assignment
+	 */
+	public String delete(String url) throws IOException, RateLimitException {
+		if (Bridges.getDebugFlag()) {
+		    System.err.println("Connector.delete-String("+url+")");
+		}
+		String out = server_url;
+		out += url.replace(" ", "%20");
+		return executeHTTPRequest(Request.Delete(out));
+	}
+
 
 	/**
 	 * Escape the URL and prepend the base URL.

@@ -520,6 +520,33 @@ public class Bridges {
 
 	/**
 	 *
+	 * This method deletes the user's current assignment from the Bridges server
+	 *
+	 * @throws IOException
+	 */
+	public void clearAssignment() {
+		String response = "";
+
+		try {
+			response = connector.delete("/clearAssignment/" + assignment + "?apikey=" + getKey() + "&username=" + getUserName());
+		}
+		catch (IOException e) {
+			System.err.println("There was a problem removing the assignment from the server. \n"
+				+ e.getMessage());
+		}
+		catch (RateLimitException e) {
+			System.err.println("There was a RateLimitException from the server. \n"
+				+ e.getMessage());
+		}
+
+		// print the response
+		if(response.length() > 0) {
+			System.out.println(response);
+		}
+	}
+
+	/**
+	 *
 	 * This method generates the representation of the current data structure (JSON)
 	 * and sends that to the Bridges server for generating a visualization.
 	 *
