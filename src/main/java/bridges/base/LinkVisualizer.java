@@ -102,7 +102,7 @@ public class LinkVisualizer {
 	 */
 	public String getLabel() {
 		return label;
-    }
+	}
 
 	/**
 	 * This method sets the label
@@ -403,10 +403,10 @@ public class LinkVisualizer {
 			Double.toString(this.getWeight());
 
 		String label = this.getLabel();
-		if(label != null && !label.isEmpty()) {
+		if (label != null && !label.isEmpty()) {
 			link_props += COMMA +
-			QUOTE + "label" + QUOTE + COLON +
-			QUOTE + this.getLabel() + QUOTE;
+				QUOTE + "label" + QUOTE + COLON +
+				QUOTE + this.getLabel() + QUOTE;
 		}
 
 		return link_props;

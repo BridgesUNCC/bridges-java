@@ -237,18 +237,18 @@ public class Color {
 		int b = blue;
 		int a  = Math.round(255 * alpha);
 
-		// keep lowest byte of each int 
+		// keep lowest byte of each int
 		byte rd = (byte) r;
 		byte gn = (byte) g;
 		byte bl = (byte) b;
 		byte al = (byte) a;
 
 		return ByteBuffer.allocate(4)
-				.put(rd)
-				.put(gn)
-				.put(bl)
-				.put(al)
-				.array();
+			.put(rd)
+			.put(gn)
+			.put(bl)
+			.put(al)
+			.array();
 	}
 
 	/**
