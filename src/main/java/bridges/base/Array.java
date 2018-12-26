@@ -67,7 +67,7 @@ public class Array<E> extends DataStruct {
 	 *  Create an 2D array object
 	 *
 	 *  @param x_dim number of elements along dimension 1
-	 *  @param y_dim number of elements along dimension 1
+	 *  @param y_dim number of elements along dimension 2
 	 *
 	 */
 	public Array(int x_dim, int y_dim) {
@@ -81,8 +81,8 @@ public class Array<E> extends DataStruct {
 	 *  Create an 3D array object
 	 *
 	 *  @param x_dim number of elements along dimension 1
-	 *  @param y_dim number of elements along dimension 1
-	 *  @param z_dim number of elements along dimension 1
+	 *  @param y_dim number of elements along dimension 2
+	 *  @param z_dim number of elements along dimension 3
 	 *
 	 */
 	public Array(int x_dim, int y_dim, int z_dim) {
