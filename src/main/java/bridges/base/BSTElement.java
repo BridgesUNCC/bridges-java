@@ -168,51 +168,26 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 		// add this to the element's properties
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.uncc.cs.bridgesV2.base.TreeElement#getLeft()
-	 */
+	/**
+	 *	Return the left child of the BSTElement
+	 *
+	 * 	@return the left child of this BSTElement
+	 *
+	 **/
 	@Override
 	public BSTElement<K, E> getLeft() {
 		return (BSTElement<K, E>) super.getLeft();
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.uncc.cs.bridgesV2.base.TreeElement#getRight()
-	 */
+	/**
+	 *	Return the right child of the BSTElement
+	 *
+	 * 	@return the right child of this BSTElement
+	 *
+	 **/
 	@Override
 	public BSTElement<K, E> getRight() {
 		return (BSTElement<K, E>) super.getRight();
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.uncc.cs.bridgesV2.base.Element#getRepresentation()
-	 */
-	/*
-		@Override
-		public String getRepresentation() {
-			String locx = "0.0", locy = "0.0";
-			String json = "{";
-			for (Entry<String, String> entry : super.getVisualizer().properties.entrySet()) {
-				if (entry.getKey() == "locationX")
-					locx = entry.getValue();
-				else if (entry.getKey() == "locationY")
-					locy = entry.getValue();
-	            else
-					json += String.format("\"%s\": \"%s\", ", entry.getKey(),
-										entry.getValue());
-			}
-			json += String.format("\"location\": [ %s , %s ], ", locx, locy);
-			json += String.format("\"name\": \"%s\", ", super.getLabel());
-								// must check type
-			String s = ((Object) this.getKey()).getClass().getName();
-			if ( (s == "java.lang.Integer") || (s == "java.lang.Long") )
-				json += String.format("\"key\": \"%d\"", this.getKey());
-			else if ( (s == "java.lang.Float") || (s == "java.lang.Double") )
-				json += String.format("\"key\": \"%f\"", this.getKey());
-			else if ( (s == "java.lang.String") )
-				json += String.format("\"key\": \"%s\"", this.getKey());
-
-			return json + "}";
-		}
-	*/
 }

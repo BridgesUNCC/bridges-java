@@ -279,6 +279,16 @@ public class Element<E> extends DataStruct {
 				Integer.toString(avl.getBalanceFactor()) + COMMA;
 			;
 		}
+		else if (getDataStructType().equals("KDTree")) {
+			KdTreeElement kdt = (KdTreeElement) this;
+			json_str += COMMA +
+				QUOTE + "key" + QUOTE + COLON +
+				QUOTE + kdt.getKey().toString() +  QUOTE + COMMA +
+				QUOTE + "dimension" + QUOTE + COLON +
+				QUOTE + Integer.toString(kdt.getDimension()) +  QUOTE + COMMA +
+				QUOTE + "thickness" + QUOTE + COLON +
+				QUOTE + Float.toString(kdt.getThickness()) +  QUOTE + COMMA;
+		}
 		else
 			json_str += CLOSE_CURLY;
 

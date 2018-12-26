@@ -576,6 +576,7 @@ public class Bridges {
 			case "BinaryTree":
 			case "BinarySearchTree":
 			case "AVLTree":
+			case "KDTree":
 				nodes_links_str =
 					((TreeElement) ds_handle).getDataStructureRepresentation();
 				break;
