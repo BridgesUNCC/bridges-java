@@ -194,7 +194,7 @@ public class Array<E> extends DataStruct {
 	 *	@return Element<E>  object at x, y
 	 */
 	public Element<E> getElement(int x, int y) {
-		return array_data[y * dims[1] + x];
+		return array_data[y * dims[0] + x];
 	}
 	/**
 	 *
