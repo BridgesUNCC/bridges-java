@@ -75,8 +75,8 @@ public class LinkVisualizer {
 	// link weight
 	private double weight;
 
-    //    	private final String INSERT_STRING = "\\n";
-    //	private final String DIVIDE_KEY = "(\r?\n)|(\n)|(\f)|(\r)|(%n)";
+	//    	private final String INSERT_STRING = "\\n";
+	//	private final String DIVIDE_KEY = "(\r?\n)|(\n)|(\f)|(\r)|(%n)";
 
 
 	public LinkVisualizer() {
@@ -111,8 +111,8 @@ public class LinkVisualizer {
 	 * @param label the link label to set
 	 */
 	public void setLabel(String label) {
-	    //		this.label = arrangeLabel(label);
-	    this.label = label;
+		//		this.label = arrangeLabel(label);
+		this.label = label;
 	}
 
 	// /**
