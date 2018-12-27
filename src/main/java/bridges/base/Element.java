@@ -266,13 +266,13 @@ public class Element<E> extends DataStruct {
 			BSTElement bst = (BSTElement) this;
 			json_str += COMMA +
 				QUOTE + "key" + QUOTE + COLON +
-				QUOTE + bst.getKey().toString() +  QUOTE + COMMA;
+				QUOTE + JSONValue.escape(bst.getKey().toString()) +  QUOTE + COMMA;
 		}
 		else if (getDataStructType().equals("AVLTree")) {
 			AVLTreeElement avl = (AVLTreeElement) this;
 			json_str += COMMA +
 				QUOTE + "key" + QUOTE + COLON +
-				QUOTE + avl.getKey().toString() +  QUOTE + COMMA +
+				QUOTE + JSONValue.escape(avl.getKey().toString()) +  QUOTE + COMMA +
 				QUOTE + "height" + QUOTE + COLON +
 				Integer.toString(avl.getHeight()) + COMMA +
 				QUOTE + "balance_factor" + QUOTE + COLON +
