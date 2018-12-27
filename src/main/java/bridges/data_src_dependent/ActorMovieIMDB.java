@@ -2,7 +2,7 @@ package bridges.data_src_dependent;
 
 import java.util.Vector;
 
-public class ActorMovieIMDB extends DataSource{
+public class ActorMovieIMDB extends DataSource {
 
 	/**
 	 * The constructor
@@ -15,21 +15,21 @@ public class ActorMovieIMDB extends DataSource{
 		super.setLabel("");
 	}
 
-	public ActorMovieIMDB(String act_movie){
+	public ActorMovieIMDB(String act_movie) {
 		super.setLabel(act_movie);
 	}
-	
+
 	/**
 	 * This method returns the string name
 	 */
-	public String getName(){
+	public String getName() {
 		return super.getLabel();
 	}
-	
+
 	/**
 	 * This method sets the string name
 	 */
-	public void setName(String name){
+	public void setName(String name) {
 		super.setLabel(name);
 	}
 
@@ -62,7 +62,7 @@ public class ActorMovieIMDB extends DataSource{
 	public void setGenres(Vector<String> g) {
 		this.genres = g;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,17 +83,18 @@ public class ActorMovieIMDB extends DataSource{
 		if (this.getName() == null) {
 			if (other.getName() != null)
 				return false;
-		} else if (!this.getName().equals(other.getName()))
+		}
+		else if (!this.getName().equals(other.getName()))
 			return false;
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * This method returns the string value
 	 */
-	public String toString(){
+	public String toString() {
 		return this.getName();
 	}
-	
+
 }

@@ -1,6 +1,6 @@
 package bridges.connect;
 
- 
+
 import java.io.IOException;
 import java.lang.Exception;
 import java.text.DateFormat;
@@ -46,16 +46,16 @@ import org.apache.http.util.EntityUtils;
 
 /**
  * Connection to the DataFormatters server.
- * 
+ *
  * Initialize this class before using it, and call complete() afterward.
- * 
+ *
  * @author Sean Gallagher
  * @param <E>
  * @secondAuthor Mihai Mehedint
  */
 public class DataFormatter {
 
-	
+
 	private static List<Tweet> allTweets = new ArrayList<>();// this is the list off all the tweets retrieved
 	private static List<EarthquakeUSGS> allUSGS = new ArrayList<>();// this is the list off all the earthquakes retrieved
 
@@ -66,34 +66,34 @@ public class DataFormatter {
 	private static Connector backend;
 
 	// Internal utility methods
-	
+
 	/**
 	 * Constructor
 	 */
 	protected DataFormatter() {
 		super();
 		this.backend = new Connector();
-	}	
-	
+	}
+
 	public static String getServerURL() {
 		return backend.server_url;
 	}
-	
+
 	public static void setServerURL(String server_url) {
 		DataFormatter.backend.server_url = server_url;
 	}
-	
+
 	/**
 	 * Internal method for JSON preparation
 	 * @param in 	The original string
 	 * @return a string with all but the last character
 	 */
 	public static StringBuilder trimComma(StringBuilder in) {
-		if (in.length() > 0 && in.charAt(in.length()-1) == ',')
-			in.deleteCharAt(in.length()-1);
+		if (in.length() > 0 && in.charAt(in.length() - 1) == ',')
+			in.deleteCharAt(in.length() - 1);
 		return in;
 	}
-	
+
 	/**
 	 * Internal method for JSON preparation
 	 * @param in	The original String
@@ -102,17 +102,17 @@ public class DataFormatter {
 	static String quote(String in) {
 		return String.format("\"%s\"", in);
 	}
-	
+
 	/**
 	 * Internal method for JSON preparation
 	 * @return a string with all but the first and last characters
 	 */
 	static String unquote(String in) {
 		return in.substring(
-				Math.min(in.length()-1, 1),
-				Math.max(in.length()-1, 0));
+				Math.min(in.length() - 1, 1),
+				Math.max(in.length() - 1, 0));
 	}
-	
+
 	/**
 	 * Idiom for enabling ordered iteration on any map.
 	 * The reason for this is to make the strings compare equal for testing
@@ -120,12 +120,12 @@ public class DataFormatter {
 	 * @return
 	 */
 	static <T extends Comparable<T>> List<T> sorted_values(
-			Map<String, T> values) {
+		Map<String, T> values) {
 		List<T> sorted_values = new ArrayList<>(values.values());
 		Collections.sort(sorted_values);
 		return sorted_values;
 	}
-	
+
 	/**
 	 * Idiom for enabling ordered iteration on any map.
 	 * The reason for this is to make the strings compare equal for testing
@@ -133,7 +133,7 @@ public class DataFormatter {
 	 * @return
 	 */
 	static <K extends Comparable<K>, V> List<Entry<K, V>> sorted_entries(
-			Map<K, V> map) {
+		Map<K, V> map) {
 		List<Entry<K, V>> sorted_entries = new ArrayList<>(map.entrySet());
 		Collections.sort(sorted_entries, new Comparator<Entry<K, V>>() {
 			public int compare(Entry<K, V> t, Entry<K, V> o) {
@@ -142,301 +142,309 @@ public class DataFormatter {
 		});
 		return sorted_entries;
 	}
-	
-    /**
-     * 	Automatically choose whether to open a node identifier with:
-     *  Twitter via followers(),
-     *  TMDb with movies(), or
-     *  RottenTomatoes with actors()
-     * 
-     * @param identifier
-     * @param max
-     * @returns a list of identifiers
-     * @throws QueryLimitException
-     */
-   
-    /**
-     * This Method returns the list of followers 
-     * @param identifier holds the name of the 
-     * @param max holds the max number of followers
-     * @return
-     */
-    	public static List<Follower> getAssociations(Follower identifier, int max){
-        	try {
-        		return followers(identifier, max);
-    	    }
-        		catch (RateLimitException e) {
-        		return new ArrayList<>();
-        	}
-    }
-    	
 
-    	
-    	/**
-         * This Method returns the list of tweets
-         * @param identifier holds the name of the 
-         * @param max holds the max number of tweets
-         * @return
-    	 * @throws MyExceptionClass 
-         */
-        	public static List<Tweet> getAssociations(TwitterAccount identifier, int max) {
-            	try {
-            		System.out.println("hello form getAssociations Data formatter");
-            		return getTwitterTimeline(identifier, max);
-        	    }
-            		catch (RateLimitException e) {
-            		return new ArrayList<>();
-            	}
-        }
-        	
-        	/**
-             * This Method returns the list of earthquakes
-             * @param identifier holds the name of the 
-             * @param max holds the max number of earthquakes
-             * @return
-        	 * @throws MyExceptionClass 
-             */
-            	public static List<EarthquakeUSGS> getAssociations(USGSaccount identifier, int max) {
-                	try {
-                		return getUSGSTimeline(identifier, max);
-            	    }
-                		catch (RateLimitException e) {
-                		return new ArrayList<>();
-                	}
-            }
-            
-        	/**
-        	 * This method change the tweet object into an earthquake tweet object with
-        	 * more data extracted from the tweet content, like magnitude
-        	 * @param aList
-        	 * @return
-        	 */
-        	public static List<EarthquakeTweet> convertTweet(List<Tweet> aList){
-        		List<EarthquakeTweet> earthquakes = new ArrayList<>();
-        		for (int i =0; i<aList.size();i++){
-        			Tweet aTweet = aList.get(i);
-        			EarthquakeTweet anEarthquake = new EarthquakeTweet(aTweet);
-        			earthquakes.add(anEarthquake);
-        			}
-        		return earthquakes;
-        	} 
-    
-    	/**
-         * This Method returns the list of actors 
-         * @param identifier holds the name of the movie
-         * @param max holds the max number of actors
-         * @return
-         */
-        	public static List<Actor> getAssociations(Actor identifier, int max){
-            	try {
-            		return actors(identifier, max);
-        	    }
-            		catch (RateLimitException e) {
-            		return new ArrayList<>();
-            	}
-        }
-        	
-        	
-    	/**
-         * This Method returns the list of movies 
-         * @param identifier holds the name of the movie
-         * @param max holds the max number of movies
-         * @return
-         */
-        	public static List<Movie> getAssociations(Movie identifier, int max){
-            	try {
-            		return movies(identifier, max);
-        	    }
-            		catch (RateLimitException e) {
-            		return new ArrayList<>();
-            	}
-        }
-	
-    /** List the user's followers as more FollowGraphNodes.
-        Limit the result to `max` followers. Note that results are batched, so
-        a large `max` (as high as 200) _may_ only count as one request.
-        See DataFormatters.followgraph() for more about rate limiting. 
-     * @throws IOException */
-    static List<Follower> followers(Follower id, int max)
-    		throws RateLimitException {
-    	if (failsafe) {
-    		// Don't contact Twitter, use sample data
-    		return SampleDataGenerator.getFriends(id.getName(), max);
-    	} else {
-	    	try {
-	    		//either timeline or followers
-		    	String resp = backend.get("/streams/twitter.com/followers/"
-		    			+ id.getName() + "/" + max);
-		    		//System.out.println("the resp: "+resp);
-		        JSONObject response = backend.asJSONObject(resp);
-		        JSONArray followers = (JSONArray) backend.safeJSONTraverse(
-		        		"['followers']", response, JSONArray.class);
-		        List<Follower> results = new ArrayList<>();
-		    	for (Object follower : followers) {
-		    		String name = (String) backend.safeJSONTraverse(
-		    				"", follower, String.class);
-		    		results.add(new Follower(name));
-		    	}
-		    	return results;
-	    	} catch (IOException e) {
-	    		// Trigger failsafe.
-	    		System.err.println("Warning: Trouble contacting DataFormatters. Using "
-	    				+ "sample data instead.\n"
-	    				+ e.getMessage());
-	    		failsafe = true;
-	    		return followers(id, max);
-	    	}
-    	}
-    }
-    
-    /**
-     * List the user's tweets in the current twitter account.
-     * Limit the result to `max` followers. Note that results are batched, so 
-     * a large `max` (as high as 500) _may_ only count as one request.
-     * See DataFormatters.followgraph() for more about rate limiting. 
-     * @throws MyExceptionClass 
-     * @throws IOException */
+	/**
+	 * 	Automatically choose whether to open a node identifier with:
+	 *  Twitter via followers(),
+	 *  TMDb with movies(), or
+	 *  RottenTomatoes with actors()
+	 *
+	 * @param identifier
+	 * @param max
+	 * @returns a list of identifiers
+	 * @throws QueryLimitException
+	 */
+
+	/**
+	 * This Method returns the list of followers
+	 * @param identifier holds the name of the
+	 * @param max holds the max number of followers
+	 * @return
+	 */
+	public static List<Follower> getAssociations(Follower identifier, int max) {
+		try {
+			return followers(identifier, max);
+		}
+		catch (RateLimitException e) {
+			return new ArrayList<>();
+		}
+	}
+
+
+
+	/**
+	 * This Method returns the list of tweets
+	 * @param identifier holds the name of the
+	 * @param max holds the max number of tweets
+	 * @return
+	 * @throws MyExceptionClass
+	 */
+	public static List<Tweet> getAssociations(TwitterAccount identifier, int max) {
+		try {
+			System.out.println("hello form getAssociations Data formatter");
+			return getTwitterTimeline(identifier, max);
+		}
+		catch (RateLimitException e) {
+			return new ArrayList<>();
+		}
+	}
+
+	/**
+	 * This Method returns the list of earthquakes
+	 * @param identifier holds the name of the
+	 * @param max holds the max number of earthquakes
+	 * @return
+	 * @throws MyExceptionClass
+	 */
+	public static List<EarthquakeUSGS> getAssociations(USGSaccount identifier, int max) {
+		try {
+			return getUSGSTimeline(identifier, max);
+		}
+		catch (RateLimitException e) {
+			return new ArrayList<>();
+		}
+	}
+
+	/**
+	 * This method change the tweet object into an earthquake tweet object with
+	 * more data extracted from the tweet content, like magnitude
+	 * @param aList
+	 * @return
+	 */
+	public static List<EarthquakeTweet> convertTweet(List<Tweet> aList) {
+		List<EarthquakeTweet> earthquakes = new ArrayList<>();
+		for (int i = 0; i < aList.size(); i++) {
+			Tweet aTweet = aList.get(i);
+			EarthquakeTweet anEarthquake = new EarthquakeTweet(aTweet);
+			earthquakes.add(anEarthquake);
+		}
+		return earthquakes;
+	}
+
+	/**
+	 * This Method returns the list of actors
+	 * @param identifier holds the name of the movie
+	 * @param max holds the max number of actors
+	 * @return
+	 */
+	public static List<Actor> getAssociations(Actor identifier, int max) {
+		try {
+			return actors(identifier, max);
+		}
+		catch (RateLimitException e) {
+			return new ArrayList<>();
+		}
+	}
+
+
+	/**
+	 * This Method returns the list of movies
+	 * @param identifier holds the name of the movie
+	 * @param max holds the max number of movies
+	 * @return
+	 */
+	public static List<Movie> getAssociations(Movie identifier, int max) {
+		try {
+			return movies(identifier, max);
+		}
+		catch (RateLimitException e) {
+			return new ArrayList<>();
+		}
+	}
+
+	/** List the user's followers as more FollowGraphNodes.
+	    Limit the result to `max` followers. Note that results are batched, so
+	    a large `max` (as high as 200) _may_ only count as one request.
+	    See DataFormatters.followgraph() for more about rate limiting.
+	 * @throws IOException */
+	static List<Follower> followers(Follower id, int max)
+	throws RateLimitException {
+		if (failsafe) {
+			// Don't contact Twitter, use sample data
+			return SampleDataGenerator.getFriends(id.getName(), max);
+		}
+		else {
+			try {
+				//either timeline or followers
+				String resp = backend.get("/streams/twitter.com/followers/"
+						+ id.getName() + "/" + max);
+				//System.out.println("the resp: "+resp);
+				JSONObject response = backend.asJSONObject(resp);
+				JSONArray followers = (JSONArray) backend.safeJSONTraverse(
+						"['followers']", response, JSONArray.class);
+				List<Follower> results = new ArrayList<>();
+				for (Object follower : followers) {
+					String name = (String) backend.safeJSONTraverse(
+							"", follower, String.class);
+					results.add(new Follower(name));
+				}
+				return results;
+			}
+			catch (IOException e) {
+				// Trigger failsafe.
+				System.err.println("Warning: Trouble contacting DataFormatters. Using "
+					+ "sample data instead.\n"
+					+ e.getMessage());
+				failsafe = true;
+				return followers(id, max);
+			}
+		}
+	}
+
+	/**
+	 * List the user's tweets in the current twitter account.
+	 * Limit the result to `max` followers. Note that results are batched, so
+	 * a large `max` (as high as 500) _may_ only count as one request.
+	 * See DataFormatters.followgraph() for more about rate limiting.
+	 * @throws MyExceptionClass
+	 * @throws IOException */
 	private static List<Tweet> getTwitterTimeline(TwitterAccount id, int max)
-			throws RateLimitException{
+	throws RateLimitException {
 		if (failsafe) {
 			// Don't contact Twitter, use sample data
 			return SampleDataGenerator.getTwitterTimeline(id.getName(), max);
-		} else {
-	    	try {
-			 if (allTweets.isEmpty()){
-				 	System.out.println("/streams/twitter.com/timeline/"
-			    			+ id.getName() + "/" + maxRequests);
-				 	String partial = "/streams/twitter.com/timeline/"
-			    			+ id.getName() + "/" + maxRequests;
-	    			String resp ="";
-	    			resp= backend.get(partial);
-			        JSONObject response = backend.asJSONObject(resp);
-			        JSONArray tweets_json = (JSONArray) backend.safeJSONTraverse(
-			        		"['tweets']", response, JSONArray.class);
-				    	for (Object tweet_json : tweets_json) {
-				    		String content = (String) backend.safeJSONTraverse(
-				    				"['tweet']", tweet_json, String.class);
-				    		String date_str = (String) backend.safeJSONTraverse(
-				    				"['date']", tweet_json, String.class);
-				    		
-				    		// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
-				    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-				    		Date date;
-				    		try {
-								date = df.parse(date_str);
-							} catch (ParseException e) {
-								date = new Date();
-							}
-				    		allTweets.add(new Tweet(content, date));
-				    	}
-			 }
-			
-			max = validNumberOfTweets(max);
-		    	List<Tweet> results = new ArrayList<>();
-		    //	results.addAll(allTweets);
-		    	return next(results, max);
-		    	
-	    	} catch (IOException e) {
-	    		// Trigger failsafe.
-	    		System.err.println("Warning: Trouble contacting DataFormatters. Using "
-	    				+ "sample data instead.\n"
-	    				+ e.getMessage());
-	    		failsafe = true;
-	    		return getTwitterTimeline(id, max);
-	    	}
+		}
+		else {
+			try {
+				if (allTweets.isEmpty()) {
+					System.out.println("/streams/twitter.com/timeline/"
+						+ id.getName() + "/" + maxRequests);
+					String partial = "/streams/twitter.com/timeline/"
+						+ id.getName() + "/" + maxRequests;
+					String resp = "";
+					resp = backend.get(partial);
+					JSONObject response = backend.asJSONObject(resp);
+					JSONArray tweets_json = (JSONArray) backend.safeJSONTraverse(
+							"['tweets']", response, JSONArray.class);
+					for (Object tweet_json : tweets_json) {
+						String content = (String) backend.safeJSONTraverse(
+								"['tweet']", tweet_json, String.class);
+						String date_str = (String) backend.safeJSONTraverse(
+								"['date']", tweet_json, String.class);
+
+						// TODO: When Java 8 is common enough, switch this to ZonedDateTime.parse()
+						DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+						Date date;
+						try {
+							date = df.parse(date_str);
+						}
+						catch (ParseException e) {
+							date = new Date();
+						}
+						allTweets.add(new Tweet(content, date));
+					}
+				}
+
+				max = validNumberOfTweets(max);
+				List<Tweet> results = new ArrayList<>();
+				//	results.addAll(allTweets);
+				return next(results, max);
+
+			}
+			catch (IOException e) {
+				// Trigger failsafe.
+				System.err.println("Warning: Trouble contacting DataFormatters. Using "
+					+ "sample data instead.\n"
+					+ e.getMessage());
+				failsafe = true;
+				return getTwitterTimeline(id, max);
+			}
 		}
 	}
-	
+
 	private static List<EarthquakeUSGS> getUSGSTimeline(USGSaccount id, int max)
-			throws RateLimitException{
-	    	try {
-			 if (allUSGS.isEmpty()){   				 	
-	    			String resp = backend.getUSGS("/latest/" + maxRequests);
-			        JSONObject response = backend.asJSONObject(resp);
+	throws RateLimitException {
+		try {
+			if (allUSGS.isEmpty()) {
+				String resp = backend.getUSGS("/latest/" + maxRequests);
+				JSONObject response = backend.asJSONObject(resp);
 
-			        JSONArray usgs_json = (JSONArray) backend.safeJSONTraverse(    //these are earthquakes
-			        		"['Earthquakes']", response, JSONArray.class);
-			        
-			        for (Object eq_json : usgs_json) {
+				JSONArray usgs_json = (JSONArray) backend.safeJSONTraverse(    //these are earthquakes
+						"['Earthquakes']", response, JSONArray.class);
 
-				        UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq				    		
-				        	//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				    		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-				    		
-				    		
-							Date date = new Date(Long.parseLong((deserializedEq.properties.time)));
-							//formated_date = df.format(date);
-							
-				    		allUSGS.add(new EarthquakeUSGS(deserializedEq.properties.mag, 
-				    										date,
-				    										Double.parseDouble(deserializedEq.properties.mag),
-				    										Float.parseFloat(deserializedEq.geometry.coordinates.longitude),
-				    										Float.parseFloat(deserializedEq.geometry.coordinates.latitude),
-				    										deserializedEq.properties.place, 
-				    										deserializedEq.properties.title,
-				    										deserializedEq.properties.url,
-				    										deserializedEq.properties.toString()));
-				    	}
-			 
-//			System.out.println("allUSGS: " + allUSGS.get(0));
-			max = validNumberOfTweets(max);
-		    	List<EarthquakeUSGS> results = new ArrayList<>();
-		    //	results.addAll(allTweets);
-		    	return next(results, max, id);
-		    	
-	    	}
-			 } catch (IOException e) {
-	    		// Trigger failsafe.
-	    		System.err.println("Warning: Trouble contacting DataFormatters. Using "
-	    				+ "sample data instead.\n"
-	    				+ e.getMessage());
-	    		failsafe = true;
-	    		return getUSGSTimeline(id, max);
-	    	}
+				for (Object eq_json : usgs_json) {
+
+					UsgsFoo deserializedEq = new Gson().fromJson(eq_json.toString(), UsgsFoo.class);//deserializing Eq
+					//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					//DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+
+					Date date = new Date(Long.parseLong((deserializedEq.properties.time)));
+					//formated_date = df.format(date);
+
+					allUSGS.add(new EarthquakeUSGS(deserializedEq.properties.mag,
+							date,
+							Double.parseDouble(deserializedEq.properties.mag),
+							Float.parseFloat(deserializedEq.geometry.coordinates.longitude),
+							Float.parseFloat(deserializedEq.geometry.coordinates.latitude),
+							deserializedEq.properties.place,
+							deserializedEq.properties.title,
+							deserializedEq.properties.url,
+							deserializedEq.properties.toString()));
+				}
+
+				//			System.out.println("allUSGS: " + allUSGS.get(0));
+				max = validNumberOfTweets(max);
+				List<EarthquakeUSGS> results = new ArrayList<>();
+				//	results.addAll(allTweets);
+				return next(results, max, id);
+
+			}
+		}
+		catch (IOException e) {
+			// Trigger failsafe.
+			System.err.println("Warning: Trouble contacting DataFormatters. Using "
+				+ "sample data instead.\n"
+				+ e.getMessage());
+			failsafe = true;
+			return getUSGSTimeline(id, max);
+		}
 		return allUSGS;
 	}
-	
-	
+
+
 	/**
 	 * The next(List<Tweet>, int) method retrieves the next batch of tweets
-	 * and adds deep copy of those tweets to the current list 
+	 * and adds deep copy of those tweets to the current list
 	 * @param aList holds the reference to the current list of tweets
 	 * @param max the number of tweets in the new batch of tweets
 	 * @return the list of tweets containing the old and the new batch of tweets
-	 * @throws MyExceptionClass 
+	 * @throws MyExceptionClass
 	 */
-	public static List<Tweet> next(List<Tweet> aList, int max){
+	public static List<Tweet> next(List<Tweet> aList, int max) {
 		max = validNumberOfTweets(max);
-		for (int i = 0; i < max; i++){
+		for (int i = 0; i < max; i++) {
 			tweetIterator ++;
-			try{
+			try {
 				//aList.add(allTweets.get(tweetIterator));
 				aList.add(new Tweet(allTweets.get(tweetIterator)));
-				} catch(Exception e){
-					System.out.println(e.getMessage());
-				}	
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
 		return aList;
 	}
-	
+
 	/**
 	 * The next(List<EarthquakeUSGS>, int) method retrieves the next batch of eq
-	 * and adds deep copy of those eq to the current list 
+	 * and adds deep copy of those eq to the current list
 	 * @param aList holds the reference to the current list of eq
 	 * @param max the number of eq in the new batch of eq
 	 * @return the list of eq containing the old and the new batch of tweets
-	 * @throws MyExceptionClass 
+	 * @throws MyExceptionClass
 	 */
-	public static List<EarthquakeUSGS> next(List<EarthquakeUSGS> aList, int max, USGSaccount acu){
+	public static List<EarthquakeUSGS> next(List<EarthquakeUSGS> aList, int max, USGSaccount acu) {
 		max = validNumberOfTweets(max);//same validator as for the tweets
-		for (int i = 0; i < max; i++){
+		for (int i = 0; i < max; i++) {
 			tweetIterator ++; //same iterator as for the tweets
-			try{
+			try {
 				//aList.add(allTweets.get(tweetIterator));
 				aList.add(new EarthquakeUSGS(allUSGS.get(tweetIterator)));
-				} catch(Exception e){
-					System.out.println(e.getMessage());
-				}	
+			}
+			catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 		}
 		return aList;
 	}
@@ -446,116 +454,122 @@ public class DataFormatter {
 	 * @return returns true if the number is in the range 0 - 500
 	 * @throws MyExceptionClass otherwise
 	 */
-	public static int validNumberOfTweets(int max){
-		 //check if max is valid
-		 try{
-			 if (max<0 || (max+tweetIterator)>500){
-		 
-				 max = 500 - tweetIterator;
-			 	throw new DataFormatterException("The number of tweets requested must be in the range 0 - 500");
-			 }
-		 } catch (DataFormatterException ex){
-			 System.out.println (ex.getError());
-		 }
-		 return max;	
+	public static int validNumberOfTweets(int max) {
+		//check if max is valid
+		try {
+			if (max < 0 || (max + tweetIterator) > 500) {
+
+				max = 500 - tweetIterator;
+				throw new DataFormatterException("The number of tweets requested must be in the range 0 - 500");
+			}
+		}
+		catch (DataFormatterException ex) {
+			System.out.println (ex.getError());
+		}
+		return max;
 	}
-    
-    /**
-     * Return a list of movies an actor played in.
-     * 
-     * The data comes courtesy of RottenTomatoes.
-     * 
-     * The quota for this resource is about 10k actors/day but is shared by all
-     * students. So if you consume all 10k, it will be a bad day. Please make
-     * sure you limit your queries appropriately.
-     * 
-     */
-    static List<Movie> movies(Movie id, int max)
-    		throws RateLimitException {
 
-    	if (failsafe) {
-    		// Don't contact DataFormatters, use sample data
-    		return SampleDataGenerator.getMovies(id.getName(), max);
-    	} else {
-	    	try {
-		    	String resp = backend.get("/streams/actors/" + id.getName());
-		    	JSONArray movies = backend.asJSONArray(resp);
-		    	
-		        // Get (in JS) movies_json.map(function(m) { return m.title; })
-		        List<Movie> results = new ArrayList<>();
-		        for (Object movie : movies) {
-		        	String title = (String) backend.safeJSONTraverse("['title']",
-		        			movie, String.class);
-		        	results.add(new Movie(title));
-		        }
-		        return results;
-	    	} catch (IOException e) {
-	    		// Trigger failsafe.
-	    		System.err.println("Warning: Trouble contacting DataFormatters. Using "
-	    				+ "sample data instead.\n"
-	    				+ e.getMessage());
-	    		failsafe = true;
-	    		return movies(id, max);
-	    	}
-    	}
-    }
-    
-    /**
-     * Return the actors that played in a movie.
-     * 
-     * The data comes courtesy of TMDb.
-     * 
-     * This resource has unlimited queries but has caveats. Not every extra
-     * that played in every movie ever is listed in the database and some
-     * movies are documented rather sparsely. Expect some to be missing.
-     * @throws IOException 
-     * @throws RateLimitException 
-     */
-    static List<Actor> actors(Actor id, int max)
-    		throws RateLimitException {
+	/**
+	 * Return a list of movies an actor played in.
+	 *
+	 * The data comes courtesy of RottenTomatoes.
+	 *
+	 * The quota for this resource is about 10k actors/day but is shared by all
+	 * students. So if you consume all 10k, it will be a bad day. Please make
+	 * sure you limit your queries appropriately.
+	 *
+	 */
+	static List<Movie> movies(Movie id, int max)
+	throws RateLimitException {
 
-    	if (failsafe) {
-    		// Don't contact DataFormatters, use sample data
-    		return SampleDataGenerator.getCast(id.getName(), max);
-    	} else {
-	    	try {
-		    	String resp = backend.get("/streams/rottentomatoes.com/" + id.getName());
-		    	JSONArray movies = backend.asJSONArray(resp);
-		    	
-		        // We will assume that the first movie is the right one
-		    	JSONArray abridged_cast = (JSONArray) backend.safeJSONTraverse(
-		    			"[0]['abridged_cast']", movies, JSONArray.class);
-		    	List<Actor> results = new ArrayList<>();
-		    	for (Object cast_member : abridged_cast) {
-		    		if (results.size() == max)
-		    			break;
-		    		String name = (String) backend.safeJSONTraverse("['name']",
-		    				cast_member, String.class);
+		if (failsafe) {
+			// Don't contact DataFormatters, use sample data
+			return SampleDataGenerator.getMovies(id.getName(), max);
+		}
+		else {
+			try {
+				String resp = backend.get("/streams/actors/" + id.getName());
+				JSONArray movies = backend.asJSONArray(resp);
+
+				// Get (in JS) movies_json.map(function(m) { return m.title; })
+				List<Movie> results = new ArrayList<>();
+				for (Object movie : movies) {
+					String title = (String) backend.safeJSONTraverse("['title']",
+							movie, String.class);
+					results.add(new Movie(title));
+				}
+				return results;
+			}
+			catch (IOException e) {
+				// Trigger failsafe.
+				System.err.println("Warning: Trouble contacting DataFormatters. Using "
+					+ "sample data instead.\n"
+					+ e.getMessage());
+				failsafe = true;
+				return movies(id, max);
+			}
+		}
+	}
+
+	/**
+	 * Return the actors that played in a movie.
+	 *
+	 * The data comes courtesy of TMDb.
+	 *
+	 * This resource has unlimited queries but has caveats. Not every extra
+	 * that played in every movie ever is listed in the database and some
+	 * movies are documented rather sparsely. Expect some to be missing.
+	 * @throws IOException
+	 * @throws RateLimitException
+	 */
+	static List<Actor> actors(Actor id, int max)
+	throws RateLimitException {
+
+		if (failsafe) {
+			// Don't contact DataFormatters, use sample data
+			return SampleDataGenerator.getCast(id.getName(), max);
+		}
+		else {
+			try {
+				String resp = backend.get("/streams/rottentomatoes.com/" + id.getName());
+				JSONArray movies = backend.asJSONArray(resp);
+
+				// We will assume that the first movie is the right one
+				JSONArray abridged_cast = (JSONArray) backend.safeJSONTraverse(
+						"[0]['abridged_cast']", movies, JSONArray.class);
+				List<Actor> results = new ArrayList<>();
+				for (Object cast_member : abridged_cast) {
+					if (results.size() == max)
+						break;
+					String name = (String) backend.safeJSONTraverse("['name']",
+							cast_member, String.class);
 					results.add(new Actor(name));
-		    	}
-		    	return results;
-	    	} catch (IOException e) {
-	    		// Trigger failsafe.
-	    		System.err.println("Warning: Trouble contacting Bridges. Using "
-	    				+ "sample data instead.\n"
-	    				+ e.getMessage());
-	    		failsafe = true;
-	    		return actors(id, max);
-	    	}
-    	}
-    }
-    
-    /**
-     * Generate a sample Edge weight for two nodes
-     * @param source
-     * @param target
-     * @return
-     */
-    public static double getEdgeWeight(String source, String target) {
-    	int h = source.hashCode() + target.hashCode();
-    	if (h < 0) h = -h;
-    	return h % 10;
-    }
+				}
+				return results;
+			}
+			catch (IOException e) {
+				// Trigger failsafe.
+				System.err.println("Warning: Trouble contacting Bridges. Using "
+					+ "sample data instead.\n"
+					+ e.getMessage());
+				failsafe = true;
+				return actors(id, max);
+			}
+		}
+	}
+
+	/**
+	 * Generate a sample Edge weight for two nodes
+	 * @param source
+	 * @param target
+	 * @return
+	 */
+	public static double getEdgeWeight(String source, String target) {
+		int h = source.hashCode() + target.hashCode();
+		if (h < 0)
+			h = -h;
+		return h % 10;
+	}
 
 	/**
 	 * @return the backend
@@ -572,21 +586,21 @@ public class DataFormatter {
 	}
 
 	/**
-     *  Get USGS earthquake data
-     *  USGS Tweet data (https://earthquake.usgs.gov/earthquakes/map/)
-     *  retrieved, formatted into a list of EarthquakeUSGS objects
-     *
-     *  @param name   USGS account name - must be "earthquake" to create account
-     *  @param maxElements  the number of earthquake records retrieved, limited to 5000
-     *  @throws Exception if the request fails
-     *
-     *  @return a list of earthquake records
-     */
+	 *  Get USGS earthquake data
+	 *  USGS Tweet data (https://earthquake.usgs.gov/earthquakes/map/)
+	 *  retrieved, formatted into a list of EarthquakeUSGS objects
+	 *
+	 *  @param name   USGS account name - must be "earthquake" to create account
+	 *  @param maxElements  the number of earthquake records retrieved, limited to 5000
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of earthquake records
+	 */
 
 	public static ArrayList<EarthquakeUSGS> getEarthquakeUSGSData(
-					int maxElem) throws Exception {
+		int maxElem) throws Exception {
 
-		String url = "http://earthquakes-uncc.herokuapp.com/eq/latest/"+maxElem;
+		String url = "http://earthquakes-uncc.herokuapp.com/eq/latest/" + maxElem;
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
 		HttpResponse response = client.execute(request);
@@ -597,14 +611,14 @@ public class DataFormatter {
 			String result = EntityUtils.toString(response.getEntity());
 			JSONObject full = (JSONObject)JSONValue.parse(result);
 			JSONArray json = (JSONArray)full.get("Earthquakes");
-         
-			ArrayList<EarthquakeUSGS> eq_list = 
-					new ArrayList<EarthquakeUSGS>(json.size());
-			for (int i=0; i<json.size(); i++) {
+
+			ArrayList<EarthquakeUSGS> eq_list =
+				new ArrayList<EarthquakeUSGS>(json.size());
+			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 				JSONObject props = (JSONObject)item.get("properties");
 				JSONArray coords = (JSONArray)
-						((JSONObject)item.get("geometry")).get("coordinates");
+					((JSONObject)item.get("geometry")).get("coordinates");
 
 				EarthquakeUSGS eq = new EarthquakeUSGS();
 
@@ -620,7 +634,7 @@ public class DataFormatter {
 			return eq_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: "+status);
+			throw new Exception("HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
@@ -638,11 +652,12 @@ public class DataFormatter {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb";
 
-    if(maxElem > 0) {
-      url += "?limit=" + maxElem;
-    } else {
-      throw new IllegalArgumentException("Must provide a valid number of Actor/Movie pairs to return.");
-    }
+		if (maxElem > 0) {
+			url += "?limit=" + maxElem;
+		}
+		else {
+			throw new IllegalArgumentException("Must provide a valid number of Actor/Movie pairs to return.");
+		}
 
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
@@ -654,9 +669,9 @@ public class DataFormatter {
 			String result = EntityUtils.toString(response.getEntity());
 			JSONObject full = (JSONObject)JSONValue.parse(result);
 			JSONArray json = (JSONArray)full.get("data");
-         
-			ArrayList<ActorMovieIMDB> am_list = 
-					new ArrayList<ActorMovieIMDB>(json.size());
+
+			ArrayList<ActorMovieIMDB> am_list =
+				new ArrayList<ActorMovieIMDB>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
@@ -669,7 +684,7 @@ public class DataFormatter {
 			return am_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: "+status);
+			throw new Exception("HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
@@ -679,12 +694,12 @@ public class DataFormatter {
 	 *
 	 *  @throws Exception if the request fails
 	 *
-	 *  @return a list of ActorMovieIMDB objects, consisting of  actor name,  
-	 *		movie name, movie genre and movie rating is returned. 
+	 *  @return a list of ActorMovieIMDB objects, consisting of  actor name,
+	 *		movie name, movie genre and movie rating is returned.
 	 *
 	 */
-	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData2 () 
-									throws Exception {
+	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData2 ()
+	throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb2";
 		DefaultHttpClient client = new DefaultHttpClient();
@@ -697,9 +712,9 @@ public class DataFormatter {
 			String result = EntityUtils.toString(response.getEntity());
 			JSONObject full = (JSONObject)JSONValue.parse(result);
 			JSONArray json = (JSONArray)full.get("data");
-         
-			ArrayList<ActorMovieIMDB> am_list = 
-					new ArrayList<ActorMovieIMDB>(json.size());
+
+			ArrayList<ActorMovieIMDB> am_list =
+				new ArrayList<ActorMovieIMDB>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
@@ -719,23 +734,23 @@ public class DataFormatter {
 			return am_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: "+status);
+			throw new Exception("HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
 	/**
 	 *
 	 *  Get meta data of the Gutenberg book collection (1000 books)
-	 *  This function retrieves,  and formats the data into a list of 
+	 *  This function retrieves,  and formats the data into a list of
 	 *	GutenbergBook objects
 	 *
 	 *  @throws Exception if the request fails
 	 *
-	 *  @return a list of GutenbergBook objects, 
+	 *  @return a list of GutenbergBook objects,
 	 *
 	 */
-	public static ArrayList<GutenbergBook> getGutenbergBookMetaData () 
-									throws Exception {
+	public static ArrayList<GutenbergBook> getGutenbergBookMetaData ()
+	throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/books";
 		DefaultHttpClient client = new DefaultHttpClient();
@@ -749,8 +764,8 @@ public class DataFormatter {
 			JSONObject full = (JSONObject)JSONValue.parse(result);
 			JSONArray json = (JSONArray)full.get("data");
 
-			ArrayList<GutenbergBook> gb_list = 
-					new ArrayList<GutenbergBook>(json.size());
+			ArrayList<GutenbergBook> gb_list =
+				new ArrayList<GutenbergBook>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 				JSONObject author = (JSONObject)item.get("author");
@@ -770,7 +785,7 @@ public class DataFormatter {
 				gb.setNumDownloads(((Number) item.get("downloads")).intValue());
 				for (int k = 0; k < lang.size(); k++) {
 					gb_tmp.add((String)lang.get(k));
-}
+				}
 				gb.setLanguages(gb_tmp);
 				gb_tmp.clear();
 
@@ -786,25 +801,25 @@ public class DataFormatter {
 					gb_tmp.add((String)subjects.get(k));
 				gb.setSubjects(gb_tmp);
 				gb_tmp.clear();
-				
+
 				gb_list.add(gb);
 			}
 			return gb_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: "+status);
+			throw new Exception("HTTP Request Failed. Error Code: " + status);
 		}
 	}
 	/**
 	 *
 	 *  Get meta data of the IGN games collection.
 	 *
-	 *  This function retrieves  and formats the data into a list of 
+	 *  This function retrieves  and formats the data into a list of
 	 *	Game objects
 	 *
 	 *  @throws Exception if the request fails
 	 *
-	 *  @return a list of Game objects, 
+	 *  @return a list of Game objects,
 	 *
 	 */
 	public static ArrayList<Game> getGameData() throws Exception {
@@ -820,9 +835,9 @@ public class DataFormatter {
 			String result = EntityUtils.toString(response.getEntity());
 			JSONObject full = (JSONObject)JSONValue.parse(result);
 			JSONArray json = (JSONArray)full.get("data");
-         
-			ArrayList<Game> game_list = 
-					new ArrayList<Game>(json.size());
+
+			ArrayList<Game> game_list =
+				new ArrayList<Game>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
@@ -844,7 +859,7 @@ public class DataFormatter {
 			return game_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: "+status);
+			throw new Exception("HTTP Request Failed. Error Code: " + status);
 		}
 	}
 	/**
@@ -852,13 +867,13 @@ public class DataFormatter {
 	 *  Get data of the songs (including lyrics) using the Genius API
 	 *	https://docs.genius.com/
 	 *
-	 *  This function retrieves  and formats the data into a list of 
+	 *  This function retrieves  and formats the data into a list of
 	 *	Song objects. This version of the API retrieves all the cached
 	 *	songs in the local DB.
 	 *
 	 *  @throws Exception if the request fails
 	 *
-	 *  @return a list of Song objects, 
+	 *  @return a list of Song objects,
 	 *
 	 */
 	public static ArrayList<Song> getSongData() throws Exception {
@@ -876,7 +891,7 @@ public class DataFormatter {
 			JSONArray json = (JSONArray)full.get("data");
 
 			ArrayList<Song> song_list =
-					new ArrayList<Song>(json.size());
+				new ArrayList<Song>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
@@ -884,8 +899,8 @@ public class DataFormatter {
 
 				song.setArtist((String) item.get("artist"));
 				song.setSongTitle((String) item.get("song"));
-        song.setAlbumTitle((String) item.get("album"));
-        song.setLyrics((String) item.get("lyrics"));
+				song.setAlbumTitle((String) item.get("album"));
+				song.setLyrics((String) item.get("lyrics"));
 				song.setReleaseDate(((String) item.get("release_date")));
 
 				song_list.add(song);
@@ -894,7 +909,7 @@ public class DataFormatter {
 			return song_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: "+status);
+			throw new Exception("HTTP Request Failed. Error Code: " + status);
 		}
 	}
 	/**
@@ -902,30 +917,31 @@ public class DataFormatter {
 	 *  Get data of a particular songs (including lyrics) using the Genius API
 	 *	(https://docs.genius.com/), given the song title and artist name.
 	 *
-	 *  This function retrieves  and formats the data into a 
+	 *  This function retrieves  and formats the data into a
 	 *	Song object. The song if not cached in the local DB is queried
 	 *	and added to the DB
 	 *
 	 *  @throws Exception if the request fails
 	 *
-	 *  @return a Song object, 
+	 *  @return a Song object,
 	 *
 	 */
-  public static Song getSong(String songTitle, String artistName) throws Exception {
-    String url = "https://bridgesdata.herokuapp.com/api/songs/find/";
+	public static Song getSong(String songTitle, String artistName) throws Exception {
+		String url = "https://bridgesdata.herokuapp.com/api/songs/find/";
 
-    // add the song title to the query url
-    if(songTitle.length() > 0) {
-        url += songTitle;
-    } else {
-      throw new Exception("Must provide a valid song title.");
-    }
-    // add the artist name as a query variable where appropriate
-    if(artistName.length() > 0) {
-        url += "?artistName=" + artistName;
-    }
+		// add the song title to the query url
+		if (songTitle.length() > 0) {
+			url += songTitle;
+		}
+		else {
+			throw new Exception("Must provide a valid song title.");
+		}
+		// add the artist name as a query variable where appropriate
+		if (artistName.length() > 0) {
+			url += "?artistName=" + artistName;
+		}
 
-	// Create and execute the HTTP request
+		// Create and execute the HTTP request
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(UrlEscapers.urlFragmentEscaper().escape(url));
 		HttpResponse response = client.execute(request);
@@ -940,14 +956,14 @@ public class DataFormatter {
 			Song song = new Song();
 			song.setArtist((String) songJSON.get("artist"));
 			song.setSongTitle((String) songJSON.get("song"));
-		  song.setAlbumTitle((String) songJSON.get("album"));
-		  song.setLyrics((String) songJSON.get("lyrics"));
+			song.setAlbumTitle((String) songJSON.get("album"));
+			song.setLyrics((String) songJSON.get("lyrics"));
 			song.setReleaseDate(((String) songJSON.get("release_date")));
 
 			return song;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: "+status+". Message: " + result);
+			throw new Exception("HTTP Request Failed. Error Code: " + status + ". Message: " + result);
 		}
 	}
 
@@ -955,8 +971,8 @@ public class DataFormatter {
 	 *
 	 *  Get data of Shakespeare works (plays, poems)
 	 *
-	 *  This function retrieves  and formats the data into a 
-	 *	a list of Shakespeare objects. 
+	 *  This function retrieves  and formats the data into a
+	 *	a list of Shakespeare objects.
 	 *
 	 *  @throws Exception if the request fails
 	 *
@@ -969,11 +985,11 @@ public class DataFormatter {
 	public static ArrayList<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
 		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";
 
-		if(works == "plays" || works == "poems") {
+		if (works == "plays" || works == "poems") {
 			url += "/" + works;
 		}
 
-		if(textOnly) {
+		if (textOnly) {
 			url += "?format=simple";
 		}
 
@@ -987,9 +1003,9 @@ public class DataFormatter {
 			String result = EntityUtils.toString(response.getEntity());
 			JSONObject full = (JSONObject)JSONValue.parse(result);
 			JSONArray json = (JSONArray)full.get("data");
-         
-			ArrayList<Shakespeare> shksp_list = 
-					new ArrayList<Shakespeare>(json.size());
+
+			ArrayList<Shakespeare> shksp_list =
+				new ArrayList<Shakespeare>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
@@ -1003,12 +1019,12 @@ public class DataFormatter {
 			return shksp_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: "+status);
+			throw new Exception("HTTP Request Failed. Error Code: " + status);
 		}
 	}
-	
+
 	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws Exception {
-	
+
 		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations?limit=10";
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
@@ -1020,44 +1036,44 @@ public class DataFormatter {
 			String result = EntityUtils.toString(response.getEntity());
 			JSONObject j_obj = (JSONObject)JSONValue.parse(result);
 			JSONArray json = (JSONArray) j_obj.get("data");
-         
-			ArrayList<CancerIncidence> canc_objs = 
-					new ArrayList<CancerIncidence>(json.size());
+
+			ArrayList<CancerIncidence> canc_objs =
+				new ArrayList<CancerIncidence>(json.size());
 			for (int i = 0; i < 10; i++) {
 				JSONObject item = (JSONObject) json.get(i);
 
 				CancerIncidence c = new CancerIncidence();
 
 				JSONObject age = (JSONObject) item.get("Age");
-					c.setAgeAdjustedRate(((Number) 
-							age.get("Age Adjusted Rate")).doubleValue());
-					c.setAgeAdjustedCI_Lower(((Number) 
-							age.get("Age Adjusted CI Lower")).doubleValue());
-					c.setAgeAdjustedCI_Upper(((Number) 
-							age.get("Age Adjusted CI Upper")).doubleValue());
-					
+				c.setAgeAdjustedRate(((Number)
+						age.get("Age Adjusted Rate")).doubleValue());
+				c.setAgeAdjustedCI_Lower(((Number)
+						age.get("Age Adjusted CI Lower")).doubleValue());
+				c.setAgeAdjustedCI_Upper(((Number)
+						age.get("Age Adjusted CI Upper")).doubleValue());
+
 				JSONObject data = (JSONObject) item.get("Data");
-					c.setCrudeRate(((Number) data.get("Crude Rate")).doubleValue());
-					c.setCrudeRate_CI_Lower(
-						((Number) data.get("Crude CI Lower")).doubleValue());
-					c.setCrudeRate_CI_Upper(
-						((Number) data.get("Crude CI Upper")).doubleValue());
-					c.setRace((String) data.get("Race"));
-					c.setGender((String) data.get("Sex"));
-					c.setYear(((Number) item.get("Year")).intValue());
-					c.setEventType((String) data.get("Event Type"));
-					c.setPopulation(((Number) data.get("Population")).intValue());
-					c.setAffectedArea((String) item.get("Area"));
+				c.setCrudeRate(((Number) data.get("Crude Rate")).doubleValue());
+				c.setCrudeRate_CI_Lower(
+					((Number) data.get("Crude CI Lower")).doubleValue());
+				c.setCrudeRate_CI_Upper(
+					((Number) data.get("Crude CI Upper")).doubleValue());
+				c.setRace((String) data.get("Race"));
+				c.setGender((String) data.get("Sex"));
+				c.setYear(((Number) item.get("Year")).intValue());
+				c.setEventType((String) data.get("Event Type"));
+				c.setPopulation(((Number) data.get("Population")).intValue());
+				c.setAffectedArea((String) item.get("Area"));
 				JSONArray loc = (JSONArray) item.get("loc");
-					c.setLocationX (((Number) loc.get(0)).doubleValue());
-					c.setLocationY (((Number) loc.get(1)).doubleValue());
-				
+				c.setLocationX (((Number) loc.get(0)).doubleValue());
+				c.setLocationY (((Number) loc.get(1)).doubleValue());
+
 				canc_objs.add(c);
 			}
 			return canc_objs;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: "+status);
+			throw new Exception("HTTP Request Failed. Error Code: " + status);
 		}
 	}
 

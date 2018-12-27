@@ -4,8 +4,8 @@ package bridges.data_src_dependent;
  * @author mihai mehedint
  *
  */
-abstract interface Source extends Comparable<DataSource>{
-	
+abstract interface Source extends Comparable<DataSource> {
+
 	abstract void setLabel(String label);
 
 	abstract String getLabel();
@@ -13,7 +13,7 @@ abstract interface Source extends Comparable<DataSource>{
 	abstract boolean equals(Object obj);
 
 	abstract String toString();
-	
+
 	abstract int compareTo(DataSource src);
 
 }

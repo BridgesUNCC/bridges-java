@@ -1,29 +1,29 @@
 package bridges.data_src_dependent;
 
-public class Movie extends DataSource{
-	
-	public Movie(String aMovie){
+public class Movie extends DataSource {
+
+	public Movie(String aMovie) {
 		super.setLabel(aMovie);
 	}
-	
+
 	/**
 	 * This method returns the string name
 	 */
-	public String getName(){
+	public String getName() {
 		return super.getLabel();
 	}
-	
+
 	/**
 	 * This method sets the string name
 	 */
-	public void setName(String name){
+	public void setName(String name) {
 		this.setLabel(name);
 	}
-	
+
 	/**
 	 * This method returns the string value
 	 */
-	public String toString(){
+	public String toString() {
 		return this.getName();
 	}
 
@@ -41,10 +41,11 @@ public class Movie extends DataSource{
 		if (getClass() != obj.getClass())
 			return false;
 		Movie other = (Movie) obj;
-		if (this.getName()== null) {
+		if (this.getName() == null) {
 			if (other.getName() != null)
 				return false;
-		} else if (!this.getName().equals(other.getName()))
+		}
+		else if (!this.getName().equals(other.getName()))
 			return false;
 		return true;
 	}

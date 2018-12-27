@@ -7,25 +7,25 @@ import java.util.Scanner;
 import bridges.connect.DataFormatter;
 
 /**
- * 
+ *
  * @author mihai mehedint
  *
  */
-public class EarthquakeTweet extends Tweet{
+public class EarthquakeTweet extends Tweet {
 	private double magnitude;
-	
+
 	public EarthquakeTweet(String content, Date date2) {
 		super(content, date2);
 		setMagnitude();
 		//this.setContent(enterCarriageReturn(content));
-		
+
 	}
-	public EarthquakeTweet(Tweet aTweet){
+	public EarthquakeTweet(Tweet aTweet) {
 		this(aTweet.getContent(), aTweet.getDate());
 		this.setContent(enterCarriageReturn(aTweet.getContent()));
 	}
-	
-	public void setMagnitude(){
+
+	public void setMagnitude() {
 		Scanner scan = new Scanner(this.getContent());
 		scan.next();
 		scan.next();
@@ -33,17 +33,17 @@ public class EarthquakeTweet extends Tweet{
 		str.append(scan.next());
 		DataFormatter.trimComma(str);
 		magnitude = Double.parseDouble(str.toString());
-		
+
 	}
-	
-	public void setMagnitude(double mag){
+
+	public void setMagnitude(double mag) {
 		this.magnitude = mag;
 	}
-	public String enterCarriageReturn(String str){
+	public String enterCarriageReturn(String str) {
 		return str = str.replace(" ", "\\n");
 	}
-	
-	public double getMagnitude(){
+
+	public double getMagnitude() {
 		return magnitude;
 	}
 	/* (non-Javadoc)
@@ -51,17 +51,18 @@ public class EarthquakeTweet extends Tweet{
 	 */
 	@Override
 	public int compareTo(DataSource o) {
-		if (o!=null)
+		if (o != null)
 			return ((Double)this.getMagnitude()).compareTo(((Double)((EarthquakeTweet)o).getMagnitude()));
-		else{
+		else {
 			try {
 				throw new ClassCastException("Expected an instance of DataSource or of its subclasses Actor, Movie, Tweet, etc. for the compareTo method.");
-			} catch (ClassCastException e) {
+			}
+			catch (ClassCastException e) {
 				e.printStackTrace();
 			}
 			return -1;
 		}
 	}
-	
-	
+
+
 }

@@ -1,7 +1,7 @@
 package bridges.data_src_dependent;
 
-public class Twitter extends DataSource{
-	
+public class Twitter extends DataSource {
+
 	/**
 	 * Constructor
 	 */

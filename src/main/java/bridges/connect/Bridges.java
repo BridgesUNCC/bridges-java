@@ -129,7 +129,7 @@ public class Bridges {
 		Bridges.userName = username;
 
 		if (debug_flag) {
-			System.err.println ("Bridges.init: assignment="+Bridges.assignment+" username="+Bridges.userName+" apikey="+Bridges.key);
+			System.err.println ("Bridges.init: assignment=" + Bridges.assignment + " username=" + Bridges.userName + " apikey=" + Bridges.key);
 		}
 	}
 
@@ -204,13 +204,13 @@ public class Bridges {
 	 * @param mode	One of: ['slide', 'stack'].
 	 */
 	public void setDisplayMode(String mode) throws IllegalArgumentException {
-		switch(mode) {
-				case "stack":
-				case "slide":
-					display_mode = mode;
-					break;
-				default:
-					throw new IllegalArgumentException("Invalid display mode '" + mode + "'. Please use one of the following options: ['slide', 'stack'].");
+		switch (mode) {
+			case "stack":
+			case "slide":
+				display_mode = mode;
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid display mode '" + mode + "'. Please use one of the following options: ['slide', 'stack'].");
 		}
 	}
 
@@ -281,7 +281,7 @@ public class Bridges {
 	 *  @return a list of ActorMovieIMDB objects, but only actor,  movie, movie genre
 	 *			and movie rating are returned.
 	 */
- 	public static List<ActorMovieIMDB> getActorMovieIMDBData() throws Exception {
+	public static List<ActorMovieIMDB> getActorMovieIMDBData() throws Exception {
 		return DataFormatter.getActorMovieIMDBData(Integer.MAX_VALUE);
 	}
 	public static List<ActorMovieIMDB> getActorMovieIMDBData(int maxElements) throws Exception {
@@ -540,7 +540,7 @@ public class Bridges {
 		}
 
 		// print the response
-		if(response.length() > 0) {
+		if (response.length() > 0) {
 			System.out.println(response);
 		}
 	}
@@ -642,7 +642,7 @@ public class Bridges {
 		}
 
 		// Only print a url and increment assignment part when a successful upload has completed
-		if(response.length() > 0) {
+		if (response.length() > 0) {
 			// Return a URL to the user
 			System.out.println("\nCheck Your Visualization at the following link:\n\n" +
 				connector.getServerURL() + "/assignments/" + assignment + "/"

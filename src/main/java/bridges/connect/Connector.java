@@ -52,20 +52,20 @@ public class Connector {
 	 */
 	public void setServer(String server) throws IllegalArgumentException {
 		if (Bridges.getDebugFlag()) {
-			System.err.println("Connector.setServer("+server+")");
+			System.err.println("Connector.setServer(" + server + ")");
 		}
-		switch(server) {
-				case "live":
-					setServerURL(server_live);
-					break;
-				case "clone":
-					setServerURL(server_clone);
-					break;
-				case "local":
-					setServerURL(server_local);
-					break;
-				default:
-					throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'local'].");
+		switch (server) {
+			case "live":
+				setServerURL(server_live);
+				break;
+			case "clone":
+				setServerURL(server_clone);
+				break;
+			case "local":
+				setServerURL(server_local);
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'local'].");
 		}
 	}
 
@@ -534,8 +534,8 @@ public class Connector {
 	throws IOException, RateLimitException {
 		//System.out.println("From Connector.post1()..\n");
 		if (Bridges.getDebugFlag()) {
-			System.err.println("Connector.post-StringMap("+url+", "+arguments.toString()+")");
-			System.err.println("prepare(url)="+prepare(url));
+			System.err.println("Connector.post-StringMap(" + url + ", " + arguments.toString() + ")");
+			System.err.println("prepare(url)=" + prepare(url));
 		}
 		Request req = Request.Post(prepare(url));
 		Form form = Form.form();
@@ -547,20 +547,20 @@ public class Connector {
 
 	public String post(String url, String data) throws IOException,
 		RateLimitException {
-        if (Bridges.getDebugFlag()) {
-            System.err.println("Connector.post-StringString("+url+", "+data+")");
-            System.err.println("prepare(url)="+prepare(url));
-        }
+		if (Bridges.getDebugFlag()) {
+			System.err.println("Connector.post-StringString(" + url + ", " + data + ")");
+			System.err.println("prepare(url)=" + prepare(url));
+		}
 		return executeHTTPRequest(Request.Post(prepare(url))
-			.bodyString(data, ContentType.TEXT_PLAIN));
+				.bodyString(data, ContentType.TEXT_PLAIN));
 	}
 
 	/*
 	 *  Send a delete request to the server for the given user and assignment
 	 */
-	public String delete(String url) throws IOException, RateLimitException {
+	public String delete (String url) throws IOException, RateLimitException {
 		if (Bridges.getDebugFlag()) {
-		    System.err.println("Connector.delete-String("+url+")");
+			System.err.println("Connector.delete-String(" + url + ")");
 		}
 		String out = server_url;
 		out += url.replace(" ", "%20");

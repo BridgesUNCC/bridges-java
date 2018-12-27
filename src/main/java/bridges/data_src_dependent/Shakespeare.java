@@ -1,8 +1,8 @@
 package bridges.data_src_dependent;
 /**
- * @brief  A Shakespeare Data source object containing sonnets, poems and 
+ * @brief  A Shakespeare Data source object containing sonnets, poems and
  *		plays
- *  
+ *
  * This is a convenience class provided for  users who wish to use this
  * data source as part of their application. It provides an API that makes
  * it easy to access the attributes of this data set.
@@ -23,13 +23,13 @@ import bridges.data_src_dependent.DataSource;
 
 public class Shakespeare  extends DataSource {
 	private	String title,		// title of sonnet, play or poem
-				type,			// Type (sonnet, play or poem
-				text;			// full text
-	
+			type,			// Type (sonnet, play or poem
+			text;			// full text
+
 	public	Shakespeare() {
 		title = type = text = "";
 	}
-	
+
 	public Shakespeare(String title, String type, String text) {
 		this.title = title;
 		this.type = type;
@@ -37,7 +37,7 @@ public class Shakespeare  extends DataSource {
 	}
 
 	public String getTitle() {
-		return this.title;	
+		return this.title;
 	}
 	public 	void setTitle (String title) {
 		this.title = title;

@@ -2,7 +2,7 @@ package bridges.data_src_dependent;
 /**
  * @brief  A Gutenberg Book object, used along with the Gutenberg
  *	books data source (https://www.gutenberg.org/).
- *	
+ *
  *  This is a convenience class provided for  users who wish to use this
  *	data source as part of their application. It provides an API that makes
  *  it easy to access the attributes of this data set. It contains meta data
@@ -22,8 +22,8 @@ import bridges.data_src_dependent.DataSource;
 
 public class GutenbergBook  extends DataSource {
 	private String authorName;
-	private int authorBirth, 
-		authorDeath;
+	private int authorBirth,
+			authorDeath;
 	private String title;
 	private Vector<String> languages, genre, subjects;
 	private int numChars, numWords, numSentences, numDifficultWords;
@@ -33,19 +33,19 @@ public class GutenbergBook  extends DataSource {
 	public GutenbergBook () {
 		authorName = title = url = "";
 		authorBirth =  authorDeath =  numDownLoads =
-		numChars = numWords = numSentences = numDifficultWords = 0;
+					numChars = numWords = numSentences = numDifficultWords = 0;
 		languages = new Vector<String>();
 		genre = new Vector<String>();
 		subjects = new Vector<String>();
 	}
-	public GutenbergBook(String authorName, int authorBirth, int authorDeath, 
-				String title, Vector<String> languages, Vector<String> genre,
-				Vector<String> subjects, int numChars, int numWords, 
-				int numSentences, int numDifficultWords, String url, 
-				int downloads) {
+	public GutenbergBook(String authorName, int authorBirth, int authorDeath,
+		String title, Vector<String> languages, Vector<String> genre,
+		Vector<String> subjects, int numChars, int numWords,
+		int numSentences, int numDifficultWords, String url,
+		int downloads) {
 
 		this.authorName = authorName;
-		this.authorBirth = authorBirth;  
+		this.authorBirth = authorBirth;
 		this.authorDeath = authorDeath;
 		this.title =  title;
 		this.languages = languages;
@@ -152,5 +152,5 @@ public class GutenbergBook  extends DataSource {
 	}
 };
 
- 
+
 
