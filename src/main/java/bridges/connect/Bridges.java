@@ -12,6 +12,9 @@ import bridges.base.*;
 import bridges.data_src_dependent.*;
 import bridges.validation.*;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
+import javax.xml.crypto.Data;
+
 
 /**
  * 	@brief The Bridges class is the main class that provides interfaces to datasets,
@@ -117,7 +120,6 @@ public class Bridges {
 	 *
 	 * Initialize Bridges
 	 *
-	 * @param <E>
 	 * @param assignment this is the assignmen id (integer)
 	 * @param appl_id    this is the appl authentication key(from the Bridges account)
 	 * @param username   this is the username (from the Bridges account)
@@ -157,7 +159,7 @@ public class Bridges {
 
 	/**
 	 *
-	 * @param descr description to annotate the visualization;
+	 * @param description description to annotate the visualization;
 	 *
 	 */
 	public void setDescription(String description) {
@@ -418,11 +420,49 @@ public class Bridges {
 		return DataFormatter.getCancerIncidenceData();
 	}
 
-
-	public static String getAssignmentJSON() {
-
-	    return null;
+	/***
+	 * This function obtains the JSON representation of a particular subassignment.
+	 *
+	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 * @param subassignment the ID of the subassignment to get
+	 ***/
+	public String getAssignmentJSON(String user, int assignment, int subassignment) throws IOException {
+	    return DataFormatter.getAssignment(this.connector.server_url, user, assignment, subassignment);
 	}
+	/***
+	 * This function obtains the JSON representation of a particular subassignment.
+	 *
+	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 ***/
+	public String getAssignmentJSON(String user, int assignment) throws IOException{
+	    return getAssignmentJSON(user, assignment, 0);
+	}
+	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	 *
+	 * @return the ColorGrid stored in the bridges server
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 * @param subassignment the ID of the subassignment to get
+	 **/
+	public bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment, int subassignment)
+			throws IOException{
+		return DataFormatter.getColorGridFromAssignment(this.connector.server_url, user, assignment, subassignment);
+    }
+
+    /**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	 *
+	 * @return the ColorGrid stored in the bridges server
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 **/
+    public bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment) throws IOException{
+		return getColorGridFromAssignment(user, assignment, 0);
+	}
+
 	/**
 	 *	Get the assignment id
 	 *

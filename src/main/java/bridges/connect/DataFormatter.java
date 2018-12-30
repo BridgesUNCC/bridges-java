@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 import java.util.Vector;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.protocol.HTTP;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -38,6 +39,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.client.HttpClient;
 import org.apache.http.util.EntityUtils;
@@ -609,7 +611,7 @@ public class DataFormatter {
 	 */
 
 	public static ArrayList<EarthquakeUSGS> getEarthquakeUSGSData(
-		int maxElem) throws Exception {
+		int maxElem) throws IOException {
 
 		String url = "http://earthquakes-uncc.herokuapp.com/eq/latest/" + maxElem;
 		HttpResponse response = makeRequest(url);
@@ -641,7 +643,7 @@ public class DataFormatter {
 			return eq_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
@@ -661,7 +663,7 @@ public class DataFormatter {
 	 *  @return a list of ActorMovieIMDB objects, but only actor and movie fields
 	 * 				in this version
 	 */
-	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData(int maxElem) throws Exception, IllegalArgumentException {
+	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData(int maxElem) throws IOException, IllegalArgumentException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb";
 
@@ -690,7 +692,7 @@ public class DataFormatter {
 			return am_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
@@ -705,7 +707,7 @@ public class DataFormatter {
 	 *
 	 */
 	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData2 ()
-	throws Exception {
+	throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb2";
 		HttpResponse response = makeRequest(url);
@@ -733,7 +735,7 @@ public class DataFormatter {
 			return am_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
@@ -749,7 +751,7 @@ public class DataFormatter {
 	 *
 	 */
 	public static ArrayList<GutenbergBook> getGutenbergBookMetaData ()
-	throws Exception {
+	throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/books";
 		HttpResponse response = makeRequest(url);
@@ -802,7 +804,7 @@ public class DataFormatter {
 			return gb_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 	/**
@@ -817,7 +819,7 @@ public class DataFormatter {
 	 *  @return a list of Game objects,
 	 *
 	 */
-	public static ArrayList<Game> getGameData() throws Exception {
+	public static ArrayList<Game> getGameData() throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/games";
 		HttpResponse response = makeRequest(url);
@@ -850,7 +852,7 @@ public class DataFormatter {
 			return game_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
@@ -878,7 +880,7 @@ public class DataFormatter {
 	 *  @return a list of Song objects,
 	 *
 	 */
-	public static ArrayList<Song> getSongData() throws Exception {
+	public static ArrayList<Song> getSongData() throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/songs";
 		HttpResponse response = makeRequest(url);
@@ -900,7 +902,7 @@ public class DataFormatter {
 			return song_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 	/**
@@ -917,7 +919,8 @@ public class DataFormatter {
 	 *  @return a Song object,
 	 *
 	 */
-	public static Song getSong(String songTitle, String artistName) throws Exception {
+	public static Song getSong(String songTitle, String artistName)
+			throws IOException {
 		String url = "https://bridgesdata.herokuapp.com/api/songs/find/";
 
 		// add the song title to the query url
@@ -925,7 +928,7 @@ public class DataFormatter {
 			url += songTitle;
 		}
 		else {
-			throw new Exception("Must provide a valid song title.");
+			throw new IllegalArgumentException("Must provide a valid song title.");
 		}
 		// add the artist name as a query variable where appropriate
 		if (artistName.length() > 0) {
@@ -945,7 +948,7 @@ public class DataFormatter {
 			return song;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status + ". Message: " + result);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status + ". Message: " + result);
 		}
 	}
 
@@ -957,7 +960,12 @@ public class DataFormatter {
 	 * @param assignment the ID of the assignment to get
 	 * @param subassignment the ID of the subassignment to get
 	 **/
-	static bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment, int subassignment) {
+	static bridges.base.ColorGrid getColorGridFromAssignment(String server,
+															 String user,
+															 int assignment,
+															 int subassignment
+	) throws IOException {
+		String assignmentJSON = getAssignment(server, user, assignment, subassignment);
 
 		return null;
     }
@@ -968,8 +976,9 @@ public class DataFormatter {
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 **/
-    static bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment) {
-		return getColorGridFromAssignment(user, assignment, 0);
+    static bridges.base.ColorGrid getColorGridFromAssignment(String server, String user, int assignment)
+			throws IOException {
+		return getColorGridFromAssignment(server, user, assignment, 0);
 	}
 
 	/***
@@ -980,9 +989,19 @@ public class DataFormatter {
 	 * @param assignment the ID of the assignment to get
 	 * @param subassignment the ID of the subassignment to get
 	 ***/
-	private static String getAssignment(String user, int assignment, int subassignment) {
-
-		return null;
+	static String getAssignment(String server, String user, int assignment, int subassignment)
+			throws IOException {
+		String leadingZero = subassignment > 10 ? "" : "0";
+		String url = String.format("%s/assignmentJSON/%d.%s%d/%s", server, assignment, leadingZero, subassignment, user);
+		HttpResponse resp = makeRequest(url);
+		int status = resp.getStatusLine().getStatusCode();
+		String result = EntityUtils.toString(resp.getEntity());
+		if (status == 200) 	{
+			return result;
+		}
+		else {
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status + ". Message: " + result);
+		}
 	}
 	/***
 	 * This function obtains the JSON representation of the first subassignment of an assignment.
@@ -991,8 +1010,8 @@ public class DataFormatter {
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 ***/
-	private static String getAssignment(String user, int assignment) {
-        return getAssignment(user, assignment, 0);
+	static String getAssignment(String server, String user, int assignment) throws IOException, Exception {
+        return getAssignment(server, user, assignment, 0);
 	}
 
 	/**
