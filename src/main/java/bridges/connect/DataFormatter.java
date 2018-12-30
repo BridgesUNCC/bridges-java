@@ -37,7 +37,6 @@ import com.google.common.net.UrlEscapers;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.client.HttpClient;
@@ -585,7 +584,7 @@ public class DataFormatter {
 
 	private static HttpResponse makeRequest(String url) throws ClientProtocolException, IOException {
 		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet request = new HttpGet(url);
+		HttpGet request = new HttpGet(UrlEscapers.urlFragmentEscaper().escape(url));
 		return client.execute(request);
 	}
 	/**
@@ -936,10 +935,7 @@ public class DataFormatter {
 		}
 
 		// Create and execute the HTTP request
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(UrlEscapers.urlFragmentEscaper().escape(url));
-		HttpResponse response = client.execute(request);
-		String res = new String();
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 		String result = EntityUtils.toString(response.getEntity());
@@ -981,9 +977,7 @@ public class DataFormatter {
 			url += "?format=simple";
 		}
 
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
@@ -1014,9 +1008,7 @@ public class DataFormatter {
 	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations?limit=10";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 

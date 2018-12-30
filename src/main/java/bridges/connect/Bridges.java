@@ -421,6 +421,7 @@ public class Bridges {
 
 	public static String getAssignmentJSON() {
 
+	    return null;
 	}
 	/**
 	 *	Get the assignment id
