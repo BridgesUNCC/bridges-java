@@ -52,9 +52,7 @@ import org.apache.http.util.EntityUtils;
  *
  * Initialize this class before using it, and call complete() afterward.
  *
- * @author Sean Gallagher
- * @param <E>
- * @secondAuthor Mihai Mehedint
+ * @author Sean Gallagher, Mihai Mehedint
  */
 public class DataFormatter {
 
@@ -254,10 +252,11 @@ public class DataFormatter {
 	}
 
 	/** List the user's followers as more FollowGraphNodes.
-	    Limit the result to `max` followers. Note that results are batched, so
-	    a large `max` (as high as 200) _may_ only count as one request.
-	    See DataFormatters.followgraph() for more about rate limiting.
-	 * @throws IOException */
+	 *  Limit the result to `max` followers. Note that results are batched, so
+	 *  a large `max` (as high as 200) _may_ only count as one request.
+	 *  See DataFormatters.followgraph() for more about rate limiting.
+	 * @throws IOException
+	 */
 	static List<Follower> followers(Follower id, int max)
 	throws RateLimitException {
 		if (failsafe) {
@@ -297,7 +296,8 @@ public class DataFormatter {
 	 * Limit the result to `max` followers. Note that results are batched, so
 	 * a large `max` (as high as 500) _may_ only count as one request.
 	 * See DataFormatters.followgraph() for more about rate limiting.
-	 * @throws IOException */
+	 * @throws IOException
+	 */
 	private static List<Tweet> getTwitterTimeline(TwitterAccount id, int max)
 	throws RateLimitException {
 		if (failsafe) {
