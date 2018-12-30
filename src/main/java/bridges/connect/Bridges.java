@@ -233,14 +233,14 @@ public class Bridges {
 	}
 
 	/**
-	 * 	@param check if the flag to output the JSON is set
+	 * 	@return check if the flag to output the JSON is set
 	**/
 	public boolean visualizeJSON() {
 		return json_flag;
 	}
 
 	/**
-	 * 	@param set the flag to print the JSON represenation of the data structure
+	 * 	@param flag the flag to print the JSON represenation of the data structure
 	 *		to standard output
 	 **/
 	public void setVisualizeJSON (boolean flag) {
@@ -255,7 +255,6 @@ public class Bridges {
 	 *  More information on the dataset can be found at <p>
 	 *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *
-	 *  @param name   USGS account name - must be "earthquake" to create account
 	 *	@param maxElements  the number of earthquake records retrieved, limited to 5000
 	 *  @throws Exception if the request fails
 	 *
@@ -274,8 +273,6 @@ public class Bridges {
 	 *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *  for more information and to look at the dataset.
 	 *
-	 *  @param maxElements  the number of actor/movie pairs(but currently unused),
-	 *	 							returns all records.
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of ActorMovieIMDB objects, but only actor,  movie, movie genre
@@ -296,9 +293,6 @@ public class Bridges {
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *  for more information and to look at the dataset.
 	 *
-	 *  @param name   should be "IMDB"
-	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
-	 *	 	returns all records.
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of ActorMovieIMDB objects
@@ -424,6 +418,10 @@ public class Bridges {
 		return DataFormatter.getCancerIncidenceData();
 	}
 
+
+	public static String getAssignmentJSON() {
+
+	}
 	/**
 	 *	Get the assignment id
 	 *
