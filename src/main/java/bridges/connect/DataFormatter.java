@@ -587,6 +587,16 @@ public class DataFormatter {
 		HttpGet request = new HttpGet(UrlEscapers.urlFragmentEscaper().escape(url));
 		return client.execute(request);
 	}
+
+	private static JSONArray unwrapJSONArray(HttpResponse response, String get) throws IOException{
+		String result = EntityUtils.toString(response.getEntity());
+		JSONObject full = (JSONObject)JSONValue.parse(result);
+		return (JSONArray)full.get(get);
+	}
+
+	private static JSONArray unwrapJSONArray(HttpResponse response) throws IOException{
+		return	unwrapJSONArray(response, "data");
+	}
 	/**
 	 *  Get USGS earthquake data
 	 *  USGS Tweet data (https://earthquake.usgs.gov/earthquakes/map/)
@@ -607,9 +617,7 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("Earthquakes");
+			JSONArray json = unwrapJSONArray(response,"Earthquakes");
 
 			ArrayList<EarthquakeUSGS> eq_list =
 				new ArrayList<EarthquakeUSGS>(json.size());
@@ -637,6 +645,12 @@ public class DataFormatter {
 		}
 	}
 
+	static ActorMovieIMDB parseActorMovieIMDB(JSONObject item) {
+		ActorMovieIMDB am_pair = new ActorMovieIMDB();
+		am_pair.setActor((String) item.get("actor"));
+		am_pair.setMovie((String) item.get("movie"));
+		return am_pair;
+	}
 	/**
 	 *  Get ActorMovie IMDB Data
 	 *  retrieved, formatted into a list of ActorMovieIMDB objects
@@ -663,19 +677,14 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response,"data");
 
 			ArrayList<ActorMovieIMDB> am_list =
 				new ArrayList<ActorMovieIMDB>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
-				ActorMovieIMDB am_pair = new ActorMovieIMDB();
-
-				am_pair.setActor((String) item.get("actor"));
-				am_pair.setMovie((String) item.get("movie"));
+				ActorMovieIMDB am_pair = parseActorMovieIMDB(item);
 				am_list.add(am_pair);
 			}
 			return am_list;
@@ -704,19 +713,14 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<ActorMovieIMDB> am_list =
 				new ArrayList<ActorMovieIMDB>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
-				ActorMovieIMDB am_pair = new ActorMovieIMDB();
-
-				am_pair.setActor((String) item.get("actor"));
-				am_pair.setMovie((String) item.get("movie"));
+				ActorMovieIMDB am_pair = parseActorMovieIMDB(item);
 				am_pair.setMovieRating(((Number) item.get("rating")).doubleValue());
 				JSONArray genre = (JSONArray) item.get("genres");
 
@@ -753,9 +757,7 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<GutenbergBook> gb_list =
 				new ArrayList<GutenbergBook>(json.size());
@@ -823,9 +825,7 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<Game> game_list =
 				new ArrayList<Game>(json.size());
@@ -886,9 +886,7 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<Song> song_list =
 				new ArrayList<Song>(json.size());
@@ -982,9 +980,7 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<Shakespeare> shksp_list =
 				new ArrayList<Shakespeare>(json.size());
@@ -1013,9 +1009,7 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject j_obj = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray) j_obj.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<CancerIncidence> canc_objs =
 				new ArrayList<CancerIncidence>(json.size());
