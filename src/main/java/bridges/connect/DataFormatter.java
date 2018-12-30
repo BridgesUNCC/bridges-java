@@ -8,18 +8,11 @@ import java.security.spec.ECField;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Vector;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.protocol.HTTP;
@@ -47,6 +40,7 @@ import org.apache.http.client.HttpResponseException;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.client.HttpClient;
 import org.apache.http.util.EntityUtils;
+import org.apache.commons.codec.binary.Base64;
 //import com.google.code.gson.Gson;
 
 
@@ -957,6 +951,28 @@ public class DataFormatter {
 	}
 
 
+	static Color getColorFromSignedBytes(byte r, byte g, byte b, byte a) {
+		int R, G, B, A;
+		if (r < 0)
+			R = 256 + r;
+		else
+			R = r;
+		if (g < 0)
+			G = 256 + g;
+		else
+			G = g;
+		if (b < 0)
+			B = 256 + b;
+		else
+			B = b;
+		if (a < 0)
+			A = 256 + a;
+		else
+			A = a;
+
+		float alpha = A / 255.0f;
+		return new Color(R,G,B,alpha);
+	}
 	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
 	 *
 	 * @return the ColorGrid stored in the bridges server
@@ -979,9 +995,97 @@ public class DataFormatter {
 			assignmentObject = wrapped.assignmentJSON;
 		}
 		catch (Exception e) {
-			throw new JsonParseException("Malformed ColorGrid JSON: Unable to Parse");
+			throw new JsonParseException("Malformed JSON: Unable to Parse");
 		}
 
+		if (assignmentObject.data.length != 1)
+			throw new RuntimeException("Malformed JSON: data is malformed");
+
+		BridgesAssignmentData data = assignmentObject.data[0];
+		if (!data.visual.equals("ColorGrid"))
+			throw new RuntimeException("Malformed ColorGrid JSON: not a ColorGrid");
+
+		String encoding = data.encoding;
+		// handle ColorGrids posted before encoding field was added
+		if (encoding == null)
+			encoding = "RAW";
+
+		if (!encoding.equals("RLE") && !encoding.equals("RAW"))
+			throw new RuntimeException("Malformed ColorGrid JSON: encoding not supported :" + encoding);
+
+		int[] dims = data.dimensions;
+		if (dims.length != 2)
+			throw new RuntimeException("Malformed ColorGrid JSON: dimensions are malformed");
+		int dimx = dims[0];
+		int dimy = dims[1];
+
+		if (data.nodes.length != 1)
+			throw new RuntimeException("Malformed ColorGrid JSON: nodes are malformed");
+		Object node = data.nodes[0];
+		String nodeString;
+		if (node instanceof String)
+			nodeString = (String) node;
+		else
+			throw new RuntimeException("Malformed ColorGrid JSON: node is not a String");
+
+		byte[] decoded = Base64.decodeBase64(nodeString);
+		ColorGrid cg = new ColorGrid(dimx, dimy);
+
+		if (encoding.equals("RAW")) {
+			if (decoded.length < dimx * dimy * 4)
+				throw new RuntimeException("Malformed ColorGrid JSON: nodes is smaller than expected");
+
+			int base = 0;
+
+			for (int x = 0; x < dimx ; ++x) {
+				for (int y = 0; y < dimy; ++y) {
+					Color c = getColorFromSignedBytes(decoded[base],
+							 decoded[base + 1],
+							 decoded[base + 2],
+							 decoded[base + 3]
+					);
+
+					cg.set(x, y, c);
+					base += 4;
+				}
+			}
+
+		}
+		else if (encoding.equals("RLE")) {
+			int currentInDecoded = 0;
+			int currentInCG = 0;
+			while (currentInDecoded != decoded.length) {
+				if (decoded.length % 5 != 0)
+					throw new RuntimeException("Malformed ColorGrid JSON: nodes is not a multiple of 5");
+
+				int repeat = decoded[currentInDecoded++];
+				if (repeat < 0)
+					repeat = 256 + repeat;
+
+				Color c = getColorFromSignedBytes(decoded[currentInDecoded++],
+						decoded[currentInDecoded++],
+						decoded[currentInDecoded++],
+						decoded[currentInDecoded++]);
+
+				while (repeat >= 0) {
+					int posX = currentInCG / dimy;
+					int posY = currentInCG % dimy;
+					if (posX >= dimx || posY >= dimy)
+						throw new RuntimeException("Malformed ColorGrid JSON: Too much data in nodes");
+
+					cg.set(posX, posY, c);
+					currentInCG++;
+					repeat--;
+				}
+			}
+
+			if (currentInCG != dimx * dimy)
+				throw new RuntimeException("Malformed ColorGrid JSON: Not enough data in nodes");
+		}
+
+		return cg;
+
+		// Example of starting to parse JSON without gson, leaving as is for now, for comparison sake.
 		/*
 		// Parse JSON String into JSONObject and
 		// Access response['assignmentJSON']
@@ -1045,9 +1149,6 @@ public class DataFormatter {
 			throw new IOException("Malformed ColorGrid JSON: Non-int dimensions");
 		}
 	*/
-
-
-		return null;
     }
 
     /**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
@@ -1198,7 +1299,7 @@ public class DataFormatter {
 
 } // end of DataFormatter
 
-// helper class for deserializing Bridges Assignments from the server with gson
+// struct like class for deserializing Bridges Assignments from the server with gson
 class BridgesAssignmentWrapper{
 	BridgesAssignment assignmentJSON;
 }
