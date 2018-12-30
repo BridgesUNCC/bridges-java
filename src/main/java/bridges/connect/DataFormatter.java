@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -39,6 +40,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.client.HttpClient;
 import org.apache.http.util.EntityUtils;
 //import com.google.code.gson.Gson;
 
@@ -131,7 +133,7 @@ public class DataFormatter {
 	/**
 	 * Idiom for enabling ordered iteration on any map.
 	 * The reason for this is to make the strings compare equal for testing
-	 * @param values
+	 * @param map
 	 * @return
 	 */
 	static <K extends Comparable<K>, V> List<Entry<K, V>> sorted_entries(
@@ -179,7 +181,6 @@ public class DataFormatter {
 	 * @param identifier holds the name of the
 	 * @param max holds the max number of tweets
 	 * @return
-	 * @throws MyExceptionClass
 	 */
 	public static List<Tweet> getAssociations(TwitterAccount identifier, int max) {
 		try {
@@ -196,7 +197,6 @@ public class DataFormatter {
 	 * @param identifier holds the name of the
 	 * @param max holds the max number of earthquakes
 	 * @return
-	 * @throws MyExceptionClass
 	 */
 	public static List<EarthquakeUSGS> getAssociations(USGSaccount identifier, int max) {
 		try {
@@ -298,7 +298,6 @@ public class DataFormatter {
 	 * Limit the result to `max` followers. Note that results are batched, so
 	 * a large `max` (as high as 500) _may_ only count as one request.
 	 * See DataFormatters.followgraph() for more about rate limiting.
-	 * @throws MyExceptionClass
 	 * @throws IOException */
 	private static List<Tweet> getTwitterTimeline(TwitterAccount id, int max)
 	throws RateLimitException {
@@ -411,7 +410,6 @@ public class DataFormatter {
 	 * @param aList holds the reference to the current list of tweets
 	 * @param max the number of tweets in the new batch of tweets
 	 * @return the list of tweets containing the old and the new batch of tweets
-	 * @throws MyExceptionClass
 	 */
 	public static List<Tweet> next(List<Tweet> aList, int max) {
 		max = validNumberOfTweets(max);
@@ -434,7 +432,6 @@ public class DataFormatter {
 	 * @param aList holds the reference to the current list of eq
 	 * @param max the number of eq in the new batch of eq
 	 * @return the list of eq containing the old and the new batch of tweets
-	 * @throws MyExceptionClass
 	 */
 	public static List<EarthquakeUSGS> next(List<EarthquakeUSGS> aList, int max, USGSaccount acu) {
 		max = validNumberOfTweets(max);//same validator as for the tweets
@@ -454,7 +451,6 @@ public class DataFormatter {
 	 * Check the validity of number of Tweets requested
 	 * @param max the number of tweets
 	 * @return returns true if the number is in the range 0 - 500
-	 * @throws MyExceptionClass otherwise
 	 */
 	public static int validNumberOfTweets(int max) {
 		//check if max is valid
@@ -587,13 +583,17 @@ public class DataFormatter {
 		DataFormatter.backend = backend;
 	}
 
+	private static HttpResponse makeRequest(String url) throws ClientProtocolException, IOException {
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpGet request = new HttpGet(url);
+		return client.execute(request);
+	}
 	/**
 	 *  Get USGS earthquake data
 	 *  USGS Tweet data (https://earthquake.usgs.gov/earthquakes/map/)
 	 *  retrieved, formatted into a list of EarthquakeUSGS objects
 	 *
-	 *  @param name   USGS account name - must be "earthquake" to create account
-	 *  @param maxElements  the number of earthquake records retrieved, limited to 5000
+	 *  @param maxElem  the number of earthquake records retrieved, limited to 5000
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of earthquake records
@@ -603,9 +603,7 @@ public class DataFormatter {
 		int maxElem) throws Exception {
 
 		String url = "http://earthquakes-uncc.herokuapp.com/eq/latest/" + maxElem;
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
@@ -644,7 +642,7 @@ public class DataFormatter {
 	 *  Get ActorMovie IMDB Data
 	 *  retrieved, formatted into a list of ActorMovieIMDB objects
 	 *
-	 *  @param maxElements  the number of actor/movie pairs
+	 *  @param maxElem the number of actor/movie pairs
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of ActorMovieIMDB objects, but only actor and movie fields
@@ -661,9 +659,7 @@ public class DataFormatter {
 			throw new IllegalArgumentException("Must provide a valid number of Actor/Movie pairs to return.");
 		}
 
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
@@ -704,9 +700,7 @@ public class DataFormatter {
 	throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb2";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
@@ -755,9 +749,7 @@ public class DataFormatter {
 	throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/books";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
@@ -827,9 +819,7 @@ public class DataFormatter {
 	public static ArrayList<Game> getGameData() throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/games";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
@@ -864,6 +854,17 @@ public class DataFormatter {
 			throw new Exception("HTTP Request Failed. Error Code: " + status);
 		}
 	}
+
+	private static Song parseSong(JSONObject songJSON) {
+		Song song = new Song();
+		song.setArtist((String) songJSON.get("artist"));
+		song.setSongTitle((String) songJSON.get("song"));
+		song.setAlbumTitle((String) songJSON.get("album"));
+		song.setLyrics((String) songJSON.get("lyrics"));
+		song.setReleaseDate(((String) songJSON.get("release_date")));
+
+		return song;
+	}
 	/**
 	 *
 	 *  Get data of the songs (including lyrics) using the Genius API
@@ -881,9 +882,7 @@ public class DataFormatter {
 	public static ArrayList<Song> getSongData() throws Exception {
 
 		String url = "https://bridgesdata.herokuapp.com/api/songs";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
@@ -896,14 +895,7 @@ public class DataFormatter {
 				new ArrayList<Song>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
-
-				Song song = new Song();
-
-				song.setArtist((String) item.get("artist"));
-				song.setSongTitle((String) item.get("song"));
-				song.setAlbumTitle((String) item.get("album"));
-				song.setLyrics((String) item.get("lyrics"));
-				song.setReleaseDate(((String) item.get("release_date")));
+				Song song = parseSong(item);
 
 				song_list.add(song);
 
@@ -954,13 +946,7 @@ public class DataFormatter {
 
 		if (status == 200) 	{
 			JSONObject songJSON = (JSONObject)JSONValue.parse(result);
-
-			Song song = new Song();
-			song.setArtist((String) songJSON.get("artist"));
-			song.setSongTitle((String) songJSON.get("song"));
-			song.setAlbumTitle((String) songJSON.get("album"));
-			song.setLyrics((String) songJSON.get("lyrics"));
-			song.setReleaseDate(((String) songJSON.get("release_date")));
+			Song song = parseSong(songJSON);
 
 			return song;
 		}
