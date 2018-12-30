@@ -3,6 +3,8 @@ package bridges.connect;
 
 import java.io.IOException;
 import java.lang.Exception;
+import java.rmi.server.ExportException;
+import java.security.spec.ECField;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +19,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.protocol.HTTP;
 import org.json.simple.JSONArray;
@@ -965,7 +969,83 @@ public class DataFormatter {
 															 int assignment,
 															 int subassignment
 	) throws IOException {
-		String assignmentJSON = getAssignment(server, user, assignment, subassignment);
+		String response = getAssignment(server, user, assignment, subassignment);
+
+		Gson gson = new Gson();
+		BridgesAssignment assignmentObject;
+		try {
+		    // parse JSON into a BridgesAssignment object
+			BridgesAssignmentWrapper wrapped = gson.fromJson(response, BridgesAssignmentWrapper.class);
+			assignmentObject = wrapped.assignmentJSON;
+		}
+		catch (Exception e) {
+			throw new JsonParseException("Malformed ColorGrid JSON: Unable to Parse");
+		}
+
+		/*
+		// Parse JSON String into JSONObject and
+		// Access response['assignmentJSON']
+		JSONObject innerJSON;
+		try {
+			JSONObject assignmentJSON = (JSONObject) JSONValue.parse(response);
+			innerJSON = (JSONObject) assignmentJSON.get("assignmentJSON");
+		} catch (Exception e) {
+			throw new IOException("Malformed ColorGrid JSON: no assignmentJSON");
+		}
+
+		// Access response['assignmentJSON']['data'][0]
+		JSONObject data;
+		try {
+			JSONArray innerData = (JSONArray) innerJSON.get("data");
+			data = (JSONObject) innerData.get(0);
+		}
+		catch (Exception e) {
+			throw new IOException("Malformed ColorGrid JSON: No data");
+		}
+
+		// Access visual type and throw exception if not a ColorGrid
+		try {
+			String visual = (String) data.get("visual");
+			if (!visual.equals("ColorGrid"))
+				throw new IOException("Malformed ColorGrid JSON: Not a ColorGrid");
+		}
+		catch (Exception e) {
+			throw new IOException("Malformed ColorGrid JSON: missing / malformed value for 'visual'");
+		}
+
+		// Access encoding, defaulting to RAW if not present
+		String encoding;
+		try {
+			encoding = (String) data.get("encoding");
+		}
+		// allows for ColorGrids generated before RLE to be parsed
+		catch (Exception e) {
+			encoding = "RAW";
+		}
+		if (!encoding.equals("RAW") && !encoding.equals("RLE"))
+			throw new IOException("Malformed ColorGrid JSON: encoding not supported: " + encoding);
+
+		JSONArray dimensions;
+		try {
+			dimensions = (JSONArray) data.get("dimensions");
+			if (dimensions.size() != 2)
+				throw new Exception("");
+		}
+		catch (Exception e) {
+			throw new IOException("Malformed ColorGrid JSON: Malformed dimensions");
+		}
+
+		int dimx;
+		int dimy;
+		try {
+			dimx = (int) dimensions.get(0);
+			dimy = (int) dimensions.get(1);
+		}
+		catch (Exception e) {
+			throw new IOException("Malformed ColorGrid JSON: Non-int dimensions");
+		}
+	*/
+
 
 		return null;
     }
@@ -1029,7 +1109,7 @@ public class DataFormatter {
 	 *  @return an array of Shakespeare objects
 	 *
 	 */
-	public static ArrayList<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
+	public static ArrayList<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws IOException {
 		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";
 
 		if (works == "plays" || works == "poems") {
@@ -1062,11 +1142,11 @@ public class DataFormatter {
 			return shksp_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
-	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws Exception {
+	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations?limit=10";
 		HttpResponse response = makeRequest(url);
@@ -1112,8 +1192,13 @@ public class DataFormatter {
 			return canc_objs;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
 } // end of DataFormatter
+
+// helper class for deserializing Bridges Assignments from the server with gson
+class BridgesAssignmentWrapper{
+	BridgesAssignment assignmentJSON;
+}

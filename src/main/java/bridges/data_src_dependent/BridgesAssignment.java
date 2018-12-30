@@ -1,20 +1,12 @@
 package bridges.data_src_dependent;
 
-import bridges.base.DataStruct;
-import bridges.connect.Bridges;
-
-import java.util.List;
-
 /**
- * TODO Think about if it is worth it to capture an entire assignment, storing subassignments in a List of some sort
+ * @brief Struct like class used to represent Bridges Assignments as they are returned from the server
  *
  * @author Alec Goncharow
- * @date   12/29/18
- *
  */
 public class BridgesAssignment extends DataSource {
-    private String username, assignmentName, assignmentNumber, title, description, vistype;
-    private int assignmentID;
-    private List<DataStruct> assignments;
-    public BridgesAssignment() {}
+    public String username, assignmentName, assignmentNumber, title, description, vistype, dateCreated;
+    public double assignmentID;
+    public BridgesAssignmentData[] data;
 }
