@@ -588,13 +588,13 @@ public class DataFormatter {
 		return client.execute(request);
 	}
 
-	private static JSONArray unwrapJSONArray(HttpResponse response, String get) throws IOException {
+	private static JSONArray unwrapJSONArray(HttpResponse response, String get) throws IOException{
 		String result = EntityUtils.toString(response.getEntity());
 		JSONObject full = (JSONObject)JSONValue.parse(result);
 		return (JSONArray)full.get(get);
 	}
 
-	private static JSONArray unwrapJSONArray(HttpResponse response) throws IOException {
+	private static JSONArray unwrapJSONArray(HttpResponse response) throws IOException{
 		return	unwrapJSONArray(response, "data");
 	}
 	/**
@@ -617,7 +617,7 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			JSONArray json = unwrapJSONArray(response, "Earthquakes");
+			JSONArray json = unwrapJSONArray(response,"Earthquakes");
 
 			ArrayList<EarthquakeUSGS> eq_list =
 				new ArrayList<EarthquakeUSGS>(json.size());
@@ -677,7 +677,7 @@ public class DataFormatter {
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			JSONArray json = unwrapJSONArray(response, "data");
+			JSONArray json = unwrapJSONArray(response,"data");
 
 			ArrayList<ActorMovieIMDB> am_list =
 				new ArrayList<ActorMovieIMDB>(json.size());
@@ -918,7 +918,7 @@ public class DataFormatter {
 	 *
 	 */
 	public static Song getSong(String songTitle, String artistName)
-	throws IOException {
+			throws IOException {
 		String url = "https://bridgesdata.herokuapp.com/api/songs/find/";
 
 		// add the song title to the query url
@@ -974,16 +974,16 @@ public class DataFormatter {
 	 * @param subassignment the ID of the subassignment to get
 	 **/
 	static bridges.base.ColorGrid getColorGridFromAssignment(String server,
-		String user,
-		int assignment,
-		int subassignment
+															 String user,
+															 int assignment,
+															 int subassignment
 	) throws IOException {
 		String response = getAssignment(server, user, assignment, subassignment);
 
 		Gson gson = new Gson();
 		BridgesAssignment assignmentObject;
 		try {
-			// parse JSON into a BridgesAssignment object
+		    // parse JSON into a BridgesAssignment object
 			BridgesAssignmentWrapper wrapped = gson.fromJson(response, BridgesAssignmentWrapper.class);
 			assignmentObject = wrapped.assignmentJSON;
 		}
@@ -1033,10 +1033,10 @@ public class DataFormatter {
 			for (int x = 0; x < dimx ; ++x) {
 				for (int y = 0; y < dimy; ++y) {
 					Color c = getColorFromSignedBytes(decoded[base],
-							decoded[base + 1],
-							decoded[base + 2],
-							decoded[base + 3]
-						);
+							 decoded[base + 1],
+							 decoded[base + 2],
+							 decoded[base + 3]
+					);
 
 					cg.set(x, y, c);
 					base += 4;
@@ -1141,16 +1141,16 @@ public class DataFormatter {
 		catch (Exception e) {
 			throw new IOException("Malformed ColorGrid JSON: Non-int dimensions");
 		}
-		*/
-	}
+	*/
+    }
 
-	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+    /**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
 	 *
 	 * @return the ColorGrid stored in the bridges server
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 **/
-	static bridges.base.ColorGrid getColorGridFromAssignment(String server, String user, int assignment)
+    static bridges.base.ColorGrid getColorGridFromAssignment(String server, String user, int assignment)
 	throws IOException {
 		return getColorGridFromAssignment(server, user, assignment, 0);
 	}
@@ -1164,7 +1164,7 @@ public class DataFormatter {
 	 * @param subassignment the ID of the subassignment to get
 	 ***/
 	static String getAssignment(String server, String user, int assignment, int subassignment)
-	throws IOException {
+			throws IOException {
 		String leadingZero = subassignment > 10 ? "" : "0";
 		String url = String.format("%s/assignmentJSON/%d.%s%d/%s", server, assignment, leadingZero, subassignment, user);
 		HttpResponse resp = makeRequest(url);
@@ -1185,7 +1185,7 @@ public class DataFormatter {
 	 * @param assignment the ID of the assignment to get
 	 ***/
 	static String getAssignment(String server, String user, int assignment) throws IOException, Exception {
-		return getAssignment(server, user, assignment, 0);
+        return getAssignment(server, user, assignment, 0);
 	}
 
 	/**
@@ -1293,6 +1293,6 @@ public class DataFormatter {
 } // end of DataFormatter
 
 // struct like class for deserializing Bridges Assignments from the server with gson
-class BridgesAssignmentWrapper {
+class BridgesAssignmentWrapper{
 	BridgesAssignment assignmentJSON;
 }
