@@ -950,28 +950,21 @@ public class DataFormatter {
 		}
 	}
 
-
-	static Color getColorFromSignedBytes(byte r, byte g, byte b, byte a) {
+	/* Due to the nature of how Java handles numbers, Bytes range from -128 to 127, which is problematic for
+	 * Bridge Color objects which store RGB as 0-255. This function translates 4 bytes into a Bridges Color object,
+	 * taking these factors into account.
+	 * This function may be useful to add directly to the Color class, but it may only be needed in this case, where
+	 * we need to convert an array of bytes into a ColorGrid.
+	 */
+	private static Color getColorFromSignedBytes(byte r, byte g, byte b, byte a) {
 		int R, G, B, A;
-		if (r < 0)
-			R = 256 + r;
-		else
-			R = r;
-		if (g < 0)
-			G = 256 + g;
-		else
-			G = g;
-		if (b < 0)
-			B = 256 + b;
-		else
-			B = b;
-		if (a < 0)
-			A = 256 + a;
-		else
-			A = a;
+		R = r < 0 ? 256 + r : r;
+		G = g < 0 ? 256 + g : g;
+		B = b < 0 ? 256 + b : b;
+		A = a < 0 ? 256 + a : a;
 
 		float alpha = A / 255.0f;
-		return new Color(R,G,B,alpha);
+		return new Color(R, G, B, alpha);
 	}
 	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
 	 *
@@ -1158,7 +1151,7 @@ public class DataFormatter {
 	 * @param assignment the ID of the assignment to get
 	 **/
     static bridges.base.ColorGrid getColorGridFromAssignment(String server, String user, int assignment)
-			throws IOException {
+	throws IOException {
 		return getColorGridFromAssignment(server, user, assignment, 0);
 	}
 
