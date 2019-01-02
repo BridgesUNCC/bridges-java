@@ -66,7 +66,7 @@ public class Bridges {
 	private static DataFormatter df;
 	private static String userName, vis_type,
 			title, description;
-	private static Integer MaxTitleSize = 50,
+	private static Integer MaxTitleSize = 200,
 						   MaxDescrSize = 1000;
 	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular"};
 
