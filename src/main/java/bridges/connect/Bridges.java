@@ -477,6 +477,11 @@ public class Bridges {
 			String.valueOf(assignment_part);
 	}
 
+	public static int getAssignmentID() {
+	    return assignment;
+	}
+
+    
 	/**
 	 *	set the assignment id
 	 *
