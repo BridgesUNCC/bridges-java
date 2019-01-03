@@ -234,6 +234,7 @@ public class Element<E> extends DataStruct {
 	 */
 	public String getElementRepresentation() {
 
+System.out.println("Data Struct type:" +  getDataStructType());
 		// first get all the attributes common to all
 		// elements; assumes location is a fundamental
 		// attribute that may or may not be used
@@ -279,7 +280,7 @@ public class Element<E> extends DataStruct {
 				Integer.toString(avl.getBalanceFactor()) + COMMA;
 			;
 		}
-		else if (getDataStructType().equals("KDTree")) {
+		else if (getDataStructType().equals("KdTree")) {
 			KdTreeElement kdt = (KdTreeElement) this;
 			json_str += COMMA +
 				QUOTE + "key" + QUOTE + COLON +
