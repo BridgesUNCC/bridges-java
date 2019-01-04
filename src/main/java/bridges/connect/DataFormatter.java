@@ -3,19 +3,14 @@ package bridges.connect;
 
 import java.io.IOException;
 import java.lang.Exception;
-import java.rmi.server.ExportException;
-import java.security.spec.ECField;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.protocol.HTTP;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -24,18 +19,11 @@ import bridges.base.*;
 import bridges.validation.*;
 import bridges.data_src_dependent.*;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
-
 import com.google.gson.Gson;
 import com.google.common.net.UrlEscapers;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.client.HttpClient;
@@ -981,22 +969,21 @@ public class DataFormatter {
 		String response = getAssignment(server, user, assignment, subassignment);
 
 		Gson gson = new Gson();
-		BridgesAssignment assignmentObject;
+		Assignment assignmentObject;
 		try {
 			// parse JSON into a BridgesAssignment object
-			BridgesAssignmentWrapper wrapped = gson.fromJson(response, BridgesAssignmentWrapper.class);
-			assignmentObject = wrapped.assignmentJSON;
+			assignmentObject = gson.fromJson(response, Assignment.class);
 		}
 		catch (Exception e) {
 			throw new JsonParseException("Malformed JSON: Unable to Parse");
 		}
+		if (!assignmentObject.assignment_type.equals("ColorGrid"))
+			throw new RuntimeException("Malformed ColorGrid JSON: not a ColorGrid");
 
 		if (assignmentObject.data.length != 1)
 			throw new RuntimeException("Malformed JSON: data is malformed");
 
-		BridgesAssignmentData data = assignmentObject.data[0];
-		if (!data.visual.equals("ColorGrid"))
-			throw new RuntimeException("Malformed ColorGrid JSON: not a ColorGrid");
+		AssignmentData data = assignmentObject.data[0];
 
 		String encoding = data.encoding;
 		// handle ColorGrids posted before encoding field was added
@@ -1227,7 +1214,3 @@ public class DataFormatter {
 
 } // end of DataFormatter
 
-// struct like class for deserializing Bridges Assignments from the server with gson
-class BridgesAssignmentWrapper {
-	BridgesAssignment assignmentJSON;
-}

@@ -4,8 +4,9 @@ package bridges.data_src_dependent;
  *
  * @author Alec Goncharow
  */
-public class BridgesAssignmentData {
-	public String visual, title, description, coord_system_type, encoding;
+public class AssignmentData {
+	public String coord_system_type, encoding;
 	public Object[] nodes;
+	boolean map_overlay;
 	public int[] dimensions;
 }
