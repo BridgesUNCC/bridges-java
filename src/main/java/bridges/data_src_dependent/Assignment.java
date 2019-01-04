@@ -5,8 +5,8 @@ package bridges.data_src_dependent;
  *
  * @author Alec Goncharow
  */
-public class BridgesAssignment extends DataSource {
-	public String username, assignmentName, assignmentNumber, title, description, vistype, dateCreated;
+public class Assignment extends DataSource {
+	public String username, title, assignmentNumber, subAssignment, description, vistype, dateCreated, assignment_type;
 	public double assignmentID;
-	public BridgesAssignmentData[] data;
+	public AssignmentData[] data;
 }
