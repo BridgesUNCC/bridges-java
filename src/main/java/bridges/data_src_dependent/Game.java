@@ -1,4 +1,8 @@
 package bridges.data_src_dependent;
+import java.util.Vector;
+import java.lang.String;
+
+import bridges.data_src_dependent.DataSource;
 /**
  * @brief  A Game object, used along with the Games data source.
  *
@@ -16,10 +20,6 @@ package bridges.data_src_dependent;
  * @date   2/1/17
  *
  */
-import java.util.Vector;
-import java.lang.String;
-
-import bridges.data_src_dependent.DataSource;
 
 public class Game  extends DataSource {
 	private	String title,		// game title

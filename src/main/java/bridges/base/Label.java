@@ -6,7 +6,7 @@ import bridges.base.Color;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONObject;
 
-/*
+/**
  * @brief This is a superclass in BRIDGES for deriving a
  *  number of Shape objects for use in a ShapeCollection.
  *  Shapes correspond to a simplified subset of SVG paths
@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
  *
  * @author David Burlinson
  *
-*/
+ */
 public class Label extends Symbol {
 	static final Integer DEFAULT_FONTSIZE = 12;
 
