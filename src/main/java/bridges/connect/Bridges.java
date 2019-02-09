@@ -68,9 +68,10 @@ public class Bridges {
 			title, description;
 	private static Integer MaxTitleSize = 200,
 						   MaxDescrSize = 1000;
-	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular"};
+	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular", "window"};
 
 	private static Boolean map_overlay = false;	// default to no map overlay
+	private static float[] window;
 	private static String display_mode = "slide"; // default to slide (vs stack)
 	private static String coord_system_type = projection_options[0];	// default to Cartesian space
 
@@ -219,7 +220,7 @@ public class Bridges {
 
 	/**
 	 * 	@param coord 	this is the desired coordinate space argument
-	 *		Options are: ['cartesian', 'albersusa', 'equirectangular'], and 'cartesian' is the default;
+	 *		Options are: ['cartesian', 'albersusa', 'equirectangular', 'window'], and 'cartesian' is the default;
 	 **/
 	public void setCoordSystemType (String coord) {
 		if (java.util.Arrays.asList(projection_options).indexOf(coord) >= 0) {
@@ -232,6 +233,19 @@ public class Bridges {
 			}
 			coord_system_type = "cartesian";
 		}
+	}
+
+	/**
+	 * 	@param x1 	minimum window x
+	 * 	@param y1 	minimum window y
+	 * 	@param x2 	maximum window x
+	 * 	@param y2 	maximum window y
+	 **/
+	public void setWindow (int x1, int y1, int x2, int y2) {
+		setWindow((float) x1, (float) y1, (float) x2, (float) y2);
+	}
+	public void setWindow (float x1, float y1, float x2, float y2) {
+		window = new float[]{x1, y1, x2, y2};
 	}
 
 	/**
@@ -481,7 +495,7 @@ public class Bridges {
 	    return assignment;
 	}
 
-    
+
 	/**
 	 *	set the assignment id
 	 *
@@ -649,7 +663,12 @@ public class Bridges {
 			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
 			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
 
-		// get the nodes and link representations
+		// if window is specified, add it to JSON
+		if(window != null && window.length == 4) {
+				ds_json += QUOTE + "window" + QUOTE + COLON + OPEN_BOX;
+				ds_json += window[0] + COMMA + window[1] + COMMA + window[2] + COMMA + window[3];
+		 		ds_json += CLOSE_BOX + COMMA;
+		}
 
 		if (vis_type == "Array") {
 			int dims[] = new int[3];
