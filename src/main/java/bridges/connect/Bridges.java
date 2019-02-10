@@ -71,7 +71,7 @@ public class Bridges {
 	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular", "window"};
 
 	private static Boolean map_overlay = false;	// default to no map overlay
-	private static float[] window;
+	private static double[] window;
 	private static String display_mode = "slide"; // default to slide (vs stack)
 	private static String coord_system_type = projection_options[0];	// default to Cartesian space
 
@@ -242,10 +242,13 @@ public class Bridges {
 	 * 	@param y2 	maximum window y
 	 **/
 	public void setWindow (int x1, int y1, int x2, int y2) {
-		setWindow((float) x1, (float) y1, (float) x2, (float) y2);
+		setWindow((double) x1, (double) y1, (double) x2, (double) y2);
 	}
 	public void setWindow (float x1, float y1, float x2, float y2) {
-		window = new float[]{x1, y1, x2, y2};
+		setWindow((double) x1, (double) y1, (double) x2, (double) y2);
+	}
+	public void setWindow (double x1, double y1, double x2, double y2) {
+		window = new double[]{x1, y1, x2, y2};
 	}
 
 	/**
