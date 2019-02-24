@@ -57,6 +57,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 
 	private final HashMap < K, SLelement < Edge< K, E2 > > > adj_list;
 
+	private final int LARGE_GRAPH_VERT_SIZE = 1000;
+
 	/**
 	 *
 	 *	Constructor
@@ -73,6 +75,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *
 	 */
 	public String getDataStructType() {
+		if (this.vertices.size() > LARGE_GRAPH_VERT_SIZE)
+			return "largegraph";
 		return "GraphAdjacencyList";
 	}
 	/**
@@ -349,6 +353,9 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *	Get the JSON representation of the the data structure
 	 */
 	public String getDataStructureRepresentation() {
+		if (this.vertices.size() > LARGE_GRAPH_VERT_SIZE) {
+			return getDataStructureLargeGraph();
+		}
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
 		// get teh list nodes
@@ -401,5 +408,79 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 
 		return json_str;
 
+	}
+
+	private String getDataStructureLargeGraph() {
+		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
+		// get the list nodes
+		Vector<Element<E1>> nodes = new Vector<Element<E1>>();
+
+		for (Entry<K, Element<E1>> element : vertices.entrySet())
+			nodes.add(element.getValue());
+
+		String nodes_JSON = "";
+		// remap  map these nodes to  0...MaxNodes-1
+		// and build the nodes JSON
+		for (int k = 0; k < nodes.size(); k++) {
+			node_map.put(nodes.get(k), k);
+			ElementVisualizer elvis = nodes.get(k).getVisualizer();
+			String loc_str = "";
+			if (elvis.getLocationX() != Double.POSITIVE_INFINITY
+					&& elvis.getLocationY() != Double.POSITIVE_INFINITY) {
+				loc_str = OPEN_BOX + elvis.getLocationX() + COMMA
+						+ elvis.getLocationY()
+						+ CLOSE_BOX + COMMA;
+			}
+			Color color = elvis.getColor();
+			nodes_JSON += OPEN_BOX + loc_str + OPEN_BOX +
+					color.getRed() + COMMA +
+					color.getGreen() + COMMA +
+					color.getBlue() + COMMA +
+					color.getAlpha() + CLOSE_BOX + CLOSE_BOX + COMMA;
+
+		}
+
+		if (nodes_JSON.length() > 0) {
+			nodes_JSON = nodes_JSON.substring(0, nodes_JSON.length() - 1);
+		}
+
+		String link_JSON = "";
+
+		for (Entry<K, SLelement<Edge<K, E2>>> a_list : adj_list.entrySet()) {
+			SLelement<Edge<K, E2>> list = a_list.getValue();
+			Element<E1> src_vert = vertices.get(a_list.getKey());
+			while (list != null) {
+				Integer src_indx = node_map.get(src_vert);
+				Edge<K, E2> edge = list.getValue();
+				Element<E1> dest_vert = vertices.get(edge.getVertex());
+				Integer dest_indx = node_map.get(dest_vert);
+				Color color = src_vert.getLinkVisualizer(dest_vert).getColor();
+
+				link_JSON += OPEN_BOX +
+						src_indx + COMMA +
+						dest_indx + COMMA +
+						OPEN_BOX +
+						color.getRed() + COMMA +
+						color.getGreen() + COMMA +
+						color.getBlue() + COMMA +
+						color.getAlpha() + CLOSE_BOX + CLOSE_BOX + COMMA;
+				list = list.getNext();
+			}
+		}
+
+		if (link_JSON.length() > 0) {
+			link_JSON = link_JSON.substring(0, link_JSON.length() - 1);
+		}
+
+		String graph_alist_json =
+					QUOTE + "nodes"  + QUOTE + COLON +
+							OPEN_BOX + nodes_JSON + CLOSE_BOX + COMMA +
+					QUOTE + "links" + QUOTE + COLON +
+							OPEN_BOX + link_JSON + CLOSE_BOX +
+							CLOSE_CURLY;
+
+		System.out.println(graph_alist_json);
+
+		return graph_alist_json;
 	}
 }

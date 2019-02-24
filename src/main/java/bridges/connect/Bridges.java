@@ -635,6 +635,7 @@ public class Bridges {
 					((TreeElement) ds_handle).getDataStructureRepresentation();
 				break;
 			case "GraphAdjacencyList":
+			case "largegraph":
 				nodes_links_str =
 					((GraphAdjList) ds_handle).getDataStructureRepresentation();
 				break;

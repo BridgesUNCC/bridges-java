@@ -1134,14 +1134,14 @@ public class DataFormatter {
 
 		OsmVertex[] vertices = new OsmVertex[respObject.nodes.length];
 		HashMap<Double, Integer> vert_map = new HashMap<>();
-		for (int i = 0; i <  vertices.length; ++i) {
+		for (int i = 0; i < vertices.length; ++i) {
 			Double[] node = respObject.nodes[i];
 			vert_map.put(node[0], i);
 			vertices[i] = new OsmVertex(node[1], node[2]);
 		}
 
 		OsmEdge[] edges = new OsmEdge[respObject.edges.length];
-		for(int i = 0; i < edges.length; ++i) {
+		for (int i = 0; i < edges.length; ++i) {
 			Double[] edge = respObject.edges[i];
 			Double id_from = edge[0];
 			Double id_to = edge[1];

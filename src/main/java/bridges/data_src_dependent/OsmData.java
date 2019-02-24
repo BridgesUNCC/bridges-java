@@ -37,7 +37,7 @@ public class OsmData {
                 cart_range_x = {Double.MAX_VALUE, -Double.MAX_VALUE},
                 cart_range_y = {Double.MAX_VALUE, -Double.MAX_VALUE};
 
-        for(OsmVertex vertex : vertices) {
+        for (OsmVertex vertex : vertices) {
             double lat = vertex.getLatitude();
             double lon = vertex.getLongitude();
             double cart_x = vertex.getCartesian_coord()[0];
