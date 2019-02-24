@@ -1110,6 +1110,49 @@ public class DataFormatter {
 		return getAssignment(server, user, assignment, 0);
 	}
 
+	static OsmData getOsmData(String location) throws IOException {
+		String url = "https://osm-api.herokuapp.com/name/" + location;
+		HttpResponse resp = makeRequest(url);
+		int status = resp.getStatusLine().getStatusCode();
+		String content = EntityUtils.toString(resp.getEntity());
+		if (status != 200) {
+			if (status == 404) {
+				// TODO add fetching of name_list
+			}
+			throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
+		}
+		// TODO add caching
+		Gson gson = new Gson();
+		OsmServerResponse respObject;
+		try {
+			System.out.println(content);
+			respObject = gson.fromJson(content, OsmServerResponse.class);
+		}
+		catch (Exception e) {
+			throw new JsonParseException("Malformed JSON: Unable to Parse");
+		}
+
+		OsmVertex[] vertices = new OsmVertex[respObject.nodes.length];
+		HashMap<Double, Integer> vert_map = new HashMap<>();
+		for (int i = 0; i <  vertices.length; ++i) {
+			Double[] node = respObject.nodes[i];
+			vert_map.put(node[0], i);
+			vertices[i] = new OsmVertex(node[1], node[2]);
+		}
+
+		OsmEdge[] edges = new OsmEdge[respObject.edges.length];
+		for(int i = 0; i < edges.length; ++i) {
+			Double[] edge = respObject.edges[i];
+			Double id_from = edge[0];
+			Double id_to = edge[1];
+			Double dist = edge[2];
+			edges[i] = new OsmEdge(vert_map.get(id_from), vert_map.get(id_to), dist);
+		}
+
+		OsmData ret_data = new OsmData(vertices, edges, respObject.meta.name);
+		return ret_data;
+	}
+
 	/**
 	 *
 	 *  Get data of Shakespeare works (plays, poems)

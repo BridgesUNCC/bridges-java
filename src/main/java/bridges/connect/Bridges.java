@@ -464,6 +464,16 @@ public class Bridges {
 	}
 
 	/**
+	 * Fetches Open Street Map data for a given location
+	 * @param location, name of city or area that the server supports
+	 * @return OsmData, vertex and edges of Open Street Map data
+	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 */
+	public static bridges.data_src_dependent.OsmData getOsmData(String location) throws IOException {
+		return DataFormatter.getOsmData(location);
+	}
+
+	/**
 	 *	Get the assignment id
 	 *
 	 *  @return assignment as a string
