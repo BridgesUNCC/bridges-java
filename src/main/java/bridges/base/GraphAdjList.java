@@ -479,8 +479,6 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 							OPEN_BOX + link_JSON + CLOSE_BOX +
 							CLOSE_CURLY;
 
-		System.out.println(graph_alist_json);
-
 		return graph_alist_json;
 	}
 }
