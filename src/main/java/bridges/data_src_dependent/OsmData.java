@@ -87,9 +87,15 @@ public class OsmData {
     public double[] getCartesianRangeX() {
         return cartesian_range_x;
     }
+	public void getLatLongRange(double[] latr, double[] lonr) {
+		latr[0] = latitude_range[0];
+		latr[1] = latitude_range[1];
+		lonr[0] = longitude_range[0];
+		lonr[1] = longitude_range[1];
+	}
 
-    public GraphAdjList<Integer, OsmVertex, OsmEdge> getGraph() {
-        GraphAdjList<Integer, OsmVertex, OsmEdge> ret_graph = new GraphAdjList<>();
+    public GraphAdjList<Integer, OsmVertex, Double> getGraph() {
+        GraphAdjList<Integer, OsmVertex, Double> ret_graph = new GraphAdjList<>();
 
         for (int i = 0; i < this.vertices.length; ++i) {
             OsmVertex vertex = this.vertices[i];
