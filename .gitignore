@@ -10,3 +10,4 @@
 *.class
 .idea/
 src/main/java/edu/uncc/cs/bridgesV2/drivers/
+*.iml

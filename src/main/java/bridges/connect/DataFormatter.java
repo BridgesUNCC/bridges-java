@@ -1,8 +1,11 @@
 package bridges.connect;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.Exception;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -1110,18 +1113,48 @@ public class DataFormatter {
 		return getAssignment(server, user, assignment, 0);
 	}
 
+	/***
+	 * Fetches Open Street Map data for a given location
+	 * @param location, name of city or area that the server supports
+	 * @return OsmData, vertex and edges of Open Street Map data
+	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 */
 	static OsmData getOsmData(String location) throws IOException {
-		String url = "https://osm-api.herokuapp.com/name/" + location;
-		HttpResponse resp = makeRequest(url);
-		int status = resp.getStatusLine().getStatusCode();
-		String content = EntityUtils.toString(resp.getEntity());
-		if (status != 200) {
-			if (status == 404) {
-				// TODO add fetching of name_list
+		File cache_dir = new File("./bridges_data_cache");
+
+		if (!cache_dir.exists()) {
+			if(!cache_dir.mkdir()) {
+				throw new IOException("Error creating cache directory");
 			}
-			throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
 		}
-		// TODO add caching
+
+		String content = null;
+		for (File file : cache_dir.listFiles()) {
+			if (file.getName().equals(location + ".json")) {
+				content = new String(Files.readAllBytes(file.toPath()));
+			}
+		}
+
+		if (content == null) {
+			String url = "https://osm-api.herokuapp.com/name/" + location;
+			HttpResponse resp = makeRequest(url);
+			int status = resp.getStatusLine().getStatusCode();
+			content = EntityUtils.toString(resp.getEntity());
+			if (status != 200) {
+				if (status == 404) {
+					url = "https://osm-api.herokuapp.com/name_list";
+					resp = makeRequest(url);
+					status = resp.getStatusLine().getStatusCode();
+					if (status == 200) {
+						content = EntityUtils.toString(resp.getEntity());
+						throw new RuntimeException("Invalid name: " + location + "\nValid names:" + content);
+					}
+				}
+				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
+			}
+			Files.write(Paths.get("./bridges_data_cache/" + location + ".json"), content.getBytes());
+		}
+
 		Gson gson = new Gson();
 		OsmServerResponse respObject;
 		try {
