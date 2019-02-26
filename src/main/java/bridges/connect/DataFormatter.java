@@ -1167,7 +1167,6 @@ public class DataFormatter {
 		Gson gson = new Gson();
 		OsmServerResponse respObject;
 		try {
-			System.out.println(content);
 			respObject = gson.fromJson(content, OsmServerResponse.class);
 		}
 		catch (Exception e) {
