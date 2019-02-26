@@ -85,7 +85,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *	exists. This method will replace the value for this key
 	 *
 	 *	@param k - vertex id
-	 *	@param E - vertex info, currently used as a label by default
+	 *	@param e - vertex info, currently used as a label by default
 	 *
 	 *	@return none
 	 */
@@ -154,8 +154,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *	Sets data for a graph vertex
 	 *
 	 *	@param src - source vertex of edge
-	 *	@param dest - destination  vertex of edge
-	 *	@param data - vertex data
+	 *	@param vertex_data - vertex data
 	 *
 	 */
 	public void setVertexData(K src, E1 vertex_data) {
@@ -175,7 +174,6 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *	Gets data for an edge
 	 *
 	 *	@param src - source vertex of edge
-	 *	@param dest - destination  vertex of edge
 	 *
 	 */
 	public E1 getVertexData(K src) {
@@ -197,7 +195,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
-	 *	@param data - edge data
+	 *	@param edge_data - edge data
 	 *
 	 */
 	public void setEdgeData(K src, K dest, E2 edge_data) {

@@ -942,7 +942,7 @@ public class DataFormatter {
 	}
 
 	/* Due to the nature of how Java handles numbers, Bytes range from -128 to 127, which is problematic for
-	 * Bridge Color objects which store RGB as 0-255. This function translates 4 bytes into a Bridges Color object,
+	 * Bridges Color objects which store RGB as 0-255. This function translates 4 bytes into a Bridges Color object,
 	 * taking these factors into account.
 	 * This function may be useful to add directly to the Color class, but it may only be needed in this case, where
 	 * we need to convert an array of bytes into a ColorGrid.
@@ -1122,12 +1122,14 @@ public class DataFormatter {
 	static OsmData getOsmData(String location) throws IOException {
 		File cache_dir = new File("./bridges_data_cache");
 
+		// make cache if does not exist
 		if (!cache_dir.exists()) {
 			if(!cache_dir.mkdir()) {
 				throw new IOException("Error creating cache directory");
 			}
 		}
 
+		// look for file in cache
 		String content = null;
 		for (File file : cache_dir.listFiles()) {
 			if (file.getName().equals(location + ".json")) {
@@ -1135,6 +1137,7 @@ public class DataFormatter {
 			}
 		}
 
+		// if not in cache, hit server for data
 		if (content == null) {
 			String url = "https://osm-api.herokuapp.com/name/" + location;
 			HttpResponse resp = makeRequest(url);
@@ -1142,6 +1145,7 @@ public class DataFormatter {
 			content = EntityUtils.toString(resp.getEntity());
 			if (status != 200) {
 				if (status == 404) {
+					// attempt to get valid names
 					url = "https://osm-api.herokuapp.com/name_list";
 					resp = makeRequest(url);
 					status = resp.getStatusLine().getStatusCode();
@@ -1155,6 +1159,7 @@ public class DataFormatter {
 			Files.write(Paths.get("./bridges_data_cache/" + location + ".json"), content.getBytes());
 		}
 
+		// parse that data
 		Gson gson = new Gson();
 		OsmServerResponse respObject;
 		try {
@@ -1165,6 +1170,7 @@ public class DataFormatter {
 			throw new JsonParseException("Malformed JSON: Unable to Parse");
 		}
 
+		// vertex list
 		OsmVertex[] vertices = new OsmVertex[respObject.nodes.length];
 		HashMap<Double, Integer> vert_map = new HashMap<>();
 		for (int i = 0; i < vertices.length; ++i) {
@@ -1173,6 +1179,7 @@ public class DataFormatter {
 			vertices[i] = new OsmVertex(node[1], node[2]);
 		}
 
+		// edge list
 		OsmEdge[] edges = new OsmEdge[respObject.edges.length];
 		for (int i = 0; i < edges.length; ++i) {
 			Double[] edge = respObject.edges[i];

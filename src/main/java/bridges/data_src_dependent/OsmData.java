@@ -3,6 +3,15 @@ package bridges.data_src_dependent;
 import bridges.base.GraphAdjList;
 
 public class OsmData {
+    /**
+	 * @brief  Class that hold Open Street Map vertices
+	 *
+	 * Class that holds Open Street Map data, from https://openstreetmap.org
+	 *
+	 * Kalpathi Subramanian, 2/16/19
+	 *
+	 */
+
     private OsmVertex[] vertices;
     private OsmEdge[] edges;
     private double[] latitude_range, longitude_range, cartesian_range_x, cartesian_range_y;
@@ -56,37 +65,78 @@ public class OsmData {
 
     }
 
+    /**
+     * get name of OsmData
+     * @return String
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * set name of OsmData
+     * @param name: String
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * get edges of OsmData
+     * @return edges: OsmEdge[]
+     */
     public OsmEdge[] getEdges() {
         return edges;
     }
 
+
+    /**
+     * set edges of OsmData
+     * @param edges: OsmEdge[]
+     */
     public void setEdges(OsmEdge[] edges) {
         this.edges = edges;
     }
 
+    /**
+     * get range of the y cartesian coordinates of vertex locations
+     * @return double[]: {min_y, max_y}
+     */
     public double[] getCartesianRangeY() {
         return cartesian_range_y;
     }
 
+    /**
+     * get range of the latitude of vertex locations
+     * @return double[]: {min_latitude, max_latitude}
+     */
     public double[] getLatitudeRange() {
         return latitude_range;
     }
 
+    /**
+     * get range of longitude of vertex locations
+     * @return double[]: {min_longitude, max_longitude}
+     */
     public double[] getLongitudeRange() {
         return longitude_range;
     }
 
+    /**
+     * get range of the x cartesian coordinates of vertex locations
+     * @return double[]: {min_x, max_x}
+     */
     public double[] getCartesianRangeX() {
         return cartesian_range_x;
     }
+
+    /**
+     *   get the range of dataset in Cartesian coords
+     *
+     *   @param  latr: double[2]
+     *   @param  lonr: double[2]
+     *	 @return none
+     */
 	public void getLatLongRange(double[] latr, double[] lonr) {
 		latr[0] = latitude_range[0];
 		latr[1] = latitude_range[1];
@@ -94,6 +144,17 @@ public class OsmData {
 		lonr[1] = longitude_range[1];
 	}
 
+    /**
+     * Construct a graph out of the vertex an edge
+     * data of the OSM object.  The graph will
+     * associate the length of the edge to the
+     * graph edge. No data is bound to the
+     * vertices.
+     *
+     * The vertices of the graph will be located at
+     * the location where given in the data set
+     * converted to cartesian coordinate.
+     **/
     public GraphAdjList<Integer, OsmVertex, Double> getGraph() {
         GraphAdjList<Integer, OsmVertex, Double> ret_graph = new GraphAdjList<>();
 
