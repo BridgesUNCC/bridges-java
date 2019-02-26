@@ -1116,24 +1116,28 @@ public class DataFormatter {
 	/***
 	 * Fetches Open Street Map data for a given location
 	 * @param location, name of city or area that the server supports
-	 * @return OsmData, vertex and edges of Open Street Map data
+	 * @return OsmData, vertices and edges of Open Street Map data
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
 	static OsmData getOsmData(String location) throws IOException {
 		File cache_dir = new File("./bridges_data_cache");
 
+		boolean has_cache = true;
 		// make cache if does not exist
 		if (!cache_dir.exists()) {
 			if(!cache_dir.mkdir()) {
-				throw new IOException("Error creating cache directory");
+				System.err.println("Error creating cache directory");
+				has_cache = false;
 			}
 		}
 
 		// look for file in cache
 		String content = null;
-		for (File file : cache_dir.listFiles()) {
-			if (file.getName().equals(location + ".json")) {
-				content = new String(Files.readAllBytes(file.toPath()));
+		if (has_cache) {
+			for (File file : cache_dir.listFiles()) {
+				if (file.getName().equals(location + ".json")) {
+					content = new String(Files.readAllBytes(file.toPath()));
+				}
 			}
 		}
 
