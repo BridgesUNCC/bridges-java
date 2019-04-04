@@ -649,6 +649,8 @@ public class Bridges {
 			case "SymbolCollection":
 				nodes_links_str = ((SymbolCollection) ds_handle).getDataStructureRepresentation();
 				break;
+			case "Plot":
+				nodes_links_str = ((Plot) ds_handle).getDataStructureRepresentation();
 		}
 
 		String ds_json =
