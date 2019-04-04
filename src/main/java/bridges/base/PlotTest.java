@@ -49,6 +49,7 @@ public class PlotTest {
 		
 		Plot plot = new Plot("Sort Runtime");
 		plot.runtime("InsertSort", sort);
+		plot.runtime("bubblesort", bubbleSort);
 		
 		bridges.setDataStructure(plot);
 		bridges.visualize();
