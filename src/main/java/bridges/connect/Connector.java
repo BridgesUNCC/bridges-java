@@ -27,6 +27,7 @@ public class Connector {
 	String server_live = "http://bridges-cs.herokuapp.com";
 	String server_clone = "http://bridges-clone.herokuapp.com";
 	String server_local = "http://127.0.0.1:3000";
+	String server_plotting = "http://bridges-plotting.herokuapp.com";
 
 	String server_type = "application";
 	String server_url = "http://bridges-cs.herokuapp.com";
@@ -63,6 +64,9 @@ public class Connector {
 				break;
 			case "local":
 				setServerURL(server_local);
+				break;
+			case "plotting":
+				setServerURL(server_plotting);
 				break;
 			default:
 				throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'local'].");

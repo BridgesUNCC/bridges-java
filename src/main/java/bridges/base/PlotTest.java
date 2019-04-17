@@ -43,8 +43,8 @@ public class PlotTest {
 	};
 
 	public static void main(String[] args) throws IOException, RateLimitException, InterruptedException {
-		Bridges bridges = new Bridges(0, "testtest", "1243437903811");
-		bridges.setServer("local");
+		Bridges bridges = new Bridges(0, "test", "1055982372149");
+		bridges.setServer("plotting");
 		bridges.setVisualizeJSON(true);
 		
 		Plot plot = new Plot("Sort Runtime");
