@@ -42,14 +42,14 @@ public class PlotTest {
                 } 
 	};
 
-	public static void main(String[] args) throws IOException, RateLimitException {
+	public static void main(String[] args) throws IOException, RateLimitException, InterruptedException {
 		Bridges bridges = new Bridges(0, "testtest", "1243437903811");
 		bridges.setServer("local");
 		bridges.setVisualizeJSON(true);
 		
 		Plot plot = new Plot("Sort Runtime");
-		plot.runtime("InsertSort", sort);
-		plot.runtime("bubblesort", bubbleSort);
+		plot.runtime("InsertSort", 100, 10000, sort);
+		plot.runtime("bubblesort", 100, 10000, bubbleSort);
 		
 		bridges.setDataStructure(plot);
 		bridges.visualize();

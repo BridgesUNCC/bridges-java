@@ -3,6 +3,11 @@ package bridges.base;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
 import org.json.simple.JSONValue;
 
@@ -74,24 +79,27 @@ public class Plot extends DataStruct{
 		return null;
 	}
 	
-	public void runtime(String title, Consumer<int[]> runnable) {
+	public void runtime(String title, int iter, int maxRun, Consumer<int[]> runnable) throws InterruptedException {
 		Random r = new Random();
-		long[] time = new long[10];
-		int[] xData = new int[10];
-		int n = 1;
+		long[] time = new long[iter];
+		int[] xData = new int[iter];
+		int size = maxRun/iter;
+		int n = 0;
 		
-		for(int j = 1; j <= 10; j++) {
-			n *= 2; 
-			int[] arr = new int[2 * n];
+		for(int j = 1; j <= iter; j++) {
+			n += size;
+			System.out.println(n);
+			int[] arr = new int[n];
 			for(int i = 0; i < arr.length; i++) {
-				arr[i] = r.nextInt(1000);
+				arr[i] = r.nextInt(10000);
 			}
 			long start = System.currentTimeMillis();
 			runnable.accept(arr);
 			long end = System.currentTimeMillis();
-			long runTime = end - start;	
+			long runTime = end - start;
+			
 			time[j-1] = runTime;
-			xData[j-1] = 10*n;
+			xData[j-1] = n;
 			System.out.println("here");
 		}
 		
@@ -130,3 +138,4 @@ public class Plot extends DataStruct{
 		
 	}
 }
+
