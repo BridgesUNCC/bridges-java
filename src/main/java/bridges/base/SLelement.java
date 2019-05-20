@@ -1,7 +1,9 @@
 package bridges.base;
 
+import java.util.Iterator;
 import java.util.Vector;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 /**
  * 	@brief This class can be used to instantiate Singly Linked Elements.
 
@@ -29,7 +31,7 @@ import java.util.HashMap;
  *	\sa Example Tutorial at <br> http://bridgesuncc.github.io/Hello_World_Tutorials/SLL.html
  */
 
-public class SLelement<E> extends Element<E> {
+public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 
 	protected SLelement<E> next = null; //the link to the next element
 
@@ -199,6 +201,35 @@ public class SLelement<E> extends Element<E> {
 			CLOSE_CURLY;
 
 		return json_str;
+	}
+
+
+	class SLelementIterator implements Iterator<SLelement<E>> {
+		SLelement<E> current;
+
+		SLelementIterator(SLelement<E> current) {
+			this.current = current;
+		}
+
+		public boolean hasNext() {
+			return this.current != null;
+		}
+
+		public SLelement<E> next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			SLelement<E> ret = this.current;
+			this.current = this.current.next;
+			return ret;
+		}
+
+	}
+
+	// Return an iterator over the elements in the array. This is generally not
+    // called directly, but is called by Java when used in a "simple" for loops
+	public Iterator<SLelement<E>> iterator() {
+		return new SLelementIterator(this);
 	}
 
 	/*

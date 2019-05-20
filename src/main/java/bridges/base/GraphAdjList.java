@@ -46,7 +46,7 @@ import java.util.Vector;
  *		http://bridgesuncc.github.io/Hello_World_Tutorials/Graph.html
  *
  */
-public class GraphAdjList<K, E1, E2> extends DataStruct {
+public class GraphAdjList<K, E1, E2> extends DataStruct  {
 
 	// keep track of the graph nodes; useful
 	// to maintain their properties
