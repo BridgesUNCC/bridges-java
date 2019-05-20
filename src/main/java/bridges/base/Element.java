@@ -123,7 +123,7 @@ public class Element<E> extends DataStruct {
 	 *
 	 * @param sz the pixel size of the Element in the Bridges Visualization
 	 */
-	void setSize(double sz) {
+	public void setSize(double sz) {
 		this.visualizer.setSize(sz);
 	}
 
@@ -132,20 +132,20 @@ public class Element<E> extends DataStruct {
 	 *	@return the size (in pixels) of the element
 	 *
 	 */
-	double getSize()  {
+	public double getSize()  {
 		return this.visualizer.getSize();
 	}
 	/**
 	 *  Set the color to "col"
 	 *  @param col The color of the element
 	 */
-	void setColor( Color col) {
+	public void setColor( Color col) {
 		this.visualizer.setColor(col);
 	}
 	/**
 	 *	@return The color of the element
 	 */
-	Color getColor() {
+	public Color getColor() {
 		return this.visualizer.getColor();
 	}
 
@@ -154,7 +154,7 @@ public class Element<E> extends DataStruct {
 	 *
 	 *  @param opacity
 	 */
-	void setOpacity(float opacity) {
+	public void setOpacity(float opacity) {
 		this.visualizer.setOpacity(opacity);
 	}
 
@@ -163,7 +163,7 @@ public class Element<E> extends DataStruct {
 	 *
 	 *	@return opacity
 	 */
-	double getOpacity() {
+	public double getOpacity() {
 		return this.visualizer.getOpacity();
 	}
 	/**
@@ -174,14 +174,14 @@ public class Element<E> extends DataStruct {
 	 * @param aShape the string representing the shape of the Element in
 	 *			the Bridges Visualization
 	 */
-	void setShape(String aShape) {
+	public void setShape(String aShape) {
 		this.visualizer.setShape(aShape);
 	}
 	/**
 	 *	@return The shape of the element(one of CIRCLE,SQUARE,
 	 *		DIAMOND,CROSS,TRI_DOWN,TRI_UP
 	 */
-	String getShape()  {
+	public String getShape()  {
 		return this.visualizer.getShape();
 	}
 	/**
@@ -190,20 +190,20 @@ public class Element<E> extends DataStruct {
 	 * 	@param locX X coordinate of the element location
 	 * 	@param locY Y coordinate of the element location
 	 */
-	void setLocation( double locX,  double locY) {
+	public void setLocation( double locX,  double locY) {
 		this.visualizer.setLocation(locX, locY);
 	}
 
 	/**
 	 *	@return the X coordinate of the  element's location attribute
 	 */
-	double getLocationX()  {
+	public double getLocationX()  {
 		return this.visualizer.getLocationX();
 	}
 	/**
 	 *	@return the Y coordinate of the  element's location attribute
 	 */
-	double getLocationY()  {
+	public double getLocationY()  {
 		return this.visualizer.getLocationY();
 	}
 
