@@ -160,7 +160,7 @@ public class ElementVisualizer {
 	/**
 	 * Set the size of the Element in the Bridge Visualization (in pixel units)
 	 *
-	 * @param size the pixel size of the Element in the Bridges Visualization
+	 * @param sz the pixel size of the Element in the Bridges Visualization
 	 */
 	public void setSize(double sz) {
 		Validation.validateSize(sz);

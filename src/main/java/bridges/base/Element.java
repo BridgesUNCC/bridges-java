@@ -119,6 +119,96 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
+	 * Set the size of the Element in the Bridge Visualization (in pixel units)
+	 *
+	 * @param sz the pixel size of the Element in the Bridges Visualization
+	 */
+	void setSize(double sz) {
+		this.visualizer.setSize(sz);
+	}
+
+	/**
+	 *  Get element size
+	 *	@return the size (in pixels) of the element
+	 *
+	 */
+	double getSize()  {
+		return this.visualizer.getSize();
+	}
+	/**
+	 *  Set the color to "col"
+	 *  @param col The color of the element
+	 */
+	void setColor( Color col) {
+		this.visualizer.setColor(col);
+	}
+	/**
+	 *	@return The color of the element
+	 */
+	Color getColor() {
+		return this.visualizer.getColor();
+	}
+
+	/**
+	 *	set opacity of element - use the 4th color component
+	 *
+	 *  @param opacity
+	 */
+	void setOpacity(float opacity) {
+		this.visualizer.setOpacity(opacity);
+	}
+
+	/**
+	 *	get opacity of element
+	 *
+	 *	@return opacity
+	 */
+	double getOpacity() {
+		return this.visualizer.getOpacity();
+	}
+	/**
+	 * Sets the shape of the Element in the Bridges Visualization. Supported
+	 * 		shapes include "star", "circle", "square", "diamond", "cross",
+	 *		"triangle", "wye".
+	 *
+	 * @param aShape the string representing the shape of the Element in
+	 *			the Bridges Visualization
+	 */
+	void setShape(String aShape) {
+		this.visualizer.setShape(aShape);
+	}
+	/**
+	 *	@return The shape of the element(one of CIRCLE,SQUARE,
+	 *		DIAMOND,CROSS,TRI_DOWN,TRI_UP
+	 */
+	String getShape()  {
+		return this.visualizer.getShape();
+	}
+	/**
+	 * 	Set the location attributes of an element.
+	 *
+	 * 	@param locX X coordinate of the element location
+	 * 	@param locY Y coordinate of the element location
+	 */
+	void setLocation( double locX,  double locY) {
+		this.visualizer.setLocation(locX, locY);
+	}
+
+	/**
+	 *	@return the X coordinate of the  element's location attribute
+	 */
+	double getLocationX()  {
+		return this.visualizer.getLocationX();
+	}
+	/**
+	 *	@return the Y coordinate of the  element's location attribute
+	 */
+	double getLocationY()  {
+		return this.visualizer.getLocationY();
+	}
+
+
+	/**
 	 * This method sets the visualizer object for the current
 	 * element object
 	 *
@@ -167,7 +257,7 @@ public class Element<E> extends DataStruct {
 	 * Validates the Element's value when the Element is created
 	 * A non null value is expected
 	 * this will be unnecessary after we modify the server
-	 * @param ELement value
+	 * @param <E> value
 	 */
 	protected void validateVal(E value) {
 		try {
