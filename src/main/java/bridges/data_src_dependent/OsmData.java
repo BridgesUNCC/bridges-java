@@ -167,8 +167,7 @@ public class OsmData {
         }
 
         for (OsmEdge edge : this.edges) {
-            ret_graph.addEdge(edge.getSource(), edge.getDestination(), (int)edge.getDistance());
-            ret_graph.setEdgeData(edge.getSource(), edge.getDestination(), edge.getDistance());
+            ret_graph.addEdge(edge.getSource(), edge.getDestination(), edge.getDistance());
         }
 
         return ret_graph;
