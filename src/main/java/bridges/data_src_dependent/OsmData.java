@@ -162,13 +162,13 @@ public class OsmData {
             OsmVertex vertex = this.vertices[i];
             double[] cart_coord = vertex.getCartesian_coord();
             ret_graph.addVertex(i, vertex);
-            ret_graph.getVertex(i).getVisualizer().setLocation(cart_coord[0], cart_coord[1]);
-            ret_graph.getVertex(i).getVisualizer().setColor("green");
+            ret_graph.getVertex(i).setLocation(cart_coord[0], cart_coord[1]);
+            ret_graph.getVertex(i).setColor("green");
         }
 
         for (OsmEdge edge : this.edges) {
             ret_graph.addEdge(edge.getSource(), edge.getDestination(), (int)edge.getDistance());
-	    ret_graph.setEdgeData(edge.getSource(), edge.getDestination(), edge.getDistance());
+            ret_graph.setEdgeData(edge.getSource(), edge.getDestination(), edge.getDistance());
         }
 
         return ret_graph;

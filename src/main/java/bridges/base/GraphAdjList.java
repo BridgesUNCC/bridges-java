@@ -300,6 +300,12 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	public SLelement<Edge<K, E2> >  getAdjacencyList(K vertex) {
 		return adj_list.get(vertex);
 	}
+
+	public Edge<K, E2>[] outgoingEdgeSetOf(K vertex) {
+		SLelement<Edge<K, E2>> list = getAdjacencyList(vertex);
+
+
+	}
 	/**
 	 *
 	 *	 This is a convenience method to simplify access to the link visualizer;

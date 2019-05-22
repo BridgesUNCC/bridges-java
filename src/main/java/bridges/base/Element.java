@@ -143,6 +143,13 @@ public class Element<E> extends DataStruct {
 		this.visualizer.setColor(col);
 	}
 	/**
+	 *  Set the color to "col"
+	 *  @param col The color of the element
+	 */
+	public void setColor(String col) {
+		this.visualizer.setColor(col);
+	}
+	/**
 	 *	@return The color of the element
 	 */
 	public Color getColor() {
