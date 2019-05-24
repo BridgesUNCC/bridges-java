@@ -391,6 +391,10 @@ public class Element<E> extends DataStruct {
 
 		return json_str;
 	}
+
+	public String getDataStructureRepresentation() {
+		return null;
+	}
 	/**
 	 *	Generate string representing the data structure of a list
 	 *

@@ -152,6 +152,11 @@ public class Symbol extends DataStruct {
 		return new Float[] {0.0f, 0.0f, 0.0f, 0.0f};
 	}
 
+
+	public String getDataStructureRepresentation() {
+		return null;
+	}
+
 	/**
 	 * Internal code for getting the properties of the Symbol object.
 	 * It produces (without the spaces or newlines):

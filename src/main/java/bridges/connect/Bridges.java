@@ -74,7 +74,7 @@ public class Bridges {
 	private static String display_mode = "slide"; // default to slide (vs stack)
 	private static String coord_system_type = projection_options[0];	// default to Cartesian space
 
-	private static DataStruct ds_handle = null;		// data structure handle
+	private DataStruct ds_handle = null;		// data structure handle
 
 	//  string constants  for use in constructing JSON
 	//  representation of the data structure
@@ -609,47 +609,8 @@ public class Bridges {
 	 */
 	public void visualize()  throws IOException, RateLimitException {
 		String[] nodes_links = new String[2];
-		String nodes_links_str = "";
 		String response = "";
-		switch (vis_type) {
-			case "Array":
-				nodes_links_str = ((Array) ds_handle).getDataStructureRepresentation();
-				break;
-			case "SinglyLinkedList":
-			case "DoublyLinkedList":
-			case "CircularSinglyLinkedList":
-			case "CircularDoublyLinkedList":
-				nodes_links_str =
-					((SLelement) ds_handle).getDataStructureRepresentation();
-				break;
-			case "MultiList":
-				nodes_links_str =
-					((MLelement) ds_handle).getDataStructureRepresentation();
-				break;
-			case "Tree":
-			case "BinaryTree":
-			case "BinarySearchTree":
-			case "AVLTree":
-			case "KdTree":
-				nodes_links_str =
-					((TreeElement) ds_handle).getDataStructureRepresentation();
-				break;
-			case "GraphAdjacencyList":
-			case "largegraph":
-				nodes_links_str =
-					((GraphAdjList) ds_handle).getDataStructureRepresentation();
-				break;
-			case "GraphAdjacencyMatrix":
-				nodes_links_str =
-					((GraphAdjMatrix) ds_handle).getDataStructureRepresentation();
-				break;
-			case "ColorGrid":
-				nodes_links_str = ((ColorGrid) ds_handle).getDataStructureRepresentation();
-				break;
-			case "SymbolCollection":
-				nodes_links_str = ((SymbolCollection) ds_handle).getDataStructureRepresentation();
-				break;
-		}
+		String nodes_links_str = this.ds_handle.getDataStructureRepresentation();
 
 		String ds_json =
 			OPEN_CURLY +

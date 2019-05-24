@@ -62,5 +62,6 @@ public abstract class DataStruct {
 	CLOSE_BOX = "]";
 
 	public  abstract  String getDataStructType();
+	public abstract String getDataStructureRepresentation();
 };
 
