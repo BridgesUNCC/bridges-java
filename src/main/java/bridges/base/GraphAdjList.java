@@ -108,20 +108,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *
 	 */
 	public void addEdge(K src, K dest) {
-		// check to see if the two vertices exist, else
-		// throw an exception
-
-		try {
-			if (vertices.get(src) == null || vertices.get(dest) == null) {
-				throw new NullPointerException("Vertex " + src + " or " + dest +
-					" does not exist! Add the vertex before creating the edge.");
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		adj_list.put(src, new SLelement<Edge<K, E2>>(new Edge<K, E2>(src, dest, null),
-				adj_list.get(src) ) );
+	    this.addEdge(src, dest, null);
 	}
 
 	/**
@@ -147,8 +134,10 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		LinkVisualizer lvis = this.getLinkVisualizer(src, dest);
 		adj_list.put(src, new SLelement<Edge<K, E2>>(
-				new Edge<K, E2>(src, dest, data), adj_list.get(src) ) );
+				new Edge<K, E2>(src, dest, data, lvis), adj_list.get(src)));
 	}
 	/**
 	 *	Sets data for a graph vertex
@@ -313,7 +302,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	 is thrown
 	 *
 	 */
-	public LinkVisualizer getLinkVisualizer (K src, K dest) throws Exception {
+	public LinkVisualizer getLinkVisualizer (K src, K dest) {
 		// get the source and destination vertex elements
 		// and check to see if they exist
 		Element<E1> v1 = vertices.get(src);
@@ -336,7 +325,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	exception is thrown
 	 *
 	 */
-	public ElementVisualizer getVisualizer (K vertex) throws Exception {
+	public ElementVisualizer getVisualizer (K vertex) {
 		// get the source and destination vertex elements
 		// and check to see if they exist
 		Element<E1> v = vertices.get(vertex);

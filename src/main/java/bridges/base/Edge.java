@@ -32,11 +32,11 @@ public class Edge<K, E2> {
 	 * @param data is the  edge information object
 	 *
 	 */
-	public Edge(K from, K to, E2 data) {
+	public Edge(K from, K to, E2 data, LinkVisualizer lvis) {
 		this.to = to;
 		this.from = from;
 		this.edge_data = data;
-		this.lvis = new LinkVisualizer();
+		this.lvis = lvis;
 	}
 
 	/**
@@ -102,6 +102,86 @@ public class Edge<K, E2> {
 	 */
 	public E2 getEdgeData() {
 		return this.edge_data;
+	}
+
+	public LinkVisualizer getLinkVisualizer() {
+		return this.lvis;
+	}
+
+	public void setLinkVisualizer(LinkVisualizer lvis) {
+		this.lvis = lvis;
+	}
+
+	/*
+		Begin visualizer method exposing
+	 */
+
+	public String getLabel() {
+		return this.lvis.getLabel();
+	}
+
+	public void setLabel(String label) {
+		this.lvis.setLabel(label);
+	}
+
+	/**
+	 * Get the thickness of the link in the Bridges Visualiation
+	 *
+	 * @return the size in pixels of the Element in the Bridges Visualization
+	 */
+	public double getThickness() {
+		return this.lvis.getThickness();
+	}
+
+	public void setThickness(double thickness) {
+		this.lvis.setThickness(thickness);
+	}
+
+	/**
+	 *	Get the color of the link in the Bridges Visualization
+	 *
+	 *	@return the Color object representing the color of the link
+	 *
+	 */
+	public Color getColor() {
+		return this.lvis.getColor();
+	}
+
+	/**
+	 * Set the color of the link from an existing Color object
+	 * @param color Bridges Color object
+	 */
+	public void setColor(Color color) {
+		this.lvis.setColor(color);
+	}
+
+	/**
+	 *
+	 *	Set the color of the link in the Bridges Visualization to "aColor".
+	 *
+	 * 	@param col_name the string reprsenting the color of the Element in
+	 *		the Bridges Visualization; supported named colors are
+	 *  	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
+	 *  	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
+	 *  	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
+	 *  	"pink", "lavender", "purple", "gold"
+	 *
+	 */
+	public void setColor(String color) {
+		this.lvis.setColor(color);
+	}
+
+	/**
+	 *
+	 * 	Set the color of the link given RGBA components
+	 *
+	 * 	@param r, g, b, a components
+	 *
+	 *	check to ensure they are in 0-255 range, else throw exception
+	 *
+	 */
+	public void setColor(int r, int g, int b, float a) {
+		this.lvis.setColor(r, g, b, a);
 	}
 
 }

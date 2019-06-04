@@ -110,15 +110,6 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 * Returns the Element's visualizer object
-	 *
-	 * @return the visualizer object
-	 */
-	public ElementVisualizer getVisualizer() {
-		return visualizer;
-	}
-
-	/**
 	 * Set the size of the Element in the Bridge Visualization (in pixel units)
 	 *
 	 * @param sz the pixel size of the Element in the Bridges Visualization
@@ -214,6 +205,14 @@ public class Element<E> extends DataStruct {
 		return this.visualizer.getLocationY();
 	}
 
+	/**
+	 * Returns the Element's visualizer object
+	 *
+	 * @return the visualizer object
+	 */
+	public ElementVisualizer getVisualizer() {
+		return visualizer;
+	}
 
 	/**
 	 * This method sets the visualizer object for the current
@@ -395,64 +394,6 @@ public class Element<E> extends DataStruct {
 	public String getDataStructureRepresentation() {
 		return null;
 	}
-	/**
-	 *	Generate string representing the data structure of a list
-	 *
-	 *	@param nodes   the list of nodes in the list
-	 *
-	 */
-	/*
-		public String[] generateListJSON(Vector<Element<E>> nodes) {
-
-			HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
-			StringBuilder nodes_JSON = new StringBuilder(),
-						  links_JSON = new StringBuilder();
-
-							// create the nodes JSON string
-			for (int k = 0; k < nodes.size(); k++) {
-				node_map.put(nodes.get(k), k);
-				nodes_JSON.append(nodes.get(k).getElementRepresentation());
-				nodes_JSON.append(COMMA);
-			}
-							// remove the last comma
-			nodes_JSON.setLength(nodes_JSON.length()-1);
-
-							// now create the links JSON string
-
-							// iterate over the node map entries - these are the parent nodes
-			for (Entry<Element<E>, Integer> pmap_entry : node_map.entrySet()) {
-				Element<E> parent = pmap_entry.getKey();
-	//System.out.println("Processing " + parent.getLabel());
-							// iterate over the link vis entries - these are the child nodes
-				for (Entry<Element<E>, LinkVisualizer>
-						cmap_entry : parent.lvisualizer.entrySet()) {
-							// find the child corresponding the parent
-					Element<E> child = cmap_entry.getKey();
-	//System.out.println("\t Child " + child.getLabel());
-					if (node_map.get(child) != null) {
-						links_JSON.append(getLinkRepresentation(
-								cmap_entry.getValue(),
-								Integer.toString(node_map.get(parent)),
-								Integer.toString(node_map.get(child))) );
-						links_JSON.append(COMMA);
-	//System.out.println("from " + node_map.get(parent) + "to " + node_map.get(child) );
-					}
-				}
-			}
-							// remove the last comma
-			links_JSON.setLength(links_JSON.length()-1);
-
-			String nodes_str = nodes_JSON.toString();
-			String links_str = links_JSON.toString();
-
-	System.out.println (nodes_str + links_str);
-			String[] nodes_links = new String[2];
-			nodes_links[0] = nodes_str;
-			nodes_links[1] = links_str;
-
-			return nodes_links;
-		}
-	*/
 
 	/**
 	 *
