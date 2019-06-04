@@ -1,10 +1,6 @@
 package bridges.base;
-import bridges.base.SLelement;
-import bridges.base.Edge;
-
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
 
@@ -290,10 +286,15 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		return adj_list.get(vertex);
 	}
 
-	public Edge<K, E2>[] outgoingEdgeSetOf(K vertex) {
+	public Vector<Edge<K, E2>> outgoingEdgeSetOf(K vertex) {
+		Vector<Edge<K, E2>> edgeSet = new Vector<>();
 		SLelement<Edge<K, E2>> list = getAdjacencyList(vertex);
 
-		return null;
+		for (SLelement<Edge<K, E2>> element : list) {
+			edgeSet.add(element.getValue());
+		}
+
+		return edgeSet;
 	}
 	/**
 	 *
