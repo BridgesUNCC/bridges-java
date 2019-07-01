@@ -4,14 +4,14 @@ import bridges.base.Symbol;
 import org.json.simple.JSONObject;
 
 
-/*
+/**
  * @brief This class defines a rectangle and is part of the symbol collection.
  *		A rectangle has height and width
  *
  * @author Kalpathi Subramanian
  * @date 12/24/18
  *
-*/
+ */
 public class Circle extends Symbol {
 
 	private String shape = "circle";

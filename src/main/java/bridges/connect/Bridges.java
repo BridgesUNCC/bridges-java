@@ -1,3 +1,54 @@
+package bridges.connect;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import org.json.simple.JSONValue;
+
+import bridges.base.*;
+import bridges.data_src_dependent.*;
+import bridges.validation.*;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
+import javax.xml.crypto.Data;
+
+
+/**
+ * 	@brief The Bridges class is the main class that provides interfaces to datasets,
+ *	maintains user and assignment information, and connects to the Bridges server.
+ *
+ * 	The Bridges class is responsible  for initializing the Bridges system, specifying
+ * 	parameters (user id, assignment id, title, description, data structure
+ *	type, etc) for the student assignment, generating the data structure representation
+ *	and transmission to the Bridges server. In addition, it provides interfaces to
+ *	a number of real-world datasets, that makes it easy to access the data for use
+ * 	algorithms/data structure assignments. <br>
+ *
+ *  <b>Datasets.</b> The datasets that are currently supported through the BRIDGES API
+ *	include USGS Earthquake Data, IMDB Actor/Movie Data (2 versions), Gutenberg Book
+ *	Collection Meta Data, a Video Game Dataset and Shakespeare Dataset. More information
+ *	is found in the respective methods (below) and at <p>
+ *	http://bridgesuncc.github.io/datasets.html <p>
+ *
+ *	A typical Bridges program includes creating the Bridges object, followed by creation
+ *  of the data structure by the user, assigning visual attributes to elements of the
+ *	data structure, followed by specification of teh data structure type  and the
+ *	call to visualize the data structure (Bridges::setDataStructure() and visualize()
+ *	methods).
+ *
+ * 	@author Sean Gallagher, Kalpathi Subramanaian, Mihai Mehedint, David Burlinson.
+ *
+ * 	@date  1/16/17, 5/19/17
+ *
+ *	\sa Tutorial examples at <br>
+ *	http://bridgesuncc.github.io/Hello_World_Tutorials/Overview.html
+ */
+
+public class Bridges {
+
 	private static int assignmentDecimal = 0;
 	//	protected ADTVisualizer<K, E> visualizer;
 	private  Connector connector;
@@ -15,7 +66,7 @@
 	private static DataFormatter df;
 	private static String userName, vis_type,
 			title, description;
-	private static Integer MaxTitleSize = 50,
+	private static Integer MaxTitleSize = 200,
 						   MaxDescrSize = 1000;
 	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular"};
 
@@ -69,7 +120,6 @@
 	 *
 	 * Initialize Bridges
 	 *
-	 * @param <E>
 	 * @param assignment this is the assignmen id (integer)
 	 * @param appl_id    this is the appl authentication key(from the Bridges account)
 	 * @param username   this is the username (from the Bridges account)
@@ -109,7 +159,7 @@
 
 	/**
 	 *
-	 * @param descr description to annotate the visualization;
+	 * @param description description to annotate the visualization;
 	 *
 	 */
 	public void setDescription(String description) {
@@ -185,14 +235,14 @@
 	}
 
 	/**
-	 * 	@param check if the flag to output the JSON is set
+	 * 	@return check if the flag to output the JSON is set
 	**/
 	public boolean visualizeJSON() {
 		return json_flag;
 	}
 
 	/**
-	 * 	@param set the flag to print the JSON represenation of the data structure
+	 * 	@param flag the flag to print the JSON represenation of the data structure
 	 *		to standard output
 	 **/
 	public void setVisualizeJSON (boolean flag) {
@@ -207,7 +257,6 @@
 	 *  More information on the dataset can be found at <p>
 	 *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *
-	 *  @param name   USGS account name - must be "earthquake" to create account
 	 *	@param maxElements  the number of earthquake records retrieved, limited to 5000
 	 *  @throws Exception if the request fails
 	 *
@@ -226,8 +275,6 @@
 	 *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *  for more information and to look at the dataset.
 	 *
-	 *  @param maxElements  the number of actor/movie pairs(but currently unused),
-	 *	 							returns all records.
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of ActorMovieIMDB objects, but only actor,  movie, movie genre
@@ -248,9 +295,6 @@
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *  for more information and to look at the dataset.
 	 *
-	 *  @param name   should be "IMDB"
-	 *  @param maxElements  the number of actor/movie pairs, but currently unused,
-	 *	 	returns all records.
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of ActorMovieIMDB objects
@@ -376,6 +420,59 @@
 		return DataFormatter.getCancerIncidenceData();
 	}
 
+	/***
+	 * This function obtains the JSON representation of a particular subassignment.
+	 *
+	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 * @param subassignment the ID of the subassignment to get
+	 ***/
+	public String getAssignmentJSON(String user, int assignment, int subassignment) throws IOException {
+		return DataFormatter.getAssignment(this.connector.server_url, user, assignment, subassignment);
+	}
+	/***
+	 * This function obtains the JSON representation of a particular subassignment.
+	 *
+	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 ***/
+	public String getAssignmentJSON(String user, int assignment) throws IOException {
+		return getAssignmentJSON(user, assignment, 0);
+	}
+	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	 *
+	 * @return the ColorGrid stored in the bridges server
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 * @param subassignment the ID of the subassignment to get
+	 **/
+	public bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment, int subassignment)
+	throws IOException {
+		return DataFormatter.getColorGridFromAssignment(this.connector.server_url, user, assignment, subassignment);
+	}
+
+	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	 *
+	 * @return the ColorGrid stored in the bridges server
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 **/
+	public bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment) throws IOException {
+		return getColorGridFromAssignment(user, assignment, 0);
+	}
+
+	/**
+	 * Fetches Open Street Map data for a given location
+	 * @param location, name of city or area that the server supports
+	 * @return OsmData, vertices and edges of Open Street Map data
+	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 */
+	public static bridges.data_src_dependent.OsmData getOsmData(String location) throws IOException {
+		return DataFormatter.getOsmData(location);
+	}
+
 	/**
 	 *	Get the assignment id
 	 *
@@ -390,6 +487,11 @@
 			String.valueOf(assignment_part);
 	}
 
+	public static int getAssignmentID() {
+	    return assignment;
+	}
+
+    
 	/**
 	 *	set the assignment id
 	 *
@@ -528,11 +630,12 @@
 			case "BinaryTree":
 			case "BinarySearchTree":
 			case "AVLTree":
-			case "KDTree":
+			case "KdTree":
 				nodes_links_str =
 					((TreeElement) ds_handle).getDataStructureRepresentation();
 				break;
 			case "GraphAdjacencyList":
+			case "largegraph":
 				nodes_links_str =
 					((GraphAdjList) ds_handle).getDataStructureRepresentation();
 				break;

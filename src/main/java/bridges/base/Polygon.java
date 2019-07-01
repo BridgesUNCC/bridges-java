@@ -5,14 +5,14 @@ import bridges.base.Symbol;
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
-/*
+/**
  * @brief This class defines a rectangle and is part of the symbol collection.
  *		A rectangle has height and width
  *
  * @author David Burlinson, Kalpathi Subramanian
  * @date 12/23/18
  *
-*/
+ */
 public class Polygon extends Symbol {
 
 	private String shape = "polygon";

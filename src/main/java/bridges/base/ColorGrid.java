@@ -109,7 +109,7 @@ public class ColorGrid extends Grid<Color> {
 			pos++;
 		}
 		totalCount += count;
-		imageBytes.put((byte)(count - 1));
+		imageBytes.put((byte) (count - 1));
 		imageBytes.put(last.getByteRepresentation());
 
 		if (totalCount != gridSize[0] * gridSize[1]) {

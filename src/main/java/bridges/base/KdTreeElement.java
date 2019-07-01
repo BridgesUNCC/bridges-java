@@ -124,7 +124,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *	@return  The date structure type as a string
 	 **/
 	public String getDataStructType() {
-		return "KDTree";
+		return "KdTree";
 	}
 
 	/**

@@ -291,7 +291,7 @@ public class Connector {
 	 * Form and throw a helpful error report as part of JSON traversal.
 	 * @param sequence   The traversal we wanted to make
 	 * @param cursor     Index into `sequence`, how far in the traversal we are
-	 * @param any_json   Any JSON object
+	 * @param original_obj   Any JSON object
 	 * @param report     Statement of what went wrong.
 	 * @throws IOException
 	 */
@@ -324,7 +324,7 @@ public class Connector {
 	 * ["quoted string"] to get an object attribute
 	 *
 	 * @param sequence
-	 * @param o
+	 * @param original
 	 */
 	public Object safeJSONTraverse(
 		String sequence,
@@ -529,6 +529,17 @@ public class Connector {
 		return executeHTTPRequest(req);
 	}
 
+	/**
+	 * Execute a GET request to the url passed to the function
+	 * @param url
+	 * @return String
+	 * @throws RateLimitException
+	 * @throws IOException
+	 */
+	private String getRaw(String url) throws RateLimitException, IOException {
+		Request req = Request.Get(url);
+		return executeHTTPRequest(req);
+	}
 
 	/**
 	 * Execute a request of earthquakes to https://earthquakes-uncc.herokuapp.com/eq/

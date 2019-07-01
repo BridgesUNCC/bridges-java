@@ -1,21 +1,19 @@
 package bridges.connect;
 
+
+import java.io.File;
 import java.io.IOException;
 import java.lang.Exception;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Vector;
 
+import com.google.gson.JsonParseException;
+import org.apache.http.client.ClientProtocolException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -24,19 +22,16 @@ import bridges.base.*;
 import bridges.validation.*;
 import bridges.data_src_dependent.*;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
-
 import com.google.gson.Gson;
 import com.google.common.net.UrlEscapers;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.client.HttpClient;
 import org.apache.http.util.EntityUtils;
+import org.apache.commons.codec.binary.Base64;
 //import com.google.code.gson.Gson;
 
 /**
@@ -44,9 +39,7 @@ import org.apache.http.util.EntityUtils;
  *
  * Initialize this class before using it, and call complete() afterward.
  *
- * @author Sean Gallagher
- * @param <E>
- * @secondAuthor Mihai Mehedint
+ * @author Sean Gallagher, Mihai Mehedint
  */
 public class DataFormatter {
 
@@ -124,7 +117,7 @@ public class DataFormatter {
 	/**
 	 * Idiom for enabling ordered iteration on any map.
 	 * The reason for this is to make the strings compare equal for testing
-	 * @param values
+	 * @param map
 	 * @return
 	 */
 	static <K extends Comparable<K>, V> List<Entry<K, V>> sorted_entries(
@@ -172,7 +165,6 @@ public class DataFormatter {
 	 * @param identifier holds the name of the
 	 * @param max holds the max number of tweets
 	 * @return
-	 * @throws MyExceptionClass
 	 */
 	public static List<Tweet> getAssociations(TwitterAccount identifier, int max) {
 		try {
@@ -189,7 +181,6 @@ public class DataFormatter {
 	 * @param identifier holds the name of the
 	 * @param max holds the max number of earthquakes
 	 * @return
-	 * @throws MyExceptionClass
 	 */
 	public static List<EarthquakeUSGS> getAssociations(USGSaccount identifier, int max) {
 		try {
@@ -248,10 +239,11 @@ public class DataFormatter {
 	}
 
 	/** List the user's followers as more FollowGraphNodes.
-	    Limit the result to `max` followers. Note that results are batched, so
-	    a large `max` (as high as 200) _may_ only count as one request.
-	    See DataFormatters.followgraph() for more about rate limiting.
-	 * @throws IOException */
+	 *  Limit the result to `max` followers. Note that results are batched, so
+	 *  a large `max` (as high as 200) _may_ only count as one request.
+	 *  See DataFormatters.followgraph() for more about rate limiting.
+	 * @throws IOException
+	 */
 	static List<Follower> followers(Follower id, int max)
 	throws RateLimitException {
 		if (failsafe) {
@@ -291,8 +283,8 @@ public class DataFormatter {
 	 * Limit the result to `max` followers. Note that results are batched, so
 	 * a large `max` (as high as 500) _may_ only count as one request.
 	 * See DataFormatters.followgraph() for more about rate limiting.
-	 * @throws MyExceptionClass
-	 * @throws IOException */
+	 * @throws IOException
+	 */
 	private static List<Tweet> getTwitterTimeline(TwitterAccount id, int max)
 	throws RateLimitException {
 		if (failsafe) {
@@ -404,7 +396,6 @@ public class DataFormatter {
 	 * @param aList holds the reference to the current list of tweets
 	 * @param max the number of tweets in the new batch of tweets
 	 * @return the list of tweets containing the old and the new batch of tweets
-	 * @throws MyExceptionClass
 	 */
 	public static List<Tweet> next(List<Tweet> aList, int max) {
 		max = validNumberOfTweets(max);
@@ -427,7 +418,6 @@ public class DataFormatter {
 	 * @param aList holds the reference to the current list of eq
 	 * @param max the number of eq in the new batch of eq
 	 * @return the list of eq containing the old and the new batch of tweets
-	 * @throws MyExceptionClass
 	 */
 	public static List<EarthquakeUSGS> next(List<EarthquakeUSGS> aList, int max, USGSaccount acu) {
 		max = validNumberOfTweets(max);//same validator as for the tweets
@@ -447,7 +437,6 @@ public class DataFormatter {
 	 * Check the validity of number of Tweets requested
 	 * @param max the number of tweets
 	 * @return returns true if the number is in the range 0 - 500
-	 * @throws MyExceptionClass otherwise
 	 */
 	public static int validNumberOfTweets(int max) {
 		//check if max is valid
@@ -580,32 +569,42 @@ public class DataFormatter {
 		DataFormatter.backend = backend;
 	}
 
+	private static HttpResponse makeRequest(String url) throws ClientProtocolException, IOException {
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpGet request = new HttpGet(UrlEscapers.urlFragmentEscaper().escape(url));
+		return client.execute(request);
+	}
+
+	private static JSONArray unwrapJSONArray(HttpResponse response, String get) throws IOException {
+		String result = EntityUtils.toString(response.getEntity());
+		JSONObject full = (JSONObject)JSONValue.parse(result);
+		return (JSONArray)full.get(get);
+	}
+
+	private static JSONArray unwrapJSONArray(HttpResponse response) throws IOException {
+		return	unwrapJSONArray(response, "data");
+	}
 	/**
 	 *  Get USGS earthquake data
 	 *  USGS Tweet data (https://earthquake.usgs.gov/earthquakes/map/)
 	 *  retrieved, formatted into a list of EarthquakeUSGS objects
 	 *
-	 *  @param name   USGS account name - must be "earthquake" to create account
-	 *  @param maxElements  the number of earthquake records retrieved, limited to 5000
+	 *  @param maxElem  the number of earthquake records retrieved, limited to 5000
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of earthquake records
 	 */
 
 	public static ArrayList<EarthquakeUSGS> getEarthquakeUSGSData(
-		int maxElem) throws Exception {
+		int maxElem) throws IOException {
 
 		String url = "http://earthquakes-uncc.herokuapp.com/eq/latest/" + maxElem;
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("Earthquakes");
+			JSONArray json = unwrapJSONArray(response, "Earthquakes");
 
 			ArrayList<EarthquakeUSGS> eq_list =
 				new ArrayList<EarthquakeUSGS>(json.size());
@@ -629,21 +628,27 @@ public class DataFormatter {
 			return eq_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
+	static ActorMovieIMDB parseActorMovieIMDB(JSONObject item) {
+		ActorMovieIMDB am_pair = new ActorMovieIMDB();
+		am_pair.setActor((String) item.get("actor"));
+		am_pair.setMovie((String) item.get("movie"));
+		return am_pair;
+	}
 	/**
 	 *  Get ActorMovie IMDB Data
 	 *  retrieved, formatted into a list of ActorMovieIMDB objects
 	 *
-	 *  @param maxElements  the number of actor/movie pairs
+	 *  @param maxElem the number of actor/movie pairs
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of ActorMovieIMDB objects, but only actor and movie fields
 	 * 				in this version
 	 */
-	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData(int maxElem) throws Exception, IllegalArgumentException {
+	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData(int maxElem) throws IOException, IllegalArgumentException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb";
 
@@ -654,32 +659,25 @@ public class DataFormatter {
 			throw new IllegalArgumentException("Must provide a valid number of Actor/Movie pairs to return.");
 		}
 
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response, "data");
 
 			ArrayList<ActorMovieIMDB> am_list =
 				new ArrayList<ActorMovieIMDB>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
-				ActorMovieIMDB am_pair = new ActorMovieIMDB();
-
-				am_pair.setActor((String) item.get("actor"));
-				am_pair.setMovie((String) item.get("movie"));
+				ActorMovieIMDB am_pair = parseActorMovieIMDB(item);
 				am_list.add(am_pair);
 			}
 			return am_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
@@ -694,29 +692,22 @@ public class DataFormatter {
 	 *
 	 */
 	public static ArrayList<ActorMovieIMDB> getActorMovieIMDBData2 ()
-	throws Exception {
+	throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb2";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<ActorMovieIMDB> am_list =
 				new ArrayList<ActorMovieIMDB>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
 
-				ActorMovieIMDB am_pair = new ActorMovieIMDB();
-
-				am_pair.setActor((String) item.get("actor"));
-				am_pair.setMovie((String) item.get("movie"));
+				ActorMovieIMDB am_pair = parseActorMovieIMDB(item);
 				am_pair.setMovieRating(((Number) item.get("rating")).doubleValue());
 				JSONArray genre = (JSONArray) item.get("genres");
 
@@ -729,7 +720,7 @@ public class DataFormatter {
 			return am_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
@@ -745,19 +736,15 @@ public class DataFormatter {
 	 *
 	 */
 	public static ArrayList<GutenbergBook> getGutenbergBookMetaData ()
-	throws Exception {
+	throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/books";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<GutenbergBook> gb_list =
 				new ArrayList<GutenbergBook>(json.size());
@@ -802,7 +789,7 @@ public class DataFormatter {
 			return gb_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 	/**
@@ -817,19 +804,15 @@ public class DataFormatter {
 	 *  @return a list of Game objects,
 	 *
 	 */
-	public static ArrayList<Game> getGameData() throws Exception {
+	public static ArrayList<Game> getGameData() throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/games";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<Game> game_list =
 				new ArrayList<Game>(json.size());
@@ -854,8 +837,19 @@ public class DataFormatter {
 			return game_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
+	}
+
+	private static Song parseSong(JSONObject songJSON) {
+		Song song = new Song();
+		song.setArtist((String) songJSON.get("artist"));
+		song.setSongTitle((String) songJSON.get("song"));
+		song.setAlbumTitle((String) songJSON.get("album"));
+		song.setLyrics((String) songJSON.get("lyrics"));
+		song.setReleaseDate(((String) songJSON.get("release_date")));
+
+		return song;
 	}
 	/**
 	 *
@@ -871,32 +865,21 @@ public class DataFormatter {
 	 *  @return a list of Song objects,
 	 *
 	 */
-	public static ArrayList<Song> getSongData() throws Exception {
+	public static ArrayList<Song> getSongData() throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/songs";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<Song> song_list =
 				new ArrayList<Song>(json.size());
 			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject)json.get(i);
-
-				Song song = new Song();
-
-				song.setArtist((String) item.get("artist"));
-				song.setSongTitle((String) item.get("song"));
-				song.setAlbumTitle((String) item.get("album"));
-				song.setLyrics((String) item.get("lyrics"));
-				song.setReleaseDate(((String) item.get("release_date")));
+				Song song = parseSong(item);
 
 				song_list.add(song);
 
@@ -904,7 +887,7 @@ public class DataFormatter {
 			return song_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 	/**
@@ -921,7 +904,8 @@ public class DataFormatter {
 	 *  @return a Song object,
 	 *
 	 */
-	public static Song getSong(String songTitle, String artistName) throws Exception {
+	public static Song getSong(String songTitle, String artistName)
+	throws IOException {
 		String url = "https://bridgesdata.herokuapp.com/api/songs/find/";
 
 		// add the song title to the query url
@@ -929,7 +913,7 @@ public class DataFormatter {
 			url += songTitle;
 		}
 		else {
-			throw new Exception("Must provide a valid song title.");
+			throw new IllegalArgumentException("Must provide a valid song title.");
 		}
 		// add the artist name as a query variable where appropriate
 		if (artistName.length() > 0) {
@@ -937,29 +921,275 @@ public class DataFormatter {
 		}
 
 		// Create and execute the HTTP request
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(UrlEscapers.urlFragmentEscaper().escape(url));
-		HttpResponse response = client.execute(request);
-		String res = new String();
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 		String result = EntityUtils.toString(response.getEntity());
 
 		if (status == 200) 	{
 			JSONObject songJSON = (JSONObject)JSONValue.parse(result);
-
-			Song song = new Song();
-			song.setArtist((String) songJSON.get("artist"));
-			song.setSongTitle((String) songJSON.get("song"));
-			song.setAlbumTitle((String) songJSON.get("album"));
-			song.setLyrics((String) songJSON.get("lyrics"));
-			song.setReleaseDate(((String) songJSON.get("release_date")));
+			Song song = parseSong(songJSON);
 
 			return song;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status + ". Message: " + result);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status + ". Message: " + result);
 		}
+	}
+
+	/* Due to the nature of how Java handles numbers, Bytes range from -128 to 127, which is problematic for
+	 * Bridges Color objects which store RGB as 0-255. This function translates 4 bytes into a Bridges Color object,
+	 * taking these factors into account.
+	 * This function may be useful to add directly to the Color class, but it may only be needed in this case, where
+	 * we need to convert an array of bytes into a ColorGrid.
+	 */
+	private static Color getColorFromSignedBytes(byte r, byte g, byte b, byte a) {
+		int R, G, B, A;
+		R = r < 0 ? 256 + r : r;
+		G = g < 0 ? 256 + g : g;
+		B = b < 0 ? 256 + b : b;
+		A = a < 0 ? 256 + a : a;
+
+		float alpha = A / 255.0f;
+		return new Color(R, G, B, alpha);
+	}
+	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	 *
+	 * @return the ColorGrid stored in the bridges server
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 * @param subassignment the ID of the subassignment to get
+	 **/
+	static bridges.base.ColorGrid getColorGridFromAssignment(String server,
+		String user,
+		int assignment,
+		int subassignment
+	) throws IOException {
+		String response = getAssignment(server, user, assignment, subassignment);
+
+		Gson gson = new Gson();
+		Assignment assignmentObject;
+		try {
+			// parse JSON into a BridgesAssignment object
+			assignmentObject = gson.fromJson(response, Assignment.class);
+		}
+		catch (Exception e) {
+			throw new JsonParseException("Malformed JSON: Unable to Parse");
+		}
+		if (!assignmentObject.assignment_type.equals("ColorGrid"))
+			throw new RuntimeException("Malformed ColorGrid JSON: not a ColorGrid");
+
+		if (assignmentObject.data.length != 1)
+			throw new RuntimeException("Malformed JSON: data is malformed");
+
+		AssignmentData data = assignmentObject.data[0];
+
+		String encoding = data.encoding;
+		// handle ColorGrids posted before encoding field was added
+		if (encoding == null)
+			encoding = "RAW";
+
+		if (!encoding.equals("RLE") && !encoding.equals("RAW"))
+			throw new RuntimeException("Malformed ColorGrid JSON: encoding not supported :" + encoding);
+
+		int[] dims = data.dimensions;
+		if (dims.length != 2)
+			throw new RuntimeException("Malformed ColorGrid JSON: dimensions are malformed");
+		int dimx = dims[0];
+		int dimy = dims[1];
+
+		if (data.nodes.length != 1)
+			throw new RuntimeException("Malformed ColorGrid JSON: nodes are malformed");
+		Object node = data.nodes[0];
+		String nodeString;
+		if (node instanceof String)
+			nodeString = (String) node;
+		else
+			throw new RuntimeException("Malformed ColorGrid JSON: node is not a String");
+
+		byte[] decoded = Base64.decodeBase64(nodeString);
+		ColorGrid cg = new ColorGrid(dimx, dimy);
+
+		if (encoding.equals("RAW")) {
+			if (decoded.length < dimx * dimy * 4)
+				throw new RuntimeException("Malformed ColorGrid JSON: nodes is smaller than expected");
+
+			int base = 0;
+
+			for (int x = 0; x < dimx ; ++x) {
+				for (int y = 0; y < dimy; ++y) {
+					Color c = getColorFromSignedBytes(decoded[base],
+							decoded[base + 1],
+							decoded[base + 2],
+							decoded[base + 3]
+						);
+
+					cg.set(x, y, c);
+					base += 4;
+				}
+			}
+
+		}
+		else if (encoding.equals("RLE")) {
+			int currentInDecoded = 0;
+			int currentInCG = 0;
+			while (currentInDecoded != decoded.length) {
+				if (decoded.length % 5 != 0)
+					throw new RuntimeException("Malformed ColorGrid JSON: nodes is not a multiple of 5");
+
+				int repeat = decoded[currentInDecoded++];
+				if (repeat < 0)
+					repeat = 256 + repeat;
+
+				Color c = getColorFromSignedBytes(decoded[currentInDecoded++],
+						decoded[currentInDecoded++],
+						decoded[currentInDecoded++],
+						decoded[currentInDecoded++]);
+
+				while (repeat >= 0) {
+					int posX = currentInCG / dimy;
+					int posY = currentInCG % dimy;
+					if (posX >= dimx || posY >= dimy)
+						throw new RuntimeException("Malformed ColorGrid JSON: Too much data in nodes");
+
+					cg.set(posX, posY, c);
+					currentInCG++;
+					repeat--;
+				}
+			}
+
+			if (currentInCG != dimx * dimy)
+				throw new RuntimeException("Malformed ColorGrid JSON: Not enough data in nodes");
+		}
+
+		return cg;
+	}
+
+	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	 *
+	 * @return the ColorGrid stored in the bridges server
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 **/
+	static bridges.base.ColorGrid getColorGridFromAssignment(String server, String user, int assignment)
+	throws IOException {
+		return getColorGridFromAssignment(server, user, assignment, 0);
+	}
+
+	/***
+	 * This function obtains the JSON representation of a particular subassignment.
+	 *
+	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 * @param subassignment the ID of the subassignment to get
+	 ***/
+	static String getAssignment(String server, String user, int assignment, int subassignment)
+	throws IOException {
+		String leadingZero = subassignment > 10 ? "" : "0";
+		String url = String.format("%s/assignmentJSON/%d.%s%d/%s", server, assignment, leadingZero, subassignment, user);
+		HttpResponse resp = makeRequest(url);
+		int status = resp.getStatusLine().getStatusCode();
+		String result = EntityUtils.toString(resp.getEntity());
+		if (status == 200) 	{
+			return result;
+		}
+		else {
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status + ". Message: " + result);
+		}
+	}
+	/***
+	 * This function obtains the JSON representation of the first subassignment of an assignment.
+	 *
+	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
+	 * @param user the name of the user who uploaded the assignment
+	 * @param assignment the ID of the assignment to get
+	 ***/
+	static String getAssignment(String server, String user, int assignment) throws IOException, Exception {
+		return getAssignment(server, user, assignment, 0);
+	}
+
+	/***
+	 * Fetches Open Street Map data for a given location
+	 * @param location, name of city or area that the server supports
+	 * @return OsmData, vertices and edges of Open Street Map data
+	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 */
+	static OsmData getOsmData(String location) throws IOException {
+		File cache_dir = new File("./bridges_data_cache");
+
+		boolean has_cache = true;
+		// make cache if does not exist
+		if (!cache_dir.exists()) {
+			if(!cache_dir.mkdir()) {
+				System.err.println("Error creating cache directory");
+				has_cache = false;
+			}
+		}
+
+		// look for file in cache
+		String content = null;
+		if (has_cache) {
+			for (File file : cache_dir.listFiles()) {
+				if (file.getName().equals(location + ".json")) {
+					content = new String(Files.readAllBytes(file.toPath()));
+				}
+			}
+		}
+
+		// if not in cache, hit server for data
+		if (content == null) {
+			String url = "https://osm-api.herokuapp.com/name/" + location;
+			HttpResponse resp = makeRequest(url);
+			int status = resp.getStatusLine().getStatusCode();
+			content = EntityUtils.toString(resp.getEntity());
+			if (status != 200) {
+				if (status == 404) {
+					// attempt to get valid names
+					url = "https://osm-api.herokuapp.com/name_list";
+					resp = makeRequest(url);
+					status = resp.getStatusLine().getStatusCode();
+					if (status == 200) {
+						content = EntityUtils.toString(resp.getEntity());
+						throw new RuntimeException("Invalid name: " + location + "\nValid names:" + content);
+					}
+				}
+				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
+			}
+			Files.write(Paths.get("./bridges_data_cache/" + location + ".json"), content.getBytes());
+		}
+
+		// parse that data
+		Gson gson = new Gson();
+		OsmServerResponse respObject;
+		try {
+			respObject = gson.fromJson(content, OsmServerResponse.class);
+		}
+		catch (Exception e) {
+			throw new JsonParseException("Malformed JSON: Unable to Parse");
+		}
+
+		// vertex list
+		OsmVertex[] vertices = new OsmVertex[respObject.nodes.length];
+		HashMap<Double, Integer> vert_map = new HashMap<>();
+		for (int i = 0; i < vertices.length; ++i) {
+			Double[] node = respObject.nodes[i];
+			vert_map.put(node[0], i);
+			vertices[i] = new OsmVertex(node[1], node[2]);
+		}
+
+		// edge list
+		OsmEdge[] edges = new OsmEdge[respObject.edges.length];
+		for (int i = 0; i < edges.length; ++i) {
+			Double[] edge = respObject.edges[i];
+			Double id_from = edge[0];
+			Double id_to = edge[1];
+			Double dist = edge[2];
+			edges[i] = new OsmEdge(vert_map.get(id_from), vert_map.get(id_to), dist);
+		}
+
+		OsmData ret_data = new OsmData(vertices, edges, respObject.meta.name);
+		return ret_data;
 	}
 
 	/**
@@ -977,7 +1207,7 @@ public class DataFormatter {
 	 *  @return an array of Shakespeare objects
 	 *
 	 */
-	public static ArrayList<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
+	public static ArrayList<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws IOException {
 		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";
 
 		if (works == "plays" || works == "poems") {
@@ -988,16 +1218,12 @@ public class DataFormatter {
 			url += "?format=simple";
 		}
 
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject full = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray)full.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<Shakespeare> shksp_list =
 				new ArrayList<Shakespeare>(json.size());
@@ -1014,23 +1240,19 @@ public class DataFormatter {
 			return shksp_list;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
-	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws Exception {
+	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations?limit=10";
-		DefaultHttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-		HttpResponse response = client.execute(request);
+		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
 
 		if (status == 200) 	{
-			String result = EntityUtils.toString(response.getEntity());
-			JSONObject j_obj = (JSONObject)JSONValue.parse(result);
-			JSONArray json = (JSONArray) j_obj.get("data");
+			JSONArray json = unwrapJSONArray(response);
 
 			ArrayList<CancerIncidence> canc_objs =
 				new ArrayList<CancerIncidence>(json.size());
@@ -1068,8 +1290,9 @@ public class DataFormatter {
 			return canc_objs;
 		}
 		else {
-			throw new Exception("HTTP Request Failed. Error Code: " + status);
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
 
 } // end of DataFormatter
+

@@ -2,6 +2,9 @@ package bridges.data_src_dependent;
 
 /**
  *
+ *  @brief United States Cancer Statistics from the U.S. Center for
+ *  Disease Control
+ *
  * 	From the United States Cancer Statistics as part of the U.S. Center for
  *	Disease Control, the following data set focuses on the crude rate for
  *	all types of cancer reported for different demograpic groups.
