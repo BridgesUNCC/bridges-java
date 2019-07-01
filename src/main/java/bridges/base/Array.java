@@ -52,39 +52,44 @@ public class Array<E> extends DataStruct {
 		setDimensions(dims);
 	}
 	/**
-	 *  Create an 1D array object 
+	 *  Create an 1D array object
 	 *
 	 *  @param num_elements in the array
 	 *
 	 */
 	public Array(int num_elements) {
 		setNumDimensions(1);
-		dims[0] = num_elements; dims[1] = dims[2] = 1;
+		dims[0] = num_elements;
+		dims[1] = dims[2] = 1;
 		setDimensions(dims);
 	}
 	/**
-	 *  Create an 2D array object 
+	 *  Create an 2D array object
 	 *
 	 *  @param x_dim number of elements along dimension 1
-	 *  @param y_dim number of elements along dimension 1
+	 *  @param y_dim number of elements along dimension 2
 	 *
 	 */
 	public Array(int x_dim, int y_dim) {
 		setNumDimensions(2);
-		dims[0] = x_dim; dims[1] = y_dim; dims[2] = 1;
+		dims[0] = x_dim;
+		dims[1] = y_dim;
+		dims[2] = 1;
 		setDimensions(dims);
 	}
 	/**
-	 *  Create an 3D array object 
+	 *  Create an 3D array object
 	 *
 	 *  @param x_dim number of elements along dimension 1
-	 *  @param y_dim number of elements along dimension 1
-	 *  @param z_dim number of elements along dimension 1
+	 *  @param y_dim number of elements along dimension 2
+	 *  @param z_dim number of elements along dimension 3
 	 *
 	 */
 	public Array(int x_dim, int y_dim, int z_dim) {
 		setNumDimensions(3);
-		dims[0] = x_dim; dims[1] = y_dim; dims[2] = z_dim;
+		dims[0] = x_dim;
+		dims[1] = y_dim;
+		dims[2] = z_dim;
 		setDimensions(dims);
 	}
 	/**
@@ -189,7 +194,7 @@ public class Array<E> extends DataStruct {
 	 *	@return Element<E>  object at x, y
 	 */
 	public Element<E> getElement(int x, int y) {
-		return array_data[y*dims[1]+ x];
+		return array_data[y * dims[1] + x];
 	}
 	/**
 	 *
@@ -197,12 +202,12 @@ public class Array<E> extends DataStruct {
 	 *
 	 *	@param x  - column index
 	 *	@param y  - row index
-	 *	@param z  - slice index 
- 	 *
+	 *	@param z  - slice index
+	 *
 	 *	@return Element<E>  object at x, y, z
 	 */
 	public Element<E> getElement(int x, int y, int z) {
-		return array_data[z*dims[0]*dims[1] + y*dims[0] + x];
+		return array_data[z * dims[0] * dims[1] + y * dims[0] + x];
 	}
 
 	/**

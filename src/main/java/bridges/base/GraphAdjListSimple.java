@@ -6,16 +6,16 @@ import bridges.base.GraphAdjList;
  *
  *	@brief The GraphAdjListSimple class is a simplification of the
  *	GraphAdjList class; this class is useful in applications where vertex
- *	and edge specific information is not used; this class is thus a 
+ *	and edge specific information is not used; this class is thus a
  *	specialization of GraphAdjList with only a single generic parameter that
- *	specifies the key type.	
+ *	specifies the key type.
  *
- *	The GraphAdjListSimple class can be used to represent adjacency list based  
+ *	The GraphAdjListSimple class can be used to represent adjacency list based
  *	graphs in BRIDGES; it takes 1 generic parameter: K, which is an orderable
- *	key value used in accessing vertices and edges (in constant time) using 
- *	hashmaps. This permits data sets that need to be accessed by keys that are 
+ *	key value used in accessing vertices and edges (in constant time) using
+ *	hashmaps. This permits data sets that need to be accessed by keys that are
  *	strings. Vertex and edge specific information can still be represented, but
- *	they will be restricted to be of type K. 
+ *	they will be restricted to be of type K.
  *
  *	The class is simply a wrapper  around the Java Hashmap class
  *	and, thus, derives all its operations from it.
@@ -27,7 +27,7 @@ import bridges.base.GraphAdjList;
  *	vertex id, weight) in the Edge structure, defined separately. Adjacency lists
  *	are singly linked lists using the BRIDGES SLelement.
  *
- *	Convenience methods are provided to add vertices and edges to the graph as 
+ *	Convenience methods are provided to add vertices and edges to the graph as
  *	well as retrieve the adjacency list of a vertex, given its id. Methods
  *	to access and set visual attributes are also provided, indexed by the vertex
  *	ids.

@@ -27,9 +27,9 @@ import java.util.Map.Entry;
  *	class structure.
  *
  *  Convenience methods are provided to add vertices and edges to the graph. Edges
- *  are retrieved by using the dual hashmap, given the vertex ids of the edge. 
+ *  are retrieved by using the dual hashmap, given the vertex ids of the edge.
  *	Methods to access the element and link visualizer are now provided, indexed
- *  vertex ids, making it easier to set visual attributes to graph nodes and 
+ *  vertex ids, making it easier to set visual attributes to graph nodes and
  *	links.
  *
  *  @author Kalpathi Subramanian, Mihai Mehedint
@@ -89,13 +89,13 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		vertices.put(k, new Element<E1>(e));
 		vertices.get(k).setLabel((String) k);
 
-							// create a hashmap for this vertex
+		// create a hashmap for this vertex
 		matrix.put(k, new HashMap<K, Integer>());
-							// create a hashmap for edge data for this vertex
+		// create a hashmap for edge data for this vertex
 		edge_data.put(k, new HashMap<K, E2>());
 
 
-							// fill up this vertex's row and column elements
+		// fill up this vertex's row and column elements
 		for (Entry<K, Element<E1>> el : vertices.entrySet()) {
 			(matrix.get(k)).put(el.getKey(), 0); // row
 			(matrix.get(el.getKey())).put(k, 0); // col
@@ -106,7 +106,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	 *
 	 *	Adds a new edge to the graph, adds it to the index corresponding to
 	 *	the source, destination vertex ids;  this version of the method assumes
-	 *	an edge weight of 1 (unweighted graph); user is responsible for 
+	 *	an edge weight of 1 (unweighted graph); user is responsible for
 	 *	checking if the vertices already exist, else an exception is thrown.
 	 *
 	 *	@param src - source vertex of edge
@@ -114,8 +114,8 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	 *
 	 */
 	public void addEdge(K src, K dest) {
-					// check to see if the two vertices exist, else
-					// throw an exception
+		// check to see if the two vertices exist, else
+		// throw an exception
 		try {
 			if (vertices.get(src) == null || vertices.get(dest) == null) {
 				throw new NullPointerException("Vertex " + src + " or " + dest +
@@ -138,8 +138,8 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	 *
 	 */
 	public void addEdge(K src, K dest, int weight) {
-					// check to see if the two vertices exist, else
-					// throw an exception
+		// check to see if the two vertices exist, else
+		// throw an exception
 		try {
 			if (vertices.get(src) == null || vertices.get(dest) == null) {
 				throw new NullPointerException("Vertex " + src + " or " + dest +
@@ -153,7 +153,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	}
 	/**
 	 *	Sets data for a graph vertex
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *	@param data - vertex data
@@ -174,7 +174,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	}
 	/**
 	 *	Gets data for an edge
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *
@@ -184,7 +184,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 
 		try {
 			if (vertices.get(src) == null) {
-				throw new NullPointerException("Vertex " + src + 
+				throw new NullPointerException("Vertex " + src +
 					" does not exist!");
 			}
 		}
@@ -195,7 +195,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	}
 	/**
 	 *	Sets data for an edge
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *	@param data - edge data
@@ -214,12 +214,12 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-							// add edge data
+		// add edge data
 		(edge_data.get(src)).put(dest, data);
 	}
 	/**
 	 *	Gets data for an edge
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *
@@ -275,7 +275,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	/**
 	 *
 	 *	 This is a convenience method to simplify access to the link visualizer;
-	 *	 the method assumes the vertex names point to existing vertices, 
+	 *	 the method assumes the vertex names point to existing vertices,
 	 *	 else an exception is thrown
 	 *
 	 */

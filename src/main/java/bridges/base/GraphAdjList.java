@@ -55,7 +55,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 
 	// holds the adjacency list of edges
 
-	private final HashMap < K, SLelement < Edge< K,E2 > > > adj_list;
+	private final HashMap < K, SLelement < Edge< K, E2 > > > adj_list;
 
 	/**
 	 *
@@ -148,7 +148,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	}
 	/**
 	 *	Sets data for a graph vertex
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *	@param data - vertex data
@@ -169,7 +169,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	}
 	/**
 	 *	Gets data for an edge
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *
@@ -179,7 +179,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 
 		try {
 			if (vertices.get(src) == null) {
-				throw new NullPointerException("Vertex " + src + 
+				throw new NullPointerException("Vertex " + src +
 					" does not exist!");
 			}
 		}
@@ -190,7 +190,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	}
 	/**
 	 *	Sets data for an edge
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *	@param data - edge data
@@ -209,7 +209,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-							// look for the edge
+		// look for the edge
 
 		SLelement<Edge<K, E2>> sle = adj_list.get(src);
 		while (sle != null) {
@@ -221,12 +221,12 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 			sle = sle.getNext();
 		}
 		if (sle == null)
-			throw new NullPointerException("Edge from " + src  + " to " 
-						+ dest + " does not exist!");
+			throw new NullPointerException("Edge from " + src  + " to "
+				+ dest + " does not exist!");
 	}
 	/**
 	 *	Gets data for an edge
-	 *	
+	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
 	 *
@@ -244,7 +244,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-							// look for the edge
+		// look for the edge
 		SLelement<Edge<K, E2>> sle = adj_list.get(src);
 		while (sle != null) {
 			K edge_dest = ((Edge<K, E2>) sle.getValue()).getVertex();
@@ -256,7 +256,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 			throw new NullPointerException("Edge from " + src + " to " + dest +
 				" does not exist!");
 
-				// should never reach here
+		// should never reach here
 		return null;
 	}
 	/**
