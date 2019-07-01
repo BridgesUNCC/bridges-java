@@ -67,12 +67,16 @@ public abstract class BlockingGame extends GameBase implements KeypressListener 
         sock.addListener(this);
         // associate the grid with the Bridges object
         bridges.setDataStructure(grid);
-        initialize();
     }
 
     // / calling this function starts the game engine.
     public void start() {
-	GameLoop();
-        render();
+
+        initialize();
+
+	while (true) {
+	    GameLoop();
+	    render();
+	}
     }
 }

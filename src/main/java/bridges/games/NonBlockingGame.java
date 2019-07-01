@@ -86,19 +86,31 @@ public abstract class NonBlockingGame extends GameBase {
         }
     }
 
+    // /sleeps so there is time between frames
+    private void sleepTimer(long timems) {
+        try {
+            Thread.sleep(timems); // wait for browser to connect
+        } catch (InterruptedException ie) {
+            quit();
+        }
+    }
+
+    
     // /should be called right before render() Aims at having a fixed
     // /fps of 30 frames per second. This work by waiting until
     // /1/30th of a second after the last call to this function.
     private void controlFrameRate() {
-        int fps = 20;
+        int fps = 30;
         double hz = 1. / fps;
 
         long currenttime = System.currentTimeMillis();
         long theoreticalnextframe = timeoflastframe + (int) (hz * 1000);
         long waittime = theoreticalnextframe - currenttime;
 
+	//System.out.println(waittime);
+	
         if (waittime > 0) {
-            sleepTimer();
+            sleepTimer(waittime);
         }
         timeoflastframe = System.currentTimeMillis();
     }

@@ -52,7 +52,8 @@ public abstract class GameBase {
 
         // /create a new color grid with random color
         grid = new GameGrid(c, r);
-
+	grid.setEncoding("rle");
+	
         // /set up socket connection to receive and send data
         sock = new SocketConnection();
         sock.setupConnection(bridges.getUserName(), bridges.getAssignment());
