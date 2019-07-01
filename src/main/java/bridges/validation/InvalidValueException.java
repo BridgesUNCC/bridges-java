@@ -16,5 +16,5 @@ public class InvalidValueException extends RuntimeException {
 	 * Auto-generated ID
 	 */
 	private static final long serialVersionUID = 8664177180092591999L;
-	
+
 }

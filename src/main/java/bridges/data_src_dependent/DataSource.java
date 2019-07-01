@@ -1,6 +1,6 @@
 package bridges.data_src_dependent;
 
-abstract class DataSource implements Source{
+abstract class DataSource implements Source {
 	protected String label;
 	@Override
 	public void setLabel(String label) {
@@ -17,17 +17,18 @@ abstract class DataSource implements Source{
 	 */
 	@Override
 	public int compareTo(DataSource o) {
-		if( o != null)
+		if ( o != null)
 			return this.getLabel().compareTo(o.getLabel());
-		else{
+		else {
 			try {
 				throw new ClassCastException("Expected an instance of DataSource or of its subclasses Actor, Movie, Tweet, etc. for the compareTo method.");
-			} catch (ClassCastException e) {
+			}
+			catch (ClassCastException e) {
 				e.printStackTrace();
 			}
 			return -1;
 		}
-			
+
 	}
 
 }

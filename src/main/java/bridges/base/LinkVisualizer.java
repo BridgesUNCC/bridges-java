@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Random;
+import org.json.simple.JSONValue;
 
 /**
  *  @brief This class maintains the visual attributes of links that join
@@ -74,8 +75,8 @@ public class LinkVisualizer {
 	// link weight
 	private double weight;
 
-	private final String INSERT_STRING = "\\n";
-	private final String DIVIDE_KEY = "(\r?\n)|(\n)|(\f)|(\r)|(%n)";
+	//    	private final String INSERT_STRING = "\\n";
+	//	private final String DIVIDE_KEY = "(\r?\n)|(\n)|(\f)|(\r)|(%n)";
 
 
 	public LinkVisualizer() {
@@ -110,36 +111,37 @@ public class LinkVisualizer {
 	 * @param label the link label to set
 	 */
 	public void setLabel(String label) {
-		this.label = arrangeLabel(label);
+		//		this.label = arrangeLabel(label);
+		this.label = label;
 	}
 
-	/**
-	 * This method formats the label string using a predefine pattern (DIVIDE_KEY) and
-	 * replaces the pattern with the string characters hold by the INSERT_STRING global
-	 *	variable
-	 *
-	 * @param label  the input label string
-	 *
-	 * @return  the formatted label
-	 */
-	public String arrangeLabel(String label) {
-		final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
-		Matcher match = myPattern.matcher(label);
-		if (!match.find())
-			return label;
-		else {
-			match.reset();
-			StringBuffer str = new StringBuffer();
-			while (match.find()) {
-				match.appendReplacement(str, Matcher.quoteReplacement(INSERT_STRING));
-			}
-			match.appendTail(str);
-			if (str.length() == 0)
-				return label;
-			else
-				return label = str.toString();
-		}
-	}
+	// /**
+	//  * This method formats the label string using a predefine pattern (DIVIDE_KEY) and
+	//  * replaces the pattern with the string characters hold by the INSERT_STRING global
+	//  *	variable
+	//  *
+	//  * @param label  the input label string
+	//  *
+	//  * @return  the formatted label
+	//  */
+	// public String arrangeLabel(String label) {
+	// 	final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
+	// 	Matcher match = myPattern.matcher(label);
+	// 	if (!match.find())
+	// 		return label;
+	// 	else {
+	// 		match.reset();
+	// 		StringBuffer str = new StringBuffer();
+	// 		while (match.find()) {
+	// 			match.appendReplacement(str, Matcher.quoteReplacement(INSERT_STRING));
+	// 		}
+	// 		match.appendTail(str);
+	// 		if (str.length() == 0)
+	// 			return label;
+	// 		else
+	// 			return label = str.toString();
+	// 	}
+	// }
 
 	/**
 	 * Set the thickness of the link in the Bridge Visualization in pixels; thickness
@@ -406,7 +408,7 @@ public class LinkVisualizer {
 		if (label != null && !label.isEmpty()) {
 			link_props += COMMA +
 				QUOTE + "label" + QUOTE + COLON +
-				QUOTE + this.getLabel() + QUOTE;
+				QUOTE + JSONValue.escape(this.getLabel()) + QUOTE;
 		}
 
 		return link_props;

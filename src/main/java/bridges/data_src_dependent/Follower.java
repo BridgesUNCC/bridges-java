@@ -1,30 +1,30 @@
 package bridges.data_src_dependent;
 
-public class Follower extends DataSource{
-	
-	public Follower(String aFollower){
+public class Follower extends DataSource {
+
+	public Follower(String aFollower) {
 		this.setLabel(aFollower);
 	}
-	
+
 	/**
 	 * This method returns the string name
 	 */
-	public String getName(){
+	public String getName() {
 		return this.getLabel();
 	}
-	
+
 	/**
 	 * This method sets the string name
 	 */
-	public void setName(String name){
+	public void setName(String name) {
 		this.setLabel(name);
 	}
-	
-	
+
+
 	/**
 	 * This method returns the string value
 	 */
-	public String toString(){
+	public String toString() {
 		return this.getName();
 	}
 
@@ -33,7 +33,7 @@ public class Follower extends DataSource{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((this.getName() == null) ? 0 : this.getName().hashCode());
+			+ ((this.getName() == null) ? 0 : this.getName().hashCode());
 		return result;
 	}
 
@@ -49,9 +49,10 @@ public class Follower extends DataSource{
 		if (this.getName() == null) {
 			if (other.getName() != null)
 				return false;
-		} else if (!this.getName().equals(other.getName()))
+		}
+		else if (!this.getName().equals(other.getName()))
 			return false;
 		return true;
 	}
-	
+
 }

@@ -1,8 +1,8 @@
 package bridges.data_src_dependent;
 
 
-public class RottenTomatos extends DataSource{
-	
+public class RottenTomatos extends DataSource {
+
 	/**
 	 * Constructor
 	 */
@@ -20,9 +20,9 @@ public class RottenTomatos extends DataSource{
 	public String getLabel() {
 		return super.getLabel();
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return this.getLabel();
 	}
 }

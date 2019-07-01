@@ -2,12 +2,12 @@ package bridges.data_src_dependent;
 
 /**
  *
- * 	From the United States Cancer Statistics as part of the U.S. Center for 
- *	Disease Control, the following data set focuses on the crude rate for 
- *	all types of cancer reported for different demograpic groups. 
+ * 	From the United States Cancer Statistics as part of the U.S. Center for
+ *	Disease Control, the following data set focuses on the crude rate for
+ *	all types of cancer reported for different demograpic groups.
  *	Significant groupings include age, gender, race and geographical area.
  *
- *	http://www.cdc.gov/cancer/npcr/uscs/download_data.htm 
+ *	http://www.cdc.gov/cancer/npcr/uscs/download_data.htm
  *  Data: Courtesy of Corgis Datasets, 2017
  *
  *  Author: Kalpathi Subramanian, April, 2017
@@ -15,27 +15,27 @@ package bridges.data_src_dependent;
  */
 
 
-public class CancerIncidence extends DataSource{
+public class CancerIncidence extends DataSource {
 
-	private double 
-			age_adjusted_rate,		 // expected cancer rate, adjusted for age
-			age_adjusted_rate_ci[], // confidence interval-lower,upper
-			crude_rate,				 // cancer rate adjusted by population 	
-			crude_rate_ci[];		 // confidence interval
+	private double
+	age_adjusted_rate,		 // expected cancer rate, adjusted for age
+	age_adjusted_rate_ci[], // confidence interval-lower,upper
+	crude_rate,				 // cancer rate adjusted by population
+	crude_rate_ci[];		 // confidence interval
 
-	private int  
-			count,					 // incidence count
-			year,					 // reporting year
-			population;				 // population of this area
+	private int
+	count,					 // incidence count
+	year,					 // reporting year
+	population;				 // population of this area
 
 	private String
-			gender, 				 // gender (male, female, male and female
-			race,					
-			event_type,				 // incidence, mortality
-			affected_area;			 // location, typically, state
+	gender, 				 // gender (male, female, male and female
+	race,
+	event_type,				 // incidence, mortality
+	affected_area;			 // location, typically, state
 
 	private double loc[];		 	// location (cartesian coords
-			
+
 
 	/**
 	 * The constructor
@@ -47,21 +47,21 @@ public class CancerIncidence extends DataSource{
 		crude_rate_ci = new double[] {0.0, 0.0};
 	}
 
-	public CancerIncidence(String canc_label){
+	public CancerIncidence(String canc_label) {
 		super.setLabel(canc_label);
 	}
-	
+
 	/**
 	 * This method returns the string name
 	 */
-	public String getName(){
+	public String getName() {
 		return super.getLabel();
 	}
-	
+
 	/**
 	 * This method sets the string name
 	 */
-	public void setName(String name){
+	public void setName(String name) {
 		super.setLabel(name);
 	}
 	/*
@@ -83,9 +83,9 @@ public class CancerIncidence extends DataSource{
 	public void setAgeAdjustedRate(double aar) {
 		age_adjusted_rate = aar;
 	}
-		
+
 	/*
-	 * Get the expected cancer rate confidence interval(lower), 
+	 * Get the expected cancer rate confidence interval(lower),
 	 *	adjusted for age of participants.
 	 *
 	 * @return cancer conf interval (lower) rate
@@ -96,7 +96,7 @@ public class CancerIncidence extends DataSource{
 	}
 
 	/**
-	 * Set age adjusted cancer conf interval (lower) 
+	 * Set age adjusted cancer conf interval (lower)
 	 *
 	 * @param double ci_l
 	 *
@@ -105,7 +105,7 @@ public class CancerIncidence extends DataSource{
 		age_adjusted_rate_ci[0] = ci_l;
 	}
 	/*
-	 * Get the expected cancer rate confidence interval(upper), 
+	 * Get the expected cancer rate confidence interval(upper),
 	 *	adjusted for age of participants.
 	 *
 	 * @return cancer conf interval (lower) rate
@@ -116,7 +116,7 @@ public class CancerIncidence extends DataSource{
 	}
 
 	/**
-	 * Set age adjusted cancer conf interval (upper) 
+	 * Set age adjusted cancer conf interval (upper)
 	 *
 	 * @param double ci_u
 	 *
@@ -124,7 +124,7 @@ public class CancerIncidence extends DataSource{
 	public void setAgeAdjustedCI_Upper(double ci_u) {
 		age_adjusted_rate_ci[1] = ci_u;
 	}
-		
+
 	/*
 	 * Get the cancer rate, adjusted for population
 	 *
@@ -133,7 +133,7 @@ public class CancerIncidence extends DataSource{
 	public double getCrudeRate() {
 		return crude_rate;
 	}
-	/** 
+	/**
 	 * Set cancer rate, adjusted for population
 	 *
 	 * @param double cr
@@ -142,7 +142,7 @@ public class CancerIncidence extends DataSource{
 		crude_rate = cr;
 	}
 	/*
-	 * Get the expected cancer crude rate confidence interval(lower), 
+	 * Get the expected cancer crude rate confidence interval(lower),
 	 * adjusted for age of participants.
 	 *
 	 * @return cancer conf interval (lower) rate
@@ -153,7 +153,7 @@ public class CancerIncidence extends DataSource{
 	}
 
 	/**
-	 * Set age adjusted cancer crude conf interval (lower) 
+	 * Set age adjusted cancer crude conf interval (lower)
 	 *
 	 * @param double cr_l
 	 *
@@ -162,7 +162,7 @@ public class CancerIncidence extends DataSource{
 		crude_rate_ci[0] = cr_l;
 	}
 	/*
-	 * Get the expected cancer crude rate confidence interval(upper), 
+	 * Get the expected cancer crude rate confidence interval(upper),
 	 * adjusted for age of participants.
 	 *
 	 * @return cancer crude rate CI (upper) rate
@@ -173,7 +173,7 @@ public class CancerIncidence extends DataSource{
 	}
 
 	/**
-	 * Set crude rate CI (upper) 
+	 * Set crude rate CI (upper)
 	 *
 	 * @param double cr_u
 	 *
@@ -194,7 +194,7 @@ public class CancerIncidence extends DataSource{
 	/*
 	 * Set the year of this cancer record
 	 *
-	 * @param y  year 
+	 * @param y  year
 	 */
 	public void setYear(int y) {
 		year = y;
@@ -207,10 +207,10 @@ public class CancerIncidence extends DataSource{
 	public String getGender() {
 		return gender;
 	}
-	/** 
+	/**
 	 * Set gender
 	 *
-	 * @param g 
+	 * @param g
 	 */
 	public void setGender(String g) {
 		gender = g;
@@ -224,10 +224,10 @@ public class CancerIncidence extends DataSource{
 	public String getRace() {
 		return race;
 	}
-	/** 
+	/**
 	 * Set race
 	 *
-	 * @param String r 
+	 * @param String r
 	 */
 	public void setRace(String r) {
 		race = r;
@@ -241,10 +241,10 @@ public class CancerIncidence extends DataSource{
 	public String getEventType() {
 		return event_type;
 	}
-	/** 
+	/**
 	 * Set event type
 	 *
-	 * @param event (String) 
+	 * @param event (String)
 	 */
 	public void setEventType(String et) {
 		event_type = et;
@@ -258,10 +258,10 @@ public class CancerIncidence extends DataSource{
 	public int getPopulation() {
 		return population;
 	}
-	/** 
+	/**
 	 * Set population size
 	 *
-	 * @param pop (int) 
+	 * @param pop (int)
 	 */
 	public void setPopulation(int pop) {
 		population = pop;
@@ -275,10 +275,10 @@ public class CancerIncidence extends DataSource{
 	public String getAffectedArea() {
 		return affected_area;
 	}
-	/** 
-	 * Set cancer incidenc area 
+	/**
+	 * Set cancer incidenc area
 	 *
-	 * @param area (String) 
+	 * @param area (String)
 	 */
 	public void setAffectedArea(String area) {
 		affected_area = area;
@@ -292,10 +292,10 @@ public class CancerIncidence extends DataSource{
 	public int getCount() {
 		return count;
 	}
-	/** 
+	/**
 	 * Set cancer incidence count
 	 *
-	 * @param c (int) 
+	 * @param c (int)
 	 */
 	public void setCount(int c) {
 		count = c;
@@ -312,10 +312,10 @@ public class CancerIncidence extends DataSource{
 	/**
 	 *	Set location (X coord)
 	 *
-	 *	@param locX  X coordinate of location 
+	 *	@param locX  X coordinate of location
 	 *
 	 */
-	 public void setLocationX (double locX) {
+	public void setLocationX (double locX) {
 		loc[0] = locX;
 	}
 
@@ -330,10 +330,10 @@ public class CancerIncidence extends DataSource{
 	/**
 	 *	Set location (Y coord)
 	 *
-	 *	@param locX  Y coordinate of location 
+	 *	@param locX  Y coordinate of location
 	 *
 	 */
-	 public void setLocationY (double locY) {
+	public void setLocationY (double locY) {
 		loc[1] = locY;
 	}
 };

@@ -6,4 +6,5 @@
 .project
 .DS_Store
 .orig
+*.class
 src/main/java/edu/uncc/cs/bridgesV2/drivers/

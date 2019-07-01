@@ -10,11 +10,11 @@ import java.util.Scanner;
 import bridges.connect.DataFormatter;
 
 /**
- * 
+ *
  * @author mihai mehedint
  *
  */
-public class EarthquakeUSGS extends Tweet{
+public class EarthquakeUSGS extends Tweet {
 	private double magnitude;
 	private double latit;
 	private double longit;
@@ -24,8 +24,8 @@ public class EarthquakeUSGS extends Tweet{
 	private String time;
 
 	private String properties;
-	
-	
+
+
 	public EarthquakeUSGS() {
 		super ("", null);
 		this.magnitude = 0.0;
@@ -34,23 +34,23 @@ public class EarthquakeUSGS extends Tweet{
 		this.location = "";
 		this.title = "";
 		this.url = "";
-		this.properties = "";	
+		this.properties = "";
 	}
 
 	public EarthquakeUSGS(String content, Date date2, double magnitude,
-			double longit, double latit, String location, String title, String url, String properties) {
+		double longit, double latit, String location, String title, String url, String properties) {
 
-		super("USGSeq magnitude "+ magnitude+" "+title, date2);
+		super("USGSeq magnitude " + magnitude + " " + title, date2);
 		this.magnitude = magnitude;
 		this.latit = latit;
 		this.longit = longit;
 		this.location = location;
 		this.title = this.enterCarriageReturn(title);
 		this.url = url;
-		this.properties = properties;	
+		this.properties = properties;
 	}
-		
-	
+
+
 	public String getProperties() {
 		return this.properties;
 	}
@@ -61,13 +61,13 @@ public class EarthquakeUSGS extends Tweet{
 	}
 
 
-		
-//	private static Date getTime(String properties) {
-//		// TODO Auto-generated method stub
-//		//here we parse the properties string for the Time:value in milisec since epoch 1970
-		
-//		return null;
-//	}
+
+	//	private static Date getTime(String properties) {
+	//		// TODO Auto-generated method stub
+	//		//here we parse the properties string for the Time:value in milisec since epoch 1970
+
+	//		return null;
+	//	}
 	public double getLatit() {
 		return this.latit;
 	}
@@ -102,7 +102,7 @@ public class EarthquakeUSGS extends Tweet{
 		this.magnitude = magnitude;
 	}
 	public void setTime (String t) {
-							// convert this to a sane format
+		// convert this to a sane format
 		DateFormat df = new SimpleDateFormat("MMM dd yyyy  HH:mm:ss.SSS zzz");
 
 		Date date = new Date(Long.parseLong(t));
@@ -111,40 +111,40 @@ public class EarthquakeUSGS extends Tweet{
 	public String getTime () {
 		return this.time;
 	}
-	public EarthquakeUSGS(EarthquakeUSGS eq){
-		super("USGSeq magnitude "+ eq.magnitude+" "+eq.getTitle(), eq.getDate());
+	public EarthquakeUSGS(EarthquakeUSGS eq) {
+		super("USGSeq magnitude " + eq.magnitude + " " + eq.getTitle(), eq.getDate());
 		this.magnitude = eq.magnitude;
 		this.latit = eq.latit;
 		this.longit = eq.longit;
 		this.location = eq.location;
 		this.title = eq.getTitle();
 		this.url = eq.url;
-		this.properties=eq.getProperties();
+		this.properties = eq.getProperties();
 		//this(eq.getContent(), eq.getDate());
 		//this.setContent(enterCarriageReturn(aTweet.getContent()));
 	}
-	
-	public void eqProperties (String prop){
+
+	public void eqProperties (String prop) {
 		Scanner scan = new Scanner(prop);
-		
+
 	}
-	
-	
-	public void setMagnitude(Double mag){
+
+
+	public void setMagnitude(Double mag) {
 		/*Scanner scan = new Scanner(this.getContent());
 		StringBuilder str =  new StringBuilder();
 		str.append(scan.next());
 		DataFormatter.trimComma(str);
 		magnitude = Double.parseDouble(str.toString());*/
 		this.magnitude = mag;
-		
+
 	}
-	
-	public String enterCarriageReturn(String str){
+
+	public String enterCarriageReturn(String str) {
 		return str = str.replace(" ", "\\n");
 	}
-	
-	public double getMagnitude(){
+
+	public double getMagnitude() {
 		return this.magnitude;
 	}
 	/* (non-Javadoc)
@@ -152,17 +152,18 @@ public class EarthquakeUSGS extends Tweet{
 	 */
 	@Override
 	public int compareTo(DataSource o) {
-		if (o!=null)
+		if (o != null)
 			return ((Double)this.getMagnitude()).compareTo(((Double)((EarthquakeUSGS)o).getMagnitude()));
-		else{
+		else {
 			try {
 				throw new ClassCastException("Expected an instance of DataSource or of its subclasses Actor, Movie, Tweet, etc. for the compareTo method.");
-			} catch (ClassCastException e) {
+			}
+			catch (ClassCastException e) {
 				e.printStackTrace();
 			}
 			return -1;
 		}
 	}
-	
-	
+
+
 }

@@ -1,28 +1,28 @@
 package bridges.data_src_dependent;
 
-public class Actor extends DataSource{
+public class Actor extends DataSource {
 
 	/**
 	 * The constructor
 	 */
-	public Actor(String anActor){
+	public Actor(String anActor) {
 		super.setLabel(anActor);
 	}
-	
+
 	/**
 	 * This method returns the string name
 	 */
-	public String getName(){
+	public String getName() {
 		return super.getLabel();
 	}
-	
+
 	/**
 	 * This method sets the string name
 	 */
-	public void setName(String name){
+	public void setName(String name) {
 		super.setLabel(name);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -43,17 +43,18 @@ public class Actor extends DataSource{
 		if (this.getName() == null) {
 			if (other.getName() != null)
 				return false;
-		} else if (!this.getName().equals(other.getName()))
+		}
+		else if (!this.getName().equals(other.getName()))
 			return false;
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * This method returns the string value
 	 */
-	public String toString(){
+	public String toString() {
 		return this.getName();
 	}
-	
+
 }

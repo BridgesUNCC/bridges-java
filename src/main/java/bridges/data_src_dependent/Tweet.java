@@ -6,9 +6,9 @@ import java.util.Date;
  * @second author mihai mehedint
  *
  */
-public class Tweet extends DataSource{
+public class Tweet extends DataSource {
 	private Date date;
-	
+
 	public Tweet(String content, Date date2) {
 		super.setLabel(content);
 		this.date = date2;
@@ -18,8 +18,8 @@ public class Tweet extends DataSource{
 		super.setLabel(content);
 		this.date = new Date();
 	}
-	
-	public Tweet(Tweet aTweetToCopy){
+
+	public Tweet(Tweet aTweetToCopy) {
 		super.setLabel(aTweetToCopy.getContent());
 		this.date = aTweetToCopy.getDate();
 	}
@@ -31,21 +31,21 @@ public class Tweet extends DataSource{
 	public void setContent(String content) {
 		super.setLabel(content);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.Source#setLabel(java.lang.String)
 	 */
 	@Override
-	public void setLabel(String label){
+	public void setLabel(String label) {
 		setContent(label);
 	}
-	
+
 
 	/* (non-Javadoc)
 	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.Source#getLabel()
 	 */
 	@Override
-	public String getLabel(){
+	public String getLabel() {
 		return getContent();
 	}
 
@@ -81,16 +81,18 @@ public class Tweet extends DataSource{
 		if (this.getContent() == null) {
 			if (other.getContent() != null)
 				return false;
-		} else if (!this.getContent().equals(other.getContent()))
+		}
+		else if (!this.getContent().equals(other.getContent()))
 			return false;
 		if (date == null) {
 			if (other.date != null)
 				return false;
-		} else if (!date.equals(other.date))
+		}
+		else if (!date.equals(other.date))
 			return false;
 		return true;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.Source#toString()
 	 */

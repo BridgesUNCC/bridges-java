@@ -1,6 +1,6 @@
 package bridges.data_src_dependent;
 /**
- * @brief  A Song object, used along with the Songs data source (using the 
+ * @brief  A Song object, used along with the Songs data source (using the
  *			Genius API.
  *
  * This is a convenience class provided for  users who wish to use this
@@ -22,10 +22,10 @@ import bridges.data_src_dependent.DataSource;
 
 public class Song extends DataSource {
 	private	String artist,
-		song,	// song title
-		album,	// album title
-		lyrics,	// full lyrics
-		release_date;
+			song,	// song title
+			album,	// album title
+			lyrics,	// full lyrics
+			release_date;
 
 	/**
 	 *

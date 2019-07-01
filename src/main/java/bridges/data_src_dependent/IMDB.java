@@ -3,7 +3,7 @@ package bridges.data_src_dependent;
 
 public class IMDB {
 	protected String imdb;
-	
+
 	/**
 	 * @param imdb
 	 */
