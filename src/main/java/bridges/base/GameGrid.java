@@ -39,7 +39,7 @@ public class GameGrid extends Grid<GameCell> {
    *
   **/
   public GameGrid() {
-    this(gridSize[0], gridSize[1]);
+      this(defaultGridSize[0], defaultGridSize[1]);
   }
 
   /**

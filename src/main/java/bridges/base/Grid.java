@@ -1,3 +1,4 @@
+
 package bridges.base;
 import java.util.*;
 
@@ -10,7 +11,8 @@ import java.util.*;
 public class Grid<E> extends DataStruct {
 
 	protected ArrayList<ArrayList<E>> grid;
-	protected static int[] gridSize = {10, 10};
+    	protected static final int[] defaultGridSize = {10, 10};
+	protected int[] gridSize;
 	protected static int[] maxGridSize = {1080, 1920};
 
 	public String getDataStructType() {
@@ -22,7 +24,7 @@ public class Grid<E> extends DataStruct {
 	 *
 	 */
 	public Grid() {
-		this(gridSize);
+		this( defaultGridSize );
 	}
 
 	public Grid(int size) {
@@ -40,6 +42,8 @@ public class Grid<E> extends DataStruct {
 				"\nInvalid size: [" + size[0] + "," + size[1] + "]... please use values between (0 and " + maxGridSize[0] + "] for rows and values between (0 and " + maxGridSize[1] + "] for columns!\n");
 		}
 
+		gridSize = size.clone();
+		
 		// set up outer list capacity (rows)
 		grid = new ArrayList<ArrayList<E>>(size[0]);
 
