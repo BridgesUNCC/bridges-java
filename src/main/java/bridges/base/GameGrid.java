@@ -15,10 +15,10 @@ import org.apache.commons.codec.binary.Base64;
  */
 public class GameGrid extends Grid<GameCell> {
 
-    ByteBuffer bf_bg;
-    ByteBuffer bf_fg;
-    ByteBuffer bf_symbols;
-    String encoding = "raw";
+  ByteBuffer bf_bg;
+  ByteBuffer bf_fg;
+  ByteBuffer bf_symbols;
+  String encoding = "raw";
 
     /**
      * Enable to change the encoding used internally when nbuilding JSON
@@ -314,5 +314,4 @@ public class GameGrid extends Grid<GameCell> {
         }
         return out.toString();
     }
-
 }
