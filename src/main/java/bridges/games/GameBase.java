@@ -48,7 +48,7 @@ public abstract class GameBase {
         bridges = new Bridges(id, log, key);
 
         // /make sure the bridges connects to the game version of the web app
-        bridges.setServer("games");
+	bridges.setServer("games");
 
         // /create a new color grid with random color
         grid = new GameGrid(c, r);
@@ -64,6 +64,10 @@ public abstract class GameBase {
     // /students can decide how to initialize their game grid
     public abstract void initialize();
 
+    // /What happens at each step of the game
+    public abstract void GameLoop();
+
+    
     // /closes the connection
     protected void quit() {
         sock.close();

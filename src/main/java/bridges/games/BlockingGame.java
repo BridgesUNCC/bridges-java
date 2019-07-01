@@ -65,13 +65,14 @@ public abstract class BlockingGame extends GameBase implements KeypressListener 
     private void blockingInit() {
         keyqueue = new ArrayDeque<String>();
         sock.addListener(this);
+        // associate the grid with the Bridges object
+        bridges.setDataStructure(grid);
+        initialize();
     }
 
     // / calling this function starts the game engine.
     public void start() {
-        // associate the grid with the Bridges object
-        bridges.setDataStructure(grid);
-        initialize();
+	GameLoop();
         render();
     }
 }
