@@ -53,8 +53,12 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 
 	private final HashMap < K, SLelement < Edge< K, E2 > > > adj_list;
 
-	private final int LARGE_GRAPH_VERT_SIZE = 1000;
+	private final static int LARGE_GRAPH_VERT_SIZE = 1000;
 
+    private boolean forceLargeViz = false;
+    private boolean forceSmallViz = false;
+    
+    
 	/**
 	 *
 	 *	Constructor
@@ -357,12 +361,33 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		}
 	return true;
     }
+
+    public void forceLargeVisualization(boolean f) {
+	if (f) {
+	    forceLargeViz = true;
+	    forceSmallViz = false;
+	}
+	else {
+	    forceLargeViz = false;
+	}
+    }
+
+    public void forceSmallVisualization(boolean f) {
+	if (f) {
+	    forceSmallViz = true;
+	    forceLargeViz = false;
+	}
+	else {
+	    forceSmallViz = false;
+	}
+    }
     
 	/*
 	 *	Get the JSON representation of the the data structure
 	 */
 	public String getDataStructureRepresentation() {
-	    if (this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated()) {
+	    if (forceLargeViz ||
+		(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated())) {
 			return getDataStructureLargeGraph();
 		}
 		// map to reorder the nodes for building JSON
