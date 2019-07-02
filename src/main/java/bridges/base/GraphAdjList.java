@@ -1,10 +1,6 @@
 package bridges.base;
-import bridges.base.SLelement;
-import bridges.base.Edge;
-
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
 
@@ -46,7 +42,7 @@ import java.util.Vector;
  *		http://bridgesuncc.github.io/Hello_World_Tutorials/Graph.html
  *
  */
-public class GraphAdjList<K, E1, E2> extends DataStruct {
+public class GraphAdjList<K, E1, E2> extends DataStruct  {
 
 	// keep track of the graph nodes; useful
 	// to maintain their properties
@@ -57,6 +53,12 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 
 	private final HashMap < K, SLelement < Edge< K, E2 > > > adj_list;
 
+	private final static int LARGE_GRAPH_VERT_SIZE = 1000;
+
+    private boolean forceLargeViz = false;
+    private boolean forceSmallViz = false;
+    
+    
 	/**
 	 *
 	 *	Constructor
@@ -73,6 +75,10 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *
 	 */
 	public String getDataStructType() {
+	    if (forceLargeViz ||
+		(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated())) {
+			return "largegraph";
+	    }
 		return "GraphAdjacencyList";
 	}
 	/**
@@ -81,7 +87,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *	exists. This method will replace the value for this key
 	 *
 	 *	@param k - vertex id
-	 *	@param E - vertex info, currently used as a label by default
+	 *	@param e - vertex info, currently used as a label by default
 	 *
 	 *	@return none
 	 */
@@ -104,20 +110,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *
 	 */
 	public void addEdge(K src, K dest) {
-		// check to see if the two vertices exist, else
-		// throw an exception
-
-		try {
-			if (vertices.get(src) == null || vertices.get(dest) == null) {
-				throw new NullPointerException("Vertex " + src + " or " + dest +
-					" does not exist! Add the vertex before creating the edge.");
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		adj_list.put(src, new SLelement<Edge<K, E2>>(new Edge<K, E2>(1, dest),
-				adj_list.get(src) ) );
+	    this.addEdge(src, dest, null);
 	}
 
 	/**
@@ -127,10 +120,10 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
-	 *	@param weight - edge weight
+	 *	@param data - edge data
 	 *
 	 */
-	public void addEdge(K src, K dest, int weight) {
+	public void addEdge(K src, K dest, E2 data) {
 		// check to see if the two vertices exist, else
 		// throw an exception
 
@@ -143,15 +136,16 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		LinkVisualizer lvis = this.getLinkVisualizer(src, dest);
 		adj_list.put(src, new SLelement<Edge<K, E2>>(
-				new Edge<K, E2>(weight, dest), adj_list.get(src) ) );
+				new Edge<K, E2>(src, dest, data, lvis), adj_list.get(src)));
 	}
 	/**
 	 *	Sets data for a graph vertex
 	 *
 	 *	@param src - source vertex of edge
-	 *	@param dest - destination  vertex of edge
-	 *	@param data - vertex data
+	 *	@param vertex_data - vertex data
 	 *
 	 */
 	public void setVertexData(K src, E1 vertex_data) {
@@ -171,7 +165,6 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *	Gets data for an edge
 	 *
 	 *	@param src - source vertex of edge
-	 *	@param dest - destination  vertex of edge
 	 *
 	 */
 	public E1 getVertexData(K src) {
@@ -193,7 +186,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *
 	 *	@param src - source vertex of edge
 	 *	@param dest - destination  vertex of edge
-	 *	@param data - edge data
+	 *	@param edge_data - edge data
 	 *
 	 */
 	public void setEdgeData(K src, K dest, E2 edge_data) {
@@ -213,7 +206,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 
 		SLelement<Edge<K, E2>> sle = adj_list.get(src);
 		while (sle != null) {
-			K edge_dest = ((Edge<K, E2>) sle.getValue()).getVertex();
+			K edge_dest = ((Edge<K, E2>) sle.getValue()).getTo();
 			if (edge_dest.equals(dest)) {	// found
 				sle.getValue().setEdgeData(edge_data);
 				return;
@@ -247,7 +240,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 		// look for the edge
 		SLelement<Edge<K, E2>> sle = adj_list.get(src);
 		while (sle != null) {
-			K edge_dest = ((Edge<K, E2>) sle.getValue()).getVertex();
+			K edge_dest = ((Edge<K, E2>) sle.getValue()).getTo();
 			if (edge_dest.equals(dest)) 	// found
 				return sle.getValue().getEdgeData();
 			sle = sle.getNext();
@@ -298,6 +291,17 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	public SLelement<Edge<K, E2> >  getAdjacencyList(K vertex) {
 		return adj_list.get(vertex);
 	}
+
+	public Vector<Edge<K, E2>> outgoingEdgeSetOf(K vertex) {
+		Vector<Edge<K, E2>> edgeSet = new Vector<>();
+		SLelement<Edge<K, E2>> list = getAdjacencyList(vertex);
+
+		for (SLelement<Edge<K, E2>> element : list) {
+			edgeSet.add(element.getValue());
+		}
+
+		return edgeSet;
+	}
 	/**
 	 *
 	 *	 This is a convenience method to simplify access to the link visualizer;
@@ -305,7 +309,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *	 is thrown
 	 *
 	 */
-	public LinkVisualizer getLinkVisualizer (K src, K dest) throws Exception {
+	public LinkVisualizer getLinkVisualizer (K src, K dest) {
 		// get the source and destination vertex elements
 		// and check to see if they exist
 		Element<E1> v1 = vertices.get(src);
@@ -328,7 +332,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	 *	exception is thrown
 	 *
 	 */
-	public ElementVisualizer getVisualizer (K vertex) throws Exception {
+	public ElementVisualizer getVisualizer (K vertex) {
 		// get the source and destination vertex elements
 		// and check to see if they exist
 		Element<E1> v = vertices.get(vertex);
@@ -345,10 +349,49 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 	}
 
 
+    /**
+     * @return true if all vertices have both an x and y location
+     */
+    private boolean areAllVerticesLocated() {
+		for (Entry<K, Element<E1>> element : vertices.entrySet()) {
+		    Element<E1> el = element.getValue();
+		    ElementVisualizer elvis = el.getVisualizer();
+			if (elvis.getLocationX() == Double.POSITIVE_INFINITY
+					|| elvis.getLocationY() == Double.POSITIVE_INFINITY) {
+			    return false;
+			}
+		}
+	return true;
+    }
+
+    public void forceLargeVisualization(boolean f) {
+	if (f) {
+	    forceLargeViz = true;
+	    forceSmallViz = false;
+	}
+	else {
+	    forceLargeViz = false;
+	}
+    }
+
+    public void forceSmallVisualization(boolean f) {
+	if (f) {
+	    forceSmallViz = true;
+	    forceLargeViz = false;
+	}
+	else {
+	    forceSmallViz = false;
+	}
+    }
+    
 	/*
 	 *	Get the JSON representation of the the data structure
 	 */
 	public String getDataStructureRepresentation() {
+	    if (forceLargeViz ||
+		(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated())) {
+			return getDataStructureLargeGraph();
+		}
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
 		// get teh list nodes
@@ -379,7 +422,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 				Integer src_indx = node_map.get(src_vert);
 				// get the destination vertex index for the JSON (int)
 				Edge<K, E2> edge = list.getValue();
-				Element<E1> dest_vert = vertices.get(edge.getVertex());
+				Element<E1> dest_vert = vertices.get(edge.getTo());
 				Integer dest_indx = node_map.get(dest_vert);
 				// get link representation
 				links_JSON.append(list.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert),
@@ -401,5 +444,77 @@ public class GraphAdjList<K, E1, E2> extends DataStruct {
 
 		return json_str;
 
+	}
+
+	private String getDataStructureLargeGraph() {
+		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
+		// get the list nodes
+		Vector<Element<E1>> nodes = new Vector<Element<E1>>();
+
+		for (Entry<K, Element<E1>> element : vertices.entrySet())
+			nodes.add(element.getValue());
+
+		String nodes_JSON = "";
+		// remap  map these nodes to  0...MaxNodes-1
+		// and build the nodes JSON
+		for (int k = 0; k < nodes.size(); k++) {
+			node_map.put(nodes.get(k), k);
+			ElementVisualizer elvis = nodes.get(k).getVisualizer();
+			String loc_str = "";
+			if (elvis.getLocationX() != Double.POSITIVE_INFINITY
+					&& elvis.getLocationY() != Double.POSITIVE_INFINITY) {
+				loc_str = OPEN_BOX + elvis.getLocationX() + COMMA
+						+ elvis.getLocationY()
+						+ CLOSE_BOX + COMMA;
+			}
+			Color color = elvis.getColor();
+			nodes_JSON += OPEN_BOX + loc_str + OPEN_BOX +
+					color.getRed() + COMMA +
+					color.getGreen() + COMMA +
+					color.getBlue() + COMMA +
+					color.getAlpha() + CLOSE_BOX + CLOSE_BOX + COMMA;
+
+		}
+
+		if (nodes_JSON.length() > 0) {
+			nodes_JSON = nodes_JSON.substring(0, nodes_JSON.length() - 1);
+		}
+
+		String link_JSON = "";
+
+		for (Entry<K, SLelement<Edge<K, E2>>> a_list : adj_list.entrySet()) {
+			SLelement<Edge<K, E2>> list = a_list.getValue();
+			Element<E1> src_vert = vertices.get(a_list.getKey());
+			while (list != null) {
+				Integer src_indx = node_map.get(src_vert);
+				Edge<K, E2> edge = list.getValue();
+				Element<E1> dest_vert = vertices.get(edge.getTo());
+				Integer dest_indx = node_map.get(dest_vert);
+				Color color = src_vert.getLinkVisualizer(dest_vert).getColor();
+
+				link_JSON += OPEN_BOX +
+						src_indx + COMMA +
+						dest_indx + COMMA +
+						OPEN_BOX +
+						color.getRed() + COMMA +
+						color.getGreen() + COMMA +
+						color.getBlue() + COMMA +
+						color.getAlpha() + CLOSE_BOX + CLOSE_BOX + COMMA;
+				list = list.getNext();
+			}
+		}
+
+		if (link_JSON.length() > 0) {
+			link_JSON = link_JSON.substring(0, link_JSON.length() - 1);
+		}
+
+		String graph_alist_json =
+					QUOTE + "nodes"  + QUOTE + COLON +
+							OPEN_BOX + nodes_JSON + CLOSE_BOX + COMMA +
+					QUOTE + "links" + QUOTE + COLON +
+							OPEN_BOX + link_JSON + CLOSE_BOX +
+							CLOSE_CURLY;
+
+		return graph_alist_json;
 	}
 }
