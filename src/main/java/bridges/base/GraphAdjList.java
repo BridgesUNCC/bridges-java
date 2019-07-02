@@ -343,11 +343,26 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	}
 
 
+    /**
+     * @return true if all vertices have both an x and y location
+     */
+    private boolean areAllVerticesLocated() {
+		for (Entry<K, Element<E1>> element : vertices.entrySet()) {
+		    Element<E1> el = element.getValue();
+		    ElementVisualizer elvis = el.getVisualizer();
+			if (elvis.getLocationX() == Double.POSITIVE_INFINITY
+					|| elvis.getLocationY() == Double.POSITIVE_INFINITY) {
+			    return false;
+			}
+		}
+	return true;
+    }
+    
 	/*
 	 *	Get the JSON representation of the the data structure
 	 */
 	public String getDataStructureRepresentation() {
-		if (this.vertices.size() > LARGE_GRAPH_VERT_SIZE) {
+	    if (this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated()) {
 			return getDataStructureLargeGraph();
 		}
 		// map to reorder the nodes for building JSON
