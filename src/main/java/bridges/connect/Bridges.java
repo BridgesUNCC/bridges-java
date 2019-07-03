@@ -646,6 +646,9 @@ public class Bridges {
 			case "ColorGrid":
 				nodes_links_str = ((ColorGrid) ds_handle).getDataStructureRepresentation();
 				break;
+		case "GameGrid":
+		    nodes_links_str = ((GameGrid) ds_handle).getDataStructureRepresentation();
+		    break;
 			case "SymbolCollection":
 				nodes_links_str = ((SymbolCollection) ds_handle).getDataStructureRepresentation();
 				break;
