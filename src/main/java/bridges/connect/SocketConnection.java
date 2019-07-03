@@ -32,10 +32,14 @@ public class SocketConnection {
             IO.Options opts = new IO.Options();
             opts.transports = new String[]{"websocket"};
 
-            // is the socket server running locally?
-            // socket = IO.socket("http://localhost:3000", opts);
-            // is the game server live?
-            socket = IO.socket("https://bridges-games.herokuapp.com", opts);
+
+	    String url = "https://bridges-games.herokuapp.com";
+
+	    if (Bridges.getDebugFlag()) {
+		System.out.println("Connecting to "+url+" using mainly transport "+opts.transports[0]);
+	    }
+	    
+            socket = IO.socket(url, opts);
 
             /*
 			 * bind listeners to specific socket events

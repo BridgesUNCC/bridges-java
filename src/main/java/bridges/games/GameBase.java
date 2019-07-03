@@ -50,6 +50,7 @@ public abstract class GameBase {
         bridges = new Bridges(id, log, key);
 
 	if (debug) {
+	    Bridges.setDebugFlag(true);
 	    bridges.setVisualizeJSON(true);
 	}
 	
