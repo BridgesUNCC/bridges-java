@@ -9,6 +9,8 @@ import bridges.connect.SocketConnection;
 
 public abstract class GameBase {
 
+    protected boolean debug = true;
+    
     // /Game map
     protected GameGrid grid;
 
@@ -47,6 +49,10 @@ public abstract class GameBase {
         // /https://bridges-sockets.herokuapp.com/signup)
         bridges = new Bridges(id, log, key);
 
+	if (debug) {
+	    bridges.setVisualizeJSON(true);
+	}
+	
         // /make sure the bridges connects to the game version of the web app
 	bridges.setServer("games");
 
