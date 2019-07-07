@@ -488,10 +488,10 @@ public class Bridges {
 	}
 
 	public static int getAssignmentID() {
-	    return assignment;
+		return assignment;
 	}
 
-    
+
 	/**
 	 *	set the assignment id
 	 *
@@ -656,7 +656,7 @@ public class Bridges {
 			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
 			QUOTE + "title"   + QUOTE + COLON + QUOTE + JSONValue.escape(title) + QUOTE + COMMA +
 			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) +
-															 QUOTE + COMMA +
+			QUOTE + COMMA +
 			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
 			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
 			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;

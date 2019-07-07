@@ -78,7 +78,7 @@ public class Edge<K, E2> {
 	 *
 	 * @return the string identifier of the source Element
 	 *
-     */
+	 */
 	public K getFrom() {
 		return this.from;
 	}

@@ -55,10 +55,10 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 
 	private final static int LARGE_GRAPH_VERT_SIZE = 1000;
 
-    private boolean forceLargeViz = false;
-    private boolean forceSmallViz = false;
-    
-    
+	private boolean forceLargeViz = false;
+	private boolean forceSmallViz = false;
+
+
 	/**
 	 *
 	 *	Constructor
@@ -75,10 +75,10 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *
 	 */
 	public String getDataStructType() {
-	    if (forceLargeViz ||
-		(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated())) {
+		if (forceLargeViz ||
+			(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated())) {
 			return "largegraph";
-	    }
+		}
 		return "GraphAdjacencyList";
 	}
 	/**
@@ -110,7 +110,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *
 	 */
 	public void addEdge(K src, K dest) {
-	    this.addEdge(src, dest, null);
+		this.addEdge(src, dest, null);
 	}
 
 	/**
@@ -349,47 +349,47 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	}
 
 
-    /**
-     * @return true if all vertices have both an x and y location
-     */
-    private boolean areAllVerticesLocated() {
+	/**
+	 * @return true if all vertices have both an x and y location
+	 */
+	private boolean areAllVerticesLocated() {
 		for (Entry<K, Element<E1>> element : vertices.entrySet()) {
-		    Element<E1> el = element.getValue();
-		    ElementVisualizer elvis = el.getVisualizer();
+			Element<E1> el = element.getValue();
+			ElementVisualizer elvis = el.getVisualizer();
 			if (elvis.getLocationX() == Double.POSITIVE_INFINITY
-					|| elvis.getLocationY() == Double.POSITIVE_INFINITY) {
-			    return false;
+				|| elvis.getLocationY() == Double.POSITIVE_INFINITY) {
+				return false;
 			}
 		}
-	return true;
-    }
+		return true;
+	}
 
-    public void forceLargeVisualization(boolean f) {
-	if (f) {
-	    forceLargeViz = true;
-	    forceSmallViz = false;
+	public void forceLargeVisualization(boolean f) {
+		if (f) {
+			forceLargeViz = true;
+			forceSmallViz = false;
+		}
+		else {
+			forceLargeViz = false;
+		}
 	}
-	else {
-	    forceLargeViz = false;
-	}
-    }
 
-    public void forceSmallVisualization(boolean f) {
-	if (f) {
-	    forceSmallViz = true;
-	    forceLargeViz = false;
+	public void forceSmallVisualization(boolean f) {
+		if (f) {
+			forceSmallViz = true;
+			forceLargeViz = false;
+		}
+		else {
+			forceSmallViz = false;
+		}
 	}
-	else {
-	    forceSmallViz = false;
-	}
-    }
-    
+
 	/*
 	 *	Get the JSON representation of the the data structure
 	 */
 	public String getDataStructureRepresentation() {
-	    if (forceLargeViz ||
-		(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated())) {
+		if (forceLargeViz ||
+			(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated())) {
 			return getDataStructureLargeGraph();
 		}
 		// map to reorder the nodes for building JSON
@@ -462,17 +462,17 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 			ElementVisualizer elvis = nodes.get(k).getVisualizer();
 			String loc_str = "";
 			if (elvis.getLocationX() != Double.POSITIVE_INFINITY
-					&& elvis.getLocationY() != Double.POSITIVE_INFINITY) {
+				&& elvis.getLocationY() != Double.POSITIVE_INFINITY) {
 				loc_str = OPEN_BOX + elvis.getLocationX() + COMMA
-						+ elvis.getLocationY()
-						+ CLOSE_BOX + COMMA;
+					+ elvis.getLocationY()
+					+ CLOSE_BOX + COMMA;
 			}
 			Color color = elvis.getColor();
 			nodes_JSON += OPEN_BOX + loc_str + OPEN_BOX +
-					color.getRed() + COMMA +
-					color.getGreen() + COMMA +
-					color.getBlue() + COMMA +
-					color.getAlpha() + CLOSE_BOX + CLOSE_BOX + COMMA;
+				color.getRed() + COMMA +
+				color.getGreen() + COMMA +
+				color.getBlue() + COMMA +
+				color.getAlpha() + CLOSE_BOX + CLOSE_BOX + COMMA;
 
 		}
 
@@ -493,13 +493,13 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 				Color color = src_vert.getLinkVisualizer(dest_vert).getColor();
 
 				link_JSON += OPEN_BOX +
-						src_indx + COMMA +
-						dest_indx + COMMA +
-						OPEN_BOX +
-						color.getRed() + COMMA +
-						color.getGreen() + COMMA +
-						color.getBlue() + COMMA +
-						color.getAlpha() + CLOSE_BOX + CLOSE_BOX + COMMA;
+					src_indx + COMMA +
+					dest_indx + COMMA +
+					OPEN_BOX +
+					color.getRed() + COMMA +
+					color.getGreen() + COMMA +
+					color.getBlue() + COMMA +
+					color.getAlpha() + CLOSE_BOX + CLOSE_BOX + COMMA;
 				list = list.getNext();
 			}
 		}
@@ -509,11 +509,11 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		}
 
 		String graph_alist_json =
-					QUOTE + "nodes"  + QUOTE + COLON +
-							OPEN_BOX + nodes_JSON + CLOSE_BOX + COMMA +
-					QUOTE + "links" + QUOTE + COLON +
-							OPEN_BOX + link_JSON + CLOSE_BOX +
-							CLOSE_CURLY;
+			QUOTE + "nodes"  + QUOTE + COLON +
+			OPEN_BOX + nodes_JSON + CLOSE_BOX + COMMA +
+			QUOTE + "links" + QUOTE + COLON +
+			OPEN_BOX + link_JSON + CLOSE_BOX +
+			CLOSE_CURLY;
 
 		return graph_alist_json;
 	}
