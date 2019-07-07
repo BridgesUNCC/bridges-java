@@ -610,33 +610,14 @@ public class Bridges {
 	public void visualize()  throws IOException, RateLimitException {
 		String[] nodes_links = new String[2];
 		String response = "";
+
 		String nodes_links_str = this.ds_handle.getDataStructureRepresentation();
 
-		String ds_json =
-			OPEN_CURLY +
-			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
-			QUOTE + "title"   + QUOTE + COLON + QUOTE + JSONValue.escape(title) + QUOTE + COMMA +
-			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) + QUOTE + COMMA +
-			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
-			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
-			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
+		String json_hdr = getJSONHeader();
 
 		// get the nodes and link representations
 
-		if (vis_type == "Array") {
-			int dims[] = new int[3];
-			Array ds_array = (Array) ds_handle;
-			int num_dims = ds_array.getNumDimensions();
-			ds_array.getDimensions(dims);
-			ds_json += QUOTE + "dims" + QUOTE + COLON +
-				OPEN_BOX + dims[0] + COMMA + dims[1] + COMMA + dims[2] + CLOSE_BOX + COMMA;
-
-			ds_json +=  nodes_links_str;
-
-		}
-		else {
-			ds_json += nodes_links_str;
-		}
+		String ds_json =  json_hdr + nodes_links_str;
 
 		if (json_flag)		// print the JSON (mostly for debugging)
 			System.out.println("\nJSON String:\n" + ds_json);
@@ -667,5 +648,19 @@ public class Bridges {
 			// Increment the subassignment counter
 			assignment_part++;
 		}
+	}
+	String getJSONHeader() {
+
+		String json_hdr =
+			OPEN_CURLY +
+			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
+			QUOTE + "title"   + QUOTE + COLON + QUOTE + JSONValue.escape(title) + QUOTE + COMMA +
+			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) +
+															 QUOTE + COMMA +
+			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
+			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
+			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
+
+		return json_hdr;
 	}
 }
