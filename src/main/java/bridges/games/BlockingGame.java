@@ -73,8 +73,9 @@ public abstract class BlockingGame extends GameBase implements KeypressListener 
     public void start() {
 
         initialize();
+	gameStarted = true;
 
-	while (true) {
+	while (gameStarted) {
 	    GameLoop();
 	    render();
 	}
