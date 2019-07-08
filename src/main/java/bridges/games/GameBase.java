@@ -10,6 +10,7 @@ import bridges.connect.SocketConnection;
 public abstract class GameBase {
 
     protected boolean debug = true;
+    protected boolean gameStarted = false;
     
     // /Game map
     protected GameGrid grid;
@@ -78,7 +79,7 @@ public abstract class GameBase {
     
     // /closes the connection
     protected void quit() {
-        sock.close();
+        gameStarted = false;
     }
 
     // /set the title of the game
