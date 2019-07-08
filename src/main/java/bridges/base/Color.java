@@ -15,9 +15,45 @@ import bridges.validation.InvalidValueException;
  *	into [RGBA] prior to transmission to the server for visualization.
  *
  * 	<p>
+
+ * Supported named colors are:
+ * 
+ * <b>"red", "green",
+ * "blue",
+ * "yellow",
+ * "cyan",
+ * "magenta",
+ * "white",
+ * "black",
+ * "orange",
+ * "green",
+ * "turquoise",
+ * "maroon",
+ * "aquamarine",
+ * "azure",
+ * "beige",
+ * "brown",
+ * "tan",
+ * "olive",
+ * "chartreuse",
+ * "khaki",
+ * "bisque",
+ * "coral",
+ * "pink",
+ * "lavender",
+ * "purple",
+ * "gold",
+ * "steelblue"</b>
+ *
+ * All named colors have are fully opaque by default.
+ *
+ * Default Color is opaque white
+ *
+ * @date 7/8/19, Kalpathi Subramanian 
+ *
  *
  *	@author K.R. Subramanian,
- *	@date 7/14/16
+ *	@date 7/8/19
  *
  */
 public class Color {
@@ -277,154 +313,83 @@ public class Color {
 	 */
 	public void setColor(String col_name) {
 		switch (col_name) {
-			case "red":
-				red = 255;
-				green = blue = 0;
-				alpha = 1.0f;
+			case "red": 
+				red = 255; green = blue = 0; alpha = 1.0f;
 				break;
-			case "green":
-				red = 0;
-				green = 255;
-				blue = 0;
-				alpha = 1.0f;
+			case "green": 
+				red = 0; green = 255; blue = 0; alpha = 1.0f;
 				break;
 			case "blue":
-				red = 0;
-				green = 0;
-				blue = 255;
-				alpha = 1.0f;
+				red = 0; green = 0; blue = 255; alpha = 1.0f;
 				break;
 			case "yellow":
-				red = 255;
-				green = 255;
-				blue = 0;
-				alpha = 1.0f;
+				red = 255; green = 255; blue = 0; alpha = 1.0f;
 				break;
 			case "cyan":
-				red = 0;
-				green = 255;
-				blue = 255;
-				alpha = 1.0f;
+				red = 0; green = 255; blue = 255; alpha = 1.0f;
 				break;
 			case "magenta":
-				red = 255;
-				green = 0;
-				blue = 255;
-				alpha = 1.0f;
+				red = 255; green = 0; blue = 255; alpha = 1.0f;
 				break;
 			case "white":
-				red = 255;
-				green = 255;
-				blue = 255;
-				alpha = 1.0f;
+				red = 255; green = 255; blue = 255; alpha = 1.0f;
 				break;
 			case "black":
-				red = 0;
-				green = 0;
-				blue = 0;
-				alpha = 1.0f;
+				red = 0; green = 0; blue = 0; alpha = 1.0f;
 				break;
 			case "orange":
-				red = 255;
-				green = 155;
-				blue = 0;
-				alpha = 1.0f;
+				red = 255; green = 155; blue = 0; alpha = 1.0f;
 				break;
 			case "turquoise":
-				red = 173;
-				green = 234;
-				blue = 234;
-				alpha = 1.0f;
+				red = 64; green = 224; blue = 208; alpha = 1.0f;
 				break;
 			case "maroon":
-				red = 176;
-				green = 48;
-				blue = 96;
-				alpha = 1.0f;
+				red = 176; green = 48; blue = 96; alpha = 1.0f;
 				break;
 			case "aquamarine":
-				red = 127;
-				green = 255;
-				blue = 212;
-				alpha = 1.0f;
+				red = 127; green = 255; blue = 212; alpha = 1.0f;
 				break;
 			case "azure":
-				red = 240;
-				green = 255;
-				blue = 255;
-				alpha = 1.0f;
+				red = 240; green = 255; blue = 255; alpha = 1.0f;
 				break;
 			case "beige":
-				red = 245;
-				green = 245;
-				blue = 220;
-				alpha = 1.0f;
+				red = 245; green = 245; blue = 220; alpha = 1.0f;
 				break;
 			case "brown":
-				red = 166;
-				green = 42;
-				blue = 42;
-				alpha = 1.0f;
+				red = 166; green = 42; blue = 42; alpha = 1.0f;
 				break;
 			case "tan":
-				red = 210;
-				green = 180;
-				blue = 140;
-				alpha = 1.0f;
+				red = 210; green = 180; blue = 140; alpha = 1.0f;
 				break;
 			case "olive":
-				red = 128;
-				green = 128;
-				blue = 0;
-				alpha = 1.0f;
+				red = 128; green = 128; blue = 0; alpha = 1.0f;
 				break;
 			case "chartreuse":
-				red = 127;
-				green = 255;
-				blue = 0;
-				alpha = 1.0f;
+				red = 127; green = 255; blue = 0; alpha = 1.0f;
 				break;
 			case "khaki":
-				red = 240;
-				green = 230;
-				blue = 140;
-				alpha = 1.0f;
+				red = 240; green = 230; blue = 140; alpha = 1.0f;
 				break;
 			case "bisque":
-				red = 255;
-				green = 228;
-				blue = 196;
-				alpha = 1.0f;
+				red = 255; green = 228; blue = 196; alpha = 1.0f;
 				break;
 			case "coral":
-				red = 255;
-				green = 127;
-				blue = 0;
-				alpha = 1.0f;
+				red = 255; green = 127; blue = 80; alpha = 1.0f;
 				break;
 			case "pink":
-				red = 255;
-				green = 192;
-				blue = 203;
-				alpha = 1.0f;
+				red = 255; green = 192; blue = 203; alpha = 1.0f;
 				break;
 			case "lavender":
-				red = 230;
-				green = 230;
-				blue = 250;
-				alpha = 1.0f;
+				red = 230; green = 230; blue = 250; alpha = 1.0f;
 				break;
 			case "purple":
-				red = 160;
-				green = 32;
-				blue = 240;
-				alpha = 1.0f;
+				red = 128; green = 0; blue = 128; alpha = 1.0f;
 				break;
 			case "gold":
-				red = 255;
-				green = 215;
-				blue = 0;
-				alpha = 1.0f;
+				red = 255; green = 215; blue = 0; alpha = 1.0f;
+				break;
+			case "steelblue":
+				red = 70; green = 130; blue = 180; alpha = 1.0f;
 				break;
 			default:
 				throw new InvalidValueException("Invalid color name: " + col_name + "\n");

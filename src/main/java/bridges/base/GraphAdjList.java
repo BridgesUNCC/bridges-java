@@ -76,7 +76,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 */
 	public String getDataStructType() {
 		if (forceLargeViz ||
-			(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE && areAllVerticesLocated())) {
+			(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE && 
+					areAllVerticesLocated())) {
 			return "largegraph";
 		}
 		return "GraphAdjacencyList";
