@@ -632,12 +632,6 @@ public class Bridges {
 
 		String json_hdr = getJSONHeader();
 
-		// if window is specified, add it to JSON
-		if(window != null && window.length == 4) {
-				ds_json += QUOTE + "window" + QUOTE + COLON + OPEN_BOX;
-				ds_json += window[0] + COMMA + window[1] + COMMA + window[2] + COMMA + window[3];
-		 		ds_json += CLOSE_BOX + COMMA;
-		}
 
 		String ds_json =  json_hdr + nodes_links_str;
 
@@ -683,6 +677,14 @@ public class Bridges {
 			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
 			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
 
+		// if window is specified, add it to JSON
+		if(window != null && window.length == 4) {
+				json_hdr += QUOTE + "window" + QUOTE + COLON + OPEN_BOX;
+				json_hdr += window[0] + COMMA + window[1] + COMMA + window[2] + COMMA + window[3];
+		 		json_hdr += CLOSE_BOX + COMMA;
+		}
+
+		
 		return json_hdr;
 	}
 }
