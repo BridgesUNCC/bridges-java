@@ -227,7 +227,7 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 	}
 
 	// Return an iterator over the elements in the array. This is generally not
-    // called directly, but is called by Java when used in a "simple" for loops
+	// called directly, but is called by Java when used in a "simple" for loops
 	public Iterator<SLelement<E>> iterator() {
 		return new SLelementIterator(this);
 	}

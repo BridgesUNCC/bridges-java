@@ -181,7 +181,7 @@ public class LinkVisualizer {
 	 */
 	public void setColor(Integer r, Integer g, Integer b, Float a)  throws
 		InvalidValueException {
-	    this.color = new Color(r, g, b, a);
+		this.color = new Color(r, g, b, a);
 	}
 
 	/**

@@ -116,9 +116,10 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		try {
 			if (vertices.get(src) == null || vertices.get(dest) == null) {
 				throw new NullPointerException("Vertex " + src + " or " + dest +
-						" does not exist! Add the vertex before creating the edge.");
+					" does not exist! Add the vertex before creating the edge.");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		(matrix.get(src)).put(dest, 1);
@@ -139,9 +140,10 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		try {
 			if (vertices.get(src) == null || vertices.get(dest) == null) {
 				throw new NullPointerException("Vertex " + src + " or " + dest +
-						" does not exist! Add the vertex before creating the edge.");
+					" does not exist! Add the vertex before creating the edge.");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		(matrix.get(src)).put(dest, weight);
@@ -160,7 +162,8 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 			if (vertices.get(src) == null) {
 				throw new NullPointerException("Vertex " + src + " does not exist!");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -179,9 +182,10 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		try {
 			if (vertices.get(src) == null) {
 				throw new NullPointerException("Vertex " + src +
-						" does not exist!");
+					" does not exist!");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return vertices.get(src).getValue();
@@ -201,9 +205,10 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		try {
 			if (vertices.get(src) == null || vertices.get(dest) == null) {
 				throw new NullPointerException("Vertex " + src + " or " + dest +
-						" does not exist! Add the vertex before creating the edge.");
+					" does not exist! Add the vertex before creating the edge.");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		// add edge data
@@ -223,9 +228,10 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		try {
 			if (vertices.get(src) == null || vertices.get(dest) == null) {
 				throw new NullPointerException("Vertex " + src + " or " + dest +
-						" does not exist! Add the vertex before creating the edge.");
+					" does not exist! Add the vertex before creating the edge.");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return (edge_data.get(src)).get(dest);
@@ -272,9 +278,10 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		try {
 			if (v1 == null || v2 == null) {
 				throw new NullPointerException("Vertex " + src + " or " + dest +
-						" does not exist! First add the vertices to the graph.");
+					" does not exist! First add the vertices to the graph.");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return v1.getLinkVisualizer(v2);
@@ -292,9 +299,10 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		try {
 			if (v == null) {
 				throw new NullPointerException("Vertex " + vertex +
-						" does not exist! First add the vertices to the graph.");
+					" does not exist! First add the vertices to the graph.");
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return v.getVisualizer();
@@ -338,7 +346,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 
 					links_JSON.append(src_vert.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert),
 							Integer.toString(src_indx), Integer.toString(dest_indx)))
-							.append(COMMA);
+					.append(COMMA);
 				}
 			}
 		}
@@ -347,11 +355,11 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 			links_JSON.setLength(links_JSON.length() - 1);
 
 		String json_str =
-				QUOTE + "nodes" + QUOTE + COLON +
-						OPEN_BOX + nodes_JSON.toString() + CLOSE_BOX + COMMA +
-						QUOTE + "links" + QUOTE + COLON +
-						OPEN_BOX + links_JSON.toString() + CLOSE_BOX +
-						CLOSE_CURLY;
+			QUOTE + "nodes" + QUOTE + COLON +
+			OPEN_BOX + nodes_JSON.toString() + CLOSE_BOX + COMMA +
+			QUOTE + "links" + QUOTE + COLON +
+			OPEN_BOX + links_JSON.toString() + CLOSE_BOX +
+			CLOSE_CURLY;
 
 		return json_str;
 	}
