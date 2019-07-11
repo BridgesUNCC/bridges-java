@@ -17,24 +17,20 @@ class InputHelper implements KeypressListener {
     boolean sKey;
     boolean dKey;
     boolean qKey; // was button 1
-    boolean pKey; // was button 2
+    boolean spaceKey; // was button 2
 
-    public InputHelper(SocketConnection sc) {
-
-        // game will now listen for keypresses from the socket
-        sc.addListener(this);
-
+    public InputHelper() {
+        
         upKey = false;
         downKey = false;
         leftKey = false;
         rightKey = false;
         qKey = false;
-        pKey = false;
+        spaceKey = false;
         wKey = false;
         aKey = false;
         sKey = false;
         dKey = false;
-
     }
 
     public void keypress(JSONObject keypress) {
@@ -97,12 +93,12 @@ class InputHelper implements KeypressListener {
             }
         }
 
-        if (key.compareTo("p") == 0) {
+        if (key.compareTo(" ") == 0) {
             if (set_to_up) {
-                pKey = false;
+                spaceKey = false;
             }
             if (set_to_down) {
-                pKey = true;
+                spaceKey = true;
             }
         }
 
@@ -171,8 +167,8 @@ class InputHelper implements KeypressListener {
         return qKey;
     }
 
-    public boolean p() {
-        return pKey;
+    public boolean space() {
+        return spaceKey;
     }
 
     public boolean w() {

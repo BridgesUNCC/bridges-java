@@ -10,20 +10,21 @@ import bridges.connect.SocketConnection;
 public abstract class GameBase {
 
     protected boolean debug = true;
+    protected boolean gameStarted = false;
     
     // /Game map
-    protected GameGrid grid;
+    private GameGrid grid;
 
     // /this stores the JSON representation that will be sent to the BRIDGES server.
-    protected String gridJSON;
-    protected String gridState;
+    private String gridJSON;
+    private String gridState;
 
     // /Bridges Connection
-    protected Bridges bridges;
-    protected SocketConnection sock;
+    private Bridges bridges;
+    private SocketConnection sock;
 
     // /Checks for first time rendering grid
-    protected boolean firsttime;
+    private boolean firsttime;
 
     // Initialize with default grid size 30x30
     public GameBase(int assid, String login, String apikey) {
@@ -33,18 +34,17 @@ public abstract class GameBase {
     // Initialize with student specified grid size no greater than 30x30
     public GameBase(int assid, String login, String apikey, int cols, int rows) {
 
-        if (cols > 30 || rows > 30) { // Allows students to create smaller grids if they prefer.
-            System.out.println("ERROR: Number of rows or columns cannot exceed 30.");
+        if ((cols*rows)>1024) { // Allows students to create smaller grids if they prefer.
+            System.out.println("ERROR: Number of cells in your grid cannot exceed 32x32 or 1024.");
             System.exit(1);
         }
 
         gameBaseInit(assid, login, apikey, cols, rows);
-
     }
 
     private void gameBaseInit(int id, String log, String key, int c, int r) {
         firsttime = true;
-
+        
         // /bridges-sockets account (you need to make a new account:
         // /https://bridges-sockets.herokuapp.com/signup)
         bridges = new Bridges(id, log, key);
@@ -66,6 +66,10 @@ public abstract class GameBase {
         sock.setupConnection(bridges.getUserName(), bridges.getAssignment());
     }
 
+    protected void registerKeypress(InputHelper i){
+        sock.addListener(i);
+    }
+
     // /blocking and non-blocking games have different start sequences
     public abstract void start();
 
@@ -73,53 +77,32 @@ public abstract class GameBase {
     public abstract void initialize();
 
     // /What happens at each step of the game
-    public abstract void GameLoop();
-
+    public abstract void gameLoop();
     
-    // /closes the connection
-    protected void quit() {
-        sock.close();
+    // /Stops game updates. Student must use start() again to
+    // /restart the games updating process.
+    public void quit(){
+        gameStarted = false;
     }
 
     // /set the title of the game
-    protected void SetTitle(String title) {
+    protected void setTitle(String title) {
         bridges.setTitle(title);
     }
 
     // /give a short discription of the game
-    protected void SetDescription(String desc) {
+    protected void setDescription(String desc) {
         bridges.setDescription(desc);
     }
 
     // /set background color of cell x, y to c
-    protected void SetBGColor(int x, int y, NamedColor c) {
+    protected void setBGColor(int x, int y, NamedColor c) {
         grid.setBGColor(y, x, c);
     }
 
-    // /set foreground color of cell x, y to c
-    protected void SetFGColor(int x, int y, NamedColor c) {
-        grid.setFGColor(y, x, c);
-    }
-
-    // /set symbol of cell x, y to s
-    protected void SetSymbol(int x, int y, int s) {
-        grid.drawObject(y, x, s);
-    }
-
-    // /set symbol of cell x, y to s
-    protected void DrawObject(int x, int y, NamedSymbol s) {
-        grid.drawObject(y, x, s);
-    }
-
     // /set symbol and foreground color of cell x, y to s and c
-    protected void DrawObject(int x, int y, NamedSymbol s, NamedColor c) {
+    protected void drawObject(int x, int y, NamedSymbol s, NamedColor c) {
         grid.drawObject(y, x, s, c);
-    }
-
-    // /get background color of cell x, y
-    protected int GetBGColor(int col, int row) {
-        int color = grid.get(col, row).getBGColor();
-        return color;
     }
 
     protected void render() {

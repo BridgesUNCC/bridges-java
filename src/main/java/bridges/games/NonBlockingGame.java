@@ -1,60 +1,62 @@
 package bridges.games;
 
-public abstract class NonBlockingGame extends GameBase {
+import bridges.connect.SocketConnection;
 
-    // /used for fps control
-    private long timeoflastframe;
+public abstract class NonBlockingGame extends GameBase {
 
     // /helper class to make Input Management a bit easier.
     private InputHelper ih;
 
+    // /used for fps control
+    private long timeoflastframe;
+
     // / @return true if "left" is pressed
-    protected boolean KeyLeft() {
+    protected boolean keyLeft() {
         return ih.left();
     }
 
     // / @return true if "right" is pressed
-    protected boolean KeyRight() {
+    protected boolean keyRight() {
         return ih.right();
     }
 
     // / @return true if "up" is pressed
-    protected boolean KeyUp() {
+    protected boolean keyUp() {
         return ih.up();
     }
 
     // / @return true if "down" is pressed
-    protected boolean KeyDown() {
+    protected boolean keyDown() {
         return ih.down();
     }
 
     // / @return true if "button1 - q" is pressed
-    protected boolean Keyq() {
+    protected boolean keyQ() {
         return ih.q();
     }
 
     // / @return true if "button2 - p" is pressed
-    protected boolean Keyp() {
-        return ih.p();
+    protected boolean keySpace() {
+        return ih.space();
     }
 
     // / @return true if "w" is pressed
-    protected boolean Keyw() {
+    protected boolean keyW() {
         return ih.w();
     }
 
     // / @return true if "a" is pressed
-    protected boolean Keya() {
+    protected boolean keyA() {
         return ih.a();
     }
 
     // / @return true if "s" is pressed
-    protected boolean Keys() {
+    protected boolean keyS() {
         return ih.s();
     }
 
     // / @return true if "d" is pressed
-    protected boolean Keyd() {
+    protected boolean keyD() {
         return ih.d();
     }
 
@@ -74,7 +76,10 @@ public abstract class NonBlockingGame extends GameBase {
     // /Initializes specific non-blocking game variables
     private void nonBlockInit() {
         timeoflastframe = System.currentTimeMillis();
-        ih = new InputHelper(sock);
+
+        // /Create input helpter for non-blocking game.
+        ih = new InputHelper();
+        registerKeypress(ih);
     }
 
     // /sleeps so there is time between frames
@@ -95,7 +100,6 @@ public abstract class NonBlockingGame extends GameBase {
         }
     }
 
-    
     // /should be called right before render() Aims at having a fixed
     // /fps of 30 frames per second. This work by waiting until
     // /1/30th of a second after the last call to this function.
@@ -107,8 +111,7 @@ public abstract class NonBlockingGame extends GameBase {
         long theoreticalnextframe = timeoflastframe + (int) (hz * 1000);
         long waittime = theoreticalnextframe - currenttime;
 
-	//System.out.println(waittime);
-	
+        //System.out.println(waittime);
         if (waittime > 0) {
             sleepTimer(waittime);
         }
@@ -119,14 +122,14 @@ public abstract class NonBlockingGame extends GameBase {
     public void start() {
 
         sleepTimer();
-        // associate the grid with the Bridges object
-        bridges.setDataStructure(grid);
         // visualize the grid
         render();
         initialize();
 
-        while (true) {
-            GameLoop();
+        gameStarted = true;
+
+        while (gameStarted) {
+            gameLoop();
             render();
             controlFrameRate();
             // System.out.println("rendered");

@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import java.util.Queue;
 import java.util.ArrayDeque;
 
-public abstract class BlockingGame extends GameBase implements KeypressListener {
+public abstract class BlockingGame extends GameBase implements KeypressListener{
 
     protected Queue<String> keyqueue;
 
@@ -38,7 +38,7 @@ public abstract class BlockingGame extends GameBase implements KeypressListener 
     }
 
     // Returns a string corrisponding to the users keypress
-    public String GetKeyPress() {
+    public String getKeyPress() {
         String ret = "";
         synchronized (keyqueue) {
             try {
@@ -64,9 +64,7 @@ public abstract class BlockingGame extends GameBase implements KeypressListener 
     // Initializes specific blocking game variables
     private void blockingInit() {
         keyqueue = new ArrayDeque<String>();
-        sock.addListener(this);
-        // associate the grid with the Bridges object
-        bridges.setDataStructure(grid);
+         // /Create listener for non-blocking game
     }
 
     // / calling this function starts the game engine.
@@ -74,9 +72,11 @@ public abstract class BlockingGame extends GameBase implements KeypressListener 
 
         initialize();
 
-	while (true) {
-	    GameLoop();
-	    render();
-	}
+        gameStarted = true;
+
+	    while (gameStarted) {
+	        gameLoop();
+	        render();
+	    }
     }
 }
