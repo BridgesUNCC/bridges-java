@@ -18,34 +18,7 @@ import bridges.validation.InvalidValueException;
  *
  * 	<p>
 
- * Supported named colors are:
- *
- * <b>"red", "green",
- * "blue",
- * "yellow",
- * "cyan",
- * "magenta",
- * "white",
- * "black",
- * "orange",
- * "green",
- * "turquoise",
- * "maroon",
- * "aquamarine",
- * "azure",
- * "beige",
- * "brown",
- * "tan",
- * "olive",
- * "chartreuse",
- * "khaki",
- * "bisque",
- * "coral",
- * "pink",
- * "lavender",
- * "purple",
- * "gold",
- * "steelblue"</b>
+ * Supported named colors are listed here: https://drafts.csswg.org/css-color-3/#svg-color
  *
  * All named colors have are fully opaque by default.
  *
@@ -89,6 +62,7 @@ public class Color {
 		tempMap.put("darkcyan", "#008b8b");
 		tempMap.put("darkgoldenrod", "#b8860b");
 		tempMap.put("darkgrey", "#a9a9a9");
+		tempMap.put("darkgray", "#a9a9a9");
 		tempMap.put("darkgreen", "#006400");
 		tempMap.put("darkkhaki", "#bdb76b");
 		tempMap.put("darkmagenta", "#8b008b");
@@ -100,11 +74,13 @@ public class Color {
 		tempMap.put("darkseagreen", "#8fbc8f");
 		tempMap.put("darkslateblue", "#483d8b");
 		tempMap.put("darkslategrey", "#2f4f4f");
+		tempMap.put("darkslategray", "#2f4f4f");
 		tempMap.put("darkturquoise", "#00ced1");
 		tempMap.put("darkviolet", "#9400d3");
 		tempMap.put("deeppink", "#ff1493");
 		tempMap.put("deepskyblue", "#00bfff");
 		tempMap.put("dimgrey", "#696969");
+		tempMap.put("dimgray", "#696969");
 		tempMap.put("dodgerblue", "#1e90ff");
 		tempMap.put("firebrick", "#b22222");
 		tempMap.put("floralwhite", "#fffaf0");
@@ -114,6 +90,7 @@ public class Color {
 		tempMap.put("ghostwhite", "#f8f8ff");
 		tempMap.put("gold", "#ffd700");
 		tempMap.put("goldenrod", "#daa520");
+		tempMap.put("grey", "#808080");
 		tempMap.put("gray", "#808080");
 		tempMap.put("green", "#008000");
 		tempMap.put("greenyellow", "#adff2f");
@@ -132,6 +109,7 @@ public class Color {
 		tempMap.put("lightcyan", "#e0ffff");
 		tempMap.put("lightgoldenrodyellow", "#fafad2");
 		tempMap.put("lightgrey", "#d3d3d3");
+		tempMap.put("lightgray", "#d3d3d3");
 		tempMap.put("lightgreen", "#90ee90");
 		tempMap.put("lightpink", "#ffb6c1");
 		tempMap.put("lightsalmon", "#ffa07a");
@@ -189,6 +167,7 @@ public class Color {
 		tempMap.put("skyblue", "#87ceeb");
 		tempMap.put("slateblue", "#6a5acd");
 		tempMap.put("slategrey", "#708090");
+		tempMap.put("slategray", "#708090");
 		tempMap.put("snow", "#fffafa");
 		tempMap.put("springgreen", "#00ff7f");
 		tempMap.put("steelblue", "#4682b4");
