@@ -272,7 +272,15 @@ public class Array<E> extends DataStruct {
 		// remove last comma
 		nodes_JSON.setLength(nodes_JSON.length() - 1);
 
-		String json_str = QUOTE + "nodes"  + QUOTE + COLON +
+		// add dimension information
+
+
+		String json_str =
+			QUOTE + "dims" + QUOTE + COLON +
+			OPEN_BOX +
+			dims[0] + COMMA + dims[1] + COMMA + dims[2] +
+			CLOSE_BOX + COMMA +
+			QUOTE + "nodes"  + QUOTE + COLON +
 			OPEN_BOX  + nodes_JSON + CLOSE_BOX + CLOSE_CURLY;
 
 		return json_str;

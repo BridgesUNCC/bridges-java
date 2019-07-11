@@ -18,90 +18,47 @@ import java.util.Map.Entry;
  */
 public class Edge<K, E2> {
 
-	private int weight;
-	private K vertex; // refers to a terminating vertex
+	private K to;
+	private K from;
 	private E2 edge_data;
-
-	/**
-	 *
-	 * Constructors
-	 *
-	 */
-	public Edge() {
-		weight = 0;
-	}
-
-	/**
-	 *
-	 * Construct an edge with weight equal to "wt" and no terminating Element
-	 * - used only for graphs.
-	 * @param wt integer representing the weight of the edge
-	 *
-	 */
-	public Edge(int wt) {
-		weight = wt;
-	}
-
+	private LinkVisualizer lvis;
 	/**
 	 *
 	 * Construct an edge with weight "wt" and a terminating
 	 * Element with an identifer equal to "v" - used only for graphs
 	 *
-	 * @param wt integer, representing  edge weight
-	 * @param v the terminating vertex of the edge
+	 * @param from key of source vertex
+	 * @param to ket of terminating vertex of the edge
+	 * @param data is the  edge information object
 	 *
 	 */
-	public Edge(int wt, K v) {
-		weight = wt;
-		vertex = v;
-	}
-	/**
-	 *
-	 * Construct an edge with weight "wt" and a terminating
-	 * Element with an identifer equal to "v" - used only for graphs
-	 *
-	 * @param wt integer, representing  edge weight
-	 * @param v the terminating vertex of the edge
-	 * @param d is the  edge information object
-	 *
-	 */
-	public Edge(int wt, K v, E2 e) {
-		weight = wt;
-		vertex = v;
-		edge_data = e;
+	public Edge(K from, K to, E2 data, LinkVisualizer lvis) {
+		this.to = to;
+		this.from = from;
+		this.edge_data = data;
+		this.lvis = lvis;
 	}
 
 	/**
 	 *
-	 * Set edge weight to "wt"
+	 * Set source Element of the edge
 	 *
-	 * @param wt  -  graph edge weight
+	 * @param from the identifier of the source Element
 	 *
 	 */
-	public void setWeight(int wt) {
-		weight = wt;
+	public void setFrom(K from) {
+		this.from = from;
 	}
 
 	/**
 	 *
-	 * Get edge weight
+	 * Set identifer of the terminating Element of edge
 	 *
-	 * @return the weight of edge
-	 *
-	 */
-	public int getWeight() {
-		return weight;
-	}
-
-	/**
-	 *
-	 * Set terminating Element of the edge
-	 *
-	 * @param v the identifier of the terminating Element
+	 * @param to the identifier of the terminating Element
 	 *
 	 */
-	public void setVertex(K v) {
-		vertex = v;
+	public void setTo(K to) {
+		this.to = to;
 	}
 
 	/**
@@ -111,8 +68,19 @@ public class Edge<K, E2> {
 	 * @return the string identifier of the terminating Element
 	 *
 	 */
-	public K getVertex() {
-		return vertex;
+	public K getTo() {
+		return this.to;
+	}
+
+	/**
+	 *
+	 * Get identifer of the source Element of edge
+	 *
+	 * @return the string identifier of the source Element
+	 *
+	 */
+	public K getFrom() {
+		return this.from;
 	}
 
 	/**
@@ -135,24 +103,85 @@ public class Edge<K, E2> {
 	public E2 getEdgeData() {
 		return this.edge_data;
 	}
-	/**
-	 *
-	 * Set edge to weight  of "wt" and terminating Elememt of "v".
-	 *
-	 * @param wt edge weight
-	 * @param v the identifier of the terminating Element
-	 *
+
+	public LinkVisualizer getLinkVisualizer() {
+		return this.lvis;
+	}
+
+	public void setLinkVisualizer(LinkVisualizer lvis) {
+		this.lvis = lvis;
+	}
+
+	/*
+		Begin visualizer method exposing
 	 */
-	public void setEdge(int wt, K v) {
-		this.weight = wt;
-		this.vertex = v;
+
+	public String getLabel() {
+		return this.lvis.getLabel();
+	}
+
+	public void setLabel(String label) {
+		this.lvis.setLabel(label);
 	}
 
 	/**
-	 * Returns this edge
+	 * Get the thickness of the link in the Bridges Visualiation
+	 *
+	 * @return the size in pixels of the Element in the Bridges Visualization
 	 */
-	public Edge<K, E2> getEdge() {
-		return this;
+	public double getThickness() {
+		return this.lvis.getThickness();
 	}
 
-};
+	public void setThickness(double thickness) {
+		this.lvis.setThickness(thickness);
+	}
+
+	/**
+	 *	Get the color of the link in the Bridges Visualization
+	 *
+	 *	@return the Color object representing the color of the link
+	 *
+	 */
+	public Color getColor() {
+		return this.lvis.getColor();
+	}
+
+	/**
+	 * Set the color of the link from an existing Color object
+	 * @param color Bridges Color object
+	 */
+	public void setColor(Color color) {
+		this.lvis.setColor(color);
+	}
+
+	/**
+	 *
+	 *	Set the color of the link in the Bridges Visualization to "aColor".
+	 *
+	 * 	@param col_name the string reprsenting the color of the Element in
+	 *		the Bridges Visualization; supported named colors are
+	 *  	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
+	 *  	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
+	 *  	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
+	 *  	"pink", "lavender", "purple", "gold"
+	 *
+	 */
+	public void setColor(String color) {
+		this.lvis.setColor(color);
+	}
+
+	/**
+	 *
+	 * 	Set the color of the link given RGBA components
+	 *
+	 * 	@param r, g, b, a components
+	 *
+	 *	check to ensure they are in 0-255 range, else throw exception
+	 *
+	 */
+	public void setColor(int r, int g, int b, float a) {
+		this.lvis.setColor(r, g, b, a);
+	}
+
+}

@@ -110,6 +110,102 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
+	 * Set the size of the Element in the Bridge Visualization (in pixel units)
+	 *
+	 * @param sz the pixel size of the Element in the Bridges Visualization
+	 */
+	public void setSize(double sz) {
+		this.visualizer.setSize(sz);
+	}
+
+	/**
+	 *  Get element size
+	 *	@return the size (in pixels) of the element
+	 *
+	 */
+	public double getSize()  {
+		return this.visualizer.getSize();
+	}
+	/**
+	 *  Set the color to "col"
+	 *  @param col The color of the element
+	 */
+	public void setColor( Color col) {
+		this.visualizer.setColor(col);
+	}
+	/**
+	 *  Set the color to "col"
+	 *  @param col The color of the element
+	 */
+	public void setColor(String col) {
+		this.visualizer.setColor(col);
+	}
+	/**
+	 *	@return The color of the element
+	 */
+	public Color getColor() {
+		return this.visualizer.getColor();
+	}
+
+	/**
+	 *	set opacity of element - use the 4th color component
+	 *
+	 *  @param opacity
+	 */
+	public void setOpacity(float opacity) {
+		this.visualizer.setOpacity(opacity);
+	}
+
+	/**
+	 *	get opacity of element
+	 *
+	 *	@return opacity
+	 */
+	public double getOpacity() {
+		return this.visualizer.getOpacity();
+	}
+	/**
+	 * Sets the shape of the Element in the Bridges Visualization. Supported
+	 * 		shapes include "star", "circle", "square", "diamond", "cross",
+	 *		"triangle", "wye".
+	 *
+	 * @param aShape the string representing the shape of the Element in
+	 *			the Bridges Visualization
+	 */
+	public void setShape(String aShape) {
+		this.visualizer.setShape(aShape);
+	}
+	/**
+	 *	@return The shape of the element(one of CIRCLE,SQUARE,
+	 *		DIAMOND,CROSS,TRI_DOWN,TRI_UP
+	 */
+	public String getShape()  {
+		return this.visualizer.getShape();
+	}
+	/**
+	 * 	Set the location attributes of an element.
+	 *
+	 * 	@param locX X coordinate of the element location
+	 * 	@param locY Y coordinate of the element location
+	 */
+	public void setLocation( double locX,  double locY) {
+		this.visualizer.setLocation(locX, locY);
+	}
+
+	/**
+	 *	@return the X coordinate of the  element's location attribute
+	 */
+	public double getLocationX()  {
+		return this.visualizer.getLocationX();
+	}
+	/**
+	 *	@return the Y coordinate of the  element's location attribute
+	 */
+	public double getLocationY()  {
+		return this.visualizer.getLocationY();
+	}
+
+	/**
 	 * Returns the Element's visualizer object
 	 *
 	 * @return the visualizer object
@@ -167,7 +263,7 @@ public class Element<E> extends DataStruct {
 	 * Validates the Element's value when the Element is created
 	 * A non null value is expected
 	 * this will be unnecessary after we modify the server
-	 * @param ELement value
+	 * @param <E> value
 	 */
 	protected void validateVal(E value) {
 		try {
@@ -295,64 +391,10 @@ public class Element<E> extends DataStruct {
 
 		return json_str;
 	}
-	/**
-	 *	Generate string representing the data structure of a list
-	 *
-	 *	@param nodes   the list of nodes in the list
-	 *
-	 */
-	/*
-		public String[] generateListJSON(Vector<Element<E>> nodes) {
 
-			HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
-			StringBuilder nodes_JSON = new StringBuilder(),
-						  links_JSON = new StringBuilder();
-
-							// create the nodes JSON string
-			for (int k = 0; k < nodes.size(); k++) {
-				node_map.put(nodes.get(k), k);
-				nodes_JSON.append(nodes.get(k).getElementRepresentation());
-				nodes_JSON.append(COMMA);
-			}
-							// remove the last comma
-			nodes_JSON.setLength(nodes_JSON.length()-1);
-
-							// now create the links JSON string
-
-							// iterate over the node map entries - these are the parent nodes
-			for (Entry<Element<E>, Integer> pmap_entry : node_map.entrySet()) {
-				Element<E> parent = pmap_entry.getKey();
-	//System.out.println("Processing " + parent.getLabel());
-							// iterate over the link vis entries - these are the child nodes
-				for (Entry<Element<E>, LinkVisualizer>
-						cmap_entry : parent.lvisualizer.entrySet()) {
-							// find the child corresponding the parent
-					Element<E> child = cmap_entry.getKey();
-	//System.out.println("\t Child " + child.getLabel());
-					if (node_map.get(child) != null) {
-						links_JSON.append(getLinkRepresentation(
-								cmap_entry.getValue(),
-								Integer.toString(node_map.get(parent)),
-								Integer.toString(node_map.get(child))) );
-						links_JSON.append(COMMA);
-	//System.out.println("from " + node_map.get(parent) + "to " + node_map.get(child) );
-					}
-				}
-			}
-							// remove the last comma
-			links_JSON.setLength(links_JSON.length()-1);
-
-			String nodes_str = nodes_JSON.toString();
-			String links_str = links_JSON.toString();
-
-	System.out.println (nodes_str + links_str);
-			String[] nodes_links = new String[2];
-			nodes_links[0] = nodes_str;
-			nodes_links[1] = links_str;
-
-			return nodes_links;
-		}
-	*/
+	public String getDataStructureRepresentation() {
+		return null;
+	}
 
 	/**
 	 *

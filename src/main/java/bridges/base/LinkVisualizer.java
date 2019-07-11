@@ -75,24 +75,12 @@ public class LinkVisualizer {
 	// link weight
 	private double weight;
 
-	//    	private final String INSERT_STRING = "\\n";
-	//	private final String DIVIDE_KEY = "(\r?\n)|(\n)|(\f)|(\r)|(%n)";
-
 
 	public LinkVisualizer() {
 		super();
 		color = new Color(70, 130, 180, 1.0f);
 		setThickness(1.0);
 		setWeight(1.0);
-		/*
-			HashMap<String,String> properties;
-				properties = new HashMap<String, String>() {{
-							put("color", "black");
-		        				put("opacity", "1.0");
-		        				put("width", "1.0");
-		        				put("weight", "1.0");
-							}};
-		*/
 	}
 
 	/**
@@ -114,34 +102,6 @@ public class LinkVisualizer {
 		//		this.label = arrangeLabel(label);
 		this.label = label;
 	}
-
-	// /**
-	//  * This method formats the label string using a predefine pattern (DIVIDE_KEY) and
-	//  * replaces the pattern with the string characters hold by the INSERT_STRING global
-	//  *	variable
-	//  *
-	//  * @param label  the input label string
-	//  *
-	//  * @return  the formatted label
-	//  */
-	// public String arrangeLabel(String label) {
-	// 	final Pattern myPattern = Pattern.compile(DIVIDE_KEY);
-	// 	Matcher match = myPattern.matcher(label);
-	// 	if (!match.find())
-	// 		return label;
-	// 	else {
-	// 		match.reset();
-	// 		StringBuffer str = new StringBuffer();
-	// 		while (match.find()) {
-	// 			match.appendReplacement(str, Matcher.quoteReplacement(INSERT_STRING));
-	// 		}
-	// 		match.appendTail(str);
-	// 		if (str.length() == 0)
-	// 			return label;
-	// 		else
-	// 			return label = str.toString();
-	// 	}
-	// }
 
 	/**
 	 * Set the thickness of the link in the Bridge Visualization in pixels; thickness
@@ -169,7 +129,7 @@ public class LinkVisualizer {
 	 * Set the weight of the link, useful in graph algorithms, for example.
 	 * weight value is user defined, and determined by the input graph specification.
 	 *
-	 * @param weight
+	 * @param wt
 	 *
 	 */
 	public void setWeight(double wt) {
@@ -199,143 +159,15 @@ public class LinkVisualizer {
 	 *
 	 */
 	public void setColor(String col_name) {
+		color = new Color(col_name);
+	}
 
-		String col = col_name.toLowerCase();
-		// validates and returns a 4 component RGBA val
-		int red, green, blue;
-		float  alpha = 1.0f;
-
-		switch (col_name) {
-			case "red":
-				red = 255;
-				green = blue = 0;
-				break;
-			case "green":
-				red = 0;
-				green = 255;
-				blue = 0;
-				break;
-			case "blue":
-				red = 0;
-				green = 0;
-				blue = 255;
-				break;
-			case "yellow":
-				red = 255;
-				green = 255;
-				blue = 0;
-				break;
-			case "cyan":
-				red = 0;
-				green = 255;
-				blue = 255;
-				break;
-			case "magenta":
-				red = 255;
-				green = 0;
-				blue = 255;
-				break;
-			case "white":
-				red = 255;
-				green = 255;
-				blue = 255;
-				break;
-			case "black":
-				red = 0;
-				green = 0;
-				blue = 0;
-				break;
-			case "orange":
-				red = 255;
-				green = 155;
-				blue = 0;
-				break;
-			case "turquoise":
-				red = 173;
-				green = 234;
-				blue = 234;
-				break;
-			case "maroon":
-				red = 176;
-				green = 48;
-				blue = 96;
-				break;
-			case "aquamarine":
-				red = 127;
-				green = 255;
-				blue = 212;
-				break;
-			case "azure":
-				red = 240;
-				green = 255;
-				blue = 255;
-				break;
-			case "beige":
-				red = 245;
-				green = 245;
-				blue = 220;
-				break;
-			case "brown":
-				red = 166;
-				green = 42;
-				blue = 42;
-				break;
-			case "tan":
-				red = 210;
-				green = 180;
-				blue = 140;
-				break;
-			case "olive":
-				red = 128;
-				green = 128;
-				blue = 0;
-				break;
-			case "chartreuse":
-				red = 127;
-				green = 255;
-				blue = 0;
-				break;
-			case "khaki":
-				red = 240;
-				green = 230;
-				blue = 140;
-				break;
-			case "bisque":
-				red = 255;
-				green = 228;
-				blue = 196;
-				break;
-			case "coral":
-				red = 255;
-				green = 127;
-				blue = 0;
-				break;
-			case "pink":
-				red = 255;
-				green = 192;
-				blue = 203;
-				break;
-			case "lavender":
-				red = 230;
-				green = 230;
-				blue = 250;
-				break;
-			case "purple":
-				red = 160;
-				green = 32;
-				blue = 240;
-				break;
-			case "gold":
-				red = 255;
-				green = 215;
-				blue = 0;
-				break;
-			default:
-				throw new InvalidValueException("Invalid color " + "'" +
-					col_name + "'" + "."
-					+ " Only named primaries supported now. \n");
-		}
-		color = new Color (red, green, blue, alpha);
+	/**
+	 * Set the color of the link from an existing Color object
+	 * @param color Bridges Color object
+	 */
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	/**
@@ -349,10 +181,7 @@ public class LinkVisualizer {
 	 */
 	public void setColor(Integer r, Integer g, Integer b, Float a)  throws
 		InvalidValueException {
-		color.setRed(r);
-		color.setGreen(g);
-		color.setBlue(b);
-		color.setAlpha(a);
+		this.color = new Color(r, g, b, a);
 	}
 
 	/**
