@@ -138,12 +138,9 @@ public class Bridges {
 
 
 	/**
+	 * @brief Change the title of the assignment.
 	 *
-	 *	Bridges JSON Parameters
-	 *
-	 */
-
-	/**
+	 * The title is capped at MaxTitleSize characters.
 	 *
 	 * @param title title used in the visualization;
 	 *
@@ -159,6 +156,9 @@ public class Bridges {
 	}
 
 	/**
+	 * @brief Change the textual description of the assignment.
+	 *
+	 * This description is capped at MaxDescrSize characters.
 	 *
 	 * @param description description to annotate the visualization;
 	 *
@@ -221,6 +221,8 @@ public class Bridges {
 	/**
 	 * 	@param coord 	this is the desired coordinate space argument
 	 *		Options are: ['cartesian', 'albersusa', 'equirectangular', 'window'], and 'cartesian' is the default;
+	 *
+	 * The "window" option only works for graphs and will automatically scale the view on the browser to include all vertices which have a fixed location. A different window can be specified using setWindow().
 	 **/
 	public void setCoordSystemType (String coord) {
 		if (java.util.Arrays.asList(projection_options).indexOf(coord) >= 0) {
@@ -236,6 +238,10 @@ public class Bridges {
 	}
 
 	/**
+	 * @brief Specify the window that will be used to render the view by default. 
+	 *
+	 * This function enables specifying the window that will rendered by default in the view. This only works for graph data types. And the coordinate system need ot be set to "window" using setCoordSystemType().
+	 *
 	 * 	@param x1 	minimum window x
 	 * 	@param y1 	minimum window y
 	 * 	@param x2 	maximum window x
@@ -244,9 +250,29 @@ public class Bridges {
 	public void setWindow (int x1, int y1, int x2, int y2) {
 		setWindow((double) x1, (double) y1, (double) x2, (double) y2);
 	}
+	/**
+	 * @brief Specify the window that will be used to render the view by default. 
+	 *
+	 * This function enables specifying the window that will rendered by default in the view. This only works for graph data types. And the coordinate system need ot be set to "window" using setCoordSystemType().
+	 *
+	 * 	@param x1 	minimum window x
+	 * 	@param y1 	minimum window y
+	 * 	@param x2 	maximum window x
+	 * 	@param y2 	maximum window y
+	 **/
 	public void setWindow (float x1, float y1, float x2, float y2) {
 		setWindow((double) x1, (double) y1, (double) x2, (double) y2);
 	}
+	/**
+	 * @brief Specify the window that will be used to render the view by default. 
+	 *
+	 * This function enables specifying the window that will rendered by default in the view. This only works for graph data types. And the coordinate system need ot be set to "window" using setCoordSystemType().
+	 *
+	 * 	@param x1 	minimum window x
+	 * 	@param y1 	minimum window y
+	 * 	@param x2 	maximum window x
+	 * 	@param y2 	maximum window y
+	 **/
 	public void setWindow (double x1, double y1, double x2, double y2) {
 		window = new double[]{x1, y1, x2, y2};
 	}
