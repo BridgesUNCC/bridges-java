@@ -247,8 +247,8 @@ public class Bridges {
 	 * 	@param x2 	maximum window x
 	 * 	@param y2 	maximum window y
 	 **/
-	public void setWindow (int x1, int y1, int x2, int y2) {
-		setWindow((double) x1, (double) y1, (double) x2, (double) y2);
+	public void setWindow (int x1, int x2, int y1, int y2) {
+		setWindow((double) x1, (double) x2, (double) y1, (double) y2);
 	}
 	/**
 	 * @brief Specify the window that will be used to render the view by default. 
@@ -260,8 +260,8 @@ public class Bridges {
 	 * 	@param x2 	maximum window x
 	 * 	@param y2 	maximum window y
 	 **/
-	public void setWindow (float x1, float y1, float x2, float y2) {
-		setWindow((double) x1, (double) y1, (double) x2, (double) y2);
+	public void setWindow (float x1, float x2, float y1, float y2) {
+		setWindow((double) x1, (double) x2, (double) y1, (double) y2);
 	}
 	/**
 	 * @brief Specify the window that will be used to render the view by default. 
@@ -273,8 +273,8 @@ public class Bridges {
 	 * 	@param x2 	maximum window x
 	 * 	@param y2 	maximum window y
 	 **/
-	public void setWindow (double x1, double y1, double x2, double y2) {
-		window = new double[]{x1, y1, x2, y2};
+	public void setWindow (double x1, double x2, double y1, double y2) {
+		window = new double[]{x1, x2, y1, y2};
 	}
 
 	/**
