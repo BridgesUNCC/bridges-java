@@ -125,8 +125,8 @@ public abstract class NonBlockingGame extends GameBase {
         // visualize the grid
         render();
         initialize();
-	    
-	    gameStarted = true;
+
+        gameStarted = true;
 
         while (gameStarted) {
             gameLoop();
