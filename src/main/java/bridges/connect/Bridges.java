@@ -74,7 +74,7 @@ public class Bridges {
 	private static String display_mode = "slide"; // default to slide (vs stack)
 	private static String coord_system_type = projection_options[0];	// default to Cartesian space
 
-	private static DataStruct ds_handle = null;		// data structure handle
+	private DataStruct ds_handle = null;		// data structure handle
 
 	//  string constants  for use in constructing JSON
 	//  representation of the data structure
@@ -488,10 +488,10 @@ public class Bridges {
 	}
 
 	public static int getAssignmentID() {
-	    return assignment;
+		return assignment;
 	}
 
-    
+
 	/**
 	 *	set the assignment id
 	 *
@@ -609,76 +609,15 @@ public class Bridges {
 	 */
 	public void visualize()  throws IOException, RateLimitException {
 		String[] nodes_links = new String[2];
-		String nodes_links_str = "";
 		String response = "";
-		switch (vis_type) {
-			case "Array":
-				nodes_links_str = ((Array) ds_handle).getDataStructureRepresentation();
-				break;
-			case "SinglyLinkedList":
-			case "DoublyLinkedList":
-			case "CircularSinglyLinkedList":
-			case "CircularDoublyLinkedList":
-				nodes_links_str =
-					((SLelement) ds_handle).getDataStructureRepresentation();
-				break;
-			case "MultiList":
-				nodes_links_str =
-					((MLelement) ds_handle).getDataStructureRepresentation();
-				break;
-			case "Tree":
-			case "BinaryTree":
-			case "BinarySearchTree":
-			case "AVLTree":
-			case "KdTree":
-				nodes_links_str =
-					((TreeElement) ds_handle).getDataStructureRepresentation();
-				break;
-			case "GraphAdjacencyList":
-			case "largegraph":
-				nodes_links_str =
-					((GraphAdjList) ds_handle).getDataStructureRepresentation();
-				break;
-			case "GraphAdjacencyMatrix":
-				nodes_links_str =
-					((GraphAdjMatrix) ds_handle).getDataStructureRepresentation();
-				break;
-			case "ColorGrid":
-				nodes_links_str = ((ColorGrid) ds_handle).getDataStructureRepresentation();
-				break;
-		case "GameGrid":
-		    nodes_links_str = ((GameGrid) ds_handle).getDataStructureRepresentation();
-		    break;
-			case "SymbolCollection":
-				nodes_links_str = ((SymbolCollection) ds_handle).getDataStructureRepresentation();
-				break;
-		}
 
-		String ds_json =
-			OPEN_CURLY +
-			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
-			QUOTE + "title"   + QUOTE + COLON + QUOTE + JSONValue.escape(title) + QUOTE + COMMA +
-			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) + QUOTE + COMMA +
-			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
-			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
-			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
+		String nodes_links_str = this.ds_handle.getDataStructureRepresentation();
+
+		String json_hdr = getJSONHeader();
 
 		// get the nodes and link representations
 
-		if (vis_type == "Array") {
-			int dims[] = new int[3];
-			Array ds_array = (Array) ds_handle;
-			int num_dims = ds_array.getNumDimensions();
-			ds_array.getDimensions(dims);
-			ds_json += QUOTE + "dims" + QUOTE + COLON +
-				OPEN_BOX + dims[0] + COMMA + dims[1] + COMMA + dims[2] + CLOSE_BOX + COMMA;
-
-			ds_json +=  nodes_links_str;
-
-		}
-		else {
-			ds_json += nodes_links_str;
-		}
+		String ds_json =  json_hdr + nodes_links_str;
 
 		if (json_flag)		// print the JSON (mostly for debugging)
 			System.out.println("\nJSON String:\n" + ds_json);
@@ -709,5 +648,19 @@ public class Bridges {
 			// Increment the subassignment counter
 			assignment_part++;
 		}
+	}
+	String getJSONHeader() {
+
+		String json_hdr =
+			OPEN_CURLY +
+			QUOTE + "visual"  + QUOTE + COLON + QUOTE + vis_type + QUOTE + COMMA +
+			QUOTE + "title"   + QUOTE + COLON + QUOTE + JSONValue.escape(title) + QUOTE + COMMA +
+			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) +
+			QUOTE + COMMA +
+			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
+			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
+			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
+
+		return json_hdr;
 	}
 }

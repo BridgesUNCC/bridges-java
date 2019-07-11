@@ -1121,7 +1121,7 @@ public class DataFormatter {
 		boolean has_cache = true;
 		// make cache if does not exist
 		if (!cache_dir.exists()) {
-			if(!cache_dir.mkdir()) {
+			if (!cache_dir.mkdir()) {
 				System.err.println("Error creating cache directory");
 				has_cache = false;
 			}

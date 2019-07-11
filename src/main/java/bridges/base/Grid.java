@@ -82,4 +82,8 @@ public class Grid<E> extends DataStruct {
 			e.printStackTrace();
 		}
 	}
+
+	public String getDataStructureRepresentation() {
+		return null;
+	}
 }
