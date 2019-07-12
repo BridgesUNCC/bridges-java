@@ -34,10 +34,6 @@ import org.apache.http.util.EntityUtils;
 import org.apache.commons.codec.binary.Base64;
 //import com.google.code.gson.Gson;
 
-
-
-
-
 /**
  * Connection to the DataFormatters server.
  *
