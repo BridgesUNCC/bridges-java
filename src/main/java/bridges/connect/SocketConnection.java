@@ -10,6 +10,12 @@ import org.json.JSONObject;
 // Wrapper for a socket.io socket connection for BRIDGES
 public class SocketConnection {
 
+    private Bridges bridges;
+
+    public SocketConnection (Bridges b) {
+	bridges = b;
+    }
+    
     // This is the actual socket
     private io.socket.client.Socket socket;
 
@@ -26,7 +32,7 @@ public class SocketConnection {
     // server
     // TODO: this will need to be refactored to sit within BRIDGES, but for now
     // we pass credentials directly
-    public void setupConnection(String user, String assignment) {
+    public void setupConnection() {
         try { // connect to the socket server
 
             IO.Options opts = new IO.Options();
@@ -57,10 +63,10 @@ public class SocketConnection {
                     socket.emit(
                             "credentials",
                             "{\"user\":\""
-                            + user
+                            + bridges.getUserName()
+			    + "\",\"apikey\":\"" + bridges.getKey()
                             + "\",\"assignment\":\""
-                            + assignment.substring(0,
-                                    assignment.indexOf("."))
+                            + bridges.getAssignmentID()
                             + "\"}");
                     System.out
                             .println("passing credentials to socket server...");

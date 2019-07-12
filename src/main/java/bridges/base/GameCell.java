@@ -88,24 +88,24 @@ public class GameCell {
   }
 
   /**
-   *  @return background color as integer (index of value in NamedColor)
+   *  @return background color
    */
-  public int getBGColor() {
-    return this.bg.ordinal();
+  public NamedColor getBGColor() {
+    return this.bg;
   }
 
   /**
-   *  @return foreground color as integer (index of value in NamedColor)
+   *  @return object color
    */
-  public int getFGColor() {
-    return this.fg.ordinal();
+  public NamedColor getFGColor() {
+    return this.fg;
   }
 
   /**
-   *  @return symbol as integer
+   *  @return symbol
    */
-  public int getSymbol() {
-    return this.symbol.ordinal();
+  public NamedSymbol getSymbol() {
+    return this.symbol;
   }
 
   /**

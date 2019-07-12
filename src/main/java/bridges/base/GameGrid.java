@@ -80,6 +80,19 @@ public class GameGrid extends Grid<GameCell> {
     this.get(row, col).setBGColor(color);
   }
 
+  public NamedColor getBGColor(Integer row, Integer col) {
+    return this.get(row, col).getBGColor();
+  }
+
+  public NamedSymbol getSymbol(Integer row, Integer col) {
+    return this.get(row, col).getSymbol();
+  }
+    
+  public NamedColor getSymbolColor(Integer row, Integer col) {
+    return this.get(row, col).getFGColor();
+  }
+    
+    
   /**
    *  Set foreground color of a cell using an enum argument
    *
@@ -204,9 +217,9 @@ public class GameGrid extends Grid<GameCell> {
       		for (int j = 0; j < gridSize[1]; j++) {
     		    if (grid.get(i).get(j) != null) {
         			gc = grid.get(i).get(j);
-        			bg[count] = gc.getBGColor();
-        			fg[count] = gc.getFGColor();
-        			symbols[count] = gc.getSymbol();
+        			bg[count] = gc.getBGColor().ordinal();
+        			fg[count] = gc.getFGColor().ordinal();
+        			symbols[count] = gc.getSymbol().ordinal();
         			count++;
         		}
           }
@@ -230,9 +243,9 @@ public class GameGrid extends Grid<GameCell> {
           for (int j = 0; j < gridSize[1]; j++) {
             if (grid.get(i).get(j) != null) {
             	gc = grid.get(i).get(j);
-            	bf_bg.put((byte)gc.getBGColor());
-            	bf_fg.put((byte)gc.getFGColor());
-            	bf_symbols.put((byte)gc.getSymbol());
+            	bf_bg.put((byte)gc.getBGColor().ordinal());
+            	bf_fg.put((byte)gc.getFGColor().ordinal());
+            	bf_symbols.put((byte)gc.getSymbol().ordinal());
             }
           }
         }
