@@ -68,7 +68,7 @@ public abstract class GameBase {
         sock.addListener(kl);
     }
 
-    /// @brief Call this function from min to start the game.
+    /// @brief Call this function from main to start the game.
     public abstract void start();
 
     /// @brief This function is called once when the game starts.
@@ -97,7 +97,7 @@ public abstract class GameBase {
 
     /// @brief Set a short description of the game
     ///
-    /// @param desk Description of the game
+    /// @param desc Description of the game
     protected void setDescription(String desc) {
         bridges.setDescription(desc);
     }
