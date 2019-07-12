@@ -112,20 +112,13 @@ public class Element<E> extends DataStruct {
 	/**
 	 * Set the size of the Element in the Bridge Visualization (in pixel units)
 	 *
-	 * @param sz the pixel size of the Element in the Bridges Visualization
+	 * @param sz the pixel size of the Element in the Bridges Visualization. Must be in [1:50].
 	 */
 	public void setSize(double sz) {
 		this.visualizer.setSize(sz);
 	}
 
-	/**
-	 *  Get element size
-	 *	@return the size (in pixels) of the element
-	 *
-	 */
-	public double getSize()  {
-		return this.visualizer.getSize();
-	}
+
 	/**
 	 *  Set the color to "col"
 	 *  @param col The color of the element
@@ -133,14 +126,8 @@ public class Element<E> extends DataStruct {
 	public void setColor( Color col) {
 		this.visualizer.setColor(col);
 	}
-	/**
-	 *  Set the color to "col"
-	 *  @param col The color of the element
-	 */
-	public void setColor(String col) {
-		this.visualizer.setColor(col);
-	}
-	/**
+
+    /**
 	 *	@return The color of the element
 	 */
 	public Color getColor() {
@@ -174,35 +161,6 @@ public class Element<E> extends DataStruct {
 	 */
 	public void setShape(String aShape) {
 		this.visualizer.setShape(aShape);
-	}
-	/**
-	 *	@return The shape of the element(one of CIRCLE,SQUARE,
-	 *		DIAMOND,CROSS,TRI_DOWN,TRI_UP
-	 */
-	public String getShape()  {
-		return this.visualizer.getShape();
-	}
-	/**
-	 * 	Set the location attributes of an element.
-	 *
-	 * 	@param locX X coordinate of the element location
-	 * 	@param locY Y coordinate of the element location
-	 */
-	public void setLocation( double locX,  double locY) {
-		this.visualizer.setLocation(locX, locY);
-	}
-
-	/**
-	 *	@return the X coordinate of the  element's location attribute
-	 */
-	public double getLocationX()  {
-		return this.visualizer.getLocationX();
-	}
-	/**
-	 *	@return the Y coordinate of the  element's location attribute
-	 */
-	public double getLocationY()  {
-		return this.visualizer.getLocationY();
 	}
 
 	/**
@@ -446,6 +404,53 @@ public class Element<E> extends DataStruct {
 	public void setValue(E value) {
 		validateVal(value);
 		this.value = value;
+	}
+
+
+	/**
+	 *  Get element size
+	 *	@return the size (in pixels) of the element
+	 *
+	 */
+	public double getSize() {
+		return visualizer.getSize();
+	}
+	/**
+	 *  Set the color to "col"
+	 *  @param color The color of the element
+	 */
+	public void setColor(String col) {
+		visualizer.setColor(col);
+	}
+
+	/**
+	 *	@return The shape of the element(one of CIRCLE,SQUARE,
+	 *		DIAMOND,CROSS,TRI_DOWN,TRI_UP
+	 */
+	public String getShape() {
+		return visualizer.getShape();
+	}
+	/**
+	 * 	Set the location attributes of an element.
+	 *
+	 * 	@param locX X coordinate of the element location
+	 * 	@param locY Y coordinate of the element location
+	 */
+	public void setLocation(double locX, double locY) {
+		visualizer.setLocation(locX, locY);
+	}
+
+	/**
+	 *	@return the X coordinate of the  element's location attribute
+	 */
+	public double getLocationX(){
+		return visualizer.getLocationX();
+	}
+	/**
+	 *	@return the Y coordinate of the  element's location attribute
+	 */
+	public double getLocationY() {
+		return visualizer.getLocationY();
 	}
 
 
