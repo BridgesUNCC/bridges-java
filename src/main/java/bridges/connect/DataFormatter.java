@@ -1114,13 +1114,42 @@ public class DataFormatter {
 	}
 
 	/***
-	 * Fetches Open Street Map data for a given location
+	 * Generates Open Street Map URL request for a given location and returns the map data
 	 * @param location, name of city or area that the server supports
+	 * @param level, level of road detail on requested map
 	 * @return OsmData, vertices and edges of Open Street Map data
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
-	static OsmData getOsmData(String location) throws IOException {
+	static OsmData getOsmData(String location, String level) throws IOException {
+		String url = "http://cci-bridges-osm-t.dyn.uncc.edu/loc?location=" + location + "&level=" + level;
+		String hashUrl = "http://cci-bridges-osm-t.dyn.uncc.edu/hash?location=" + location + "&level=" + level;
+		return (downloadMapFile(url, hashUrl));
+  }
+	/***
+	 * Generates Open Street Map URL request for a given set of coordinates and returns the map data
+	 * @param minLat, minimum latitude value for the area requested
+	 * @param minLon, minimum longitude value for the area requested
+	 * @param maxLat, maximum latitude value for the area requested
+	 * @param maxLon, maximum longitude value for the area requested
+	 * @param level, level of road detail on requested map
+	 * @return OsmData, vertices and edges of Open Street Map data
+	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 */
+	static OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
+		String url = "http://cci-bridges-osm-t.dyn.uncc.edu/coords?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
+		String hashUrl = "http://cci-bridges-osm-t.dyn.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
+		return (downloadMapFile(url, hashUrl));
+	}
+	/***
+	 * Downloads and caches maps requested
+	 * @param url, string of the url that will be used when requesting map data from server
+	 * @param hashurl, string of the url that will be used when requesting hash data from serverp
+	 * @return OsmData, vertices and edges of Open Street Map data
+	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 */
+	static OsmData downloadMapFile(String url, String hashUrl) throws IOException{
 		File cache_dir = new File("./bridges_data_cache");
+		ArrayList<String> lru =  new ArrayList<String>();
 
 		boolean has_cache = true;
 		// make cache if does not exist
@@ -1131,37 +1160,89 @@ public class DataFormatter {
 			}
 		}
 
+		//Loads the LRU list
+		File lru_file = new File("./bridges_data_cache/lru.txt");
+		if (lru_file.exists()){
+			String lruImport = new String(Files.readAllBytes(lru_file.toPath()));
+			String[] x = lruImport.split(",");
+			for (String val: x){
+				lru.add(val);
+			}
+		}
 		// look for file in cache
 		String content = null;
-		if (has_cache) {
+		String hash = null;
+		HttpResponse hashResp = makeRequest(hashUrl);
+		int hashStatus = hashResp.getStatusLine().getStatusCode();
+		hash = EntityUtils.toString(hashResp.getEntity());
+		if (has_cache && !hash.equals("false") && hashStatus == 200) {
 			for (File file : cache_dir.listFiles()) {
-				if (file.getName().equals(location + ".json")) {
+				if (file.getName().equals(hash)) {
 					content = new String(Files.readAllBytes(file.toPath()));
+
+					//Updates the LRU
+					try{
+						lru.remove(new String(hash));
+					} catch (Exception e){
+						//Its fine if its not found in LRU
+					}
+					lru.add(0, hash); // pushes the hash to the front of LRU
 				}
 			}
 		}
 
 		// if not in cache, hit server for data
 		if (content == null) {
-			String url = "https://osm-api.herokuapp.com/name/" + location;
 			HttpResponse resp = makeRequest(url);
 			int status = resp.getStatusLine().getStatusCode();
 			content = EntityUtils.toString(resp.getEntity());
 			if (status != 200) {
 				if (status == 404) {
 					// attempt to get valid names
-					url = "https://osm-api.herokuapp.com/name_list";
+					url = "http://cci-bridges-osm-t.dyn.uncc.edu/cities";
 					resp = makeRequest(url);
 					status = resp.getStatusLine().getStatusCode();
 					if (status == 200) {
 						content = EntityUtils.toString(resp.getEntity());
-						throw new RuntimeException("Invalid name: " + location + "\nValid names:" + content);
+						throw new RuntimeException("Invalid name" + "\nValid names:" + content);
 					}
 				}
 				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
 			}
-			Files.write(Paths.get("./bridges_data_cache/" + location + ".json"), content.getBytes());
+			hashResp = makeRequest(hashUrl);
+			hash = EntityUtils.toString(hashResp.getEntity());
+
+			//Checks to see if valid hash is generated
+			if (!hash.equals("false")){
+				//Updates the LRU and purges the old map
+				lru.add(0, hash);
+				//Purges old maps from the cache and lru
+				while (lru.size() >= 30){
+					String dir = "./bridges_data_cache";
+					File old_map = new File(dir);
+					for (File file : old_map.listFiles()) {
+							if (file.getName().replaceAll("[^a-zA-Z0-9]", "").equals(lru.get(lru.size()-1).replaceAll("[^a-zA-Z0-9]", ""))) { //regexs out any non alphanumeric character
+								file.delete();
+								lru.remove(lru.size()-1);
+							}
+						}
+					}
+				Files.write(Paths.get("./bridges_data_cache/" + hash), content.getBytes());
+			}
 		}
+
+		//Saves the LRU list
+		String output = "";
+		int count = 1;
+		for (String y : lru){
+			output = output + y.replaceAll("[^a-zA-Z0-9]", ""); //regexs out any non alphanumeric character
+			if (lru.size() != count){
+				output = output + ",";
+			}
+			count++;
+		}
+		Files.write(Paths.get("./bridges_data_cache/lru.txt"), output.getBytes());
+
 
 		// parse that data
 		Gson gson = new Gson();
@@ -1299,4 +1380,3 @@ public class DataFormatter {
 	}
 
 } // end of DataFormatter
-
