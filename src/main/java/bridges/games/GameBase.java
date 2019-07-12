@@ -55,45 +55,69 @@ public abstract class GameBase {
         sock.setupConnection(bridges.getUserName(), bridges.getAssignment());
     }
 
-    protected void registerKeypress(InputHelper i) {
-        sock.addListener(i);
+    /// @brief register a new KeypressListener
+    ///
+    /// Students should not have to call this function directly.  The
+    /// KeypressListener listener will get notified of all keypresses
+    /// (up and down) that happens in the game.
+    ///
+    /// @param kl a KeypressListener to register
+    protected void registerKeypress(KeypressListener kl) {
+        sock.addListener(kl);
     }
 
     // /blocking and non-blocking games have different start sequences
     public abstract void start();
 
     // /students can decide how to initialize their game grid
-    public abstract void initialize();
+    protected abstract void initialize();
 
     // /What happens at each step of the game
-    public abstract void gameLoop();
+    protected abstract void gameLoop();
 
-    // /Stops game updates. Student must use start() again to
-    // /restart the games updating process.
-    public void quit() {
+    /// @brief Call this function to stop the game. 
+    protected void quit() {
         gameStarted = false;
     }
 
-    // /set the title of the game
+    /// @brief Set the title of the game
+    ///
+    /// @param title Title of the game
     protected void setTitle(String title) {
         bridges.setTitle(title);
     }
 
-    // /give a short discription of the game
+    /// @brief Set a short description of the game
+    ///
+    /// @param desk Description of the game
     protected void setDescription(String desc) {
         bridges.setDescription(desc);
     }
 
-    // /set background color of cell x, y to c
+    /// @brief Change the background color of a cell
+    ///
+    /// @param x row of the cell to set
+    /// @param y column of the cell to set
+    /// @param c NamedColor to set
     protected void setBGColor(int x, int y, NamedColor c) {
         grid.setBGColor(y, x, c);
     }
 
-    // /set symbol and foreground color of cell x, y to s and c
+    /// @brief Draw an object on the game
+    ///
+    /// @param x row of the cell to draw the object on
+    /// @param y column of the cell to draw the object on
+    /// @param s symbol representing the object
+    /// @param c color of the object
     protected void drawObject(int x, int y, NamedSymbol s, NamedColor c) {
         grid.drawObject(y, x, s, c);
     }
 
+
+    /// @brief Renders the game
+    ///
+    /// Student should not have to call this function directly. It is
+    /// called automatically by Bridges.
     protected void render() {
         if (firsttime) {
             firsttime = false;

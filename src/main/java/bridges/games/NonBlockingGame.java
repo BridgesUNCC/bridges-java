@@ -80,12 +80,23 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.d();
     }
 
-    // /takes bridges credential and information as a parameter. Student grid size.
-    // /no greater than 30x30
+    /// @brief Construct a NonBlockingGame object. It is expected
+    /// students will never directly construct a NonBlockingGame
+    /// object but rather derive from it.
+    ///
+    ///
+    /// The created grid can not be larger than 1024 cells in total
+    /// (e.g., 32x32, or 2x512).
+    ///
+    /// @param assid bridges assignment ID
+    /// @param login login on the bridges server
+    /// @param apikey apikey of the account specified in login
+    /// @param cols number of columns in the game
+    /// @param rows number of rows in the game
     public NonBlockingGame(int assid, String login, String apikey, int cols, int rows) {
         super(assid, login, apikey, cols, rows);
-        
-        if ((cols * rows) > 1024) { // Allows students to create smaller grids if they prefer.
+
+	if ((cols * rows) > 1024) { // Allows students to create smaller grids if they prefer.
             System.out.println("ERROR: Number of cells in a non-blocking game grid cannot exceed 32x32 or 1024.");
             System.exit(1);
         }
@@ -139,7 +150,8 @@ public abstract class NonBlockingGame extends GameBase {
         timeoflastframe = System.currentTimeMillis();
     }
 
-    /// calling this function starts the game engine.
+    /// Call this function to start the game engine.
+    ///
     public void start() {
 
         sleepTimer();
