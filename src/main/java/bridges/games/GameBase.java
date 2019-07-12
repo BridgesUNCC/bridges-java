@@ -6,6 +6,8 @@ import bridges.base.NamedSymbol;
 import bridges.base.GameGrid;
 
 import bridges.connect.SocketConnection;
+import bridges.connect.KeypressListener;
+
 
 public abstract class GameBase {
 

@@ -2,6 +2,7 @@ package bridges.games;
 
 import bridges.connect.SocketConnection;
 
+
 public abstract class NonBlockingGame extends GameBase {
 
     ///helper class to make Input Management a bit easier.
@@ -116,11 +117,7 @@ public abstract class NonBlockingGame extends GameBase {
 
     /// sleeps so there is time between frames
     private void sleepTimer() {
-        try {
-            Thread.sleep(5 * 1000); // wait for browser to connect
-        } catch (InterruptedException ie) {
-            quit();
-        }
+	sleepTimer(1000);
     }
 
     /// sleeps so there is time between frames
