@@ -4,60 +4,98 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.function.Consumer;
-import org.json.simple.JSONValue;
 
 public class Plot extends DataStruct{
 	
 	private String plotTitle;
 	private String plotSubtitle;
-	private String plotYaxis;
-	
-	private long[] plotYData;
+	private String yLabel;
+	private String xLabel;
 	private int[] plotXData;
-	private int plotPointStart;
-	private int runtime;
+	private boolean mouseTrack;
+	private boolean dataLabel;
+	private boolean logorithmic;
 	
 	private HashMap<String, long[]> yaxisData;
+	private HashMap<String, int[]> xaxisData;
 	
 	public Plot(String title){
 		this.plotTitle = title;
+		this.plotSubtitle = "";
+		this.yLabel = "";
+		this.xLabel = "";
 		this.yaxisData = new HashMap<String, long[]>();
+		this.xaxisData = new HashMap<String, int[]>();
+		this.mouseTrack = false;
+		this.dataLabel = true;
+		this.logorithmic = false;
+	}
+	
+	public void plotOptions(boolean mTrack, boolean dLabel) {
+		this.mouseTrack = mTrack;
+		this.dataLabel = dLabel;
 	}
 	
 	public String getDataStructType() {
 		return "Plot";
 	}
 	
+	public void toggleMouseTrack(boolean val) {
+		this.mouseTrack = val;
+	}
+	
+	public void toggleDataLabel(boolean val) {
+		this.dataLabel = val;
+	}
+	
+	public void toggleLogorithmic(boolean val) {
+		this.logorithmic = val;
+	}
+	
 	public void setTitle(String t) {
-		plotTitle = t;
+		this.plotTitle = t;
 	}
 
 	public String getTitle() {
-		return plotTitle;
+		return this.plotTitle;
 	}
 	
 	public void setSubTitle(String s) {
-		plotSubtitle = s;
+		this.plotSubtitle = s;
 	}
 	
-	public String getSubtitle() {
-		return plotSubtitle;
+	public String getSubTitle() {
+		return this.plotSubtitle;
 	}
 	
-	public void setYaxis(String yaxisName) {
-		plotYaxis = yaxisName;
+	public void setYLabel(String yaxisName) {
+		this.yLabel = yaxisName;
 	}
 	
-	public String getYaxis() {
-		return plotYaxis;
+	public String getYLabel() {
+		return this.yLabel;
 	}
 	
-	public void setXData(int[] d) {
-		plotXData = d;
+	public void setXLabel(String xaxisName) {
+		this.xLabel = xaxisName;
 	}
 	
-	public int[] getXData() {
-		return plotXData;
+	public String getXLabel() {
+		return this.xLabel;
+	}
+	
+	public void setXData(String key, int[] d) {
+		if (!xaxisData.containsKey(key)) {
+			xaxisData.put(key, d);
+		} 
+	}
+	
+	public int[] getXData(String key) {
+		if(xaxisData.containsKey(key)) {
+			int[] result = xaxisData.get(key);
+			return result;
+		}
+		return null;
 	}
 	
 	public void setYData(String key, long[] d) {
@@ -74,42 +112,21 @@ public class Plot extends DataStruct{
 		return null;
 	}
 	
-	public void runtime(String title, int iter, int maxRun, Consumer<int[]> runnable) throws InterruptedException {
-		Random r = new Random();
-		long[] time = new long[iter];
-		int[] xData = new int[iter];
-		int size = maxRun/iter;
-		int n = 0;
-		
-		for(int j = 1; j <= iter; j++) {
-			n += size;
-			System.out.println(n);
-			int[] arr = new int[n];
-			for(int i = 0; i < arr.length; i++) {
-				arr[i] = r.nextInt(10000);
-			}
-			long start = System.currentTimeMillis();
-			runnable.accept(arr);
-			long end = System.currentTimeMillis();
-			long runTime = end - start;
-			
-			time[j-1] = runTime;
-			xData[j-1] = n;
-			System.out.println("here");
-		}
-		
-		this.setXData(xData);
-		this.setYData(title, time);
-		
-	}
-	
 	public String getDataStructureRepresentation() {
-		String xaxis_json = OPEN_BOX;
-		for(int i = 0; i < plotXData.length; i++) {
-			xaxis_json +=  QUOTE + plotXData[i] + QUOTE + COMMA;
+		String xaxis_json = "";
+		for (Entry<String, int[]> entry : xaxisData.entrySet()) {
+		    String key = entry.getKey();
+		    int[] value = entry.getValue();
+		    xaxis_json += OPEN_CURLY + QUOTE + "Plot_Name" + QUOTE + COLON + QUOTE + key + QUOTE + COMMA +
+		    			  QUOTE + "xaxis_data" + QUOTE + COLON + OPEN_BOX;
+		    for( int i = 0; i < value.length ; i++) {
+		    	xaxis_json += QUOTE + value[i] + QUOTE + COMMA;
+		    }
+		    xaxis_json = xaxis_json.substring(0, xaxis_json.length() - 1);
+			xaxis_json += CLOSE_BOX + CLOSE_CURLY + COMMA;
 		}
-		xaxis_json = xaxis_json.substring(0, xaxis_json.length() - 1);
-		xaxis_json += CLOSE_BOX + COMMA;
+	    xaxis_json = xaxis_json.substring(0, xaxis_json.length() - 1);
+
 		
 		String yaxis_json = "";
 		for (Entry<String, long[]> entry : yaxisData.entrySet()) {
@@ -127,8 +144,15 @@ public class Plot extends DataStruct{
 		
 		
 		String json_str = QUOTE +"plot_title" + QUOTE + COLON + QUOTE + this.getTitle() + QUOTE + COMMA +
-						  QUOTE + "xaxis_data" + QUOTE + COLON + xaxis_json +
-						  QUOTE + "plots" + QUOTE + COLON + OPEN_BOX + yaxis_json + CLOSE_BOX + CLOSE_CURLY;
+						  QUOTE +"subtitle" + QUOTE + COLON + QUOTE + this.getSubTitle() + QUOTE + COMMA +
+						  QUOTE +"xLabel" + QUOTE + COLON + QUOTE + this.getXLabel() + QUOTE + COMMA +
+						  QUOTE +"yLabel" + QUOTE + COLON + QUOTE + this.getYLabel() + QUOTE + COMMA +
+						  QUOTE + "axisType" + QUOTE + COLON + this.logorithmic + COMMA +
+						  QUOTE + "options" + QUOTE + COLON + OPEN_CURLY + QUOTE + "mouseTracking" + QUOTE + COLON +
+				          this.mouseTrack + COMMA + QUOTE + "dataLabels" + QUOTE + COLON + this.dataLabel + CLOSE_CURLY + COMMA +
+						  QUOTE + "xaxis_data" + QUOTE + COLON + OPEN_BOX + xaxis_json + CLOSE_BOX + COMMA +
+						  QUOTE + "yaxis_data" + QUOTE + COLON + OPEN_BOX + yaxis_json + CLOSE_BOX +
+						  CLOSE_CURLY;
 		return json_str;
 		
 	}
