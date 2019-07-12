@@ -507,15 +507,29 @@ public class Bridges {
 	}
 
 	/**
-	 * Fetches Open Street Map data for a given location
+	 * Generates Open Street Map URL request for a given location and returns the map data
 	 * @param location, name of city or area that the server supports
+	 * @param level, level of road detail on requested map
 	 * @return OsmData, vertices and edges of Open Street Map data
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
-	public static bridges.data_src_dependent.OsmData getOsmData(String location) throws IOException {
-		return DataFormatter.getOsmData(location);
+	public static bridges.data_src_dependent.OsmData getOsmData(String location, String level) throws IOException {
+		return DataFormatter.getOsmData(location, level);
 	}
 
+	/**
+	 * Generates Open Street Map URL request for a given set of coordinates and returns the map data
+	 * @param minLat, minimum latitude value for the area requested
+	 * @param minLon, minimum longitude value for the area requested
+	 * @param maxLat, maximum latitude value for the area requested
+	 * @param maxLon, maximum longitude value for the area requested
+	 * @param level, level of road detail on requested map
+	 * @return OsmData, vertices and edges of Open Street Map data
+	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 */
+	public static bridges.data_src_dependent.OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
+		return DataFormatter.getOsmData(minLon, minLat, maxLon, maxLat, level);
+	}
 	/**
 	 *	Get the assignment id
 	 *
