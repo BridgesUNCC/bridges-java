@@ -111,6 +111,30 @@ public abstract class GameBase {
         grid.setBGColor(y, x, c);
     }
 
+    /// @brief What color is this cell?
+    ///
+    /// @param x row of the cell 
+    /// @param y column of the cell 
+    protected NamedColor getBGColor(int x, int y) {
+        return grid.getBGColor(y, x);
+    }
+
+    /// @brief What object is in this cell?
+    ///
+    /// @param x row of the cell 
+    /// @param y column of the cell 
+    protected NamedSymbol getSymbol(int x, int y) {
+        return grid.getSymbol(y, x);
+    }
+
+    /// @brief What color is object in this cell?
+    ///
+    /// @param x row of the cell 
+    /// @param y column of the cell 
+    protected NamedColor getSymbolColor(int x, int y) {
+        return grid.getSymbolColor(y, x);
+    }
+    
     /// @brief Draw an object on the game
     ///
     /// @param x row of the cell to draw the object on
