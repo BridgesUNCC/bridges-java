@@ -66,13 +66,19 @@ public abstract class GameBase {
         sock.addListener(kl);
     }
 
-    // /blocking and non-blocking games have different start sequences
+    /// @brief Call this function from min to start the game.
     public abstract void start();
 
-    // /students can decide how to initialize their game grid
+    /// @brief This function is called once when the game starts.
+    ///
+    /// Students write this function.
+    /// It will be called once at the begining of the game.
     protected abstract void initialize();
 
-    // /What happens at each step of the game
+    /// @brief This function is called once per frame of the game.
+    ///
+    /// Students write this function.
+    /// It will be called at each frame of the game.
     protected abstract void gameLoop();
 
     /// @brief Call this function to stop the game. 
