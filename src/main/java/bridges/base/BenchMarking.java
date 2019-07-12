@@ -13,8 +13,8 @@ public class BenchMarking {
 	
 	public void run(String title, int iter, int maxRun, Consumer<int[]> runnable) {
 		Random r = new Random();
-		long[] time = new long[iter];
-		int[] xData = new int[iter];
+		double[] time = new double[iter];
+		double[] xData = new double[iter];
 		int size = maxRun/iter; //determines the size of each iteration
 		int n = 0;
 		

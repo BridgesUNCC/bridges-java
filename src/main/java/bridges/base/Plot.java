@@ -11,21 +11,20 @@ public class Plot extends DataStruct{
 	private String plotSubtitle;
 	private String yLabel;
 	private String xLabel;
-	private int[] plotXData;
 	private boolean mouseTrack;
 	private boolean dataLabel;
 	private boolean logorithmic;
 	
-	private HashMap<String, long[]> yaxisData;
-	private HashMap<String, int[]> xaxisData;
+	private HashMap<String, double[]> yaxisData;
+	private HashMap<String, double[]> xaxisData;
 	
 	public Plot(String title){
 		this.plotTitle = title;
 		this.plotSubtitle = "";
 		this.yLabel = "";
 		this.xLabel = "";
-		this.yaxisData = new HashMap<String, long[]>();
-		this.xaxisData = new HashMap<String, int[]>();
+		this.yaxisData = new HashMap<String, double[]>();
+		this.xaxisData = new HashMap<String, double[]>();
 		this.mouseTrack = false;
 		this.dataLabel = true;
 		this.logorithmic = false;
@@ -84,29 +83,29 @@ public class Plot extends DataStruct{
 		return this.xLabel;
 	}
 	
-	public void setXData(String key, int[] d) {
+	public void setXData(String key, double[] d) {
 		if (!xaxisData.containsKey(key)) {
 			xaxisData.put(key, d);
 		} 
 	}
 	
-	public int[] getXData(String key) {
+	public double[] getXData(String key) {
 		if(xaxisData.containsKey(key)) {
-			int[] result = xaxisData.get(key);
+			double[] result = xaxisData.get(key);
 			return result;
 		}
 		return null;
 	}
 	
-	public void setYData(String key, long[] d) {
+	public void setYData(String key, double[] d) {
 		if (!yaxisData.containsKey(key)) {
 			yaxisData.put(key, d);
 		}
 	}
 	
-	public long[] getYData(String key) {
+	public double[] getYData(String key) {
 		if(yaxisData.containsKey(key)) {
-			long[] result = yaxisData.get(key);
+			double[] result = yaxisData.get(key);
 			return result;
 		}
 		return null;
@@ -114,9 +113,9 @@ public class Plot extends DataStruct{
 	
 	public String getDataStructureRepresentation() {
 		String xaxis_json = "";
-		for (Entry<String, int[]> entry : xaxisData.entrySet()) {
+		for (Entry<String, double[]> entry : xaxisData.entrySet()) {
 		    String key = entry.getKey();
-		    int[] value = entry.getValue();
+		    double[] value = entry.getValue();
 		    xaxis_json += OPEN_CURLY + QUOTE + "Plot_Name" + QUOTE + COLON + QUOTE + key + QUOTE + COMMA +
 		    			  QUOTE + "xaxis_data" + QUOTE + COLON + OPEN_BOX;
 		    for( int i = 0; i < value.length ; i++) {
@@ -129,9 +128,9 @@ public class Plot extends DataStruct{
 
 		
 		String yaxis_json = "";
-		for (Entry<String, long[]> entry : yaxisData.entrySet()) {
+		for (Entry<String, double[]> entry : yaxisData.entrySet()) {
 		    String key = entry.getKey();
-		    long[] value = entry.getValue();
+		    double[] value = entry.getValue();
 		    yaxis_json += OPEN_CURLY + QUOTE + "Plot_Name" + QUOTE + COLON + QUOTE + key + QUOTE + COMMA +
 		    			  QUOTE + "yaxis_data" + QUOTE + COLON + OPEN_BOX;
 		    for( int i = 0; i < value.length ; i++) {
