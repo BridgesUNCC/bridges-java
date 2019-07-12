@@ -240,4 +240,22 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 		return (KdTreeElement<K, E>) super.getRight();
 	}
 
+    /** 
+     *  Augment the element with the "height" and "balance factor" fields.
+     *
+     *  @return the augmented JSON string
+     */
+	public String getElementRepresentation() {
+		String orig_json_str = super.getElementRepresentation();
+
+		String kdt_str = QUOTE + "dimension" + QUOTE + COLON +
+                Integer.toString(this.getDimension()) +  COMMA +
+				QUOTE + "thickness" + QUOTE + COLON +
+                Float.toString(this.getThickness());
+
+		String json_str = orig_json_str.substring(0, orig_json_str.length()-1) + COMMA +
+				kdt_str + CLOSE_CURLY;
+
+		return json_str;
+    }
 }
