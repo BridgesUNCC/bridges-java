@@ -297,48 +297,6 @@ public class Bridges {
 	}
 
 
-	/***
-	 * This function obtains the JSON representation of a particular subassignment.
-	 *
-	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
-	 * @param user the name of the user who uploaded the assignment
-	 * @param assignment the ID of the assignment to get
-	 * @param subassignment the ID of the subassignment to get
-	 ***/
-	public String getAssignmentJSON(String user, int assignment, int subassignment) throws IOException {
-		return DataFormatter.getAssignment(this.connector.server_url, user, assignment, subassignment);
-	}
-	/***
-	 * This function obtains the JSON representation of a particular subassignment.
-	 *
-	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
-	 * @param user the name of the user who uploaded the assignment
-	 * @param assignment the ID of the assignment to get
-	 ***/
-	public String getAssignmentJSON(String user, int assignment) throws IOException {
-		return getAssignmentJSON(user, assignment, 0);
-	}
-	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
-	 *
-	 * @return the ColorGrid stored in the bridges server
-	 * @param user the name of the user who uploaded the assignment
-	 * @param assignment the ID of the assignment to get
-	 * @param subassignment the ID of the subassignment to get
-	 **/
-	public bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment, int subassignment)
-	throws IOException {
-		return DataFormatter.getColorGridFromAssignment(this.connector.server_url, user, assignment, subassignment);
-	}
-
-	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
-	 *
-	 * @return the ColorGrid stored in the bridges server
-	 * @param user the name of the user who uploaded the assignment
-	 * @param assignment the ID of the assignment to get
-	 **/
-	public bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment) throws IOException {
-		return getColorGridFromAssignment(user, assignment, 0);
-	}
 
 	/**
 	 *	Get the assignment id
@@ -537,4 +495,8 @@ public class Bridges {
 
 		return json_hdr;
 	}
+
+    String getServerURL() {
+	return connector.getServerURL();
+    }
 }
