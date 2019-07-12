@@ -51,11 +51,6 @@ public abstract class BlockingGame extends GameBase implements KeypressListener{
         return ret;
     }
 
-    public BlockingGame(int assid, String login, String apikey) {
-        super(assid, login, apikey);
-        blockingInit();
-    }
-
     public BlockingGame(int assid, String login, String apikey, int cols, int rows) {
         super(assid, login, apikey, cols, rows);
         blockingInit();

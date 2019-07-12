@@ -11,7 +11,7 @@ public abstract class GameBase {
 
     protected boolean debug = true;
     protected boolean gameStarted = false;
-    
+
     // /Game map
     private GameGrid grid;
 
@@ -26,47 +26,36 @@ public abstract class GameBase {
     // /Checks for first time rendering grid
     private boolean firsttime;
 
-    // Initialize with default grid size 30x30
-    public GameBase(int assid, String login, String apikey) {
-        gameBaseInit(assid, login, apikey, 30, 30);
-    }
-
     // Initialize with student specified grid size no greater than 30x30
     public GameBase(int assid, String login, String apikey, int cols, int rows) {
-
-        if ((cols*rows)>1024) { // Allows students to create smaller grids if they prefer.
-            System.out.println("ERROR: Number of cells in your grid cannot exceed 32x32 or 1024.");
-            System.exit(1);
-        }
-
         gameBaseInit(assid, login, apikey, cols, rows);
     }
 
     private void gameBaseInit(int id, String log, String key, int c, int r) {
         firsttime = true;
-        
+
         // /bridges-sockets account (you need to make a new account:
         // /https://bridges-sockets.herokuapp.com/signup)
         bridges = new Bridges(id, log, key);
 
-	if (debug) {
-	    Bridges.setDebugFlag(true);
-	    bridges.setVisualizeJSON(true);
-	}
-	
+        if (debug) {
+            Bridges.setDebugFlag(true);
+            bridges.setVisualizeJSON(true);
+        }
+
         // /make sure the bridges connects to the game version of the web app
-	bridges.setServer("games");
+        bridges.setServer("games");
 
         // /create a new color grid with random color
         grid = new GameGrid(c, r);
-	grid.setEncoding("rle");
-	
+        grid.setEncoding("rle");
+
         // /set up socket connection to receive and send data
         sock = new SocketConnection();
         sock.setupConnection(bridges.getUserName(), bridges.getAssignment());
     }
 
-    protected void registerKeypress(InputHelper i){
+    protected void registerKeypress(InputHelper i) {
         sock.addListener(i);
     }
 
@@ -78,10 +67,10 @@ public abstract class GameBase {
 
     // /What happens at each step of the game
     public abstract void gameLoop();
-    
+
     // /Stops game updates. Student must use start() again to
     // /restart the games updating process.
-    public void quit(){
+    public void quit() {
         gameStarted = false;
     }
 

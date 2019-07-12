@@ -60,21 +60,22 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.d();
     }
 
-    // /takes bridges credential and information as a parameter. Default 30x30 grid size.
-    public NonBlockingGame(int assid, String login, String apikey) {
-        super(assid, login, apikey);
-        nonBlockInit();
-    }
-
     // /takes bridges credential and information as a parameter. Student grid size.
     // /no greater than 30x30
     public NonBlockingGame(int assid, String login, String apikey, int cols, int rows) {
         super(assid, login, apikey, cols, rows);
+        
+        if ((cols * rows) > 1024) { // Allows students to create smaller grids if they prefer.
+            System.out.println("ERROR: Number of cells in a non-blocking game grid cannot exceed 32x32 or 1024.");
+            System.exit(1);
+        }
+        
         nonBlockInit();
     }
 
     // /Initializes specific non-blocking game variables
     private void nonBlockInit() {
+        
         timeoflastframe = System.currentTimeMillis();
 
         // /Create input helpter for non-blocking game.
