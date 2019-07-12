@@ -1,9 +1,8 @@
-
 package bridges.base;
 import java.util.*;
 
 /**
- * @brief This is a class in BRIDGES for representing an (m x n) grid.
+ * @brief This is a class in BRIDGES for representing an (n x n) grid.
  * @author David Burlinson
  * @param
 **/
@@ -11,8 +10,7 @@ import java.util.*;
 public class Grid<E> extends DataStruct {
 
 	protected ArrayList<ArrayList<E>> grid;
-    	protected static final int[] defaultGridSize = {10, 10};
-	protected int[] gridSize;
+	protected static int[] gridSize = {10, 10};
 	protected static int[] maxGridSize = {1080, 1920};
 
 	public String getDataStructType() {
@@ -24,7 +22,7 @@ public class Grid<E> extends DataStruct {
 	 *
 	 */
 	public Grid() {
-		this( defaultGridSize );
+		this(gridSize);
 	}
 
 	public Grid(int size) {
@@ -42,8 +40,6 @@ public class Grid<E> extends DataStruct {
 				"\nInvalid size: [" + size[0] + "," + size[1] + "]... please use values between (0 and " + maxGridSize[0] + "] for rows and values between (0 and " + maxGridSize[1] + "] for columns!\n");
 		}
 
-		gridSize = size.clone();
-		
 		// set up outer list capacity (rows)
 		grid = new ArrayList<ArrayList<E>>(size[0]);
 
