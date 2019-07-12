@@ -53,8 +53,8 @@ public abstract class GameBase {
         grid.setEncoding("rle");
 
         // /set up socket connection to receive and send data
-        sock = new SocketConnection();
-        sock.setupConnection(bridges.getUserName(), bridges.getAssignment());
+        sock = new SocketConnection(bridges);
+        sock.setupConnection();
     }
 
     /// @brief register a new KeypressListener
