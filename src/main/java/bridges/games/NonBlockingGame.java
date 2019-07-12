@@ -4,58 +4,78 @@ import bridges.connect.SocketConnection;
 
 public abstract class NonBlockingGame extends GameBase {
 
-    // /helper class to make Input Management a bit easier.
+    ///helper class to make Input Management a bit easier.
     private InputHelper ih;
 
-    // /used for fps control
+    ///used for fps control
     private long timeoflastframe;
 
-    // / @return true if "left" is pressed
+    /// @brief Is the LeftArrow key currently pressed?
+    ///
+    /// @return true if "left" is pressed
     protected boolean keyLeft() {
         return ih.left();
     }
 
-    // / @return true if "right" is pressed
+    /// @brief Is the RightArrow key currently pressed?
+    ///
+    /// @return true if "right" is pressed
     protected boolean keyRight() {
         return ih.right();
     }
 
-    // / @return true if "up" is pressed
+    /// @brief Is the UpArrow key currently pressed?
+    ///
+    /// @return true if "up" is pressed
     protected boolean keyUp() {
         return ih.up();
     }
 
-    // / @return true if "down" is pressed
+    /// @brief Is the DownArrow key currently pressed?
+    ///
+    /// @return true if "down" is pressed
     protected boolean keyDown() {
         return ih.down();
     }
 
-    // / @return true if "button1 - q" is pressed
+    /// @brief Is the Q key currently pressed?
+    ///
+    /// @return true if "q" is pressed
     protected boolean keyQ() {
         return ih.q();
     }
 
-    // / @return true if "button2 - p" is pressed
+    /// @brief Is the SpaceBar key currently pressed?
+    ///
+    /// @return true if SpaceBar is pressed
     protected boolean keySpace() {
         return ih.space();
     }
 
-    // / @return true if "w" is pressed
+    /// @brief Is the W key currently pressed?
+    ///
+    /// @return true if "w" is pressed
     protected boolean keyW() {
         return ih.w();
     }
 
-    // / @return true if "a" is pressed
+    /// @brief Is the A key currently pressed?
+    ///
+    /// @return true if "a" is pressed?
     protected boolean keyA() {
         return ih.a();
     }
 
-    // / @return true if "s" is pressed
+    /// @brief Is the S key currently pressed?
+    ///
+    /// @return true if "s" is pressed
     protected boolean keyS() {
         return ih.s();
     }
 
-    // / @return true if "d" is pressed
+    /// @brief Is the D key currently pressed?
+    ///
+    /// @return true if "d" is pressed
     protected boolean keyD() {
         return ih.d();
     }
@@ -73,7 +93,7 @@ public abstract class NonBlockingGame extends GameBase {
         nonBlockInit();
     }
 
-    // /Initializes specific non-blocking game variables
+    ///Initializes specific non-blocking game variables
     private void nonBlockInit() {
         
         timeoflastframe = System.currentTimeMillis();
@@ -83,7 +103,7 @@ public abstract class NonBlockingGame extends GameBase {
         registerKeypress(ih);
     }
 
-    // /sleeps so there is time between frames
+    /// sleeps so there is time between frames
     private void sleepTimer() {
         try {
             Thread.sleep(5 * 1000); // wait for browser to connect
@@ -92,7 +112,7 @@ public abstract class NonBlockingGame extends GameBase {
         }
     }
 
-    // /sleeps so there is time between frames
+    /// sleeps so there is time between frames
     private void sleepTimer(long timems) {
         try {
             Thread.sleep(timems); // wait for browser to connect
@@ -101,9 +121,9 @@ public abstract class NonBlockingGame extends GameBase {
         }
     }
 
-    // /should be called right before render() Aims at having a fixed
-    // /fps of 30 frames per second. This work by waiting until
-    // /1/30th of a second after the last call to this function.
+    /// should be called right before render() Aims at having a fixed
+    /// fps of 30 frames per second. This work by waiting until
+    /// 1/30th of a second after the last call to this function.
     private void controlFrameRate() {
         int fps = 30;
         double hz = 1. / fps;
@@ -119,7 +139,7 @@ public abstract class NonBlockingGame extends GameBase {
         timeoflastframe = System.currentTimeMillis();
     }
 
-    // /calling this function starts the game engine.
+    /// calling this function starts the game engine.
     public void start() {
 
         sleepTimer();
