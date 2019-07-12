@@ -238,7 +238,7 @@ public class Bridges {
 	}
 
 	/**
-	 * @brief Specify the window that will be used to render the view by default. 
+	 * @brief Specify the window that will be used to render the view by default.
 	 *
 	 * This function enables specifying the window that will rendered by default in the view. This only works for graph data types. And the coordinate system need ot be set to "window" using setCoordSystemType().
 	 *
@@ -251,7 +251,7 @@ public class Bridges {
 		setWindow((double) x1, (double) x2, (double) y1, (double) y2);
 	}
 	/**
-	 * @brief Specify the window that will be used to render the view by default. 
+	 * @brief Specify the window that will be used to render the view by default.
 	 *
 	 * This function enables specifying the window that will rendered by default in the view. This only works for graph data types. And the coordinate system need ot be set to "window" using setCoordSystemType().
 	 *
@@ -264,7 +264,7 @@ public class Bridges {
 		setWindow((double) x1, (double) x2, (double) y1, (double) y2);
 	}
 	/**
-	 * @brief Specify the window that will be used to render the view by default. 
+	 * @brief Specify the window that will be used to render the view by default.
 	 *
 	 * This function enables specifying the window that will rendered by default in the view. This only works for graph data types. And the coordinate system need ot be set to "window" using setCoordSystemType().
 	 *
@@ -528,7 +528,7 @@ public class Bridges {
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
 	public static bridges.data_src_dependent.OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
-		return DataFormatter.getOsmData(minLon, minLat, maxLon, maxLat, level);
+		return DataFormatter.getOsmData(minLat, minLon, maxLat, maxLon, level);
 	}
 	/**
 	 *	Get the assignment id
@@ -724,7 +724,7 @@ public class Bridges {
 		 		json_hdr += CLOSE_BOX + COMMA;
 		}
 
-		
+
 		return json_hdr;
 	}
 }
