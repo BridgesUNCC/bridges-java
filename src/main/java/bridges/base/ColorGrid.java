@@ -12,14 +12,18 @@ import org.apache.commons.codec.binary.Base64;
 public class ColorGrid extends Grid<Color> {
 	private static Color baseColor = new Color(0, 0, 0, 1.0f);
 
+	/**
+	 *	Get the data type name
+	 *  @return the data type
+	 */
 	public String getDataStructType() {
 		return "ColorGrid";
 	}
 
 	/**
-	 * Grid constructors
+	 * Construct a color grid with defaulty sizes:
 	 *
-	**/
+	 */
 	public ColorGrid() {
 		this(defaultGridSize[0], defaultGridSize[1], baseColor);
 	}
@@ -30,7 +34,7 @@ public class ColorGrid extends Grid<Color> {
 	 * @param rows - int representing the number of rows of the grid
 	 * @param cols - int representing the number of columns of the grid
 	 *
-	**/
+	 */
 	public ColorGrid (int rows, int cols) {
 		this(rows, cols, baseColor);
 	}
@@ -64,13 +68,20 @@ public class ColorGrid extends Grid<Color> {
 		}
 	}
 
-	// set the (row, col) element in the ColorGrid
+	/** 
+	 *  Set the (row, col) element in the ColorGrid
+	 *
+	 *  @param row  grid row number
+	 *  @param col  grid column number
+	 *  @param color color of the cell
 	public void set(Integer row, Integer col, Color color) {
 		super.set(row, col, color);
 	}
 
-
-	// get the Run Length Encoding of the ColorGrid
+	/** 
+	 *   Run Length Encoding of the ColorGrid
+	 *	 @return byte buffer representation of the color grid
+	 */
 	private ByteBuffer getRLE() {
 		ByteBuffer imageBytes = ByteBuffer.allocate(5 * gridSize[0] * gridSize[1]);
 		int count = 0;
@@ -122,6 +133,10 @@ public class ColorGrid extends Grid<Color> {
 		return imageBytes;
 	}
 
+	/** 
+	 *   Raw Encoding of the ColorGrid
+	 *	 @return byte buffer representation of the color grid
+	 */
 	// get raw encoding of ColorGrid
 	private ByteBuffer getRAW() {
 		// Maintain a bytebuffer for the byte representations of each grid color
@@ -145,7 +160,7 @@ public class ColorGrid extends Grid<Color> {
 	/**
 	 * get the JSON representation of the color grid
 	 *
-	 * @return the JSON representation of the color grid
+	 * @return the JSON representation (string) of the color grid
 	**/
 	public String getDataStructureRepresentation () {
 		ByteBuffer byte_buff = getRLE();

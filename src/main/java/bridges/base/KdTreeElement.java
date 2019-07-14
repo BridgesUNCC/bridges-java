@@ -25,7 +25,7 @@ import java.util.Map.Entry;
  *      E the application data type
  *
  * @author Kalpathi Subramanian
- * @date 12/26/18
+ * @date 12/26/18, 7/12/19
  */
 
 public class KdTreeElement<K, E> extends BSTElement<K, E> {

@@ -4,9 +4,10 @@ import java.util.*;
 
 /**
  * @brief This is a class in BRIDGES for representing an (m x n) grid.
+ *
  * @author David Burlinson
- * @param
-**/
+ * @date  5/14/18, 7/14/19
+ **/
 
 public class Grid<E> extends DataStruct {
 
@@ -15,26 +16,46 @@ public class Grid<E> extends DataStruct {
 	protected int[] gridSize;
 	protected static int[] maxGridSize = {1080, 1920};
 
+	/**
+	 *   Get data structure name
+	 *   @return data type name
+	 */
 	public String getDataStructType() {
 		return "Grid";
 	}
 
 	/**
-	 * Grid constructors
+	 * Construct a grid with default sizes
 	 *
 	 */
 	public Grid() {
 		this( defaultGridSize );
 	}
 
+	/**
+	 * Construct a size x size grid 
+	 *
+	 */
 	public Grid(int size) {
 		this(new int[] {size, size});
 	}
 
+	/**
+	 * Construct a rows x cols  size grid 
+	 *
+	 * @param rows number of rows in grid
+	 * @param cols number of rows in grid
+	 */
 	public Grid(int rows, int cols) {
 		this(new int[] {rows, cols});
 	}
 
+	/**
+	 *
+	 * Construct a size[0] by size[1] sized grid
+	 * @param size[] specifies rows and column sizes of the grid
+	 *
+	 */
 	public Grid (int[] size)  {
 		if ((size[0] <= 0 || size[0] > maxGridSize[0]) ||
 			(size[1] <= 0 || size[1] > maxGridSize[1])) {
@@ -58,11 +79,21 @@ public class Grid<E> extends DataStruct {
 		}
 	}
 
+	/**
+	 *
+	 * Get the grid dimensions
+	 *
+	 * @return an array of two values (rows, cols) of the grid
+	 */
 	public int[] getDimensions() {
 		return new int[] {gridSize[0], gridSize[1]};
 	}
 
-	// get the (row, col) element in the grid
+	/** 
+	 *	Get the (row, col) element in the grid
+	 * 	@param row row number
+	 * 	@param col number 
+	 */
 	public E get(Integer row, Integer col) {
 		try {
 			return grid.get(row).get(col);
@@ -73,7 +104,12 @@ public class Grid<E> extends DataStruct {
 		}
 	}
 
-	// set the (row, col) element in the grid
+	/** 
+	 *	Set the (row, col) element in the grid
+	 * 	@param row row number
+	 * 	@param col number 
+	 *	@val the value to be set to
+	 */
 	public void set(Integer row, Integer col, E val) {
 		try {
 			grid.get(row).set(col, val);
@@ -83,6 +119,9 @@ public class Grid<E> extends DataStruct {
 		}
 	}
 
+	/**
+	 * Get data structure representation
+	 */
 	public String getDataStructureRepresentation() {
 		return null;
 	}
