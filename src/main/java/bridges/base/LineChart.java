@@ -3,6 +3,7 @@ package bridges.base;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
@@ -194,6 +195,41 @@ public class LineChart extends DataStruct{
 	setXData(seriesName, xdata);
 	setYData(seriesName, ydata);
     }
+
+    /**
+     * @brief Add a series (or update it)
+     *
+     * @param series indicates the series to add (or change)
+     * @param xdata the X data in the series
+     * @param ydata the Y data in the series
+     **/
+    public void setDataSeries(String seriesName, ArrayList<Double> xdata, ArrayList<Double> ydata) {
+	setXData(seriesName, xdata);
+	setYData(seriesName, ydata);
+    }
+    /**
+     * @brief Add a series (or update it)
+     *
+     * @param series indicates the series to add (or change)
+     * @param xdata the X data in the series
+     * @param ydata the Y data in the series
+     **/
+    public void setDataSeries(String seriesName, double[] xdata, ArrayList<Double> ydata) {
+	setXData(seriesName, xdata);
+	setYData(seriesName, ydata);
+    }
+    
+    /**
+     * @brief Add a series (or update it)
+     *
+     * @param series indicates the series to add (or change)
+     * @param xdata the X data in the series
+     * @param ydata the Y data in the series
+     **/
+    public void setDataSeries(String seriesName, ArrayList<Double> xdata, double[] ydata) {
+	setXData(seriesName, xdata);
+	setYData(seriesName, ydata);
+    }
     
     /**
      * @brief Changes the X data for a series
@@ -204,7 +240,25 @@ public class LineChart extends DataStruct{
     public void setXData(String series, double[] xdata) {
 	xaxisData.put(series, xdata);
     }
-	
+
+    private double[] convert(ArrayList<Double> xdata) {
+	double[] arr = new double[xdata.size()];
+	for (int i=0; i<xdata.size(); ++i)
+	    arr[i] = xdata.get(i);
+	return arr;
+    }
+
+    /**
+     * @brief Changes the X data for a series
+     *
+     * @param series indicates the series to get
+     * @param xdata the X data in the series
+     **/
+    public void setXData(String series, ArrayList<Double> xdata) {
+	xaxisData.put(series, convert(xdata));
+    }
+
+    
     /**
      * @brief Returns the X data for a series
      *
@@ -215,6 +269,16 @@ public class LineChart extends DataStruct{
 	return  xaxisData.get(series);
     }
 
+    /**
+     * @brief Changes the Y data for a series
+     *
+     * @param series indicates the series to get
+     * @param ydata the Y data in the series
+     **/
+    public void setYData(String series, ArrayList<Double> ydata) {
+	yaxisData.put(series, convert(ydata));
+    }
+    
     /**
      * @brief Changes the Y data for a series
      *
