@@ -19,8 +19,8 @@ public class LineChart extends DataStruct{
 	private HashMap<String, double[]> yaxisData;
 	private HashMap<String, double[]> xaxisData;
 	
-	public LineChart(String title){
-		this.plotTitle = title;
+	public LineChart(){
+		this.plotTitle = "";
 		this.plotSubtitle = "";
 		this.yLabel = "";
 		this.xLabel = "";
@@ -31,12 +31,7 @@ public class LineChart extends DataStruct{
 		this.logarithmicx = false;
 		this.logarithmicy = false;
 	}
-	
-	public void plotOptions(boolean mTrack, boolean dLabel) {
-		this.mouseTrack = mTrack;
-		this.dataLabel = dLabel;
-	}
-	
+		
 	public String getDataStructType() {
 		return "Plot";
 	}
