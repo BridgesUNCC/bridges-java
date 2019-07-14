@@ -24,12 +24,8 @@ import org.json.simple.JSONValue;
  *
  *  Supported attribute values are as follows:<p>
  *
- *  <b>Supported Colors (by name)</b>: <p>
- *  "red", "green", "blue","yellow","cyan","magenta",
- *  "white",, "black", "orange",  "turquoise",  "maroon",  <br>
- *  "aquamarine",  "azure",  "beige", "brown",  "tan",  "olive",
- *  "chartreuse", "khaki", "bisque",  "coral", <br>
- *  "pink",  "lavender",  "purple",  "gold" <p>
+ *  <b>Supported Colors (by name)</b>: 
+ *		See the Color class for the complete list.
  *
  *  <b> Color by RGBA Specification :</b>  Range: 0-255 for each component <p>
  *
@@ -39,10 +35,10 @@ import org.json.simple.JSONValue;
  *
  *  @author Mihai Mehedint, Kalpathi Subramanian
  *
- *  @date 6/22/16, 1/16/17, 5/17/17
+ *  @date 6/22/16, 1/16/17, 5/17/17, 7/12/19
  *
  *  \sa Example Tutorial at <br>
- *  http://bridgesuncc.github.io/Hello_World_Tutorials/SLL.html
+ *  http://bridgesuncc.github.io/tutorials/SLL.html
  *
  */
 
@@ -107,7 +103,7 @@ public class LinkVisualizer {
 	 * Set the thickness of the link in the Bridge Visualization in pixels; thickness
 	 * shoudl be in the range 0-50.0
 	 *
-	 * @param thickness
+	 * @param thickness of the link
 	 *
 	 */
 	public void setThickness(double th) {
@@ -119,7 +115,7 @@ public class LinkVisualizer {
 	/**
 	 * Get the thickness of the link in the Bridges Visualiation
 	 *
-	 * @return the size in pixels of the Element in the Bridges Visualization
+	 * @return the size in pixels of the  link
 	 */
 	public double getThickness() {
 		return thickness;
@@ -148,18 +144,14 @@ public class LinkVisualizer {
 
 	/**
 	 *
-	 *	Set the color of the link in the Bridges Visualization to "aColor".
+	 *	Set the color of the link in the Bridges Visualization to "aColor". 
+	 *	See the Color clas for a complete list of supported color names.
 	 *
-	 * 	@param col_name the string reprsenting the color of the Element in
-	 *		the Bridges Visualization; supported named colors are
-	 *  	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
-	 *  	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
-	 *  	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
-	 *  	"pink", "lavender", "purple", "gold"
+	 * 	@param col_name the string reprsenting the color of the link.
 	 *
 	 */
 	public void setColor(String col_name) {
-		color = new Color(col_name);
+		color.setColor(col_name);
 	}
 
 	/**
@@ -172,11 +164,14 @@ public class LinkVisualizer {
 
 	/**
 	 *
-	 * 	Set the color of the link given RGBA components
+	 * 	Set the color of the link given RGBA components;
+	 *	0-255 range for R, G, B and 0-1.0 for opacity
 	 *
-	 * 	@param r, g, b, a components
+	 * 	@param r red component
+	 *	@param g green component 
+	 *	@param b blue component 
+	 *	@param a alpha (opacity)  component 
 	 *
-	 *	check to ensure they are in 0-255 range, else throw exception
 	 *
 	 */
 	public void setColor(Integer r, Integer g, Integer b, Float a)  throws
@@ -196,13 +191,11 @@ public class LinkVisualizer {
 	}
 
 	/**
-	 * Sets the opacity of the link in the Bridges Visualization
+	 * Sets the opacity of the link in the Bridges Visualization, 
+	 *  0 is fully transparent, 1 for fully opaque, 
 	 *
-	 * @param opacity a float between 0 and 1 representing how transparent
-	 *	the node
-	 *            should be on the Bridges Visualization. 0 for invisible, 1 for
-	 *            fully visible, a decimal between 0 and 1 for varying
-	 *            transparency.
+	 * @param opacity, a float in the range  0-1.0 representing 
+	 *		link transparency
 	 */
 	public void setOpacity(float opacity) {
 		color.setAlpha(opacity);
@@ -212,13 +205,16 @@ public class LinkVisualizer {
 	 *
 	 * 	Get the opacity of the link in the Bridges Visualization
 	 *
-	 * 	@return the opacity value (in the range 0.0-1.0
+	 * 	@return the opacity value (in the range 0.0-1.0)
 	 *
 	 */
 	public float getOpacity() {
 		return (color.getAlpha());
 	}
 
+	/**
+	 *  Get link properties - used for building JSON representation
+	 */
 	public String getLinkProperties() {
 		String link_props =
 			QUOTE + "color" + QUOTE + COLON +

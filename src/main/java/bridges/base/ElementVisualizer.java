@@ -18,16 +18,11 @@ import java.util.Random;
  *	Element's getVisualizer() method, and then set attributes using its methods.
  *  Supported attributed values are as follows:<br>
  *
- *  <b>Supported Colors (by name)</b>: <p>
- * 	"red", "green", "blue","yellow","cyan","magenta",
- *	"white",, "black", "orange",  "turquoise",  "maroon",  <br>
- *	"aquamarine",  "azure",  "beige", "brown",  "tan",  "olive",
- *	"chartreuse", "khaki", "bisque",  "coral", <br>
- *	"pink",  "lavender",  "purple",  "gold" <p>
+ *  Supported colors by name: See the Color class for the complete list
  *
  *	<b> Color by RGBA Specification :</b>  Range: 0-255 for each component <p>
  *
- *	<b>Supported Shapes: </b>
+ *	<b>	Supported Shapes: </b>
  *
  *	"circle", "square", "diamond", "cross",
  *	"triangle", "star", "wye" <p>
@@ -38,10 +33,10 @@ import java.util.Random;
  *
  *	@author Mihai Mehedint, Kalpathi Subramanian
  *
- *	@date 6/22/16, 1/7/17, 5/17/17
+ *	@date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
- *  \sa Example Tutorial at <br>
- *	http://bridgesuncc.github.io/Hello_World_Tutorials/SLL.html
+ *  \sa Example Tutorial (with singly linked list) at <br>
+ *	http://bridgesuncc.github.io/tutorials/SLL.html
  *
  */
 
@@ -56,9 +51,9 @@ public class ElementVisualizer {
 					size = 10.0;
 	private float   opacity = 1.0f;
 
+							// default properties
 	private Map<String, String> properties = new HashMap<String, String>() {
 		{
-			//			put("color", "green");
 			put("color", "[70, 130, 180, 1.0]");
 			put("opacity", "1.0");
 			put("size", "10.0");
@@ -73,8 +68,8 @@ public class ElementVisualizer {
 	 *
 	 *	Construct an ElementVisualizer with the default visualization settings.
 	 *
-	 *	The default settings are color = green, opacity = 1.0, size = 10.0,
-	 *	shape = circle.
+	 *	The default settings are color = [70, 130, 180, 1.0], opacity = 1.0,
+	 *	size = 10.0, shape = circle.
 	 *
 	 */
 	public ElementVisualizer() {
@@ -181,154 +176,15 @@ public class ElementVisualizer {
 
 	/**
 	 *
-	 *	Set the color of the Element in the Bridges Visualization to "aColor".
+	 *  Set the color of the Element in the Bridges Visualization to "aColor".
 	 *
-	 * @param col_name the string reprsenting the color of the Element in
-	 *  	the Bridges Visualization; supported named colors are
-	 * 	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
-	 *	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
-	 *	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
-	 *	"pink", "lavender", "purple", "gold"
+	 *	@param col_name the string reprsenting the color of the Element in
+	 *  	the Bridges Visualization; see the Color class for the list 
+	 * 		of supported colors
 	 *
 	 */
 	public void setColor(String col_name) throws InvalidValueException {
-
-		String col = col_name.toLowerCase();
-		// validates and returns a 4 component RGBA val
-		int red, green, blue;
-		float  alpha = this.getOpacity();
-
-		switch (col_name) {
-			case "red":
-				red = 255;
-				green = blue = 0;
-				break;
-			case "green":
-				red = 0;
-				green = 255;
-				blue = 0;
-				break;
-			case "blue":
-				red = 0;
-				green = 0;
-				blue = 255;
-				break;
-			case "yellow":
-				red = 255;
-				green = 255;
-				blue = 0;
-				break;
-			case "cyan":
-				red = 0;
-				green = 255;
-				blue = 255;
-				break;
-			case "magenta":
-				red = 255;
-				green = 0;
-				blue = 255;
-				break;
-			case "white":
-				red = 255;
-				green = 255;
-				blue = 255;
-				break;
-			case "black":
-				red = 0;
-				green = 0;
-				blue = 0;
-				break;
-			case "orange":
-				red = 255;
-				green = 155;
-				blue = 0;
-				break;
-			case "turquoise":
-				red = 173;
-				green = 234;
-				blue = 234;
-				break;
-			case "maroon":
-				red = 176;
-				green = 48;
-				blue = 96;
-				break;
-			case "aquamarine":
-				red = 127;
-				green = 255;
-				blue = 212;
-				break;
-			case "azure":
-				red = 240;
-				green = 255;
-				blue = 255;
-				break;
-			case "beige":
-				red = 245;
-				green = 245;
-				blue = 220;
-				break;
-			case "brown":
-				red = 166;
-				green = 42;
-				blue = 42;
-				break;
-			case "tan":
-				red = 210;
-				green = 180;
-				blue = 140;
-				break;
-			case "olive":
-				red = 128;
-				green = 128;
-				blue = 0;
-				break;
-			case "chartreuse":
-				red = 127;
-				green = 255;
-				blue = 0;
-				break;
-			case "khaki":
-				red = 240;
-				green = 230;
-				blue = 140;
-				break;
-			case "bisque":
-				red = 255;
-				green = 228;
-				blue = 196;
-				break;
-			case "coral":
-				red = 255;
-				green = 127;
-				blue = 0;
-				break;
-			case "pink":
-				red = 255;
-				green = 192;
-				blue = 203;
-				break;
-			case "lavender":
-				red = 230;
-				green = 230;
-				blue = 250;
-				break;
-			case "purple":
-				red = 160;
-				green = 32;
-				blue = 240;
-				break;
-			case "gold":
-				red = 255;
-				green = 215;
-				blue = 0;
-				break;
-			default:
-				throw new InvalidValueException("Invalid color " + "'" +
-					col_name + "'" + "."
-					+ " Only named primaries supported now \n");
-		}
-		color = new Color (red, green, blue, alpha);
+		color.setColor(col_name);
 	}
 
 	/**
