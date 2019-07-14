@@ -24,12 +24,13 @@ import java.util.Vector;
  *
  * 	@author Kalpathi  Subramanian
  *
- * 	@date  6/22/16, 5/17/17
+ * 	@date  6/22/16, 5/17/17, 7/14/19
  *
  *  @param <E> The generic parameter object that is part of this element, representing
  *          application specific data.
  *
- *	\sa Example tutorial at <br> ??
+ *	\sa Example tutorial at 
+ *		http://bridgesuncc.github.io/tutorials/Tree.html
  */
 public class TreeElement<E> extends Element<E> {
 

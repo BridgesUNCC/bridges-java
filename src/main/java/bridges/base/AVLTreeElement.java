@@ -24,7 +24,7 @@ import bridges.base.*;
  *
  *  @author Kalpathi Subramanian, Mihai Mehedint
  *
- *  @date 6/22/16, 1/7/17, 5/17/17
+ *  @date 6/22/16, 1/7/17, 5/17/17, 7/12/19
  *
  *  \sa Example tutorial using AVLTreeElement at <br>
  *      http://bridgesuncc.github.io/Hello_World_Tutorials/AVL.html

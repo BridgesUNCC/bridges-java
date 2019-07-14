@@ -24,12 +24,12 @@ package bridges.base;
  *
  *	@author Kalpathi Subramanian
  *
- *	@date 6/22/16, 1/7/17, 5/17/17
+ *	@date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
  *	@param <E>  the generic parameter that is defined by the application
  *
  *	\sa Example Tutorial at <br>
- *			http://bridgesuncc.github.io/Hello_World_Tutorials/CSLL.html
+ *			http://bridgesuncc.github.io/tutorials/CSLL.html
  */
 public class CircSLelement<E> extends SLelement<E> {
 	/**

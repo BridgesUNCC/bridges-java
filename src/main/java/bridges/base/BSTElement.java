@@ -7,8 +7,7 @@ import org.json.simple.JSONValue;
 /**
  *  @brief The BSTElement class is the building block for creating binary search trees.
  *
- *	The BSTElement class is the building block for creating binary search tree structures.
- *  It contains two children (viz., left, right), and a search key, to be used
+ *  It contains two children (left, right), and a search key, to be used
  *  in search operations .
  *
  *  BSTElement contains a visualizer (ElementVisualizer) object for setting visual
@@ -32,7 +31,7 @@ import org.json.simple.JSONValue;
  *	for use in a binary search tree implementations.
  *
  *	\sa Example tutorial using BSTElement at  <br>
- *		http://bridgesuncc.github.io/Hello_World_Tutorials/BST.html
+ *		http://bridgesuncc.github.io/tutorials/BST.html
  *
  */
 public class BSTElement<K, E> extends BinTreeElement<E> {
@@ -166,7 +165,6 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 	 **/
 	public void setKey(K key) {
 		this.key = key;
-		// add this to the element's properties
 	}
 
 	/**
@@ -209,5 +207,4 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 
 		return json_str;
 	}
-
 }

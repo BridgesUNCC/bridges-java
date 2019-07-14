@@ -26,13 +26,13 @@ package bridges.base;
  *
  *  @author Kalpathi Subramanian
  *
- *	@date   7/17/16, 1/16/17
+ *	@date   7/17/16, 1/16/17, 7/14/19
  *
  *  @param <E>  the generic parameter object that contains application specific data,
  *		defined by the user when instantiating this object.
  *
  *	\sa Example Tutorial at <br>
- *		http://bridgesuncc.github.io/Hello_World_Tutorials/CDLL.html
+ *		http://bridgesuncc.github.io/tutorials/CDLL.html
  *
  */
 
@@ -96,7 +96,7 @@ public class CircDLelement<E> extends DLelement<E> {
 
 	/**
 	 *
-	 *	This method gets the data structure type
+	 *	This method gets the name of the data structure type
 	 *
 	 *	@return  The date structure type as a string
 	 *

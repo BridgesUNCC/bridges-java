@@ -23,12 +23,12 @@ import java.util.NoSuchElementException;
  *
  * @author Mihai Mehedint, Kalpathi Subramanian
  *
- * @date 6/22/16, 1/7/17, 5/17/17
+ * @date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
  * @param <E> The generic parameter object that is part of this element, representing
  *			application specific data.
  *
- *	\sa Example Tutorial at <br> http://bridgesuncc.github.io/Hello_World_Tutorials/SLL.html
+ *	\sa Example Tutorial at http://bridgesuncc.github.io/tutorials/SLL.html
  */
 
 public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
@@ -236,7 +236,7 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 	 */
 	protected void getListElements(Vector<Element<E>> nodes) {
 		SLelement<E> el = this;
-		// try to handld all lists in subclasses, except multilists
+		// try to handle all lists in subclasses, except multilists
 		nodes.clear();
 		while (el != null) {
 			nodes.add(el);

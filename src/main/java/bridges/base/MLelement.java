@@ -24,12 +24,12 @@ import java.util.Vector;
  *
  * @author , Kalpathi Subramanian
  *
- * @date 5/24/17
+ * @date 5/24/17, 7/14/19
  *
  * @param <E> The generic parameter object that is part of this element, representing
  *			either application specific data, or a pointer to a sublist.
  *
- *	\sa Example Tutorial at <br> ??
+ *	\sa Example Tutorial at http://bridgesuncc.github.io/tutorials/ML.html
  */
 
 public class MLelement<E> extends SLelement<E> {
@@ -39,7 +39,7 @@ public class MLelement<E> extends SLelement<E> {
 
 	/**
 	 *
-	 * This constructor creates an SLelement object
+	 * This constructor creates an MLelement object
 	 * and sets the next pointer to null
 	 *
 	 */
@@ -51,11 +51,11 @@ public class MLelement<E> extends SLelement<E> {
 
 	/**
 	 *
-	 * This constructor creates an SLelement object of generic parameter object E,
+	 * This constructor creates an MLelement object of generic parameter object E,
 	 *	and label "label" and sets the next pointer to null
 	 *
-	 * @param label the label of SLelement that shows up on the Bridges visualization
-	 * @param e the generic object that this SLelement will hold
+	 * @param label the label of MLelement that shows up on the Bridges visualization
+	 * @param e the generic object that this MLelement will hold
 	 *
 	 */
 	public MLelement (String label, E e) {
@@ -66,7 +66,7 @@ public class MLelement<E> extends SLelement<E> {
 	/**
 	 *
 	 * Creates a new element with value "e" and sets the next pointer
-	 * to the SLelement referenced by the "next" argument
+	 * to the MLelement referenced by the "next" argument
 	 *
 	 * @param e the generic object that this element will hold
 	 * @param next the element that should be assigned to the next pointer
@@ -80,8 +80,8 @@ public class MLelement<E> extends SLelement<E> {
 
 	/**
 	 * Creates a new element and sets the next pointer
-	 * to the SLelement "next"
-	 * @param next the SLelement that should be assigned to the next pointer
+	 * to the MLelement "next"
+	 * @param next the MLelement that should be assigned to the next pointer
 	 */
 	public MLelement (MLelement<E> sublist, MLelement<E> next) {
 		this.setNext(next);
@@ -94,7 +94,7 @@ public class MLelement<E> extends SLelement<E> {
 
 	/**
 	 * Sets the start of a new sublist.
-	 * to the SLelement "next"
+	 * to the MLelement "next"
 	 *
 	 * @param sl the MLelement that is the beginning of a sublist
 	 */
@@ -225,7 +225,7 @@ public class MLelement<E> extends SLelement<E> {
 	/*
 	 *	Get the elements of the list
 	 *
-	 *	@param nodes  a vector of the ndoes in the list
+	 *	@param nodes  a vector of the nodes in the list
 	 *
 	 */
 	protected void getListElements(Vector<Element<E>> nodes) {

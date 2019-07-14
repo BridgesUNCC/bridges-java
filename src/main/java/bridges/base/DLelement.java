@@ -7,7 +7,7 @@ import java.util.HashMap;
  *
  * 	@author Mihai Mehedint, Kalpathi Subramanian
  *
- *	@date 6/22/16, 1/7/17, 5/17/17
+ *	@date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
  * 	@brief This class is used to create doubly linked element objects.
  *
@@ -28,7 +28,7 @@ import java.util.HashMap;
  *          application specific data.
  *
  *	\sa Example Tutorial at <br>
- *		http://bridgesuncc.github.io/Hello_World_Tutorials/DLL.html
+ *		http://bridgesuncc.github.io/tutorials/DLL.html
  */
 
 public class DLelement<E> extends SLelement<E> {
@@ -112,14 +112,11 @@ public class DLelement<E> extends SLelement<E> {
 	 * @param next the DLelement that should be assigned to the next pointer
 	 *
 	 */
-	/*
-		public void setNext(DLelement<E> nxt) {
-			this.next = nxt;
-			if (nxt != null)
-				this.setLinkVisualizer(nxt);
-		}
-	*/
-
+	public void setNext(DLelement<E> nxt) {
+		this.next = nxt;
+		if (nxt != null)
+			this.setLinkVisualizer(nxt);
+	}
 
 	/**
 	 * This method returns the pointer to the previous DLelement
@@ -148,6 +145,7 @@ public class DLelement<E> extends SLelement<E> {
 	}
 	/*
 	 *	Get the JSON representation of the the data structure
+	 *	@return JSON string of the doubly linked list representation
 	 */
 	public String getDataStructureRepresentation() {
 		// map to reorder the nodes for building JSON
