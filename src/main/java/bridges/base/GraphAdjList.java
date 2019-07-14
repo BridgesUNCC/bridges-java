@@ -10,19 +10,22 @@ import java.util.Vector;
  *		graphs in BRIDGES
  *
  *	The GraphAdjList class can be used to represent adjacency list based  graphs
- *	in BRIDGES; it takes 2 generic parameters: (1) K, which is an orderable
+ *	in BRIDGES; it takes 3 generic parameters: (1) K, which is an orderable
  *	key value used in accessing vertices (in constant time) using a hashmap. This
- *	permits data sets that need to be accessed by keys that are strings, and
- *	(2) E, an application defined type, and used in the Edge representation.
- *	The class is simply a wrapper  around the Java Hashmap class
+ *	permits data sets that need to be accessed by keys that are strings, 
+ *	(2) E1, for maintaining vertex specific data, and (3) E2, for maintaining 
+ *	edge *	specific data.
+ *	The class is a wrapper  around the Java Hashmap class
  *	and, thus, derives all its operations from it.
  *	BRIDGES provides methods to visualize the graph  and its contents.
  *
  *	The vertices of the graph are held in a Java hashmap, for near constant time access;
- *	this lets us use strings or integral ids for vertices. The adjacency lists,
- *	also a Java hashmap  are built for each vertex and contain the edge (terminating
- *	vertex id, weight) in the Edge structure, defined separately. Adjacency lists
- *	are singly linked lists using the BRIDGES SLelement.
+ *	this lets us use strings or integer ids for vertices. The adjacency lists,
+ *	also a Java hashmap  are built for each vertex and contain the edge 
+ *	(source, destination vertices and edge weight) in the Edge structure, 
+ *	defined separately. Adjacency lists are singly linked lists using the 
+ *	BRIDGES SLelement. Iterators are provided for easy traversal of the 
+ *  adjacency lists.
  *
  *	Convenience methods are provided to add vertices and edges to the graph. Edges
  *  are retrieved by using the dual hashmap, given the vertex ids of the edge.
@@ -30,16 +33,16 @@ import java.util.Vector;
  *  vertex ids, making it easier to set visual attributes to graph nodes and
  *  links.
  *
- *	@author Kalpathi Subramanian
+ *	@author Kalpathi Subramanian, Erik Saule
  *
- *	@date 6/29/15, 5/18/17, 4/24/18
+ *	@date 6/29/15, 5/18/17, 4/24/18, 7/14/19
  *
  *	@param <K>  orderable key (string, int, etc) that is used to index into vertex
  *	@param <E1> holds vertex specific information, defined by application
  *	@param <E2> holds edge specific information, defined by application
  *
  *	\sa Example tutorial at <p>
- *		http://bridgesuncc.github.io/Hello_World_Tutorials/Graph.html
+ *		http://bridgesuncc.github.io/tutorials/Graph.html
  *
  */
 public class GraphAdjList<K, E1, E2> extends DataStruct  {
@@ -254,9 +257,9 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		return null;
 	}
 	/**
-	 *	This method returns the graph nodes
+	 *	This method returns the graph vertices
 	 *
-	 *	return -- vertices held in  in the hashmap
+	 *	@return vertices held in the hashmap
 	 *
 	 */
 	public HashMap<K, Element<E1> > getVertices() {
@@ -266,7 +269,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	This is a convenience method to retrieve a vertex given
 	 *	its key
 	 *
-	 *	return -- graph vertex corresponding to its key
+	 *	@return graph vertex corresponding to its key
 	 *
 	 */
 	public Element<E1> getVertex(K key) {
@@ -274,16 +277,16 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	}
 
 	/**
-	 *	Gets the adjacency list (of type SLelement<Edge> )
+	 *	Gets the graph's adjacency list 
 	 *
-	 *	@return - the graph's adjacency lists
+	 *	@return the graph's adjacency lists
 	 *
 	 */
 	public HashMap<K, SLelement<Edge<K, E2> > > getAdjacencyList() {
 		return adj_list;
 	}
 	/**
-	 *	Gets the adjacency list (of type SLelement<Edge <K> >  of a vertex)
+	 *	Gets the adjacency list (of type SLelement<Edge <K> >)  of a vertex
 	 *
 	 *	@param - vertex key
 	 *
@@ -293,6 +296,11 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		return adj_list.get(vertex);
 	}
 
+	/**
+	 *  Gets a vector of the outgoing edges from a graph vertex
+	 *	@param vertex  graph vertex
+	 *	@return  a vector of the edges emanating from this vertex
+	 */
 	public Vector<Edge<K, E2>> outgoingEdgeSetOf(K vertex) {
 		Vector<Edge<K, E2>> edgeSet = new Vector<>();
 		SLelement<Edge<K, E2>> list = getAdjacencyList(vertex);
@@ -308,6 +316,9 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	 This is a convenience method to simplify access to the link visualizer;
 	 *	 the method assumes the vertex names point to existing vertices, else an exception
 	 *	 is thrown
+	 *	 @param src   source vertex
+	 *	 @param dest   destination  vertex
+	 *	 @return the link visualizer of an edge from src to dest
 	 *
 	 */
 	public LinkVisualizer getLinkVisualizer (K src, K dest) {
@@ -332,6 +343,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	the method assumes the vertex name points to an existing vertice, else an
 	 *	exception is thrown
 	 *
+	 *	 @param vertex   graph vertex
+	 *	 @return the element visualizer of this vertex
 	 */
 	public ElementVisualizer getVisualizer (K vertex) {
 		// get the source and destination vertex elements
@@ -351,6 +364,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 
 
 	/**
+	 * Checks if all the graph vertices have the location attribute
+	 *
 	 * @return true if all vertices have both an x and y location
 	 */
 	private boolean areAllVerticesLocated() {
@@ -365,6 +380,11 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		return true;
 	}
 
+	/** 
+	 * Forces  the graph to be considered large, in which case the rendering
+	 * is switched to more efficient methods
+	 * @param f  - boolean controlling the visualization method used.
+	 */
 	public void forceLargeVisualization(boolean f) {
 		if (f) {
 			forceLargeViz = true;
@@ -375,6 +395,10 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		}
 	}
 
+	/** 
+	 * Forces  the graph to be considered small
+	 * @param f  - boolean controlling the visualization method used.
+	 */
 	public void forceSmallVisualization(boolean f) {
 		if (f) {
 			forceSmallViz = true;
@@ -387,6 +411,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 
 	/*
 	 *	Get the JSON representation of the the data structure
+	 *  @return  the JSON (string) of the graph
 	 */
 	public String getDataStructureRepresentation() {
 		if (forceLargeViz ||
