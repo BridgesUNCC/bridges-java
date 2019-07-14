@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class Plot extends DataStruct{
+public class LineChart extends DataStruct{
 	
 	private String plotTitle;
 	private String plotSubtitle;
@@ -18,7 +18,7 @@ public class Plot extends DataStruct{
 	private HashMap<String, double[]> yaxisData;
 	private HashMap<String, double[]> xaxisData;
 	
-	public Plot(String title){
+	public LineChart(String title){
 		this.plotTitle = title;
 		this.plotSubtitle = "";
 		this.yLabel = "";

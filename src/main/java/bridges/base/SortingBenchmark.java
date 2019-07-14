@@ -4,14 +4,14 @@ import java.util.Random;
 import java.util.function.Consumer;
 
 
-public class BenchMarking {
-	private Plot plot;
+public class SortingBenchmark {
+	private LineChart plot;
 	
-	public BenchMarking(Plot p) {
+	public SortingBenchmark(LineChart p) {
 		this.plot = p;
 	}
 	
-	public void run(String title, int iter, int maxRun, Consumer<int[]> runnable) {
+	public void run(String algoName, int iter, int maxRun, Consumer<int[]> runnable) {
 		Random r = new Random();
 		double[] time = new double[iter];
 		double[] xData = new double[iter];
@@ -32,8 +32,8 @@ public class BenchMarking {
 			time[j-1] = runTime;
 			xData[j-1] = n;
 		}
-		plot.setXData(title, xData);
-		plot.setYData(title, time);
+		plot.setXData(algoName, xData);
+		plot.setYData(algoName, time);
 	}
 
 }
