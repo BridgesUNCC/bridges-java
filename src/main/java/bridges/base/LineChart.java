@@ -234,8 +234,62 @@ public class LineChart extends DataStruct{
     public double[] getYData(String series) {
 	    return yaxisData.get(series);
     }
-	
+
+    /**
+     * @brief check if the LineChart is in a valid state.
+     *
+     * Checks whether the xdata and ydata are present for each series.
+     * Checks whether the xdata and ydata are the same length for each series.
+     * Checks whether the data are positive if logarithmic scales are used.
+     *
+     * Print an error message to System.err if the data structure is in an invalid state.
+     *
+     * @return whether it is in a valid state
+     */    
+    private boolean check() {
+	boolean correct = true;
+	for (Entry<String, double[]> entry : xaxisData.entrySet()) {
+	    String series = entry.getKey();
+	    double[] xdata = entry.getValue();
+	    double[] ydata = yaxisData.get(series);
+	    if (ydata == null) {
+		System.out.println("Series \""+series+"\" has xdata but no ydata");
+		correct = false;
+	    }
+	    if (xdata.length != ydata.length) {
+		System.out.println("Series \""+series+"\" has xdata and ydata of different sizes");
+		correct = false;
+	    }
+	    if (logarithmicx) {
+		for (int i=0; i<xdata.length; ++i) {
+		    if (xdata[i] <= 0) {
+			System.out.println("Xaxis scale is logarithmic but series \""+series+"\" has xdata["+i+"] = "+xdata[i]+" (should be stricly positive)");
+		    }
+		}
+	    }
+	    if (logarithmicy) {
+		for (int i=0; i<ydata.length; ++i) {
+		    if (ydata[i] <= 0) {
+			System.out.println("Yaxis scale is logarithmic but series \""+series+"\" has ydata["+i+"] = "+ydata[i]+" (should be stricly positive)");
+		    }
+		}
+	    }
+	}
+	for (Entry<String, double[]> entry : yaxisData.entrySet()) {
+	    String series = entry.getKey();
+	    double[] ydata = entry.getValue();
+	    double[] xdata = xaxisData.get(series);
+	    if (xdata == null) {
+		System.out.println("Series: "+series+" has ydata but no xdata");
+		correct = false;
+	    }
+	    //Everything else already checked.	    
+	}
+	return correct;
+    }
+    
     public String getDataStructureRepresentation() {
+	check();
 	String xaxis_json = "";
 	for (Entry<String, double[]> entry : xaxisData.entrySet()) {
 	    String key = entry.getKey();
