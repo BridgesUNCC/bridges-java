@@ -13,7 +13,8 @@ public class LineChart extends DataStruct{
 	private String xLabel;
 	private boolean mouseTrack;
 	private boolean dataLabel;
-	private boolean logorithmic;
+	private boolean logarithmicx;
+    	private boolean logarithmicy;
 	
 	private HashMap<String, double[]> yaxisData;
 	private HashMap<String, double[]> xaxisData;
@@ -27,7 +28,8 @@ public class LineChart extends DataStruct{
 		this.xaxisData = new HashMap<String, double[]>();
 		this.mouseTrack = false;
 		this.dataLabel = true;
-		this.logorithmic = false;
+		this.logarithmicx = false;
+		this.logarithmicy = false;
 	}
 	
 	public void plotOptions(boolean mTrack, boolean dLabel) {
@@ -47,10 +49,14 @@ public class LineChart extends DataStruct{
 		this.dataLabel = val;
 	}
 	
-	public void toggleLogorithmic(boolean val) {
-		this.logorithmic = val;
+	public void toggleLogarithmicX(boolean val) {
+		this.logarithmicx = val;
 	}
-	
+
+    public void toggleLogarithmicY(boolean val) {
+		this.logarithmicy = val;
+	}
+    
 	public void setTitle(String t) {
 		this.plotTitle = t;
 	}
@@ -82,7 +88,12 @@ public class LineChart extends DataStruct{
 	public String getXLabel() {
 		return this.xLabel;
 	}
-	
+
+    public void setDataSeries(String seriesName, double[] x, double[] y) {
+	setXData(seriesName, x);
+	setYData(seriesName, y);
+    }
+    
 	public void setXData(String key, double[] d) {
 		if (!xaxisData.containsKey(key)) {
 			xaxisData.put(key, d);
@@ -146,7 +157,7 @@ public class LineChart extends DataStruct{
 						  QUOTE +"subtitle" + QUOTE + COLON + QUOTE + this.getSubTitle() + QUOTE + COMMA +
 						  QUOTE +"xLabel" + QUOTE + COLON + QUOTE + this.getXLabel() + QUOTE + COMMA +
 						  QUOTE +"yLabel" + QUOTE + COLON + QUOTE + this.getYLabel() + QUOTE + COMMA +
-						  QUOTE + "axisType" + QUOTE + COLON + this.logorithmic + COMMA +
+						  QUOTE + "axisType" + QUOTE + COLON + this.logarithmicx + COMMA +
 						  QUOTE + "options" + QUOTE + COLON + OPEN_CURLY + QUOTE + "mouseTracking" + QUOTE + COLON +
 				          this.mouseTrack + COMMA + QUOTE + "dataLabels" + QUOTE + COLON + this.dataLabel + CLOSE_CURLY + COMMA +
 						  QUOTE + "xaxis_data" + QUOTE + COLON + OPEN_BOX + xaxis_json + CLOSE_BOX + COMMA +
