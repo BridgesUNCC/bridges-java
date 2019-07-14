@@ -128,22 +128,22 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 		return (AVLTreeElement<K, E>) super.getRight();
 	}
 
-    /** 
-     *  Augment the element with the "height" and "balance factor" fields.
-     *
-     *  @return the augmented JSON string
-     */
+	/**
+	 *  Augment the element with the "height" and "balance factor" fields.
+	 *
+	 *  @return the augmented JSON string
+	 */
 	public String getElementRepresentation() {
 		String orig_json_str = super.getElementRepresentation();
 
 		String avl_str = QUOTE + "height" + QUOTE + COLON +
-                Integer.toString(this.getHeight()) +  COMMA +
-				QUOTE + "balance_factor" + QUOTE + COLON +
-                Integer.toString(this.getBalanceFactor());
+			Integer.toString(this.getHeight()) +  COMMA +
+			QUOTE + "balance_factor" + QUOTE + COLON +
+			Integer.toString(this.getBalanceFactor());
 
-		String json_str = orig_json_str.substring(0, orig_json_str.length()-1) + COMMA +
-				avl_str + CLOSE_CURLY;
+		String json_str = orig_json_str.substring(0, orig_json_str.length() - 1) + COMMA +
+			avl_str + CLOSE_CURLY;
 
 		return json_str;
-    }
+	}
 }

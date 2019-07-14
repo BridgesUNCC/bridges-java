@@ -21,7 +21,7 @@ public class ColorGrid extends Grid<Color> {
 	 *
 	**/
 	public ColorGrid() {
-	    this(defaultGridSize[0], defaultGridSize[1], baseColor);
+		this(defaultGridSize[0], defaultGridSize[1], baseColor);
 	}
 
 	/**

@@ -127,7 +127,7 @@ public class Element<E> extends DataStruct {
 		this.visualizer.setColor(col);
 	}
 
-    /**
+	/**
 	 *	@return The color of the element
 	 */
 	public Color getColor() {
@@ -316,34 +316,34 @@ public class Element<E> extends DataStruct {
 				Double.toString(visualizer.getLocationY()) +
 				CLOSE_BOX;
 
-//		if (getDataStructType().equals("BinarySearchTree")) {
-//			BSTElement bst = (BSTElement) this;
-//			json_str += COMMA +
-//				QUOTE + "key" + QUOTE + COLON +
-//				QUOTE + JSONValue.escape(bst.getKey().toString()) +  QUOTE + COMMA;
-//		}
-//		else if (getDataStructType().equals("AVLTree")) {
-//			AVLTreeElement avl = (AVLTreeElement) this;
-//			json_str += COMMA +
-//				QUOTE + "key" + QUOTE + COLON +
-//				QUOTE + JSONValue.escape(avl.getKey().toString()) +  QUOTE + COMMA +
-//				QUOTE + "height" + QUOTE + COLON +
-//				Integer.toString(avl.getHeight()) + COMMA +
-//				QUOTE + "balance_factor" + QUOTE + COLON +
-//				Integer.toString(avl.getBalanceFactor()) + COMMA;
-//			;
-//		}
-//		if (getDataStructType().equals("KdTree")) {
-//			KdTreeElement kdt = (KdTreeElement) this;
-//			json_str += COMMA +
-//				QUOTE + "key" + QUOTE + COLON +
-//				QUOTE + kdt.getKey().toString() +  QUOTE + COMMA +
-//				QUOTE + "dimension" + QUOTE + COLON +
-//				QUOTE + Integer.toString(kdt.getDimension()) +  QUOTE + COMMA +
-//				QUOTE + "thickness" + QUOTE + COLON +
-//				QUOTE + Float.toString(kdt.getThickness()) +  QUOTE + COMMA;
-//		}
-//		else
+		//		if (getDataStructType().equals("BinarySearchTree")) {
+		//			BSTElement bst = (BSTElement) this;
+		//			json_str += COMMA +
+		//				QUOTE + "key" + QUOTE + COLON +
+		//				QUOTE + JSONValue.escape(bst.getKey().toString()) +  QUOTE + COMMA;
+		//		}
+		//		else if (getDataStructType().equals("AVLTree")) {
+		//			AVLTreeElement avl = (AVLTreeElement) this;
+		//			json_str += COMMA +
+		//				QUOTE + "key" + QUOTE + COLON +
+		//				QUOTE + JSONValue.escape(avl.getKey().toString()) +  QUOTE + COMMA +
+		//				QUOTE + "height" + QUOTE + COLON +
+		//				Integer.toString(avl.getHeight()) + COMMA +
+		//				QUOTE + "balance_factor" + QUOTE + COLON +
+		//				Integer.toString(avl.getBalanceFactor()) + COMMA;
+		//			;
+		//		}
+		//		if (getDataStructType().equals("KdTree")) {
+		//			KdTreeElement kdt = (KdTreeElement) this;
+		//			json_str += COMMA +
+		//				QUOTE + "key" + QUOTE + COLON +
+		//				QUOTE + kdt.getKey().toString() +  QUOTE + COMMA +
+		//				QUOTE + "dimension" + QUOTE + COLON +
+		//				QUOTE + Integer.toString(kdt.getDimension()) +  QUOTE + COMMA +
+		//				QUOTE + "thickness" + QUOTE + COLON +
+		//				QUOTE + Float.toString(kdt.getThickness()) +  QUOTE + COMMA;
+		//		}
+		//		else
 
 		json_str += CLOSE_CURLY;
 
@@ -444,7 +444,7 @@ public class Element<E> extends DataStruct {
 	/**
 	 *	@return the X coordinate of the  element's location attribute
 	 */
-	public double getLocationX(){
+	public double getLocationX() {
 		return visualizer.getLocationX();
 	}
 	/**

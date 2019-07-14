@@ -97,14 +97,6 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 		this.setNext(next);
 	}
 
-	/*
-		public SLelement (SLelement<E> original) {
-			super(original.getValue());
-			this.setLabel(original.getLabel());
-			this.setVisualizer(original.getVisualizer());
-			this.setNext(original.getNext());
-		}
-	*/
 	/**
 	 *	This method gets the data structure type
 	 *
@@ -126,16 +118,12 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 	}
 
 	/**
-	 * Sets the element to point to the next SLelement
+	 * Sets the element to point to the next SLelement, updates
+	 *  the link visualizer
 	 *
 	 * @param next SLelement<E> that should be assigned to the next pointer
 	 */
 	public void setNext(SLelement<E> next) {
-		// remove any existing link visualizer from this node
-		//		if (this.next != null) {
-		//			this.removeLinkVisualizer(this.next);
-		//		}
-
 		this.next = next;
 		if (next != null) {
 			this.setLinkVisualizer(next);
@@ -157,8 +145,10 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 			+ getClass() + ", hashCode()=" + hashCode() + "]";
 	}
 
-	/*
+	/**
 	 *	Get the JSON representation of the the data structure
+	 *
+	 *  @return the JSON string of the element's representation
 	 */
 	public String getDataStructureRepresentation() {
 		// map to reorder the nodes for building JSON
@@ -203,7 +193,11 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 		return json_str;
 	}
 
-
+	/**
+	 *
+	 *  Implements an iterator on the singly linked element for ease
+	 *  iterating over lists
+	 */
 	class SLelementIterator implements Iterator<SLelement<E>> {
 		SLelement<E> current;
 
@@ -226,14 +220,16 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 
 	}
 
-	// Return an iterator over the elements in the array. This is generally not
-	// called directly, but is called by Java when used in a "simple" for loops
+	/**
+	 *	Return an iterator over the elements in the array. This is generally not
+	 *  called directly, but is called by Java when used in a "simple" for loops
+	 */
 	public Iterator<SLelement<E>> iterator() {
 		return new SLelementIterator(this);
 	}
 
 	/*
-	 *	Get the elements of the list
+	 *	Get the elements of the list - used for  JSON construction
 	 *
 	 *	@param nodes  a vector of the ndoes in the list
 	 *

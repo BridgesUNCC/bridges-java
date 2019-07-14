@@ -191,7 +191,7 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 		return (BSTElement<K, E>) super.getRight();
 	}
 
-	/** 
+	/**
 	 *  Augment the element with the "key" field.
 	 *
 	 *  @return the augmented JSON string
@@ -200,14 +200,14 @@ public class BSTElement<K, E> extends BinTreeElement<E> {
 	@Override
 	public String getElementRepresentation() {
 		String orig_json_str = super.getElementRepresentation();
-		
-		String key_str = QUOTE + "key" + QUOTE + COLON +
-				QUOTE + JSONValue.escape(this.getKey().toString()) +  QUOTE;
 
-		String json_str = orig_json_str.substring(0, orig_json_str.length()-1) + COMMA +
-					key_str + CLOSE_CURLY;
+		String key_str = QUOTE + "key" + QUOTE + COLON +
+			QUOTE + JSONValue.escape(this.getKey().toString()) +  QUOTE;
+
+		String json_str = orig_json_str.substring(0, orig_json_str.length() - 1) + COMMA +
+			key_str + CLOSE_CURLY;
 
 		return json_str;
 	}
-	
+
 }

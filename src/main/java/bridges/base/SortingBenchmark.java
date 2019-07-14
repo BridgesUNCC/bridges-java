@@ -6,134 +6,134 @@ import java.util.function.Consumer;
 
 
 public class SortingBenchmark {
-    private LineChart plot;
+	private LineChart plot;
 
-    private Random r;
+	private Random r;
 
-    private int maxSize;
-    private int baseSize;
-    private int increment;
-    private double geoBase;
-    private long time_cap_ms;
-    
-    public SortingBenchmark(LineChart p) {
-	this.plot = p;
-	p.setXLabel("Size of Array");
-	p.setYLabel("Runtime (in ms)");
+	private int maxSize;
+	private int baseSize;
+	private int increment;
+	private double geoBase;
+	private long time_cap_ms;
 
-	r = new Random();
+	public SortingBenchmark(LineChart p) {
+		this.plot = p;
+		p.setXLabel("Size of Array");
+		p.setYLabel("Runtime (in ms)");
 
-	maxSize = 1;
-	baseSize = 1;
-	increment = 1;
-	geoBase = 1.;
-	time_cap_ms = Long.MAX_VALUE;
-    }
+		r = new Random();
 
-    public void setMaxSize(int size) {
-	maxSize = size;
-    }
-
-    public void setBaseSize(int size) {
-	baseSize = size;
-    }
-    
-    public void setIncrement(int inc) {
-	increment = inc;
-    }
-
-    public void setGeometric(double base) {
-	geoBase = base;
-    }
-
-    /**
-     * @brief The benchmark will sample a range with a fixed number of
-     * points.
-     *
-     * The benchmark will sample about nbPoint equally distributed in
-     * the range [baseSize; maxSize]
-     * 
-     * @param baseSize lower bound of the range sampled
-     * @param maxSize upper bound of the range sampled
-     * @param nbPoint number of sample
-     */
-    public void linearRange(int baseSize, int maxSize, int nbPoint) {
-	setBaseSize (baseSize);
-	setMaxSize (maxSize);
-	setIncrement ((maxSize - baseSize)/nbPoint);
-	setGeometric (1.0);
-    }
-
-    /**
-     * @brief The benchmark will sample a range using in geometrically
-     * increasing sequence
-     *
-     * The benchmark will sample the range [baseSize; maxSize] using a
-     * geometric distribution in base base. That is to say, it will
-     * sample baseSize, base*baseSize, base*base*baseSize, ...
-     * 
-     * @param baseSize lower bound of the range sampled
-     * @param maxSize upper bound of the range sampled
-     * @param base base of the geometric increase
-     */
-    public void geometricRange(int baseSize, int maxSize, double base) {
-	setBaseSize (baseSize);
-	setMaxSize (maxSize);
-	setIncrement (0);
-	setGeometric (base);
-	if (base <= 1.0) {
-	    System.err.println("base should be > 1.0");
+		maxSize = 1;
+		baseSize = 1;
+		increment = 1;
+		geoBase = 1.;
+		time_cap_ms = Long.MAX_VALUE;
 	}
-    }
-    
-    /**
-     * @brief sets an upper bound to the time of a run.
-     *
-     * The benchmark will end after a run if it takes more than the
-     * given amount of time. So it is possible a particular run takes
-     * more than the alloted time, but that will be the last run.x
-     *
-     * @param cap_in_ms time limit in milliseconds
-     **/
-    public void setTimeCap(long cap_in_ms) {
-	time_cap_ms = cap_in_ms;
-    }
 
-    private void generate(int[] arr, int n) {
-	for(int i = 0; i < n; i++) {
-	    arr[i] = r.nextInt(2*n);
+	public void setMaxSize(int size) {
+		maxSize = size;
 	}
-    }
-    
-    public void run(String algoName, Consumer<int[]> runnable) {
 
-	ArrayList<Double> time = new ArrayList<Double>();
-	ArrayList<Double> xData = new ArrayList<Double>();
-
-	System.out.println(geoBase);
-	System.out.println(increment);
-	    
-	for(int n = baseSize; n <= maxSize;
-	    n=Math.max((int)(geoBase*n)+increment, n+1)) {
-
-	    //System.out.println(n);
-	    int[] arr = new int[n];
-		
-	    generate(arr, n);
-		
-	    long start = System.currentTimeMillis();
-	    runnable.accept(arr);
-	    long end = System.currentTimeMillis();
-	    long runTime = end - start;
-	    time.add ((double)runTime );
-	    xData.add ( (double)n );
-
-	    if (runTime > time_cap_ms) {
-		break;
-	    }
+	public void setBaseSize(int size) {
+		baseSize = size;
 	}
-	plot.setXData(algoName, xData);
-	plot.setYData(algoName, time);
-    }
+
+	public void setIncrement(int inc) {
+		increment = inc;
+	}
+
+	public void setGeometric(double base) {
+		geoBase = base;
+	}
+
+	/**
+	 * @brief The benchmark will sample a range with a fixed number of
+	 * points.
+	 *
+	 * The benchmark will sample about nbPoint equally distributed in
+	 * the range [baseSize; maxSize]
+	 *
+	 * @param baseSize lower bound of the range sampled
+	 * @param maxSize upper bound of the range sampled
+	 * @param nbPoint number of sample
+	 */
+	public void linearRange(int baseSize, int maxSize, int nbPoint) {
+		setBaseSize (baseSize);
+		setMaxSize (maxSize);
+		setIncrement ((maxSize - baseSize) / nbPoint);
+		setGeometric (1.0);
+	}
+
+	/**
+	 * @brief The benchmark will sample a range using in geometrically
+	 * increasing sequence
+	 *
+	 * The benchmark will sample the range [baseSize; maxSize] using a
+	 * geometric distribution in base base. That is to say, it will
+	 * sample baseSize, base*baseSize, base*base*baseSize, ...
+	 *
+	 * @param baseSize lower bound of the range sampled
+	 * @param maxSize upper bound of the range sampled
+	 * @param base base of the geometric increase
+	 */
+	public void geometricRange(int baseSize, int maxSize, double base) {
+		setBaseSize (baseSize);
+		setMaxSize (maxSize);
+		setIncrement (0);
+		setGeometric (base);
+		if (base <= 1.0) {
+			System.err.println("base should be > 1.0");
+		}
+	}
+
+	/**
+	 * @brief sets an upper bound to the time of a run.
+	 *
+	 * The benchmark will end after a run if it takes more than the
+	 * given amount of time. So it is possible a particular run takes
+	 * more than the alloted time, but that will be the last run.x
+	 *
+	 * @param cap_in_ms time limit in milliseconds
+	 **/
+	public void setTimeCap(long cap_in_ms) {
+		time_cap_ms = cap_in_ms;
+	}
+
+	private void generate(int[] arr, int n) {
+		for (int i = 0; i < n; i++) {
+			arr[i] = r.nextInt(2 * n);
+		}
+	}
+
+	public void run(String algoName, Consumer<int[]> runnable) {
+
+		ArrayList<Double> time = new ArrayList<Double>();
+		ArrayList<Double> xData = new ArrayList<Double>();
+
+		System.out.println(geoBase);
+		System.out.println(increment);
+
+		for (int n = baseSize; n <= maxSize;
+			n = Math.max((int)(geoBase * n) + increment, n + 1)) {
+
+			//System.out.println(n);
+			int[] arr = new int[n];
+
+			generate(arr, n);
+
+			long start = System.currentTimeMillis();
+			runnable.accept(arr);
+			long end = System.currentTimeMillis();
+			long runTime = end - start;
+			time.add ((double)runTime );
+			xData.add ( (double)n );
+
+			if (runTime > time_cap_ms) {
+				break;
+			}
+		}
+		plot.setXData(algoName, xData);
+		plot.setYData(algoName, time);
+	}
 
 }
