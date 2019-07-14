@@ -45,7 +45,18 @@ public class SortingBenchmark {
     public void setGeometric(double base) {
 	geoBase = base;
     }
-    
+
+    /**
+     * @brief The benchmark will sample a range with a fixed number of
+     * points.
+     *
+     * The benchmark will sample about nbPoint equally distributed in
+     * the range [baseSize; maxSize]
+     * 
+     * @param baseSize lower bound of the range sampled
+     * @param maxSize upper bound of the range sampled
+     * @param nbPoint number of sample
+     */
     public void linearRange(int baseSize, int maxSize, int nbPoint) {
 	setBaseSize (baseSize);
 	setMaxSize (maxSize);
@@ -53,6 +64,18 @@ public class SortingBenchmark {
 	setGeometric (1.0);
     }
 
+    /**
+     * @brief The benchmark will sample a range using in geometrically
+     * increasing sequence
+     *
+     * The benchmark will sample the range [baseSize; maxSize] using a
+     * geometric distribution in base base. That is to say, it will
+     * sample baseSize, base*baseSize, base*base*baseSize, ...
+     * 
+     * @param baseSize lower bound of the range sampled
+     * @param maxSize upper bound of the range sampled
+     * @param base base of the geometric increase
+     */
     public void geometricRange(int baseSize, int maxSize, double base) {
 	setBaseSize (baseSize);
 	setMaxSize (maxSize);
@@ -63,6 +86,15 @@ public class SortingBenchmark {
 	}
     }
     
+    /**
+     * @brief sets an upper bound to the time of a run.
+     *
+     * The benchmark will end after a run if it takes more than the
+     * given amount of time. So it is possible a particular run takes
+     * more than the alloted time, but that will be the last run.x
+     *
+     * @param cap_in_ms time limit in milliseconds
+     **/
     public void setTimeCap(long cap_in_ms) {
 	time_cap_ms = cap_in_ms;
     }
