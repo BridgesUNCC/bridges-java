@@ -202,23 +202,17 @@ public class LineChart extends DataStruct{
      * @param xdata the X data in the series
      **/
     public void setXData(String series, double[] xdata) {
-	if (!xaxisData.containsKey(series)) {
-	    xaxisData.put(series, xdata);
-	} 
+	xaxisData.put(series, xdata);
     }
 	
     /**
      * @brief Returns the X data for a series
      *
      * @param series indicate the series to get
-     * @return the X data of series
+     * @return the X data of series or null if the series is not in there
      **/
     public double[] getXData(String series) {
-	if(xaxisData.containsKey(series)) {
-	    double[] result = xaxisData.get(series);
-	    return result;
-	}
-	return null;
+	return  xaxisData.get(series);
     }
 
     /**
@@ -228,23 +222,17 @@ public class LineChart extends DataStruct{
      * @param ydata the Y data in the series
      **/
     public void setYData(String series, double[] ydata) {
-	if (!yaxisData.containsKey(series)) {
 	    yaxisData.put(series, ydata);
-	}
     }
 	
     /**
      * @brief Returns the Y data for a series
      *
      * @param series indicate the series to get
-     * @return the Y data of series
+     * @return the Y data of series or null if the data is not in there
      **/
     public double[] getYData(String series) {
-	if(yaxisData.containsKey(series)) {
-	    double[] result = yaxisData.get(series);
-	    return result;
-	}
-	return null;
+	    return yaxisData.get(series);
     }
 	
     public String getDataStructureRepresentation() {
