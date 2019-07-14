@@ -44,6 +44,10 @@ public class Element<E> extends DataStruct {
 	private HashMap<Element<E>, LinkVisualizer>  lvisualizer;
 	private E value;
 
+	/**
+	 *  Get the Element type name
+	 *	@return the element type (string)
+	 */
 	public String getDataStructType() {
 		return "Element";
 	}
@@ -79,6 +83,7 @@ public class Element<E> extends DataStruct {
 
 	/**
 	 * the constructor of Element
+	 *
 	 * @param label the string that is visible on the Bridges Visualization
 	 * @param val generic parameter value used to construct Element
 	 */
@@ -103,6 +108,7 @@ public class Element<E> extends DataStruct {
 
 	/**
 	 * this method returns the element's unique identifier
+	 *
 	 * @return the string identifier
 	 */
 	public String getIdentifier() {
@@ -112,7 +118,8 @@ public class Element<E> extends DataStruct {
 	/**
 	 * Set the size of the Element in the Bridge Visualization (in pixel units)
 	 *
-	 * @param sz the pixel size of the Element in the Bridges Visualization. Must be in [1:50].
+	 * @param sz the pixel size of the Element in the Bridges Visualization. 
+	 *	Must be in [1:50].
 	 */
 	public void setSize(double sz) {
 		this.visualizer.setSize(sz);
@@ -121,13 +128,14 @@ public class Element<E> extends DataStruct {
 
 	/**
 	 *  Set the color to "col"
-	 *  @param col The color of the element
+	 *  @param col The color of the element. See the Color class for details
 	 */
-	public void setColor( Color col) {
+	public void setColor(Color col) {
 		this.visualizer.setColor(col);
 	}
 
 	/**
+		Get the current color of the element
 	 *	@return The color of the element
 	 */
 	public Color getColor() {
@@ -146,7 +154,7 @@ public class Element<E> extends DataStruct {
 	/**
 	 *	get opacity of element
 	 *
-	 *	@return opacity
+	 *	@return current opacity of element (0-1 range)
 	 */
 	public double getOpacity() {
 		return this.visualizer.getOpacity();
@@ -213,6 +221,12 @@ public class Element<E> extends DataStruct {
 		lvisualizer.put(el, new LinkVisualizer() );
 	}
 
+	/**
+	 *	Removes the link from this element to a new incoming element
+	 *
+	 *	@param el the terminating element of the link
+	 *
+	 */
 	protected void removeLinkVisualizer(Element<E> el) {
 		lvisualizer.remove(el);
 	}
@@ -278,12 +292,8 @@ public class Element<E> extends DataStruct {
 
 
 	/**
-	 * Internal code for getting the properties of the Element object.
-	 * It produces (without the spaces or newlines):
-	 * {
-	 *  "name": "Some label",
-	 *  "other CSS properties like color": any_JSON_value
-	 * }
+	 * Get the JSON representation of the element's propertis
+	 *
 	 * @returns the encoded JSON string
 	 */
 	public String getElementRepresentation() {
@@ -316,35 +326,6 @@ public class Element<E> extends DataStruct {
 				Double.toString(visualizer.getLocationY()) +
 				CLOSE_BOX;
 
-		//		if (getDataStructType().equals("BinarySearchTree")) {
-		//			BSTElement bst = (BSTElement) this;
-		//			json_str += COMMA +
-		//				QUOTE + "key" + QUOTE + COLON +
-		//				QUOTE + JSONValue.escape(bst.getKey().toString()) +  QUOTE + COMMA;
-		//		}
-		//		else if (getDataStructType().equals("AVLTree")) {
-		//			AVLTreeElement avl = (AVLTreeElement) this;
-		//			json_str += COMMA +
-		//				QUOTE + "key" + QUOTE + COLON +
-		//				QUOTE + JSONValue.escape(avl.getKey().toString()) +  QUOTE + COMMA +
-		//				QUOTE + "height" + QUOTE + COLON +
-		//				Integer.toString(avl.getHeight()) + COMMA +
-		//				QUOTE + "balance_factor" + QUOTE + COLON +
-		//				Integer.toString(avl.getBalanceFactor()) + COMMA;
-		//			;
-		//		}
-		//		if (getDataStructType().equals("KdTree")) {
-		//			KdTreeElement kdt = (KdTreeElement) this;
-		//			json_str += COMMA +
-		//				QUOTE + "key" + QUOTE + COLON +
-		//				QUOTE + kdt.getKey().toString() +  QUOTE + COMMA +
-		//				QUOTE + "dimension" + QUOTE + COLON +
-		//				QUOTE + Integer.toString(kdt.getDimension()) +  QUOTE + COMMA +
-		//				QUOTE + "thickness" + QUOTE + COLON +
-		//				QUOTE + Float.toString(kdt.getThickness()) +  QUOTE + COMMA;
-		//		}
-		//		else
-
 		json_str += CLOSE_CURLY;
 
 		return json_str;
@@ -359,8 +340,13 @@ public class Element<E> extends DataStruct {
 	 *	Get  the link visualizer representation, iterating through
 	 *	the link properties
 	 *
+	 *	@param lv  link visualizer 
+	 *	@param src source node name
+	 *	@param dest destination node name
+	 *
 	 */
-	public String getLinkRepresentation(LinkVisualizer lv, String src, String dest) {
+	public String getLinkRepresentation(LinkVisualizer lv, String src, 
+									String dest) {
 
 		return	OPEN_CURLY +
 			lv.getLinkProperties() + COMMA +
@@ -370,10 +356,10 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 * This method returns the existing value of the label fields
+	 * This method returns the current label of the element
 	 *
-	 * @return the label of the Element; the label is typically displayed on BRIDGES
-	 *			visualizations.
+	 * @return the label of the Element; the label is displayed 
+	 *		on BRIDGES visualizations.
 	 */
 	public String getLabel() {
 		return label;
@@ -389,7 +375,7 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 * This method returns the generic parameter value held in the element.
+	 * This method returns the generic object held in the element.
 	 *
 	 * @return the value
 	 */
@@ -398,7 +384,7 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 * This method sets the generic parameter value for  this element.
+	 * This method sets the generic object for  this element.
 	 *
 	 * @param value the value to set
 	 */
@@ -418,6 +404,7 @@ public class Element<E> extends DataStruct {
 	}
 	/**
 	 *  Set the color to "col"
+	 *  See the Color class for a complete list of supported color names
 	 *  @param color The color of the element
 	 */
 	public void setColor(String col) {
@@ -442,12 +429,14 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
+	 *	Get the X coordinate of the element's location
 	 *	@return the X coordinate of the  element's location attribute
 	 */
 	public double getLocationX() {
 		return visualizer.getLocationX();
 	}
 	/**
+	 *	Get the Y coordinate of the element's location
 	 *	@return the Y coordinate of the  element's location attribute
 	 */
 	public double getLocationY() {
