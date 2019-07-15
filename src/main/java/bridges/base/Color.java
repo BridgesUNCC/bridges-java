@@ -40,6 +40,7 @@ public class Color {
 	private int red, green, blue;
 	private float alpha; // alpha represents opacity from 0.0-1.0
 	private static final Map<String, String> colorNames;
+	// CSS colors  - complete list
 	static {
 		Map<String, String> tempMap = new HashMap<>();
 		tempMap.put("aliceblue", "#f0f8ff");
@@ -190,7 +191,7 @@ public class Color {
 		colorNames = Collections.unmodifiableMap(tempMap);
 	}
 	/**
-	 * Constructors
+	 * Construct a default color object (steel blue)
 	 */
 	public Color() {
 		red = 70;
@@ -203,7 +204,10 @@ public class Color {
 	 *
 	 * Constructor, given r, g, b, a components
 	 *
-	 * @param r, g, b, a  - checked to be in the range 0-255
+	 * @param r  red component
+	 * @param g  green component
+	 * @param b  blue component
+	 * @param a  alpha component
 	 *
 	 */
 	public Color(int r, int g, int b, float a) {
@@ -215,7 +219,9 @@ public class Color {
 	 * 	Constructor, given r, g, b components
 	 *	alpha (opacity) defaults to 255
 	 *
-	 *	@param r, g, b, a  - checked to be in the range 0-255
+	 * @param r  red component
+	 * @param g  green component
+	 * @param b  blue component
 	 *
 	 */
 	public Color(int r, int g, int b) {
@@ -226,7 +232,7 @@ public class Color {
 	 *
 	 * 	Constructor, given color name
 	 *
-	 *	@param color - checked to be in the list of possible color names
+	 *	@param color  one of the CSS colors (check Color class for full list)
 	 *
 	 */
 	public Color(String color) {
@@ -238,7 +244,10 @@ public class Color {
 	 *
 	 * 	sets color to the given r, g, b, a components
 	 *
-	 *	@param r, g, b, a  - checked to be in the range 0-255
+	 * @param r  red component
+	 * @param g  green component
+	 * @param b  blue component
+	 * @param a  alpha component
 	 *
 	 */
 	public void setColor(int r, int g, int b, float a) {
@@ -259,7 +268,7 @@ public class Color {
 	 *
 	 * 	sets the red component
 	 *
-	 * @param r  - checked to be in the range 0-255
+	 * @param r  red component
 	 *
 	 */
 	public void setRed(int r) {
@@ -275,7 +284,7 @@ public class Color {
 	 *
 	 * 	gets the red component
 	 *
-	 * 	@return  red - returns the red component of the color
+	 * 	@return  red returns the red component of the color
 	 *
 	 */
 	public int getRed() {
@@ -286,7 +295,7 @@ public class Color {
 	 *
 	 * 	sets the green component
 	 *
-	 * 	@param g  - checked to be in the range 0-255
+	 * 	@param g   green component
 	 *
 	 */
 	public void setGreen(int g) {
@@ -302,7 +311,7 @@ public class Color {
 	 *
 	 * 	gets the green component
 	 *
-	 * 	@return  green - returns the green component of the color
+	 * 	@return  green returns the green component of the color
 	 *
 	 */
 	public int getGreen() {
@@ -313,7 +322,7 @@ public class Color {
 	 *
 	 * 	sets the blue component
 	 *
-	 * 	@param b  - checked to be in the range 0-255
+	 * 	@param b blue component
 	 *
 	 */
 	public void setBlue(int b) {
@@ -329,7 +338,7 @@ public class Color {
 	 *
 	 * 	gets the blue component
 	 *
-	 * 	@return  blue - returns the blue component of the color
+	 * 	@return  blue returns the blue component of the color
 	 *
 	 */
 	public int getBlue() {
@@ -340,7 +349,7 @@ public class Color {
 	 *
 	 * 	sets the alpha(opacity) component
 	 *
-	 * 	@param a  - checked to be in the range 0-255
+	 * 	@param a   alpha component (0-1.0)
 	 *
 	 */
 	public void setAlpha(float a) {
@@ -354,9 +363,9 @@ public class Color {
 
 	/**
 	 *
-	 * 	gets the alpha component
+	 * 	Gets the alpha component
 	 *
-	 * 	@return  alpha - returns the alpha(opacity) component of the color
+	 * 	@return  alpha returns the alpha (opacity) component of the color
 	 *
 	 */
 	public float getAlpha() {
@@ -365,9 +374,9 @@ public class Color {
 
 	/**
 	 *
-	 * 	gets the Color representation as a String
+	 * 	Gets the Color representation as a String
 	 *
-	 * 	@return - returns the color as a String with an RGBA array format
+	 * 	@return returns the color as a String with an RGBA array format
 	 *
 	 */
 	public String getRepresentation() {
@@ -376,7 +385,7 @@ public class Color {
 
 	/**
 	 *
-	 * 	gets the RGB Color representation as a Hex String
+	 * 	Gets the RGB Color representation as a Hex String
 	 *
 	 * 	@return - returns the RGB color as hexadecimal String
 	 *

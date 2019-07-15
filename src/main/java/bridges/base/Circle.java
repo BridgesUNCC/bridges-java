@@ -5,8 +5,8 @@ import org.json.simple.JSONObject;
 
 
 /**
- * @brief This class defines a rectangle and is part of the symbol collection.
- *		A rectangle has height and width
+ * @brief This class defines a circle and is part of the symbol collection.
+ *		A circle has a center and radius
  *
  * @author Kalpathi Subramanian
  * @date 12/24/18
@@ -21,12 +21,16 @@ public class Circle extends Symbol {
 
 
 	/**
-	 *  constructors
+	 *  Construct a default circle  (center at origin, radius of 10 units)
 	 */
 	public Circle () {
 		super();
 	}
 
+	/**
+	 *  Construct a circle of radius r
+	 *	@param r  radius of circle
+	 */
 	public Circle (int r) {
 		this();
 		if (r < 0)
@@ -34,8 +38,12 @@ public class Circle extends Symbol {
 		radius = r;
 	}
 
-	// provides both location and radius
-
+	/**
+	 *	Construct a circle with given location and radius
+	 *  @param locx  x coordinat of circle center
+	 *  @param locy  y coordinat of circle center
+	 *	@param r  radius of circle
+	 */
 	public Circle (Float locx, Float locy, int r) {
 		this(r);
 		setLocation (locx, locy);
@@ -64,9 +72,9 @@ public class Circle extends Symbol {
 	/**
 	 * This method sets the circle dimensions
 	 *
-	 * @param locx  x coordinat of location
-	 * @param locy  y coordinat of location
-	 * @param r  radius
+	 * @param locx  x coordinate of circle center
+	 * @param locy  y coordinate of circle center
+	 * @param r  radius of circle
 	 * @return none
 	 */
 	public void setCircle (Float locx, Float locy, int r) {
@@ -80,8 +88,7 @@ public class Circle extends Symbol {
 	 * This method returns the dimensions of the shape: min and max
 	 *	values in X and Y
 	 *
-	 * @param none
-	 * @return array of 4 values
+	 * @return bounding box of circle (array of 4 values)
 	 */
 	public Float[] getDimensions() {
 
@@ -99,7 +106,7 @@ public class Circle extends Symbol {
 	/**
 	 * This method returns the JSON representation of the shape
 	 *
-	 * @return string  JSON string
+	 * @return JSON representation of circle (string)
 	 */
 	public JSONObject getJSONRepresentation() {
 

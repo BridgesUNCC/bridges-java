@@ -6,32 +6,32 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 /**
- * @brief This class defines a polygon and is part of the symbol collection.
- *		A polygon has a sequence of points (x, y coordinate pairs)
+ * @brief This class defines a polyline and is part of the symbol collection.
+ *		A polyline has a sequence of points (x, y coordinate pairs)
  *
  * @author David Burlinson, Kalpathi Subramanian
  * @date 12/23/18, 7/15/19
  *
  */
-public class Polygon extends Symbol {
+public class Polyline extends Symbol {
 
-	private String shape = "polygon";
+	private String shape = "polyline";
 	// height, width of rectangle
 	private ArrayList<Float> points = null;
 
 
 	/**
-	 *	 Construct a default polygon structure
+	 *	 Construct a default polyline structure
 	 */
-	public Polygon () {
+	public Polyline () {
 		super();
 		points = new ArrayList<Float>();
 	}
 
 	/**
-	 *	 Construct a polygon with the give set of points
+	 *	 Construct a polyline with the give set of points
 	 */
-	public Polygon (ArrayList<Float>  pts) {
+	public Polyline (ArrayList<Float>  pts) {
 		this();
 		points = pts;
 	}
@@ -42,11 +42,11 @@ public class Polygon extends Symbol {
 	 *  @return name   shape name
 	 */
 	public String getName() {
-		return "polygon";
+		return "polyline";
 	}
 
 	/**
-	 * This method adds a point to the polygon
+	 * This method adds a point to the polyline
 	 *
 	 * @param x, y  Coordinates of the point
 	 */
@@ -62,15 +62,15 @@ public class Polygon extends Symbol {
 		}
 	}
 	/**
-	 * This method returns the point list of the polygon
+	 * This method returns the point list of the polyline
 	 *
-	 * @return points  point list of the polygon - sequence of x, y values
+	 * @return points  point list of the polyline - sequence of x, y values
 	 */
 	public ArrayList<Float> getPoints() {
 		return points;
 	}
 
-	public void setPolygon (ArrayList<Float> pts) {
+	public void setPolyline (ArrayList<Float> pts) {
 		points = pts;
 	}
 

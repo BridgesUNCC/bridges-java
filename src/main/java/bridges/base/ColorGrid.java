@@ -158,7 +158,7 @@ public class ColorGrid extends Grid<Color> {
 	}
 
 	/**
-	 * get the JSON representation of the color grid
+	 * Get the JSON representation of the color grid
 	 *
 	 * @return the JSON representation (string) of the color grid
 	**/
