@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import org.json.simple.JSONValue;
 
 /**
  * @brief Show series of data or functions using a line chart.
@@ -361,13 +362,12 @@ public class LineChart extends DataStruct {
 			xaxis_json += OPEN_CURLY + QUOTE + "Plot_Name" + QUOTE + COLON + QUOTE + key + QUOTE + COMMA +
 				QUOTE + "xaxis_data" + QUOTE + COLON + OPEN_BOX;
 			for ( int i = 0; i < value.length ; i++) {
-				xaxis_json += QUOTE + value[i] + QUOTE + COMMA;
+			    xaxis_json += JSONValue.toJSONString(value[i]) + COMMA;
 			}
 			xaxis_json = xaxis_json.substring(0, xaxis_json.length() - 1);
 			xaxis_json += CLOSE_BOX + CLOSE_CURLY + COMMA;
 		}
 		xaxis_json = xaxis_json.substring(0, xaxis_json.length() - 1);
-
 
 		String yaxis_json = "";
 		for (Entry<String, double[]> entry : yaxisData.entrySet()) {
@@ -376,7 +376,7 @@ public class LineChart extends DataStruct {
 			yaxis_json += OPEN_CURLY + QUOTE + "Plot_Name" + QUOTE + COLON + QUOTE + key + QUOTE + COMMA +
 				QUOTE + "yaxis_data" + QUOTE + COLON + OPEN_BOX;
 			for ( int i = 0; i < value.length ; i++) {
-				yaxis_json += QUOTE + value[i] + QUOTE + COMMA;
+			    yaxis_json +=  JSONValue.toJSONString(value[i])  + COMMA;
 			}
 			yaxis_json = yaxis_json.substring(0, yaxis_json.length() - 1);
 			yaxis_json += CLOSE_BOX + CLOSE_CURLY + COMMA;
@@ -388,7 +388,8 @@ public class LineChart extends DataStruct {
 			QUOTE + "subtitle" + QUOTE + COLON + QUOTE + this.getSubTitle() + QUOTE + COMMA +
 			QUOTE + "xLabel" + QUOTE + COLON + QUOTE + this.getXLabel() + QUOTE + COMMA +
 			QUOTE + "yLabel" + QUOTE + COLON + QUOTE + this.getYLabel() + QUOTE + COMMA +
-			QUOTE + "axisType" + QUOTE + COLON + this.logarithmicx + COMMA +
+			QUOTE + "xaxisType" + QUOTE + COLON + this.logarithmicx + COMMA +
+			QUOTE + "yaxisType" + QUOTE + COLON + this.logarithmicy + COMMA +
 			QUOTE + "options" + QUOTE + COLON + OPEN_CURLY + QUOTE + "mouseTracking" + QUOTE + COLON +
 			this.mouseTrack + COMMA + QUOTE + "dataLabels" + QUOTE + COLON + this.dataLabel + CLOSE_CURLY + COMMA +
 			QUOTE + "xaxis_data" + QUOTE + COLON + OPEN_BOX + xaxis_json + CLOSE_BOX + COMMA +
