@@ -24,7 +24,7 @@ import org.json.simple.JSONValue;
  *
  *  Supported attribute values are as follows:<p>
  *
- *  <b>Supported Colors (by name)</b>: 
+ *  <b>Supported Colors (by name)</b>:
  *		See the Color class for the complete list.
  *
  *  <b> Color by RGBA Specification :</b>  Range: 0-255 for each component <p>
@@ -144,7 +144,7 @@ public class LinkVisualizer {
 
 	/**
 	 *
-	 *	Set the color of the link in the Bridges Visualization to "aColor". 
+	 *	Set the color of the link in the Bridges Visualization to "aColor".
 	 *	See the Color clas for a complete list of supported color names.
 	 *
 	 * 	@param col_name the string reprsenting the color of the link.
@@ -168,9 +168,9 @@ public class LinkVisualizer {
 	 *	0-255 range for R, G, B and 0-1.0 for opacity
 	 *
 	 * 	@param r red component
-	 *	@param g green component 
-	 *	@param b blue component 
-	 *	@param a alpha (opacity)  component 
+	 *	@param g green component
+	 *	@param b blue component
+	 *	@param a alpha (opacity)  component
 	 *
 	 *
 	 */
@@ -191,10 +191,10 @@ public class LinkVisualizer {
 	}
 
 	/**
-	 * Sets the opacity of the link in the Bridges Visualization, 
-	 *  0 is fully transparent, 1 for fully opaque, 
+	 * Sets the opacity of the link in the Bridges Visualization,
+	 *  0 is fully transparent, 1 for fully opaque,
 	 *
-	 * @param opacity, a float in the range  0-1.0 representing 
+	 * @param opacity, a float in the range  0-1.0 representing
 	 *		link transparency
 	 */
 	public void setOpacity(float opacity) {

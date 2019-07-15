@@ -29,7 +29,7 @@ import java.util.Vector;
  *  @param <E> The generic parameter object that is part of this element, representing
  *          application specific data.
  *
- *	\sa Example tutorial at 
+ *	\sa Example tutorial at
  *		http://bridgesuncc.github.io/tutorials/Tree.html
  */
 public class TreeElement<E> extends Element<E> {

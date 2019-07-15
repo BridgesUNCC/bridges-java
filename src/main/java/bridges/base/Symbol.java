@@ -8,12 +8,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
 /*
- * @brief This is a class BRIDGES for deriving a
+ *  @brief This is a class in BRIDGES for deriving a
  *  number of Symbol objects for use in a SymbolCollection.
  *  Symbols correspond to a simplified subset of SVG paths
  *  and shapes for custom visual representations in BRIDGES.
  *
- * @author David Burlinson
+ * 	@author David Burlinson, Kalpathi Subramanian
+ *
+ *	@date  2018, 7/15/19
  *
 */
 public class Symbol extends DataStruct {
@@ -42,10 +44,18 @@ public class Symbol extends DataStruct {
 	protected Float locationX = DEFAULT_LOCATIONX;
 	protected Float locationY = DEFAULT_LOCATIONY;
 
+	/**
+	 *  Get data structure name
+	 *
+	 *	@return data type name (string)
+	 */
 	public String getDataStructType() {
 		return "Symbol";
 	}
 
+	/**
+	 *	Create a default symbol object
+	 */
 	public Symbol() {
 		super();
 		this.identifier = ids.toString();
@@ -62,34 +72,64 @@ public class Symbol extends DataStruct {
 		this.label = label;
 	}
 
+	/**
+	 * This method gets the symbol label
+	 *
+	 * @return symbol label
+	 */
 	public String getLabel() {
 		return this.label;
 	}
 
 	/**
-	 * this method returns the Symbol's unique identifier
+	 * This method returns the Symbol's unique identifier
 	 * @return the string identifier
 	 */
 	public String getIdentifier() {
 		return identifier;
 	}
 
+	/**
+	 * This method sets the symbol fill color
+	 *
+	 * @param c the color to set
+	 */
 	public Symbol setFillColor(Color c) {
 		this.fillColor = c;
 		return this;
 	}
+	/**
+	* This method gets fill color
+	*
+	* @return  fill color
+	*/
 	public Color getFillColor() {
 		return this.fillColor;
 	}
 
+	/**
+	 * This method sets the symbol stroke color
+	 *
+	 * @param c the color to set
+	 */
 	public Symbol setStrokeColor(Color c) {
 		this.strokeColor = c;
 		return this;
 	}
+	/**
+	 * This method gets stroke color
+	 *
+	 * @return  stroke color
+	 */
 	public Color getStrokeColor() {
 		return this.strokeColor;
 	}
 
+	/**
+	 * This method sets the symbol stroke width
+	 *
+	 * @param strk_width the stroke width to set
+	 */
 	public Symbol setStrokeWidth(Float strokewidth) {
 		if (strokewidth <= 0.0f || strokewidth > 10.0f) {
 			throw new IllegalArgumentException("Stroke width must be between 0 and 10");
@@ -99,10 +139,21 @@ public class Symbol extends DataStruct {
 		}
 		return this;
 	}
+	/**
+	 * This method gets stroke width
+	 *
+	 * @return  stroke width
+	 */
+
 	public Float getStrokeWidth() {
 		return this.strokeWidth;
 	}
 
+	/**
+	 * This method sets the symbol opacity
+	 *
+	 * @param op the opacity to set
+	 */
 	public Symbol setOpacity(Float o) {
 		if (o <= 0.0f || o > 1.0f) {
 			throw new IllegalArgumentException("Opacity must be between 0 and 1");
@@ -112,10 +163,21 @@ public class Symbol extends DataStruct {
 		}
 		return this;
 	}
+
+	/**
+	 * This method gets symbol opacity
+	 *
+	 * @return  symbol opacity
+	 */
 	public Float getOpacity() {
 		return this.opacity;
 	}
 
+	/**
+	 * This method sets the stroke dash level
+	 *
+	 * @param dash dash level
+	 */
 	public Symbol setStrokeDash(int dash) {
 		if (dash < 0 || dash > 10) {
 			throw new IllegalArgumentException("Dash must be between 0 and 10 (inclusive)");
@@ -125,14 +187,35 @@ public class Symbol extends DataStruct {
 		}
 		return this;
 	}
+
+	/**
+	 * This method gets stroke dash level
+	 *
+	 * @return  stroke dash level
+	 */
+
 	public Integer getStrokeDash() {
 		return this.strokeDash;
 	}
 
+
+	/**
+	 * This method sets the symbol location
+	 *
+	 * @param x  x coordinate
+	 * @param y  y coordinate
+	 */
 	public Symbol setLocation(int x, int y) {
 		setLocation((float) x, (float) y);
 		return this;
 	}
+
+	/**
+	 * This method sets the symbol location
+	 *
+	 * @param x  x coordinate
+	 * @param y  y coordinate
+	 */
 
 	public Symbol setLocation(Float x, Float y) {
 		if ((x > Float.NEGATIVE_INFINITY && x < Float.POSITIVE_INFINITY) &&
@@ -145,13 +228,27 @@ public class Symbol extends DataStruct {
 		}
 		return this;
 	}
+	/**
+	 * This method gets the symbol location
+	 *
+	 * @return location (x, y) of the symbol
+	 */
+
 	public Float[] getLocation() {
 		return new Float[] {this.locationX, this.locationY};
 	}
+	/**
+	 * Get Dimensions of symbol
+	 * @return  symbol dimensions
+	 */
 	public Float[] getDimensions() {
 		return new Float[] {0.0f, 0.0f, 0.0f, 0.0f};
 	}
 
+	/**
+	 * Get JSON string of Data type
+	 * @return JSON of data type (string)
+	 */
 
 	public String getDataStructureRepresentation() {
 		return null;
@@ -159,11 +256,6 @@ public class Symbol extends DataStruct {
 
 	/**
 	 * Internal code for getting the properties of the Symbol object.
-	 * It produces (without the spaces or newlines):
-	 * {
-	 *  "name": "Some label",
-	 *  "other CSS properties like color": any_JSON_value
-	 * }
 	 * @returns the encoded JSON string
 	 */
 	public JSONObject getJSONRepresentation() {
@@ -207,7 +299,6 @@ public class Symbol extends DataStruct {
 			json_builder.put("location", location);
 		}
 
-		// System.out.println(json_builder.toString());
 		return json_builder;
 	}
 }

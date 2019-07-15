@@ -33,7 +33,7 @@ public class Grid<E> extends DataStruct {
 	}
 
 	/**
-	 * Construct a size x size grid 
+	 * Construct a size x size grid
 	 *
 	 */
 	public Grid(int size) {
@@ -41,7 +41,7 @@ public class Grid<E> extends DataStruct {
 	}
 
 	/**
-	 * Construct a rows x cols  size grid 
+	 * Construct a rows x cols  size grid
 	 *
 	 * @param rows number of rows in grid
 	 * @param cols number of rows in grid
@@ -89,10 +89,10 @@ public class Grid<E> extends DataStruct {
 		return new int[] {gridSize[0], gridSize[1]};
 	}
 
-	/** 
+	/**
 	 *	Get the (row, col) element in the grid
 	 * 	@param row row number
-	 * 	@param col number 
+	 * 	@param col number
 	 */
 	public E get(Integer row, Integer col) {
 		try {
@@ -104,10 +104,10 @@ public class Grid<E> extends DataStruct {
 		}
 	}
 
-	/** 
+	/**
 	 *	Set the (row, col) element in the grid
 	 * 	@param row row number
-	 * 	@param col number 
+	 * 	@param col number
 	 *	@val the value to be set to
 	 */
 	public void set(Integer row, Integer col, E val) {

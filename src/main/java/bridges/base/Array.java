@@ -21,15 +21,13 @@ import bridges.validation.Validation;
  *          application specific data.
  *
  *  \sa Example Tutorial at <br>
- *		http://bridgesuncc.github.io/Hello_World_Tutorials/ARRAY1D.html (1D Array)<br>
- *		http://bridgesuncc.github.io/Hello_World_Tutorials/ARRAY2D.html (2D Array)<br>
- *		http://bridgesuncc.github.io/Hello_World_Tutorials/ARRAY3D.html (3D Array)
+ *		http://bridgesuncc.github.io/tutorials/Array.html (1D, 2D, and 3D Array)<br>
  *
  */
 public class Array<E> extends DataStruct {
 	private Element<E>[] array_data;
-	private int num_dims;					// only 2D and 3D arrays supported
-	private int[] dims = {1, 1, 1};					// array dimensions
+	private int num_dims;					// 1D, 2D and 3D arrays supported
+	private int[] dims = {1, 1, 1};			// array dimensions
 	private int size;						// array size
 
 	/*
@@ -141,11 +139,10 @@ public class Array<E> extends DataStruct {
 		int sz = 1;
 		for (int k = 0; k < num_dims; k++) {
 			dims[k] = dim[k];
+			// check the dimension is positive
+			if (dims[k] < 0)
+				throw new InvalidValueException("Invalid dimension value, must be  positive");
 			sz *= dim[k];
-		}
-		// first check the dimensions are all positive
-		if (sz < 0) {
-			throw new InvalidValueException("Invalid dimension value, must be  positive");
 		}
 		size = sz;
 		// allocate space for the array
@@ -252,11 +249,10 @@ public class Array<E> extends DataStruct {
 	}
 
 	/**
-	 * Generating the JSON string for a Bridges array object (Array<E>[])
+	 * Generating the JSON string for a Bridges array object
 	 *
-	 * @param Bridges Array object
 	 *
-	 * @return JSON string
+	 * @return JSON string of the Array type
 	*/
 
 	public String getDataStructureRepresentation () {
@@ -272,8 +268,7 @@ public class Array<E> extends DataStruct {
 		// remove last comma
 		nodes_JSON.setLength(nodes_JSON.length() - 1);
 
-		// add dimension information
-
+		// add dimension  and the element information
 
 		String json_str =
 			QUOTE + "dims" + QUOTE + COLON +

@@ -51,7 +51,7 @@ public class ElementVisualizer {
 					size = 10.0;
 	private float   opacity = 1.0f;
 
-							// default properties
+	// default properties
 	private Map<String, String> properties = new HashMap<String, String>() {
 		{
 			put("color", "[70, 130, 180, 1.0]");
@@ -179,7 +179,7 @@ public class ElementVisualizer {
 	 *  Set the color of the Element in the Bridges Visualization to "aColor".
 	 *
 	 *	@param col_name the string reprsenting the color of the Element in
-	 *  	the Bridges Visualization; see the Color class for the list 
+	 *  	the Bridges Visualization; see the Color class for the list
 	 * 		of supported colors
 	 *
 	 */

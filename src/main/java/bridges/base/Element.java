@@ -118,7 +118,7 @@ public class Element<E> extends DataStruct {
 	/**
 	 * Set the size of the Element in the Bridge Visualization (in pixel units)
 	 *
-	 * @param sz the pixel size of the Element in the Bridges Visualization. 
+	 * @param sz the pixel size of the Element in the Bridges Visualization.
 	 *	Must be in [1:50].
 	 */
 	public void setSize(double sz) {
@@ -340,13 +340,13 @@ public class Element<E> extends DataStruct {
 	 *	Get  the link visualizer representation, iterating through
 	 *	the link properties
 	 *
-	 *	@param lv  link visualizer 
+	 *	@param lv  link visualizer
 	 *	@param src source node name
 	 *	@param dest destination node name
 	 *
 	 */
-	public String getLinkRepresentation(LinkVisualizer lv, String src, 
-									String dest) {
+	public String getLinkRepresentation(LinkVisualizer lv, String src,
+		String dest) {
 
 		return	OPEN_CURLY +
 			lv.getLinkProperties() + COMMA +
@@ -358,7 +358,7 @@ public class Element<E> extends DataStruct {
 	/**
 	 * This method returns the current label of the element
 	 *
-	 * @return the label of the Element; the label is displayed 
+	 * @return the label of the Element; the label is displayed
 	 *		on BRIDGES visualizations.
 	 */
 	public String getLabel() {

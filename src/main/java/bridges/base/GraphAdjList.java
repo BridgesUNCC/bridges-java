@@ -12,8 +12,8 @@ import java.util.Vector;
  *	The GraphAdjList class can be used to represent adjacency list based  graphs
  *	in BRIDGES; it takes 3 generic parameters: (1) K, which is an orderable
  *	key value used in accessing vertices (in constant time) using a hashmap. This
- *	permits data sets that need to be accessed by keys that are strings, 
- *	(2) E1, for maintaining vertex specific data, and (3) E2, for maintaining 
+ *	permits data sets that need to be accessed by keys that are strings,
+ *	(2) E1, for maintaining vertex specific data, and (3) E2, for maintaining
  *	edge *	specific data.
  *	The class is a wrapper  around the Java Hashmap class
  *	and, thus, derives all its operations from it.
@@ -21,10 +21,10 @@ import java.util.Vector;
  *
  *	The vertices of the graph are held in a Java hashmap, for near constant time access;
  *	this lets us use strings or integer ids for vertices. The adjacency lists,
- *	also a Java hashmap  are built for each vertex and contain the edge 
- *	(source, destination vertices and edge weight) in the Edge structure, 
- *	defined separately. Adjacency lists are singly linked lists using the 
- *	BRIDGES SLelement. Iterators are provided for easy traversal of the 
+ *	also a Java hashmap  are built for each vertex and contain the edge
+ *	(source, destination vertices and edge weight) in the Edge structure,
+ *	defined separately. Adjacency lists are singly linked lists using the
+ *	BRIDGES SLelement. Iterators are provided for easy traversal of the
  *  adjacency lists.
  *
  *	Convenience methods are provided to add vertices and edges to the graph. Edges
@@ -277,7 +277,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	}
 
 	/**
-	 *	Gets the graph's adjacency list 
+	 *	Gets the graph's adjacency list
 	 *
 	 *	@return the graph's adjacency lists
 	 *
@@ -380,7 +380,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		return true;
 	}
 
-	/** 
+	/**
 	 * Forces  the graph to be considered large, in which case the rendering
 	 * is switched to more efficient methods
 	 * @param f  - boolean controlling the visualization method used.
@@ -395,7 +395,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		}
 	}
 
-	/** 
+	/**
 	 * Forces  the graph to be considered small
 	 * @param f  - boolean controlling the visualization method used.
 	 */

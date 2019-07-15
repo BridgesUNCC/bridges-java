@@ -21,12 +21,17 @@ public	class Rectangle extends  Symbol {
 
 
 	/**
-	 *  constructors
+	 *  Construct a default rectangle
 	 */
 	public Rectangle() {
 		super();
 	}
 
+	/**
+	 *  Construct a rectangle with given height and width
+	 *  @param w  width of rectangle
+	 *  @param h  height of rectangle
+	 */
 	public Rectangle (int w, int h) {
 		this();
 		if (w < 0 || h < 0)
@@ -36,6 +41,13 @@ public	class Rectangle extends  Symbol {
 		height = h;
 	}
 
+	/**
+	 *  Construct a rectangle with given its location (center),  height and width
+	 *  @param locx x coordinate of center
+	 *  @param locy y coordinate of center
+	 *  @param w  width of rectangle
+	 *  @param h  height of rectangle
+	 */
 	public Rectangle (Float locx, Float locy, int w, int h) {
 		this(w, h);
 		setLocation (locx, locy);
@@ -79,8 +91,7 @@ public	class Rectangle extends  Symbol {
 	 * This method returns the dimensions of the shape: min and max
 	 *	values in X and Y
 	 *
-	 * @param none
-	 * @return array of 4 values
+	 * @return rectangle's bounding box (array of 4 values)
 	 */
 	public Float[] getDimensions() {
 
@@ -119,7 +130,7 @@ public	class Rectangle extends  Symbol {
 	/**
 	 * This method returns the JSON representation of the shape
 	 *
-	 * @return String  JSON string
+	 * @return JSON representation of rectangle (string)
 	 */
 	public JSONObject getJSONRepresentation() {
 

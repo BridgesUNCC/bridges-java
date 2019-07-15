@@ -10,10 +10,11 @@ import org.json.simple.JSONArray;
 
 
 
-/*
- * @brief the ShapeCollection represents a collection of symbols (shapes, polygons, and text) to visualize in Bridges
+/**
+ * @brief the ShapeCollection represents a collection of symbols to visualize in Bridges
  * @author David Burlinson
-*/
+ * @date 2018, 7/15/19
+ */
 public class SymbolCollection extends DataStruct {
 	// keep track of the shape elements; useful
 	// to maintain their properties
@@ -43,14 +44,16 @@ public class SymbolCollection extends DataStruct {
 
 	/**
 	 *   This method adds a symbol to the collection
+	 *	 @param s  symbol to be added
 	 */
 	public void addSymbol(Symbol s) {
 		// note: it is the user's responsibility to handle
 		//  duplicates where desired
 		symbols.put(s.getIdentifier(), s);
 	}
-	/*
+	/**
 	 *   This method examines whether the axes should be expanded to ensure all shapes are shown
+	 *	 @param s  symbol to be updated
 	 */
 	private void updateAxisDomains(Symbol s) {
 		Float[] dims = s.getDimensions();
@@ -72,8 +75,9 @@ public class SymbolCollection extends DataStruct {
 		}
 	}
 
-	/*
+	/**
 	 *	Get the JSON representation of the the data structure
+	 *	@return JSON of symbol collection (string)
 	 */
 
 	public String getDataStructureRepresentation() {

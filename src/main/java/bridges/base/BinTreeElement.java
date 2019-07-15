@@ -23,7 +23,7 @@ package bridges.base;
  *
  * @date 6/22/16, 1/7/17, 5/17/17
  *
- * \sa Example Tutorial at 
+ * \sa Example Tutorial at
  *			http://bridgesuncc.github.io/tutorials/BinTree.html
  */
 
