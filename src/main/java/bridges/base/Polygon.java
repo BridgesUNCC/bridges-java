@@ -6,11 +6,11 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 /**
- * @brief This class defines a rectangle and is part of the symbol collection.
- *		A rectangle has height and width
+ * @brief This class defines a polygon and is part of the symbol collection.
+ *		A polygon has a sequence of points (x, y coordinate pairs)
  *
  * @author David Burlinson, Kalpathi Subramanian
- * @date 12/23/18
+ * @date 12/23/18, 7/15/19
  *
  */
 public class Polygon extends Symbol {
@@ -20,12 +20,17 @@ public class Polygon extends Symbol {
 	private ArrayList<Float> points = null;
 
 
-	// constructors
+	/**
+	 *	 Construct a default polygon structure
+	 */
 	public Polygon () {
 		super();
 		points = new ArrayList<Float>();
 	}
 
+	/**
+	 *	 Construct a polygon with the give set of points
+	 */
 	public Polygon (ArrayList<Float>  pts) {
 		this();
 		points = pts;
@@ -43,7 +48,7 @@ public class Polygon extends Symbol {
 	/**
 	 * This method adds a point to the polygon
 	 *
-	 * @param x, y  X, Y coordinates of the point
+	 * @param x, y  Coordinates of the point
 	 */
 	public void addPoint(Integer x, Integer y) {
 
@@ -73,8 +78,7 @@ public class Polygon extends Symbol {
 	 * This method returns the dimensions of the shape: min and max
 	 *	values in X and Y
 	 *
-	 * @param none
-	 * @return array of 4 values
+	 * @return Bounding box of the point list (array of 4 values)
 	 */
 	public Float[] getDimensions() {
 		Float minx = Float.POSITIVE_INFINITY;

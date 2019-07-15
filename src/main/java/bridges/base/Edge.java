@@ -11,17 +11,17 @@ import java.util.Map.Entry;
  * representation uses them as the generic paramter, as SLelement<Edge>
  * Bridges represents Edges as links between pairs of elements
  *
- * @author K.R. Subramanian
+ * @author Kalpathi Subramanian
  *
  * @param generic parameter <K>  holds the terminating vertex of the edge
  * @param generic parameter <E2> holds edge specific information
  */
 public class Edge<K, E2> {
 
-	private K to;
-	private K from;
-	private E2 edge_data;
-	private LinkVisualizer lvis;
+	private K from;						// source vertex
+	private K to;						// destination vertex
+	private E2 edge_data;				// edge specific data
+	private LinkVisualizer lvis;		// link visualizer for this edge
 	/**
 	 *
 	 * Construct an edge with weight "wt" and a terminating
@@ -65,7 +65,7 @@ public class Edge<K, E2> {
 	 *
 	 * Get identifer of the terminating Element of edge
 	 *
-	 * @return the string identifier of the terminating Element
+	 * @return the identifier of the terminating Element
 	 *
 	 */
 	public K getTo() {
@@ -76,7 +76,7 @@ public class Edge<K, E2> {
 	 *
 	 * Get identifer of the source Element of edge
 	 *
-	 * @return the string identifier of the source Element
+	 * @return the identifier of the source Element
 	 *
 	 */
 	public K getFrom() {
@@ -104,35 +104,52 @@ public class Edge<K, E2> {
 		return this.edge_data;
 	}
 
+	/**
+	 *	Get the edge's link visualizer
+	 *  @return link visualizer for this edge
+	 */
 	public LinkVisualizer getLinkVisualizer() {
 		return this.lvis;
 	}
 
+	/**
+	 *	Set the edge's link visualizer
+	 *  @param link visualizer to be set for this edge
+	 */
 	public void setLinkVisualizer(LinkVisualizer lvis) {
 		this.lvis = lvis;
 	}
 
-	/*
-		Begin visualizer method exposing
+	/**
+	 *	Get the edge's label
+	 *	@return label of this edge
 	 */
-
 	public String getLabel() {
 		return this.lvis.getLabel();
 	}
 
+	/**
+	 *	Set the edge's label
+	 *	@param label the label to be assigned
+	 */
 	public void setLabel(String label) {
 		this.lvis.setLabel(label);
 	}
 
 	/**
-	 * Get the thickness of the link in the Bridges Visualiation
+	 * Get the thickness of the edge 
 	 *
-	 * @return the size in pixels of the Element in the Bridges Visualization
+	 * @return the size in pixels of the edge
 	 */
 	public double getThickness() {
 		return this.lvis.getThickness();
 	}
 
+	/**
+	 * Set the thickness of the edge 
+	 *
+	 * @param thickness edge thickness to set
+	 */
 	public void setThickness(double thickness) {
 		this.lvis.setThickness(thickness);
 	}
@@ -140,7 +157,7 @@ public class Edge<K, E2> {
 	/**
 	 *	Get the color of the link in the Bridges Visualization
 	 *
-	 *	@return the Color object representing the color of the link
+	 *	@return the edge color
 	 *
 	 */
 	public Color getColor() {
@@ -149,7 +166,7 @@ public class Edge<K, E2> {
 
 	/**
 	 * Set the color of the link from an existing Color object
-	 * @param color Bridges Color object
+	 * @param color  the edge color to be assigned
 	 */
 	public void setColor(Color color) {
 		this.lvis.setColor(color);
@@ -159,12 +176,8 @@ public class Edge<K, E2> {
 	 *
 	 *	Set the color of the link in the Bridges Visualization to "aColor".
 	 *
-	 * 	@param col_name the string reprsenting the color of the Element in
-	 *		the Bridges Visualization; supported named colors are
-	 *  	"red", "green", "blue", "yellow", "cyan", "magenta", "white", "black",
-	 *  	"orange", "turquoise", "maroon", "aquamarine", "azure", "beige",
-	 *  	"brown", "tan", "olive", "chartreuse", "khaki", "bisque", "coral",
-	 *  	"pink", "lavender", "purple", "gold"
+	 * 	@param col_name the string reprsenting the color. See the Color class
+	 *		for the complete set of supported colors
 	 *
 	 */
 	public void setColor(String color) {
@@ -175,9 +188,10 @@ public class Edge<K, E2> {
 	 *
 	 * 	Set the color of the link given RGBA components
 	 *
-	 * 	@param r, g, b, a components
-	 *
-	 *	check to ensure they are in 0-255 range, else throw exception
+	 * 	@param r  red component
+	 * 	@param g  green component
+	 * 	@param b  blue component
+	 * 	@param a  alpha (transparency) component
 	 *
 	 */
 	public void setColor(int r, int g, int b, float a) {

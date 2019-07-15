@@ -7,13 +7,11 @@ import org.json.simple.JSONValue;
 import org.json.simple.JSONObject;
 
 /**
- * @brief This is a superclass in BRIDGES for deriving a
- *  number of Shape objects for use in a ShapeCollection.
- *  Shapes correspond to a simplified subset of SVG paths
- *  and shapes for custom visual representations in BRIDGES.
+ * @brief This class used to label symbols. 
+ *		Labels have  a text string, font size, width, height and location
  *
  * @author David Burlinson
- *
+ * @date 2018, 7/15/19
  */
 public class Label extends Symbol {
 	static final Integer DEFAULT_FONTSIZE = 12;
@@ -23,25 +21,21 @@ public class Label extends Symbol {
 	private Integer fontSize = DEFAULT_FONTSIZE;
 
 
+	/** 
+	 *	Construct a default label
+	 */
 	public Label() {
 		super();
 	}
 
+	/** 
+	 *	Construct a label with the give text string
+	 *  @param label the text of the label
+	 */
 	public Label(String label) {
 		this();
 		this.setLabel(label);
 	}
-
-	// size method for width and height arguments
-	// public Label setSize(Integer width, Integer height) {
-	//   if((width <= 0 || width > 100) || (height <= 0 || height > 100)) {
-	//     throw new IllegalArgumentException("Please enter dimensions between 0 and 100");
-	//   } else {
-	//     this.width = width;
-	//     this.height = height;
-	//   }
-	//   return this;
-	// }
 
 	public Label setFontSize(Integer size) {
 		if (size <= 0 || size > 200) {
@@ -53,7 +47,10 @@ public class Label extends Symbol {
 		return this;
 	}
 
-	// return four points: min x value, max x value, min y value, max y value
+	/**
+	 *  Get the dimensions of the label object
+	 *  @return bounding box of the label (min x, max x, min y, max y)
+	 */
 	public Float[] getDimensions() {
 		float length = (float) 0.09 * this.fontSize * this.getLabel().length();
 		float x = this.getLocation()[0];
@@ -64,12 +61,8 @@ public class Label extends Symbol {
 	}
 
 	/**
-	 * Internal code for getting the properties of the Shape object.
-	 * It produces (without the spaces or newlines):
-	 * {
-	 *  "name": "Some label",
-	 *  "other CSS properties like color": any_JSON_value
-	 * }
+	 * Get the JSON representation of the label object
+	 *
 	 * @returns the encoded JSON string
 	 */
 	public JSONObject getJSONRepresentation() {
