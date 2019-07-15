@@ -7,7 +7,7 @@ import org.json.simple.JSONValue;
 import org.json.simple.JSONObject;
 
 /**
- * @brief This class used to label symbols. 
+ * @brief This class used to label symbols.
  *		Labels have  a text string, font size, width, height and location
  *
  * @author David Burlinson
@@ -21,14 +21,14 @@ public class Label extends Symbol {
 	private Integer fontSize = DEFAULT_FONTSIZE;
 
 
-	/** 
+	/**
 	 *	Construct a default label
 	 */
 	public Label() {
 		super();
 	}
 
-	/** 
+	/**
 	 *	Construct a label with the give text string
 	 *  @param label the text of the label
 	 */

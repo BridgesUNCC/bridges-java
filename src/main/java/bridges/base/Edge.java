@@ -137,7 +137,7 @@ public class Edge<K, E2> {
 	}
 
 	/**
-	 * Get the thickness of the edge 
+	 * Get the thickness of the edge
 	 *
 	 * @return the size in pixels of the edge
 	 */
@@ -146,7 +146,7 @@ public class Edge<K, E2> {
 	}
 
 	/**
-	 * Set the thickness of the edge 
+	 * Set the thickness of the edge
 	 *
 	 * @param thickness edge thickness to set
 	 */

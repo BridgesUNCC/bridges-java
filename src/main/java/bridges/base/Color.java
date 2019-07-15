@@ -40,7 +40,7 @@ public class Color {
 	private int red, green, blue;
 	private float alpha; // alpha represents opacity from 0.0-1.0
 	private static final Map<String, String> colorNames;
-						// CSS colors  - complete list
+	// CSS colors  - complete list
 	static {
 		Map<String, String> tempMap = new HashMap<>();
 		tempMap.put("aliceblue", "#f0f8ff");
@@ -322,7 +322,7 @@ public class Color {
 	 *
 	 * 	sets the blue component
 	 *
-	 * 	@param b blue component 
+	 * 	@param b blue component
 	 *
 	 */
 	public void setBlue(int b) {

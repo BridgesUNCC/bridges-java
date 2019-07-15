@@ -38,7 +38,7 @@ public class Circle extends Symbol {
 		radius = r;
 	}
 
-	/** 
+	/**
 	 *	Construct a circle with given location and radius
 	 *  @param locx  x coordinat of circle center
 	 *  @param locy  y coordinat of circle center
