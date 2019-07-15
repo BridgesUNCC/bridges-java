@@ -62,7 +62,7 @@ public class LineChart extends DataStruct {
 	}
 
 	public String getDataStructType() {
-		return "Plot";
+		return "LineChart";
 	}
 
 	/**
