@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 
 
 public class SortingBenchmark {
+    private boolean debug = false;
+    
 	private LineChart plot;
 
 	private Random r;
@@ -105,13 +107,32 @@ public class SortingBenchmark {
 		}
 	}
 
+    private boolean check (int[] arr, int n) {
+	boolean ok = true;
+	for (int i=1; i<n; ++i) {
+	    if (arr[i]< arr[i-1]) {
+		ok = false;
+		break;
+	    }
+	}	
+	return ok;
+    }
+    
+    /**
+     * @brief benchmark a particular algorithm
+     *
+     * @param algoName Screen name of the algorithm
+     * @param runnable the actual algorithm
+     **/
 	public void run(String algoName, Consumer<int[]> runnable) {
 
 		ArrayList<Double> time = new ArrayList<Double>();
 		ArrayList<Double> xData = new ArrayList<Double>();
 
-		System.out.println(geoBase);
-		System.out.println(increment);
+		if (debug) {
+		    System.out.println(geoBase);
+		    System.out.println(increment);
+		}
 
 		for (int n = baseSize; n <= maxSize;
 			n = Math.max((int)(geoBase * n) + increment, n + 1)) {
@@ -125,6 +146,11 @@ public class SortingBenchmark {
 			runnable.accept(arr);
 			long end = System.currentTimeMillis();
 			long runTime = end - start;
+
+			if (!check(arr, n)) {
+			    System.err.println("Sorting algorithm "+algoName+" is incorrect");
+			}
+			
 			time.add ((double)runTime );
 			xData.add ( (double)n );
 
