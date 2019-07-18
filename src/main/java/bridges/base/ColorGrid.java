@@ -19,7 +19,7 @@ import org.apache.commons.codec.binary.Base64;
  * \endcode
  *
  * You can get a ColorGrid from an existing Bridges ColorGrid assignment using
- * DataSource::getColorGridFromAssignment()
+ * bridges.connect.DataSource.getColorGridFromAssignment()
  *
  * There is a tutorial about ColorGrid : http://bridgesuncc.github.io/tutorials/Grid.html
  *
