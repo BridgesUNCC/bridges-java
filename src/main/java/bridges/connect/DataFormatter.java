@@ -1144,45 +1144,22 @@ public class DataFormatter {
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
 	static OsmData downloadMapFile(String url, String hashUrl) throws IOException{
-		File cache_dir = new File("./bridges_data_cache");
-		ArrayList<String> lru =  new ArrayList<String>();
+		File cache_dir = new File("./cache");
+		LRUCache lru = new LRUCache(30);
 
-		boolean has_cache = true;
-		// make cache if does not exist
-		if (!cache_dir.exists()) {
-			if (!cache_dir.mkdir()) {
-				System.err.println("Error creating cache directory");
-				has_cache = false;
-			}
-		}
+		lru.get();
 
-		//Loads the LRU list
-		File lru_file = new File("./bridges_data_cache/lru.txt");
-		if (lru_file.exists()){
-			String lruImport = new String(Files.readAllBytes(lru_file.toPath()));
-			String[] x = lruImport.split(",");
-			for (String val: x){
-				lru.add(val);
-			}
-		}
 		// look for file in cache
 		String content = null;
 		String hash = null;
 		HttpResponse hashResp = makeRequest(hashUrl);
 		int hashStatus = hashResp.getStatusLine().getStatusCode();
 		hash = EntityUtils.toString(hashResp.getEntity());
-		if (has_cache && !hash.equals("false") && hashStatus == 200) {
+		if (!hash.equals("false") && hashStatus == 200) {
 			for (File file : cache_dir.listFiles()) {
 				if (file.getName().equals(hash)) {
 					content = new String(Files.readAllBytes(file.toPath()));
-
-					//Updates the LRU
-					try{
-						lru.remove(new String(hash));
-					} catch (Exception e){
-						//Its fine if its not found in LRU
-					}
-					lru.add(0, hash); // pushes the hash to the front of LRU
+					lru.put(hash);
 				}
 			}
 		}
@@ -1210,34 +1187,10 @@ public class DataFormatter {
 
 			//Checks to see if valid hash is generated
 			if (!hash.equals("false")){
-				//Updates the LRU and purges the old map
-				lru.add(0, hash);
-				//Purges old maps from the cache and lru
-				while (lru.size() >= 30){
-					String dir = "./bridges_data_cache";
-					File old_map = new File(dir);
-					for (File file : old_map.listFiles()) {
-							if (file.getName().replaceAll("[^a-zA-Z0-9]", "").equals(lru.get(lru.size()-1).replaceAll("[^a-zA-Z0-9]", ""))) { //regexs out any non alphanumeric character
-								file.delete();
-								lru.remove(lru.size()-1);
-							}
-						}
-					}
-				Files.write(Paths.get("./bridges_data_cache/" + hash), content.getBytes());
+				lru.put(hash);
+				Files.write(Paths.get("./cache/" + hash), content.getBytes());
 			}
 		}
-
-		//Saves the LRU list
-		String output = "";
-		int count = 1;
-		for (String y : lru){
-			output = output + y.replaceAll("[^a-zA-Z0-9]", ""); //regexs out any non alphanumeric character
-			if (lru.size() != count){
-				output = output + ",";
-			}
-			count++;
-		}
-		Files.write(Paths.get("./bridges_data_cache/lru.txt"), output.getBytes());
 
 
 		// parse that data
@@ -1376,3 +1329,89 @@ public class DataFormatter {
 	}
 
 } // end of DataFormatter
+
+
+
+
+
+class LRUCache{
+  int maxCacheSize;
+  ArrayList<String> lru = new ArrayList<String>();
+
+
+  public LRUCache(int maxCacheSize){
+    this.maxCacheSize = maxCacheSize;
+
+    File cache_dir = new File("./cache");
+    if (!cache_dir.exists()) {
+			if (!cache_dir.mkdir()) {
+				System.err.println("Error creating cache directory");
+			}
+		}
+  }
+
+  public void get(){
+    File lru_file = new File("./cache/lru.txt");
+		try{
+			if (lru_file.exists()){
+				String lruImport = new String(Files.readAllBytes(lru_file.toPath()));
+				String[] x = lruImport.split(",");
+				for (String val: x){
+					lru.add(val);
+				}
+			}
+		} catch (Exception e){
+
+		}
+
+    return;
+  }
+
+  public void put(String hash){
+    //Updates the LRU
+    try{
+      lru.remove(new String(hash));
+    } catch (Exception e){
+      //Its fine if its not found in LRU
+    }
+    lru.add(0, hash); // pushes the hash to the front of LRU
+
+    //checks lru size
+    while (lru.size() >= maxCacheSize){  //Purges old maps from the cache and lru
+      String dir = "./cache";
+      File old_map = new File(dir);
+      for (File file : old_map.listFiles()) {
+          if (file.getName().replaceAll("[^a-zA-Z0-9]", "").equals(lru.get(lru.size()-1).replaceAll("[^a-zA-Z0-9]", ""))) { //regexs out any non alphanumeric character
+            file.delete();
+            lru.remove(lru.size()-1);
+          }
+        }
+      }
+
+    //Saves lru
+    String output = "";
+		int count = 1;
+		for (String y : lru){
+			output = output + y.replaceAll("[^a-zA-Z0-9]", ""); //regexs out any non alphanumeric character
+			if (lru.size() != count){
+				output = output + ",";
+			}
+			count++;
+		}
+		try{
+			Files.write(Paths.get("./cache/lru.txt"), output.getBytes());
+		} catch (Exception e){
+			System.err.println("Error saving LRU array");
+		}
+
+
+  }
+  public boolean inCache(String hash){
+    for(String x : lru){
+      if(x.equals(hash)){
+        return true;
+      }
+    }
+    return false;
+  }
+}
