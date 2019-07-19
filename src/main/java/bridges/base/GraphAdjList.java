@@ -2,7 +2,7 @@ package bridges.base;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
@@ -466,7 +466,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
 		// get teh list nodes
-		Vector<Element<E1> > nodes = new Vector<Element<E1>> ();
+		ArrayList<Element<E1> > nodes = new ArrayList<Element<E1>> ();
 
 		for (Entry<K, Element<E1>> element : vertices.entrySet())
 			nodes.add(element.getValue());
@@ -520,7 +520,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	private String getDataStructureLargeGraph() {
 		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
 		// get the list nodes
-		Vector<Element<E1>> nodes = new Vector<Element<E1>>();
+		ArrayList<Element<E1>> nodes = new ArrayList<Element<E1>>();
 
 		for (Entry<K, Element<E1>> element : vertices.entrySet())
 			nodes.add(element.getValue());
