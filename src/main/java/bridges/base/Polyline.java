@@ -15,10 +15,8 @@ import java.util.ArrayList;
  */
 public class Polyline extends Symbol {
 
-	private String shape = "polyline";
 	// height, width of rectangle
 	private ArrayList<Float> points = null;
-
 
 	/**
 	 *	 Construct a default polyline structure
@@ -26,6 +24,7 @@ public class Polyline extends Symbol {
 	public Polyline () {
 		super();
 		points = new ArrayList<Float>();
+		setShapeType("polyline");
 	}
 
 	/**
@@ -33,7 +32,7 @@ public class Polyline extends Symbol {
 	 */
 	public Polyline (ArrayList<Float>  pts) {
 		this();
-		points = pts;
+		setPolyline(pts);
 	}
 
 	/**
@@ -69,6 +68,7 @@ public class Polyline extends Symbol {
 
 	public void setPolyline (ArrayList<Float> pts) {
 		points = pts;
+		setShapeType("polyline");
 	}
 
 	/**
@@ -157,8 +157,8 @@ public class Polyline extends Symbol {
 		translate (transl[0], transl[1]);
 		// scale the points
 		for (int k = 0; k < points.size(); k += 2) {
-			points.set(k,  points.get(k)*sx);
-			points.set(k+1, points.get(k+1)* sy);
+			points.set(k,  points.get(k) * sx);
+			points.set(k + 1, points.get(k + 1) * sy);
 		}
 		// translate back
 		transl[0] = center[0];
@@ -182,8 +182,8 @@ public class Polyline extends Symbol {
 			if (points.get(k + 1) > bbox[3])
 				bbox[3] = points.get(k + 1);
 		}
-		center[0] = bbox[0] + (bbox[2] - bbox[0])/2.0f;
-		center[1] = bbox[1] + (bbox[3] - bbox[1])/2.0f;
+		center[0] = bbox[0] + (bbox[2] - bbox[0]) / 2.0f;
+		center[1] = bbox[1] + (bbox[3] - bbox[1]) / 2.0f;
 	}
 
 
@@ -195,11 +195,12 @@ public class Polyline extends Symbol {
 	 */
 	public JSONObject getJSONRepresentation() {
 
+		String shape = getShapeType();
+
 		JSONObject  shape_json = super.getJSONRepresentation();
 
 		shape_json.put ("name", getLabel());
 		shape_json.put ("shape", shape);
-
 		shape_json.put ("points", points);
 
 		return shape_json;

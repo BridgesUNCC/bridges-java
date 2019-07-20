@@ -23,6 +23,7 @@ public class Symbol extends DataStruct {
 	static	Integer ids = 0;
 	private String identifier;
 	protected String label = "";
+	private String shape_type = "circle";
 
 	// Static default attribute values for all Symbols
 	static final Color DEFAULT_FILLCOLOR = new Color("blue");
@@ -87,6 +88,23 @@ public class Symbol extends DataStruct {
 	 */
 	public String getIdentifier() {
 		return identifier;
+	}
+
+	/**
+	 *  Get the shape type
+	 *
+	 *	@return shape type
+	 */
+	protected String getShapeType() {
+		return shape_type;
+	}
+
+	/**
+	 *	Set the shape type
+	 *	@param shape type
+	 */
+	protected void setShapeType(String sh) {
+		shape_type = sh;
 	}
 
 	/**

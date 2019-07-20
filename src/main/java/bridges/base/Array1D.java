@@ -20,7 +20,7 @@ import java.util.Iterator;
  *
  * \code{java}
  * Array1D<Integer> arr = something();
- * for (Integer i : arr) 
+ * for (Integer i : arr)
  *   System.out.println(i);
  * \endcode
  *
@@ -78,23 +78,23 @@ public class Array1D<E> extends Array<E> implements Iterable<E> {
 	}
 
 
-    public Iterator<E> iterator() {
-	class Array1DIterator<E> implements Iterator<E> {
-	    public E next() {
-		E ret = arr.getElement(index).getValue();
-		index++;
-		return ret;
-	    }
-	    public boolean hasNext() {
-		return index < arr.size;
-	    }
-	    public Array1D<E> arr;
-	    public int index;
-	    Array1DIterator (Array1D<E> a) {
-		arr = a;
-		index = 0;
-	    }
+	public Iterator<E> iterator() {
+		class Array1DIterator<E> implements Iterator<E> {
+			public E next() {
+				E ret = arr.getElement(index).getValue();
+				index++;
+				return ret;
+			}
+			public boolean hasNext() {
+				return index < arr.size;
+			}
+			public Array1D<E> arr;
+			public int index;
+			Array1DIterator (Array1D<E> a) {
+				arr = a;
+				index = 0;
+			}
+		}
+		return new Array1DIterator (this);
 	}
-	return new Array1DIterator (this);
-    }
 }

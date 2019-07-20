@@ -332,7 +332,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	@return  an iterable set of the outgoing edge of this vertex
 	 */
 	public Iterable<Edge<K, E2>> outgoingEdgeSetOf(K vertex) {
-	    //TODO: This should probably not create an array list, but create an iterable type out of SLelement
+		//TODO: This should probably not create an array list, but create an iterable type out of SLelement
 		ArrayList<Edge<K, E2>> edgeSet = new ArrayList<Edge<K, E2>>();
 		SLelement<Edge<K, E2>> list = getAdjacencyList(vertex);
 

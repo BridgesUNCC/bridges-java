@@ -14,8 +14,6 @@ import org.json.simple.JSONObject;
  */
 public class Circle extends Symbol {
 
-	private String shape = "circle";
-
 	// radius of circle
 	private float radius = 1.0f;
 
@@ -43,7 +41,7 @@ public class Circle extends Symbol {
 	 *  @param locy  y coordinat of circle center
 	 *	@param r  radius of circle
 	 */
-	public Circle (float locx, float locy, int r) {
+	public Circle (float locx, float locy, float r) {
 		super();
 		setCircle (locx, locy, r);
 	}
@@ -81,6 +79,7 @@ public class Circle extends Symbol {
 		if (r < 0)
 			throw new IllegalArgumentException ("Illegal value for radius. Must be positive");
 		radius = r;
+		setShapeType("circle");
 	}
 
 	/**
@@ -139,6 +138,8 @@ public class Circle extends Symbol {
 
 		// get the JSON of the attributes of the shape
 		JSONObject shape_json = super.getJSONRepresentation();
+
+		String shape = getShapeType();
 
 		shape_json.put ("name", getLabel());
 		shape_json.put ("shape", shape);

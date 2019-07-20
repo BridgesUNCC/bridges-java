@@ -14,11 +14,8 @@ import org.json.simple.JSONObject;
  */
 public	class Rectangle extends  Symbol {
 
-	private String shape = "rect";
-
 	// height, width of rectangle
 	private float width = 1.0f, height = 1.0f;
-
 
 	/**
 	 *  Construct a default rectangle
@@ -122,6 +119,7 @@ public	class Rectangle extends  Symbol {
 
 		width = w;
 		height = h;
+		setShapeType("rect");
 	}
 
 	/**
@@ -156,6 +154,8 @@ public	class Rectangle extends  Symbol {
 	 * @return JSON representation of rectangle (string)
 	 */
 	public JSONObject getJSONRepresentation() {
+
+		String shape = getShapeType();
 
 		// get the JSON of the attributes of the shape
 		JSONObject shape_json = super.getJSONRepresentation();
