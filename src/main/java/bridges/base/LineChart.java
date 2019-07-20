@@ -360,9 +360,9 @@ public class LineChart extends DataStruct {
 			String key = entry.getKey();
 			double[] value = entry.getValue();
 			xaxis_json += OPEN_CURLY + JSONValue.toJSONString("Plot_Name") + COLON + JSONValue.toJSONString( key ) + COMMA +
-			    JSONValue.toJSONString("xaxis_data") + COLON + OPEN_BOX;
+				JSONValue.toJSONString("xaxis_data") + COLON + OPEN_BOX;
 			for ( int i = 0; i < value.length ; i++) {
-			    xaxis_json += JSONValue.toJSONString(value[i]) + COMMA;
+				xaxis_json += JSONValue.toJSONString(value[i]) + COMMA;
 			}
 			xaxis_json = xaxis_json.substring(0, xaxis_json.length() - 1);
 			xaxis_json += CLOSE_BOX + CLOSE_CURLY + COMMA;
@@ -374,9 +374,9 @@ public class LineChart extends DataStruct {
 			String key = entry.getKey();
 			double[] value = entry.getValue();
 			yaxis_json += OPEN_CURLY + JSONValue.toJSONString("Plot_Name") + COLON + JSONValue.toJSONString( key) + COMMA +
-			    JSONValue.toJSONString("yaxis_data") + COLON + OPEN_BOX;
+				JSONValue.toJSONString("yaxis_data") + COLON + OPEN_BOX;
 			for ( int i = 0; i < value.length ; i++) {
-			    yaxis_json +=  JSONValue.toJSONString(value[i])  + COMMA;
+				yaxis_json +=  JSONValue.toJSONString(value[i])  + COMMA;
 			}
 			yaxis_json = yaxis_json.substring(0, yaxis_json.length() - 1);
 			yaxis_json += CLOSE_BOX + CLOSE_CURLY + COMMA;
@@ -385,15 +385,15 @@ public class LineChart extends DataStruct {
 
 
 		String json_str = JSONValue.toJSONString("plot_title") + COLON +  JSONValue.toJSONString(this.getTitle()) + COMMA +
-		    JSONValue.toJSONString("subtitle") + COLON + JSONValue.toJSONString(this.getSubTitle())  + COMMA +
-		    JSONValue.toJSONString("xLabel") + COLON + JSONValue.toJSONString(this.getXLabel()) +  COMMA +
-		    JSONValue.toJSONString("yLabel") + COLON + JSONValue.toJSONString(this.getYLabel()) + COMMA +
-		    JSONValue.toJSONString("xaxisType") + COLON + this.logarithmicx + COMMA +
-		    JSONValue.toJSONString("yaxisType") + COLON + this.logarithmicy + COMMA +
-		    JSONValue.toJSONString("options") + COLON + OPEN_CURLY + JSONValue.toJSONString("mouseTracking") + COLON +
-		    this.mouseTrack + COMMA + JSONValue.toJSONString("dataLabels") + COLON + this.dataLabel + CLOSE_CURLY + COMMA +
-		    JSONValue.toJSONString("xaxis_data") + COLON + OPEN_BOX + xaxis_json + CLOSE_BOX + COMMA +
-		    JSONValue.toJSONString("yaxis_data") + COLON + OPEN_BOX + yaxis_json + CLOSE_BOX +
+			JSONValue.toJSONString("subtitle") + COLON + JSONValue.toJSONString(this.getSubTitle())  + COMMA +
+			JSONValue.toJSONString("xLabel") + COLON + JSONValue.toJSONString(this.getXLabel()) +  COMMA +
+			JSONValue.toJSONString("yLabel") + COLON + JSONValue.toJSONString(this.getYLabel()) + COMMA +
+			JSONValue.toJSONString("xaxisType") + COLON + this.logarithmicx + COMMA +
+			JSONValue.toJSONString("yaxisType") + COLON + this.logarithmicy + COMMA +
+			JSONValue.toJSONString("options") + COLON + OPEN_CURLY + JSONValue.toJSONString("mouseTracking") + COLON +
+			this.mouseTrack + COMMA + JSONValue.toJSONString("dataLabels") + COLON + this.dataLabel + CLOSE_CURLY + COMMA +
+			JSONValue.toJSONString("xaxis_data") + COLON + OPEN_BOX + xaxis_json + CLOSE_BOX + COMMA +
+			JSONValue.toJSONString("yaxis_data") + COLON + OPEN_BOX + yaxis_json + CLOSE_BOX +
 			CLOSE_CURLY;
 		return json_str;
 

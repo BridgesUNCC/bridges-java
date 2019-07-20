@@ -17,7 +17,7 @@ public	class Rectangle extends  Symbol {
 	private String shape = "rect";
 
 	// height, width of rectangle
-	private Integer width = 10, height = 10;
+	private float width = 1.0f, height = 1.0f;
 
 
 	/**
@@ -25,6 +25,7 @@ public	class Rectangle extends  Symbol {
 	 */
 	public Rectangle() {
 		super();
+		setRectangle (0.0f, 0.0f, 1.0f, 1.0f);
 	}
 
 	/**
@@ -32,13 +33,9 @@ public	class Rectangle extends  Symbol {
 	 *  @param w  width of rectangle
 	 *  @param h  height of rectangle
 	 */
-	public Rectangle (int w, int h) {
-		this();
-		if (w < 0 || h < 0)
-			throw new IllegalArgumentException ("Illegal height or width! Height and Width values need to be positive");
-
-		width = w;
-		height = h;
+	public Rectangle (float w, float h) {
+		super();
+		setRectangle (0.0f, 0.0f, w, h);
 	}
 
 	/**
@@ -48,9 +45,9 @@ public	class Rectangle extends  Symbol {
 	 *  @param w  width of rectangle
 	 *  @param h  height of rectangle
 	 */
-	public Rectangle (Float locx, Float locy, int w, int h) {
-		this(w, h);
-		setLocation (locx, locy);
+	public Rectangle (float locx, float locy, float w, float h) {
+		super();
+		setRectangle (locx, locy, w, h);
 	}
 
 	/**
@@ -67,8 +64,8 @@ public	class Rectangle extends  Symbol {
 	 *
 	 * @param w  width
 	 */
-	public void setWidth(int w) {
-		if (w <= 0 || w > 300) {
+	public void setWidth(float w) {
+		if (w <= 0.0f || w > 300.0f) {
 			throw new IllegalArgumentException ("Width need to be in the range(0-300)");
 		}
 		width = w;
@@ -79,8 +76,8 @@ public	class Rectangle extends  Symbol {
 	 *
 	 * @param h  height
 	 */
-	void setHeight(int h) {
-		if (h <= 0 || h > 300) {
+	void setHeight(float h) {
+		if (h <= 0.0f || h > 300.0f) {
 			throw new IllegalArgumentException ("Height need to be in the range(0-300)");
 		}
 		height = h;
@@ -93,10 +90,10 @@ public	class Rectangle extends  Symbol {
 	 *
 	 * @return rectangle's bounding box (array of 4 values)
 	 */
-	public Float[] getDimensions() {
+	public float[] getDimensions() {
 
-		Float[] dims = new Float[4];
-		Float[] location = getLocation();
+		float[] dims = new float[4];
+		float[] location = getLocation();
 
 		dims[0] = location[0] - width / 2;
 		dims[1] = location[0] + width / 2;
@@ -116,15 +113,41 @@ public	class Rectangle extends  Symbol {
 	 *
 	 * @return none
 	 */
-	public void setRectangle(Float locx, Float locy, int w, int h) 	{
+	public void setRectangle(float locx, float locy, float w, float h) 	{
 
 		setLocation (locx, locy);
-		if (w <= 0 || w > 300 || h <= 0 ||  w > 300) {
+		if (w <= 0.0f || w > 300.0f || h <= 0.0f ||  w > 300.0f) {
 			throw new IllegalArgumentException ("Height, Width need to be in the range(0-300)");
 		}
 
 		width = w;
 		height = h;
+	}
+
+	/**
+	*  Translate the rectangle
+	*
+	*  @param translation factor (tx, ty)
+	*/
+	public void translate(float tx, float ty) {
+		float[] center = getLocation();
+		translatePoint (center, tx, ty);
+		setLocation(center[0], center[1]);
+	}
+	/**
+	 *  Scale the rectangle about its center
+	 *
+	 *  @param scale factor (sx, sy)
+	 */
+	public void scale(float sx, float sy) {
+		// scale the height, width
+		// center remains the same
+		float[] pt =  new float[2];
+		pt[0]  = width;
+		pt[1] = height;
+		scalePoint (pt, sx, sy);
+		width = pt[0];
+		height = pt[1];
 	}
 
 	/**

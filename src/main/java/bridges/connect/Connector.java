@@ -62,24 +62,24 @@ public class Connector {
 		if (Bridges.getDebugFlag()) {
 			System.err.println("Connector.setServer(" + server + ")");
 		}
-		switch(server) {
-				case "live":
-					setServerURL(server_live);
-					break;
-				case "clone":
-					setServerURL(server_clone);
-					break;
-				case "local":
-					setServerURL(server_local);
-					break;
-				case "sockets":
-				    setServerURL(server_sockets);
-				    break;
-				case "games":
-				    setServerURL(server_games);
-				    break;
-				default:
-					throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'sockets', 'games', 'local'].");
+		switch (server) {
+			case "live":
+				setServerURL(server_live);
+				break;
+			case "clone":
+				setServerURL(server_clone);
+				break;
+			case "local":
+				setServerURL(server_local);
+				break;
+			case "sockets":
+				setServerURL(server_sockets);
+				break;
+			case "games":
+				setServerURL(server_games);
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'sockets', 'games', 'local'].");
 		}
 	}
 
@@ -479,7 +479,7 @@ public class Connector {
 		 *   	won't give error codes
 		 *   (String) ...execute(request).returnResponse().getEntity()
 		 *   	won't cast
- 		 */
+		 */
 		//	this will output the server error as well as
 		// 	parsed from the error message
 		String err = asJSONObject(EntityUtils.toString(

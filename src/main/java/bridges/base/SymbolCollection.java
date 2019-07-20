@@ -56,7 +56,7 @@ public class SymbolCollection extends DataStruct {
 	 *	 @param s  symbol to be updated
 	 */
 	private void updateAxisDomains(Symbol s) {
-		Float[] dims = s.getDimensions();
+		float[] dims = s.getDimensions();
 
 		// check x axis
 		if (Math.abs(dims[0]) > domain) {

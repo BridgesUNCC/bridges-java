@@ -51,12 +51,12 @@ public class Label extends Symbol {
 	 *  Get the dimensions of the label object
 	 *  @return bounding box of the label (min x, max x, min y, max y)
 	 */
-	public Float[] getDimensions() {
+	public float[] getDimensions() {
 		float length = (float) 0.09 * this.fontSize * this.getLabel().length();
 		float x = this.getLocation()[0];
 		float y = this.getLocation()[1];
 
-		return new Float[] {(float) x - length / 2, (float) x + length / 2, (float) y, (float) y};
+		return new float[] {(float) x - length / 2, (float) x + length / 2, (float) y, (float) y};
 
 	}
 

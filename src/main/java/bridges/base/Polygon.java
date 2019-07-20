@@ -80,13 +80,13 @@ public class Polygon extends Symbol {
 	 *
 	 * @return Bounding box of the point list (array of 4 values)
 	 */
-	public Float[] getDimensions() {
-		Float minx = Float.POSITIVE_INFINITY;
-		Float miny = Float.POSITIVE_INFINITY;
-		Float maxx = Float.NEGATIVE_INFINITY;
-		Float maxy = Float.NEGATIVE_INFINITY;
-		Float x = 0.0f;
-		Float y = 0.0f;
+	public float[] getDimensions() {
+		float minx = Float.POSITIVE_INFINITY;
+		float miny = Float.POSITIVE_INFINITY;
+		float maxx = Float.NEGATIVE_INFINITY;
+		float maxy = Float.NEGATIVE_INFINITY;
+		float x = 0.0f;
+		float y = 0.0f;
 		for (int i = 0; i < this.points.size(); i += 2) {
 			x = this.points.get(i);
 			y = this.points.get(i + 1);
@@ -99,7 +99,7 @@ public class Polygon extends Symbol {
 			if (y > maxy)
 				maxy = y;
 		}
-		return new Float[] {minx, maxx, miny, maxy};
+		return new float[] {minx, maxx, miny, maxy};
 	}
 
 	/**
