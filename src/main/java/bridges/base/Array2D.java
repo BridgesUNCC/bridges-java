@@ -24,7 +24,7 @@ import bridges.validation.Validation;
  *		http://bridgesuncc.github.io/tutorials/Array.html (1D, 2D, and 3D Array)<br>
  *
  */
-public class Array2D<E> extends Array<E>{
+public class Array2D<E> extends Array<E> {
 	private int size;						// array size
 	private int num_rows, num_cols;			// dimensions of the array
 

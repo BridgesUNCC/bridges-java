@@ -10,28 +10,28 @@ import bridges.data_src_dependent.*;
 import bridges.validation.*;
 
 public class DataSource {
-    private Bridges bridges;
+	private Bridges bridges;
 
-    DataSource() {
-    }
+	DataSource() {
+	}
 
-    DataSource(Bridges b) {
-	bridges = b;
-    }
+	DataSource(Bridges b) {
+		bridges = b;
+	}
 
-    	/**
-	 *  This helper function provides a simple API to retrieve current USGS earthquake
-	 *	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
-	 *  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
-	 *
-	 *  More information on the dataset can be found at <p>
-	 *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
-	 *
-	 *	@param maxElements  the number of earthquake records retrieved, limited to 5000
-	 *  @throws Exception if the request fails
-	 *
-	 *  @return a list of earthquake records
-	 */
+	/**
+	*  This helper function provides a simple API to retrieve current USGS earthquake
+	*	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
+	*  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
+	*
+	*  More information on the dataset can be found at <p>
+	*  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	*
+	*	@param maxElements  the number of earthquake records retrieved, limited to 5000
+	*  @throws Exception if the request fails
+	*
+	*  @return a list of earthquake records
+	*/
 	public  List<EarthquakeUSGS> getEarthquakeUSGSData(
 		int maxElements) throws Exception {
 		return DataFormatter.getEarthquakeUSGSData(maxElements);
@@ -228,7 +228,7 @@ public class DataSource {
 	 * @param subassignment the ID of the subassignment to get
 	 ***/
 	public String getAssignmentJSON(String user, int assignment, int subassignment) throws IOException {
-	    return DataFormatter.getAssignment(bridges.getServerURL(), user, assignment, subassignment);
+		return DataFormatter.getAssignment(bridges.getServerURL(), user, assignment, subassignment);
 	}
 	/***
 	 * This function obtains the JSON representation of a particular subassignment.
@@ -249,7 +249,7 @@ public class DataSource {
 	 **/
 	public bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment, int subassignment)
 	throws IOException {
-	    return DataFormatter.getColorGridFromAssignment(bridges.getServerURL(), user, assignment, subassignment);
+		return DataFormatter.getColorGridFromAssignment(bridges.getServerURL(), user, assignment, subassignment);
 	}
 
 	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server

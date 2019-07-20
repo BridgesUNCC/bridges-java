@@ -26,23 +26,23 @@ public class Symbol extends DataStruct {
 
 	// Static default attribute values for all Symbols
 	static final Color DEFAULT_FILLCOLOR = new Color("blue");
-	static final Float DEFAULT_OPACITY = 1.0f;
+	static final float DEFAULT_OPACITY = 1.0f;
 	static final Color DEFAULT_STROKECOLOR = new Color("white");
-	static final Float DEFAULT_STROKEWIDTH = 1.0f;
+	static final float DEFAULT_STROKEWIDTH = 1.0f;
 	static final Integer DEFAULT_STROKEDASH = 1;
-	static final Float DEFAULT_LOCATIONX = 0.0f;
-	static final Float DEFAULT_LOCATIONY = 0.0f;
+	static final float DEFAULT_LOCATIONX = 0.0f;
+	static final float DEFAULT_LOCATIONY = 0.0f;
 
 	// default css attributes for Symbols
 	protected Color fillColor = new Color("blue");
-	protected Float opacity = DEFAULT_OPACITY;
+	protected float opacity = DEFAULT_OPACITY;
 	protected Color strokeColor = new Color("white");
-	protected Float strokeWidth = DEFAULT_STROKEWIDTH;
+	protected float strokeWidth = DEFAULT_STROKEWIDTH;
 	protected Integer strokeDash = DEFAULT_STROKEDASH;
 
 	// default location attributes for Symbols
-	protected Float locationX = DEFAULT_LOCATIONX;
-	protected Float locationY = DEFAULT_LOCATIONY;
+	protected float locationX = DEFAULT_LOCATIONX;
+	protected float locationY = DEFAULT_LOCATIONY;
 
 	/**
 	 *  Get data structure name
@@ -94,9 +94,16 @@ public class Symbol extends DataStruct {
 	 *
 	 * @param c the color to set
 	 */
-	public Symbol setFillColor(Color c) {
+	public void setFillColor(Color c) {
 		this.fillColor = c;
-		return this;
+	}
+	/**
+	 * This method sets the symbol fill color
+	 *
+	 * @param c the color to set
+	 */
+	public void setFillColor(String c) {
+		this.fillColor = new Color(c);
 	}
 	/**
 	* This method gets fill color
@@ -112,8 +119,16 @@ public class Symbol extends DataStruct {
 	 *
 	 * @param c the color to set
 	 */
-	public Symbol setStrokeColor(Color c) {
+	public void setStrokeColor(Color c) {
 		this.strokeColor = c;
+	}
+	/**
+	 * This method sets the symbol stroke color
+	 *
+	 * @param c the named color to set
+	 */
+	public Symbol setStrokeColor(String c) {
+		this.strokeColor = new Color(c);
 		return this;
 	}
 	/**
@@ -130,14 +145,13 @@ public class Symbol extends DataStruct {
 	 *
 	 * @param strk_width the stroke width to set
 	 */
-	public Symbol setStrokeWidth(Float strokewidth) {
+	public void setStrokeWidth(float strokewidth) {
 		if (strokewidth <= 0.0f || strokewidth > 10.0f) {
 			throw new IllegalArgumentException("Stroke width must be between 0 and 10");
 		}
 		else {
 			this.strokeWidth = strokewidth;
 		}
-		return this;
 	}
 	/**
 	 * This method gets stroke width
@@ -145,7 +159,7 @@ public class Symbol extends DataStruct {
 	 * @return  stroke width
 	 */
 
-	public Float getStrokeWidth() {
+	public float getStrokeWidth() {
 		return this.strokeWidth;
 	}
 
@@ -154,7 +168,7 @@ public class Symbol extends DataStruct {
 	 *
 	 * @param op the opacity to set
 	 */
-	public Symbol setOpacity(Float o) {
+	public Symbol setOpacity(float o) {
 		if (o <= 0.0f || o > 1.0f) {
 			throw new IllegalArgumentException("Opacity must be between 0 and 1");
 		}
@@ -169,7 +183,7 @@ public class Symbol extends DataStruct {
 	 *
 	 * @return  symbol opacity
 	 */
-	public Float getOpacity() {
+	public float getOpacity() {
 		return this.opacity;
 	}
 
@@ -205,19 +219,8 @@ public class Symbol extends DataStruct {
 	 * @param x  x coordinate
 	 * @param y  y coordinate
 	 */
-	public Symbol setLocation(int x, int y) {
-		setLocation((float) x, (float) y);
-		return this;
-	}
 
-	/**
-	 * This method sets the symbol location
-	 *
-	 * @param x  x coordinate
-	 * @param y  y coordinate
-	 */
-
-	public Symbol setLocation(Float x, Float y) {
+	public void setLocation(float x, float y) {
 		if ((x > Float.NEGATIVE_INFINITY && x < Float.POSITIVE_INFINITY) &&
 			(y > Float.NEGATIVE_INFINITY && y < Float.POSITIVE_INFINITY)) {
 			this.locationX = x;
@@ -226,7 +229,7 @@ public class Symbol extends DataStruct {
 		else {
 			throw new IllegalArgumentException("Coordinates must be real numbers");
 		}
-		return this;
+
 	}
 	/**
 	 * This method gets the symbol location
@@ -234,22 +237,64 @@ public class Symbol extends DataStruct {
 	 * @return location (x, y) of the symbol
 	 */
 
-	public Float[] getLocation() {
-		return new Float[] {this.locationX, this.locationY};
+	public float[] getLocation() {
+		return new float[] {this.locationX, this.locationY};
 	}
+
 	/**
 	 * Get Dimensions of symbol
 	 * @return  symbol dimensions
 	 */
-	public Float[] getDimensions() {
-		return new Float[] {0.0f, 0.0f, 0.0f, 0.0f};
+	public float[] getDimensions() {
+		return new float[] {0.0f, 0.0f, 0.0f, 0.0f};
+	}
+
+	/**
+	 *  Translate a 2D point
+	 *  @param pt  2D point (x, y)
+	 *  @translation  translation factors (tx, ty)
+	 */
+	protected void translatePoint (float[] pt, float tx, float ty) {
+		pt[0] += tx;
+		pt[1] += ty;
+	}
+
+	/**
+	 *  Scale a 2D point
+	 *  @param pt  2D point (x, y)
+	 *  @scale factor  scale factors (sx, sy)
+	 */
+	void scalePoint (float[] pt, float sx, float sy) {
+		pt[0] *= sx;
+		pt[1] *= sy;
+	}
+
+	/**
+	 *  Rotate a 2D point (about Z)
+	 *  @param pt  2D point (x, y)
+	 *  @rotation angle theta (positive is counter clockwise,
+	 *	negative is	clockwise)
+	 */
+	void rotatePoint (float[] pt, float angle) {
+		// compute sin, cos
+		double angle_r =  Math.toRadians(angle);
+		double c = Math.cos(angle_r);
+		double s = Math.sin(angle_r);
+
+		// rotate the point
+		double[] tmp = new double[2];
+		tmp[0] = pt[0] * c - pt[1] * s;
+		tmp[1] = pt[0] * s + pt[1] * c;
+
+		// assign to point
+		pt[0] = (float) tmp[0];
+		pt[1] = (float) tmp[1];
 	}
 
 	/**
 	 * Get JSON string of Data type
 	 * @return JSON of data type (string)
 	 */
-
 	public String getDataStructureRepresentation() {
 		return null;
 	}
@@ -293,7 +338,8 @@ public class Symbol extends DataStruct {
 			json_builder.put("stroke-dasharray", strokeDash);
 		}
 
-		if (locationX != DEFAULT_LOCATIONX && locationY != DEFAULT_LOCATIONY) {
+		if (!((locationX == DEFAULT_LOCATIONX) &&
+				(locationY == DEFAULT_LOCATIONY))) {
 			location.put("x", locationX);
 			location.put("y", locationY);
 			json_builder.put("location", location);

@@ -102,12 +102,14 @@ public class Array<E> extends DataStruct {
 			throw new InvalidValueException("Invalid dimension value, must be  positive");
 
 		// set dimensions, size
-		dims[0] = dim[0]; dims[1] = dim[1]; dims[2] = dim[2];
+		dims[0] = dim[0];
+		dims[1] = dim[1];
+		dims[2] = dim[2];
 		num_dims = nd;
-		size = dim[0]*dim[1]*dim[2];
+		size = dim[0] * dim[1] * dim[2];
 
-		// allocate space for the array  (is there a better way?) 
-		for (int k = 0; k < size; k++) 
+		// allocate space for the array  (is there a better way?)
+		for (int k = 0; k < size; k++)
 			array_data.add (null);
 
 		// set elements

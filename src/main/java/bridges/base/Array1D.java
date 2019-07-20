@@ -34,7 +34,7 @@ public class Array1D<E> extends Array<E> {
 	}
 
 	/**
-	 *  Create a 1D array object 
+	 *  Create a 1D array object
 	 *
 	 *  @param sz number of elements in the array
 	 *

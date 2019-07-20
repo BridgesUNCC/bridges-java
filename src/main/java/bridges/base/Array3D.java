@@ -44,7 +44,9 @@ public class Array3D<E> extends Array<E> {
 	public Array3D(int[] dims) {
 		super();
 		this.setSize (3, dims);
-		num_cols = dims[0]; num_rows = dims[1]; num_slices = dims[2]; 
+		num_cols = dims[0];
+		num_rows = dims[1];
+		num_slices = dims[2];
 	}
 	/**
 	 *  Create an array object with the specified dimensions
@@ -58,7 +60,9 @@ public class Array3D<E> extends Array<E> {
 		super();
 		int[] dims = {cols, rows, slices};
 		this.setSize (3, dims);
-		num_cols = cols; num_rows = rows; num_slices = slices;
+		num_cols = cols;
+		num_rows = rows;
+		num_slices = slices;
 	}
 
 	/**
@@ -72,7 +76,7 @@ public class Array3D<E> extends Array<E> {
 	 *	@return Element<E>  object at x, y, z
 	 */
 	public Element<E> getElement(int x, int y, int z) {
-		return super.getElement(z * num_cols*num_rows + y * num_cols + x);
+		return super.getElement(z * num_cols * num_rows + y * num_cols + x);
 	}
 
 	/**
@@ -87,6 +91,6 @@ public class Array3D<E> extends Array<E> {
 	 *
 	 */
 	public void setElement(int col, int row, int slice, Element<E> el) {
-		super.setElement(slice * num_cols*num_rows + row * num_cols + col, el);
+		super.setElement(slice * num_cols * num_rows + row * num_cols + col, el);
 	}
 }
