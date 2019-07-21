@@ -142,10 +142,8 @@ public class TreeElement<E> extends Element<E> {
 	/**
 	 *	adds a child to the node - will be added at the next open position
 	 *
-	 * @param  child to be added
-	 *
-	 * @return none
-	 *
+	 * @param[in] index which child to set
+	 * @param[in] child child to be added
 	 */
 	public void setChild (int index, TreeElement<E> child) {
 		if (index < children.size())
