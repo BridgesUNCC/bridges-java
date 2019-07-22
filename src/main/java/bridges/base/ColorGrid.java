@@ -85,16 +85,6 @@ public class ColorGrid extends Grid<Color> {
 	}
 
 	/**
-	 *  Set the (row, col) element in the ColorGrid
-	 *
-	 *  @param row  grid row number
-	 *  @param col  grid column number
-	 *  @param color color of the cell
-	public void set(Integer row, Integer col, Color color) {
-		super.set(row, col, color);
-	}
-
-	/**
 	 *   Run Length Encoding of the ColorGrid
 	 *	 @return byte buffer representation of the color grid
 	 */
