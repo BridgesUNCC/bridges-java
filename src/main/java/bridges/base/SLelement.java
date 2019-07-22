@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 /**
  * 	@brief This class can be used to instantiate Singly Linked Elements.
 
- * 	This class extends Element and takes a generic parameter <E>
+ * 	This class extends Element and takes a generic parameter E
  *	representing application specific data. This element forms the basic
  *	building block for singly linked lists. Singly linked elements have a field
  *	pointing to the next element along the list.
