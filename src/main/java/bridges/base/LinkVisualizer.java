@@ -192,9 +192,7 @@ public class LinkVisualizer {
 			Float.toString(this.getColor().getAlpha()) +
 			CLOSE_BOX + COMMA +
 			QUOTE + "thickness" + QUOTE + COLON +
-			Double.toString(this.getThickness()) + COMMA +
-			QUOTE + "weight" + QUOTE + COLON +
-			Double.toString(this.getWeight());
+		    Double.toString(this.getThickness());
 
 		String label = this.getLabel();
 		if (label != null && !label.isEmpty()) {
