@@ -7,11 +7,27 @@ import org.json.simple.JSONValue;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
-/*
+/**
  *  @brief This is a class in BRIDGES for deriving a
  *  number of Symbol objects for use in a SymbolCollection.
+ *
+ * It is not intended that objects from this class will be directly
+ * created. Rather, we expect that classes that derive from this class
+ * be instantiated such as Circle, Label, Polyline, Polygon,
+ * Rectangle.
+ *
  *  Symbols correspond to a simplified subset of SVG paths
  *  and shapes for custom visual representations in BRIDGES.
+ *
+ * The stroke is the actual lines that get drawn (such as the
+ * perimeter of a rectangle) and its style is controlled by
+ * setStrokeColor(), setStrokeWidth(), and setStrokeDash().
+ *
+ * The inside of the Symbol can be colored independently from the
+ * stroke using setFillColor().
+ *
+ * The overall Symbol can be made more of less visible by adjusting
+ * its opacity using setOpacity().
  *
  * 	@author David Burlinson, Kalpathi Subramanian
  *
@@ -101,7 +117,7 @@ public class Symbol extends DataStruct {
 
 	/**
 	 *	Set the shape type
-	 *	@param shape type
+	 *	@param sh shape type
 	 */
 	protected void setShapeType(String sh) {
 		shape_type = sh;
@@ -159,9 +175,11 @@ public class Symbol extends DataStruct {
 	}
 
 	/**
-	 * This method sets the symbol stroke width
+	 * @brief This method sets the symbol stroke width.
 	 *
-	 * @param strk_width the stroke width to set
+	 * This is the weight of the individual lines that are drawn, such as the perimeter of a rectangle.
+	 *
+	 * @param strokewidth the stroke width to set
 	 */
 	public void setStrokeWidth(float strokewidth) {
 		if (strokewidth <= 0.0f || strokewidth > 10.0f) {
@@ -182,16 +200,16 @@ public class Symbol extends DataStruct {
 	}
 
 	/**
-	 * This method sets the symbol opacity
+	 * @brief This method sets the symbol opacity
 	 *
 	 * @param op the opacity to set
 	 */
-	public Symbol setOpacity(float o) {
-		if (o <= 0.0f || o > 1.0f) {
+	public Symbol setOpacity(float op) {
+		if (op <= 0.0f || op > 1.0f) {
 			throw new IllegalArgumentException("Opacity must be between 0 and 1");
 		}
 		else {
-			this.opacity = o;
+			this.opacity = op;
 		}
 		return this;
 	}
@@ -270,7 +288,7 @@ public class Symbol extends DataStruct {
 	/**
 	 *  Translate a 2D point
 	 *  @param pt  2D point (x, y)
-	 *  @translation  translation factors (tx, ty)
+	 *  @param tx, ty translation vector
 	 */
 	protected void translatePoint (float[] pt, float tx, float ty) {
 		pt[0] += tx;
@@ -278,9 +296,10 @@ public class Symbol extends DataStruct {
 	}
 
 	/**
-	 *  Scale a 2D point
-	 *  @param pt  2D point (x, y)
-	 *  @scale factor  scale factors (sx, sy)
+	 * @brief Scale a 2D point
+	 *
+	 *  @param pt 2D point (x, y) to scale
+	 *  @param sx,sy  scale factors (along each axis)
 	 */
 	void scalePoint (float[] pt, float sx, float sy) {
 		pt[0] *= sx;
@@ -288,10 +307,10 @@ public class Symbol extends DataStruct {
 	}
 
 	/**
-	 *  Rotate a 2D point (about Z)
+	 *  @brief Rotate a 2D point (about Z)
+	 *
 	 *  @param pt  2D point (x, y)
-	 *  @rotation angle theta (positive is counter clockwise,
-	 *	negative is	clockwise)
+	 *  @param angle rotation angle in degrees (positive is counter clockwise, negative is clockwise)
 	 */
 	void rotatePoint (float[] pt, float angle) {
 		// compute sin, cos
