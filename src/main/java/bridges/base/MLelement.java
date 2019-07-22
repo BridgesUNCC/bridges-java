@@ -22,7 +22,7 @@ import java.util.Vector;
  *  which connects the element to the following elements; a similar logic follows for
  *	sublists.
  *
- * @author , Kalpathi Subramanian
+ * @author Kalpathi Subramanian
  *
  * @date 5/24/17, 7/14/19
  *
@@ -144,7 +144,7 @@ public class MLelement<E> extends SLelement<E> {
 	 *
 	 *	Sets the tag of the element.
 	 *
-	 *	@param boolean t
+	 *	@param[in]  t tag
 	 *
 	 */
 	public void setTag(boolean t) {
