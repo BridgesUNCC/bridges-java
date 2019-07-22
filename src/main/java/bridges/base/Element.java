@@ -27,7 +27,7 @@ import org.json.simple.JSONValue;
  *
  * @author Mihai Mehedint, Kalpathi Subramanian
  *
- * @param generic <E>  Elements are defined with an application specific  generic
+ * @param E  Elements are defined with an application specific  generic
  *	parameter, that is defined by the user. These can be any legal Java type
  *	and manipulated using setValue()/getValue() methods.
  *	For more information on Java generics, see
@@ -45,7 +45,7 @@ public class Element<E> extends DataStruct {
 	private E value;
 
 	/**
-	 *  Get the Element type name
+	 *  @brief Get the Element type name
 	 *	@return the element type (string)
 	 */
 	public String getDataStructType() {
@@ -53,7 +53,8 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 * Element constructor
+	 * @brief Element constructor
+	 *
 	 * creates an ElementVisualizer object
 	 * sets a unique identifier for the current Element
 	 * normally used from subclasses
@@ -68,7 +69,7 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 * the constructor of Element
+	 * @brief the constructor of Element
 	 *
 	 * @param val generic parameter value used to construct Element
 	 */
@@ -82,7 +83,7 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 * the constructor of Element
+	 * @brief Constructor of Element
 	 *
 	 * @param label the string that is visible on the Bridges Visualization
 	 * @param val generic parameter value used to construct Element
@@ -93,7 +94,7 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 * performing deep copy of an element when needed
+	 * @brief performing deep copy of an element when needed
 	 *
 	 * @param original the Element that is to be copied
 	 */
@@ -191,16 +192,16 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 * Returns the Element's link visualizer object
+	 * @brief Returns the Element's link visualizer object
 	 *
 	 * The link visualizer object links this element to another element, which
 	 * is specified by the argument to this method. This method is typically used
 	 * to set the visual attributes of the links, such as in graphs or binary tree
 	 * structures.
 	 *
-	 * @parm Element el -- the element terminating the link
+	 * @param el the element terminating the link
 	 *
-	 * @return the link visualizer
+	 * @return the visualizer of the link from this to el
 	 */
 	public LinkVisualizer getLinkVisualizer(Element<E> el) {
 		// if this is the first time, must create the
@@ -212,7 +213,7 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 *	Sets the link from this element to a new incoming element
+	 *	@brief Sets the link from this element to a new incoming element
 	 *
 	 *	@param el the element to be linked to.
 	 *
@@ -222,9 +223,9 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 *	Removes the link from this element to a new incoming element
+	 *	@brief Removes the link from this element to a new incoming element
 	 *
-	 *	@param el the terminating element of the link
+	 *	@param el the terminating element of the link to be removed
 	 *
 	 */
 	protected void removeLinkVisualizer(Element<E> el) {
@@ -235,7 +236,7 @@ public class Element<E> extends DataStruct {
 	 * Validates the Element's value when the Element is created
 	 * A non null value is expected
 	 * this will be unnecessary after we modify the server
-	 * @param <E> value
+	 * @param value
 	 */
 	protected void validateVal(E value) {
 		try {
@@ -403,9 +404,9 @@ public class Element<E> extends DataStruct {
 		return visualizer.getSize();
 	}
 	/**
-	 *  Set the color to "col"
-	 *  See the Color class for a complete list of supported color names
-	 *  @param color The color of the element
+	 * @brief Change the element color
+	 *
+	 *  @param col The new color of the element. See the Color class for a complete list of supported color names.
 	 */
 	public void setColor(String col) {
 		visualizer.setColor(col);
@@ -419,10 +420,9 @@ public class Element<E> extends DataStruct {
 		return visualizer.getShape();
 	}
 	/**
-	 * 	Set the location attributes of an element.
+	 * 	@brief Set the location attributes of an element.
 	 *
-	 * 	@param locX X coordinate of the element location
-	 * 	@param locY Y coordinate of the element location
+	 * 	@param[in] locX,locY
 	 */
 	public void setLocation(double locX, double locY) {
 		visualizer.setLocation(locX, locY);
