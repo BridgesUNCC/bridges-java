@@ -26,12 +26,12 @@ import java.util.function.Consumer;
  * static void mysort(int[]);
  * and can be passed to the run function for being benchmarked. A typical use would look something like
  *
- * \code{java}
+ * \code{.java}
  * LineChart lc;
  * SortingBenchmark sb (lc);
  * sb.linearRange (100, 1000, 5);
  * sb.run("mysortingalgorithm", MyClass::mysort);
- * \endgroup
+ * \endcode
  *
  * @author Erik Saule
  * @date 07/20/2019
