@@ -106,9 +106,8 @@ public class Grid<E> extends DataStruct {
 
 	/**
 	 *	Set the (row, col) element in the grid
-	 * 	@param row row number
-	 * 	@param col number
-	 *	@val the value to be set to
+	 * 	@param row,col cell to change
+	 *	@param val the value to be set to
 	 */
 	public void set(Integer row, Integer col, E val) {
 		try {
