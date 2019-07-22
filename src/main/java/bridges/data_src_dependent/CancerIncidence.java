@@ -40,9 +40,6 @@ public class CancerIncidence extends DataSource {
 	private double loc[];		 	// location (cartesian coords
 
 
-	/**
-	 * The constructor
-	 */
 	public CancerIncidence () {
 		super.setLabel("Cancer Incidence Data");
 		loc  = new double[] {0.0, 0.0};
@@ -55,32 +52,35 @@ public class CancerIncidence extends DataSource {
 	}
 
 	/**
-	 * This method returns the string name
+	 * @brief get the name of the incidence report.
+	 *
+	 * @return the name of the incidence report.
 	 */
 	public String getName() {
 		return super.getLabel();
 	}
 
 	/**
-	 * This method sets the string name
+	 * @brief sets the string name
+	 *
+	 * @param name name to use.
 	 */
 	public void setName(String name) {
 		super.setLabel(name);
 	}
 	/*
-	 * Get the expected cancer rate, adjusted for age of participants.
+	 * @brief Get the expected cancer rate, adjusted for age of participants.
 	 *
-	 * @return cancer rate
-	 *
+	 * @return cancer rate adjusted for age
 	 */
 	public double getAgeAdjustedRate() {
 		return age_adjusted_rate;
 	}
 
 	/**
-	 * Set age adjusted cancer rate
+	 * @brief Set age adjusted cancer rate
 	 *
-	 * @param double aar
+	 * @param aar age adjusted rate
 	 *
 	 */
 	public void setAgeAdjustedRate(double aar) {
@@ -88,7 +88,7 @@ public class CancerIncidence extends DataSource {
 	}
 
 	/*
-	 * Get the expected cancer rate confidence interval(lower),
+	 * @brief Get the expected cancer rate confidence interval(lower),
 	 *	adjusted for age of participants.
 	 *
 	 * @return cancer conf interval (lower) rate
@@ -99,19 +99,19 @@ public class CancerIncidence extends DataSource {
 	}
 
 	/**
-	 * Set age adjusted cancer conf interval (lower)
+	 * @brief Set age adjusted cancer conf interval (lower)
 	 *
-	 * @param double ci_l
+	 * @param ci_l lower bound for confidence interval
 	 *
 	 */
 	public void setAgeAdjustedCI_Lower(double ci_l) {
 		age_adjusted_rate_ci[0] = ci_l;
 	}
 	/*
-	 * Get the expected cancer rate confidence interval(upper),
+	 * @brief Get the expected cancer rate confidence interval(upper),
 	 *	adjusted for age of participants.
 	 *
-	 * @return cancer conf interval (lower) rate
+	 * @return cancer conf interval (upper) rate
 	 *
 	 */
 	public double getAgeAdjustedCI_Upper() {
@@ -119,17 +119,17 @@ public class CancerIncidence extends DataSource {
 	}
 
 	/**
-	 * Set age adjusted cancer conf interval (upper)
+	 * @brief Set age adjusted cancer conf interval (upper)
 	 *
-	 * @param double ci_u
+	 * @param ci_u upper bound of the confidence interval to set
 	 *
 	 */
 	public void setAgeAdjustedCI_Upper(double ci_u) {
 		age_adjusted_rate_ci[1] = ci_u;
 	}
 
-	/*
-	 * Get the cancer rate, adjusted for population
+        /**
+	 * @brief Get the cancer rate, adjusted for population
 	 *
 	 * @return crude cancer rate
 	 */
@@ -137,15 +137,15 @@ public class CancerIncidence extends DataSource {
 		return crude_rate;
 	}
 	/**
-	 * Set cancer rate, adjusted for population
+	 * @brief Set cancer rate, adjusted for population
 	 *
-	 * @param double cr
+	 * @param cr crude rate to set
 	 */
 	public void setCrudeRate(double cr) {
 		crude_rate = cr;
 	}
-	/*
-	 * Get the expected cancer crude rate confidence interval(lower),
+        /**
+	 * @brief Get the expected cancer crude rate confidence interval(lower),
 	 * adjusted for age of participants.
 	 *
 	 * @return cancer conf interval (lower) rate
@@ -156,70 +156,70 @@ public class CancerIncidence extends DataSource {
 	}
 
 	/**
-	 * Set age adjusted cancer crude conf interval (lower)
+	 * @brief Set age adjusted cancer crude conf interval (lower)
 	 *
-	 * @param double cr_l
+	 * @param cr_l lower bound of the cancer crude rate confidence interval 
 	 *
 	 */
 	public void setCrudeRate_CI_Lower(double cr_l) {
 		crude_rate_ci[0] = cr_l;
 	}
-	/*
-	 * Get the expected cancer crude rate confidence interval(upper),
-	 * adjusted for age of participants.
-	 *
-	 * @return cancer crude rate CI (upper) rate
-	 *
-	 */
+	 /**
+	  * Get the expected cancer crude rate confidence interval(upper),
+	  * adjusted for age of participants.
+	  *
+	  * @return cancer crude rate CI (upper) rate
+	  *
+	  **/
 	public double getCrudeRate_CI_Upper() {
 		return crude_rate_ci[1];
 	}
 
 	/**
-	 * Set crude rate CI (upper)
+	 * @brief Set crude rate CI (upper)
 	 *
-	 * @param double cr_u
+	 * @param cr_u upper bound of crude rate confidence interval
 	 *
 	 */
 	public void setCrudeRate_CI_Upper(double cr_u) {
 		crude_rate_ci[1] = cr_u;
 	}
 
-	/*
-	 * Get the year of this cancer record
+ 	/**
+	 * @brief Get the year of this cancer record
 	 *
-	 * @return year
+	 * @return year of the cancer record
 	 */
 	public int getYear() {
 		return year;
 	}
 
-	/*
-	 * Set the year of this cancer record
+	/**
+	 * @brief Set the year of this cancer record
 	 *
-	 * @param y  year
+	 * @param y  year of the cancer record
 	 */
 	public void setYear(int y) {
 		year = y;
 	}
 	/*
-	 * Get the gender of the group
+	 * @brief Get the gender of the group
 	 *
-	 * @return gender (male, female, male and female)
+	 * @return the gender ("male", "female", "male and female")
 	 */
 	public String getGender() {
 		return gender;
 	}
 	/**
-	 * Set gender
+	 * @brief Set gender
 	 *
-	 * @param g
+	 * @param g the gender to set ("male", "female", "male and female")
 	 */
 	public void setGender(String g) {
 		gender = g;
 	}
 
-	/*
+ 	/**
 	 * Get the race of the group
 	 *
 	 * @return race (All Races, etc)
@@ -228,92 +228,92 @@ public class CancerIncidence extends DataSource {
 		return race;
 	}
 	/**
-	 * Set race
+	 * @brief Set race
 	 *
-	 * @param String r
+	 * @param r race to set
 	 */
 	public void setRace(String r) {
 		race = r;
 	}
 
-	/*
-	 * Get the event type (incidence, mortality, etc)
+ 	/**
+	 * @brief Get the event type (incidence, mortality, etc)
 	 *
-	 * @return event (String)
+	 * @return event type
 	 */
 	public String getEventType() {
 		return event_type;
 	}
 	/**
-	 * Set event type
+	 * @brief Set event type
 	 *
-	 * @param event (String)
+	 * @param et event type to set
 	 */
 	public void setEventType(String et) {
 		event_type = et;
 	}
 
-	/*
-	 * Get the population size
+ 	/**
+	 * @brief Get the population size
 	 *
-	 * @return population (int)
+	 * @return population size
 	 */
 	public int getPopulation() {
 		return population;
 	}
 	/**
-	 * Set population size
+	 * @brief Set population size
 	 *
-	 * @param pop (int)
+	 * @param pop population size
 	 */
 	public void setPopulation(int pop) {
 		population = pop;
 	}
 
-	/*
-	 * Get the cancer incidence area (state, region, etc)
+ 	/**
+	 * @brief Get the cancer incidence area (state, region, etc)
 	 *
-	 * @return area (String)
+	 * @return affected area 
 	 */
 	public String getAffectedArea() {
 		return affected_area;
 	}
 	/**
-	 * Set cancer incidenc area
+	 * @brief Set cancer incidence area
 	 *
-	 * @param area (String)
+	 * @param area affected area
 	 */
 	public void setAffectedArea(String area) {
 		affected_area = area;
 	}
 
-	/*
-	 * Get the number of people affected in this group
+ 	/**
+	 * @brief Get the number of people affected in this group
 	 *
-	 * @return incidence count (int)
+	 * @return number of people affected in this group.
 	 */
 	public int getCount() {
 		return count;
 	}
 	/**
-	 * Set cancer incidence count
+	 * @brief Set cancer incidence count
 	 *
-	 * @param c (int)
+	 * @param c incidence count
 	 */
 	public void setCount(int c) {
 		count = c;
 	}
 
-	/*
-	 * Get the X coordinate of location
+ 	/**
+	 * @brief Get the X coordinate of location
 	 *
-	 * @return x coordinate
+	 * @return x coordinate (longitude?)
 	 */
 	public double getLocationX() {
 		return loc[0];
 	}
 	/**
-	 *	Set location (X coord)
+	 *	@brief Set location (X coord)
 	 *
 	 *	@param locX  X coordinate of location
 	 *
@@ -322,19 +322,18 @@ public class CancerIncidence extends DataSource {
 		loc[0] = locX;
 	}
 
-	/*
-	 * Get the Y coordinate of location
+ 	/**
+	 * @brief Get the Y coordinate of location
 	 *
-	 * @return y coordinate
+	 * @return y coordinate (latitude?)
 	 */
 	public double getLocationY() {
 		return loc[1];
 	}
 	/**
-	 *	Set location (Y coord)
+	 *	@brief Set location (Y coord)
 	 *
-	 *	@param locX  Y coordinate of location
-	 *
+	 *	@param locY  Y coordinate of location
 	 */
 	public void setLocationY (double locY) {
 		loc[1] = locY;
