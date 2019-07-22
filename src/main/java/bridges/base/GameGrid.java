@@ -17,8 +17,9 @@ public class GameGrid extends Grid<GameCell> {
 	ByteBuffer bf_symbols;
 	String encoding = "raw";
 
-	/** Enable changing the game grid encoding when building JSON representation.
-	 *  @param type of encoding. Supports "raw" and "rle"
+	/** @brief Enable changing the game grid encoding when building JSON representation.
+	 *
+	 *  @param encoding type of encoding. Supports "raw" and "rle"
 	**/
 	public void setEncoding(String encoding) {
 		if (encoding.equals("raw") || encoding.equals("rle")) {
