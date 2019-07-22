@@ -91,10 +91,10 @@ public class Array<E> extends DataStruct {
 	}
 
 	/**
+	 *	@brief Set the size of each dimensions; also allocates  array space
 	 *
-	 *	Set the size of each dimensions; also allocates  array space
-	 *
-	 *	@param dim[]  size of each dimension
+	 *      @param nd number of dimension
+	 *	@param dim  size of each dimension
 	 */
 	public void setSize(int nd, int[] dim) {
 		// check for invalid dimension values
@@ -118,10 +118,9 @@ public class Array<E> extends DataStruct {
 			array_data.set(k, new Element<E>());
 	}
 	/**
+	 *	@brief Get the size of each dimensions;
 	 *
-	 *	Get the size of each dimensions;
-	 *
-	 *	@param dims[]  size of each dimension is returned
+	 *	@param[out] dim size of each dimension is returned
 	 */
 	public void getDimensions(int[] dim) {
 		dim[0] = dims[0];
