@@ -38,8 +38,7 @@ public class Array2D<E> extends Array<E> {
 	/**
 	 *  Create an array object with the specified dimensions
 	 *
-	 *  @param num_dims number of dimensions of the array
-	 *  @param dims size of each dimension
+	 * @param rows,cols size of the array
 	 *
 	 */
 	public Array2D(int rows, int cols) {
