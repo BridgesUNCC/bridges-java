@@ -24,7 +24,7 @@ import java.util.HashMap;
  *	another element, appropriate for setting link attributes, such as in linked lists,
  *	between the current element and its next or previous nodes.
  *
- *	@param <E> The generic parameter object that is part of this element, representing
+ *	@param E The generic parameter object that is part of this element, representing
  *          application specific data.
  *
  *	\sa Example Tutorial at <br>
@@ -109,7 +109,7 @@ public class DLelement<E> extends SLelement<E> {
 	/**
 	 * This method sets the pointer to the next DLelement
 	 *
-	 * @param next the DLelement that should be assigned to the next pointer
+	 * @param nxt the DLelement that should be assigned to the next pointer
 	 *
 	 */
 	public void setNext(DLelement<E> nxt) {
@@ -130,7 +130,7 @@ public class DLelement<E> extends SLelement<E> {
 	/**
 	 * This method sets the pointer to the previous DLelement
 	 *
-	 * @param prev the DLelement that should be assigned to the prev pointer
+	 * @param prv the DLelement that should be assigned to the prev pointer
 	 */
 	public void setPrev(DLelement<E> prv) {
 		// first remove any existing link visualizer from this node

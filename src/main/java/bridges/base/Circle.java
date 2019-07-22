@@ -85,7 +85,7 @@ public class Circle extends Symbol {
 	/**
 	*  Translate the circle
 	*
-	*  @param translation factor (tx, ty)
+	*  @param (tx, ty) translation vector
 	*/
 	public void translate(float tx, float ty) {
 		float[] center = getLocation();

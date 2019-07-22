@@ -107,8 +107,6 @@ public	class Rectangle extends  Symbol {
 	 * @pram locy  y coordinate of location
 	 * @param w  width of rectangle
 	 * @param h  height of rectangle
-	 *
-	 * @return none
 	 */
 	public void setRectangle(float locx, float locy, float w, float h) 	{
 
@@ -125,7 +123,7 @@ public	class Rectangle extends  Symbol {
 	/**
 	*  Translate the rectangle
 	*
-	*  @param translation factor (tx, ty)
+	*  @param tx,ty translation vector
 	*/
 	public void translate(float tx, float ty) {
 		float[] center = getLocation();
@@ -135,7 +133,7 @@ public	class Rectangle extends  Symbol {
 	/**
 	 *  Scale the rectangle about its center
 	 *
-	 *  @param scale factor (sx, sy)
+	 *  @param sx,sy scale factor along each axis
 	 */
 	public void scale(float sx, float sy) {
 		// scale the height, width
