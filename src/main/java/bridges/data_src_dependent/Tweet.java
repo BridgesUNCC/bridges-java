@@ -2,8 +2,7 @@ package bridges.data_src_dependent;
 
 import java.util.Date;
 /**
- * @author Sean Gallager
- * @second author mihai mehedint
+ * @author Sean Gallager, Mihai Mehedint
  *
  */
 public class Tweet extends DataSource {
