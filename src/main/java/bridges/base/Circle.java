@@ -8,6 +8,8 @@ import org.json.simple.JSONObject;
  * @brief This class defines a circle and is part of the symbol collection.
  *		A circle has a center and radius
  *
+ * Basic styling such as stroke and fill are defined in the superclass Symbol.
+ *
  * @author Kalpathi Subramanian
  * @date 12/24/18
  *

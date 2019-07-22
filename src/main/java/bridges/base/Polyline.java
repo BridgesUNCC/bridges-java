@@ -9,6 +9,8 @@ import java.util.ArrayList;
  * @brief This class defines a polyline and is part of the symbol collection.
  *		A polyline has a sequence of points (x, y coordinate pairs)
  *
+ * Basic styling such as stroke and fill are defined in the superclass Symbol.
+ *
  * @author David Burlinson, Kalpathi Subramanian
  * @date 12/23/18, 7/15/19
  *
@@ -38,7 +40,7 @@ public class Polyline extends Symbol {
 	/**
 	 *	This method gets the name of the shape
 	 *
-	 *  @return name   shape name
+	 *  @return shape name
 	 */
 	public String getName() {
 		return "polyline";
@@ -102,7 +104,7 @@ public class Polyline extends Symbol {
 	/**
 	 *  Translate the polyline
 	 *
-	 *  @param translation factor (tx, ty)
+	 *  @param tx, ty translation vector
 	 */
 	void translate(float tx, float ty) {
 		// translate the points
@@ -113,9 +115,9 @@ public class Polyline extends Symbol {
 	}
 
 	/**
-	 *  rotate the polyline about its center
+	 *  @brief Rotate the polyline about its center
 	 *
-	 *  @param scale factor (sx, sy)
+	 *  @param angle rotation angle in degree
 	 */
 	void rotate(float angle) {
 		// get center of polyline
@@ -142,9 +144,12 @@ public class Polyline extends Symbol {
 	}
 
 	/**
-	 *  Scale the polyline about its center
+	 *  @brief Scale the polyline about its center.
 	 *
-	 *  @param scale factor (sx, sy)
+	 * That is to say, the center of the polyline will not change
+	 * location, but the object itself will grow bigger.
+	 *
+	 *  @param sx, sy scale factor 
 	 */
 	void scale(float sx, float sy) {
 		// get center of polyline
@@ -165,8 +170,11 @@ public class Polyline extends Symbol {
 		transl[1] = center[1];
 		translate(transl[0], transl[1]);
 	}
+    
 	/**
-	 *  Get center of polyline - use its bounding box
+	 * @brief Get center of polyline - use its bounding box
+	 *
+	 * @param[out] center center of the polyline
 	 */
 	void getCenter(float[] center) {
 		float[]  bbox = new float[4];

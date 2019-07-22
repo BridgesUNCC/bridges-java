@@ -9,6 +9,8 @@ import java.util.ArrayList;
  * @brief This class defines a polygon and is part of the symbol collection.
  *		A polygon has a sequence of points (x, y coordinate pairs)
  *
+ * Basic styling such as stroke and fill are defined in the superclass Symbol.
+ *
  * @author David Burlinson, Kalpathi Subramanian
  * @date 12/23/18, 7/15/19
  *

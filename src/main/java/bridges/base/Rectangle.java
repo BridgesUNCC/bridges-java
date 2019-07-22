@@ -8,6 +8,8 @@ import org.json.simple.JSONObject;
  * @brief This class defines a rectangle and is part of the symbol collection.
  *		A rectangle has height and width
  *
+ * Basic styling such as stroke and fill are defined in the superclass Symbol.
+ *
  * @author Kalpathi Subramanian
  * @date 12/23/18
  *
