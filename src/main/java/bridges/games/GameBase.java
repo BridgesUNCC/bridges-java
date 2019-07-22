@@ -64,7 +64,7 @@ public abstract class GameBase {
     /// (up and down) that happens in the game.
     ///
     /// @param kl a KeypressListener to register
-    protected void registerKeypress(KeypressListener kl) {
+    void registerKeypress(KeypressListener kl) { //having the function at package level prevents user code from calling this function directly
         sock.addListener(kl);
     }
 
@@ -150,7 +150,7 @@ public abstract class GameBase {
     ///
     /// Student should not have to call this function directly. It is
     /// called automatically by Bridges.
-    protected void render() {
+    void render() { //having this function at package level prevent user code from calling it by mistake
         if (firsttime) {
             firsttime = false;
             // associate the grid with the Bridges object
