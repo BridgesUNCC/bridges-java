@@ -105,7 +105,7 @@ public class Connector {
 
 	/**
 	 * This reformats the coordinates in Earthwuake tweet such that there will be
-	 * no arrays present when casting to the JSONObject. for  the resons described below
+	 * no arrays present when casting to the JSONObject. for  the reasons described below
 	 * Mihai
 	 * @param text
 	 * @return
@@ -314,7 +314,8 @@ public class Connector {
 	}
 
 	/**
-	 * Traverse JSON in a type-safe manner.
+	 * @brief Traverse JSON in a type-safe manner.
+	 *
 	 * This is somewhat complicated, but comes with the advantage that the
 	 * debugging reports are far clearer when you know the whole path you are
 	 * searching for.
@@ -325,6 +326,7 @@ public class Connector {
 	 *
 	 * @param sequence
 	 * @param original
+	 * @param target
 	 */
 	public Object safeJSONTraverse(
 		String sequence,

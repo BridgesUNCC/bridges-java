@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * 	@brief This class is used to create doubly linked element objects.
  *
- *	This class extends Element and takes a generic parameter <E> representing
+ *	This class extends Element and takes a generic parameter E representing
  *	application specific data. This element forms the basic building block for
  *	doubly linked lists. Doubly linked elements have two links,
  * 	"next" and "previous", that point to the previous and succeeding nodes along the list.

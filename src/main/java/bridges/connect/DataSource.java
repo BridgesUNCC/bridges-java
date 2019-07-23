@@ -24,8 +24,7 @@ public class DataSource {
 	*	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
 	*  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
 	*
-	*  More information on the dataset can be found at <p>
-	*  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	*  More information on the dataset can be found at http://bridgesuncc.github.io/datasets.html 
 	*
 	*	@param maxElements  the number of earthquake records retrieved, limited to 5000
 	*  @throws Exception if the request fails
@@ -143,29 +142,61 @@ public class DataSource {
 	}
 
 	/**
-	 *  This helper function provides access to a collection of Shakespeare plays,
+	 *  @brief This function provides access to a collection of Shakespeare plays,
 	 * 	poems and plays.
 	 *
-	 *  Each record in this collection has
-	 *	information on title, type (poem, Sonnet, play) and text. <br>
+	 * This function return all the works of Shakespeare in the collection.
 	 *
-	 *	For more information and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *  Each record in this collection has
+	 *	information on title, type (poem, Sonnet, play) and text. 
+	 *
+	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html 
 	 *
 	 *  @throws Exception if the request fails
-	 *
-	 *  @param {String} [works] Valid input: "Plays" or "Poems". The works flag is optional.
-	 *
-	 *  @param {Boolean} [textOnly] True returns only words, no punctuation. The textOnly flag is optional.
 	 *
 	 *  @return a list of Shakespeare objects.
 	 */
 	public  List<Shakespeare> getShakespeareData() throws Exception {
 		return DataFormatter.getShakespeareData("", false);
 	}
+	/**
+	 *  @brief This function provides access to a collection of Shakespeare plays,
+	 * 	poems and plays.
+	 *
+	 *
+	 *  Each record in this collection has
+	 *	information on title, type (poem, Sonnet, play) and text. 
+	 *
+	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html 
+	 *
+	 * This function returns only some of the works, either the plays, or the poems, depending on the parameters.
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @param works return only some of the works. "Plays" for only the plays, "Poems", or "" for all.
+	 *
+	 *  @return a list of Shakespeare objects.
+	 */
 	public  List<Shakespeare> getShakespeareData(String works) throws Exception {
 		return DataFormatter.getShakespeareData(works, false);
 	}
+	/**
+	 *  @brief This function provides access to a collection of Shakespeare plays,
+	 * 	poems and plays.
+	 *
+	 *  Each record in this collection has
+	 *	information on title, type (poem, Sonnet, play) and text. 
+	 *
+	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html 
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @param works return only some of the works. "Plays" for only the plays, "Poems", or "" for all.
+	 *
+	 *  @param textOnly true to returns only words, no punctuation.
+	 *
+	 *  @return a list of Shakespeare objects.
+	 */
 	public  List<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
 		return DataFormatter.getShakespeareData(works, textOnly);
 	}
@@ -193,10 +224,10 @@ public class DataSource {
 
 	/**
 	 * Generates Open Street Map URL request for a given location and returns the map data
-	 * @param location, name of city or area that the server supports
-	 * @param level, level of road detail on requested map
-	 * @return OsmData, vertices and edges of Open Street Map data
-	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 * @param location name of city or area that the server supports
+	 * @param level level of road detail on requested map
+	 * @return OsmData vertices and edges of Open Street Map data
+	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
 	public bridges.data_src_dependent.OsmData getOsmData(String location, String level) throws IOException {
 		return DataFormatter.getOsmData(location, level);
@@ -204,13 +235,13 @@ public class DataSource {
 
 	/**
 	 * Generates Open Street Map URL request for a given set of coordinates and returns the map data
-	 * @param minLat, minimum latitude value for the area requested
-	 * @param minLon, minimum longitude value for the area requested
-	 * @param maxLat, maximum latitude value for the area requested
-	 * @param maxLon, maximum longitude value for the area requested
-	 * @param level, level of road detail on requested map
-	 * @return OsmData, vertices and edges of Open Street Map data
-	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 * @param minLat minimum latitude value for the area requested
+	 * @param minLon minimum longitude value for the area requested
+	 * @param maxLat maximum latitude value for the area requested
+	 * @param maxLon maximum longitude value for the area requested
+	 * @param level level of road detail on requested map
+	 * @return OsmData vertices and edges of Open Street Map data
+	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
 	public bridges.data_src_dependent.OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
 		return DataFormatter.getOsmData(minLat, minLon, maxLat, maxLon, level);

@@ -417,6 +417,7 @@ public class DataFormatter {
 	 * and adds deep copy of those eq to the current list
 	 * @param aList holds the reference to the current list of eq
 	 * @param max the number of eq in the new batch of eq
+	 * @param acu USGSaccount information
 	 * @return the list of eq containing the old and the new batch of tweets
 	 */
 	public static List<EarthquakeUSGS> next(List<EarthquakeUSGS> aList, int max, USGSaccount acu) {
@@ -953,12 +954,14 @@ public class DataFormatter {
 		float alpha = A / 255.0f;
 		return new Color(R, G, B, alpha);
 	}
-	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	/**
+	 * @brief Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
 	 *
-	 * @return the ColorGrid stored in the bridges server
+	 * @param server base URL of the Bridges service
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 * @param subassignment the ID of the subassignment to get
+	 * @return the ColorGrid stored in the bridges server
 	 **/
 	static bridges.base.ColorGrid getColorGridFromAssignment(String server,
 		String user,
@@ -1065,11 +1068,13 @@ public class DataFormatter {
 		return cg;
 	}
 
-	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	/**
+	 * @brief Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
 	 *
-	 * @return the ColorGrid stored in the bridges server
+	 * @param server base URL of the Bridges service
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
+	 * @return the ColorGrid stored in the bridges server
 	 **/
 	static bridges.base.ColorGrid getColorGridFromAssignment(String server, String user, int assignment)
 	throws IOException {
