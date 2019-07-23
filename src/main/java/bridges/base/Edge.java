@@ -170,7 +170,7 @@ public class Edge<K, E2> {
 	}
 
 	/**
-	 *	@brief Set the color of the link in the Bridges Visualization 
+	 *	@brief Set the color of the link in the Bridges Visualization
 	 *
 	 * 	@param color the string reprsenting the color. See the Color class
 	 *		for the complete set of supported colors.

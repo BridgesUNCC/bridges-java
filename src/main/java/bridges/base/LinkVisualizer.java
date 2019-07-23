@@ -25,8 +25,8 @@ import org.json.simple.JSONValue;
  *  Supported attribute values are as follows:
  *
  *  <b>Color:</b> Use color with setColor() and getColor(). <b>:by name:</b>
- *		See the Color class for the complete list. 
- *  <b>by RGBA Specification:</b>  Range: 0-255 for each component. 
+ *		See the Color class for the complete list.
+ *  <b>by RGBA Specification:</b>  Range: 0-255 for each component.
  *
  *  <b> Thickness: </b> Range : 0.0-50.0. Use thickness with setThickness() and getThickness().
  *
@@ -192,7 +192,7 @@ public class LinkVisualizer {
 			Float.toString(this.getColor().getAlpha()) +
 			CLOSE_BOX + COMMA +
 			QUOTE + "thickness" + QUOTE + COLON +
-		    Double.toString(this.getThickness());
+			Double.toString(this.getThickness());
 
 		String label = this.getLabel();
 		if (label != null && !label.isEmpty()) {

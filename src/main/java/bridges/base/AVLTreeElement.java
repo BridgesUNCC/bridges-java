@@ -80,7 +80,7 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	/**
 	 *	This method sets the height of the tree at this node
 	 *
-	 *  @param  h height 
+	 *  @param  h height
 	 *
 	 */
 	public void setHeight(int h) {
@@ -100,7 +100,7 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	/**
 	 *  This method sets the balance factor of the tree at this node
 	 *
-	 *  @param  bf balance factor  
+	 *  @param  bf balance factor
 	 */
 	public void setBalanceFactor(int bf) {
 		balFactor = bf;

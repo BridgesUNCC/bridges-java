@@ -149,7 +149,7 @@ public class Polyline extends Symbol {
 	 * That is to say, the center of the polyline will not change
 	 * location, but the object itself will grow bigger.
 	 *
-	 *  @param sx, sy scale factor 
+	 *  @param sx, sy scale factor
 	 */
 	void scale(float sx, float sy) {
 		// get center of polyline
@@ -170,7 +170,7 @@ public class Polyline extends Symbol {
 		transl[1] = center[1];
 		translate(transl[0], transl[1]);
 	}
-    
+
 	/**
 	 * @brief Get center of polyline - use its bounding box
 	 *

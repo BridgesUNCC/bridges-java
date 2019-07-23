@@ -19,7 +19,7 @@ import java.util.Random;
  *  Supported attributed values are as follows:<br>
  *
  *  <b>Color:</b> Supported colors by <b>name</b>: See the Color class for the complete list;
- *	by <b>RGBA Specification :</b>  Range: 0-255 for each component 
+ *	by <b>RGBA Specification :</b>  Range: 0-255 for each component
  *
  *	<b>	Supported Shapes: </b>
  *	"circle", "square", "diamond", "cross",
@@ -185,7 +185,7 @@ public class ElementVisualizer {
 
 	/**
 	 *	@brief Set the color of the Element in the Bridges Visualization given
-	 *	RGBA components 
+	 *	RGBA components
 	 *
 	 *	@param r,g, b, a color components. r, g, b are in the [0-255] range, a in [0,1].
 	 *
@@ -270,7 +270,7 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 *  @brief Set the location (x, y)  of the element 
+	 *  @brief Set the location (x, y)  of the element
 	 *
 	 *	@param x,y location to be set
 	 */
