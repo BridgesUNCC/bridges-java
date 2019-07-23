@@ -83,6 +83,23 @@ public class ColorGrid extends Grid<Color> {
 			}
 		}
 	}
+	/**
+	 *	Get the height of the color grid
+	 *
+	 *	@return the height (number of rows) of the grid
+	 */
+	public int getHeight() {
+		return gridSize[0];
+	}
+
+	/**
+	 *	Get the width of the color grid
+	 *
+	 *	@return the width (number of columns) of the grid
+	 */
+	public int getWidth() {
+		return gridSize[1];
+	}
 
 	/**
 	 *   Run Length Encoding of the ColorGrid
