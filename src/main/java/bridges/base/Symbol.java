@@ -34,7 +34,7 @@ import org.json.simple.JSONArray;
  *	@date  2018, 7/15/19
  *
 */
-public class Symbol extends DataStruct {
+public class Symbol {
 
 	static	Integer ids = 0;
 	private String identifier;
@@ -61,14 +61,6 @@ public class Symbol extends DataStruct {
 	protected float locationX = DEFAULT_LOCATIONX;
 	protected float locationY = DEFAULT_LOCATIONY;
 
-	/**
-	 *  Get data structure name
-	 *
-	 *	@return data type name (string)
-	 */
-	public String getDataStructType() {
-		return "Symbol";
-	}
 
 	/**
 	 *	Create a default symbol object
@@ -326,14 +318,6 @@ public class Symbol extends DataStruct {
 		// assign to point
 		pt[0] = (float) tmp[0];
 		pt[1] = (float) tmp[1];
-	}
-
-	/**
-	 * Get JSON string of Data type
-	 * @return JSON of data type (string)
-	 */
-	public String getDataStructureRepresentation() {
-		return null;
 	}
 
 	/**
