@@ -130,7 +130,7 @@ public class GameGrid extends Grid<GameCell> {
 	 *  @param row, col - integer indices specifying the position to modify
 	 *  @param symbol - Integer symbol argument to set the symbol at the chosen position
 	 */
-	public void drawObject(Integer row, Integer col, Integer symbol) {
+	public void drawSymbol(Integer row, Integer col, Integer symbol) {
 		this.get(row, col).setSymbol(symbol);
 	}
 
@@ -139,7 +139,7 @@ public class GameGrid extends Grid<GameCell> {
 	 *  @param row, col - integer indices specifying the position to modify
 	 *  @param symbol - Named symbol enum argument to set the symbol at the chosen position
 	 */
-	public void drawObject(Integer row, Integer col, NamedSymbol symbol) {
+	public void drawSymbol(Integer row, Integer col, NamedSymbol symbol) {
 		this.get(row, col).setSymbol(symbol);
 	}
 
@@ -149,8 +149,8 @@ public class GameGrid extends Grid<GameCell> {
 	 *  @param symbol - Integer symbol argument to set the symbol at the chosen position
 	 *  @param color - String color argument to set the background at the chosen position
 	 */
-	public void drawObject(Integer row, Integer col, Integer symbol, String color) {
-		this.drawObject(row, col, symbol, NamedColor.valueOf(color));
+	public void drawSymbol(Integer row, Integer col, Integer symbol, String color) {
+		this.drawSymbol(row, col, symbol, NamedColor.valueOf(color));
 	}
 
 	/**
@@ -159,8 +159,8 @@ public class GameGrid extends Grid<GameCell> {
 	 *  @param symbol - Named Symbol enum argument to set the symbol at the chosen position
 	 *  @param color - String color argument to set the background at the chosen position
 	 */
-	public void drawObject(Integer row, Integer col, NamedSymbol symbol, String color) {
-		this.drawObject(row, col, symbol, NamedColor.valueOf(color));
+	public void drawSymbol(Integer row, Integer col, NamedSymbol symbol, String color) {
+		this.drawSymbol(row, col, symbol, NamedColor.valueOf(color));
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class GameGrid extends Grid<GameCell> {
 	 *  @param symbol - Integer symbol argument to set the symbol at the chosen position
 	 *  @param color - Named Color enum argument to set the foreground at the chosen position
 	 */
-	public void drawObject(Integer row, Integer col, Integer symbol, NamedColor color) {
+	public void drawSymbol(Integer row, Integer col, Integer symbol, NamedColor color) {
 		this.get(row, col).setSymbol(symbol);
 		this.get(row, col).setFGColor(color);
 	}
@@ -180,7 +180,7 @@ public class GameGrid extends Grid<GameCell> {
 	 *  @param symbol - Named Symbol enum argument to set the symbol at the chosen position
 	 *  @param color - Named Color enum argument to set the foreground at the chosen position
 	 */
-	public void drawObject(Integer row, Integer col, NamedSymbol symbol, NamedColor color) {
+	public void drawSymbol(Integer row, Integer col, NamedSymbol symbol, NamedColor color) {
 		this.get(row, col).setSymbol(symbol);
 		this.get(row, col).setFGColor(color);
 	}

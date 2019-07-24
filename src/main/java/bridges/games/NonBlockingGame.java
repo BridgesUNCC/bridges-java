@@ -106,7 +106,8 @@ import bridges.connect.SocketConnection;
  **/
 
 public abstract class NonBlockingGame extends GameBase {
-
+    private double fps = 30.;
+    
     ///helper class to make Input Management a bit easier.
     private InputHelper ih;
 
@@ -235,7 +236,6 @@ public abstract class NonBlockingGame extends GameBase {
     /// fps of 30 frames per second. This work by waiting until
     /// 1/30th of a second after the last call to this function.
     private void controlFrameRate() {
-        int fps = 30;
         double hz = 1. / fps;
 
         long currenttime = System.currentTimeMillis();
@@ -249,6 +249,15 @@ public abstract class NonBlockingGame extends GameBase {
         timeoflastframe = System.currentTimeMillis();
     }
 
+    /// @brief What frame rate is the game running at?
+    ///
+    /// @return the target framerate. The game could be somewhat
+    /// slower depending on how computationally expensive the
+    /// gameloop is and on the speed of the network.
+    protected double getFrameRate() {
+	return fps;
+    }
+    
     /// Call this function to start the game engine.
     ///
     public void start() {

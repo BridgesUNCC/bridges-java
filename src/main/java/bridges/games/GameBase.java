@@ -135,14 +135,14 @@ public abstract class GameBase {
         return grid.getSymbolColor(y, x);
     }
     
-    /// @brief Draw an object on the game
+    /// @brief Draw a symbol on the game
     ///
     /// @param x row of the cell to draw the object on
     /// @param y column of the cell to draw the object on
     /// @param s symbol representing the object
     /// @param c color of the object
-    protected void drawObject(int x, int y, NamedSymbol s, NamedColor c) {
-        grid.drawObject(y, x, s, c);
+    protected void drawSymbol(int x, int y, NamedSymbol s, NamedColor c) {
+        grid.drawSymbol(y, x, s, c);
     }
 
 
