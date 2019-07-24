@@ -171,4 +171,20 @@ public abstract class GameBase {
         // send valid JSON for grid into the socket
         sock.sendData(gridJSON);
     }
+
+    /// @brief How wide is the Game Board?
+    ///
+    /// @return the number of columns of the board
+    protected int getBoardWidth() {
+	int size[] = grid.getDimensions();
+	return size[1];
+    }
+
+    /// @brief How tall is the Game Board?
+    ///
+    /// @return the number of rows of the board
+    protected int getBoardHeight() {
+	int size[] = grid.getDimensions();
+	return size[0];
+    }
 }
