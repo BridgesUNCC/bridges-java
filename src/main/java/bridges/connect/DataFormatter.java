@@ -1279,6 +1279,95 @@ public class DataFormatter {
 		return ret_data;
 	}
 
+	/***
+	 * Fetches Open Street Map data for a given location.
+	 *
+	 * This uses the old API, and so it onlysupports a few locations: "uncc_campus", "charlotte", "washington_dc",
+	 * 	 "saint_paul", "new_york", "los_angeles",
+	 * 	 "san_francisco", "miami", "minneapolis", "dallas"
+	 *
+	 * @param location, name of city or area that the server supports
+	 * @return OsmData, vertices and edges of Open Street Map data
+	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 */
+	static OsmData getOsmDataOld(String location) throws IOException {
+		File cache_dir = new File("./bridges_data_cache");
+
+		boolean has_cache = true;
+		// make cache if does not exist
+		if (!cache_dir.exists()) {
+			if(!cache_dir.mkdir()) {
+				System.err.println("Error creating cache directory");
+				has_cache = false;
+			}
+		}
+
+		// look for file in cache
+		String content = null;
+		if (has_cache) {
+			for (File file : cache_dir.listFiles()) {
+				if (file.getName().equals(location + ".json")) {
+					content = new String(Files.readAllBytes(file.toPath()));
+				}
+			}
+		}
+
+		// if not in cache, hit server for data
+		if (content == null) {
+			String url = "https://osm-api.herokuapp.com/name/" + location;
+			HttpResponse resp = makeRequest(url);
+			int status = resp.getStatusLine().getStatusCode();
+			content = EntityUtils.toString(resp.getEntity());
+			if (status != 200) {
+				if (status == 404) {
+					// attempt to get valid names
+					url = "https://osm-api.herokuapp.com/name_list";
+					resp = makeRequest(url);
+					status = resp.getStatusLine().getStatusCode();
+					if (status == 200) {
+						content = EntityUtils.toString(resp.getEntity());
+						throw new RuntimeException("Invalid name: " + location + "\nValid names:" + content);
+					}
+				}
+				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
+			}
+			Files.write(Paths.get("./bridges_data_cache/" + location + ".json"), content.getBytes());
+		}
+
+		// parse that data
+		Gson gson = new Gson();
+		OsmServerResponse respObject;
+		try {
+			respObject = gson.fromJson(content, OsmServerResponse.class);
+		}
+		catch (Exception e) {
+			throw new JsonParseException("Malformed JSON: Unable to Parse");
+		}
+
+		// vertex list
+		OsmVertex[] vertices = new OsmVertex[respObject.nodes.length];
+		HashMap<Double, Integer> vert_map = new HashMap<>();
+		for (int i = 0; i < vertices.length; ++i) {
+			Double[] node = respObject.nodes[i];
+			vert_map.put(node[0], i);
+			vertices[i] = new OsmVertex(node[1], node[2]);
+		}
+
+		// edge list
+		OsmEdge[] edges = new OsmEdge[respObject.edges.length];
+		for (int i = 0; i < edges.length; ++i) {
+			Double[] edge = respObject.edges[i];
+			Double id_from = edge[0];
+			Double id_to = edge[1];
+			Double dist = edge[2];
+			edges[i] = new OsmEdge(vert_map.get(id_from), vert_map.get(id_to), dist);
+		}
+
+		OsmData ret_data = new OsmData(vertices, edges, respObject.meta.name);
+		return ret_data;
+	}
+
+    
 	/**
 	 *
 	 *  Get data of Shakespeare works (plays, poems)

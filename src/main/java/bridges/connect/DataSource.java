@@ -234,6 +234,23 @@ public class DataSource {
 	}
 
 	/**
+	 * Generates Open Street Map URL request for a given location and returns the map data
+	 *
+	 * This is a legacy function that only supports few cities:
+	 * 	  "uncc_campus", "charlotte", "washington_dc",
+	 * 	 "saint_paul", "new_york", "los_angeles",
+	 * 	 "san_francisco", "miami", "minneapolis", "dallas"
+	 *
+	 * @param location name of city or area that the server supports
+	 * @return OsmData vertices and edges of Open Street Map data
+	 * @throws IOException If there is an error parsing response from server or is an invalid location name
+	 */
+	public bridges.data_src_dependent.OsmData getOsmDataOld(String location) throws IOException {
+		return DataFormatter.getOsmDataOld(location);
+	}
+
+    
+	/**
 	 * Generates Open Street Map URL request for a given set of coordinates and returns the map data
 	 * @param minLat minimum latitude value for the area requested
 	 * @param minLon minimum longitude value for the area requested
