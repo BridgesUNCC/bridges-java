@@ -47,7 +47,7 @@ import bridges.connect.SocketConnection;
  * the background color of a particular cell. It takes three
  * parameters, the first two identify the cell of the board to change,
  * and the last one is a color from a color palette provided by
- * NamedColor. drawObject() takes four parameters, the first two
+ * NamedColor. drawSymbol() takes four parameters, the first two
  * identify the cell of the board to change, the third is a symbol
  * from a symbol palette provided by NamedSymbol, the fourth is the
  * color that symbol shold be drawn in and provided by NamedColor.
@@ -56,7 +56,7 @@ import bridges.connect.SocketConnection;
  * \code{.java}
  * public void initialize() {
  *   setBGColor(0, 0, NamedColor.lightsalmon);
- *   drawObject(0, 0, NamedSymbol.sword, NamedColor.blue);
+ *   drawSymbol(0, 0, NamedSymbol.sword, NamedColor.blue);
  * }
  * \endcode
  *
@@ -76,7 +76,7 @@ import bridges.connect.SocketConnection;
  *
  * The bridges game engine will call the gameLoop() function at each
  * frame of the game. You can write this function to modify the state
- * of the game board using setBGColor() and drawObject(). For
+ * of the game board using setBGColor() and drawSymbol(). For
  * instance, the following gameLoop() will color the board randomly
  * one cell at a time.
  *
@@ -106,7 +106,8 @@ import bridges.connect.SocketConnection;
  **/
 
 public abstract class NonBlockingGame extends GameBase {
-
+    private double fps = 30.;
+    
     ///helper class to make Input Management a bit easier.
     private InputHelper ih;
 
@@ -235,7 +236,6 @@ public abstract class NonBlockingGame extends GameBase {
     /// fps of 30 frames per second. This work by waiting until
     /// 1/30th of a second after the last call to this function.
     private void controlFrameRate() {
-        int fps = 30;
         double hz = 1. / fps;
 
         long currenttime = System.currentTimeMillis();
@@ -249,6 +249,15 @@ public abstract class NonBlockingGame extends GameBase {
         timeoflastframe = System.currentTimeMillis();
     }
 
+    /// @brief What frame rate is the game running at?
+    ///
+    /// @return the target framerate. The game could be somewhat
+    /// slower depending on how computationally expensive the
+    /// gameloop is and on the speed of the network.
+    protected double getFrameRate() {
+	return fps;
+    }
+    
     /// Call this function to start the game engine.
     ///
     public void start() {
