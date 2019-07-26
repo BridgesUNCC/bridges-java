@@ -1422,7 +1422,7 @@ public class DataFormatter {
 
 	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws IOException {
 
-		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations?limit=10";
+		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations";
 		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
@@ -1432,7 +1432,7 @@ public class DataFormatter {
 
 			ArrayList<CancerIncidence> canc_objs =
 				new ArrayList<CancerIncidence>(json.size());
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject) json.get(i);
 
 				CancerIncidence c = new CancerIncidence();
