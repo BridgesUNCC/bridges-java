@@ -444,9 +444,6 @@ public class Element<E> extends DataStruct {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Element [name=" + JSONValue.escape(label) + ", identifier=" + identifier

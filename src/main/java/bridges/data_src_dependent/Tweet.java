@@ -31,18 +31,12 @@ public class Tweet extends DataSource {
 		super.setLabel(content);
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.Source#setLabel(java.lang.String)
-	 */
 	@Override
 	public void setLabel(String label) {
 		setContent(label);
 	}
 
 
-	/* (non-Javadoc)
-	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.Source#getLabel()
-	 */
 	@Override
 	public String getLabel() {
 		return getContent();
@@ -65,9 +59,6 @@ public class Tweet extends DataSource {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.Source#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -92,9 +83,6 @@ public class Tweet extends DataSource {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.Source#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Tweet [content=" + this.getContent() + ", date=" + date + "]";

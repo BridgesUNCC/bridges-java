@@ -107,11 +107,6 @@ public class CircSLelement<E> extends SLelement<E> {
 	}
 
 
-	/** (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 *
-	 */
 	@Override
 	public String toString() {
 		return "CircSLelement [next=" + next + ", getNext()=" + getNext()

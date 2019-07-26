@@ -130,9 +130,6 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "SLelement [next=" + next + ", getNext()=" + getNext()
