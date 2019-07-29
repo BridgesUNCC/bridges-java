@@ -1148,30 +1148,12 @@ public class DataFormatter {
 	 * @return OsmData, vertices and edges of Open Street Map data
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
-<<<<<<< HEAD
 	static OsmData downloadMapFile(String url, String hashUrl) throws IOException{
 		File cache_dir = new File("./cache");
 		LRUCache lru = new LRUCache(30);
-=======
-	static OsmData downloadMapFile(String url, String hashUrl) throws IOException {
-		File cache_dir = new File("./bridges_data_cache");
-		ArrayList<String> lru =  new ArrayList<String>();
->>>>>>> 3e7d7372268be74a237f2733a7916c8039c56df2
 
 		lru.get();
 
-<<<<<<< HEAD
-=======
-		//Loads the LRU list
-		File lru_file = new File("./bridges_data_cache/lru.txt");
-		if (lru_file.exists()) {
-			String lruImport = new String(Files.readAllBytes(lru_file.toPath()));
-			String[] x = lruImport.split(",");
-			for (String val : x) {
-				lru.add(val);
-			}
-		}
->>>>>>> 3e7d7372268be74a237f2733a7916c8039c56df2
 		// look for file in cache
 		String content = null;
 		String hash = null;
@@ -1182,19 +1164,7 @@ public class DataFormatter {
 			for (File file : cache_dir.listFiles()) {
 				if (file.getName().equals(hash)) {
 					content = new String(Files.readAllBytes(file.toPath()));
-<<<<<<< HEAD
 					lru.put(hash);
-=======
-
-					//Updates the LRU
-					try {
-						lru.remove(new String(hash));
-					}
-					catch (Exception e) {
-						//Its fine if its not found in LRU
-					}
-					lru.add(0, hash); // pushes the hash to the front of LRU
->>>>>>> 3e7d7372268be74a237f2733a7916c8039c56df2
 				}
 			}
 		}
@@ -1221,45 +1191,11 @@ public class DataFormatter {
 			hash = EntityUtils.toString(hashResp.getEntity());
 
 			//Checks to see if valid hash is generated
-<<<<<<< HEAD
 			if (!hash.equals("false")){
 				lru.put(hash);
 				Files.write(Paths.get("./cache/" + hash), content.getBytes());
 			}
 		}
-
-=======
-			if (!hash.equals("false")) {
-				//Updates the LRU and purges the old map
-				lru.add(0, hash);
-				//Purges old maps from the cache and lru
-				while (lru.size() >= 30) {
-					String dir = "./bridges_data_cache";
-					File old_map = new File(dir);
-					for (File file : old_map.listFiles()) {
-						if (file.getName().replaceAll("[^a-zA-Z0-9]", "").equals(lru.get(lru.size() - 1).replaceAll("[^a-zA-Z0-9]", ""))) { //regexs out any non alphanumeric character
-							file.delete();
-							lru.remove(lru.size() - 1);
-						}
-					}
-				}
-				Files.write(Paths.get("./bridges_data_cache/" + hash), content.getBytes());
-			}
-		}
-
-		//Saves the LRU list
-		String output = "";
-		int count = 1;
-		for (String y : lru) {
-			output = output + y.replaceAll("[^a-zA-Z0-9]", ""); //regexs out any non alphanumeric character
-			if (lru.size() != count) {
-				output = output + ",";
-			}
-			count++;
-		}
-		Files.write(Paths.get("./bridges_data_cache/lru.txt"), output.getBytes());
-
->>>>>>> 3e7d7372268be74a237f2733a7916c8039c56df2
 
 		// parse that data
 		Gson gson = new Gson();
