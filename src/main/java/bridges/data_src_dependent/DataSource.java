@@ -12,9 +12,6 @@ abstract class DataSource implements Source {
 		return label;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.Source#compareTo(edu.uncc.cs.bridgesV2.data_src_dependent.Source)
-	 */
 	@Override
 	public int compareTo(DataSource o) {
 		if ( o != null)

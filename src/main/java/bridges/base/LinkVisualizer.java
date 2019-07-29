@@ -18,20 +18,19 @@ import org.json.simple.JSONValue;
  *  Visual properties include color, thickness, and opacity.
  *  Objects of this class are stored as part of the Element class.
  *  Generally, a user will manipulate the LinkVisualizer returned from the
- *  Element's getLinkVisualizer(Element it) method (which it is the Bridges element
+ *  Element.getLinkVisualizer() method (which it is the Bridges element
  *	this element is linked to), and then set attributes using its methods. Links are
  *  utilized in all types of linked lists, tree and graph structures.
  *
- *  Supported attribute values are as follows:<p>
+ *  Supported attribute values are as follows:
  *
- *  <b>Supported Colors (by name)</b>:
+ *  <b>Color:</b> Use color with setColor() and getColor(). <b>:by name:</b>
  *		See the Color class for the complete list.
+ *  <b>by RGBA Specification:</b>  Range: 0-255 for each component.
  *
- *  <b> Color by RGBA Specification :</b>  Range: 0-255 for each component <p>
+ *  <b> Thickness: </b> Range : 0.0-50.0. Use thickness with setThickness() and getThickness().
  *
- *  <b> Thickness: </b> Range : 0.0-50.0
- *
- *  <b> Opacity: </b> Range (0.0-1.0) </p>
+ *  <b> Opacity: </b> Range (0.0-1.0). use opacity with setOpacity(), getOpacity().
  *
  *  @author Mihai Mehedint, Kalpathi Subramanian
  *
@@ -68,15 +67,10 @@ public class LinkVisualizer {
 	// link thickness
 	private double thickness;
 
-	// link weight
-	private double weight;
-
-
 	public LinkVisualizer() {
 		super();
 		color = new Color(70, 130, 180, 1.0f);
 		setThickness(1.0);
-		setWeight(1.0);
 	}
 
 	/**
@@ -100,11 +94,9 @@ public class LinkVisualizer {
 	}
 
 	/**
-	 * Set the thickness of the link in the Bridge Visualization in pixels; thickness
-	 * shoudl be in the range 0-50.0
+	 * @brief Set the thickness of the link in the Bridge Visualization.
 	 *
-	 * @param thickness of the link
-	 *
+	 * @param th thickness of the link in pixels; thickness should be in [0-50.0].
 	 */
 	public void setThickness(double th) {
 
@@ -119,27 +111,6 @@ public class LinkVisualizer {
 	 */
 	public double getThickness() {
 		return thickness;
-	}
-
-	/**
-	 * Set the weight of the link, useful in graph algorithms, for example.
-	 * weight value is user defined, and determined by the input graph specification.
-	 *
-	 * @param wt
-	 *
-	 */
-	public void setWeight(double wt) {
-		// is user defined so no checking
-		weight = wt;
-	}
-
-	/**
-	 * Get the weight of the link
-	 *
-	 * @return the stored edge weight
-	 */
-	public double getWeight() {
-		return weight;
 	}
 
 	/**
@@ -191,22 +162,18 @@ public class LinkVisualizer {
 	}
 
 	/**
-	 * Sets the opacity of the link in the Bridges Visualization,
-	 *  0 is fully transparent, 1 for fully opaque,
+	 * @brief  Sets the opacity of the link in the Bridges Visualization.
 	 *
-	 * @param opacity, a float in the range  0-1.0 representing
-	 *		link transparency
+	 * @param opacity a float in [0-1.0]. 0 is fully transparent, 1 for fully opaque.
 	 */
 	public void setOpacity(float opacity) {
 		color.setAlpha(opacity);
 	}
 
 	/**
+	 * 	@brief Get the opacity of the link in the Bridges Visualization
 	 *
-	 * 	Get the opacity of the link in the Bridges Visualization
-	 *
-	 * 	@return the opacity value (in the range 0.0-1.0)
-	 *
+	 * 	@return the opacity value in [0.0-1.0]. 0 is fully transparent, 1 for fully opaque.
 	 */
 	public float getOpacity() {
 		return (color.getAlpha());
@@ -225,9 +192,7 @@ public class LinkVisualizer {
 			Float.toString(this.getColor().getAlpha()) +
 			CLOSE_BOX + COMMA +
 			QUOTE + "thickness" + QUOTE + COLON +
-			Double.toString(this.getThickness()) + COMMA +
-			QUOTE + "weight" + QUOTE + COLON +
-			Double.toString(this.getWeight());
+			Double.toString(this.getThickness());
 
 		String label = this.getLabel();
 		if (label != null && !label.isEmpty()) {

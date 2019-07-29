@@ -533,10 +533,11 @@ public class SampleDataGenerator {
 	}
 
 	/**
-	 * Pick one of the names given a hash
+	 * @brief Pick one entry of a string based on a random value.
+	 *
 	 * The reason for this is that you can easily pick from either list.
-	 * @param available_friend_names
-	 * @param hash
+	 * @param choices possible returns values
+	 * @param hash random value.
 	 * @return a String from the list
 	 */
 	private static String pickOneOf(String[] choices, int hash) {

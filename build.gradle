@@ -11,7 +11,7 @@ apply plugin: 'signing'
 /// General
 ///
 group = "edu.uncc.cs.bridges"
-version = "2.4.1"
+version = "3.0.0b1"
 
 
 ///

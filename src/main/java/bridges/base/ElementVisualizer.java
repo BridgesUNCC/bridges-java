@@ -18,18 +18,18 @@ import java.util.Random;
  *	Element's getVisualizer() method, and then set attributes using its methods.
  *  Supported attributed values are as follows:<br>
  *
- *  Supported colors by name: See the Color class for the complete list
- *
- *	<b> Color by RGBA Specification :</b>  Range: 0-255 for each component <p>
+ *  <b>Color:</b> Supported colors by <b>name</b>: See the Color class for the complete list;
+ *	by <b>RGBA Specification :</b>  Range: 0-255 for each component
  *
  *	<b>	Supported Shapes: </b>
- *
  *	"circle", "square", "diamond", "cross",
- *	"triangle", "star", "wye" <p>
+ *	"triangle", "star", "wye". set it with setShape() and getShape().
  *
- *	<b> Shape Size</b> : Range (0-50) </p>
+ *	<b> Shape Size</b> : Range [0-50]. Set it with setSize() and getSize().
  *
- *	<b> Opacity: </b> Range (0.0-1.0) </p>
+ *	<b> Opacity: </b> Range [0.0-1.0]. Use it with setOpacity() and getOpacity().
+ *
+ *      <b> Location: </b> Use it with setLocation(), getLocationX(), and getLocationY().
  *
  *	@author Mihai Mehedint, Kalpathi Subramanian
  *
@@ -116,15 +116,12 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 *
-	 * Construct an ElementVisualizer with its color set to "aColor", its shape
-	 * set to "aShape", its opacity set to "opacity" and size set to "size".
+	 * @brief Construct an ElementVisualizer with given color, shape, opacity, and size.
 	 *
 	 * @param aColor the string that represents one of the Bridges colors.
 	 * @param aShape the string that represents one of the Bridges shapes
-	 * @param opacity a double between 0 and 1 representing how transparent the node
-	 *            should be on the Bridges Visualization. 0 for invisible, 1 for
-	 *            fully visible, 0-1 for varying transparency.
+	 * @param opacity a double in [0;1] for varying transparency representing how transparent the node
+	 *            should. 0 for invisible, 1 for fully visible/
 	 * @param size
 	 *            the double that represents the size of the Element on the
 	 *            Bridges Visualization
@@ -165,7 +162,7 @@ public class ElementVisualizer {
 
 	/**
 	 *
-	 * Get the size of the Element in the Bridges Visualiation
+	 * Get the size of the Element in the Bridges Visualization
 	 *
 	 * @return the size in pixels of the Element in the Bridges Visualization
 	 *
@@ -175,8 +172,7 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 *
-	 *  Set the color of the Element in the Bridges Visualization to "aColor".
+	 *  @brief Set the color of the Element in the Bridges Visualization.
 	 *
 	 *	@param col_name the string reprsenting the color of the Element in
 	 *  	the Bridges Visualization; see the Color class for the list
@@ -188,11 +184,10 @@ public class ElementVisualizer {
 	}
 
 	/**
+	 *	@brief Set the color of the Element in the Bridges Visualization given
+	 *	RGBA components
 	 *
-	 *	Set the color of the Element in the Bridges Visualization given
-	 *	RGBA components (0-255 range)
-	 *
-	 *	@param r,g, b, a color components
+	 *	@param r,g, b, a color components. r, g, b are in the [0-255] range, a in [0,1].
 	 *
 	 */
 	public void setColor(Integer r, Integer g, Integer b, float a) {
@@ -203,11 +198,9 @@ public class ElementVisualizer {
 	}
 
 	/**
+	 * @brief Set the color of the Element in the Bridges Visualization.
 	 *
-	 *	Set the color of the Element in the Bridges Visualization to "aColor".
-	 *  	given a Color object
-	 *
-	 * @param col  Color object
+	 * @param c  Color to set.
 	 *
 	 */
 	public void setColor(Color c)  {
@@ -269,20 +262,17 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 *
-	 * 	Get the opacity of the Element in the Bridges Visualization
+	 * 	@brief Get the opacity of the Element in the Bridges Visualization
 	 *	@return the opacity value
-	 *
 	 */
 	public float getOpacity() {
 		return (color.getAlpha());
 	}
 
 	/**
-	 *  Set the location (x, y)  of the element - used for displaying elements
-	 *	in maps
+	 *  @brief Set the location (x, y)  of the element
 	 *
-	 *	@param location the X,Y location(array of 2 doubles) to be set
+	 *	@param x,y location to be set
 	 */
 	public void setLocation(double x, double y) {
 		locationX = x;
@@ -290,24 +280,22 @@ public class ElementVisualizer {
 	}
 
 	/**
-	 *
-	 *  Get the X coordinate position of the element
+	 *  @brief Get the X coordinate position of the element
 	 *
 	 * @return location X coordinate
 	 *
 	 **/
-	double getLocationX() {
+	public double getLocationX() {
 		return locationX;
 	}
 
 	/**
-	 *
-	 *  Get the Y coordinate  position  of the element
+	 *  @brief Get the Y coordinate  position  of the element
 	 *
 	 * @return location Y coordinate
 	 *
 	 **/
-	double getLocationY() {
+	public double getLocationY() {
 		return locationY;
 	}
 

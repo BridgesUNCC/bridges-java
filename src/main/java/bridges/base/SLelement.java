@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 /**
  * 	@brief This class can be used to instantiate Singly Linked Elements.
 
- * 	This class extends Element and takes a generic parameter <E>
+ * 	This class extends Element and takes a generic parameter E
  *	representing application specific data. This element forms the basic
  *	building block for singly linked lists. Singly linked elements have a field
  *	pointing to the next element along the list.
@@ -25,7 +25,7 @@ import java.util.NoSuchElementException;
  *
  * @date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
- * @param <E> The generic parameter object that is part of this element, representing
+ * @param E The generic parameter object that is part of this element, representing
  *			application specific data.
  *
  *	\sa Example Tutorial at http://bridgesuncc.github.io/tutorials/SLL.html
@@ -130,9 +130,6 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "SLelement [next=" + next + ", getNext()=" + getNext()

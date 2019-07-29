@@ -3,6 +3,7 @@ package bridges.base;
 import bridges.base.Array;
 import bridges.validation.InvalidValueException;
 import bridges.validation.Validation;
+import java.util.Iterator;
 
 /**
  *
@@ -15,6 +16,15 @@ import bridges.validation.Validation;
  *	This class can be used to create 1D arrays of type Element<E>  where E
  *	is a generic object representing application specific data.
  *
+ * Array1D has iterator semantic to enable range for loops. For instance,
+ *
+ * \code{java}
+ * Array1D<Integer> arr = something();
+ * for (Integer i : arr)
+ *   System.out.println(i);
+ * \endcode
+ *
+ *
  * @param <E> The generic parameter object that is part of this element, representing
  *          application specific data.
  *
@@ -22,7 +32,7 @@ import bridges.validation.Validation;
  *		http://bridgesuncc.github.io/tutorials/Array.html (1D, 2D, and 3D Array)<br>
  *
  */
-public class Array1D<E> extends Array<E> {
+public class Array1D<E> extends Array<E> implements Iterable<E> {
 	private int size;						// array size
 
 	/*
@@ -34,7 +44,7 @@ public class Array1D<E> extends Array<E> {
 	}
 
 	/**
-	 *  Create a 1D array object 
+	 *  Create a 1D array object
 	 *
 	 *  @param sz number of elements in the array
 	 *
@@ -65,5 +75,26 @@ public class Array1D<E> extends Array<E> {
 	 **/
 	public void setElement(int indx, Element<E> el) {
 		super.setElement(indx, el);
+	}
+
+
+	public Iterator<E> iterator() {
+		class Array1DIterator<E> implements Iterator<E> {
+			public E next() {
+				E ret = arr.getElement(index).getValue();
+				index++;
+				return ret;
+			}
+			public boolean hasNext() {
+				return index < arr.size;
+			}
+			public Array1D<E> arr;
+			public int index;
+			Array1DIterator (Array1D<E> a) {
+				arr = a;
+				index = 0;
+			}
+		}
+		return new Array1DIterator (this);
 	}
 }

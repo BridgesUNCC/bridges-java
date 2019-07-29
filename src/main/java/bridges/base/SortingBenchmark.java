@@ -5,7 +5,41 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 
+/**
+ * @brief Benchmarks sorting algorithm
+ *
+ * Benchmarks sorting algorithms and add time series to a LineChart.
+ *
+ * The benchmark goes from an initial size controlled by
+ * setBaseSize() to a largest size controlled by setMaxSize(). One
+ * can also set a maximum time spent on a particular run using
+ * setTimeCap().
+ *
+ * The benchmark goes from a array size of n to the next one of
+ * geoBase * n + increment, where the base is controlled by
+ * setGeometric() and increment is controlled by
+ * setIncrement(). For simpler use one can set a purley linear
+ * sampling with linearRange() or a purely geometric one with
+ * geometricRange().
+ *
+ * The sorting algorithms must have for prototype:
+ * static void mysort(int[]);
+ * and can be passed to the run function for being benchmarked. A typical use would look something like
+ *
+ * \code{.java}
+ * LineChart lc;
+ * SortingBenchmark sb (lc);
+ * sb.linearRange (100, 1000, 5);
+ * sb.run("mysortingalgorithm", MyClass::mysort);
+ * \endcode
+ *
+ * @author Erik Saule
+ * @date 07/20/2019
+ *
+ **/
 public class SortingBenchmark {
+	private boolean debug = false;
+
 	private LineChart plot;
 
 	private Random r;
@@ -30,18 +64,38 @@ public class SortingBenchmark {
 		time_cap_ms = Long.MAX_VALUE;
 	}
 
+	/**
+	* @brief Puts a cap on the largest array to be used
+	*
+	* @param size Maximum size considered
+	**/
 	public void setMaxSize(int size) {
 		maxSize = size;
 	}
 
+	/**
+	 * @brief Smallest array to be used
+	 *
+	 * @param size of the smallest array to use/
+	 **/
 	public void setBaseSize(int size) {
 		baseSize = size;
 	}
 
+	/**
+	 * @brief Sets the increment for the benchmark size
+	 *
+	 * @param inc new value of the increment
+	 **/
 	public void setIncrement(int inc) {
 		increment = inc;
 	}
 
+	/**
+	 * @brief Sets a geometric progression for the benchmark size
+	 *
+	 * @param base new base of the geometric progression
+	 **/
 	public void setGeometric(double base) {
 		geoBase = base;
 	}
@@ -105,13 +159,32 @@ public class SortingBenchmark {
 		}
 	}
 
+	private boolean check (int[] arr, int n) {
+		boolean ok = true;
+		for (int i = 1; i < n; ++i) {
+			if (arr[i] < arr[i - 1]) {
+				ok = false;
+				break;
+			}
+		}
+		return ok;
+	}
+
+	/**
+	 * @brief benchmark a particular algorithm
+	 *
+	 * @param algoName Screen name of the algorithm
+	 * @param runnable the actual algorithm
+	 **/
 	public void run(String algoName, Consumer<int[]> runnable) {
 
 		ArrayList<Double> time = new ArrayList<Double>();
 		ArrayList<Double> xData = new ArrayList<Double>();
 
-		System.out.println(geoBase);
-		System.out.println(increment);
+		if (debug) {
+			System.out.println(geoBase);
+			System.out.println(increment);
+		}
 
 		for (int n = baseSize; n <= maxSize;
 			n = Math.max((int)(geoBase * n) + increment, n + 1)) {
@@ -125,6 +198,11 @@ public class SortingBenchmark {
 			runnable.accept(arr);
 			long end = System.currentTimeMillis();
 			long runTime = end - start;
+
+			if (!check(arr, n)) {
+				System.err.println("Sorting algorithm " + algoName + " is incorrect");
+			}
+
 			time.add ((double)runTime );
 			xData.add ( (double)n );
 

@@ -5,9 +5,25 @@ import java.nio.ByteBuffer;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * @brief This is a class in BRIDGES for representing an (n x n) grid.
- * @author David Burlinson
- * @param
+ * @brief This is a class in BRIDGES for representing an image
+ *
+ * A ColorGrid is essentially an image. One can construct an image of
+ * a particular size using the ColorGrid() constructor to be either
+ * blank or filled with a particular Color depending on which
+ * constructor is called.
+ *
+ * One can change the color of a pixel with set(). For instance, like that:
+ * \code{java}
+ * ColorGrid grid = new ColorGrid(rows, columns);
+ * grid.set (2, 3, new Color("lightsalmon");
+ * \endcode
+ *
+ * You can get a ColorGrid from an existing Bridges ColorGrid assignment using
+ * bridges.connect.DataSource.getColorGridFromAssignment()
+ *
+ * There is a tutorial about ColorGrid : http://bridgesuncc.github.io/tutorials/Grid.html
+ *
+ * @author David Burlinson, Erik Saule
 **/
 public class ColorGrid extends Grid<Color> {
 	private static Color baseColor = new Color(0, 0, 0, 1.0f);
@@ -67,15 +83,22 @@ public class ColorGrid extends Grid<Color> {
 			}
 		}
 	}
+	/**
+	 *	Get the height of the color grid
+	 *
+	 *	@return the height (number of rows) of the grid
+	 */
+	public int getHeight() {
+		return gridSize[0];
+	}
 
 	/**
-	 *  Set the (row, col) element in the ColorGrid
+	 *	Get the width of the color grid
 	 *
-	 *  @param row  grid row number
-	 *  @param col  grid column number
-	 *  @param color color of the cell
-	public void set(Integer row, Integer col, Color color) {
-		super.set(row, col, color);
+	 *	@return the width (number of columns) of the grid
+	 */
+	public int getWidth() {
+		return gridSize[1];
 	}
 
 	/**
