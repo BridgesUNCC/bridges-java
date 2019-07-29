@@ -51,25 +51,25 @@ public class Array2D<E> extends Array<E> {
 	 *
 	 *	Get the object at index x, y -- for 2D arrays
 	 *
-	 *	@param x  - column index
-	 *	@param y  - row index
+	 *	@param row  - row index
+	 *	@param col  - column index
 	 *	@return Element<E>  object at x, y
 	 */
-	public Element<E> getElement(int x, int y) {
-		return super.getElement(y * num_cols + x);
+	public Element<E> getElement(int row, int col) {
+		return super.getElement(row * num_cols + col);
 	}
 
 	/**
 	 *
 	 *	Set the input object at x, y - 2D arrays
 	 *
-	 *	@param x  column index into the array
-	 *	@param y  row index into the array
+	 *	@param row  row index into the array
+	 *	@param col  index index into the array
 	 *	@param el  element object to be assigned at 'indx'
 	 *
 	 */
-	public void setElement(int x, int y, Element<E> el) {
-		this.setElement(y * num_cols + x, el);
+	public void setElement(int row, int col, Element<E> el) {
+		this.setElement(row * num_cols + col, el);
 	}
 
 }
