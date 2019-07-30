@@ -253,20 +253,16 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	@param src source vertex of edge
 	 *	@param dest destination vertex of edge
 	 *
+	 * @return the edge data, or null if the edge does not exist
 	 */
 	public E2 getEdgeData(K src, K dest) {
 		// check to see if the two vertices exist, else
-		// throw an exception
+		// return null
 
-		try {
 			if (vertices.get(src) == null || vertices.get(dest) == null) {
-				throw new NullPointerException("Vertex " + src + " or " + dest +
-					" does not exist! Add the vertex before creating the edge.");
+			    return null;
 			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+
 		// look for the edge
 		SLelement<Edge<K, E2>> sle = adj_list.get(src);
 		while (sle != null) {
@@ -275,9 +271,6 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 				return sle.getValue().getEdgeData();
 			sle = sle.getNext();
 		}
-		if (sle == null)
-			throw new NullPointerException("Edge from " + src + " to " + dest +
-				" does not exist!");
 
 		// should never reach here
 		return null;
@@ -352,7 +345,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	 @param src   source vertex
 	 *	 @param dest   destination  vertex
 	 *
-	 *	 @return the LinkVisualizer of an edge from src to dest
+	 *	 @return the LinkVisualizer of an edge from src to dest, or null otherwise
 	 *
 	 */
 	public LinkVisualizer getLinkVisualizer (K src, K dest) {
@@ -360,14 +353,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		// and check to see if they exist
 		Element<E1> v1 = vertices.get(src);
 		Element<E1> v2 = vertices.get(dest);
-		try {
-			if (v1 == null || v2 == null) {
-				throw new NullPointerException("Vertex " + src + " or " + dest +
-					" does not exist! First add the vertices to the graph.");
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+		if (v1 == null || v2 == null) {
+		    return null;
 		}
 		return v1.getLinkVisualizer(v2);
 	}
