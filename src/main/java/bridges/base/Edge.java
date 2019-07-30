@@ -21,7 +21,7 @@ public class Edge<K, E2> {
 	private K from;						// source vertex
 	private K to;						// destination vertex
 	private E2 edge_data;				// edge specific data
-	private LinkVisualizer lvis;		// link visualizer for this edge
+	LinkVisualizer lvis;		// link visualizer for this edge
 	/**
 	 * @brief Construct an edge using each extremities, user data, and styling information.
 	 *
