@@ -54,16 +54,16 @@ import java.util.ArrayList;
  *   System.out.println("a -> "+e.getTo());
  * \endcode
  *
+ * \sa Example tutorial at
+ *		http://bridgesuncc.github.io/tutorials/Graph_AL.html
+ *
  * @author Kalpathi Subramanian, Erik Saule
  *
  * @date 6/29/15, 5/18/17, 4/24/18, 7/14/19
  *
- * @param <K>  orderable key (string, int, etc) that is used to index into vertex
- * @param <E1> holds vertex specific information, defined by application
- * @param <E2> holds edge specific information, defined by application
- *
- * \sa Example tutorial at <p>
- *		http://bridgesuncc.github.io/tutorials/Graph.html
+ * @param K  orderable key (string, int, etc) that is used to index into vertex
+ * @param E1 holds vertex specific information, defined by application
+ * @param E2 holds edge specific information, defined by application
  *
  */
 public class GraphAdjList<K, E1, E2> extends DataStruct  {

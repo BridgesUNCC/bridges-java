@@ -21,14 +21,14 @@ import java.util.NoSuchElementException;
  *	another element, appropriate for setting link attributes, for instance, between
  *	the current element and its next element.
  *
+ *	@sa Example Tutorial at http://bridgesuncc.github.io/tutorials/SinglyLinkedList.html
+ *
  * @author Mihai Mehedint, Kalpathi Subramanian
  *
  * @date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
  * @param E The generic parameter object that is part of this element, representing
  *			application specific data.
- *
- *	\sa Example Tutorial at http://bridgesuncc.github.io/tutorials/SLL.html
  */
 
 public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {

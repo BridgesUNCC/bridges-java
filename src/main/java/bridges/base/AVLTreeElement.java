@@ -15,9 +15,13 @@ import bridges.base.*;
  *
  *  AVLTree elements also have a LinkVisualizer object, that is used when they are
  *	linked to another element, appropriate for setting link attributes, for instance,
- *	between *  the current element and its left or right child
+ *	between  the current element and its left or right child
  *
- *  @param E he generic parameter object that is part of this element, representing
+ *
+ *  @sa Example tutorial using AVLTreeElement at
+ *      http://bridgesuncc.github.io/tutorials/AVL.html
+ *
+ *  @param E the generic parameter object that is part of this element, representing
  *      application specific data.
  *  @param K is the search key parameter in the AVL tree node; K must be orderable, such
  *      as integer, float, string, etc., on which relational operators work.
@@ -25,10 +29,6 @@ import bridges.base.*;
  *  @author Kalpathi Subramanian, Mihai Mehedint
  *
  *  @date 6/22/16, 1/7/17, 5/17/17, 7/12/19
- *
- *  \sa Example tutorial using AVLTreeElement at <br>
- *      http://bridgesuncc.github.io/Hello_World_Tutorials/AVL.html
- *
  */
 
 public class AVLTreeElement<K, E>  extends BSTElement<K, E> {

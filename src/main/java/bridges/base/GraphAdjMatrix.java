@@ -34,16 +34,16 @@ import java.util.Set;
  *  vertex ids, making it easier to set visual attributes to graph nodes and
  *	links.
  *
+ *  @sa Example tutorial at http://bridgesuncc.github.io/tutorials/Graph_AM.html
+ *      
+ *
  *  @author Kalpathi Subramanian, Mihai Mehedint
  *
  *  @date 7/12/15, 5/18/17, 4/23/18
  *
- *  @param <K> orderable key (string, int, etc) that is used to index into vertex
- *  @param <E1> vertex specific information, for graph vertices
- *  @param <E2> edge specific information, for graph vertices
- *
- *  \sa Example tutorial at <p>
- *      ?? TO DO
+ *  @param K orderable key (string, int, etc) that is used to index into vertex
+ *  @param E1 vertex specific information, for graph vertices
+ *  @param E2 edge specific information, for graph vertices
  *
  */
 

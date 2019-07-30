@@ -24,11 +24,11 @@ import java.util.HashMap;
  *	another element, appropriate for setting link attributes, such as in linked lists,
  *	between the current element and its next or previous nodes.
  *
+ *	\sa Example Tutorial at <br>
+ *		http://bridgesuncc.github.io/tutorials/DoublyLinkedList.html
+ *
  *	@param E The generic parameter object that is part of this element, representing
  *          application specific data.
- *
- *	\sa Example Tutorial at <br>
- *		http://bridgesuncc.github.io/tutorials/DLL.html
  */
 
 public class DLelement<E> extends SLelement<E> {

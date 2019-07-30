@@ -16,15 +16,15 @@ package bridges.base;
  *  another element, appropriate for setting link attributes, for instance, between
  *  the current element and its left or  right child
  *
- * @param E he generic parameter object that is part of this element, representing
+ * @sa Example Tutorial at
+ *			http://bridgesuncc.github.io/tutorials/BinTree.html
+ *
+ * @param E the generic parameter object that is part of this element, representing
  *		application specific data.
  *
  * @author Kalpathi Subramanian, Mihai Mehedint
  *
  * @date 6/22/16, 1/7/17, 5/17/17
- *
- * \sa Example Tutorial at
- *			http://bridgesuncc.github.io/tutorials/BinTree.html
  */
 
 public class BinTreeElement<E> extends TreeElement<E> {

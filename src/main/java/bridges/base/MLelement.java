@@ -31,14 +31,14 @@ import java.util.Vector;
  *  which connects the element to the following elements; a similar logic follows for
  *	sublists.
  *
+ *	@sa Example Tutorial at http://bridgesuncc.github.io/tutorials/MultiList.html
+ *
  * @author Kalpathi Subramanian
  *
  * @date 5/24/17, 7/14/19
  *
- * @param <E> The generic parameter object that is part of this element, representing
+ * @param E The generic parameter object that is part of this element, representing
  *			either application specific data, or a pointer to a sublist.
- *
- *	\sa Example Tutorial at http://bridgesuncc.github.io/tutorials/ML.html
  */
 
 public class MLelement<E> extends SLelement<E> {

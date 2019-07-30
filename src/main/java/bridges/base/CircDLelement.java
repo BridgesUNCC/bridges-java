@@ -24,15 +24,16 @@ package bridges.base;
  *	linked to another element, appropriate for setting link attributes, between
  *  the element and its previous or next nodes.
  *
+ *	\sa Example Tutorial at 
+ *		http://bridgesuncc.github.io/tutorials/CircularDoublyLinkedList.html
+ *
  *  @author Kalpathi Subramanian
  *
  *	@date   7/17/16, 1/16/17, 7/14/19
  *
- *  @param <E>  the generic parameter object that contains application specific data,
+ *  @param E  the generic parameter object that contains application specific data,
  *		defined by the user when instantiating this object.
  *
- *	\sa Example Tutorial at <br>
- *		http://bridgesuncc.github.io/tutorials/CDLL.html
  *
  */
 

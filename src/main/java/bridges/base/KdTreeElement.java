@@ -21,10 +21,13 @@ import java.util.Map.Entry;
  *  convenient to generate visual representation
  *  to allow for use in a binary search tree implementation.
  *
- * Generic Parameters:
- *      K that is the search key type - this is usually a number, integer
+ *
+ *  @sa Example tutorial using AVLTreeElement at
+ *      http://bridgesuncc.github.io/tutorials/KdTree.html
+ *
+ * @param K that is the search key type - this is usually a number, integer
  *          or float
- *      E the application data type
+ * @param E the application data type
  *
  * @author Kalpathi Subramanian
  * @date 12/26/18, 7/12/19
