@@ -22,7 +22,7 @@ package bridges.base;
  *	linked to another element, appropriate for setting link attributes, between
  *  an element and its next element.
  *
- *     @\sa Example Tutorial at 
+ *     @\sa Example Tutorial at
  *			http://bridgesuncc.github.io/tutorials/CircularSinglyLinkedList.html
  *
  *	@author Kalpathi Subramanian

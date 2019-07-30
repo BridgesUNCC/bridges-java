@@ -223,10 +223,10 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		// check to see if the two vertices exist, else
 		// throw an exception
 
-			if (vertices.get(src) == null || vertices.get(dest) == null) {
-				throw new NullPointerException("Vertex " + src + " or " + dest +
-					" does not exist! Add the vertex before creating the edge.");
-			}
+		if (vertices.get(src) == null || vertices.get(dest) == null) {
+			throw new NullPointerException("Vertex " + src + " or " + dest +
+				" does not exist! Add the vertex before creating the edge.");
+		}
 		// look for the edge
 
 		SLelement<Edge<K, E2>> sle = adj_list.get(src);
@@ -250,12 +250,12 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *
 	 * @return the edge data, or null if the edge does not exist
 	 */
-    private Edge<K, E2> getEdge(K src, K dest) {
+	private Edge<K, E2> getEdge(K src, K dest) {
 		// check to see if the two vertices exist, else
 		// return null
-			if (vertices.get(src) == null || vertices.get(dest) == null) {
-			    return null;
-			}
+		if (vertices.get(src) == null || vertices.get(dest) == null) {
+			return null;
+		}
 
 		// look for the edge
 		SLelement<Edge<K, E2>> sle = adj_list.get(src);
@@ -269,8 +269,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		// should never reach here if the edge exist
 		return null;
 	}
-    
-    
+
+
 	/**
 	 *	@brief Gets data for an edge
 	 *
@@ -280,11 +280,11 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 * @return the edge data, or null if the edge does not exist
 	 */
 	public E2 getEdgeData(K src, K dest) {
-	    Edge<K, E2> e =getEdge(src, dest);
-	    if (e == null)
-		return null;
-	    else
-		return e.getEdgeData();
+		Edge<K, E2> e = getEdge(src, dest);
+		if (e == null)
+			return null;
+		else
+			return e.getEdgeData();
 	}
 	/**
 	 *	@brief This method returns the graph vertices
@@ -360,11 +360,11 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *
 	 */
 	public LinkVisualizer getLinkVisualizer (K src, K dest) {
-	    	    Edge<K, E2> e =getEdge(src, dest);
-	    if (e == null)
-		return null;
-	    else
-		return e.lvis;
+		Edge<K, E2> e = getEdge(src, dest);
+		if (e == null)
+			return null;
+		else
+			return e.lvis;
 	}
 	/**
 	 * @brief Access the ElementVisualizer associated with a vertex

@@ -35,7 +35,7 @@ import java.util.Set;
  *	links.
  *
  *  @sa Example tutorial at http://bridgesuncc.github.io/tutorials/Graph_AM.html
- *      
+ *
  *
  *  @author Kalpathi Subramanian, Mihai Mehedint
  *

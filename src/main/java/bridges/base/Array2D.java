@@ -45,7 +45,8 @@ public class Array2D<E> extends Array<E> {
 	public Array2D(int rows, int cols) {
 		super();
 		int[] dim = {cols, rows};
-		num_rows = rows; num_cols = cols;
+		num_rows = rows;
+		num_cols = cols;
 		this.setSize (2, dim);
 	}
 

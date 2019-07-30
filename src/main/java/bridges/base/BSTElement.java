@@ -18,7 +18,7 @@ import org.json.simple.JSONValue;
  *  another element, appropriate for setting link attributes, for instance, between
  *  the current element and its left or right child
  *
- *	@sa Example tutorial using BSTElement at 
+ *	@sa Example tutorial using BSTElement at
  *		http://bridgesuncc.github.io/tutorials/BinarySearchTree.html
  *
  *	@param E the generic parameter object that is part of this element, representing

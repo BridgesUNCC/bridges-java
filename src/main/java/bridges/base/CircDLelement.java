@@ -24,7 +24,7 @@ package bridges.base;
  *	linked to another element, appropriate for setting link attributes, between
  *  the element and its previous or next nodes.
  *
- *	\sa Example Tutorial at 
+ *	\sa Example Tutorial at
  *		http://bridgesuncc.github.io/tutorials/CircularDoublyLinkedList.html
  *
  *  @author Kalpathi Subramanian

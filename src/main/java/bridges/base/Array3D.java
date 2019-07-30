@@ -91,6 +91,6 @@ public class Array3D<E> extends Array<E> {
 	 *
 	 */
 	public void setElement(int slice, int row, int col, Element<E> el) {
-		super.setElement(slice*num_cols*num_rows + row*num_cols + col, el);
+		super.setElement(slice * num_cols * num_rows + row * num_cols + col, el);
 	}
 }
