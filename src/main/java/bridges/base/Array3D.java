@@ -56,7 +56,7 @@ public class Array3D<E> extends Array<E> {
 	 *  @param slices number of slices
 	 *
 	 */
-	public Array3D(int cols, int rows, int slices) {
+	public Array3D(int slices, int rows, int cols) {
 		super();
 		int[] dims = {cols, rows, slices};
 		this.setSize (3, dims);
@@ -67,16 +67,16 @@ public class Array3D<E> extends Array<E> {
 
 	/**
 	 *
-	 *	Get the object at x, y, z -- for 3D arrays
+	 *	Get the object at slice, row, column -- for 3D arrays
 	 *
-	 *	@param x  - column index
-	 *	@param y  - row index
-	 *	@param z  - slice index
+	 *	@param slice  - slice index
+	 *	@param row  - row index
+	 *	@param col  - column index
 	 *
-	 *	@return Element<E>  object at x, y, z
+	 *	@return Element<E>  object at slice, row, column
 	 */
-	public Element<E> getElement(int x, int y, int z) {
-		return super.getElement(z * num_cols * num_rows + y * num_cols + x);
+	public Element<E> getElement(int slice, int row, int col) {
+		return super.getElement(slice * num_cols * num_rows + row * num_cols + col);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class Array3D<E> extends Array<E> {
 	 *	@param el  element object to be assigned at 'indx'
 	 *
 	 */
-	public void setElement(int col, int row, int slice, Element<E> el) {
-		super.setElement(slice * num_cols * num_rows + row * num_cols + col, el);
+	public void setElement(int slice, int row, int col, Element<E> el) {
+		super.setElement(slice*num_cols*num_rows + row*num_cols + col, el);
 	}
 }
