@@ -1150,7 +1150,7 @@ public class DataFormatter {
 	 */
 	static OsmData downloadMapFile(String url, String hashUrl) throws IOException{
 		File cache_dir = new File("./cache");
-		LRUCache lru = new LRUCache(3);
+		LRUCache lru = new LRUCache(30);
 
 		// look for file in cache
 		String content = null;
