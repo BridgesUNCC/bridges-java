@@ -24,7 +24,7 @@ public class DataSource {
 	*	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
 	*  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
 	*
-	*  More information on the dataset can be found at http://bridgesuncc.github.io/datasets.html 
+	*  More information on the dataset can be found at http://bridgesuncc.github.io/datasets.html
 	*
 	*	@param maxElements  the number of earthquake records retrieved, limited to 5000
 	*  @throws Exception if the request fails
@@ -148,9 +148,9 @@ public class DataSource {
 	 * This function return all the works of Shakespeare in the collection.
 	 *
 	 *  Each record in this collection has
-	 *	information on title, type (poem, Sonnet, play) and text. 
+	 *	information on title, type (poem, Sonnet, play) and text.
 	 *
-	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html 
+	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html
 	 *
 	 *  @throws Exception if the request fails
 	 *
@@ -165,9 +165,9 @@ public class DataSource {
 	 *
 	 *
 	 *  Each record in this collection has
-	 *	information on title, type (poem, Sonnet, play) and text. 
+	 *	information on title, type (poem, Sonnet, play) and text.
 	 *
-	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html 
+	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html
 	 *
 	 * This function returns only some of the works, either the plays, or the poems, depending on the parameters.
 	 *
@@ -185,9 +185,9 @@ public class DataSource {
 	 * 	poems and plays.
 	 *
 	 *  Each record in this collection has
-	 *	information on title, type (poem, Sonnet, play) and text. 
+	 *	information on title, type (poem, Sonnet, play) and text.
 	 *
-	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html 
+	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html
 	 *
 	 *  @throws Exception if the request fails
 	 *
@@ -242,14 +242,15 @@ public class DataSource {
 	 * 	 "san_francisco", "miami", "minneapolis", "dallas"
 	 *
 	 * @param location name of city or area that the server supports
+	 * @param level level of road detail on requested map
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public bridges.data_src_dependent.OsmData getOsmDataOld(String location) throws IOException {
-		return DataFormatter.getOsmDataOld(location);
+	public bridges.data_src_dependent.OsmData getOsmDataOld(String location, String level) throws IOException {
+		return DataFormatter.getOsmData(location, level);
 	}
 
-    
+
 	/**
 	 * Generates Open Street Map URL request for a given set of coordinates and returns the map data
 	 * @param minLat minimum latitude value for the area requested
