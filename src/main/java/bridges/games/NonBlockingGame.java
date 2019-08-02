@@ -269,13 +269,35 @@ public abstract class NonBlockingGame extends GameBase {
         render();
         initialize();
 
-        gameStarted = true;
+	long framelimit = -1;
 
+	{
+	    String str_limit = System.getenv("FORCE_BRIDGES_FRAMELIMIT");
+	    if (str_limit != null) {
+		try {
+		    framelimit = Long.parseLong(str_limit);
+		    System.err.println("Setting framelimit to " + framelimit+ "!");
+		}
+		catch (java.lang.NumberFormatException e) {
+		    System.err.println("FORCE_BRIDGES_FRAMELIMIT environment variable is not an integer. Ignoring it...");
+		}
+	    }
+	}
+
+
+	long frame = 0;
         while (gameStarted) {
             gameLoop();
             render();
             controlFrameRate();
             // System.out.println("rendered");
+	    frame ++;
+ 
+	    if (framelimit > 0 && frame > framelimit) {
+		    quit();
+	    }
         }
+
+	terminateNetwork();
     }
 }

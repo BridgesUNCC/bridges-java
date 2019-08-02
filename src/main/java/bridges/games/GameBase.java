@@ -11,8 +11,8 @@ import bridges.connect.KeypressListener;
 
 public abstract class GameBase {
 
-    protected boolean debug = true;
-    protected boolean gameStarted = false;
+    protected boolean debug = false;
+    protected boolean gameStarted = true;
 
     // /Game map
     private GameGrid grid;
@@ -186,5 +186,11 @@ public abstract class GameBase {
     protected int getBoardHeight() {
 	int size[] = grid.getDimensions();
 	return size[0];
+    }
+
+    /// @brief terminal all network connections
+    /// Note that it takes a minute for all threads to gracefully exit
+    protected void terminateNetwork() {
+	sock.close();
     }
 }

@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 // Wrapper for a socket.io socket connection for BRIDGES
 public class SocketConnection {
-
 	private Bridges bridges;
 
 	public SocketConnection (Bridges b) {
@@ -24,6 +23,7 @@ public class SocketConnection {
 
 	// Register listeners to keypress events
 	public void addListener(KeypressListener toAdd) {
+	    if (Bridges.getDebugFlag())
 		System.out.println("subscribing to keypress events..");
 		listeners.add(toAdd);
 	}
@@ -68,8 +68,8 @@ public class SocketConnection {
 						+ "\",\"assignment\":\""
 						+ bridges.getAssignmentID()
 						+ "\"}");
-					System.out
-					.println("passing credentials to socket server...");
+					if (Bridges.getDebugFlag())
+					    System.out.println("passing credentials to socket server...");
 				}
 			})
 			.on("announcement", new Emitter.Listener() {
@@ -80,7 +80,8 @@ public class SocketConnection {
 				@Override
 				public void call(Object... args) {
 					JSONObject obj = (JSONObject) args[0];
-					System.out.println("announcement: " + obj);
+					if (Bridges.getDebugFlag())
+					    System.out.println("announcement: " + obj);
 				}
 			})
 			.on("keydown", new Emitter.Listener() {
@@ -157,7 +158,8 @@ public class SocketConnection {
 	}
 
 	public void close() {
+	    socket.disconnect();
 		socket.off();
-		socket.disconnect();
+			    socket.close();
 	}
 }
