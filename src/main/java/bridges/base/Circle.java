@@ -8,16 +8,16 @@ import org.json.simple.JSONObject;
  * @brief This class defines a circle and is part of the symbol collection.
  *		A circle has a center and radius
  *
+ * Basic styling such as stroke and fill are defined in the superclass Symbol.
+ *
  * @author Kalpathi Subramanian
  * @date 12/24/18
  *
  */
 public class Circle extends Symbol {
 
-	private String shape = "circle";
-
 	// radius of circle
-	private int radius = 10;
+	private float radius = 1.0f;
 
 
 	/**
@@ -25,17 +25,16 @@ public class Circle extends Symbol {
 	 */
 	public Circle () {
 		super();
+		setCircle(0.0f, 0.0f, 1.0f);
 	}
 
 	/**
 	 *  Construct a circle of radius r
 	 *	@param r  radius of circle
 	 */
-	public Circle (int r) {
-		this();
-		if (r < 0)
-			throw new IllegalArgumentException ("Radius value needs to be positive");
-		radius = r;
+	public Circle (float r) {
+		super();
+		setCircle(0.0f, 0.0f, r);
 	}
 
 	/**
@@ -44,9 +43,9 @@ public class Circle extends Symbol {
 	 *  @param locy  y coordinat of circle center
 	 *	@param r  radius of circle
 	 */
-	public Circle (Float locx, Float locy, int r) {
-		this(r);
-		setLocation (locx, locy);
+	public Circle (float locx, float locy, float r) {
+		super();
+		setCircle (locx, locy, r);
 	}
 
 	/**
@@ -63,7 +62,7 @@ public class Circle extends Symbol {
 	 *
 	 * @param r  radius
 	 */
-	public void setRadius(int r) {
+	public void setRadius(float r) {
 		if (r < 0)
 			throw new IllegalArgumentException ("Illegal value for radius. Must be positive");
 		radius = r;
@@ -77,12 +76,41 @@ public class Circle extends Symbol {
 	 * @param r  radius of circle
 	 * @return none
 	 */
-	public void setCircle (Float locx, Float locy, int r) {
+	public void setCircle (float locx, float locy, float r) {
 		setLocation (locx, locy);
 		if (r < 0)
 			throw new IllegalArgumentException ("Illegal value for radius. Must be positive");
 		radius = r;
+		setShapeType("circle");
 	}
+
+	/**
+	*  Translate the circle
+	*
+	*  @param (tx, ty) translation vector
+	*/
+	public void translate(float tx, float ty) {
+		float[] center = getLocation();
+		this.translatePoint (center, tx, ty);
+		setLocation(center[0], center[1]);
+	}
+	/**
+	*  Scale the circle
+	*  Only the radius needs to be scaled, using a single scale value
+	*
+	*  @param scale factor s
+	*/
+	public void scale(float scale) {
+		// scale only the radius,
+		// center stays the same
+		radius  *= scale;
+	}
+	/**
+	* This method returns the dimensions of the shape: min and max
+	*  values in X and Y
+	*
+	* @return array of 4 values
+	*/
 
 	/**
 	 * This method returns the dimensions of the shape: min and max
@@ -90,10 +118,10 @@ public class Circle extends Symbol {
 	 *
 	 * @return bounding box of circle (array of 4 values)
 	 */
-	public Float[] getDimensions() {
+	public float[] getDimensions() {
 
-		Float[] dims = new Float[4];
-		Float[]  location = getLocation();
+		float[] dims = new float[4];
+		float[]  location = getLocation();
 
 		dims[0] = location[0] - radius;
 		dims[1] = location[0] + radius;
@@ -112,6 +140,8 @@ public class Circle extends Symbol {
 
 		// get the JSON of the attributes of the shape
 		JSONObject shape_json = super.getJSONRepresentation();
+
+		String shape = getShapeType();
 
 		shape_json.put ("name", getLabel());
 		shape_json.put ("shape", shape);

@@ -22,14 +22,15 @@ package bridges.base;
  *	linked to another element, appropriate for setting link attributes, between
  *  an element and its next element.
  *
+ *     @\sa Example Tutorial at
+ *			http://bridgesuncc.github.io/tutorials/CircularSinglyLinkedList.html
+ *
  *	@author Kalpathi Subramanian
  *
  *	@date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
  *	@param <E>  the generic parameter that is defined by the application
  *
- *	\sa Example Tutorial at <br>
- *			http://bridgesuncc.github.io/tutorials/CSLL.html
  */
 public class CircSLelement<E> extends SLelement<E> {
 	/**
@@ -107,11 +108,6 @@ public class CircSLelement<E> extends SLelement<E> {
 	}
 
 
-	/** (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 *
-	 */
 	@Override
 	public String toString() {
 		return "CircSLelement [next=" + next + ", getNext()=" + getNext()

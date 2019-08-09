@@ -13,23 +13,22 @@ import java.util.Map.Entry;
  *
  * @author Kalpathi Subramanian
  *
- * @param generic parameter <K>  holds the terminating vertex of the edge
- * @param generic parameter <E2> holds edge specific information
+ * @param K  holds the terminating vertex of the edge
+ * @param E2 holds edge specific information
  */
 public class Edge<K, E2> {
 
 	private K from;						// source vertex
 	private K to;						// destination vertex
 	private E2 edge_data;				// edge specific data
-	private LinkVisualizer lvis;		// link visualizer for this edge
+	LinkVisualizer lvis;		// link visualizer for this edge
 	/**
+	 * @brief Construct an edge using each extremities, user data, and styling information.
 	 *
-	 * Construct an edge with weight "wt" and a terminating
-	 * Element with an identifer equal to "v" - used only for graphs
-	 *
-	 * @param from key of source vertex
-	 * @param to ket of terminating vertex of the edge
+	 * @param from key of source vertex of the edge
+	 * @param to key of terminating vertex of the edge
 	 * @param data is the  edge information object
+	 * @param lvis is the object storing styling information for the edge
 	 *
 	 */
 	public Edge(K from, K to, E2 data, LinkVisualizer lvis) {
@@ -40,10 +39,9 @@ public class Edge<K, E2> {
 	}
 
 	/**
+	 * @brief Set source Element (Vertex) of the edge
 	 *
-	 * Set source Element of the edge
-	 *
-	 * @param from the identifier of the source Element
+	 * @param from the identifier of the source Element (Vertex)
 	 *
 	 */
 	public void setFrom(K from) {
@@ -51,10 +49,9 @@ public class Edge<K, E2> {
 	}
 
 	/**
+	 * @brief Set identifier of the terminating Element (Vertex) of edge
 	 *
-	 * Set identifer of the terminating Element of edge
-	 *
-	 * @param to the identifier of the terminating Element
+	 * @param to the identifier of the terminating Element (Vertex)
 	 *
 	 */
 	public void setTo(K to) {
@@ -62,11 +59,9 @@ public class Edge<K, E2> {
 	}
 
 	/**
+	 * @brief Get identifer of the terminating Element of edge
 	 *
-	 * Get identifer of the terminating Element of edge
-	 *
-	 * @return the identifier of the terminating Element
-	 *
+	 * @return the identifier of the terminating Element (vertex)
 	 */
 	public K getTo() {
 		return this.to;
@@ -113,15 +108,16 @@ public class Edge<K, E2> {
 	}
 
 	/**
-	 *	Set the edge's link visualizer
-	 *  @param link visualizer to be set for this edge
+	 *  @brief Set the edge's link visualizer
+	 *
+	 *  @param lvis link visualizer to be set for this edge
 	 */
 	public void setLinkVisualizer(LinkVisualizer lvis) {
 		this.lvis = lvis;
 	}
 
 	/**
-	 *	Get the edge's label
+	 *	@brief Get the edge's label
 	 *	@return label of this edge
 	 */
 	public String getLabel() {
@@ -129,7 +125,7 @@ public class Edge<K, E2> {
 	}
 
 	/**
-	 *	Set the edge's label
+	 *	@brief Set the edge's label
 	 *	@param label the label to be assigned
 	 */
 	public void setLabel(String label) {
@@ -137,7 +133,7 @@ public class Edge<K, E2> {
 	}
 
 	/**
-	 * Get the thickness of the edge
+	 * @brief Get the thickness of the edge
 	 *
 	 * @return the size in pixels of the edge
 	 */
@@ -146,7 +142,7 @@ public class Edge<K, E2> {
 	}
 
 	/**
-	 * Set the thickness of the edge
+	 * @brief Set the thickness of the edge
 	 *
 	 * @param thickness edge thickness to set
 	 */
@@ -155,7 +151,7 @@ public class Edge<K, E2> {
 	}
 
 	/**
-	 *	Get the color of the link in the Bridges Visualization
+	 *	@brief Get the color of the link in the Bridges Visualization
 	 *
 	 *	@return the edge color
 	 *
@@ -165,34 +161,31 @@ public class Edge<K, E2> {
 	}
 
 	/**
-	 * Set the color of the link from an existing Color object
-	 * @param color  the edge color to be assigned
+	 * @brief Set the color of the link from an existing Color object
+	 *
+	 * @param color the edge color to be assigned
 	 */
 	public void setColor(Color color) {
 		this.lvis.setColor(color);
 	}
 
 	/**
+	 *	@brief Set the color of the link in the Bridges Visualization
 	 *
-	 *	Set the color of the link in the Bridges Visualization to "aColor".
-	 *
-	 * 	@param col_name the string reprsenting the color. See the Color class
-	 *		for the complete set of supported colors
-	 *
+	 * 	@param color the string reprsenting the color. See the Color class
+	 *		for the complete set of supported colors.
 	 */
 	public void setColor(String color) {
 		this.lvis.setColor(color);
 	}
 
 	/**
-	 *
-	 * 	Set the color of the link given RGBA components
+	 * 	@brief Set the color of the link given RGBA components
 	 *
 	 * 	@param r  red component
 	 * 	@param g  green component
 	 * 	@param b  blue component
 	 * 	@param a  alpha (transparency) component
-	 *
 	 */
 	public void setColor(int r, int g, int b, float a) {
 		this.lvis.setColor(r, g, b, a);

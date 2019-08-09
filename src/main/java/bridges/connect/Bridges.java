@@ -106,10 +106,10 @@ public class Bridges {
 		init(0, "", "");
 	}
 
-    public DataSource getDataSource () {
-	return new DataSource(this);
-    }
-    
+	public DataSource getDataSource () {
+		return new DataSource(this);
+	}
+
 	/**
 	 * Initialize Bridges (Constructor)
 	 *
@@ -297,7 +297,7 @@ public class Bridges {
 	 * 	@param y2 	maximum window y
 	 **/
 	public void setWindow (double x1, double x2, double y1, double y2) {
-		window = new double[]{x1, x2, y1, y2};
+		window = new double[] {x1, x2, y1, y2};
 	}
 
 	/**
@@ -505,17 +505,17 @@ public class Bridges {
 			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
 
 		// if window is specified, add it to JSON
-		if(window != null && window.length == 4) {
-				json_hdr += QUOTE + "window" + QUOTE + COLON + OPEN_BOX;
-				json_hdr += window[0] + COMMA + window[1] + COMMA + window[2] + COMMA + window[3];
-		 		json_hdr += CLOSE_BOX + COMMA;
+		if (window != null && window.length == 4) {
+			json_hdr += QUOTE + "window" + QUOTE + COLON + OPEN_BOX;
+			json_hdr += window[0] + COMMA + window[1] + COMMA + window[2] + COMMA + window[3];
+			json_hdr += CLOSE_BOX + COMMA;
 		}
 
 
 		return json_hdr;
 	}
 
-    String getServerURL() {
-	return connector.getServerURL();
-    }
+	String getServerURL() {
+		return connector.getServerURL();
+	}
 }

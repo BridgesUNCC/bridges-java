@@ -12,6 +12,9 @@ import org.json.simple.JSONArray;
 
 /**
  * @brief the ShapeCollection represents a collection of symbols to visualize in Bridges
+ *
+ * @sa See tutorial at http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
+ *
  * @author David Burlinson
  * @date 2018, 7/15/19
  */
@@ -56,7 +59,7 @@ public class SymbolCollection extends DataStruct {
 	 *	 @param s  symbol to be updated
 	 */
 	private void updateAxisDomains(Symbol s) {
-		Float[] dims = s.getDimensions();
+		float[] dims = s.getDimensions();
 
 		// check x axis
 		if (Math.abs(dims[0]) > domain) {

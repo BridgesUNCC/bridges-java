@@ -34,16 +34,16 @@ import java.util.Set;
  *  vertex ids, making it easier to set visual attributes to graph nodes and
  *	links.
  *
+ *  @sa Example tutorial at http://bridgesuncc.github.io/tutorials/Graph_AM.html
+ *
+ *
  *  @author Kalpathi Subramanian, Mihai Mehedint
  *
  *  @date 7/12/15, 5/18/17, 4/23/18
  *
- *  @param <K> orderable key (string, int, etc) that is used to index into vertex
- *  @param <E1> vertex specific information, for graph vertices
- *  @param <E2> edge specific information, for graph vertices
- *
- *  \sa Example tutorial at <p>
- *      ?? TO DO
+ *  @param K orderable key (string, int, etc) that is used to index into vertex
+ *  @param E1 vertex specific information, for graph vertices
+ *  @param E2 edge specific information, for graph vertices
  *
  */
 
@@ -82,7 +82,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	 * exists. This method will replace the value for this key
 	 *
 	 * @param k - vertex key value
-	 * @param 3 - user specified data, part of the vertex data
+	 * @param e - user specified data, part of the vertex data
 	 */
 	public void addVertex(K k, E1 e) {
 		vertices.put(k, new Element<E1>(e));
@@ -150,11 +150,10 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	}
 
 	/**
-	 * Sets data for a graph vertex
+	 * @brief Sets data for a graph vertex
 	 *
-	 * @param src  - source vertex of edge
-	 * @param dest - destination  vertex of edge
-	 * @param data - vertex data
+	 * @param src  source vertex of edge
+	 * @param vertex_data vertex data
 	 */
 	public void setVertexData(K src, E1 vertex_data) {
 		// check to see if the vertex  exists, else throw an exception
@@ -171,10 +170,9 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	}
 
 	/**
-	 * Gets data for an edge
+	 * Gets data for a vertex
 	 *
-	 * @param src  - source vertex of edge
-	 * @param dest - destination  vertex of edge
+	 * @param src source vertex of edge
 	 */
 	public E1 getVertexData(K src) {
 		// check to see if the vertex  exists, else throw an exception

@@ -34,10 +34,10 @@ import bridges.base.GraphAdjMatrix;
  *
  *	@date 4/24/18
  *
- *	@param <K>  orderable key (string, int, etc) that is used to index into vertex
+ *	@param K  orderable key (string, int, etc) that is used to index into vertex
  *
- *	\sa Example tutorial at <p>
- *		http://bridgesuncc.github.io/Hello_World_Tutorials/Graph.html
+ *	@sa Example tutorial at
+ *		http://bridgesuncc.github.io/Hello_World_Tutorials/Graph_AM.html
  *
  */
 public class GraphAdjMatrixSimple<K> extends GraphAdjMatrix<K, K, K> {};

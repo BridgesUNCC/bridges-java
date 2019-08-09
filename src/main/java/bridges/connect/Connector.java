@@ -62,24 +62,24 @@ public class Connector {
 		if (Bridges.getDebugFlag()) {
 			System.err.println("Connector.setServer(" + server + ")");
 		}
-		switch(server) {
-				case "live":
-					setServerURL(server_live);
-					break;
-				case "clone":
-					setServerURL(server_clone);
-					break;
-				case "local":
-					setServerURL(server_local);
-					break;
-				case "sockets":
-				    setServerURL(server_sockets);
-				    break;
-				case "games":
-				    setServerURL(server_games);
-				    break;
-				default:
-					throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'sockets', 'games', 'local'].");
+		switch (server) {
+			case "live":
+				setServerURL(server_live);
+				break;
+			case "clone":
+				setServerURL(server_clone);
+				break;
+			case "local":
+				setServerURL(server_local);
+				break;
+			case "sockets":
+				setServerURL(server_sockets);
+				break;
+			case "games":
+				setServerURL(server_games);
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'sockets', 'games', 'local'].");
 		}
 	}
 
@@ -105,7 +105,7 @@ public class Connector {
 
 	/**
 	 * This reformats the coordinates in Earthwuake tweet such that there will be
-	 * no arrays present when casting to the JSONObject. for  the resons described below
+	 * no arrays present when casting to the JSONObject. for  the reasons described below
 	 * Mihai
 	 * @param text
 	 * @return
@@ -314,7 +314,8 @@ public class Connector {
 	}
 
 	/**
-	 * Traverse JSON in a type-safe manner.
+	 * @brief Traverse JSON in a type-safe manner.
+	 *
 	 * This is somewhat complicated, but comes with the advantage that the
 	 * debugging reports are far clearer when you know the whole path you are
 	 * searching for.
@@ -325,6 +326,7 @@ public class Connector {
 	 *
 	 * @param sequence
 	 * @param original
+	 * @param target
 	 */
 	public Object safeJSONTraverse(
 		String sequence,
@@ -479,7 +481,7 @@ public class Connector {
 		 *   	won't give error codes
 		 *   (String) ...execute(request).returnResponse().getEntity()
 		 *   	won't cast
- 		 */
+		 */
 		//	this will output the server error as well as
 		// 	parsed from the error message
 		String err = asJSONObject(EntityUtils.toString(

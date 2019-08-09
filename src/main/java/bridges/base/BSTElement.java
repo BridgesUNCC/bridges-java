@@ -18,7 +18,10 @@ import org.json.simple.JSONValue;
  *  another element, appropriate for setting link attributes, for instance, between
  *  the current element and its left or right child
  *
- *	@param E he generic parameter object that is part of this element, representing
+ *	@sa Example tutorial using BSTElement at
+ *		http://bridgesuncc.github.io/tutorials/BinarySearchTree.html
+ *
+ *	@param E the generic parameter object that is part of this element, representing
  *      application specific data.
  *	@param K is the search key parameter in the BST node; K must be orderable, such
  *		as integer, float, string, etc., on which relational operators work.
@@ -29,9 +32,6 @@ import org.json.simple.JSONValue;
  *
  *	@brief This class extends the BinTreeElement class by adding a 'key' value
  *	for use in a binary search tree implementations.
- *
- *	\sa Example tutorial using BSTElement at  <br>
- *		http://bridgesuncc.github.io/tutorials/BST.html
  *
  */
 public class BSTElement<K, E> extends BinTreeElement<E> {

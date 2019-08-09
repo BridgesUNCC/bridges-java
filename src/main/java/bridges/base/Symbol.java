@@ -7,51 +7,60 @@ import org.json.simple.JSONValue;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
-/*
+/**
  *  @brief This is a class in BRIDGES for deriving a
  *  number of Symbol objects for use in a SymbolCollection.
+ *
+ * It is not intended that objects from this class will be directly
+ * created. Rather, we expect that classes that derive from this class
+ * be instantiated such as Circle, Label, Polyline, Polygon,
+ * Rectangle.
+ *
  *  Symbols correspond to a simplified subset of SVG paths
  *  and shapes for custom visual representations in BRIDGES.
+ *
+ * The stroke is the actual lines that get drawn (such as the
+ * perimeter of a rectangle) and its style is controlled by
+ * setStrokeColor(), setStrokeWidth(), and setStrokeDash().
+ *
+ * The inside of the Symbol can be colored independently from the
+ * stroke using setFillColor().
+ *
+ * The overall Symbol can be made more of less visible by adjusting
+ * its opacity using setOpacity().
  *
  * 	@author David Burlinson, Kalpathi Subramanian
  *
  *	@date  2018, 7/15/19
  *
 */
-public class Symbol extends DataStruct {
+public class Symbol {
 
 	static	Integer ids = 0;
 	private String identifier;
 	protected String label = "";
+	private String shape_type = "circle";
 
 	// Static default attribute values for all Symbols
 	static final Color DEFAULT_FILLCOLOR = new Color("blue");
-	static final Float DEFAULT_OPACITY = 1.0f;
+	static final float DEFAULT_OPACITY = 1.0f;
 	static final Color DEFAULT_STROKECOLOR = new Color("white");
-	static final Float DEFAULT_STROKEWIDTH = 1.0f;
+	static final float DEFAULT_STROKEWIDTH = 1.0f;
 	static final Integer DEFAULT_STROKEDASH = 1;
-	static final Float DEFAULT_LOCATIONX = 0.0f;
-	static final Float DEFAULT_LOCATIONY = 0.0f;
+	static final float DEFAULT_LOCATIONX = 0.0f;
+	static final float DEFAULT_LOCATIONY = 0.0f;
 
 	// default css attributes for Symbols
 	protected Color fillColor = new Color("blue");
-	protected Float opacity = DEFAULT_OPACITY;
+	protected float opacity = DEFAULT_OPACITY;
 	protected Color strokeColor = new Color("white");
-	protected Float strokeWidth = DEFAULT_STROKEWIDTH;
+	protected float strokeWidth = DEFAULT_STROKEWIDTH;
 	protected Integer strokeDash = DEFAULT_STROKEDASH;
 
 	// default location attributes for Symbols
-	protected Float locationX = DEFAULT_LOCATIONX;
-	protected Float locationY = DEFAULT_LOCATIONY;
+	protected float locationX = DEFAULT_LOCATIONX;
+	protected float locationY = DEFAULT_LOCATIONY;
 
-	/**
-	 *  Get data structure name
-	 *
-	 *	@return data type name (string)
-	 */
-	public String getDataStructType() {
-		return "Symbol";
-	}
 
 	/**
 	 *	Create a default symbol object
@@ -90,13 +99,37 @@ public class Symbol extends DataStruct {
 	}
 
 	/**
+	 *  Get the shape type
+	 *
+	 *	@return shape type
+	 */
+	protected String getShapeType() {
+		return shape_type;
+	}
+
+	/**
+	 *	Set the shape type
+	 *	@param sh shape type
+	 */
+	protected void setShapeType(String sh) {
+		shape_type = sh;
+	}
+
+	/**
 	 * This method sets the symbol fill color
 	 *
 	 * @param c the color to set
 	 */
-	public Symbol setFillColor(Color c) {
+	public void setFillColor(Color c) {
 		this.fillColor = c;
-		return this;
+	}
+	/**
+	 * This method sets the symbol fill color
+	 *
+	 * @param c the color to set
+	 */
+	public void setFillColor(String c) {
+		this.fillColor = new Color(c);
 	}
 	/**
 	* This method gets fill color
@@ -112,8 +145,16 @@ public class Symbol extends DataStruct {
 	 *
 	 * @param c the color to set
 	 */
-	public Symbol setStrokeColor(Color c) {
+	public void setStrokeColor(Color c) {
 		this.strokeColor = c;
+	}
+	/**
+	 * This method sets the symbol stroke color
+	 *
+	 * @param c the named color to set
+	 */
+	public Symbol setStrokeColor(String c) {
+		this.strokeColor = new Color(c);
 		return this;
 	}
 	/**
@@ -126,18 +167,19 @@ public class Symbol extends DataStruct {
 	}
 
 	/**
-	 * This method sets the symbol stroke width
+	 * @brief This method sets the symbol stroke width.
 	 *
-	 * @param strk_width the stroke width to set
+	 * This is the weight of the individual lines that are drawn, such as the perimeter of a rectangle.
+	 *
+	 * @param strokewidth the stroke width to set
 	 */
-	public Symbol setStrokeWidth(Float strokewidth) {
+	public void setStrokeWidth(float strokewidth) {
 		if (strokewidth <= 0.0f || strokewidth > 10.0f) {
 			throw new IllegalArgumentException("Stroke width must be between 0 and 10");
 		}
 		else {
 			this.strokeWidth = strokewidth;
 		}
-		return this;
 	}
 	/**
 	 * This method gets stroke width
@@ -145,21 +187,21 @@ public class Symbol extends DataStruct {
 	 * @return  stroke width
 	 */
 
-	public Float getStrokeWidth() {
+	public float getStrokeWidth() {
 		return this.strokeWidth;
 	}
 
 	/**
-	 * This method sets the symbol opacity
+	 * @brief This method sets the symbol opacity
 	 *
 	 * @param op the opacity to set
 	 */
-	public Symbol setOpacity(Float o) {
-		if (o <= 0.0f || o > 1.0f) {
+	public Symbol setOpacity(float op) {
+		if (op <= 0.0f || op > 1.0f) {
 			throw new IllegalArgumentException("Opacity must be between 0 and 1");
 		}
 		else {
-			this.opacity = o;
+			this.opacity = op;
 		}
 		return this;
 	}
@@ -169,7 +211,7 @@ public class Symbol extends DataStruct {
 	 *
 	 * @return  symbol opacity
 	 */
-	public Float getOpacity() {
+	public float getOpacity() {
 		return this.opacity;
 	}
 
@@ -205,19 +247,8 @@ public class Symbol extends DataStruct {
 	 * @param x  x coordinate
 	 * @param y  y coordinate
 	 */
-	public Symbol setLocation(int x, int y) {
-		setLocation((float) x, (float) y);
-		return this;
-	}
 
-	/**
-	 * This method sets the symbol location
-	 *
-	 * @param x  x coordinate
-	 * @param y  y coordinate
-	 */
-
-	public Symbol setLocation(Float x, Float y) {
+	public void setLocation(float x, float y) {
 		if ((x > Float.NEGATIVE_INFINITY && x < Float.POSITIVE_INFINITY) &&
 			(y > Float.NEGATIVE_INFINITY && y < Float.POSITIVE_INFINITY)) {
 			this.locationX = x;
@@ -226,7 +257,7 @@ public class Symbol extends DataStruct {
 		else {
 			throw new IllegalArgumentException("Coordinates must be real numbers");
 		}
-		return this;
+
 	}
 	/**
 	 * This method gets the symbol location
@@ -234,24 +265,59 @@ public class Symbol extends DataStruct {
 	 * @return location (x, y) of the symbol
 	 */
 
-	public Float[] getLocation() {
-		return new Float[] {this.locationX, this.locationY};
+	public float[] getLocation() {
+		return new float[] {this.locationX, this.locationY};
 	}
+
 	/**
 	 * Get Dimensions of symbol
 	 * @return  symbol dimensions
 	 */
-	public Float[] getDimensions() {
-		return new Float[] {0.0f, 0.0f, 0.0f, 0.0f};
+	public float[] getDimensions() {
+		return new float[] {0.0f, 0.0f, 0.0f, 0.0f};
 	}
 
 	/**
-	 * Get JSON string of Data type
-	 * @return JSON of data type (string)
+	 *  Translate a 2D point
+	 *  @param pt  2D point (x, y)
+	 *  @param tx, ty translation vector
 	 */
+	protected void translatePoint (float[] pt, float tx, float ty) {
+		pt[0] += tx;
+		pt[1] += ty;
+	}
 
-	public String getDataStructureRepresentation() {
-		return null;
+	/**
+	 * @brief Scale a 2D point
+	 *
+	 *  @param pt 2D point (x, y) to scale
+	 *  @param sx,sy  scale factors (along each axis)
+	 */
+	void scalePoint (float[] pt, float sx, float sy) {
+		pt[0] *= sx;
+		pt[1] *= sy;
+	}
+
+	/**
+	 *  @brief Rotate a 2D point (about Z)
+	 *
+	 *  @param pt  2D point (x, y)
+	 *  @param angle rotation angle in degrees (positive is counter clockwise, negative is clockwise)
+	 */
+	void rotatePoint (float[] pt, float angle) {
+		// compute sin, cos
+		double angle_r =  Math.toRadians(angle);
+		double c = Math.cos(angle_r);
+		double s = Math.sin(angle_r);
+
+		// rotate the point
+		double[] tmp = new double[2];
+		tmp[0] = pt[0] * c - pt[1] * s;
+		tmp[1] = pt[0] * s + pt[1] * c;
+
+		// assign to point
+		pt[0] = (float) tmp[0];
+		pt[1] = (float) tmp[1];
 	}
 
 	/**
@@ -293,7 +359,8 @@ public class Symbol extends DataStruct {
 			json_builder.put("stroke-dasharray", strokeDash);
 		}
 
-		if (locationX != DEFAULT_LOCATIONX && locationY != DEFAULT_LOCATIONY) {
+		if (!((locationX == DEFAULT_LOCATIONX) &&
+				(locationY == DEFAULT_LOCATIONY))) {
 			location.put("x", locationX);
 			location.put("y", locationY);
 			json_builder.put("location", location);

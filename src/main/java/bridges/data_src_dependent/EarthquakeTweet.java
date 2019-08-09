@@ -46,9 +46,7 @@ public class EarthquakeTweet extends Tweet {
 	public double getMagnitude() {
 		return magnitude;
 	}
-	/* (non-Javadoc)
-	 * @see edu.uncc.cs.bridgesV2.data_src_dependent.DataSource#compareTo(edu.uncc.cs.bridgesV2.data_src_dependent.DataSource)
-	 */
+
 	@Override
 	public int compareTo(DataSource o) {
 		if (o != null)

@@ -11,8 +11,8 @@ import bridges.connect.KeypressListener;
 
 public abstract class GameBase {
 
-    protected boolean debug = true;
-    protected boolean gameStarted = false;
+    protected boolean debug = false;
+    protected boolean gameStarted = true;
 
     // /Game map
     private GameGrid grid;
@@ -64,7 +64,7 @@ public abstract class GameBase {
     /// (up and down) that happens in the game.
     ///
     /// @param kl a KeypressListener to register
-    protected void registerKeypress(KeypressListener kl) {
+    void registerKeypress(KeypressListener kl) { //having the function at package level prevents user code from calling this function directly
         sock.addListener(kl);
     }
 
@@ -135,14 +135,14 @@ public abstract class GameBase {
         return grid.getSymbolColor(y, x);
     }
     
-    /// @brief Draw an object on the game
+    /// @brief Draw a symbol on the game
     ///
     /// @param x row of the cell to draw the object on
     /// @param y column of the cell to draw the object on
     /// @param s symbol representing the object
     /// @param c color of the object
-    protected void drawObject(int x, int y, NamedSymbol s, NamedColor c) {
-        grid.drawObject(y, x, s, c);
+    protected void drawSymbol(int x, int y, NamedSymbol s, NamedColor c) {
+        grid.drawSymbol(y, x, s, c);
     }
 
 
@@ -150,7 +150,7 @@ public abstract class GameBase {
     ///
     /// Student should not have to call this function directly. It is
     /// called automatically by Bridges.
-    protected void render() {
+    void render() { //having this function at package level prevent user code from calling it by mistake
         if (firsttime) {
             firsttime = false;
             // associate the grid with the Bridges object
@@ -170,5 +170,27 @@ public abstract class GameBase {
 
         // send valid JSON for grid into the socket
         sock.sendData(gridJSON);
+    }
+
+    /// @brief How wide is the Game Board?
+    ///
+    /// @return the number of columns of the board
+    protected int getBoardWidth() {
+	int size[] = grid.getDimensions();
+	return size[1];
+    }
+
+    /// @brief How tall is the Game Board?
+    ///
+    /// @return the number of rows of the board
+    protected int getBoardHeight() {
+	int size[] = grid.getDimensions();
+	return size[0];
+    }
+
+    /// @brief terminal all network connections
+    /// Note that it takes a minute for all threads to gracefully exit
+    protected void terminateNetwork() {
+	sock.close();
     }
 }

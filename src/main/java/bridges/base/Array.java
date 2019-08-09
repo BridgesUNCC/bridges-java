@@ -1,5 +1,7 @@
 package bridges.base;
 
+import java.util.ArrayList;
+
 import bridges.validation.InvalidValueException;
 import bridges.validation.Validation;
 
@@ -25,7 +27,7 @@ import bridges.validation.Validation;
  *
  */
 public class Array<E> extends DataStruct {
-	private Element<E>[] array_data;
+	private ArrayList<Element<E>> array_data;
 	private int num_dims;					// 1D, 2D and 3D arrays supported
 	private int[] dims = {1, 1, 1};			// array dimensions
 	private int size;						// array size
@@ -34,9 +36,10 @@ public class Array<E> extends DataStruct {
 	 * Construct a default array object
 	 */
 	public Array() {
-		array_data = null;
+		array_data = new ArrayList<Element<E>>();
 		num_dims = 1;
 		dims[0] = dims[1] = dims[2] = size = 0;
+		size = 0;
 	}
 	/**
 	 *  Create an array object with the specified dimensions
@@ -46,49 +49,7 @@ public class Array<E> extends DataStruct {
 	 *
 	 */
 	public Array(int num_dims, int[] dims) {
-		setNumDimensions(num_dims);
-		setDimensions(dims);
-	}
-	/**
-	 *  Create an 1D array object
-	 *
-	 *  @param num_elements in the array
-	 *
-	 */
-	public Array(int num_elements) {
-		setNumDimensions(1);
-		dims[0] = num_elements;
-		dims[1] = dims[2] = 1;
-		setDimensions(dims);
-	}
-	/**
-	 *  Create an 2D array object
-	 *
-	 *  @param x_dim number of elements along dimension 1
-	 *  @param y_dim number of elements along dimension 2
-	 *
-	 */
-	public Array(int x_dim, int y_dim) {
-		setNumDimensions(2);
-		dims[0] = x_dim;
-		dims[1] = y_dim;
-		dims[2] = 1;
-		setDimensions(dims);
-	}
-	/**
-	 *  Create an 3D array object
-	 *
-	 *  @param x_dim number of elements along dimension 1
-	 *  @param y_dim number of elements along dimension 2
-	 *  @param z_dim number of elements along dimension 3
-	 *
-	 */
-	public Array(int x_dim, int y_dim, int z_dim) {
-		setNumDimensions(3);
-		dims[0] = x_dim;
-		dims[1] = y_dim;
-		dims[2] = z_dim;
-		setDimensions(dims);
+		setSize(num_dims, dims);
 	}
 	/**
 	 *	This method gets the data structure type
@@ -130,31 +91,36 @@ public class Array<E> extends DataStruct {
 	}
 
 	/**
+	 *	@brief Set the size of each dimensions; also allocates  array space
 	 *
-	 *	Set the size of each dimensions; also allocates  array space
-	 *
-	 *	@param dim[]  size of each dimension
+	 *      @param nd number of dimension
+	 *	@param dim  size of each dimension
 	 */
-	public void setDimensions(int[] dim) {
-		int sz = 1;
-		for (int k = 0; k < num_dims; k++) {
-			dims[k] = dim[k];
-			// check the dimension is positive
-			if (dims[k] < 0)
-				throw new InvalidValueException("Invalid dimension value, must be  positive");
-			sz *= dim[k];
-		}
-		size = sz;
-		// allocate space for the array
-		array_data = new Element[size];
+	public void setSize(int nd, int[] dim) {
+		// check for invalid dimension values
+		if (dim[0] <= 0 || dim[1] <= 0 || dim[2] <= 0)
+			throw new InvalidValueException("Invalid dimension value, must be  positive");
+
+		// set dimensions, size
+		dims[0] = dim[0];
+		dims[1] = dim[1];
+		dims[2] = dim[2];
+		num_dims = nd;
+		size = dim[0] * dim[1] * dim[2];
+
+		// allocate space for the array  (is there a better way?)
 		for (int k = 0; k < size; k++)
-			array_data[k] = new Element<E>();
+			array_data.add (null);
+
+		// set elements
+		array_data.ensureCapacity(size);
+		for (int k = 0; k < size; k++)
+			array_data.set(k, new Element<E>());
 	}
 	/**
+	 *	@brief Get the size of each dimensions;
 	 *
-	 *	Get the size of each dimensions;
-	 *
-	 *	@param dims[]  size of each dimension is returned
+	 *	@param[out] dim size of each dimension is returned
 	 */
 	public void getDimensions(int[] dim) {
 		dim[0] = dims[0];
@@ -179,32 +145,8 @@ public class Array<E> extends DataStruct {
 	 *	@param indx  index into the array
 	 *	@return Element<E>  object at 'indx'
 	 */
-	public Element<E> getElement (int indx) {
-		return array_data[indx];
-	}
-	/**
-	 *
-	 *	Get the object at index x, y -- for 2D arrays
-	 *
-	 *	@param x  - column index
-	 *	@param y  - row index
-	 *	@return Element<E>  object at x, y
-	 */
-	public Element<E> getElement(int x, int y) {
-		return array_data[y * dims[0] + x];
-	}
-	/**
-	 *
-	 *	Get the object at x, y, z -- for 3D arrays
-	 *
-	 *	@param x  - column index
-	 *	@param y  - row index
-	 *	@param z  - slice index
-	 *
-	 *	@return Element<E>  object at x, y, z
-	 */
-	public Element<E> getElement(int x, int y, int z) {
-		return array_data[z * dims[0] * dims[1] + y * dims[0] + x];
+	protected Element<E> getElement (int indx) {
+		return array_data.get(indx);
 	}
 
 	/**
@@ -216,44 +158,10 @@ public class Array<E> extends DataStruct {
 	 *
 	 *
 	 **/
-	public void setElement(int indx, Element<E> el) {
-		array_data[indx] = el;
+	protected void setElement(int indx, Element<E> el) {
+		array_data.set(indx, el);
 	}
 
-	/**
-	 *
-	 *	Set the input object at x, y - 2D arrays
-	 *
-	 *	@param x  column index into the array
-	 *	@param y  row index into the array
-	 *	@param el  element object to be assigned at 'indx'
-	 *
-	 */
-	public void setElement(int x, int y, Element<E> el) {
-		array_data[y * dims[0] + x] = el;
-	}
-
-	/**
-	 *
-	 *	Set the input object at 'col, row, slice'
-	 *
-	 *	@param x  column index into the array
-	 *	@param y  row index into the array
-	 *	@param z  slice index into the array
-	 *
-	 *	@param el  element object to be assigned at 'indx'
-	 *
-	 */
-	public void setElement(int x, int y, int z, Element<E> el) {
-		array_data[z * dims[0] * dims[1] + y * dims[0] + x] = el;
-	}
-
-	/**
-	 * Generating the JSON string for a Bridges array object
-	 *
-	 *
-	 * @return JSON string of the Array type
-	*/
 
 	public String getDataStructureRepresentation () {
 
@@ -261,8 +169,8 @@ public class Array<E> extends DataStruct {
 		StringBuilder links_JSON = new StringBuilder();
 		Validation.validate_ADT_size(size);
 		for (int i = 0; i < size; i++) {
-			if (array_data[i] != null) {
-				nodes_JSON.append(array_data[i].getElementRepresentation() + ",");
+			if (array_data.get(i) != null) {
+				nodes_JSON.append(array_data.get(i).getElementRepresentation() + ",");
 			}
 		}
 		// remove last comma

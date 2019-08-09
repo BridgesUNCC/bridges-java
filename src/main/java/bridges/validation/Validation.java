@@ -215,7 +215,7 @@ public class Validation {
 	 * Determine if a color is supported by CSS.
 	 *
 	 * This method only supports a subject of CSS (yet). (1) 173 CSS extended
-	 * color names, (2) #RRGGBB or #RGB, where R, G and B are red, green, blue
+	 * color names, (2) "#RRGGBB" or "#RGB", where R, G and B are red, green, blue
 	 * values as hexadecimal digits.
 	 *
 	 * This method does not check for null because null has special meaning.

@@ -417,6 +417,7 @@ public class DataFormatter {
 	 * and adds deep copy of those eq to the current list
 	 * @param aList holds the reference to the current list of eq
 	 * @param max the number of eq in the new batch of eq
+	 * @param acu USGSaccount information
 	 * @return the list of eq containing the old and the new batch of tweets
 	 */
 	public static List<EarthquakeUSGS> next(List<EarthquakeUSGS> aList, int max, USGSaccount acu) {
@@ -953,12 +954,14 @@ public class DataFormatter {
 		float alpha = A / 255.0f;
 		return new Color(R, G, B, alpha);
 	}
-	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	/**
+	 * @brief Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
 	 *
-	 * @return the ColorGrid stored in the bridges server
+	 * @param server base URL of the Bridges service
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 * @param subassignment the ID of the subassignment to get
+	 * @return the ColorGrid stored in the bridges server
 	 **/
 	static bridges.base.ColorGrid getColorGridFromAssignment(String server,
 		String user,
@@ -1065,11 +1068,13 @@ public class DataFormatter {
 		return cg;
 	}
 
-	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	/**
+	 * @brief Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
 	 *
-	 * @return the ColorGrid stored in the bridges server
+	 * @param server base URL of the Bridges service
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
+	 * @return the ColorGrid stored in the bridges server
 	 **/
 	static bridges.base.ColorGrid getColorGridFromAssignment(String server, String user, int assignment)
 	throws IOException {
@@ -1117,10 +1122,10 @@ public class DataFormatter {
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
 	static OsmData getOsmData(String location, String level) throws IOException {
-		String url = "http://cci-bridges-osm-t.dyn.uncc.edu/loc?location=" + location + "&level=" + level;
-		String hashUrl = "http://cci-bridges-osm-t.dyn.uncc.edu/hash?location=" + location + "&level=" + level;
+		String url = "http://cci-bridges-osm-t.uncc.edu/loc?location=" + location + "&level=" + level;
+		String hashUrl = "http://cci-bridges-osm-t.uncc.edu/hash?location=" + location + "&level=" + level;
 		return (downloadMapFile(url, hashUrl));
-  }
+	}
 	/***
 	 * Generates Open Street Map URL request for a given set of coordinates and returns the map data
 	 * @param minLat, minimum latitude value for the area requested
@@ -1132,8 +1137,8 @@ public class DataFormatter {
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
 	static OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
-		String url = "http://cci-bridges-osm-t.dyn.uncc.edu/coords?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
-		String hashUrl = "http://cci-bridges-osm-t.dyn.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
+		String url = "http://cci-bridges-osm-t.uncc.edu/coords?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
+		String hashUrl = "http://cci-bridges-osm-t.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
 		return (downloadMapFile(url, hashUrl));
 	}
 	/***
@@ -1144,47 +1149,17 @@ public class DataFormatter {
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
 	static OsmData downloadMapFile(String url, String hashUrl) throws IOException{
-		File cache_dir = new File("./bridges_data_cache");
-		ArrayList<String> lru =  new ArrayList<String>();
+		File cache_dir = new File("./cache");
+		LRUCache lru = new LRUCache(30);
 
-		boolean has_cache = true;
-		// make cache if does not exist
-		if (!cache_dir.exists()) {
-			if (!cache_dir.mkdir()) {
-				System.err.println("Error creating cache directory");
-				has_cache = false;
-			}
-		}
-
-		//Loads the LRU list
-		File lru_file = new File("./bridges_data_cache/lru.txt");
-		if (lru_file.exists()){
-			String lruImport = new String(Files.readAllBytes(lru_file.toPath()));
-			String[] x = lruImport.split(",");
-			for (String val: x){
-				lru.add(val);
-			}
-		}
 		// look for file in cache
 		String content = null;
 		String hash = null;
 		HttpResponse hashResp = makeRequest(hashUrl);
 		int hashStatus = hashResp.getStatusLine().getStatusCode();
 		hash = EntityUtils.toString(hashResp.getEntity());
-		if (has_cache && !hash.equals("false") && hashStatus == 200) {
-			for (File file : cache_dir.listFiles()) {
-				if (file.getName().equals(hash)) {
-					content = new String(Files.readAllBytes(file.toPath()));
-
-					//Updates the LRU
-					try{
-						lru.remove(new String(hash));
-					} catch (Exception e){
-						//Its fine if its not found in LRU
-					}
-					lru.add(0, hash); // pushes the hash to the front of LRU
-				}
-			}
+		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
+			content = lru.get(hash);
 		}
 
 		// if not in cache, hit server for data
@@ -1210,35 +1185,9 @@ public class DataFormatter {
 
 			//Checks to see if valid hash is generated
 			if (!hash.equals("false")){
-				//Updates the LRU and purges the old map
-				lru.add(0, hash);
-				//Purges old maps from the cache and lru
-				while (lru.size() >= 30){
-					String dir = "./bridges_data_cache";
-					File old_map = new File(dir);
-					for (File file : old_map.listFiles()) {
-							if (file.getName().replaceAll("[^a-zA-Z0-9]", "").equals(lru.get(lru.size()-1).replaceAll("[^a-zA-Z0-9]", ""))) { //regexs out any non alphanumeric character
-								file.delete();
-								lru.remove(lru.size()-1);
-							}
-						}
-					}
-				Files.write(Paths.get("./bridges_data_cache/" + hash), content.getBytes());
+				lru.put(hash, content);
 			}
 		}
-
-		//Saves the LRU list
-		String output = "";
-		int count = 1;
-		for (String y : lru){
-			output = output + y.replaceAll("[^a-zA-Z0-9]", ""); //regexs out any non alphanumeric character
-			if (lru.size() != count){
-				output = output + ",";
-			}
-			count++;
-		}
-		Files.write(Paths.get("./bridges_data_cache/lru.txt"), output.getBytes());
-
 
 		// parse that data
 		Gson gson = new Gson();
@@ -1272,6 +1221,95 @@ public class DataFormatter {
 		OsmData ret_data = new OsmData(vertices, edges, respObject.meta.name);
 		return ret_data;
 	}
+
+	/***
+	 * Fetches Open Street Map data for a given location.
+	 *
+	 * This uses the old API, and so it onlysupports a few locations: "uncc_campus", "charlotte", "washington_dc",
+	 * 	 "saint_paul", "new_york", "los_angeles",
+	 * 	 "san_francisco", "miami", "minneapolis", "dallas"
+	 *
+	 * @param location, name of city or area that the server supports
+	 * @return OsmData, vertices and edges of Open Street Map data
+	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 */
+	static OsmData getOsmDataOld(String location) throws IOException {
+		File cache_dir = new File("./bridges_data_cache");
+
+		boolean has_cache = true;
+		// make cache if does not exist
+		if (!cache_dir.exists()) {
+			if(!cache_dir.mkdir()) {
+				System.err.println("Error creating cache directory");
+				has_cache = false;
+			}
+		}
+
+		// look for file in cache
+		String content = null;
+		if (has_cache) {
+			for (File file : cache_dir.listFiles()) {
+				if (file.getName().equals(location + ".json")) {
+					content = new String(Files.readAllBytes(file.toPath()));
+				}
+			}
+		}
+
+		// if not in cache, hit server for data
+		if (content == null) {
+			String url = "https://osm-api.herokuapp.com/name/" + location;
+			HttpResponse resp = makeRequest(url);
+			int status = resp.getStatusLine().getStatusCode();
+			content = EntityUtils.toString(resp.getEntity());
+			if (status != 200) {
+				if (status == 404) {
+					// attempt to get valid names
+					url = "https://osm-api.herokuapp.com/name_list";
+					resp = makeRequest(url);
+					status = resp.getStatusLine().getStatusCode();
+					if (status == 200) {
+						content = EntityUtils.toString(resp.getEntity());
+						throw new RuntimeException("Invalid name: " + location + "\nValid names:" + content);
+					}
+				}
+				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
+			}
+			Files.write(Paths.get("./bridges_data_cache/" + location + ".json"), content.getBytes());
+		}
+
+		// parse that data
+		Gson gson = new Gson();
+		OsmServerResponse respObject;
+		try {
+			respObject = gson.fromJson(content, OsmServerResponse.class);
+		}
+		catch (Exception e) {
+			throw new JsonParseException("Malformed JSON: Unable to Parse");
+		}
+
+		// vertex list
+		OsmVertex[] vertices = new OsmVertex[respObject.nodes.length];
+		HashMap<Double, Integer> vert_map = new HashMap<>();
+		for (int i = 0; i < vertices.length; ++i) {
+			Double[] node = respObject.nodes[i];
+			vert_map.put(node[0], i);
+			vertices[i] = new OsmVertex(node[1], node[2]);
+		}
+
+		// edge list
+		OsmEdge[] edges = new OsmEdge[respObject.edges.length];
+		for (int i = 0; i < edges.length; ++i) {
+			Double[] edge = respObject.edges[i];
+			Double id_from = edge[0];
+			Double id_to = edge[1];
+			Double dist = edge[2];
+			edges[i] = new OsmEdge(vert_map.get(id_from), vert_map.get(id_to), dist);
+		}
+
+		OsmData ret_data = new OsmData(vertices, edges, respObject.meta.name);
+		return ret_data;
+	}
+
 
 	/**
 	 *
@@ -1327,7 +1365,7 @@ public class DataFormatter {
 
 	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws IOException {
 
-		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations?limit=10";
+		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations";
 		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
@@ -1337,7 +1375,7 @@ public class DataFormatter {
 
 			ArrayList<CancerIncidence> canc_objs =
 				new ArrayList<CancerIncidence>(json.size());
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < json.size(); i++) {
 				JSONObject item = (JSONObject) json.get(i);
 
 				CancerIncidence c = new CancerIncidence();

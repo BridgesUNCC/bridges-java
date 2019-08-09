@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * 	@brief This class is used to create doubly linked element objects.
  *
- *	This class extends Element and takes a generic parameter <E> representing
+ *	This class extends Element and takes a generic parameter E representing
  *	application specific data. This element forms the basic building block for
  *	doubly linked lists. Doubly linked elements have two links,
  * 	"next" and "previous", that point to the previous and succeeding nodes along the list.
@@ -24,11 +24,11 @@ import java.util.HashMap;
  *	another element, appropriate for setting link attributes, such as in linked lists,
  *	between the current element and its next or previous nodes.
  *
- *	@param <E> The generic parameter object that is part of this element, representing
- *          application specific data.
- *
  *	\sa Example Tutorial at <br>
- *		http://bridgesuncc.github.io/tutorials/DLL.html
+ *		http://bridgesuncc.github.io/tutorials/DoublyLinkedList.html
+ *
+ *	@param E The generic parameter object that is part of this element, representing
+ *          application specific data.
  */
 
 public class DLelement<E> extends SLelement<E> {
@@ -109,7 +109,7 @@ public class DLelement<E> extends SLelement<E> {
 	/**
 	 * This method sets the pointer to the next DLelement
 	 *
-	 * @param next the DLelement that should be assigned to the next pointer
+	 * @param nxt the DLelement that should be assigned to the next pointer
 	 *
 	 */
 	public void setNext(DLelement<E> nxt) {
@@ -130,7 +130,7 @@ public class DLelement<E> extends SLelement<E> {
 	/**
 	 * This method sets the pointer to the previous DLelement
 	 *
-	 * @param prev the DLelement that should be assigned to the prev pointer
+	 * @param prv the DLelement that should be assigned to the prev pointer
 	 */
 	public void setPrev(DLelement<E> prv) {
 		// first remove any existing link visualizer from this node
