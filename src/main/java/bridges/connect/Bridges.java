@@ -50,13 +50,7 @@ import javax.xml.crypto.Data;
 public class Bridges {
 
 	private static int assignmentDecimal = 0;
-	//	protected ADTVisualizer<K, E> visualizer;
 	private  Connector connector;
-	//	private Element<E> root;
-	//	private GraphAdjList<K, E>  graph_adj_list;
-	//	private GraphAdjMatrix<K, E>  graph_adj_matrix;
-	//	private Element<E>[]  element_array;
-	//	private Array<E>  br_array;
 	private int element_array_size;
 	private static boolean json_flag = false;
 	private static int assignment;
@@ -93,6 +87,15 @@ public class Bridges {
 	/**
 	 *
 	 *	Constructors
+     *
+	 * If the FORCE_BRIDGES_APIKEY environment variable is set,
+	 * use the environment variable as APIkey in all cases.
+	 *
+	 * If the FORCE_BRIDGES_USERNAME environment variable is set,
+	 * use the environment variable as username in all cases.
+	 *
+	 * If the FORCE_BRIDGES_ASSIGNMENT environment variable is set,
+	 * use the environment variable as assignment number in all cases.
 	 *
 	 */
 	public Bridges() {
@@ -100,8 +103,7 @@ public class Bridges {
 		connector = new Connector();
 		df = new DataFormatter();
 		assignment_part = 0;
-		title = new String();
-		description = new String();
+		init(0, "", "");
 	}
 
     public DataSource getDataSource () {
@@ -110,6 +112,15 @@ public class Bridges {
     
 	/**
 	 * Initialize Bridges (Constructor)
+	 *
+	 * If the FORCE_BRIDGES_APIKEY environment variable is set,
+	 * use the environment variable as APIkey in all cases.
+	 *
+	 * If the FORCE_BRIDGES_USERNAME environment variable is set,
+	 * use the environment variable as username in all cases.
+	 *
+	 * If the FORCE_BRIDGES_ASSIGNMENT environment variable is set,
+	 * use the environment variable as assignment number in all cases.
 	 *
 	 * @param assignment this is the assignmen id (integer)
 	 * @param appl_id    this is the appl authentication key(from the Bridges account)
@@ -131,9 +142,17 @@ public class Bridges {
 	 *
 	 */
 	public void init(int assignment, String username, String appl_id) {
-		Bridges.setAssignment(assignment);
-		Bridges.key = appl_id;
-		Bridges.userName = username;
+		String envAssignment = System.getenv("FORCE_BRIDGES_ASSIGNMENT");
+		String envApiKey = System.getenv("FORCE_BRIDGES_APIKEY");
+		String envUser = System.getenv("FORCE_BRIDGES_USERNAME");
+		if (envAssignment == null) {
+			Bridges.setAssignment(assignment);
+		}
+		else {
+			Bridges.setAssignment(Integer.parseInt(envAssignment));
+		}
+		Bridges.key = envApiKey != null ? envApiKey : appl_id;
+		Bridges.userName = envUser != null ? envUser : username;
 
 		if (debug_flag) {
 			System.err.println ("Bridges.init: assignment=" + Bridges.assignment + " username=" + Bridges.userName + " apikey=" + Bridges.key);
