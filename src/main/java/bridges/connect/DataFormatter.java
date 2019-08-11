@@ -4,6 +4,7 @@ package bridges.connect;
 import java.io.File;
 import java.io.IOException;
 import java.lang.Exception;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -12,8 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import org.apache.http.Header;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.protocol.RequestUserAgent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -1310,6 +1316,82 @@ public class DataFormatter {
 		return ret_data;
 	}
 
+	public static ArrayList<ActorMovieWikidata> getWikidataActorMovie (int yearBegin, int yearEnd) throws IOException {
+		ArrayList<ActorMovieWikidata> ret = new ArrayList<>();
+		int limit = 30;
+		if (yearEnd - yearBegin > 30)
+			limit = (yearEnd - yearBegin) + 1;
+
+		LRUCache cache = new LRUCache(limit);
+
+		for (int i = yearBegin; i <= yearEnd; ++i) {
+			populateWikidataActorMovie(i, i, ret, cache);
+		}
+
+		return ret;
+	}
+
+	private static void populateWikidataActorMovie(int yearBegin, int yearEnd, ArrayList<ActorMovieWikidata> out
+	, LRUCache cache) throws  IOException {
+		String cacheName = String.format("wikidata-actormovie-%d-%d", yearBegin, yearEnd);
+		String json = null;
+
+		if (cache.inCache(cacheName)) {
+			json = cache.get(cacheName);
+		} else {
+			String url = "https://query.wikidata.org/sparql?";
+			String query = "SELECT ?movie ?movieLabel ?actor ?actorLabel WHERE " +
+					"{" +
+					"?movie wdt:P31 wd:Q11424." +
+					"?movie wdt:P161 ?actor." +
+					"?movie wdt:P364 wd:Q1860." +
+					"?movie wdt:P577 ?date."  +
+					"FILTER(YEAR(?date) >= " + yearBegin + " && YEAR(?date) <= " + yearEnd + ")." +
+					"SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }" +
+					"}";
+			url += "query=" + URLEncoder.encode(query) + "&format=json";
+
+			HttpGet req = new HttpGet(url);
+			req.addHeader("User-Agent", "bridges-java");
+			req.addHeader("Accept", "application/json");
+
+			HttpClient client = HttpClientBuilder.create().build();
+			HttpResponse resp;
+			try {
+				resp = client.execute(req);
+				int status = resp.getStatusLine().getStatusCode();
+				json = EntityUtils.toString(resp.getEntity());
+				cache.put(cacheName, json);
+			} catch (Exception e) {}
+		}
+
+		if (json != null) {
+			try {
+				JSONObject data = (JSONObject) JSONValue.parse(json);
+				JSONArray arr = (JSONArray) ((JSONObject) data.get("results")).get("bindings");
+
+				for (Object item : arr) {
+					JSONObject obj = (JSONObject) item;
+					String actorUri, movieUri, actor, movie;
+
+					actorUri = (String) ((JSONObject) obj.get("actor")).get("value");
+					movieUri = (String) ((JSONObject) obj.get("movie")).get("value");
+					actorUri = actorUri.replaceFirst("http://www.wikidata.org/entity/", "");
+					movieUri = movieUri.replaceFirst("http://www.wikidata.org/entity/", "");
+
+					actor = (String) ((JSONObject) obj.get("actorLabel")).get("value");
+					movie = (String) ((JSONObject) obj.get("movieLabel")).get("value");
+
+					ActorMovieWikidata add = new ActorMovieWikidata(movieUri, actorUri, movie, actor);
+
+					out.add(add);
+				}
+			} catch (Exception e) {
+				throw new IOException("Malformed JSON: Not from wikidata?");
+			}
+		}
+
+	}
 
 	/**
 	 *
@@ -1318,7 +1400,7 @@ public class DataFormatter {
 	 *  This function retrieves  and formats the data into a
 	 *	a list of Shakespeare objects.
 	 *
-	 *  @throws Exception if the request fails
+	 *  @throws IOException if the request fails
 	 *
 	 *	@param works  can be either "plays" or "poems". If this is specified,
 	 *		then only these types of works are retrieved.

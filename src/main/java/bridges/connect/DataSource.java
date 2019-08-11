@@ -311,4 +311,8 @@ public class DataSource {
 		return getColorGridFromAssignment(user, assignment, 0);
 	}
 
+	public ArrayList<ActorMovieWikidata> getWikidataActorMovie(int yearBegin, int yearEnd) throws IOException {
+		return DataFormatter.getWikidataActorMovie(yearBegin, yearEnd);
+	}
+
 }
