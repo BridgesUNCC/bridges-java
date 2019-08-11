@@ -1,12 +1,12 @@
 package bridges.data_src_dependent;
 
-public class MovieActorWikidata extends DataSource {
+public class ActorMovieWikidata extends DataSource {
     private String movieURI,
         actorURI,
         movieName,
         actorName;
 
-    public MovieActorWikidata(String movieURI, String actorURI, String movieName, String actorName) {
+    public ActorMovieWikidata(String movieURI, String actorURI, String movieName, String actorName) {
         this.movieURI = movieURI;
         this.actorURI = actorURI;
         this.movieName = movieName;
