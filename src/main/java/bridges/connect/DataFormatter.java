@@ -1316,6 +1316,15 @@ public class DataFormatter {
 		return ret_data;
 	}
 
+
+	/**
+	 * @brief This function returns the Movie and Actors playing in them between two years from WikiData
+	 *
+	 * @param yearBegin inclusive start year
+	 * @param yearEnd inclusive end year
+	 * @return ArrayList of all ActorMovie pairs in Wikidata between the years provided
+	 * @throws IOException If the response from WikiData is malformed or an issue occurs making the request
+	 */
 	public static ArrayList<ActorMovieWikidata> getWikidataActorMovie (int yearBegin, int yearEnd) throws IOException {
 		ArrayList<ActorMovieWikidata> ret = new ArrayList<>();
 		int limit = 30;
@@ -1331,6 +1340,8 @@ public class DataFormatter {
 		return ret;
 	}
 
+	// Helper function that will actually create and execute the request to WikiData, this allows us to
+	// partition the request to prevent WikiData from kicking out the client.
 	private static void populateWikidataActorMovie(int yearBegin, int yearEnd, ArrayList<ActorMovieWikidata> out
 	, LRUCache cache) throws  IOException {
 		String cacheName = String.format("wikidata-actormovie-%d-%d", yearBegin, yearEnd);

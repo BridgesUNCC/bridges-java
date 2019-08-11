@@ -311,6 +311,14 @@ public class DataSource {
 		return getColorGridFromAssignment(user, assignment, 0);
 	}
 
+	/**
+	 * @brief This function returns the Movie and Actors playing in them between two years from WikiData
+	 *
+	 * @param yearBegin inclusive start year
+	 * @param yearEnd inclusive end year
+	 * @return ArrayList of all ActorMovie pairs in Wikidata between the years provided
+	 * @throws IOException If the response from WikiData is malformed or an issue occurs making the request
+	 */
 	public ArrayList<ActorMovieWikidata> getWikidataActorMovie(int yearBegin, int yearEnd) throws IOException {
 		return DataFormatter.getWikidataActorMovie(yearBegin, yearEnd);
 	}
