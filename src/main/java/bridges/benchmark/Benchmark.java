@@ -30,10 +30,10 @@ abstract class Benchmark {
 	 * given amount of time. So it is possible a particular run takes
 	 * more than the alloted time, but that will be the last run.
 	 *
-	 * @param cap_in_s time limit in seconds
+	 * @param cap_in_ms time limit in milliseconds
 	 **/
-	void setTimeCap(long cap_in_s) {
-		this.timeCap = cap_in_s;
+	void setTimeCap(long cap_in_ms) {
+		this.timeCap = cap_in_ms;
 	}
 
 	/**
