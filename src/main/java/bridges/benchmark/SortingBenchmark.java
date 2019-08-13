@@ -50,6 +50,8 @@ public class SortingBenchmark extends Benchmark {
 
 	public SortingBenchmark(LineChart p) {
 	    super(p);
+		p.setXLabel("Size of Array");
+		p.setYLabel("Runtime (in ms)");
 
 		r = new Random();
 

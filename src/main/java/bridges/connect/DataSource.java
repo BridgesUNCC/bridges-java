@@ -319,7 +319,7 @@ public class DataSource {
 	 * @return ArrayList of all ActorMovie pairs in Wikidata between the years provided
 	 * @throws IOException If the response from WikiData is malformed or an issue occurs making the request
 	 */
-	public ArrayList<ActorMovieWikidata> getWikidataActorMovie(int yearBegin, int yearEnd) throws IOException {
+	public static ArrayList<ActorMovieWikidata> getWikidataActorMovie(int yearBegin, int yearEnd) throws IOException {
 		return DataFormatter.getWikidataActorMovie(yearBegin, yearEnd);
 	}
 

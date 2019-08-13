@@ -13,8 +13,6 @@ abstract class Benchmark {
     LineChart plot;
 
     Benchmark(LineChart plot, long timeCap) {
-		plot.setXLabel("Size of Array");
-		plot.setYLabel("Runtime (in ms)");
     	this.plot = plot;
     	this.setTimeCap(timeCap);
 	}
