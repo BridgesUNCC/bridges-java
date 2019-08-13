@@ -1,5 +1,6 @@
-package bridges.base;
-import java.util.HashMap;
+package bridges.benchmark;
+import bridges.base.LineChart;
+
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -30,14 +31,14 @@ import java.util.function.Consumer;
  * LineChart lc;
  * SortingBenchmark sb (lc);
  * sb.linearRange (100, 1000, 5);
- * sb.run("mysortingalgorithm", MyClass::mysort);
+ * sb.run("mysortingalgorithm", MyClass.mysort);
  * \endcode
  *
  * @author Erik Saule
  * @date 07/20/2019
  *
  **/
-public class SortingBenchmark {
+public class SortingBenchmark extends Benchmark {
 	private boolean debug = false;
 
 	private LineChart plot;
@@ -48,9 +49,9 @@ public class SortingBenchmark {
 	private int baseSize;
 	private int increment;
 	private double geoBase;
-	private long time_cap_ms;
 
 	public SortingBenchmark(LineChart p) {
+	    super(Long.MAX_VALUE);
 		this.plot = p;
 		p.setXLabel("Size of Array");
 		p.setYLabel("Runtime (in ms)");
@@ -61,7 +62,6 @@ public class SortingBenchmark {
 		baseSize = 1;
 		increment = 1;
 		geoBase = 1.;
-		time_cap_ms = Long.MAX_VALUE;
 	}
 
 	/**
@@ -140,18 +140,6 @@ public class SortingBenchmark {
 		}
 	}
 
-	/**
-	 * @brief sets an upper bound to the time of a run.
-	 *
-	 * The benchmark will end after a run if it takes more than the
-	 * given amount of time. So it is possible a particular run takes
-	 * more than the alloted time, but that will be the last run.x
-	 *
-	 * @param cap_in_ms time limit in milliseconds
-	 **/
-	public void setTimeCap(long cap_in_ms) {
-		time_cap_ms = cap_in_ms;
-	}
 
 	private void generate(int[] arr, int n) {
 		for (int i = 0; i < n; i++) {
@@ -206,7 +194,7 @@ public class SortingBenchmark {
 			time.add ((double)runTime );
 			xData.add ( (double)n );
 
-			if (runTime > time_cap_ms) {
+			if (runTime > this.getTimeCap()) {
 				break;
 			}
 		}
