@@ -41,9 +41,9 @@ abstract class Benchmark {
 	 *
 	 * The benchmark will end after a run if it takes more than the
 	 * given amount of time. So it is possible a particular run takes
-	 * more than the alloted time, but that will be the last run.
+	 * more than the allotted time, but that will be the last run.
 	 *
-	 * @return the time upper bound (in seconds) of a particular run.
+	 * @return the time upper bound (in milliseconds) of a particular run.
 	 */
 	long getTimeCap() {
 		return this.timeCap;
