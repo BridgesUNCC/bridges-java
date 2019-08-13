@@ -66,9 +66,6 @@ public class SimpleCache extends Cache {
             if (!dir.mkdir()) {
                 System.err.println("Error creating bridges cache directory");
             }
-            else {
-                System.err.println("dir exists?");
-            }
         }
     }
 }
