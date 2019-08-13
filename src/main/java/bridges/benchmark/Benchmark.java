@@ -1,20 +1,26 @@
 package bridges.benchmark;
 
 
+import bridges.base.LineChart;
+
 /**
  * @brief Base class for a variety of benchmarks.
  *
  * This class is not meant to be used directly by students.
  **/
-public abstract class Benchmark {
+abstract class Benchmark {
     private long timeCap;
+    LineChart plot;
 
-    public Benchmark(long timeCap) {
+    Benchmark(LineChart plot, long timeCap) {
+		plot.setXLabel("Size of Array");
+		plot.setYLabel("Runtime (in ms)");
+    	this.plot = plot;
     	this.setTimeCap(timeCap);
 	}
 
-	public Benchmark() {
-		this.setTimeCap(Long.MAX_VALUE);
+	Benchmark(LineChart plot) {
+		this(plot, Long.MAX_VALUE);
 	}
 
 	/**

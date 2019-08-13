@@ -41,8 +41,6 @@ import java.util.function.Consumer;
 public class SortingBenchmark extends Benchmark {
 	private boolean debug = false;
 
-	private LineChart plot;
-
 	private Random r;
 
 	private int maxSize;
@@ -51,10 +49,7 @@ public class SortingBenchmark extends Benchmark {
 	private double geoBase;
 
 	public SortingBenchmark(LineChart p) {
-	    super(Long.MAX_VALUE);
-		this.plot = p;
-		p.setXLabel("Size of Array");
-		p.setYLabel("Runtime (in ms)");
+	    super(p);
 
 		r = new Random();
 
@@ -198,8 +193,8 @@ public class SortingBenchmark extends Benchmark {
 				break;
 			}
 		}
-		plot.setXData(algoName, xData);
-		plot.setYData(algoName, time);
+		this.plot.setXData(algoName, xData);
+		this.plot.setYData(algoName, time);
 	}
 
 }
