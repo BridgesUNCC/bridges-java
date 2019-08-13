@@ -13,13 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
-import com.google.gson.JsonObject;
+import bridges.cache.LRUCache;
 import com.google.gson.JsonParseException;
-import org.apache.http.Header;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.protocol.RequestUserAgent;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -1165,7 +1161,7 @@ public class DataFormatter {
 		int hashStatus = hashResp.getStatusLine().getStatusCode();
 		hash = EntityUtils.toString(hashResp.getEntity());
 		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
-			content = lru.get(hash);
+			content = lru.getDoc(hash);
 		}
 
 		// if not in cache, hit server for data
@@ -1191,7 +1187,7 @@ public class DataFormatter {
 
 			//Checks to see if valid hash is generated
 			if (!hash.equals("false")){
-				lru.put(hash, content);
+				lru.putDoc(hash, content);
 			}
 		}
 
@@ -1348,7 +1344,7 @@ public class DataFormatter {
 		String json = null;
 
 		if (cache.inCache(cacheName)) {
-			json = cache.get(cacheName);
+			json = cache.getDoc(cacheName);
 		} else {
 			String url = "https://query.wikidata.org/sparql?";
 			String query = "SELECT ?movie ?movieLabel ?actor ?actorLabel WHERE " +
@@ -1372,7 +1368,7 @@ public class DataFormatter {
 				resp = client.execute(req);
 				int status = resp.getStatusLine().getStatusCode();
 				json = EntityUtils.toString(resp.getEntity());
-				cache.put(cacheName, json);
+				cache.putDoc(cacheName, json);
 			} catch (Exception e) {}
 		}
 

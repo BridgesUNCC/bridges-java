@@ -11,10 +11,14 @@ import java.util.function.Consumer;
 public class BFSBenchmark extends GraphBenchmark {
     static final int CURRENT_YEAR = 2019;
 
-    public BFSBenchmark(LineChart plot) {
-        super(plot);
+    public BFSBenchmark(LineChart plot, long timeCap) {
+        super(plot, timeCap);
         plot.setXLabel("Number of Edges");
         plot.setYLabel("Runtime (in ms)");
+    }
+
+    public BFSBenchmark(LineChart plot) {
+        this(plot, Long.MAX_VALUE);
     }
 
     /**
