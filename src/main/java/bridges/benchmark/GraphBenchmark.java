@@ -1,13 +1,16 @@
 package bridges.benchmark;
 
+import bridges.base.Array;
 import bridges.base.Edge;
 import bridges.base.GraphAdjList;
 import bridges.base.LineChart;
 import bridges.connect.DataSource;
 import bridges.data_src_dependent.ActorMovieWikidata;
+import bridges.data_src_dependent.OsmVertex;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * @brief Base class for a variety of graph based benchmark.
@@ -15,6 +18,7 @@ import java.util.ArrayList;
  * This class is not meant to be used directly by students.
  **/
 abstract class GraphBenchmark extends Benchmark {
+    static final int CURRENT_YEAR = 2019;
 
     GraphBenchmark(LineChart plot) {
         super(plot);
@@ -74,4 +78,5 @@ abstract class GraphBenchmark extends Benchmark {
 
         return ret;
     }
+
 }

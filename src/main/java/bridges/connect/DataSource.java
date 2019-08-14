@@ -2,7 +2,6 @@ package bridges.connect;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.io.IOException;
 
 import bridges.base.*;
@@ -261,10 +260,22 @@ public class DataSource {
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public bridges.data_src_dependent.OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
+	public static bridges.data_src_dependent.OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
 		return DataFormatter.getOsmData(minLat, minLon, maxLat, maxLon, level);
 	}
 
+	/**
+	 * Generates Open Street Map URL request for a given set of coordinates with default level and returns the map data
+	 * @param minLat minimum latitude value for the area requested
+	 * @param minLon minimum longitude value for the area requested
+	 * @param maxLat maximum latitude value for the area requested
+	 * @param maxLon maximum longitude value for the area requested
+	 * @return OsmData vertices and edges of Open Street Map data
+	 * @throws IOException If there is an error parsing response from server or is an invalid location name
+	 */
+	public static OsmData getOSMData(double minLat, double minLon, double maxLat, double maxLon) throws IOException {
+		return getOsmData(minLat, minLon, maxLat, maxLon, "default");
+	}
 
 
 
