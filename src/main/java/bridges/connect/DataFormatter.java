@@ -1124,8 +1124,8 @@ public class DataFormatter {
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
 	static OsmData getOsmData(String location, String level) throws IOException {
-		String url = "http://cci-bridges-osm-t.uncc.edu/loc?location=" + location + "&level=" + level;
-		String hashUrl = "http://cci-bridges-osm-t.uncc.edu/hash?location=" + location + "&level=" + level;
+		String url = "http://cci-bridges-osm.uncc.edu/loc?location=" + location + "&level=" + level;
+		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?location=" + location + "&level=" + level;
 		return (downloadMapFile(url, hashUrl));
 	}
 	/***
@@ -1139,8 +1139,8 @@ public class DataFormatter {
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
 	static OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
-		String url = "http://cci-bridges-osm-t.uncc.edu/coords?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
-		String hashUrl = "http://cci-bridges-osm-t.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
+		String url = "http://cci-bridges-osm.uncc.edu/coords?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
+		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
 		return (downloadMapFile(url, hashUrl));
 	}
 	/***
@@ -1172,7 +1172,7 @@ public class DataFormatter {
 			if (status != 200) {
 				if (status == 404) {
 					// attempt to get valid names
-					url = "http://cci-bridges-osm-t.dyn.uncc.edu/cities";
+					url = "http://cci-bridges-osm.dyn.uncc.edu/cities";
 					resp = makeRequest(url);
 					status = resp.getStatusLine().getStatusCode();
 					if (status == 200) {
