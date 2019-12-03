@@ -1,6 +1,14 @@
 apply plugin: 'java'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+
+// It turns out that sourceCompatibility and targetCompatibility are not enough to make the jar file actually cocmpatible.
+// adding "--release 8" as a javac flags help.
+tasks.withType(JavaCompile) {
+    options.compilerArgs.addAll(['--release', '8'])
+}
+
 apply plugin: 'groovy' // groovy -> scripting -> working scalatests
 apply plugin: 'application'
 apply plugin: 'eclipse'
@@ -11,7 +19,7 @@ apply plugin: 'signing'
 /// General
 ///
 group = "edu.uncc.cs.bridges"
-version = "3.0.0b2"
+version = "3.0.1"
 
 
 ///
