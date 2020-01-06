@@ -104,45 +104,45 @@ public abstract class GameBase {
 
     /// @brief Change the background color of a cell
     ///
-    /// @param x row of the cell to set
-    /// @param y column of the cell to set
+    /// @param row -  row of the cell to set
+    /// @param col - column of the cell to set
     /// @param c NamedColor to set
-    protected void setBGColor(int x, int y, NamedColor c) {
-        grid.setBGColor(y, x, c);
+    protected void setBGColor(int row, int col, NamedColor c) {
+        grid.setBGColor(row, col, c);
     }
 
     /// @brief What color is this cell?
     ///
-    /// @param x row of the cell 
-    /// @param y column of the cell 
-    protected NamedColor getBGColor(int x, int y) {
-        return grid.getBGColor(y, x);
+    /// @param row -  row of the cell 
+    /// @param col -  column of the cell 
+    protected NamedColor getBGColor(int row, int col) {
+        return grid.getBGColor(row, col);
     }
 
     /// @brief What object is in this cell?
     ///
-    /// @param x row of the cell 
-    /// @param y column of the cell 
-    protected NamedSymbol getSymbol(int x, int y) {
-        return grid.getSymbol(y, x);
+    /// @param row -  row of the cell 
+    /// @param col -  column of the cell 
+    protected NamedSymbol getSymbol(int row, int col) {
+        return grid.getSymbol(row, col);
     }
 
     /// @brief What color is object in this cell?
     ///
-    /// @param x row of the cell 
-    /// @param y column of the cell 
-    protected NamedColor getSymbolColor(int x, int y) {
-        return grid.getSymbolColor(y, x);
+    /// @param row -  row of the cell 
+    /// @param col -  column of the cell 
+    protected NamedColor getSymbolColor(int row, int col) {
+        return grid.getSymbolColor(row, col);
     }
     
     /// @brief Draw a symbol on the game
     ///
-    /// @param x row of the cell to draw the object on
-    /// @param y column of the cell to draw the object on
+    /// @param row - row of the cell to draw the object on
+    /// @param col -  column of the cell to draw the object on
     /// @param s symbol representing the object
     /// @param c color of the object
-    protected void drawSymbol(int x, int y, NamedSymbol s, NamedColor c) {
-        grid.drawSymbol(y, x, s, c);
+    protected void drawSymbol(int row, int col, NamedSymbol s, NamedColor c) {
+        grid.drawSymbol(row, col, s, c);
     }
 
 
