@@ -167,9 +167,11 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 			e.printStackTrace();
 		}
 
-		LinkVisualizer lvis = this.getLinkVisualizer(src, dest);
-		adj_list.put(src, new SLelement<Edge<K, E2>>(
-				new Edge<K, E2>(src, dest, data, lvis), adj_list.get(src)));
+		// bails out if edge already exists
+		if (getEdge(src, dest) != null)
+		    return;
+
+		adj_list.put(src, new SLelement<Edge<K, E2>>(new Edge<K, E2>(src, dest, data), adj_list.get(src)));
 	}
 	/**
 	 *	@brief Sets data for a graph vertex
@@ -364,7 +366,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		if (e == null)
 			return null;
 		else
-			return e.lvis;
+			return e.getLinkVisualizer();
 	}
 	/**
 	 * @brief Access the ElementVisualizer associated with a vertex
@@ -491,7 +493,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 				Element<E1> dest_vert = vertices.get(edge.getTo());
 				Integer dest_indx = node_map.get(dest_vert);
 				// get link representation
-				links_JSON.append(list.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert),
+				LinkVisualizer lv = edge.getLinkVisualizer();
+				links_JSON.append(lv.getLinkRepresentation(
 						Integer.toString(src_indx), Integer.toString(dest_indx))).append(COMMA);
 				list = list.getNext();
 			}

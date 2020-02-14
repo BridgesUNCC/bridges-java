@@ -21,7 +21,7 @@ public class Edge<K, E2> {
 	private K from;						// source vertex
 	private K to;						// destination vertex
 	private E2 edge_data;				// edge specific data
-	LinkVisualizer lvis;		// link visualizer for this edge
+	private LinkVisualizer lvis;		// link visualizer for this edge
 	/**
 	 * @brief Construct an edge using each extremities, user data, and styling information.
 	 *
@@ -38,6 +38,22 @@ public class Edge<K, E2> {
 		this.lvis = lvis;
 	}
 
+	/**
+	 * @brief Construct an edge using each extremities, user data.
+	 *
+	 * @param from key of source vertex of the edge
+	 * @param to key of terminating vertex of the edge
+	 * @param data is the  edge information object
+	 *
+	 */
+	public Edge(K from, K to, E2 data) {
+		this.to = to;
+		this.from = from;
+		this.edge_data = data;
+		this.lvis = new LinkVisualizer();
+	}
+
+    
 	/**
 	 * @brief Set source Element (Vertex) of the edge
 	 *
