@@ -222,6 +222,15 @@ public class DataSource {
 
 
 	/**
+	 * Generates Open Street Map URL request for a given location at general level of details and returns the map data
+	 * @param location name of city or area that the server supports
+	 * @return OsmData vertices and edges of Open Street Map data
+	 * @throws IOException If there is an error parsing response from server or is an invalid location name
+	 */
+	public bridges.data_src_dependent.OsmData getOsmData(String location) throws IOException {
+		return DataFormatter.getOsmData(location, "default");
+	}
+        /**
 	 * Generates Open Street Map URL request for a given location and returns the map data
 	 * @param location name of city or area that the server supports
 	 * @param level level of road detail on requested map
