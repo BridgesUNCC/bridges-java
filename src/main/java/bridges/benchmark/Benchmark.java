@@ -30,7 +30,7 @@ abstract class Benchmark {
 	 *
 	 * @param cap_in_ms time limit in milliseconds
 	 **/
-	void setTimeCap(long cap_in_ms) {
+	public void setTimeCap(long cap_in_ms) {
 		this.timeCap = cap_in_ms;
 	}
 
@@ -43,7 +43,7 @@ abstract class Benchmark {
 	 *
 	 * @return the time upper bound (in milliseconds) of a particular run.
 	 */
-	long getTimeCap() {
+	public long getTimeCap() {
 		return this.timeCap;
 	}
 }
