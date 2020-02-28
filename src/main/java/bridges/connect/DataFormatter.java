@@ -1313,6 +1313,60 @@ public class DataFormatter {
 	}
 
 
+
+	static ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon, double res) throws IOException {
+		String data_url = "http://cci-bridges-elevation-t.dyn.uncc.edu/elevation?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&resX=" + res + "&resY=" + res;
+		String hash_url = "http://cci-bridges-elevation-t.dyn.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat);
+
+
+
+		File cache_dir = new File("./cache/elevationData");
+		LRUCache lru = new LRUCache(30);
+
+		// look for file in cache
+		String content = null;
+		String hash = null;
+		HttpResponse hashResp = makeRequest(hash_url);
+		int hashStatus = hashResp.getStatusLine().getStatusCode();
+		hash = EntityUtils.toString(hashResp.getEntity());
+		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
+			content = lru.getDoc(hash);
+		}
+
+		// if not in cache, hit server for data
+		if (content == null) {
+			HttpResponse resp = makeRequest(data_url);
+			int status = resp.getStatusLine().getStatusCode();
+			content = EntityUtils.toString(resp.getEntity());
+			if (status != 200) {
+				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
+			}
+			hashResp = makeRequest(hash_url);
+			hash = EntityUtils.toString(hashResp.getEntity());
+
+			//Checks to see if valid hash is generated
+			if (!hash.equals("false")){
+				lru.putDoc(hash, content);
+			}
+		}
+
+		//Parse Data into object
+		int[][] data = null;
+
+		
+
+		System.out.println(content);
+
+		ElevationData ret_data = new ElevationData();
+		return ret_data;
+	}
+
+
+
+
+
+
+
 	/**
 	 * @brief This function returns the Movie and Actors playing in them between two years from WikiData
 	 *

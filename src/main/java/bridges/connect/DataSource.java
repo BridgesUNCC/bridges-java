@@ -287,6 +287,14 @@ public class DataSource {
 	}
 
 
+	public static bridges.data_src_dependent.ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon, double res) throws IOException {
+		return DataFormatter.getElevationData(minLat, minLon, maxLat, maxLon, res);
+	}
+
+
+	public static ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon) throws IOException {
+		return getElevationData(minLat, minLon, maxLat, maxLon, .01666);
+	}
 
 	/***
 	 * This function obtains the JSON representation of a particular subassignment.
