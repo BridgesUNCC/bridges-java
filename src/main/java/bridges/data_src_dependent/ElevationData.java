@@ -5,9 +5,9 @@ public class ElevationData {
     private int [][] data;
     private int cols;
     private int rows;
-    private int xll;
-    private int yll;
-    private int cellsize;
+    private double xll;
+    private double yll;
+    private double cellsize;
     private int maxVal;
 
 
@@ -21,14 +21,14 @@ public class ElevationData {
         this.maxVal = 0;
     }
 
-    public ElevationData (int[][] data, int cols, int rows, int xll, int yll, int cellsize, int maxVal){
+    public ElevationData (int[][] data, int cols, int rows, double xll, double yll, double cellsize, int maxVal){
         this.setData(data);
         this.setCols(cols);
         this.setRows(rows);
         this.setxll(xll);
-        this.yll = yll;
-        this.cellsize = cellsize;
-        this.maxVal = maxVal;
+        this.setyll(yll);
+        this.setCellSize(cellsize);
+        this.setMaxVal(maxVal);
     }
 
     public int[][] getData(){
@@ -55,27 +55,27 @@ public class ElevationData {
         this.rows = rows;
     }
 
-    public int getxll(){
+    public double getxll(){
         return xll;
     }
 
-    public void setxll(int xll){
+    public void setxll(double xll){
         this.xll = xll;
     }
 
-    public int getyll(){
+    public double getyll(){
         return yll;
     }
     
-    public void setyll(int yll){
+    public void setyll(double yll){
         this.yll = yll;
     }
 
-    public int getCellSize(){
+    public double getCellSize(){
         return cellsize;
     }
 
-    public void setCellSize(int cellsize){
+    public void setCellSize(double cellsize){
         this.cellsize = cellsize;
     }
 

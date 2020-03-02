@@ -2,6 +2,7 @@ package bridges.connect;
 
 
 import java.io.File;
+import java.util.Arrays;
 import java.io.IOException;
 import java.lang.Exception;
 import java.net.URLEncoder;
@@ -1351,13 +1352,35 @@ public class DataFormatter {
 		}
 
 		//Parse Data into object
-		int[][] data = null;
+		int cols = 0;
+		int rows = 0;
+		double xll = 0;
+		double yll = 0;
+		double cellsize = 0;
+		int maxVal = 0;
 
+
+		String [] lines = content.split("\n");
+		cols = Integer.parseInt(lines[0].replaceAll("[^0-9]", ""));
+		rows = Integer.parseInt(lines[1].replaceAll("[^0-9]", ""));
+		xll = Double.parseDouble(lines[2].replaceAll("[^0-9.]", ""));
+		yll = Double.parseDouble(lines[3].replaceAll("[^0-9.]", ""));
+		cellsize = Double.parseDouble(lines[4].replaceAll("[^0-9.]", ""));
+
+		int[][] data = new int[rows][cols];
+		int crows = 0;
 		
+		for (int i = 5; i < lines.length; i++){
+			String [] vals = lines[i].split(" ");
+			int [] intVals = new int[vals.length - 1];
+			for (int x = 0; x < vals.length-1; x++){
+				intVals[x] = Integer.parseInt(vals[x+1]);
+			}
+			data[crows] = intVals;
+			crows++;
+		}
 
-		System.out.println(content);
-
-		ElevationData ret_data = new ElevationData();
+		ElevationData ret_data = new ElevationData(data, cols, rows, xll, yll, cellsize, maxVal);
 		return ret_data;
 	}
 
