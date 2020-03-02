@@ -1357,7 +1357,7 @@ public class DataFormatter {
 		double xll = 0;
 		double yll = 0;
 		double cellsize = 0;
-		int maxVal = 0;
+		int maxVal = -9999999;
 
 
 		String [] lines = content.split("\n");
@@ -1378,6 +1378,15 @@ public class DataFormatter {
 			}
 			data[crows] = intVals;
 			crows++;
+		}
+
+		//Finds and sets the max elevation value in the set
+		for (int i = 0; i < data.length; i++){
+			for (int j = 0; j < data[i].length; j++){
+				if (data[i][j] > maxVal){
+					maxVal = data[i][j];
+				}
+			}
 		}
 
 		ElevationData ret_data = new ElevationData(data, cols, rows, xll, yll, cellsize, maxVal);
