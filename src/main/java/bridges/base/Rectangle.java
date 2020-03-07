@@ -64,8 +64,8 @@ public	class Rectangle extends  Symbol {
 	 * @param w  width
 	 */
 	public void setWidth(float w) {
-		if (w <= 0.0f || w > 300.0f) {
-			throw new IllegalArgumentException ("Width need to be in the range(0-300)");
+		if (w <= 0.0f) {
+			throw new IllegalArgumentException ("Width needs to be positive");
 		}
 		width = w;
 	}
@@ -76,8 +76,8 @@ public	class Rectangle extends  Symbol {
 	 * @param h  height
 	 */
 	void setHeight(float h) {
-		if (h <= 0.0f || h > 300.0f) {
-			throw new IllegalArgumentException ("Height need to be in the range(0-300)");
+		if (h <= 0.0f) {
+			throw new IllegalArgumentException ("Height needs to be positive");
 		}
 		height = h;
 	}
@@ -113,12 +113,9 @@ public	class Rectangle extends  Symbol {
 	public void setRectangle(float locx, float locy, float w, float h) 	{
 
 		setLocation (locx, locy);
-		if (w <= 0.0f || w > 300.0f || h <= 0.0f ||  w > 300.0f) {
-			throw new IllegalArgumentException ("Height, Width need to be in the range(0-300)");
-		}
-
-		width = w;
-		height = h;
+		setWidth(w);
+		setHeight(h);
+		
 		setShapeType("rect");
 	}
 

@@ -25,8 +25,22 @@ public class SymbolCollection extends DataStruct {
 
 	// default domain (assuming square coordinate space)
 	//  domian emanates in x and y directions, both positive and negative, from 0,0
-	protected Float domain = 100.0f;
+	protected Float domainxmin = -100.0f;
+    	protected Float domainxmax = 100.0f;
+    	protected Float domainymin = -100.0f;
+    	protected Float domainymax = 100.0f;
+    protected boolean autoscaledomain = true;
+    
 
+    public void setViewport(float xmin, float xmax,
+			    float ymin, float ymax) {
+	domainxmin = xmin;
+	domainxmax = xmax;
+	domainymin = ymin;
+	domainymax = ymax;
+	autoscaledomain = false;
+    }
+    
 	/**
 	 *
 	 *	Constructor
@@ -62,19 +76,19 @@ public class SymbolCollection extends DataStruct {
 		float[] dims = s.getDimensions();
 
 		// check x axis
-		if (Math.abs(dims[0]) > domain) {
-			domain = Math.abs(dims[0]);
+		if (dims[0] < domainxmin) {
+			domainxmin = dims[0];
 		}
-		if (Math.abs(dims[1]) > domain) {
-			domain = Math.abs(dims[1]);
+		if (dims[1] > domainxmax) {
+			domainxmax = dims[1];
 		}
 
 		// check y axis
-		if (Math.abs(dims[2]) > domain) {
-			domain = Math.abs(dims[2]);
+		if (dims[2] < domainymin) {
+			domainymin = dims[2];
 		}
-		if (Math.abs(dims[3]) > domain) {
-			domain = Math.abs(dims[3]);
+		if (dims[3] > domainymax) {
+			domainymax = dims[3];
 		}
 	}
 
@@ -87,12 +101,12 @@ public class SymbolCollection extends DataStruct {
 		JSONArray symbol_json = new JSONArray();
 		for (Entry<String, Symbol> symbol : symbols.entrySet()) {
 
-			// update axis domains where appropriate for each shape
+		    if (autoscaledomain)
 			updateAxisDomains(symbol.getValue());
 
 			symbol_json.add(symbol.getValue().getJSONRepresentation());
 		}
 
-		return "\"domainX\":[" + -domain + "," + domain + "],\"domainY\":[" + -domain + "," + domain + "]," + "\"symbols\":" + symbol_json + "}";
+		return "\"domainX\":[" + domainxmin + "," + domainxmax + "],\"domainY\":[" + domainymin + "," + domainymax + "]," + "\"symbols\":" + symbol_json + "}";
 	}
 }
