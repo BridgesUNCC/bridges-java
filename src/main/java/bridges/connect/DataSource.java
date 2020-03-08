@@ -286,12 +286,32 @@ public class DataSource {
 		return getOsmData(minLat, minLon, maxLat, maxLon, "default");
 	}
 
-
+    /**
+     * Returns elevation data for the provided coordinate box at the
+     * given resolution. Note that the ElevationData that is returned
+     * may have slightly different location and resolution.
+     *
+     * @param minLat minimum latitude requested
+     * @param minLon minimum longitude requested
+     * @param maxLat maximum latitude requested
+     * @param maxLat maximum longitude requested
+     * @param res spatial resolution, aka the distance between two samples (in degrees)
+     **/
 	public static bridges.data_src_dependent.ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon, double res) throws IOException {
 		return DataFormatter.getElevationData(minLat, minLon, maxLat, maxLon, res);
 	}
 
 
+    /**
+     * Returns elevation data for the provided coordinate box. Note
+     * that the ElevationData that is returned may have slightly
+     * different location.
+     *
+     * @param minLat minimum latitude requested
+     * @param minLon minimum longitude requested
+     * @param maxLat maximum latitude requested
+     * @param maxLat maximum longitude requested
+     **/
 	public static ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon) throws IOException {
 		return getElevationData(minLat, minLon, maxLat, maxLon, .01666);
 	}
