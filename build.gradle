@@ -9,10 +9,8 @@ targetCompatibility = JavaVersion.VERSION_1_8
 //    options.compilerArgs.addAll(['--release 8'])
 //}
 
-apply plugin: 'groovy' // groovy -> scripting -> working scalatests
 apply plugin: 'application'
 apply plugin: 'eclipse'
-apply plugin: 'maven'
 apply plugin: 'signing'
 
 ///
@@ -42,113 +40,26 @@ artifacts {
     archives sourcesJar
 }
 
-// Ignore the drivers
 sourceSets {
- 
-//			exclude 'edu/uncc/cs/bridgesdrivers/**'
-//			exclude 'edu/uncc/cs/bridges/bridgesV2/**'
-//			exclude 'src/main/test/**'
 	main  {
 		java {
-	
+
 		}
-        }
-}
-//	test {
-//		java {
-//			include '**'
-//		}
-//	}
+	}
 
-
-test {
-  // enable TestNG support (default is JUnit)
-  useJUnit()
-
-  // set a system property for the test JVM(s)
-  //systemProperty 'some.prop', 'value'
-
-  // explicitly include or exclude tests
-  include 'edu/**'
-  scanForTestClasses = true
-
-  // show standard out and standard error of the test JVM(s) on the console
-  testLogging.showStandardStreams = true
-
-  // set heap size for the test JVM(s)
-  //minHeapSize = "128m"
-  //maxHeapSize = "512m"
-
-  // set JVM arguments for the test JVM(s)
-  //jvmArgs '-XX:MaxPermSize=256m'
-
-  // listen to events in the test execution lifecycle
-  beforeTest { descriptor ->
-     logger.lifecycle("Running test: " + descriptor)
-  }
-
-  // listen to standard out and standard error of the test JVM(s)
-  onOutput { descriptor, event ->
-     logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
-  }
 }
 
 task fatJar(type: Jar) {
-    manifest {
-        attributes 'Implementation-Title': 'Bridges Jar File',
-            'Implementation-Version': version
-    }
-    baseName = project.name
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it)}}
-    with jar
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository url: "file://$projectDir/releases"
-
-            pom.project {
-               name 'Bridges Curriculum Social Network Client'
-               packaging 'jar'
-               description 'Explore and visualize social network follower graphs and user status streams with a lightweight facade API. (Client)'
-               url 'http://github.com/SeanTater/bridges'
-
-               scm {
-                   url 'scm:git@github.com:SeanTater/bridges.git'
-                   connection 'scm:git@github.com:SeanTater/bridges.git'
-                   developerConnection 'scm:git@github.com:SeanTater/bridges.git'
-               }
-
-               licenses {
-                   license {
-                       name 'GNU General Public Licence, Version 2.0'
-                       url 'http://www.gnu.org/licenses/gpl-2.0.htm'
-                       distribution 'repo'
-                   }
-               }
-
-               developers {
-                   developer {
-                       id 'SeanTater'
-                       name 'Sean Gallagher'
-                   }
-                   developer {
-                       id 'stevemacn'
-                       name 'Stephen MacNeil'
-                   }
-                   developer {
-                       id 'Dismembered'
-                       name 'Michael Vitulli'
-                   }
-                   developer {
-                       id 'mmehedin'
-                       name 'Mihai Mehedint'
-                   }
-               }
-           }
-        }
-    }
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+	manifest {
+	attributes 'Implementation-Title': 'Bridges Jar File',
+	'Implementation-Version': archiveVersion
+	}
+	archiveBaseName = project.name
+	from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it)}}
+	with jar
 }
 
 ///
@@ -166,18 +77,11 @@ repositories {
 //	test code
 dependencies {
     // The production code uses the SLF4J logging API at compile time
-    compile 'org.slf4j:slf4j-api:1.7.5'
-    compile 'com.googlecode.json-simple:json-simple:1.1.1'
-    compile 'org.apache.httpcomponents:fluent-hc:4.3.1'
-    compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.google.guava:guava:16+'
-//	compile 'com.github.scala-incubator.io:scala-io-file_2.10:0.4.2'
-//	compile 'com.github.nscala-time:nscala-time_2.10:0.6.0'
-	// Declare the dependency for your favourite test framework you want
-	// to use in your tests.
-	// TestNG is also supported by the Gradle Test task. Just change the
-	// testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
-    // 'test.useTestNG()' to your build script.
-	// testCompile "junit:junit:4.11"
-  compile 'io.socket:socket.io-client:1.0.0'
+    implementation 'org.slf4j:slf4j-api:1.7.5'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'org.apache.httpcomponents:fluent-hc:4.3.1'
+    implementation 'com.google.code.gson:gson:2.6.2'
+    implementation 'com.google.guava:guava:16+'
+    implementation 'io.socket:socket.io-client:1.0.0'
+
 }
