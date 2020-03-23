@@ -1,4 +1,4 @@
-package audio;
+package bridges_external;
 public class WavFileException extends Exception
 {
 	public WavFileException()

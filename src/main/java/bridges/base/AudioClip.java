@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 import org.apache.commons.codec.binary.Base64;
+import bridges_external.*;
 
 public class AudioClip extends DataStruct {	
 	private int sampleCount;

@@ -5,9 +5,9 @@ targetCompatibility = 1.8
 
 // It turns out that sourceCompatibility and targetCompatibility are not enough to make the jar file actually cocmpatible.
 // adding "--release 8" as a javac flags help.
-tasks.withType(JavaCompile) {
-    options.compilerArgs.addAll(['--release', '8'])
-}
+//tasks.withType(JavaCompile) {
+//    options.compilerArgs.addAll(['--release 8'])
+//}
 
 apply plugin: 'groovy' // groovy -> scripting -> working scalatests
 apply plugin: 'application'
@@ -51,7 +51,6 @@ sourceSets {
 	main  {
 		java {
 	
-			include 'bridges/**'
 		}
         }
 }
