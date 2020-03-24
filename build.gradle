@@ -55,9 +55,9 @@ task fatJar(type: Jar) {
 	targetCompatibility = JavaVersion.VERSION_1_8
 	manifest {
 	attributes 'Implementation-Title': 'Bridges Jar File',
-	'Implementation-Version': archiveVersion
+	'Implementation-Version': version
 	}
-	archiveBaseName = project.name
+	baseName = project.name
 	from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it)}}
 	with jar
 }
