@@ -39,9 +39,9 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 
 
 	/**
-	  * Constructs a KdTreeElement with the provided value, label, key,
-	  * left and right KdTree elements.  The defaults will be used if
-	  * not provided.
+	  * Constructs a KdTreeElement with the provided value, label, partitioner,
+	  * dimension, thickness, left and right KdTree elements.  The defaults will be 
+	  *	used params are not provided.
 	  *
 	  * @param k The key for ordering
 	  * @param dim number of dimensions
@@ -97,9 +97,9 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 * @param right the KdTreeElement that should be assigned to the right pointer
 	 *
 	 **/
-	public KdTreeElement(K key, E e, KdTreeElement<K, E> left, KdTreeElement<K, E> right) {
+	public KdTreeElement(K partitioner, E e, KdTreeElement<K, E> left, KdTreeElement<K, E> right) {
 		super(e, left, right);
-		this.setKey(key);
+		this.setKey(partitioner);
 	}
 
 	/**
@@ -110,6 +110,8 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 **/
 	public KdTreeElement(E e) {
 		super(e);
+		this.thickness = 0.0f;
+		this.dimension = 0;
 	}
 
 	/**
@@ -145,6 +147,8 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	public KdTreeElement(K key, E e) {
 		super(e);
 		this.setKey(key);
+		this.dimension = 0;
+		this.thickness = 0.0f;
 	}
 
 	/**
@@ -156,6 +160,8 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 **/
 	public KdTreeElement(String label, E e) {
 		super(label, e);
+		this.dimension = 0;
+		this.thickness = 0.0f;
 	}
 
 	/**
@@ -172,6 +178,8 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	public KdTreeElement(String label, K key, E e) {
 		super(label, e);
 		this.setKey(key);
+		this.dimension = 0;
+		this.thickness = 0.0f;
 	}
 
 	/**
@@ -203,6 +211,31 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 **/
 	public void setDimension(int dim) {
 		this.dimension = dimension;
+	}
+	/**
+	 *	Return the thickness of the KdtreeElement;
+	 * 		thickness is used in the visualization to draw the partitioning lines
+	 *
+	 * 	@return the thickness of this KdTreeElement
+	 *
+	 **/
+	/**
+	 *	Return the partitioner
+	 *
+	 * 	@return the partitioner value
+	 *
+	 **/
+	public K getPartitioner() {
+		return this.getKey();
+	}
+
+	/**
+	 *
+	 *	Set the dimension of the KdTreElement to key
+	 * 	@param dim the dimension to set
+	 **/
+	public void setPartitioner(K partitioner) {
+		this.setKey(partitioner);
 	}
 	/**
 	 *	Return the thickness of the KdtreeElement;
