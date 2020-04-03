@@ -342,8 +342,10 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		ArrayList<Edge<K, E2>> edgeSet = new ArrayList<Edge<K, E2>>();
 		SLelement<Edge<K, E2>> list = getAdjacencyList(vertex);
 
-		for (SLelement<Edge<K, E2>> element : list) {
-			edgeSet.add(element.getValue());
+		if (list != null) {
+			for (SLelement<Edge<K, E2>> element : list) {
+				edgeSet.add(element.getValue());
+			}
 		}
 
 		return edgeSet;
