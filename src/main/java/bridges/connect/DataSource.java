@@ -296,6 +296,8 @@ public class DataSource {
      * @param maxLat maximum latitude requested
      * @param maxLat maximum longitude requested
      * @param res spatial resolution, aka the distance between two samples (in degrees)
+     *
+     * @return a ElevationData object mapping a region close to the box requested
      **/
 	public static bridges.data_src_dependent.ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon, double res) throws IOException {
 		return DataFormatter.getElevationData(minLat, minLon, maxLat, maxLon, res);
