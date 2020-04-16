@@ -263,26 +263,43 @@ public abstract class NonBlockingGame extends GameBase {
     /// Call this function to start the game engine.
     ///
     public void start() {
+        // This will listen for any shutdown call including sigterm and make sure
+        // to cleanup our socket io client
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                try {
+                    Thread.sleep(200);
+                    System.out.println("Shutting down ...");
+                    //some cleaning up code...
+                    terminateNetwork();
+
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
         sleepTimer();
         // visualize the grid
         render();
         initialize();
 
-	long framelimit = -1;
+        long framelimit = -1;
 
-	{
-	    String str_limit = System.getenv("FORCE_BRIDGES_FRAMELIMIT");
-	    if (str_limit != null) {
-		try {
-		    framelimit = Long.parseLong(str_limit);
-		    System.err.println("Setting framelimit to " + framelimit+ "!");
-		}
-		catch (java.lang.NumberFormatException e) {
-		    System.err.println("FORCE_BRIDGES_FRAMELIMIT environment variable is not an integer. Ignoring it...");
-		}
-	    }
-	}
+        {
+            String str_limit = System.getenv("FORCE_BRIDGES_FRAMELIMIT");
+            if (str_limit != null) {
+                try {
+                    framelimit = Long.parseLong(str_limit);
+                    System.err.println("Setting framelimit to " + framelimit+ "!");
+                }
+                catch (java.lang.NumberFormatException e) {
+                    System.err.println("FORCE_BRIDGES_FRAMELIMIT environment variable is not an integer. Ignoring it...");
+                }
+            }
+        }
 
 
 	long frame = 0;
@@ -291,13 +308,12 @@ public abstract class NonBlockingGame extends GameBase {
             render();
             controlFrameRate();
             // System.out.println("rendered");
-	    frame ++;
- 
-	    if (framelimit > 0 && frame > framelimit) {
-		    quit();
-	    }
+            frame ++;
+
+            if (framelimit > 0 && frame > framelimit) {
+                quit();
+            }
         }
 
-	terminateNetwork();
     }
 }

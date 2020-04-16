@@ -191,6 +191,6 @@ public abstract class GameBase {
     /// @brief terminal all network connections
     /// Note that it takes a minute for all threads to gracefully exit
     protected void terminateNetwork() {
-	sock.close();
+        sock.close();
     }
 }
