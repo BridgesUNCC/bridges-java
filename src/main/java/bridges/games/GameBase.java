@@ -55,6 +55,22 @@ public abstract class GameBase {
         // /set up socket connection to receive and send data
         sock = new SocketConnection(bridges);
         sock.setupConnection();
+        // This will listen for any shutdown call including sigterm and make sure
+        // to cleanup our socket io client
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                try {
+                    Thread.sleep(200);
+                    System.out.println("Shutting down ...");
+                    //some cleaning up code...
+                    terminateNetwork();
+
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /// @brief register a new KeypressListener

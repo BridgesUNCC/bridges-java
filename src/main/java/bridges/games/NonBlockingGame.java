@@ -263,24 +263,6 @@ public abstract class NonBlockingGame extends GameBase {
     /// Call this function to start the game engine.
     ///
     public void start() {
-        // This will listen for any shutdown call including sigterm and make sure
-        // to cleanup our socket io client
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                try {
-                    Thread.sleep(200);
-                    System.out.println("Shutting down ...");
-                    //some cleaning up code...
-                    terminateNetwork();
-
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    e.printStackTrace();
-                }
-            }
-        });
-
-
         sleepTimer();
         // visualize the grid
         render();
@@ -302,7 +284,7 @@ public abstract class NonBlockingGame extends GameBase {
         }
 
 
-	long frame = 0;
+        long frame = 0;
         while (gameStarted) {
             gameLoop();
             render();
@@ -314,6 +296,8 @@ public abstract class NonBlockingGame extends GameBase {
                 quit();
             }
         }
+
+        terminateNetwork();
 
     }
 }
