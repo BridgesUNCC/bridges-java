@@ -94,10 +94,10 @@ public	class Rectangle extends  Symbol {
 		float[] dims = new float[4];
 		float[] location = getLocation();
 
-		dims[0] = location[0] - width / 2;
-		dims[1] = location[0] + width / 2;
-		dims[2] = location[1] - height / 2;
-		dims[3] = location[1] + height / 2;
+		dims[0] = location[0];
+		dims[1] = location[0] + width;
+		dims[2] = location[1];
+		dims[3] = location[1] + height;
 
 		return dims;
 	}
@@ -112,6 +112,9 @@ public	class Rectangle extends  Symbol {
 	 */
 	public void setRectangle(float locx, float locy, float w, float h) 	{
 
+		if (w < 0.0f || h <= 0.0f) {
+			throw new IllegalArgumentException ("Width, Height need to be positive");
+		}
 		setLocation (locx, locy);
 		setWidth(w);
 		setHeight(h);
@@ -125,9 +128,9 @@ public	class Rectangle extends  Symbol {
 	*  @param tx,ty translation vector
 	*/
 	public void translate(float tx, float ty) {
-		float[] center = getLocation();
-		translatePoint (center, tx, ty);
-		setLocation(center[0], center[1]);
+		float[] origin = getLocation();
+		translatePoint (origin, tx, ty);
+		setLocation(origin[0], origin[1]);
 	}
 	/**
 	 *  Scale the rectangle about its center
