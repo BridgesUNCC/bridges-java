@@ -169,7 +169,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 
 		// bails out if edge already exists
 		if (getEdge(src, dest) != null)
-		    return;
+			return;
 
 		adj_list.put(src, new SLelement<Edge<K, E2>>(new Edge<K, E2>(src, dest, data), adj_list.get(src)));
 	}
@@ -343,8 +343,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		SLelement<Edge<K, E2>> list = getAdjacencyList(vertex);
 
 		if (list != null) {
-			for (SLelement<Edge<K, E2>> element : list) {
-				edgeSet.add(element.getValue());
+			for (Edge<K, E2> element : list) {
+				edgeSet.add(element);
 			}
 		}
 

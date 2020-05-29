@@ -53,7 +53,7 @@ public class Edge<K, E2> {
 		this.lvis = new LinkVisualizer();
 	}
 
-    
+
 	/**
 	 * @brief Set source Element (Vertex) of the edge
 	 *

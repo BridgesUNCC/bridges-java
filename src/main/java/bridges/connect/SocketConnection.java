@@ -23,8 +23,8 @@ public class SocketConnection {
 
 	// Register listeners to keypress events
 	public void addListener(KeypressListener toAdd) {
-	    if (Bridges.getDebugFlag())
-		System.out.println("subscribing to keypress events..");
+		if (Bridges.getDebugFlag())
+			System.out.println("subscribing to keypress events..");
 		listeners.add(toAdd);
 	}
 
@@ -69,7 +69,7 @@ public class SocketConnection {
 						+ bridges.getAssignmentID()
 						+ "\"}");
 					if (Bridges.getDebugFlag())
-					    System.out.println("passing credentials to socket server...");
+						System.out.println("passing credentials to socket server...");
 				}
 			})
 			.on("announcement", new Emitter.Listener() {
@@ -81,7 +81,7 @@ public class SocketConnection {
 				public void call(Object... args) {
 					JSONObject obj = (JSONObject) args[0];
 					if (Bridges.getDebugFlag())
-					    System.out.println("announcement: " + obj);
+						System.out.println("announcement: " + obj);
 				}
 			})
 			.on("keydown", new Emitter.Listener() {
@@ -158,8 +158,8 @@ public class SocketConnection {
 	}
 
 	public void close() {
-	    socket.disconnect();
+		socket.disconnect();
 		socket.off();
-			    socket.close();
+		socket.close();
 	}
 }

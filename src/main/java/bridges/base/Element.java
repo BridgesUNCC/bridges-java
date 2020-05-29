@@ -348,7 +348,7 @@ public class Element<E> extends DataStruct {
 	 */
 	public String getLinkRepresentation(LinkVisualizer lv, String src,
 		String dest) {
-	    return lv.getLinkRepresentation(src, dest);
+		return lv.getLinkRepresentation(src, dest);
 	}
 
 	/**

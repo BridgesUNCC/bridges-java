@@ -87,7 +87,7 @@ public class Bridges {
 	/**
 	 *
 	 *	Constructors
-     *
+	 *
 	 * If the FORCE_BRIDGES_APIKEY environment variable is set,
 	 * use the environment variable as APIkey in all cases.
 	 *

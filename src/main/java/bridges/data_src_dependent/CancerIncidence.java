@@ -128,8 +128,8 @@ public class CancerIncidence extends DataSource {
 		age_adjusted_rate_ci[1] = ci_u;
 	}
 
-        /**
-	 * @brief Get the cancer rate, adjusted for population
+	/**
+	* @brief Get the cancer rate, adjusted for population
 	 *
 	 * @return crude cancer rate
 	 */
@@ -144,8 +144,8 @@ public class CancerIncidence extends DataSource {
 	public void setCrudeRate(double cr) {
 		crude_rate = cr;
 	}
-        /**
-	 * @brief Get the expected cancer crude rate confidence interval(lower),
+	/**
+	* @brief Get the expected cancer crude rate confidence interval(lower),
 	 * adjusted for age of participants.
 	 *
 	 * @return cancer conf interval (lower) rate
@@ -158,19 +158,19 @@ public class CancerIncidence extends DataSource {
 	/**
 	 * @brief Set age adjusted cancer crude conf interval (lower)
 	 *
-	 * @param cr_l lower bound of the cancer crude rate confidence interval 
+	 * @param cr_l lower bound of the cancer crude rate confidence interval
 	 *
 	 */
 	public void setCrudeRate_CI_Lower(double cr_l) {
 		crude_rate_ci[0] = cr_l;
 	}
-	 /**
-	  * Get the expected cancer crude rate confidence interval(upper),
-	  * adjusted for age of participants.
-	  *
-	  * @return cancer crude rate CI (upper) rate
-	  *
-	  **/
+	/**
+	 * Get the expected cancer crude rate confidence interval(upper),
+	 * adjusted for age of participants.
+	 *
+	 * @return cancer crude rate CI (upper) rate
+	 *
+	 **/
 	public double getCrudeRate_CI_Upper() {
 		return crude_rate_ci[1];
 	}
@@ -185,7 +185,7 @@ public class CancerIncidence extends DataSource {
 		crude_rate_ci[1] = cr_u;
 	}
 
- 	/**
+	/**
 	 * @brief Get the year of this cancer record
 	 *
 	 * @return year of the cancer record
@@ -219,7 +219,7 @@ public class CancerIncidence extends DataSource {
 		gender = g;
 	}
 
- 	/**
+	/**
 	 * Get the race of the group
 	 *
 	 * @return race (All Races, etc)
@@ -236,7 +236,7 @@ public class CancerIncidence extends DataSource {
 		race = r;
 	}
 
- 	/**
+	/**
 	 * @brief Get the event type (incidence, mortality, etc)
 	 *
 	 * @return event type
@@ -253,7 +253,7 @@ public class CancerIncidence extends DataSource {
 		event_type = et;
 	}
 
- 	/**
+	/**
 	 * @brief Get the population size
 	 *
 	 * @return population size
@@ -270,10 +270,10 @@ public class CancerIncidence extends DataSource {
 		population = pop;
 	}
 
- 	/**
+	/**
 	 * @brief Get the cancer incidence area (state, region, etc)
 	 *
-	 * @return affected area 
+	 * @return affected area
 	 */
 	public String getAffectedArea() {
 		return affected_area;
@@ -287,7 +287,7 @@ public class CancerIncidence extends DataSource {
 		affected_area = area;
 	}
 
- 	/**
+	/**
 	 * @brief Get the number of people affected in this group
 	 *
 	 * @return number of people affected in this group.
@@ -304,7 +304,7 @@ public class CancerIncidence extends DataSource {
 		count = c;
 	}
 
- 	/**
+	/**
 	 * @brief Get the X coordinate of location
 	 *
 	 * @return x coordinate (longitude?)
@@ -322,7 +322,7 @@ public class CancerIncidence extends DataSource {
 		loc[0] = locX;
 	}
 
- 	/**
+	/**
 	 * @brief Get the Y coordinate of location
 	 *
 	 * @return y coordinate (latitude?)

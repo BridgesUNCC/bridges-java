@@ -147,7 +147,7 @@ public class EarthquakeUSGS extends Tweet {
 	public double getMagnitude() {
 		return this.magnitude;
 	}
-    
+
 	@Override
 	public int compareTo(DataSource o) {
 		if (o != null)

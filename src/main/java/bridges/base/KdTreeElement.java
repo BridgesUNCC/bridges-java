@@ -40,7 +40,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 
 	/**
 	  * Constructs a KdTreeElement with the provided value, label, partitioner,
-	  * dimension, thickness, left and right KdTree elements.  The defaults will be 
+	  * dimension, thickness, left and right KdTree elements.  The defaults will be
 	  *	used params are not provided.
 	  *
 	  * @param k The key for ordering

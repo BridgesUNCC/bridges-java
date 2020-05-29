@@ -32,7 +32,11 @@ package bridges.base;
  *	@param <E>  the generic parameter that is defined by the application
  *
  */
-public class CircSLelement<E> extends SLelement<E> {
+
+
+import java.util.Iterator;
+
+public class CircSLelement<E> extends SLelement<E> implements Iterable<E> {
 	/**
 	 *
 	 * 	This constructor creates an CircSLelement object
@@ -105,6 +109,38 @@ public class CircSLelement<E> extends SLelement<E> {
 	 */
 	public CircSLelement<E> getNext() {
 		return (CircSLelement<E>) next;
+	}
+
+	/**
+	 *
+	 *  Implements an iterator on the Circular singly linked element for ease
+	 *  iterating over lists
+	 */
+	class CircSLelementIterator implements Iterator<E> {
+		CircSLelement<E> current, first;
+
+		CircSLelementIterator(CircSLelement<E> current) {
+			this.current = current;
+			this.first = current;
+		}
+
+		public boolean hasNext() {
+			return this.current != this.first;
+		}
+
+		public E next() {
+			E ret = this.current.getValue();
+			this.current = (CircSLelement) this.current.next;
+			return ret;
+		}
+	}
+
+	/**
+	 *	Return an iterator over the elements in the array. This is generally not
+	 *  called directly, but is called by Java when used in a "simple" for loops
+	 */
+	public Iterator<E> iterator() {
+		return new CircSLelementIterator(this);
 	}
 
 

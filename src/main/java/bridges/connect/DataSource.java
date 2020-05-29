@@ -230,8 +230,8 @@ public class DataSource {
 	public bridges.data_src_dependent.OsmData getOsmData(String location) throws IOException {
 		return DataFormatter.getOsmData(location, "default");
 	}
-        /**
-	 * Generates Open Street Map URL request for a given location and returns the map data
+	/**
+	* Generates Open Street Map URL request for a given location and returns the map data
 	 * @param location name of city or area that the server supports
 	 * @param level level of road detail on requested map
 	 * @return OsmData vertices and edges of Open Street Map data
@@ -286,34 +286,34 @@ public class DataSource {
 		return getOsmData(minLat, minLon, maxLat, maxLon, "default");
 	}
 
-    /**
-     * Returns elevation data for the provided coordinate box at the
-     * given resolution. Note that the ElevationData that is returned
-     * may have slightly different location and resolution.
-     *
-     * @param minLat minimum latitude requested
-     * @param minLon minimum longitude requested
-     * @param maxLat maximum latitude requested
-     * @param maxLat maximum longitude requested
-     * @param res spatial resolution, aka the distance between two samples (in degrees)
-     *
-     * @return a ElevationData object mapping a region close to the box requested
-     **/
+	/**
+	 * Returns elevation data for the provided coordinate box at the
+	 * given resolution. Note that the ElevationData that is returned
+	 * may have slightly different location and resolution.
+	 *
+	 * @param minLat minimum latitude requested
+	 * @param minLon minimum longitude requested
+	 * @param maxLat maximum latitude requested
+	 * @param maxLat maximum longitude requested
+	 * @param res spatial resolution, aka the distance between two samples (in degrees)
+	 *
+	 * @return a ElevationData object mapping a region close to the box requested
+	 **/
 	public static bridges.data_src_dependent.ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon, double res) throws IOException {
 		return DataFormatter.getElevationData(minLat, minLon, maxLat, maxLon, res);
 	}
 
 
-    /**
-     * Returns elevation data for the provided coordinate box. Note
-     * that the ElevationData that is returned may have slightly
-     * different location.
-     *
-     * @param minLat minimum latitude requested
-     * @param minLon minimum longitude requested
-     * @param maxLat maximum latitude requested
-     * @param maxLat maximum longitude requested
-     **/
+	/**
+	 * Returns elevation data for the provided coordinate box. Note
+	 * that the ElevationData that is returned may have slightly
+	 * different location.
+	 *
+	 * @param minLat minimum latitude requested
+	 * @param minLon minimum longitude requested
+	 * @param maxLat maximum latitude requested
+	 * @param maxLat maximum longitude requested
+	 **/
 	public static ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon) throws IOException {
 		return getElevationData(minLat, minLon, maxLat, maxLon, .01666);
 	}

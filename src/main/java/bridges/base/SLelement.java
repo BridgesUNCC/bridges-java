@@ -31,7 +31,7 @@ import java.util.NoSuchElementException;
  *			application specific data.
  */
 
-public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
+public class SLelement<E> extends Element<E> implements Iterable<E> {
 
 	protected SLelement<E> next = null; //the link to the next element
 
@@ -195,7 +195,7 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 	 *  Implements an iterator on the singly linked element for ease
 	 *  iterating over lists
 	 */
-	class SLelementIterator implements Iterator<SLelement<E>> {
+	class SLelementIterator implements Iterator<E> {
 		SLelement<E> current;
 
 		SLelementIterator(SLelement<E> current) {
@@ -206,11 +206,12 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 			return this.current != null;
 		}
 
-		public SLelement<E> next() {
+		@Override
+		public E next() {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			}
-			SLelement<E> ret = this.current;
+			E ret = this.current.getValue();
 			this.current = this.current.next;
 			return ret;
 		}
@@ -221,7 +222,8 @@ public class SLelement<E> extends Element<E> implements Iterable<SLelement<E>> {
 	 *	Return an iterator over the elements in the array. This is generally not
 	 *  called directly, but is called by Java when used in a "simple" for loops
 	 */
-	public Iterator<SLelement<E>> iterator() {
+	@Override
+	public Iterator<E> iterator() {
 		return new SLelementIterator(this);
 	}
 

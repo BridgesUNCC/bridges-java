@@ -26,21 +26,21 @@ public class SymbolCollection extends DataStruct {
 	// default domain (assuming square coordinate space)
 	//  domian emanates in x and y directions, both positive and negative, from 0,0
 	protected Float domainxmin = -100.0f;
-    	protected Float domainxmax = 100.0f;
-    	protected Float domainymin = -100.0f;
-    	protected Float domainymax = 100.0f;
-    protected boolean autoscaledomain = true;
-    
+	protected Float domainxmax = 100.0f;
+	protected Float domainymin = -100.0f;
+	protected Float domainymax = 100.0f;
+	protected boolean autoscaledomain = true;
 
-    public void setViewport(float xmin, float xmax,
-			    float ymin, float ymax) {
-	domainxmin = xmin;
-	domainxmax = xmax;
-	domainymin = ymin;
-	domainymax = ymax;
-	autoscaledomain = false;
-    }
-    
+
+	public void setViewport(float xmin, float xmax,
+		float ymin, float ymax) {
+		domainxmin = xmin;
+		domainxmax = xmax;
+		domainymin = ymin;
+		domainymax = ymax;
+		autoscaledomain = false;
+	}
+
 	/**
 	 *
 	 *	Constructor
@@ -101,8 +101,8 @@ public class SymbolCollection extends DataStruct {
 		JSONArray symbol_json = new JSONArray();
 		for (Entry<String, Symbol> symbol : symbols.entrySet()) {
 
-		    if (autoscaledomain)
-			updateAxisDomains(symbol.getValue());
+			if (autoscaledomain)
+				updateAxisDomains(symbol.getValue());
 
 			symbol_json.add(symbol.getValue().getJSONRepresentation());
 		}

@@ -2,6 +2,10 @@ package bridges.base;
 
 import java.util.Vector;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+
 
 /**
  *
@@ -31,7 +35,7 @@ import java.util.HashMap;
  *          application specific data.
  */
 
-public class DLelement<E> extends SLelement<E> {
+public class DLelement<E> extends SLelement<E> implements Iterable<E> {
 	protected DLelement<E> prev;
 
 	/**
@@ -143,6 +147,7 @@ public class DLelement<E> extends SLelement<E> {
 		if (prv != null)
 			this.setLinkVisualizer(prv);
 	}
+
 	/*
 	 *	Get the JSON representation of the the data structure
 	 *	@return JSON string of the doubly linked list representation
@@ -199,4 +204,35 @@ public class DLelement<E> extends SLelement<E> {
 
 		return json_str;
 	}
-}
+	/**
+	 *  Return an reverse iterator over the elements in the array. This is
+	 *	generally not called directly, but is called by Java when used in a
+	 *	"simple" for loops
+	 */
+	public Iterator<E> reverse_iterator() {
+		return new DLelementReverseIterator<E> (this);
+	}
+	/**
+	 *  A reverse iterator for doubly linked lists
+	 *
+	 */
+	class DLelementReverseIterator<E> implements Iterator<E> {
+		DLelement<E> current;
+
+		DLelementReverseIterator(DLelement<E> current) {
+			this.current = current;
+		}
+
+		public boolean hasNext() {
+			return this.current != null;
+		}
+
+		public E next() {
+			E ret = this.current.getValue();
+			this.current = this.current.prev;
+			return ret;
+		}
+	}
+}// end - DLelement
+
+

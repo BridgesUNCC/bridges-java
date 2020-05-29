@@ -118,7 +118,7 @@ public	class Rectangle extends  Symbol {
 		setLocation (locx, locy);
 		setWidth(w);
 		setHeight(h);
-		
+
 		setShapeType("rect");
 	}
 

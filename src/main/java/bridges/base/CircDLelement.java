@@ -37,7 +37,9 @@ package bridges.base;
  *
  */
 
-public class CircDLelement<E> extends DLelement<E> {
+import java.util.Iterator;
+
+public class CircDLelement<E> extends DLelement<E> implements Iterable<E> {
 	/**
 	 *
 	 *	Constructs an empty CircDLelement with next and prev pointers set
@@ -126,5 +128,66 @@ public class CircDLelement<E> extends DLelement<E> {
 	 */
 	public CircDLelement<E> getPrev() {
 		return (CircDLelement<E>) prev;
+	}
+
+	/**
+     *  Implements an iterator on the Circular doubly linked element for ease
+     *  iterating over lists
+     */
+    class CircDLelementIterator<E> implements Iterator<E> {
+		CircDLelement<E> current, first;
+
+		CircDLelementIterator(CircDLelement<E> current) {
+			this.current = current;
+			this.first = (CircDLelement) current;
+		}
+
+		public boolean hasNext() {
+			return this.current != this.first;
+		}
+
+		public E next() {
+			E ret = this.current.getValue();
+			this.current = (CircDLelement) this.current.next;
+			return ret;
+		}
+	}
+    /**
+     *  Return an iterator over the elements in the array. This is generally not
+     *  called directly, but is called by Java when used in a "simple" for loops
+     */
+	public Iterator<E> iterator() {
+		return new CircDLelementIterator(this);
+	}
+
+	/**
+     *  Implements a reverse iterator on the Circular doubly linked element for ease
+     *  iterating over lists
+     */
+    class CircDLelementReverseIterator<E> implements Iterator<E> {
+		CircDLelement<E> current, first;
+
+		CircDLelementReverseIterator(CircDLelement<E> current) {
+			this.current = current;
+			this.first = (CircDLelement) current;
+		}
+
+		public boolean hasNext() {
+			return this.current != this.first;
+		}
+
+		public E next() {
+			E ret = this.current.getValue();
+			this.current = (CircDLelement) this.current.prev;
+			return ret;
+		}
+	}
+
+    /**
+     *  Return an iterator over the elements in the array. This is generally not
+     *  called directly, but is called by Java when used in a "simple" for loops
+     */
+	public Iterator<E> reverse_iterator() {
+		return new CircDLelementReverseIterator(this);
 	}
 }

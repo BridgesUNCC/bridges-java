@@ -204,16 +204,16 @@ public class LinkVisualizer {
 		return link_props;
 	}
 
-    	/**
-	 *
-	 *	Get  the link visualizer representation, iterating through
-	 *	the link properties
-	 *
-	 *	@param src source node name
-	 *	@param dest destination node name
-	 *
-	 */
-    	public String getLinkRepresentation(String src,
+	/**
+	*
+	*	Get  the link visualizer representation, iterating through
+	*	the link properties
+	*
+	*	@param src source node name
+	*	@param dest destination node name
+	*
+	*/
+	public String getLinkRepresentation(String src,
 		String dest) {
 
 		return	OPEN_CURLY +

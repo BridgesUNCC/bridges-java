@@ -1151,7 +1151,7 @@ public class DataFormatter {
 	 * @return OsmData, vertices and edges of Open Street Map data
 	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
 	 */
-	static OsmData downloadMapFile(String url, String hashUrl) throws IOException{
+	static OsmData downloadMapFile(String url, String hashUrl) throws IOException {
 		File cache_dir = new File("./cache");
 		LRUCache lru = new LRUCache(30);
 
@@ -1187,7 +1187,7 @@ public class DataFormatter {
 			hash = EntityUtils.toString(hashResp.getEntity());
 
 			//Checks to see if valid hash is generated
-			if (!hash.equals("false")){
+			if (!hash.equals("false")) {
 				lru.putDoc(hash, content);
 			}
 		}
@@ -1242,7 +1242,7 @@ public class DataFormatter {
 		boolean has_cache = true;
 		// make cache if does not exist
 		if (!cache_dir.exists()) {
-			if(!cache_dir.mkdir()) {
+			if (!cache_dir.mkdir()) {
 				System.err.println("Error creating cache directory");
 				has_cache = false;
 			}
@@ -1346,7 +1346,7 @@ public class DataFormatter {
 			hash = EntityUtils.toString(hashResp.getEntity());
 
 			//Checks to see if valid hash is generated
-			if (!hash.equals("false")){
+			if (!hash.equals("false")) {
 				lru.putDoc(hash, content);
 			}
 		}
@@ -1369,21 +1369,21 @@ public class DataFormatter {
 
 		int[][] data = new int[rows][cols];
 		int crows = 0;
-		
-		for (int i = 5; i < lines.length; i++){
+
+		for (int i = 5; i < lines.length; i++) {
 			String [] vals = lines[i].split(" ");
 			int [] intVals = new int[vals.length - 1];
-			for (int x = 0; x < vals.length-1; x++){
-				intVals[x] = Integer.parseInt(vals[x+1]);
+			for (int x = 0; x < vals.length - 1; x++) {
+				intVals[x] = Integer.parseInt(vals[x + 1]);
 			}
 			data[crows] = intVals;
 			crows++;
 		}
 
 		//Finds and sets the max elevation value in the set
-		for (int i = 0; i < data.length; i++){
-			for (int j = 0; j < data[i].length; j++){
-				if (data[i][j] > maxVal){
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[i].length; j++) {
+				if (data[i][j] > maxVal) {
 					maxVal = data[i][j];
 				}
 			}
@@ -1425,23 +1425,24 @@ public class DataFormatter {
 	// Helper function that will actually create and execute the request to WikiData, this allows us to
 	// partition the request to prevent WikiData from kicking out the client.
 	private static void populateWikidataActorMovie(int yearBegin, int yearEnd, ArrayList<ActorMovieWikidata> out
-	, LRUCache cache) throws  IOException {
+		, LRUCache cache) throws  IOException {
 		String cacheName = String.format("wikidata-actormovie-%d-%d", yearBegin, yearEnd);
 		String json = null;
 
 		if (cache.inCache(cacheName)) {
 			json = cache.getDoc(cacheName);
-		} else {
+		}
+		else {
 			String url = "https://query.wikidata.org/sparql?";
 			String query = "SELECT ?movie ?movieLabel ?actor ?actorLabel WHERE " +
-					"{" +
-					"?movie wdt:P31 wd:Q11424." +
-					"?movie wdt:P161 ?actor." +
-					"?movie wdt:P364 wd:Q1860." +
-					"?movie wdt:P577 ?date."  +
-					"FILTER(YEAR(?date) >= " + yearBegin + " && YEAR(?date) <= " + yearEnd + ")." +
-					"SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }" +
-					"}";
+				"{" +
+				"?movie wdt:P31 wd:Q11424." +
+				"?movie wdt:P161 ?actor." +
+				"?movie wdt:P364 wd:Q1860." +
+				"?movie wdt:P577 ?date."  +
+				"FILTER(YEAR(?date) >= " + yearBegin + " && YEAR(?date) <= " + yearEnd + ")." +
+				"SERVICE wikibase:label { bd:serviceParam wikibase:language \"en\". }" +
+				"}";
 			url += "query=" + URLEncoder.encode(query) + "&format=json";
 
 			HttpGet req = new HttpGet(url);
@@ -1455,7 +1456,8 @@ public class DataFormatter {
 				int status = resp.getStatusLine().getStatusCode();
 				json = EntityUtils.toString(resp.getEntity());
 				cache.putDoc(cacheName, json);
-			} catch (Exception e) {}
+			}
+			catch (Exception e) {}
 		}
 
 		if (json != null) {
@@ -1479,7 +1481,8 @@ public class DataFormatter {
 
 					out.add(add);
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				throw new IOException("Malformed JSON: Not from wikidata?");
 			}
 		}
