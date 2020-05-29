@@ -118,19 +118,26 @@ public class CircSLelement<E> extends SLelement<E> implements Iterable<E> {
 	 */
 	class CircSLelementIterator implements Iterator<E> {
 		CircSLelement<E> current, first;
+		private boolean at_start;
 
 		CircSLelementIterator(CircSLelement<E> current) {
 			this.current = current;
 			this.first = current;
+			this.at_start = true;
 		}
 
 		public boolean hasNext() {
-			return this.current != this.first;
+			if ((this.current == this.first) && !at_start)
+				return false;
+
+			return true;
 		}
+		
 
 		public E next() {
 			E ret = this.current.getValue();
 			this.current = (CircSLelement) this.current.next;
+			at_start = false;
 			return ret;
 		}
 	}

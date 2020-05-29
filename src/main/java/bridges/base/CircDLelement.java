@@ -136,19 +136,25 @@ public class CircDLelement<E> extends DLelement<E> implements Iterable<E> {
      */
     class CircDLelementIterator<E> implements Iterator<E> {
 		CircDLelement<E> current, first;
+		private boolean at_start;
 
 		CircDLelementIterator(CircDLelement<E> current) {
 			this.current = current;
 			this.first = (CircDLelement) current;
+			at_start = true;
 		}
 
 		public boolean hasNext() {
-			return this.current != this.first;
+			if ((this.current == this.first) && !at_start)
+				return false;
+
+			return true;
 		}
 
 		public E next() {
 			E ret = this.current.getValue();
 			this.current = (CircDLelement) this.current.next;
+			at_start = false;
 			return ret;
 		}
 	}
@@ -166,19 +172,25 @@ public class CircDLelement<E> extends DLelement<E> implements Iterable<E> {
      */
     class CircDLelementReverseIterator<E> implements Iterator<E> {
 		CircDLelement<E> current, first;
+		private boolean at_start;
 
 		CircDLelementReverseIterator(CircDLelement<E> current) {
 			this.current = current;
 			this.first = (CircDLelement) current;
+			this.at_start = true;
 		}
 
 		public boolean hasNext() {
-			return this.current != this.first;
+			if ((this.current == this.first) && !at_start)
+				return false;
+
+			return true;
 		}
 
 		public E next() {
 			E ret = this.current.getValue();
 			this.current = (CircDLelement) this.current.prev;
+			at_start = false;
 			return ret;
 		}
 	}
