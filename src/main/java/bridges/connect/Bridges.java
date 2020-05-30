@@ -53,6 +53,7 @@ public class Bridges {
 	private  Connector connector;
 	private int element_array_size;
 	private static boolean json_flag = false;
+	private static boolean post_link_url_flag = false;
 	private static int assignment;
 	private static int assignment_part;
 	private static String key;
@@ -315,7 +316,18 @@ public class Bridges {
 		json_flag = flag;
 	}
 
-
+	/**
+	 *  This method is used to suppress the visualization link that is
+	 *  usually printed to the console 
+	 *
+	 *  @param link_url_flag - flag  that controls if the link is printed 
+	 *              to console
+	 *  @return none
+	 *
+	 */
+	public void  postVisualizationLink(boolean link_url_flag) {
+		post_link_url_flag = link_url_flag;
+	}
 
 	/**
 	 *	Get the assignment id
@@ -484,9 +496,11 @@ public class Bridges {
 		// Only print a url and increment assignment part when a successful upload has completed
 		if (response.length() > 0) {
 			// Return a URL to the user
-			System.out.println("\nCheck Your Visualization at the following link:\n\n" +
-				connector.getServerURL() + "/assignments/" + assignment + "/"
-				+ userName + "\n\n");
+			if (post_link_url_flag) {
+				System.out.println("\nCheck Your Visualization at the following link:\n\n" +
+					connector.getServerURL() + "/assignments/" + assignment + "/"
+					+ userName + "\n\n");
+			}
 
 			// Increment the subassignment counter
 			assignment_part++;
