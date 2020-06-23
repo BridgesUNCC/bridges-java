@@ -25,12 +25,12 @@ import bridges.connect.SocketConnection;
  * \code{.java}
  * import bridges.game.*;
  * import bridges.base.*;
- * class my_game extends NonBlockingGame {
- *   public my_game() { super (1, "myuserid",  "myapikey", 10, 10); }
+ * class MyGame extends NonBlockingGame {
+ *   public MyGame() { super (1, "myuserid",  "myapikey", 10, 10); }
  *   public void initialize()  { }
  *   public void gameLoop()  { }
  *   public static void  main (String args[]) {
- *     my_game g = new my_game();
+ *     MyGame g = new MyGame();
  *     g.start();
  *   }
  * }
@@ -71,7 +71,7 @@ import bridges.connect.SocketConnection;
  * and 64 columns can be created defining the my_game constructor as:
  *
  * \code{.java}
- *   public my_game() { super(1, "myuserid",  "myapikey", 16, 64); }
+ *   public MyGame() { super(1, "myuserid",  "myapikey", 16, 64); }
  * \endcode
  *
  * The bridges game engine will call the gameLoop() function at each
