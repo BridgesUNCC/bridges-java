@@ -53,7 +53,7 @@ public class Bridges {
 	private  Connector connector;
 	private int element_array_size;
 	private static boolean json_flag = false;
-	private static boolean post_link_url_flag = false;
+	private static boolean post_link_url_flag = true;
 	private static int assignment;
 	private static int assignment_part;
 	private static String key;
