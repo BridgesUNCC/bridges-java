@@ -133,6 +133,9 @@ public class AudioClip extends DataStruct {
 	}
 
 	public void setSample(int channel, int index, int value) {
+	    if (value >= Math.pow(2, getSampleBits()-1) ||
+		value <  -Math.pow(2, getSampleBits()-1))
+		throw new IllegalArgumentException("Audio value Out of Bound. Should be in [-2^(getSampleBits()-1) ;  2^(getSampleBits()-1)) range");
 		this.channels[channel].setSample(index, value);
 	}
 
