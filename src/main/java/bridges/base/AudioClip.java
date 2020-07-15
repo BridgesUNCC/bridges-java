@@ -113,7 +113,7 @@ public class AudioClip extends DataStruct {
 		int count = 0;
 		for (int s = 0; s < getSampleCount(); s++) {
 			for (int c = 0; c < getNumChannels(); c++) {
-				setSample(c, s, (int)(buffer[count] * (Math.pow(2, 16) / 2.0 - 1.0)));
+			    setSample(c, s, (int)(buffer[count] * (Math.pow(2, getSampleBits()) / 2.0 - 1.0)));
 				count++;
 			}
 		}
