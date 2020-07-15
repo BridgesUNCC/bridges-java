@@ -2,6 +2,7 @@ package bridges.base;
 import java.util.*;
 import bridges.base.Color;
 import java.nio.ByteBuffer;
+import java.nio.Buffer;
 import org.apache.commons.codec.binary.Base64;
 
 /**
@@ -151,7 +152,7 @@ public class ColorGrid extends Grid<Color> {
 		}
 
 		// trim the buffer down and reset position to 0
-		imageBytes.flip();
+		((Buffer)imageBytes).flip();
 
 		return imageBytes;
 	}
