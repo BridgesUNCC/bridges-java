@@ -46,11 +46,9 @@ public class AudioClip extends DataStruct {
 		double[] buffer = new double[getSampleCount() * getNumChannels()];
 		wavFile.readFrames(buffer, getSampleCount() * getNumChannels());
 
-		int count = 0;
 		for (int s = 0; s < getSampleCount(); s++) {
 			for (int c = 0; c < getNumChannels(); c++) {
 				setSample(c, s, (int)(buffer[count] * (Math.pow(2, 16) / 2.0 - 1.0)));
-				count++;
 			}
 		}
 

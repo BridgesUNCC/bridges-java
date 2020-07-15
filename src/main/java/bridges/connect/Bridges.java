@@ -318,9 +318,9 @@ public class Bridges {
 
 	/**
 	 *  This method is used to suppress the visualization link that is
-	 *  usually printed to the console 
+	 *  usually printed to the console
 	 *
-	 *  @param link_url_flag - flag  that controls if the link is printed 
+	 *  @param link_url_flag - flag  that controls if the link is printed
 	 *              to console
 	 *  @return none
 	 *

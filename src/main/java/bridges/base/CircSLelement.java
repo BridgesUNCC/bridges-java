@@ -132,7 +132,7 @@ public class CircSLelement<E> extends SLelement<E> implements Iterable<E> {
 
 			return true;
 		}
-		
+
 
 		public E next() {
 			E ret = this.current.getValue();

@@ -131,10 +131,10 @@ public class CircDLelement<E> extends DLelement<E> implements Iterable<E> {
 	}
 
 	/**
-     *  Implements an iterator on the Circular doubly linked element for ease
-     *  iterating over lists
-     */
-    class CircDLelementIterator<E> implements Iterator<E> {
+	 *  Implements an iterator on the Circular doubly linked element for ease
+	 *  iterating over lists
+	 */
+	class CircDLelementIterator<E> implements Iterator<E> {
 		CircDLelement<E> current, first;
 		private boolean at_start;
 
@@ -158,19 +158,19 @@ public class CircDLelement<E> extends DLelement<E> implements Iterable<E> {
 			return ret;
 		}
 	}
-    /**
-     *  Return an iterator over the elements in the array. This is generally not
-     *  called directly, but is called by Java when used in a "simple" for loops
-     */
+	/**
+	 *  Return an iterator over the elements in the array. This is generally not
+	 *  called directly, but is called by Java when used in a "simple" for loops
+	 */
 	public Iterator<E> iterator() {
 		return new CircDLelementIterator(this);
 	}
 
 	/**
-     *  Implements a reverse iterator on the Circular doubly linked element for ease
-     *  iterating over lists
-     */
-    class CircDLelementReverseIterator<E> implements Iterator<E> {
+	 *  Implements a reverse iterator on the Circular doubly linked element for ease
+	 *  iterating over lists
+	 */
+	class CircDLelementReverseIterator<E> implements Iterator<E> {
 		CircDLelement<E> current, first;
 		private boolean at_start;
 
@@ -195,10 +195,10 @@ public class CircDLelement<E> extends DLelement<E> implements Iterable<E> {
 		}
 	}
 
-    /**
-     *  Return an iterator over the elements in the array. This is generally not
-     *  called directly, but is called by Java when used in a "simple" for loops
-     */
+	/**
+	 *  Return an iterator over the elements in the array. This is generally not
+	 *  called directly, but is called by Java when used in a "simple" for loops
+	 */
 	public Iterator<E> reverse_iterator() {
 		return new CircDLelementReverseIterator(this);
 	}
