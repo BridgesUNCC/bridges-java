@@ -52,7 +52,10 @@ import bridges_external.*;
  * sampleBits parameter of the constructor. The sampling depth of an
  * existing clip can be obtained with getSampleBits().
  *
- * TODO: description of setsample()/getsample().
+ * The individual samples are accessed with the getSample() and
+ * setSample() functions. The samples are integer values in the
+ * [-2^(getSampleBits()-1) ; 2^(getSampleBits()-1)[ range. The
+ * functions allow to specify for channel and sample index.
  *
  **/
 
