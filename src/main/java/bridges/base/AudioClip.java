@@ -80,6 +80,15 @@ public class AudioClip extends DataStruct {
 		if (sampleBits != 8 && sampleBits != 16 && sampleBits != 24 && sampleBits != 32) {
 		    throw new IllegalArgumentException("sampleBits must be either 8, 16, 24, or 32");
 		}
+
+		if (numChannels <= 0) {
+		    throw new IllegalArgumentException("numChannels should be positive");
+		}
+
+		if (sampleRate <= 0) {
+		    throw new IllegalArgumentException("sampleRate should be positive");
+		}
+		
 		
 		this.sampleCount = sampleCount;
 		this.numChannels = numChannels;
@@ -105,8 +114,9 @@ public class AudioClip extends DataStruct {
 		this((int)wavFile.getNumFrames(), wavFile.getNumChannels(), wavFile.getValidBits(), (int)wavFile.getSampleRate());
 
 		try {
-		
-		wavFile.display();
+
+		    // // print header to screen
+		    //wavFile.display();
 
 		// Create a buffer of frames
 		double[] buffer = new double[getSampleCount() * getNumChannels()];
