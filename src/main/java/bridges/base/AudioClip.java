@@ -101,9 +101,11 @@ public class AudioClip extends DataStruct {
 	 * @brief create an audio clip from a WavFile object
 	 *
 	 **/
-    public AudioClip(WavFile wavFile) throws IOException, WavFileException {
+    public AudioClip(WavFile wavFile) throws IOException{
 		this((int)wavFile.getNumFrames(), wavFile.getNumChannels(), wavFile.getValidBits(), (int)wavFile.getSampleRate());
 
+		try {
+		
 		wavFile.display();
 
 		// Create a buffer of frames
@@ -120,18 +122,33 @@ public class AudioClip extends DataStruct {
 
 		// Close the wavFile
 		wavFile.close();
+		}catch (WavFileException wfae) {
+		    throw new IOException("Not a parsable Wave file", wfae);
+		}
 	}
 
-        /**
+    private static WavFile openWavFileRethrow (String filename ) throws IOException {
+	WavFile w = null;
+	try {
+	    w = WavFile.openWavFile(new File(filename));
+	} catch (WavFileException wfae) {
+	    throw new IOException("Not a parsable Wave file", wfae);
+	}
+	return w;
+    }
+
+    /**
 	 * @brief create an audio clip from a File
 	 *
 	 * @param file name of the file (should be a Wave file)
 	 *
 	 **/
-	public AudioClip(String file) throws IOException, WavFileException {
-		this(WavFile.openWavFile(new File(file)));
+	public AudioClip(String file) throws IOException {
+	    this(openWavFileRethrow(file));
 	}
 
+
+    
         /**
 	 * @brief create an audio clip
 	 *
