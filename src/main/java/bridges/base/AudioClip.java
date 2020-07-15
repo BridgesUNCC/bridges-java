@@ -66,11 +66,21 @@ public class AudioClip extends DataStruct {
 	private int sampleBits;
 	private AudioChannel channels[];
 
+    /**
+     * @brief create an audio clip
+     *
+     * creates an AudioClip with numChannels channels, sampleCount samples at sampleRate Hz with a depth of sampleBits
+     *
+     **/
 	public AudioClip(int sampleCount, int numChannels, int sampleBits, int sampleRate) {
 		if (sampleCount > 1000000000) {
 			throw new IllegalArgumentException("sampleCount must be less than 1 million");
 		}
 
+		if (sampleBits != 8 && sampleBits != 16 && sampleBits != 24 && sampleBits != 32) {
+		    throw new IllegalArgumentException("sampleBits must be either 8, 16, 24, or 32");
+		}
+		
 		this.sampleCount = sampleCount;
 		this.numChannels = numChannels;
 		this.channels = new AudioChannel[numChannels];
@@ -86,7 +96,12 @@ public class AudioClip extends DataStruct {
 		this.sampleBits = sampleBits;
 	}
 
-	public AudioClip(WavFile wavFile) throws IOException, WavFileException {
+    
+        /**
+	 * @brief create an audio clip from a WavFile object
+	 *
+	 **/
+    public AudioClip(WavFile wavFile) throws IOException, WavFileException {
 		this((int)wavFile.getNumFrames(), wavFile.getNumChannels(), wavFile.getValidBits(), (int)wavFile.getSampleRate());
 
 		wavFile.display();
@@ -107,39 +122,95 @@ public class AudioClip extends DataStruct {
 		wavFile.close();
 	}
 
+        /**
+	 * @brief create an audio clip from a File
+	 *
+	 * @param file name of the file (should be a Wave file)
+	 *
+	 **/
 	public AudioClip(String file) throws IOException, WavFileException {
 		this(WavFile.openWavFile(new File(file)));
 	}
 
-	public AudioClip(int sampleCount, int numChannels) {
+        /**
+	 * @brief create an audio clip
+	 *
+	 * creates an AudioClip with numChannels channels, sampleCount samples at 44100 Hz with a depth of 32 bits
+	 *
+	 **/
+    	public AudioClip(int sampleCount, int numChannels) {
 		this(sampleCount, numChannels, 32, 44100);
 	}
 
+    /**
+     * @brief returns the number of channels of the clip 
+     * @return  the number of channels of the clip (1 for mono, 2 for stereo, ...)
+     **/
 	public int getNumChannels() {
 		return this.numChannels;
 	}
 
+        /**
+	 * @brief returns the sampling rate of the clip
+	 * @return  the sampling rate of the clip in Hertz. (CD quality is 44100Hz for instance)
+	 **/
 	public int getSampleRate() {
 		return this.sampleRate;
 	}
 
+        /**
+	 * @brief returns the number of samples in the clip
+	 *
+	 * The length of the clip in second is getSampleCount()/((double) getSampleRate())
+	 *
+	 * @return  the number of samples in the clip
+	 **/    
 	public int getSampleCount() {
 		return this.sampleCount;
 	}
 
+        /**
+	 * @brief returns the sampling depth.
+	 *
+	 * The sampling depth indicates how many bits are used to
+	 * encode each individual samples. The values supported are
+	 * only 8, 16, 24, and 32.
+	 *
+	 * All samples must be in the [-2^(getSampleBits()-1) ;
+	 * 2^(getSampleBits()-1)) range. that is to say, for 8-bit, in
+	 * the [-256;255] range.
+	 *
+	 * @return the sampling depth.
+	 **/    
 	public int getSampleBits() {
 		return this.sampleBits;
 	}
 
-	public int getSample(int channel, int index) {
-		return this.channels[channel].getSample(index);
+    /**
+     * @brief access a particular sample
+
+     * @param channelIndex the index of the channel that will be accessed (in the [0;getNumChannels()-1] range).
+     * @param sampleIndex the index of the sample that will be accessed (in the [0;getSampleCount()-1] range).
+     * @return the sample value (in [-2^(getSampleBits()-1) ;  2^(getSampleBits()-1)) range).
+     *
+     **/
+	public int getSample(int channelIndex, int sampleIndex) {
+		return this.channels[channelIndex].getSample(sampleIndex);
 	}
 
-	public void setSample(int channel, int index, int value) {
+        /**
+	 * @brief change a particular sample
+	 
+	 * @param channelIndex the index of the channel that will be accessed (in the [0;getNumChannels()-1] range).
+	 * @param sampleIndex the index of the sample that will be accessed (in the [0;getSampleCount()-1] range).
+	 * @param value the sample value (in [-2^(getSampleBits()-1) ;  2^(getSampleBits()-1)) range).
+	 *
+	 **/
+	public void setSample(int channelIndex, int sampleIndex, int value) {
 	    if (value >= Math.pow(2, getSampleBits()-1) ||
 		value <  -Math.pow(2, getSampleBits()-1))
 		throw new IllegalArgumentException("Audio value Out of Bound. Should be in [-2^(getSampleBits()-1) ;  2^(getSampleBits()-1)) range");
-		this.channels[channel].setSample(index, value);
+		this.channels[channelIndex].setSample(sampleIndex, value);
 	}
 
 	public String getDataStructType() {
