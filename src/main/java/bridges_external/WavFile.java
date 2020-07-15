@@ -1,3 +1,5 @@
+//This file is free for use  by anyone, for both private and commercial purposes according to its author.
+
 package bridges_external;
 // Wav file IO class
 // A.Greensted
