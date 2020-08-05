@@ -29,11 +29,11 @@ public abstract class GameBase {
     private boolean firsttime;
 
     // Initialize with student specified grid size no greater than 30x30
-    public GameBase(int assid, String login, String apikey, int cols, int rows) {
-        gameBaseInit(assid, login, apikey, cols, rows);
+    public GameBase(int assid, String login, String apikey, int rows, int cols) {
+        gameBaseInit(assid, login, apikey, rows, cols);
     }
 
-    private void gameBaseInit(int id, String log, String key, int c, int r) {
+    private void gameBaseInit(int id, String log, String key, int rows, int cols) {
         firsttime = true;
 
         // /bridges-sockets account (you need to make a new account:
@@ -49,7 +49,7 @@ public abstract class GameBase {
         bridges.setServer("games");
 
         // /create a new color grid with random color
-        grid = new GameGrid(c, r);
+        grid = new GameGrid(rows, cols);
         grid.setEncoding("rle");
 
         // /set up socket connection to receive and send data

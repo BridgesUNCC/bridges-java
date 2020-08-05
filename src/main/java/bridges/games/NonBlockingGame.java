@@ -197,10 +197,10 @@ public abstract class NonBlockingGame extends GameBase {
     /// @param assignmentID bridges assignment ID
     /// @param login login on the bridges server
     /// @param apikey apikey of the account specified in login
-    /// @param cols number of columns in the game
     /// @param rows number of rows in the game
-    public NonBlockingGame(int assignmentID, String login, String apikey, int cols, int rows) {
-        super(assignmentID, login, apikey, cols, rows);
+    /// @param cols number of columns in the game
+    public NonBlockingGame(int assignmentID, String login, String apikey, int rows, int cols) {
+        super(assignmentID, login, apikey, rows, cols);
 
 	if ((cols * rows) > 1024) { // Allows students to create smaller grids if they prefer.
             System.out.println("ERROR: Number of cells in a non-blocking game grid cannot exceed 32x32 or 1024.");
@@ -282,7 +282,6 @@ public abstract class NonBlockingGame extends GameBase {
                 }
             }
         }
-
 
         long frame = 0;
         while (gameStarted) {
