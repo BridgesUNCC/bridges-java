@@ -259,6 +259,17 @@ public class Symbol {
 		}
 
 	}
+    	/**
+	 * This method sets the symbol location
+	 *
+	 * @param x  x coordinate
+	 * @param y  y coordinate
+	 */
+
+	public void setLocation(double x, double y) {
+	    setLocation((float)x, (float)y);
+	}
+
 	/**
 	 * This method gets the symbol location
 	 *
