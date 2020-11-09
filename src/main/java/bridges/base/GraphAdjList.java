@@ -303,7 +303,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	This is a convenience method to retrieve a vertex given
 	 *	its key
 	 *
-	 *	@return graph vertex corresponding to its key
+	 *	@return graph vertex corresponding to its key (or null if the vertex does not exist)
 	 *
 	 */
 	public Element<E1> getVertex(K key) {
