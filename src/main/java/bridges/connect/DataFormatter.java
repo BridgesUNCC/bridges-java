@@ -1456,6 +1456,15 @@ public class DataFormatter {
 		try {
 			JSONObject json = (JSONObject) parser.parse(content);
 			JSONArray nodes = (JSONArray) json.get("nodes");
+			JSONObject meta = (JSONObject) json.get("meta");
+
+
+			temp.setCount(Integer.parseInt(meta.get("count").toString()));
+			temp.setMinLat(Double.parseDouble(meta.get("minlat").toString()));
+			temp.setMinLon(Double.parseDouble(meta.get("minlon").toString()));
+			temp.setMaxLat(Double.parseDouble(meta.get("maxlat").toString()));
+			temp.setMaxLon(Double.parseDouble(meta.get("maxlon").toString()));
+			
 
 			Iterator<JSONArray> iter = nodes.iterator();
 			while(iter.hasNext()){
