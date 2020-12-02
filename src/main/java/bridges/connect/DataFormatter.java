@@ -20,6 +20,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 
 import bridges.base.*;
 import bridges.validation.*;
@@ -1395,7 +1396,84 @@ public class DataFormatter {
 
 
 
+	static AmenityData getAmenityData(String location, String amenity) throws IOException {
+		String url = "http://cci-bridges-osm.uncc.edu/amenity?location=" + location + "&amenity=" + amenity;
+		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?location=" + location + "&amenity=" + amenity;
+		return (downloadAmenityData(url, hashUrl));
+	}
+	
+	static AmenityData getAmenityData(double minLat, double minLon, double maxLat, double maxLon, String amenity) throws IOException {
+		String url = "http://192.168.2.14:8080/amenity?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
+		String hashUrl = "http://192.168.2.14:8080/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
+		return (downloadAmenityData(url, hashUrl));
+	}
 
+	static AmenityData downloadAmenityData(String url, String hashUrl) throws IOException{
+		
+		LRUCache lru = new LRUCache(30);
+
+		// look for file in cache
+		String content = null;
+		String hash = null;
+		HttpResponse hashResp = makeRequest(hashUrl);
+		int hashStatus = hashResp.getStatusLine().getStatusCode();
+		hash = EntityUtils.toString(hashResp.getEntity());
+		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
+			content = lru.getDoc(hash);
+		}
+
+		// if not in cache, hit server for data
+		if (content == null) {
+			HttpResponse resp = makeRequest(url);
+			int status = resp.getStatusLine().getStatusCode();
+			content = EntityUtils.toString(resp.getEntity());
+			if (status != 200) {
+				if (status == 404) {
+					// attempt to get valid names
+					url = "http://cci-bridges-osm.dyn.uncc.edu/cities";
+					resp = makeRequest(url);
+					status = resp.getStatusLine().getStatusCode();
+					if (status == 200) {
+						content = EntityUtils.toString(resp.getEntity());
+						throw new RuntimeException("Invalid name" + "\nValid names:" + content);
+					}
+				}
+				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
+			}
+			hashResp = makeRequest(hashUrl);
+			hash = EntityUtils.toString(hashResp.getEntity());
+
+			//Checks to see if valid hash is generated
+			if (!hash.equals("false")) {
+				lru.putDoc(hash, content);
+			}
+		}
+
+		// Parse Data into object
+		AmenityData temp = new AmenityData();
+		JSONParser parser = new JSONParser();
+
+		try {
+			JSONObject json = (JSONObject) parser.parse(content);
+			JSONArray nodes = (JSONArray) json.get("nodes");
+
+			Iterator<JSONArray> iter = nodes.iterator();
+			while(iter.hasNext()){
+				JSONArray sub_data = iter.next();
+				Amenities amen = new Amenities();
+				amen.setId(Double.parseDouble(sub_data.get(0).toString()));
+				amen.setLat(Double.parseDouble(sub_data.get(1).toString()));
+				amen.setLon(Double.parseDouble(sub_data.get(2).toString()));
+				amen.setName(sub_data.get(3).toString());
+
+				temp.addAmenities(amen);
+			}
+		}catch(Exception e) {
+			System.out.println("Error Parsing Amenity Json: " + e);
+		}
+		
+		return temp;
+	}
 
 
 
