@@ -1403,8 +1403,8 @@ public class DataFormatter {
 	}
 	
 	static AmenityData getAmenityData(double minLat, double minLon, double maxLat, double maxLon, String amenity) throws IOException {
-		String url = "http://192.168.2.14:8080/amenity?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
-		String hashUrl = "http://192.168.2.14:8080/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
+		String url = "http://cci-bridges-osm.uncc.edu/amenity?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
+		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
 		return (downloadAmenityData(url, hashUrl));
 	}
 
