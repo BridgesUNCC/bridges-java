@@ -83,7 +83,7 @@ public class ShortestPathBenchmark extends GraphBenchmark {
         double reflong = -73.98;
 
         for (double radius = 0.02; radius < 0.15; radius += 0.02) {
-            OsmData osmData = DataSource.getOSMData(reflat - radius, reflong - radius,
+            OsmData osmData = DataSource.getOsmData(reflat - radius, reflong - radius,
                     reflat + radius, reflong + radius);
             GraphAdjList<Integer, OsmVertex, Double> graph = osmData.getGraph();
 
