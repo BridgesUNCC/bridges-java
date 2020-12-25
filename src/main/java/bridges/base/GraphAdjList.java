@@ -57,6 +57,19 @@ import java.util.ArrayList;
  * \sa Example tutorial at
  *		http://bridgesuncc.github.io/tutorials/Graph_AL.html
  *
+ * There are two visualization engines available for
+ * graph. The small graph visualization supports all
+ * attributes of vertices and edges but is
+ * prohibitively slow on large graphs. The large graph
+ * visualization only supports locations (actually
+ * they are mandatory) and colors, all other
+ * attributes are ignored.
+ *
+ * BRIDGES picks the rendering engine automatically. But it can be
+ * forced to pick one used forceLargeVizualization() and
+ * forceSmallVizualization
+ *
+ *
  * @author Kalpathi Subramanian, Erik Saule
  *
  * @date 6/29/15, 5/18/17, 4/24/18, 7/14/19
@@ -416,12 +429,12 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	/**
 	 * @brief  Forces the graph use the large graph visualization.
 	 *
-	 * This forces the rendering is switched to more bandwidth
+	 * This forces the rendering to a more bandwidth
 	 * efficient at the cost of having less features. The large
 	 * graph visualization only renders vertices that have
-	 * specified locations.
+	 * specified locations. The only usable attribute for vertices and edges are colors.
 	 *
-	 * @param f  true to force large visualization.
+	 * @param f  true to force large visualization. Setting to false does not prevent large visualization to be used, just does not force it.
 	 */
 	public void forceLargeVisualization(boolean f) {
 		if (f) {
@@ -436,11 +449,11 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	/**
 	 * @brief Forces  the graph to use the small graph visualization
 	 *
-	 * The small visualization is use more bandwidth, have more
+	 * The small visualization uses more bandwidth, have more
 	 * features, and support a force directed layout for vertices
 	 * which do not have a specified location.
 	 *
-	 * @param f  true to force using the small visualization
+	 * @param f  true to force using the small visualization. Setting to false does not prevent small visualization to be used, just does not force it.
 	 */
 	public void forceSmallVisualization(boolean f) {
 		if (f) {

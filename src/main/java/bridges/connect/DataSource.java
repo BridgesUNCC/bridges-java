@@ -282,7 +282,7 @@ public class DataSource {
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public static OsmData getOSMData(double minLat, double minLon, double maxLat, double maxLon) throws IOException {
+	public static OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon) throws IOException {
 		return getOsmData(minLat, minLon, maxLat, maxLon, "default");
 	}
 
@@ -317,6 +317,18 @@ public class DataSource {
 	public static ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon) throws IOException {
 		return getElevationData(minLat, minLon, maxLat, maxLon, .01666);
 	}
+
+
+	public static bridges.data_src_dependent.AmenityData getAmenityData(double minLat, double minLon, double maxLat, double maxLon, String amenity) throws IOException {
+		return DataFormatter.getAmenityData(minLat, minLon, maxLat, maxLon, amenity);
+	}
+
+	public static bridges.data_src_dependent.AmenityData getAmenityData(String location, String amenity) throws IOException {
+		return DataFormatter.getAmenityData(location, amenity);
+	}
+
+
+	
 
 	/***
 	 * This function obtains the JSON representation of a particular subassignment.
