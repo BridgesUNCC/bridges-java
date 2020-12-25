@@ -15,6 +15,9 @@ import bridges.validation.Validation;
  *
  *	This class can be used to create arrays of type Element<E>  where E
  *	is a generic object representing application specific data.
+ *	
+ *  This class is not directly called; instead use subclasses of arrays to
+ *  construct arrays, depending on their dimension.
  *
  *	Arrays are internally represented as 1D arrays; currently 1D, 2D  and
  *	3D arrays are supported.
@@ -93,7 +96,7 @@ public class Array<E> extends DataStruct {
 	/**
 	 *	@brief Set the size of each dimensions; also allocates  array space
 	 *
-	 *      @param nd number of dimension
+	 *  @param nd number of dimension
 	 *	@param dim  size of each dimension
 	 */
 	public void setSize(int nd, int[] dim) {
@@ -120,7 +123,7 @@ public class Array<E> extends DataStruct {
 	/**
 	 *	@brief Get the size of each dimensions;
 	 *
-	 *	@param[out] dim size of each dimension is returned
+	 *	@return dim[] size of each dimension is returned
 	 */
 	public void getDimensions(int[] dim) {
 		dim[0] = dims[0];
@@ -132,7 +135,7 @@ public class Array<E> extends DataStruct {
 	 *
 	 *	Get the array size
 	 *
-	 *	@return size
+	 *	@return size of the array
 	 */
 	public int  getSize() {
 		return size;
@@ -162,7 +165,13 @@ public class Array<E> extends DataStruct {
 		array_data.set(indx, el);
 	}
 
-
+	/**
+	 *
+	 *	Gets the data structure representation of the array (as JSON)
+	 *
+	 *	@return  array representation as a JSON
+	 *
+	 */
 	public String getDataStructureRepresentation () {
 
 		StringBuilder nodes_JSON = new StringBuilder();

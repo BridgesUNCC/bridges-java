@@ -11,11 +11,10 @@ import bridges.validation.Validation;
  *
  * @date  	7/18/19
  *
- *	This class can be used to create three dimensional arrays of type Element<E>  where E
+ *	This class can be used to create 3-dimensional arrays of type Element<E>  where E
  *	is a generic object representing application specific data.
  *
- *	Arrays are internally represented as 1D arrays; currently 1D, 2D  and
- *	3D arrays are supported.
+ *	Arrays are internally represented as 1D arrays
  *
  * @param <E> The generic parameter object that is part of this element, representing
  *          application specific data.
@@ -36,7 +35,9 @@ public class Array3D<E> extends Array<E> {
 		num_cols = num_rows = num_slices = size = 0;
 	}
 	/**
-	 *  Create an array object with the specified dimensions
+	 *  Create an array object with the specified dimensions, order is
+	 *  slices, rows, columns, with slices varying the slowest, and columns
+	 *	 verying the fastest
 	 *
 	 *  @param dims size of each dimension
 	 *
@@ -58,7 +59,7 @@ public class Array3D<E> extends Array<E> {
 	 */
 	public Array3D(int slices, int rows, int cols) {
 		super();
-		int[] dims = {cols, rows, slices};
+		int[] dims = {slices, rows, cols};
 		this.setSize (3, dims);
 		num_cols = cols;
 		num_rows = rows;
@@ -83,9 +84,9 @@ public class Array3D<E> extends Array<E> {
 	 *
 	 *	Set the input object at 'col, row, slice'
 	 *
-	 *	@param col  column index into the array
-	 *	@param row  row index into the array
 	 *	@param slice  slice index into the array
+	 *	@param row  row index into the array
+	 *	@param col  column index into the array
 	 *
 	 *	@param el  element object to be assigned at 'indx'
 	 *
