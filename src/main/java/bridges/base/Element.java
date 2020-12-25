@@ -10,16 +10,16 @@ import org.json.simple.JSONValue;
 /**
  * @brief This is the main superclass in BRIDGES for  deriving a number of
  * 	objects used  in building arrays, lists, trees and graph data structures.
-
- *  SLelement, DLelement, CircSLelement, CircDLelement, TreeElement, BinTreeElement,
- *	BSTElement, CircSLelement, CircDLelement, AVLTreeElement are all subclasses
- *  (see class hierarchy above).  Element contains  two
+  
+ *  SLelement, DLelement, CircSLelement, CircDLelement, MLelement, 
+ *	TreeElement, BinTreeElement, BSTElement, AVLTreeElement, KdTreeElement 
+ *	are all subclasses (see class hierarchy above).  Element contains  two
  *	visualizer objects (ElementVisualizer, LinkVisualizer) for specifying
- *	visual attributes for nodes and links respectively. It also contains a label that
- *	that can be displayed in BRIDGES visualizations.
+ *	visual attributes for nodes and links respectively. It also contains a 
+ *	label that that can be displayed in BRIDGES visualizations.
  *
  *  All the tutorials under
- *
+ 
  *	http://bridgesuncc.github.io/Hello_World_Tutorials/Overview.html
  *
  *  illustrate examples of using different types of Element objects and how to
@@ -120,7 +120,7 @@ public class Element<E> extends DataStruct {
 	 * Set the size of the Element in the Bridge Visualization (in pixel units)
 	 *
 	 * @param sz the pixel size of the Element in the Bridges Visualization.
-	 *	Must be in [1:50].
+	 *	Must be in the range 1 to 50.
 	 */
 	public void setSize(double sz) {
 		this.visualizer.setSize(sz);
@@ -144,7 +144,7 @@ public class Element<E> extends DataStruct {
 	}
 
 	/**
-	 *	set opacity of element - use the 4th color component
+	 *	set opacity of element - must be in the range 0.0-1.0
 	 *
 	 *  @param opacity
 	 */
@@ -184,6 +184,9 @@ public class Element<E> extends DataStruct {
 	/**
 	 * This method sets the visualizer object for the current
 	 * element object
+     *
+	 * This is rarely used, as the constructor will create a visualizer for
+	 * this element
 	 *
 	 * @param visualizer the visualizer to set
 	 */
@@ -214,6 +217,9 @@ public class Element<E> extends DataStruct {
 
 	/**
 	 *	@brief Sets the link from this element to a new incoming element
+	 *
+	 *  This is rarely used, as the constructor will create a link visualizer 
+	 *	for this element
 	 *
 	 *	@param el the element to be linked to.
 	 *
@@ -293,7 +299,8 @@ public class Element<E> extends DataStruct {
 
 
 	/**
-	 * Get the JSON representation of the element's propertis
+	 * Get the JSON representation of the element; used internally to construct
+	 *  the data structure representation 
 	 *
 	 * @returns the encoded JSON string
 	 */
@@ -332,6 +339,11 @@ public class Element<E> extends DataStruct {
 		return json_str;
 	}
 
+	/**
+	 * Return the data structure representation of the element
+	 *
+	 * @return  the element representation
+	 */
 	public String getDataStructureRepresentation() {
 		return null;
 	}
@@ -401,7 +413,9 @@ public class Element<E> extends DataStruct {
 	/**
 	 * @brief Change the element color
 	 *
-	 *  @param col The new color of the element. See the Color class for a complete list of supported color names.
+	 *  @param col The new color of the element. See the Color class 
+	 *	for a complete list of supported color names.
+	 *
 	 */
 	public void setColor(String col) {
 		visualizer.setColor(col);
@@ -437,7 +451,6 @@ public class Element<E> extends DataStruct {
 	public double getLocationY() {
 		return visualizer.getLocationY();
 	}
-
 
 	@Override
 	public String toString() {

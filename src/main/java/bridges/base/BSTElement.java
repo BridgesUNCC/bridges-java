@@ -8,7 +8,8 @@ import org.json.simple.JSONValue;
  *  @brief The BSTElement class is the building block for creating binary search trees.
  *
  *  It contains two children (left, right), and a search key, to be used
- *  in search operations .
+ *  in search operations. The search key is a generic parameter and should be 
+ *  orderable, such as numeric value, string, etc.
  *
  *  BSTElement contains a visualizer (ElementVisualizer) object for setting visual
  *  attributes (color, shape, opacity, size), necessary for displaying them in a

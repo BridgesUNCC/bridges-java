@@ -74,42 +74,6 @@ public class TreeElement<E> extends Element<E> {
 		children = new Vector<TreeElement <E>> (2);
 	}
 
-	/**
-	 *
-	 *	Constructs an empty TreeElement left pointer pointing to child 0
-	 *	and right pointer pointing to child 1.
-	 *
-	 * 	@param left the TreeElement to be assigned to the child 0 of
-	 *		this TreeElement
-	 * 	@param right the TreeElement to be assigned to the child 1
-	 *		of this TreeElement
-	 *
-	 */
-	public TreeElement(TreeElement<E> left, TreeElement<E> right) {
-		super();
-		children = new Vector<TreeElement <E>> (2);
-		children.add(left);
-		children.add(right);
-	}
-
-	/**
-	 *
-	 *	Constructs a TreeElement holding the object "e", left pointer
-	 *	pointing to first child  and right pointer pointing to second child
-	 *
-	 * @param e the generic object that TreeElement will hold
-	 * @param left the TreeElement to be assigned to the first child of
-	 *		this TreeElement
-	 * @param right the TreeElement to be assigned to the second child
-	 *		of this TreeElement
-	 *
-	 */
-	public TreeElement(E e, TreeElement<E> left, TreeElement<E> right) {
-		super(e);
-		children = new Vector<TreeElement <E>> (2);
-		children.add(left);
-		children.add(right);
-	}
 
 	/**
 	 *	This method gets the data structure type

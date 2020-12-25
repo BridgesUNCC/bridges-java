@@ -2,7 +2,7 @@ package bridges.base;
 import bridges.base.*;
 /**
  *  @brief This class extends the BSTElement class by adding a height and balance factor
- *	fields that are useful in AVL trees.
+ *	fields that are useful in AVL tree implementations.
  *
  *	AVL tree elements include a 'height' and a 'balFactor' value,
  *	representing the height and balance factor of the AVL tree at
@@ -129,7 +129,7 @@ public class AVLTreeElement<K, E>  extends BSTElement<K, E> {
 	}
 
 	/**
-	 *  Augment the element with the "height" and "balance factor" fields.
+	 *  Get the representation of the  AVL Tree element as a JSON string
 	 *
 	 *  @return the augmented JSON string
 	 */
