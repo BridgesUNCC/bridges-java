@@ -4,7 +4,8 @@ import bridges.base.NamedColor;
 
 /**
  *	@brief This class is used to represent cells in GameGrids in BRIDGES.
- *  Each cell has a foreground color, background color, and symbol.
+ *	 It is part of the GameAPI.
+ *  Each cell has a foreground color, background color, and a symbol shape.
  *
  *	@author David Burlinson
  *	@date 9/06/18
@@ -15,7 +16,7 @@ public class GameCell {
 	private NamedColor bg, fg;
 	protected static NamedSymbol[] symbolArray = NamedSymbol.values();
 
-	/*
+	/**
 	 * Default Constructor
 	 */
 	public GameCell() {
@@ -27,7 +28,7 @@ public class GameCell {
 	/**
 	* Constructor with all arguments specified
 	*
-	* @param bg, fg  - Named Colors from the NamedColor enum
+	* @param bg, fg  - background, foreground Colors from the NamedColor enum
 	* @param symbol - symbol index from range 0-255
 	*
 	*/
@@ -89,6 +90,7 @@ public class GameCell {
 	}
 
 	/**
+	 *  @brief Get the background color of cell
 	 *  @return background color
 	 */
 	public NamedColor getBGColor() {
@@ -96,6 +98,7 @@ public class GameCell {
 	}
 
 	/**
+	 *  @brief Get the foreground color of cell
 	 *  @return object color
 	 */
 	public NamedColor getFGColor() {
@@ -103,6 +106,7 @@ public class GameCell {
 	}
 
 	/**
+	 *  @brief Get the cell symbol
 	 *  @return symbol
 	 */
 	public NamedSymbol getSymbol() {
@@ -110,6 +114,7 @@ public class GameCell {
 	}
 
 	/**
+	 *  @brief  Get background color as a byte
 	 *  @return background color as byte (index of value in NamedColor)
 	 */
 	public byte getBGByte() {
@@ -117,6 +122,7 @@ public class GameCell {
 	}
 
 	/**
+	 *  @brief  Get foreground color as a byte
 	 *  @return foreground color as byte (index of value in NamedColor)
 	 */
 	public byte getFGByte() {
@@ -124,6 +130,7 @@ public class GameCell {
 	}
 
 	/**
+	 *  @brief  Get symbol as a byte
 	 *  @return symbol as byte
 	 */
 	public byte getSymbolByte() {

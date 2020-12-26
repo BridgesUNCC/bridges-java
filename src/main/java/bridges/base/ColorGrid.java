@@ -15,14 +15,14 @@ import org.apache.commons.codec.binary.Base64;
  *
  * One can change the color of a pixel with set(). For instance, like that:
  * \code{java}
- * ColorGrid grid = new ColorGrid(rows, columns);
- * grid.set (2, 3, new Color("lightsalmon");
+ * ColorGrid cg = new ColorGrid(rows, columns);
+ * cg.set (2, 3, new Color("lightsalmon");
  * \endcode
  *
  * You can get a ColorGrid from an existing Bridges ColorGrid assignment using
  * bridges.connect.DataSource.getColorGridFromAssignment()
  *
- * @sa There is a tutorial about ColorGrid : http://bridgesuncc.github.io/tutorials/Grid.html
+ * @sa See the tutorial about ColorGrid : http://bridgesuncc.github.io/tutorials/Grid.html
  *
  * @author David Burlinson, Erik Saule
 **/

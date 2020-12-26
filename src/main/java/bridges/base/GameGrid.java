@@ -6,10 +6,16 @@ import java.nio.ByteBuffer;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * @brief This is a class in BRIDGES for representing an (m x n) grid. Each position in the grid will hold a GameCell object, each of which has a foreground color, background color, and a symbol.
+ * @brief This class in BRIDGES is part of the BRIDGS Game API. It is for 
+ *	representing an (m x n) game grid. Each position in the grid will hold 
+ * 	a GameCell object, each of which has a foreground color, background color, 
+ *	and a symbol.
  *
- * @author David Burlinson
-**/
+ *  The API supports 2D nonblocking games
+ *
+ * @author David Burlinson, Erik Saule
+ *
+ **/
 public class GameGrid extends Grid<GameCell> {
 
 	ByteBuffer bf_bg;
@@ -17,10 +23,12 @@ public class GameGrid extends Grid<GameCell> {
 	ByteBuffer bf_symbols;
 	String encoding = "raw";
 
-	/** @brief Enable changing the game grid encoding when building JSON representation.
+	/** 
+	 *	@brief Enable changing the game grid encoding when building JSON 
+	 *		representation.
 	 *
 	 *  @param encoding type of encoding. Supports "raw" and "rle"
-	**/
+	 **/
 	public void setEncoding(String encoding) {
 		if (encoding.equals("raw") || encoding.equals("rle")) {
 			this.encoding = encoding;
@@ -31,12 +39,18 @@ public class GameGrid extends Grid<GameCell> {
 		}
 	}
 
+	/**
+	 *	@brief Get the data structure type (string)
+	 *
+	 *	@return data structure type
+	 */
 	public String getDataStructType() {
 		return "GameGrid";
 	}
 
 	/**
 	 * Default Game Grid constructor
+	 * Default size is 10 by 10
 	 *
 	**/
 	public GameGrid() {
@@ -81,14 +95,35 @@ public class GameGrid extends Grid<GameCell> {
 		this.get(row, col).setBGColor(color);
 	}
 
+	/**
+	 *  Get background color of a cell 
+	 *
+	 *  @param row, col - integer indices specifying the position 
+	 *
+	 *	@return background color of cell
+	 */
 	public NamedColor getBGColor(Integer row, Integer col) {
 		return this.get(row, col).getBGColor();
 	}
 
+	/**
+	 *  Get symbol at a cell 
+	 *
+	 *  @param row, col - integer indices specifying the position 
+	 *
+	 *	@return cell symbol
+	 */
 	public NamedSymbol getSymbol(Integer row, Integer col) {
 		return this.get(row, col).getSymbol();
 	}
 
+	/**
+	 *  Get symbol color of a cell 
+	 *
+	 *  @param row, col - integer indices specifying the position 
+	 *
+	 *	@return cell symbol color
+	 */
 	public NamedColor getSymbolColor(Integer row, Integer col) {
 		return this.get(row, col).getFGColor();
 	}
@@ -115,10 +150,10 @@ public class GameGrid extends Grid<GameCell> {
 	}
 
 	/**
-	 *  Set background color of a cell using an enum argument
+	 *  Set foreground color of a cell using an enum argument
 	 *
 	 *  @param row, col - integer indices specifying the position to modify
-	 *  @param color - String color argument to set the background at the chosen position
+	 *  @param color - String color argument to set the foreground at the chosen position
 	 */
 	public void setFGColor(Integer row, Integer col, String color) {
 		this.setFGColor(row, col, NamedColor.valueOf(color));
