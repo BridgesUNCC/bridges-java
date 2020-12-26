@@ -31,7 +31,7 @@ import bridges.base.GraphAdjList;
  *	well as retrieve the adjacency list of a vertex, given its id. Methods
  *	to access and set visual attributes are also provided, indexed by the vertex
  *	ids.
- *
+ * 
  *	@author Kalpathi Subramanian
  *
  *	@date 4/24/18

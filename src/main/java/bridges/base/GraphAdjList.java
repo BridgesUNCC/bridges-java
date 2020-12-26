@@ -333,7 +333,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		return adj_list;
 	}
 	/**
-	 *	@brief Gets the adjacency list of a vertex
+	 *	@brief Gets the adjacency list of a vertex. Note that the list
+	 *  can be traversed using iterators. See example at top of page.
 	 *
 	 *	@param vertex the key of the vertex
 	 *

@@ -15,21 +15,23 @@ import java.util.Random;
  *	Visual properties include color, shape, opacity, size and location.
  *	Objects of this class are stored as part of the Element class.
  *	Generally, a user will manipulate the ElementVisualizer returned from the
- *	Element's getVisualizer() method, and then set attributes using its methods.
+ *	Element's getVisualizer() method (rather than creating this object directly), 
+ *	and then set attributes using its methods.
  *  Supported attributed values are as follows:<br>
  *
- *  <b>Color:</b> Supported colors by <b>name</b>: See the Color class for the complete list;
- *	by <b>RGBA Specification :</b>  Range: 0-255 for each component
+ *  <b>Color:</b> Supported colors by <b>name</b> using setColor(): 
+ *		See the Color class for the complete list; colors are set by 
+ *		by RGBA Specification,  0-255 for each component, or using color names. 
  *
- *	<b>	Supported Shapes: </b>
+ *	<b>	Supported Shapes:</b>
  *	"circle", "square", "diamond", "cross",
  *	"triangle", "star", "wye". set it with setShape() and getShape().
  *
  *	<b> Shape Size</b> : Range [0-50]. Set it with setSize() and getSize().
  *
- *	<b> Opacity: </b> Range [0.0-1.0]. Use it with setOpacity() and getOpacity().
+ *	<b> Opacity: </b> Range [0.0 - 1.0]. Use it with setOpacity(), getOpacity().
  *
- *      <b> Location: </b> Use it with setLocation(), getLocationX(), and getLocationY().
+ *  <b> Location: </b> Use it with setLocation(), getLocationX(), and getLocationY().
  *
  *	@author Mihai Mehedint, Kalpathi Subramanian
  *
@@ -249,7 +251,7 @@ public class ElementVisualizer {
 
 	/**
 	 *
-	 * 	Sets the opacity of the Element in the Bridges Visualization
+	 * 	Sets the opacity of the Element in the Bridges Visualization (0.0-1.0)
 	 *
 	 * 	@param opacity a double between 0 and 1 representing how
 	 *		transparent the node
@@ -298,6 +300,4 @@ public class ElementVisualizer {
 	public double getLocationY() {
 		return locationY;
 	}
-
-
 }
