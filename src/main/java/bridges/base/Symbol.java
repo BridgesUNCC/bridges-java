@@ -289,7 +289,7 @@ public class Symbol {
 	}
 
 	/**
-	 *  Translate a 2D point
+	 *  Translate (move)  a 2D point along X and Y
 	 *  @param pt  2D point (x, y)
 	 *  @param tx, ty translation vector
 	 */
@@ -299,12 +299,12 @@ public class Symbol {
 	}
 
 	/**
-	 * @brief Scale a 2D point
+	 * @brief Scale a 2D point; used to increase or decrease the size of objects
 	 *
-	 *  @param pt 2D point (x, y) to scale
+	 *  @param pt 2D point (x, y) to be scaled
 	 *  @param sx,sy  scale factors (along each axis)
 	 */
-	void scalePoint (float[] pt, float sx, float sy) {
+	protected void scalePoint (float[] pt, float sx, float sy) {
 		pt[0] *= sx;
 		pt[1] *= sy;
 	}
@@ -313,9 +313,10 @@ public class Symbol {
 	 *  @brief Rotate a 2D point (about Z)
 	 *
 	 *  @param pt  2D point (x, y)
-	 *  @param angle rotation angle in degrees (positive is counter clockwise, negative is clockwise)
+	 *  @param angle rotation angle in degrees (positive is counter clockwise, 
+	 *		negative is clockwise)
 	 */
-	void rotatePoint (float[] pt, float angle) {
+	protected void rotatePoint (float[] pt, float angle) {
 		// compute sin, cos
 		double angle_r =  Math.toRadians(angle);
 		double c = Math.cos(angle_r);
@@ -332,7 +333,8 @@ public class Symbol {
 	}
 
 	/**
-	 * Internal code for getting the properties of the Symbol object.
+	 * Internal code for getting the representation  of the Symbol object.
+	 *
 	 * @returns the encoded JSON string
 	 */
 	public JSONObject getJSONRepresentation() {

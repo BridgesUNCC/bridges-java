@@ -12,8 +12,7 @@ import java.util.NoSuchElementException;
  *	building block for singly linked lists. Singly linked elements have a field
  *	pointing to the next element along the list.
  *
- *
- * 	Elements contain a visualizer (ElementVisualizer) object for setting visual
+ * 	Elements contain a visualizer, ElementVisualizer, for setting visual
  *	attributes (color, shape, opacity, size), necessary for displaying them in a
  *	web browser.
  *
@@ -220,15 +219,15 @@ public class SLelement<E> extends Element<E> implements Iterable<E> {
 
 	/**
 	 *	Return an iterator over the elements in the array. This is generally not
-	 *  called directly, but is called by Java when used in a "simple" for loops
+	 *  called directly, but is called by Java when used in "simple" for loops
 	 */
 	@Override
 	public Iterator<E> iterator() {
 		return new SLelementIterator(this);
 	}
 
-	/*
-	 *	Get the elements of the list - used for  JSON construction
+	/**
+	 *	Get the elements of the list - used internally for  JSON construction
 	 *
 	 *	@param nodes  a vector of the ndoes in the list
 	 *

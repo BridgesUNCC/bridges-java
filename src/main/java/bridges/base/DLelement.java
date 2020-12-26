@@ -5,15 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
-
 /**
  *
- * 	@author Mihai Mehedint, Kalpathi Subramanian
- *
- *	@date 6/22/16, 1/7/17, 5/17/17, 7/14/19
- *
  * 	@brief This class is used to create doubly linked element objects.
+ *
  *
  *	This class extends Element and takes a generic parameter E representing
  *	application specific data. This element forms the basic building block for
@@ -27,6 +22,10 @@ import java.util.NoSuchElementException;
  *	Elements also have a LinkVisualizer object that is used when they are linked to
  *	another element, appropriate for setting link attributes, such as in linked lists,
  *	between the current element and its next or previous nodes.
+ *
+ * 	@author Mihai Mehedint, Kalpathi Subramanian
+ *
+ *	@date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
  *	\sa Example Tutorial at <br>
  *		http://bridgesuncc.github.io/tutorials/DoublyLinkedList.html

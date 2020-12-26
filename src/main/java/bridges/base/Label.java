@@ -10,7 +10,10 @@ import org.json.simple.JSONObject;
  * @brief This class used to label symbols.
  *		Labels have  a text string, font size, width, height and location
  *
- * Basic styling such as stroke and fill are defined in the superclass Symbol.
+ * Basic styling such as stroke, color are defined in the superclass Symbol.
+
+ * @sa An example tutorial can be found at 
+ * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
  * @author David Burlinson
  * @date 2018, 7/15/19

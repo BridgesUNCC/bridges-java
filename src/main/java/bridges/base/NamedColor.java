@@ -3,6 +3,8 @@ package bridges.base;
 /**
  *	@brief This enum is used to represent named, web-safe SVG colors in BRIDGES.
  *
+ *  These colors can be used as part of the Game API
+ *
  *	@author David Burlinson,
  *	@date 9/06/18
  *

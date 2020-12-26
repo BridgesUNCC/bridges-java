@@ -1,5 +1,7 @@
 package bridges.base;
 
+import java.util.Iterator;
+
 /**
  * 	@brief This class can be used to instantiate Singly Linked
  *	Circular List Elements.
@@ -22,7 +24,7 @@ package bridges.base;
  *	linked to another element, appropriate for setting link attributes, between
  *  an element and its next element.
  *
- *     @\sa Example Tutorial at
+ *  @sa Example Tutorial at
  *			http://bridgesuncc.github.io/tutorials/CircularSinglyLinkedList.html
  *
  *	@author Kalpathi Subramanian
@@ -32,9 +34,6 @@ package bridges.base;
  *	@param <E>  the generic parameter that is defined by the application
  *
  */
-
-
-import java.util.Iterator;
 
 public class CircSLelement<E> extends SLelement<E> implements Iterable<E> {
 	/**

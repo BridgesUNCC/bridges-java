@@ -11,6 +11,9 @@ import java.util.ArrayList;
  *
  * Basic styling such as stroke and fill are defined in the superclass Symbol.
  *
+ * @sa An example tutorial can be found at 
+ * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
+ *
  * @author David Burlinson, Kalpathi Subramanian
  * @date 12/23/18, 7/15/19
  *
@@ -31,6 +34,8 @@ public class Polyline extends Symbol {
 
 	/**
 	 *	 Construct a polyline with the give set of points
+	 *
+	 *   @param pts  the given set of input 2D points
 	 */
 	public Polyline (ArrayList<Float>  pts) {
 		this();
@@ -102,11 +107,11 @@ public class Polyline extends Symbol {
 	}
 
 	/**
-	 *  Translate the polyline
+	 *  Translate the polyline by the given factors in X and Y
 	 *
 	 *  @param tx, ty translation vector
 	 */
-	void translate(float tx, float ty) {
+	public void translate(float tx, float ty) {
 		// translate the points
 		for (int k = 0; k < points.size(); k += 2) {
 			points.set(k, points.get(k) + tx);
@@ -119,7 +124,7 @@ public class Polyline extends Symbol {
 	 *
 	 *  @param angle rotation angle in degree
 	 */
-	void rotate(float angle) {
+	public void rotate(float angle) {
 		// get center of polyline
 		float[]  center = new float[2];
 		getCenter(center);
@@ -147,11 +152,11 @@ public class Polyline extends Symbol {
 	 *  @brief Scale the polyline about its center.
 	 *
 	 * That is to say, the center of the polyline will not change
-	 * location, but the object itself will grow bigger.
+	 * location, but the object itself will grow bigger or smaller.
 	 *
 	 *  @param sx, sy scale factor
 	 */
-	void scale(float sx, float sy) {
+	public void scale(float sx, float sy) {
 		// get center of polyline
 		float[] center = new float[2];
 		getCenter(center);

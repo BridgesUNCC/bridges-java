@@ -1,8 +1,10 @@
 package bridges.base;
+import java.util.Iterator;
+
 /**
  *  @brief This class can be used to instantiate Circular Doubly Linked
  *  List Elements.
- *
+
  *	Structurally they are the same as doubly linked elements
  *  except that each node constructed with the next and the previous pointers
  *	points to itself.
@@ -31,14 +33,11 @@ package bridges.base;
  *
  *	@date   7/17/16, 1/16/17, 7/14/19
  *
- *  @param E  the generic parameter object that contains application specific data,
- *		defined by the user when instantiating this object.
+ *  @param E  the generic parameter object that contains application specific 
+ *		data, defined by the user when instantiating this object.
  *
  *
  */
-
-import java.util.Iterator;
-
 public class CircDLelement<E> extends DLelement<E> implements Iterable<E> {
 	/**
 	 *

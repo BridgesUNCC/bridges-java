@@ -11,7 +11,8 @@ import org.json.simple.JSONArray;
 
 
 /**
- * @brief the ShapeCollection represents a collection of symbols to visualize in Bridges
+ * @brief SymbolCollection represents a collection of symbols to visualize in Bridges
+ * This class is a container for the different symbol  types supported in BRIDGES.
  *
  * @sa See tutorial at http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
@@ -42,8 +43,7 @@ public class SymbolCollection extends DataStruct {
 	}
 
 	/**
-	 *
-	 *	Constructor
+	 *	Constructor - maintained internally as a hashmap
 	 */
 	public SymbolCollection() {
 		symbols = new HashMap<String, Symbol>();
@@ -69,7 +69,8 @@ public class SymbolCollection extends DataStruct {
 		symbols.put(s.getIdentifier(), s);
 	}
 	/**
-	 *   This method examines whether the axes should be expanded to ensure all shapes are shown
+	 *   This method updates the bounding box of the domain, if needed, 
+	 *		by the input symbol
 	 *	 @param s  symbol to be updated
 	 */
 	private void updateAxisDomains(Symbol s) {
@@ -94,6 +95,7 @@ public class SymbolCollection extends DataStruct {
 
 	/**
 	 *	Get the JSON representation of the the data structure
+	 *
 	 *	@return JSON of symbol collection (string)
 	 */
 

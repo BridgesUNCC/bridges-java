@@ -3,6 +3,8 @@ package bridges.base;
 /**
  *	@brief This enum is used to represent named symbols for use in BRIDGES GameGrids.
  *
+ *  These symbols can be used as part of the Game API
+ %
  *	@author David Burlinson,
  *	@date 10/09/18
  *

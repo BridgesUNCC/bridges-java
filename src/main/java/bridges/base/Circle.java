@@ -8,7 +8,10 @@ import org.json.simple.JSONObject;
  * @brief This class defines a circle and is part of the symbol collection.
  *		A circle has a center and radius
  *
- * Basic styling such as stroke and fill are defined in the superclass Symbol.
+ * Basic styling such as stroke, fill, color are defined in the superclass Symbol.
+ *
+ * @sa An example tutorial can be found at 
+ * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
  * @author Kalpathi Subramanian
  * @date 12/24/18
@@ -85,7 +88,7 @@ public class Circle extends Symbol {
 	}
 
 	/**
-	*  Translate the circle
+	*  Translate the circle by the given factors in X and Y
 	*
 	*  @param (tx, ty) translation vector
 	*/
@@ -111,13 +114,6 @@ public class Circle extends Symbol {
 	*
 	* @return array of 4 values
 	*/
-
-	/**
-	 * This method returns the dimensions of the shape: min and max
-	 *	values in X and Y
-	 *
-	 * @return bounding box of circle (array of 4 values)
-	 */
 	public float[] getDimensions() {
 
 		float[] dims = new float[4];

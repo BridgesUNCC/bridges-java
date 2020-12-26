@@ -6,10 +6,12 @@ import org.json.simple.JSONObject;
 
 /**
  * @brief This class defines a rectangle and is part of the symbol collection.
- *		A rectangle has height and width
+ *		A rectangle has height and width, and a location (rectangle center)
  *
- * Basic styling such as stroke and fill are defined in the superclass Symbol.
+ * Basic styling such as stroke, fill, color are defined in the superclass Symbol.
  *
+ * @sa An example tutorial can be found at 
+ * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  * @author Kalpathi Subramanian
  * @date 12/23/18
  *
@@ -123,19 +125,21 @@ public	class Rectangle extends  Symbol {
 	}
 
 	/**
-	*  Translate the rectangle
-	*
-	*  @param tx,ty translation vector
-	*/
+	 *  Translate the rectangle. The center of the rectangle is
+	 *  moved by the given factors.
+	 *
+	 *  @param tx,ty translation vector
+	 */
 	public void translate(float tx, float ty) {
 		float[] origin = getLocation();
 		translatePoint (origin, tx, ty);
 		setLocation(origin[0], origin[1]);
 	}
 	/**
-	 *  Scale the rectangle about its center
+	 *  Scale the rectangle about its center, i.e., the width and height 
+	 *	are scaled by the given scale factors
 	 *
-	 *  @param sx,sy scale factor along each axis
+	 *  @param sx,sy scale factors along each axis
 	 */
 	public void scale(float sx, float sy) {
 		// scale the height, width
