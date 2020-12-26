@@ -4,13 +4,20 @@ import io.socket.client.IO;
 import io.socket.emitter.Emitter;
 
 import java.util.*;
-
 import org.json.JSONObject;
 
-// Wrapper for a socket.io socket connection for BRIDGES
+
+
+/** 
+ *	This class is a wrapper for a socket.io socket connection for BRIDGES
+ */
 public class SocketConnection {
 	private Bridges bridges;
 
+	/**
+	 *  Pass the BRIDGES object to this class
+	 *	@param b  Bridges object
+	 */
 	public SocketConnection (Bridges b) {
 		bridges = b;
 	}
@@ -21,17 +28,22 @@ public class SocketConnection {
 	// Keep track of keypress listeners
 	private List<KeypressListener> listeners = new ArrayList<KeypressListener>();
 
-	// Register listeners to keypress events
+	/** 
+	 * Register listeners to keypress events
+	 * @param toAdd keypress listener object
+	 */
 	public void addListener(KeypressListener toAdd) {
 		if (Bridges.getDebugFlag())
 			System.out.println("subscribing to keypress events..");
 		listeners.add(toAdd);
 	}
 
-	// Given username and assignment number, set up a connection to the socket
-	// server
-	// TODO: this will need to be refactored to sit within BRIDGES, but for now
-	// we pass credentials directly
+	/** 
+	 *	Given username and assignment number, set up a connection to the socket
+	 *	server.<br>
+	 *  <b>TODO:</b> this will need to be refactored to sit within BRIDGES, but for now
+	 *  we pass credentials directly
+	 */
 	public void setupConnection() {
 		try { // connect to the socket server
 
@@ -143,9 +155,12 @@ public class SocketConnection {
 		}
 	}
 
-	// Send a dataframe string to the socket server
-	// TODO: this currently emits a gamegrid:recv event. We may need to refactor
-	// this to consider a variety of dataframe types
+	/** 
+	 *	Send a dataframe string to the socket server <br>
+	 *
+	 *  <b>TODO:</b> this currently emits a gamegrid:recv event. We may need 
+	 *	to refactor this to consider a variety of dataframe types
+	 */
 	public void sendData(String dataframe) {
 		if (socket == null) {
 			System.out.println("Cannot send data - socket is not connected.");
@@ -157,6 +172,9 @@ public class SocketConnection {
 		socket.emit("gamegrid:recv", dataframe);
 	}
 
+	/** 
+	 *	 @brief close the socket
+	 */
 	public void close() {
 		socket.disconnect();
 		socket.off();

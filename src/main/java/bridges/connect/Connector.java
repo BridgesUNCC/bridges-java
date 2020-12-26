@@ -20,6 +20,11 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/** 
+ *	This class contains the methods to make HTTP connections for transmitting
+ *	the JSON representation of a data structure to the BRIDGES server
+ */
+
 import bridges.validation.RateLimitException;
 //
 // import io.socket.IOAcknowledge;
@@ -55,8 +60,11 @@ public class Connector {
 
 	/* Accessors and Mutators */
 	/**
-	 * Set the current DataFormatters server to live, clone, or local, or throw an error;
-	 * @param server
+	 * Set the current server to 'live', 'clone', or 'local', or throw an error;
+	 *	live is the default, clone is used for development/testing and local
+	 * for use by developers on their local machines
+	 *
+	 * @param server  server type
 	 */
 	public void setServer(String server) throws IllegalArgumentException {
 		if (Bridges.getDebugFlag()) {
@@ -85,7 +93,7 @@ public class Connector {
 
 	/**
 	 * Get the current  base URL for the DataFormatters server (with no ending/)
-	 * @return
+	 * @return url  of the server
 	 */
 	public String getServerURL() {
 		//System.out.println("url:" + server_url);
@@ -94,7 +102,8 @@ public class Connector {
 
 	/**
 	 * Set the current base URL for the DataFormatters server (with no ending /)
-	 * @param server_url
+	 *
+	 * @param server_url  server url to be set
 	 */
 	public void setServerURL(String server_url) {
 		while (server_url.endsWith("/"))
@@ -106,7 +115,6 @@ public class Connector {
 	/**
 	 * This reformats the coordinates in Earthwuake tweet such that there will be
 	 * no arrays present when casting to the JSONObject. for  the reasons described below
-	 * Mihai
 	 * @param text
 	 * @return
 	 */
@@ -144,8 +152,6 @@ public class Connector {
 		return c.toString();
 
 	}
-
-
 
 	/**
 	 * Find the pattern of the coordinates (as an array) and replace them with {"lat": value, "long":value}
@@ -455,12 +461,13 @@ public class Connector {
 	 * @throws IOException
 	 * @throws RateLimitException
 	 */
-	public String executeHTTPRequest(Request request)
-	throws ClientProtocolException, IOException, RateLimitException {
-		//    	System.out.println("execute HTTPRequest in request now: " + request);
+	public String executeHTTPRequest(Request request) throws 
+			ClientProtocolException, IOException, RateLimitException {
+
 		// It's possible we need to reimplement this as a ResponseHandler
 		//System.out.println("Sending request: " + request);
 		// Execute the HTTP request
+
 		HttpResponse response;
 		if (Bridges.getDebugFlag())
 			System.err.println("Sending request: " + request);
@@ -582,8 +589,10 @@ public class Connector {
 				.bodyString(data, ContentType.TEXT_PLAIN));
 	}
 
-	/*
+	/**
 	 *  Send a delete request to the server for the given user and assignment
+	 *
+	 *  @param url send a delete request using this url
 	 */
 	public String delete (String url) throws IOException, RateLimitException {
 		if (Bridges.getDebugFlag()) {
@@ -597,6 +606,7 @@ public class Connector {
 
 	/**
 	 * Escape the URL and prepend the base URL.
+	 * @param url  prepare the request to be sent using this url
 	 * @returns the new url as a String
 	 */
 	public String prepare(String url) {
@@ -611,6 +621,11 @@ public class Connector {
 		return out;
 	}
 
+	/**
+	 * @param url  prepare the request to be sent using this url for 
+	 *		earthquake data
+	 * @returns the new url as a String
+	 */
 	public String prepareUSGS(String url) {
 		String out = usgs_url;
 		out += url;
