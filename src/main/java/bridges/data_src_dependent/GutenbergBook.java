@@ -1,4 +1,8 @@
 package bridges.data_src_dependent;
+
+import java.util.Vector;
+import java.lang.String;
+
 /**
  * @brief  A Gutenberg Book object, used along with the Gutenberg
  *	books data source (https://www.gutenberg.org/).
@@ -15,8 +19,6 @@ package bridges.data_src_dependent;
  * @date   2/1/17
  *
  */
-import java.util.Vector;
-import java.lang.String;
 
 import bridges.data_src_dependent.DataSource;
 

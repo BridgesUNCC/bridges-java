@@ -25,8 +25,6 @@ public class ActorMovieIMDB extends DataSource {
 	 * Constructor
 	 * @param act_movie label for dataset
 	 */
-	public ActorMovieIMDB () {
-	}
 	public ActorMovieIMDB(String act_movie) {
 		super.setLabel(act_movie);
 	}

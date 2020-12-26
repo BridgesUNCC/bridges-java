@@ -30,6 +30,7 @@ public class OsmData {
 	 * @param vertices nodes of the map (array of OsmVertex)
 	 * @param edges links between nodes (array of OsmEdge)
 	 * @param name  dataset name (string)
+	 */
 	public OsmData(OsmVertex[] vertices, OsmEdge[] edges, String name) {
 		this.setEdges(edges);
 		this.setVertices(vertices);
