@@ -48,6 +48,10 @@ public class LineChart extends DataStruct {
 	private HashMap<String, double[]> yaxisData;
 	private HashMap<String, double[]> xaxisData;
 
+	/**
+	 * @brief Line chart default constructor
+	 *
+	 */
 	public LineChart() {
 		this.plotTitle = "";
 		this.plotSubtitle = "";
@@ -61,6 +65,11 @@ public class LineChart extends DataStruct {
 		this.logarithmicy = false;
 	}
 
+	/**
+	 * 	@brief gets the representation of the line chart as a JSON
+	 *
+	 *	@return JSON of line chart
+	 */
 	public String getDataStructType() {
 		return "LineChart";
 	}

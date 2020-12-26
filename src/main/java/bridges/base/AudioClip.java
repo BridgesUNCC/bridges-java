@@ -69,8 +69,11 @@ public class AudioClip extends DataStruct {
     /**
      * @brief create an audio clip
      *
-     * creates an AudioClip with numChannels channels, sampleCount samples at sampleRate Hz with a depth of sampleBits
-     *
+	 * @param numChannels the number of channels
+	 * @param sampleCount the total number of samples
+	 * @param sampleBits  the bits per sample
+	 * @param sampleRate  the sampling rate (Hz, or cycles per sec)
+	 *
      **/
 	public AudioClip(int sampleCount, int numChannels, int sampleBits, int sampleRate) {
 		if (sampleCount > 1000000000) {
@@ -162,7 +165,10 @@ public class AudioClip extends DataStruct {
         /**
 	 * @brief create an audio clip
 	 *
-	 * creates an AudioClip with numChannels channels, sampleCount samples at 44100 Hz with a depth of 32 bits
+	 * creates an AudioClip with numChannels channels, sampleCount samples 
+	 *	at 44100 Hz with a depth of 32 bits
+	 * @param numChannels the number of channels
+	 * @param sampleCount the total number of samples
 	 *
 	 **/
     	public AudioClip(int sampleCount, int numChannels) {
