@@ -232,7 +232,7 @@ public class Color {
 	 *
 	 * 	Constructor, given color name
 	 *
-	 *	@param color  one of the CSS colors (check Color class for full list)
+	 *	@param color  one of the CSS colors (check above for full list of colors)
 	 *
 	 */
 	public Color(String color) {

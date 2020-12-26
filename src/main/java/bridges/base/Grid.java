@@ -41,7 +41,7 @@ public class Grid<E> extends DataStruct {
 	}
 
 	/**
-	 * Construct a rows x cols  size grid
+	 * @brief Construct a rows x cols  size grid
 	 *
 	 * @param rows number of rows in grid
 	 * @param cols number of rows in grid
@@ -52,7 +52,7 @@ public class Grid<E> extends DataStruct {
 
 	/**
 	 *
-	 * Construct a size[0] by size[1] sized grid
+	 * @brief Construct a size[0] by size[1] sized grid
 	 * @param size[] specifies rows and column sizes of the grid
 	 *
 	 */
@@ -81,7 +81,7 @@ public class Grid<E> extends DataStruct {
 
 	/**
 	 *
-	 * Get the grid dimensions
+	 * @brief Get the grid dimensions
 	 *
 	 * @return an array of two values (rows, cols) of the grid
 	 */
@@ -90,9 +90,10 @@ public class Grid<E> extends DataStruct {
 	}
 
 	/**
-	 *	Get the (row, col) element in the grid
-	 * 	@param row row number
-	 * 	@param col number
+	 *	@brief Get the (row, col) element in the grid
+	 * 	@param row row index
+	 * 	@param col column index
+     *  @return the element at (row, col)
 	 */
 	public E get(Integer row, Integer col) {
 		try {
@@ -106,7 +107,7 @@ public class Grid<E> extends DataStruct {
 
 	/**
 	 *	Set the (row, col) element in the grid
-	 * 	@param row,col cell to change
+	 * 	@param row,col  cell to change
 	 *	@param val the value to be set to
 	 */
 	public void set(Integer row, Integer col, E val) {
@@ -119,7 +120,8 @@ public class Grid<E> extends DataStruct {
 	}
 
 	/**
-	 * Get data structure representation
+	 * @brief Get data structure representation
+	 * @return the JSON of the grid representation
 	 */
 	public String getDataStructureRepresentation() {
 		return null;
