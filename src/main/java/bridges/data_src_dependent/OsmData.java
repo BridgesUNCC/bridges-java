@@ -2,15 +2,16 @@ package bridges.data_src_dependent;
 
 import bridges.base.GraphAdjList;
 
+/**
+ * @brief  Class that hold Open Street Map vertices
+ *
+ * This class holds Open Street Map data, from https://openstreetmap.org
+ *
+ * @author Kalpathi Subramanian, Erik Saule 
+ *
+ * @date 2/16/19, 12/26/20
+ */
 public class OsmData {
-	/**
-	 * @brief  Class that hold Open Street Map vertices
-	 *
-	 * Class that holds Open Street Map data, from https://openstreetmap.org
-	 *
-	 * Kalpathi Subramanian, 2/16/19
-	 *
-	 */
 
 	private OsmVertex[] vertices;
 	private OsmEdge[] edges;
@@ -24,12 +25,21 @@ public class OsmData {
 		this.name = null;
 	}
 
+	/**
+	 * Constructor
+	 * @param vertices nodes of the map (array of OsmVertex)
+	 * @param edges links between nodes (array of OsmEdge)
+	 * @param name  dataset name (string)
 	public OsmData(OsmVertex[] vertices, OsmEdge[] edges, String name) {
 		this.setEdges(edges);
 		this.setVertices(vertices);
 		this.setName(name);
 	}
 
+	/**
+	 * Gets the nodes of the dataset
+	 * @return the nodes of the dataset (array of OsmVertex)
+	 */
 	public OsmVertex[] getVertices() {
 		return vertices;
 	}
@@ -39,6 +49,11 @@ public class OsmData {
 		arr[1] = arr[1] < val ? val : arr[1];
 	}
 
+
+	/**
+	 * Sets the nodes of the map
+	 * @param vertices nodes of the map
+	 */
 	public void setVertices(OsmVertex[] vertices) {
 		this.vertices = vertices;
 		double[] lat_range = {Double.MAX_VALUE, -Double.MAX_VALUE},
@@ -145,16 +160,16 @@ public class OsmData {
 	}
 
 	/**
-	 * Construct a graph out of the vertex an edge
+	 * Construct a graph out of the vertex and edge
 	 * data of the OSM object.  The graph will
 	 * associate the length of the edge to the
 	 * graph edge. No data is bound to the
 	 * vertices.
 	 *
 	 * The vertices of the graph will be located at
-	 * the location where given in the data set
+	 * the location given in the data set
 	 * converted to cartesian coordinate.
-	 **/
+	 */
 	public GraphAdjList<Integer, OsmVertex, Double> getGraph() {
 		GraphAdjList<Integer, OsmVertex, Double> ret_graph = new GraphAdjList<>();
 
