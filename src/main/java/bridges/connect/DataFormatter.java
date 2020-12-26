@@ -67,10 +67,20 @@ public class DataFormatter {
 		this.backend = new Connector();
 	}
 
+	/**
+	 * @brief get server's url
+	 *
+	 * @return url of server
+	 */
 	public static String getServerURL() {
 		return backend.server_url;
 	}
 
+	/**
+	 * @brief set server's url
+	 *
+	 * @param url (string)  of server
+	 */
 	public static void setServerURL(String server_url) {
 		DataFormatter.backend.server_url = server_url;
 	}
@@ -1118,39 +1128,42 @@ public class DataFormatter {
 		return getAssignment(server, user, assignment, 0);
 	}
 
-	/***
-	 * Generates Open Street Map URL request for a given location and returns the map data
-	 * @param location, name of city or area that the server supports
-	 * @param level, level of road detail on requested map
-	 * @return OsmData, vertices and edges of Open Street Map data
-	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	/**
+	 * @brief Generates Open Street Map URL request for a given location and returns the map data
+	 *
+	 * @param location  name of city or area that the server supports
+	 * @param level  level of road detail on requested map
+	 * @return OsmData  vertices and edges of Open Street Map data
+	 * @throws IOException  If there is an error parsing response from server or is an invalid location name
 	 */
-	static OsmData getOsmData(String location, String level) throws IOException {
+	public static OsmData getOsmData(String location, String level) throws IOException {
 		String url = "http://cci-bridges-osm.uncc.edu/loc?location=" + location + "&level=" + level;
 		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?location=" + location + "&level=" + level;
 		return (downloadMapFile(url, hashUrl));
 	}
-	/***
-	 * Generates Open Street Map URL request for a given set of coordinates and returns the map data
-	 * @param minLat, minimum latitude value for the area requested
-	 * @param minLon, minimum longitude value for the area requested
-	 * @param maxLat, maximum latitude value for the area requested
-	 * @param maxLon, maximum longitude value for the area requested
-	 * @param level, level of road detail on requested map
-	 * @return OsmData, vertices and edges of Open Street Map data
-	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	/**
+	 * @brief Generates Open Street Map URL request for a given set of coordinates and returns the map data
+	 *
+	 * @param minLat  minimum latitude value for the area requested
+	 * @param minLon  minimum longitude value for the area requested
+	 * @param maxLat  maximum latitude value for the area requested
+	 * @param maxLon  maximum longitude value for the area requested
+	 * @param level  level of road detail on requested map
+	 * @return OsmData  vertices and edges of Open Street Map data
+	 * @throws IOException  If there is an error parsing response from server or is an invalid location name
 	 */
-	static OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
+	public static OsmData getOsmData(double minLat, double minLon, double maxLat, double maxLon, String level) throws IOException {
 		String url = "http://cci-bridges-osm.uncc.edu/coords?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
 		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
 		return (downloadMapFile(url, hashUrl));
 	}
-	/***
-	 * Downloads and caches maps requested
+	/**
+	 * @brief Downloads and caches maps requested
+	 *
 	 * @param url, string of the url that will be used when requesting map data from server
-	 * @param hashurl, string of the url that will be used when requesting hash data from serverp
-	 * @return OsmData, vertices and edges of Open Street Map data
-	 * @throws IOException, If there is an error parsing response from server or is an invalid location name
+	 * @param hashurl string of the url that will be used when requesting hash data from serverp
+	 * @return OsmData vertices and edges of Open Street Map data
+	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
 	static OsmData downloadMapFile(String url, String hashUrl) throws IOException {
 		File cache_dir = new File("./cache");
@@ -1628,6 +1641,12 @@ public class DataFormatter {
 		}
 	}
 
+	/**
+	 *	@brief Get cancer incidence data 
+	 *
+	 *  Reference: Corgis datasets, https://corgis-edu.github.io/corgis/json/cancer/
+	 *
+	 */
 	public static ArrayList<CancerIncidence> getCancerIncidenceData() throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations";

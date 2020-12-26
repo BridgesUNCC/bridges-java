@@ -44,7 +44,7 @@ import javax.xml.crypto.Data;
  * 	@date  1/16/17, 5/19/17
  *
  *	\sa Tutorial examples at <br>
- *	http://bridgesuncc.github.io/Hello_World_Tutorials/Overview.html
+ *	http://bridgesuncc.github.io/tutorials/Overview.html
  */
 
 public class Bridges {
@@ -107,6 +107,11 @@ public class Bridges {
 		init(0, "", "");
 	}
 
+	/**
+	 *	@brief get the current data source object being used by BRIDGES
+	 *
+	 *	@return data source object
+	 */
 	public DataSource getDataSource () {
 		return new DataSource(this);
 	}
@@ -135,7 +140,7 @@ public class Bridges {
 
 	/**
 	 *
-	 * Initialize Bridges
+	 * Initialize Bridges with assignment number, user name and application id
 	 *
 	 * @param assignment this is the assignmen id (integer)
 	 * @param appl_id    this is the appl authentication key(from the Bridges account)
@@ -198,25 +203,39 @@ public class Bridges {
 	}
 
 	/**
+	 *  @brief  sets the server type.
+	 *
+	 *	Options are: ['live', 'local', 'clone'], and 'live' is the default;
 	 *
 	 * 	@param  server server to which to connect.
-	 *		Options are: ['live', 'local', 'clone'], and 'live' is the default;
 	 *
 	 */
 	public void setServer(String server) {
 		connector.setServer(server);
 	}
 
+	/**
+	 *  @brief  sets a debug flag, used for debugging BRIDGES
+	 *
+	 * 	@param  flag  boolean 
+	 *
+	 */
 	public static void setDebugFlag (Boolean flag) {
 		debug_flag = flag;
 	}
 
+	/**
+	 *  @brief  gets the  debug flag value, used for debugging BRIDGES
+	 *
+	 * 	@return  boolean flag
+	 *
+	 */
 	public static Boolean getDebugFlag () {
 		return debug_flag;
 	}
 
 	/**
-	 *  Turns on map overlay for subsequent visualizations - used with location specific
+	 *  @brief Turns on map overlay for subsequent visualizations - used with location specific
 	 *  datasets
 	 *
 	 *  @param flag     this is the boolean flag for displaying a map overlay
@@ -243,10 +262,17 @@ public class Bridges {
 
 
 	/**
-	 * 	@param coord 	this is the desired coordinate space argument
-	 *		Options are: ['cartesian', 'albersusa', 'equirectangular', 'window'], and 'cartesian' is the default;
+	 * 	@brief Sets the coordinate system type.  
 	 *
-	 * The "window" option only works for graphs and will automatically scale the view on the browser to include all vertices which have a fixed location. A different window can be specified using setWindow().
+	 *	Coordinate system type options are: ['cartesian', 
+	 *	'albersusa', 'equirectangular', 'window'], and 'cartesian' 
+	 *	is the default; The "window" option 
+	 *	only works for graphs and will automatically scale the view on 
+	 *	the browser to include all vertices which have a fixed location. 
+	 *	A different window can be specified using setWindow().
+	 *
+	 * 	@param coord 	this is the desired coordinate space
+	 *
 	 **/
 	public void setCoordSystemType (String coord) {
 		if (java.util.Arrays.asList(projection_options).indexOf(coord) >= 0) {
@@ -264,11 +290,14 @@ public class Bridges {
 	/**
 	 * @brief Specify the window that will be used to render the view by default.
 	 *
-	 * This function enables specifying the window that will rendered by default in the view. This only works for graph data types. And the coordinate system need ot be set to "window" using setCoordSystemType().
+	 * This function enables specifying the window that will rendered by 
+	 *	default in the view. This only works for graph data types. 
+	 *	And the coordinate system need ot be set to "window" using 
+	 *	setCoordSystemType().
 	 *
 	 * 	@param x1 	minimum window x
-	 * 	@param y1 	minimum window y
 	 * 	@param x2 	maximum window x
+	 * 	@param y1 	minimum window y
 	 * 	@param y2 	maximum window y
 	 **/
 	public void setWindow (int x1, int x2, int y1, int y2) {
@@ -280,8 +309,8 @@ public class Bridges {
 	 * This function enables specifying the window that will rendered by default in the view. This only works for graph data types. And the coordinate system need ot be set to "window" using setCoordSystemType().
 	 *
 	 * 	@param x1 	minimum window x
-	 * 	@param y1 	minimum window y
 	 * 	@param x2 	maximum window x
+	 * 	@param y1 	minimum window y
 	 * 	@param y2 	maximum window y
 	 **/
 	public void setWindow (float x1, float x2, float y1, float y2) {
@@ -293,8 +322,8 @@ public class Bridges {
 	 * This function enables specifying the window that will rendered by default in the view. This only works for graph data types. And the coordinate system need ot be set to "window" using setCoordSystemType().
 	 *
 	 * 	@param x1 	minimum window x
-	 * 	@param y1 	minimum window y
 	 * 	@param x2 	maximum window x
+	 * 	@param y1 	minimum window y
 	 * 	@param y2 	maximum window y
 	 **/
 	public void setWindow (double x1, double x2, double y1, double y2) {
@@ -302,6 +331,8 @@ public class Bridges {
 	}
 
 	/**
+	 *	@brief Flag to control printing the JSON of the data structure. 
+	 *		Used only for debugging BRIDGES
 	 * 	@return check if the flag to output the JSON is set
 	**/
 	public boolean visualizeJSON() {
@@ -310,7 +341,7 @@ public class Bridges {
 
 	/**
 	 * 	@param flag the flag to print the JSON represenation of the data structure
-	 *		to standard output
+	 *		to standard output. Used for debugging BRIDGES
 	 **/
 	public void setVisualizeJSON (boolean flag) {
 		json_flag = flag;
@@ -330,7 +361,7 @@ public class Bridges {
 	}
 
 	/**
-	 *	Get the assignment id
+	 *	@brief Get the assignment id
 	 *
 	 *  @return assignment as a string
 	 *
@@ -343,6 +374,12 @@ public class Bridges {
 			String.valueOf(assignment_part);
 	}
 
+	/**
+	 *	@brief Get the assignment id as an integer
+	 *
+	 *  @return assignment as a string
+	 *
+	 */
 	public static int getAssignmentID() {
 		return assignment;
 	}
@@ -407,6 +444,8 @@ public class Bridges {
 	}
 
 	/**
+	 *
+	 *  @brief Provide BRIDGES  a handle to the data structure to be visualized.
 	 *
 	 * 	This method sets  the handle to the current data structure; this can
 	 *	be an array, the head of a linked list, root of a tree structure, a graph

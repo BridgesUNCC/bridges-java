@@ -8,6 +8,19 @@ import bridges.base.*;
 import bridges.data_src_dependent.*;
 import bridges.validation.*;
 
+/**
+ *  @brief This class is the main BRIDGES class that facilitates access to 
+ *	external datasets
+ *
+ *  The DataSource class provides the BRIDGES API to all external datasets that
+ *  are implemented in BRIDGES. These include earthquake data, song data, IMDB
+ *	actor/movies, Wikidata, Guttenberg book collections, OpenStreet maps, 
+ *  Shakespeare, play, sonnets, poems,  Cancer incidence data and IGN games
+ *  Each dataset is accessed through a function call, which typically returns
+ * 	a list of objects with all associated attributes. These can then be used
+ *	as part of a data structure, algorithm. Some initial support to import
+ *  previously built data structures is also provided.
+ */
 public class DataSource {
 	private Bridges bridges;
 
@@ -19,17 +32,17 @@ public class DataSource {
 	}
 
 	/**
-	*  This helper function provides a simple API to retrieve current USGS earthquake
-	*	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
-	*  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
-	*
-	*  More information on the dataset can be found at http://bridgesuncc.github.io/datasets.html
-	*
-	*	@param maxElements  the number of earthquake records retrieved, limited to 5000
-	*  @throws Exception if the request fails
-	*
-	*  @return a list of earthquake records
-	*/
+	 *  This helper function provides a simple API to retrieve current USGS earthquake
+	 *	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
+	 *  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
+	 *
+	 *  More information on the dataset can be found at http://bridgesuncc.github.io/datasets.html
+	 *
+	 *	@param maxElements  the number of earthquake records retrieved, limited to 5000
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of earthquake records
+	 */
 	public  List<EarthquakeUSGS> getEarthquakeUSGSData(
 		int maxElements) throws Exception {
 		return DataFormatter.getEarthquakeUSGSData(maxElements);
@@ -37,7 +50,7 @@ public class DataSource {
 
 	/**
 	 *  This helper function provides access to a small curated IMDB dataset. The data is
-	 *  retrieved, formatted into a list of ActorMovieIMDB objects (about 1800 pairs).
+	 *  retrieved data is formatted into a list of ActorMovieIMDB objects (about 1800 pairs).
 	 *
 	 *  This curated data set has only actor and movie name pairs. refer to <p>
 	 *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
@@ -51,6 +64,21 @@ public class DataSource {
 	public  List<ActorMovieIMDB> getActorMovieIMDBData() throws Exception {
 		return DataFormatter.getActorMovieIMDBData(Integer.MAX_VALUE);
 	}
+	/**
+	 *  This helper function provides access to a small curated IMDB dataset. The data is
+	 *  retrieved data is formatted into a list of ActorMovieIMDB objects (about 1800 pairs).
+	 *
+	 *  This curated data set has only actor and movie name pairs. refer to <p>
+	 *  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *  for more information and to look at the dataset. This method lets you 
+	 *  specify the number of actor/movie pairs to be retrieved.
+	 *
+	 *  @throws Exception if the request fails
+	 *  @param numElements  number of earthquake records to be retrieved
+	 *
+	 *  @return a list of ActorMovieIMDB objects, but only actor,  movie, movie genre
+	 *			and movie rating are returned.
+	 */
 	public  List<ActorMovieIMDB> getActorMovieIMDBData(int maxElements) throws Exception {
 		return DataFormatter.getActorMovieIMDBData(maxElements);
 	}
@@ -130,12 +158,26 @@ public class DataSource {
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
 	 *
 	 *  @throws Exception if the request fails
+	 *  @param songTitle  title of song (string)
 	 *
 	 *  @return a Song object.
 	 */
 	public  Song getSong(String songTitle) throws Exception {
 		return DataFormatter.getSong(songTitle, "");
 	}
+	/**
+	 *  These helper functions provides access to a particular song.
+	 *
+	 *  The record has information such as song title, artist, album, year, lyrics, and genre. For more information
+	 *	and to look at the data, refer to <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
+	 *
+	 *  @throws Exception if the request fails
+	 *  @param songTitle  title of song (string)
+	 *  @param artistName  of song (string)
+	 *
+	 *  @return a Song object.
+	 */
 	public  Song getSong(String songTitle, String artistName) throws Exception {
 		return DataFormatter.getSong(songTitle, artistName);
 	}
@@ -254,7 +296,7 @@ public class DataSource {
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public bridges.data_src_dependent.OsmData getOsmDataOld(String location, String level) throws IOException {
+	private bridges.data_src_dependent.OsmData getOsmDataOld(String location, String level) throws IOException {
 		return DataFormatter.getOsmData(location, level);
 	}
 
@@ -319,51 +361,66 @@ public class DataSource {
 	}
 
 
+	/**
+	 * Returns amenity data for the provided coordinate box, with a specified
+	 * amenity.
+	 *
+	 * @param minLat minimum latitude requested
+	 * @param minLon minimum longitude requested
+	 * @param maxLat maximum latitude requested
+	 * @param maxLat maximum longitude requested
+	 * @param amenity amenity type (string)
+	 **/
 	public static bridges.data_src_dependent.AmenityData getAmenityData(double minLat, double minLon, double maxLat, double maxLon, String amenity) throws IOException {
 		return DataFormatter.getAmenityData(minLat, minLon, maxLat, maxLon, amenity);
 	}
 
+	/**
+	 * Returns amenity data for the provided coordinate box, with a specified
+	 * amenity.
+	 *
+	 * @param location name of city/town for whose amenity data is being retrieved
+	 * @param amenity amenity type (string)
+	 **/
 	public static bridges.data_src_dependent.AmenityData getAmenityData(String location, String amenity) throws IOException {
 		return DataFormatter.getAmenityData(location, amenity);
 	}
 
-
-	
-
-	/***
+	/**
 	 * This function obtains the JSON representation of a particular subassignment.
 	 *
 	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 * @param subassignment the ID of the subassignment to get
-	 ***/
+	 */
 	public String getAssignmentJSON(String user, int assignment, int subassignment) throws IOException {
 		return DataFormatter.getAssignment(bridges.getServerURL(), user, assignment, subassignment);
 	}
-	/***
+	/**
 	 * This function obtains the JSON representation of a particular subassignment.
 	 *
 	 * @return a string that is the JSON representation of the subassignment as stored by the Bridges server.
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
-	 ***/
+	 */
 	public String getAssignmentJSON(String user, int assignment) throws IOException {
 		return getAssignmentJSON(user, assignment, 0);
 	}
-	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	/** Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
 	 *
 	 * @return the ColorGrid stored in the bridges server
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 * @param subassignment the ID of the subassignment to get
-	 **/
+	 */
 	public bridges.base.ColorGrid getColorGridFromAssignment(String user, int assignment, int subassignment)
 	throws IOException {
 		return DataFormatter.getColorGridFromAssignment(bridges.getServerURL(), user, assignment, subassignment);
 	}
 
-	/**Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
+	/**
+	 * Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
 	 *
 	 * @return the ColorGrid stored in the bridges server
 	 * @param user the name of the user who uploaded the assignment
