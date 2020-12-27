@@ -10,11 +10,16 @@ import java.util.Scanner;
 import bridges.connect.DataFormatter;
 
 /**
+ * This class keeps earthquake tweet data, retrieved from US Geological Survey 
+ *	Data
  *
- * @author mihai mehedint
+ * @author Mihai Mehedint, Kalpathi Subramanian
  *
+ * @date 12/26/20
  */
 public class EarthquakeUSGS extends Tweet {
+
+	// attributes of an earthquake
 	private double magnitude;
 	private double latit;
 	private double longit;
@@ -26,6 +31,9 @@ public class EarthquakeUSGS extends Tweet {
 	private String properties;
 
 
+	/**
+	 * Constructor
+	 */
 	public EarthquakeUSGS() {
 		super ("", null);
 		this.magnitude = 0.0;
@@ -37,6 +45,19 @@ public class EarthquakeUSGS extends Tweet {
 		this.properties = "";
 	}
 
+	/**
+	 * Constructor
+	 *
+	 * @param content  content of tweet (string)
+	 * @param date2  when the quake occurred
+	 * @param magnitude  magnitude of quake
+	 * @param longit  longitude of quake
+	 * @param latit  latitude of quake
+	 * @param location where it occurred
+	 * @param title  title, contains some of the content
+	 * @param url   url of quake
+	 * @param properties other properties
+	 */
 	public EarthquakeUSGS(String content, Date date2, double magnitude,
 		double longit, double latit, String location, String title, String url, String properties) {
 
@@ -51,11 +72,21 @@ public class EarthquakeUSGS extends Tweet {
 	}
 
 
+	/**
+	 * Get properties of quake 
+	 *
+	 * @return properties of quake (string)
+	 */
 	public String getProperties() {
 		return this.properties;
 	}
 
 
+	/**
+	 * set properties of quake 
+	 *
+	 * @param properties properties of quake (string) to be set
+	 */
 	public void setProperties(String properties) {
 		this.properties = properties;
 	}
@@ -68,39 +99,100 @@ public class EarthquakeUSGS extends Tweet {
 
 	//		return null;
 	//	}
+	/**
+	 * Get latitude of quake 
+	 *
+	 * @return latitude of quake (double)
+	 */
 	public double getLatit() {
 		return this.latit;
 	}
+	/**
+	 * Set latitude of quake 
+	 *
+	 * @param latit latitude  of quake to be set
+	 */
 	public void setLatit(double latit) {
 		this.latit = latit;
 	}
+	/**
+	 * Get longitude of quake 
+	 *
+	 * @return longitude of quake (double)
+	 */
 	public double getLongit() {
 		return longit;
 	}
+	/**
+	 * Set longitude of quake 
+	 *
+	 * @param longit longitude  of quake to be set
+	 */
 	public void setLongit(double longit) {
 		this.longit = longit;
 	}
+	/**
+	 * Get location of quake 
+	 *
+	 * @return location of quake (string)
+	 */
 	public String getLocation() {
 		return location;
 	}
+	/**
+	 * Set location of quake 
+	 *
+	 * @param location location  of quake to be set
+	 */
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	/**
+	 * Get title of quake  - has some of the quake info
+	 *
+	 * @return title of quake (string)
+	 */
 	public String getTitle() {
 		return this.title;
 	}
+	/**
+	 * Set title of quake 
+	 *
+	 * @param title title  of quake to be set
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	/**
+	 * Get url of quake 
+	 *
+	 * @return url of quake (string)
+	 */
 	public String getUrl() {
 		return url;
 	}
+	/**
+	 * Set url of quake 
+	 *
+	 * @param url url  of quake to be set
+	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	/**
+	 * Set magnitude of quake 
+	 *
+	 * @param magnitude magnitude (double)  of quake to be set
+	 */
 	public void setMagnitude(double magnitude) {
 		this.magnitude = magnitude;
 	}
+
+	/**
+	 * Set time of quake in a user readable format
+	 *
+	 * @param t time (string)  of quake to be set
+	 */
 	public void setTime (String t) {
 		// convert this to a sane format
 		DateFormat df = new SimpleDateFormat("MMM dd yyyy  HH:mm:ss.SSS zzz");
@@ -108,9 +200,19 @@ public class EarthquakeUSGS extends Tweet {
 		Date date = new Date(Long.parseLong(t));
 		this.time = df.format(date);
 	}
+	/**
+	 * Get time of quake 
+	 *
+	 * @return time of quake (string)
+	 */
 	public String getTime () {
 		return this.time;
 	}
+	/**
+	 * copy constructor 
+	 * @param eq the earthquake data to be copied into this object
+	 *
+	 */
 	public EarthquakeUSGS(EarthquakeUSGS eq) {
 		super("USGSeq magnitude " + eq.magnitude + " " + eq.getTitle(), eq.getDate());
 		this.magnitude = eq.magnitude;
@@ -129,21 +231,28 @@ public class EarthquakeUSGS extends Tweet {
 
 	}
 
-
+	/**
+	 * Set magnitude of quake
+	 *
+	 * @param mag magnitude (double) of quake to be set
+	 */
 	public void setMagnitude(Double mag) {
-		/*Scanner scan = new Scanner(this.getContent());
-		StringBuilder str =  new StringBuilder();
-		str.append(scan.next());
-		DataFormatter.trimComma(str);
-		magnitude = Double.parseDouble(str.toString());*/
 		this.magnitude = mag;
 
 	}
 
+	/**
+	 * function for internal use
+	 */
 	public String enterCarriageReturn(String str) {
 		return str = str.replace(" ", "\\n");
 	}
 
+	/**
+	 * get magnitude of quake
+	 *
+	 * @return magnitude (double) of quake
+	 */
 	public double getMagnitude() {
 		return this.magnitude;
 	}
