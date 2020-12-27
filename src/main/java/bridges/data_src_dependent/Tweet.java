@@ -1,51 +1,94 @@
 package bridges.data_src_dependent;
 
 import java.util.Date;
+
+
 /**
- * @author Sean Gallager, Mihai Mehedint
+ *	This class holds the content of a Tweet; it is used by the Earthquake
+ *  dataset, which is received as tweets
  *
+ * @author Sean Gallager, Mihai Mehedint, Kalpathi Subramanian
+ *
+ * @date 12/26/20
  */
 public class Tweet extends DataSource {
 	private Date date;
 
+	/**
+	 * Constructor
+	 * @param content  content of tweet (string)
+	 * @param date2  date information
+	 */
 	public Tweet(String content, Date date2) {
 		super.setLabel(content);
 		this.date = date2;
 	}
 
+	/**
+	 * Constructor
+	 * @param content  content of tweet (string)
+	 */
 	public Tweet(String content) {
 		super.setLabel(content);
 		this.date = new Date();
 	}
 
+	/**
+	 * Constructor
+	 * @param aTweetCopy  copy a tweet
+	 */
 	public Tweet(Tweet aTweetToCopy) {
 		super.setLabel(aTweetToCopy.getContent());
 		this.date = aTweetToCopy.getDate();
 	}
 
+	/**
+	 * Get the content of the tweet
+	 * @return content of the tweet  
+	 */
 	public String getContent() {
 		return super.getLabel();
 	}
 
+	/**
+	 * Set the content of the tweet
+	 * @param content content of tweet  to be set
+	 */
 	public void setContent(String content) {
 		super.setLabel(content);
 	}
 
+	/**
+	 * Set the label of the tweet
+	 * @param label label of the tweet  to be set
+	 */
 	@Override
 	public void setLabel(String label) {
 		setContent(label);
 	}
 
 
+	/**
+	 * Get the label of the tweet
+	 * @return label of the tweet  
+	 */
 	@Override
 	public String getLabel() {
 		return getContent();
 	}
 
+	/**
+	 * Get the date of the tweet
+	 * @return date of the tweet  
+	 */
 	public Date getDate() {
 		return date;
 	}
 
+	/**
+	 * Set data of tweet
+	 * @param date  (of type Date) to be set
+	 */
 	public void setDate(Date date) {
 		this.date = date;
 	}
