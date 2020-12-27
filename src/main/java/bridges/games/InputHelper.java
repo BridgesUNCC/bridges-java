@@ -6,6 +6,10 @@ import org.json.JSONObject;
 import bridges.connect.SocketConnection;
 import bridges.connect.KeypressListener;
 
+/**
+ *  This is a helper class for handling input events and is part of the 
+ *  BRIDGES Game API.
+ */
 class InputHelper implements KeypressListener {
 
     boolean upKey;
