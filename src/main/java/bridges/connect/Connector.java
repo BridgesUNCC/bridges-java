@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Collections;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -92,7 +96,7 @@ public class Connector {
 	}
 
 	/**
-	 * Get the current  base URL for the DataFormatters server (with no ending/)
+	 * Get the current  base URL for the server (with no ending/)
 	 * @return url  of the server
 	 */
 	public String getServerURL() {
@@ -101,7 +105,7 @@ public class Connector {
 	}
 
 	/**
-	 * Set the current base URL for the DataFormatters server (with no ending /)
+	 * Set the current base URL for the server (with no ending /)
 	 *
 	 * @param server_url  server url to be set
 	 */
@@ -562,18 +566,22 @@ public class Connector {
 		return executeHTTPRequest(Request.Get(prepareUSGS(url)));
 	}
 
-	/** Execute a simple POST request with relative paths, taking a Scala Map()
-	    of request parameters. */
-	public String post(String url, Map<String, String> arguments)
-	throws IOException, RateLimitException {
+	/** 
+	 *	Execute a simple POST request with relative paths, taking a Scala Map()
+	 *  of request parameters. 
+	 */
+	public String post(String url, Map<String, String> arguments) throws 
+								IOException, RateLimitException {
+
 		//System.out.println("From Connector.post1()..\n");
 		if (Bridges.getDebugFlag()) {
-			System.err.println("Connector.post-StringMap(" + url + ", " + arguments.toString() + ")");
+			System.err.println("Connector.post-StringMap(" + url + ", " + 
+									arguments.toString() + ")");
 			System.err.println("prepare(url)=" + prepare(url));
 		}
 		Request req = Request.Post(prepare(url));
 		Form form = Form.form();
-		for (Entry<String, String> e : DataFormatter.sorted_entries(arguments)) {
+		for (Entry<String, String> e : this.sorted_entries(arguments)) {
 			form.add(e.getKey(), e.getValue());
 		}
 		return executeHTTPRequest(req.bodyForm(form.build()));
@@ -587,6 +595,23 @@ public class Connector {
 		}
 		return executeHTTPRequest(Request.Post(prepare(url))
 				.bodyString(data, ContentType.TEXT_PLAIN));
+	}
+
+	/**
+     * Idiom for enabling ordered iteration on any map.
+     * The reason for this is to make the strings compare equal for testing
+     * @param map
+     * @return sorted entries
+	 */
+	private static <K extends Comparable<K>, V> List<Entry<K, V>> sorted_entries(
+		Map<K, V> map) {
+		List<Entry<K, V>> sorted_entries = new ArrayList<>(map.entrySet());
+		Collections.sort(sorted_entries, new Comparator<Entry<K, V>>() {
+			public int compare(Entry<K, V> t, Entry<K, V> o) {
+				return t.getKey().compareTo(o.getKey());
+			}
+        });
+        return sorted_entries;
 	}
 
 	/**

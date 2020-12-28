@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Object that holds amenity data retrieved from OSM repository
- * 
+ * This class is a helper class to be used with amenities data retrieved from
+ * OpenStreet Map data
+ *
  * @author Jay Strahler
  *
+ * @date 12/28/20 
  */
-
-
 public class AmenityData {
 
 
@@ -22,7 +22,9 @@ public class AmenityData {
     private double maxLon;
     private int count;
 
-
+    /**
+     * Default Constructor
+     */
     public AmenityData(){
         this.data = new ArrayList<>();
         this.minLat = 0;
@@ -31,6 +33,17 @@ public class AmenityData {
         this.maxLon = 0;
         this.count = 0;
     }
+
+	/**
+     * Constructor
+	 *
+     * @param data  amenity data
+     * @param minLat  minimum latitude
+     * @param minLon  minimum longitude
+     * @param maxLat  maximum latitude
+     * @param maxnLon  maximum longitude
+     * @param count 
+     */
 
     public AmenityData(List<Amenities> data, double minLat, double minLon, double maxLat, double maxLon, int count){
         this.data = data;
@@ -41,55 +54,102 @@ public class AmenityData {
         this.setCount(count);
     }
 
-    
+	/**
+	 * get Amenity data
+	 * @return amenity data
+	 */
 
     public List<Amenities> getAmenities(){
         return data;
     }
 
+	/**
+	 * set  Amenity data
+	 * @param amenity amenity data to be added
+	 */
     public void addAmenities(Amenities amenitiy){
         this.data.add(amenitiy);
     }
+
+	/**
+     * get the minimum latitude  of this amenity data
+     * @return  latitude minimum
+     */
 
     public double getMinLat(){
         return minLat;
     }
 
+	/**
+     * set the minimum latitude  of this amenity data
+     * @param minLat  latitude minimum to be set
+     */
     public void setMinLat(double minLat){
         this.minLat = minLat;
     }
 
+	/**
+     * get the minimum longitude  of this amenity data
+     * @return  longitude minimum
+     */
     public double getMinLon(){
         return minLon;
     }
 
+	/**
+     * set the minimum longitude  of this amenity data
+     * @param minLon  longitude minimum to be set
+     */
     public void setMinLon(double minLon){
         this.minLon = minLon;
     }
+	/**
+     * get the maximum latitude  of this amenity data
+     * @return  latitude maximum
+     */
 
     public double getMaxLat(){
         return maxLat;
     }
 
+	/**
+     * set the maximum latitude  of this amenity data
+     * @param maxLat  latitude maximum to be set
+     */
     public void setMaxLat(double maxLat){
         this.maxLat = maxLat;
     }
 
+	/**
+     * get the maximum longitude  of this amenity data
+     * @return  longitude maximum
+     */
     public double getMaxLon(){
         return maxLon;
     }
 
+	/**
+     * set the maximum longitude  of this amenity data
+     * @param maxLon  longitude maximum to be set
+     */
     public void setMaxLon(double maxLon){
         this.maxLon = maxLon;
     }
 
+	/**
+     * get the count of amenities
+     * @param count of amenities
+     */
     public int getCount(){
         return count;
     }
 
 
+	/**
+     * set the count of amenities
+     * @param count  amenity count to be set
+     */
     public void setCount(int count){
         this.count = count;
     }
-    
-}
+};

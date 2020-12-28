@@ -2,7 +2,6 @@ package bridges.data_src_dependent;
 import java.util.Vector;
 import java.lang.String;
 
-import bridges.data_src_dependent.DataSource;
 /**
  * @brief  A Game object, used along with the Games data source.
  *
@@ -24,7 +23,7 @@ import bridges.data_src_dependent.DataSource;
  *
  */
 
-public class Game  extends DataSource {
+public class Game  {
 	private	String title,		// game title
 			platform;		// game platform type
 	private	double rating;		// game rating

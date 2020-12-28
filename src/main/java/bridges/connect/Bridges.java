@@ -58,7 +58,6 @@ public class Bridges {
 	private static int assignment_part;
 	private static String key;
 	private static Boolean debug_flag = false;   // debug mode
-	private static DataFormatter df;
 	private static String userName, vis_type,
 			title, description;
 	private static Integer MaxTitleSize = 200,
@@ -102,7 +101,6 @@ public class Bridges {
 	public Bridges() {
 		super();
 		connector = new Connector();
-		df = new DataFormatter();
 		assignment_part = 0;
 		init(0, "", "");
 	}

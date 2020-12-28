@@ -11,7 +11,7 @@ package bridges.data_src_dependent;
  * @author Alec Goncharow
  * @date 12/26/20
  */
-public class Assignment extends DataSource {
+public class Assignment {
 	public String username, title, assignmentNumber, 
 			subAssignment, description, vistype, dateCreated, assignment_type;
 	public double assignmentID;

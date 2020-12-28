@@ -18,7 +18,7 @@ package bridges.data_src_dependent;
  */
 
 
-public class CancerIncidence extends DataSource {
+public class CancerIncidence {
 
 	private double
 	age_adjusted_rate,		 // expected cancer rate, adjusted for age
@@ -41,33 +41,11 @@ public class CancerIncidence extends DataSource {
 
 
 	public CancerIncidence () {
-		super.setLabel("Cancer Incidence Data");
 		loc  = new double[] {0.0, 0.0};
 		age_adjusted_rate_ci = new double[] {0.0, 0.0};
 		crude_rate_ci = new double[] {0.0, 0.0};
 	}
 
-	public CancerIncidence(String canc_label) {
-		super.setLabel(canc_label);
-	}
-
-	/**
-	 * @brief get the name of the incidence report.
-	 *
-	 * @return the name of the incidence report.
-	 */
-	public String getName() {
-		return super.getLabel();
-	}
-
-	/**
-	 * @brief sets the string name
-	 *
-	 * @param name name to use.
-	 */
-	public void setName(String name) {
-		super.setLabel(name);
-	}
 	/*
 	 * @brief Get the expected cancer rate, adjusted for age of participants.
 	 *

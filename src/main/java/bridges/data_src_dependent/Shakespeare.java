@@ -1,6 +1,7 @@
 package bridges.data_src_dependent;
+
 import java.lang.String;
-import bridges.data_src_dependent.DataSource;
+
 /**
  * @brief  A Shakespeare Data source object containing sonnets, poems and
  *		plays
@@ -20,7 +21,7 @@ import bridges.data_src_dependent.DataSource;
  *
  */
 
-public class Shakespeare  extends DataSource {
+public class Shakespeare  {
 	private	String title,		// title of sonnet, play or poem
 			type,			// Type (sonnet, play or poem
 			text;			// full text

@@ -5,7 +5,7 @@ package bridges.data_src_dependent;
  *
  * @author Erik Saule
  */
-public class ActorMovieWikidata extends DataSource {
+public class ActorMovieWikidata {
 	private String movieURI,
 			actorURI,
 			movieName,

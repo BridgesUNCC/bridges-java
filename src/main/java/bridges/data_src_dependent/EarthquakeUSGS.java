@@ -7,8 +7,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
 
-import bridges.connect.DataFormatter;
-
 /**
  * This class keeps earthquake tweet data, retrieved from US Geological Survey 
  *	Data

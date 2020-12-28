@@ -8,7 +8,7 @@ import java.util.Vector;
  *
  * @author Kalpathi Subramanian
  */
-public class ActorMovieIMDB extends DataSource {
+public class ActorMovieIMDB {
 
 	private String actor, movie;
 	private double rating;
@@ -18,31 +18,7 @@ public class ActorMovieIMDB extends DataSource {
 	 * Constructor
 	 */
 	public ActorMovieIMDB () {
-		super.setLabel("");
-	}
-
-	/**
-	 * Constructor
-	 * @param act_movie label for dataset
-	 */
-	public ActorMovieIMDB(String act_movie) {
-		super.setLabel(act_movie);
-	}
-
-	/**
-	 * This method returns the dataset label
-	 * @return the dataset label
-	 */
-	public String getName() {
-		return super.getLabel();
-	}
-
-	/**
-	 * This method sets the data set label
-	 * @param name  label to be added to dataset
-	 */
-	public void setName(String name) {
-		super.setLabel(name);
+		actor = movie = "";
 	}
 
 	/**
@@ -106,39 +82,4 @@ public class ActorMovieIMDB extends DataSource {
 	public void setGenres(Vector<String> g) {
 		this.genres = g;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.getName() == null) ? 0 : this.getName().hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Actor other = (Actor) obj;
-		if (this.getName() == null) {
-			if (other.getName() != null)
-				return false;
-		}
-		else if (!this.getName().equals(other.getName()))
-			return false;
-		return true;
-	}
-
-
-	/**
-	 * This method returns the string value
-	 */
-	public String toString() {
-		return this.getName();
-	}
-
 }

@@ -20,9 +20,7 @@ import java.lang.String;
  *
  */
 
-import bridges.data_src_dependent.DataSource;
-
-public class GutenbergBook  extends DataSource {
+public class GutenbergBook  {
 	private String authorName;
 	private int authorBirth,
 			authorDeath;

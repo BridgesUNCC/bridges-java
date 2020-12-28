@@ -18,9 +18,7 @@ package bridges.data_src_dependent;
 import java.util.Vector;
 import java.lang.String;
 
-import bridges.data_src_dependent.DataSource;
-
-public class Song extends DataSource {
+public class Song {
 	private	String artist,
 			song,	// song title
 			album,	// album title
