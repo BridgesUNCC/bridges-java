@@ -31,7 +31,7 @@ import java.util.Map.Entry;
 
 public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	private int dimension = 0;      // dimension, in the range [0..k-1]
-	private float thickness = 0;        // thickness of partitioning lines
+	private float thickness = 0.0f;        // thickness of partitioning lines
 
 
 	/**

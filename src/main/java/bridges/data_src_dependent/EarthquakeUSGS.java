@@ -15,9 +15,11 @@ import bridges.connect.DataFormatter;
  *
  * @author Mihai Mehedint, Kalpathi Subramanian
  *
- * @date 12/26/20
+ * @date 12/26/20 
+ *
+ * Modifications:  removed dependencies on Tweet and its ancestors
  */
-public class EarthquakeUSGS extends Tweet {
+public class EarthquakeUSGS {
 
 	// attributes of an earthquake
 	private double magnitude;
@@ -35,7 +37,6 @@ public class EarthquakeUSGS extends Tweet {
 	 * Constructor
 	 */
 	public EarthquakeUSGS() {
-		super ("", null);
 		this.magnitude = 0.0;
 		this.latit = 0.0;
 		this.longit = 0.0;
@@ -61,7 +62,6 @@ public class EarthquakeUSGS extends Tweet {
 	public EarthquakeUSGS(String content, Date date2, double magnitude,
 		double longit, double latit, String location, String title, String url, String properties) {
 
-		super("USGSeq magnitude " + magnitude + " " + title, date2);
 		this.magnitude = magnitude;
 		this.latit = latit;
 		this.longit = longit;
@@ -214,7 +214,6 @@ public class EarthquakeUSGS extends Tweet {
 	 *
 	 */
 	public EarthquakeUSGS(EarthquakeUSGS eq) {
-		super("USGSeq magnitude " + eq.magnitude + " " + eq.getTitle(), eq.getDate());
 		this.magnitude = eq.magnitude;
 		this.latit = eq.latit;
 		this.longit = eq.longit;
@@ -256,21 +255,4 @@ public class EarthquakeUSGS extends Tweet {
 	public double getMagnitude() {
 		return this.magnitude;
 	}
-
-	@Override
-	public int compareTo(DataSource o) {
-		if (o != null)
-			return ((Double)this.getMagnitude()).compareTo(((Double)((EarthquakeUSGS)o).getMagnitude()));
-		else {
-			try {
-				throw new ClassCastException("Expected an instance of DataSource or of its subclasses Actor, Movie, Tweet, etc. for the compareTo method.");
-			}
-			catch (ClassCastException e) {
-				e.printStackTrace();
-			}
-			return -1;
-		}
-	}
-
-
 }

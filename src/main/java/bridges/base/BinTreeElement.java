@@ -39,6 +39,8 @@ public class BinTreeElement<E> extends TreeElement<E> {
 	 */
 	public BinTreeElement() {
 		super();
+		super.addChild(null);
+		super.addChild(null);
 	}
 
 	/**
@@ -50,6 +52,8 @@ public class BinTreeElement<E> extends TreeElement<E> {
 	 */
 	public BinTreeElement (E e) {
 		super(e);
+		super.addChild(null);
+		super.addChild(null);
 	}
 
 	/**
@@ -65,6 +69,8 @@ public class BinTreeElement<E> extends TreeElement<E> {
 	 */
 	public BinTreeElement (String label, E e) {
 		super(label, e);
+		super.addChild(null);
+		super.addChild(null);
 	}
 
 	/**
