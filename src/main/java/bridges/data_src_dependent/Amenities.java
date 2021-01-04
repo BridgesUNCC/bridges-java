@@ -1,8 +1,9 @@
 package bridges.data_src_dependent;
 
 /**
- * This class is a helper class to be used with amenities data retrieved from
- * OpenStreet Map data
+ *  @brief  Class that hold individual Open Street Map Amenities
+ * 
+ * This class holds the individual information for each amenity requested
  *
  * @author Jay Strahler
  */

@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is a helper class to be used with amenities data retrieved from
- * OpenStreet Map data
- *
+ * @brief  Class that hold Open Street Map Amenity Data
+ * 
+ * This class holds the data for all the amenities requested by the user
+ * 
  * @author Jay Strahler
  *
  * @date 12/28/20 
