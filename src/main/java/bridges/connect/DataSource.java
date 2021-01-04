@@ -790,6 +790,17 @@ public class DataSource {
 		return (downloadAmenityData(url, hashUrl));
 	}
 
+	/**
+	 * @brief Downloads and caches amenity requested
+	 *
+	 * @param url, string of the url that will be used when requesting 
+	 *		amenity data from server
+	 * @param hashurl string of the url that will be used when requesting 
+	 *		hash data from server
+	 * @return AmenityData object containing coordinates and meta data
+	 * @throws IOException If there is an error parsing response from 
+	 *		server or is an invalid location name
+	 */
 	private AmenityData downloadAmenityData(String url, String hashUrl) 
 											throws IOException{
 		LRUCache lru = new LRUCache(30);

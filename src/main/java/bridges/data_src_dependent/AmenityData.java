@@ -42,7 +42,7 @@ public class AmenityData {
      * @param minLon  minimum longitude
      * @param maxLat  maximum latitude
      * @param maxnLon  maximum longitude
-     * @param count 
+     * @param count  number of amenities 
      */
 
     public AmenityData(List<Amenities> data, double minLat, double minLon, double maxLat, double maxLon, int count){
