@@ -1328,7 +1328,19 @@ public class DataFormatter {
 	}
 
 
-
+	/**
+	 * This method retrieves the elevation map of a region given the lat/long
+	 * range (bounding box) and resolution level
+	 * Note that the ElevationData that is returned
+	 * may have slightly different location and resolution.
+	 *
+	 * @param minLat minimum latitude requested
+	 * @param minLon minimum longitude requested
+	 * @param maxLat maximum latitude requested
+	 * @param maxLat maximum longitude requested
+	 * @param res spatial resolution, aka the distance between two samples (in degrees)
+	 * @return a ElevationData object mapping a region close to the box requested
+	 */
 	static ElevationData getElevationData(double minLat, double minLon, double maxLat, double maxLon, double res) throws IOException {
 		String data_url = "http://cci-bridges-elevation-t.dyn.uncc.edu/elevation?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&resX=" + res + "&resY=" + res;
 		String hash_url = "http://cci-bridges-elevation-t.dyn.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat);
@@ -1408,19 +1420,48 @@ public class DataFormatter {
 	}
 
 
-
+	/** 
+	 * This method retrieves the specified amenity related data given a location
+	 * from a specified openstreet mmap location
+	 *
+	 *	@param location city/town from where amenity data is sought
+	 *	@param amenity  amenity type
+	 *	@throws exception
+	 */
 	static AmenityData getAmenityData(String location, String amenity) throws IOException {
 		String url = "http://cci-bridges-osm.uncc.edu/amenity?location=" + location + "&amenity=" + amenity;
 		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?location=" + location + "&amenity=" + amenity;
 		return (downloadAmenityData(url, hashUrl));
 	}
 	
+	/** 
+	 * This method retrieves the specified amenity related data given a 
+	 * bounding box of a region, from a Open Street map 
+	 *
+	 *	@param minLat  minimum latitude
+	 *	@param minLon  minimumm longitude
+	 *	@param maxLat  maximum latitude
+	 *	@param maxLon  maximum longitude
+	 *	@param amenity  amenity type
+	 *	@throws exception
+	 */
 	static AmenityData getAmenityData(double minLat, double minLon, double maxLat, double maxLon, String amenity) throws IOException {
 		String url = "http://cci-bridges-osm.uncc.edu/amenity?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
 		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
 		return (downloadAmenityData(url, hashUrl));
 	}
 
+	/**
+	 * @brief Downloads and caches amenity requested
+	 *
+	 * @param url, string of the url that will be used when requesting 
+	 *		amenity data from server
+	 * @param hashurl string of the url that will be used when requesting 
+	 *		hash data from server
+	 * @return AmenityData object containing coordinates and meta data
+	 * @throws IOException If there is an error parsing response from 
+	 *		server or is an invalid location name
+	 */
 	static AmenityData downloadAmenityData(String url, String hashUrl) throws IOException{
 		
 		LRUCache lru = new LRUCache(30);

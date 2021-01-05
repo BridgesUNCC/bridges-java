@@ -1,8 +1,9 @@
 package bridges.data_src_dependent;
 
 /**
- * This class is a helper class to be used with amenities data retrieved from
- * OpenStreet Map data
+ *  @brief  Class that hold individual Open Street Map Amenities
+ * 
+ * This class holds the individual information for each amenity requested
  *
  * @author Jay Strahler
  */
@@ -28,11 +29,11 @@ public class Amenities {
 
  	/**
 	 * Constructor
-	 * @param id_val
-	 * @param lat
-	 * @param long
-	 * @param name
-	 * @param other
+	 * @param id_val  Amenity ID as stored in Open Street Maps
+	 * @param lat  Latitude of Amenity
+	 * @param long  Longitude of Amenity
+	 * @param name  Name of Amenity as found in Open Street Maps
+	 * @param other  List of special values that may have come with the amenity
 	 */
     public Amenities (double id_val, double lat, double lon, String name, String[] other){
         this.setId(id_val);
@@ -108,15 +109,15 @@ public class Amenities {
     }
 
 	/**
-	 * get the other ??
-	 * @return other?? 
+	 * get the extra data present for certain amenities
+	 * @return list of extra data
 	 */
     public String[] getOther() {
         return other;
     }
 
 	/**
-	 * set the other  ??
+	 * set the extra data present for certain amenities
 	 * @param other 
 	 */
     public void setOther(String[] other) {
