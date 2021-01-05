@@ -48,12 +48,28 @@ import java.util.ArrayList;
  * SLelement. Iterators are provided for easy traversal of the
  * adjacency lists. For instance,
  *
- * \code{java}
+ *\code{java}
  * GraphAdjList<string, Integer, Double> graph = something();
  * for (Edge<String, Double> e : graph.outgoingEdgeSetOf("a"))
  *   System.out.println("a -> "+e.getTo());
- * \endcode
+ *\endcode
  *
+ * Graphs can have their nodes and links affected by visual attributes. Nodes
+ * can have color, size, opacity and shape and  detailed in the ElementVisualizer
+ * class. Edges support attributes such as color, thickness and opacity and are
+ * detailed in the LinkVisualizer class.  Element and link attributes are set
+ * using the getVisualizer() and getLinkVisualizer() methods.  For instance,
+ *
+ *\code{java}
+ * GraphAdjList<string, Integer, Double> graph = something();
+ *   graph.addVertex("baskin");
+ *   graph.addVertex("robins");
+ *   graph.addEdge("baskin","robins");
+ *   graph.getVisualizer().setColor("cyan");
+ *   graph.getVisualizer().setShape("square");
+ *   graph.getLinkVisualizer("baskin", "robins").setColor("green");
+ *   graph.getLinkVisualizer("baskin", "robins").setOpacity("0.5f");
+ *\endcode
  * \sa Example tutorial at
  *		http://bridgesuncc.github.io/tutorials/Graph_AL.html
  *
@@ -72,7 +88,7 @@ import java.util.ArrayList;
  *
  * @author Kalpathi Subramanian, Erik Saule
  *
- * @date 6/29/15, 5/18/17, 4/24/18, 7/14/19
+ * @date 6/29/15, 5/18/17, 4/24/18, 7/14/19, 1/5/21
  *
  * @param K  orderable key (string, int, etc) that is used to index into vertex
  * @param E1 holds vertex specific information, defined by application
