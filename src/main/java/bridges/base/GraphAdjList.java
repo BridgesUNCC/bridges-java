@@ -37,11 +37,11 @@ import java.util.ArrayList;
  *
  *\code{java}
  * GraphAdjList<string, Integer, Double> graph = new GraphAdjList<String, Integer, Double> ();
- * graph.addVertex("a");
- * graph.addVertex("b");
- * graph.addEdge("a", "b");
- * graph.getVertex("a").setShape("square");
- * graph.getLinkVisualizer("a", "b").setColor("yellow");
+ *    graph.addVertex("a");
+ *    graph.addVertex("b");
+ *    graph.addEdge("a", "b");
+ *    graph.getVertex("a").setShape("square");
+ *    graph.getLinkVisualizer("a", "b").setColor("yellow");
  *\endcode
  *
  * Adjacency lists are singly linked lists using the BRIDGES
@@ -49,7 +49,7 @@ import java.util.ArrayList;
  * adjacency lists. For instance,
  *
  *\code{java}
- * GraphAdjList<string, Integer, Double> graph = something();
+ * GraphAdjList<String, Integer, Double> graph = something();
  * for (Edge<String, Double> e : graph.outgoingEdgeSetOf("a"))
  *   System.out.println("a -> "+e.getTo());
  *\endcode
@@ -61,7 +61,7 @@ import java.util.ArrayList;
  * using the getVisualizer() and getLinkVisualizer() methods.  For instance,
  *
  *\code{java}
- * GraphAdjList<string, Integer, Double> graph = something();
+ * GraphAdjList<String, Integer, Double> graph = something();
  *   graph.addVertex("baskin");
  *   graph.addVertex("robins");
  *   graph.addEdge("baskin","robins");
@@ -90,7 +90,7 @@ import java.util.ArrayList;
  *
  * @date 6/29/15, 5/18/17, 4/24/18, 7/14/19, 1/5/21
  *
- * @param K  orderable key (string, int, etc) that is used to index into vertex
+ * @param K  orderable key (String, Integer, etc) that is used to index into vertex
  * @param E1 holds vertex specific information, defined by application
  * @param E2 holds edge specific information, defined by application
  *
