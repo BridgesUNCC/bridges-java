@@ -31,7 +31,7 @@ public class Amenities {
 	 * Constructor
 	 * @param id_val  Amenity ID as stored in Open Street Maps
 	 * @param lat  Latitude of Amenity
-	 * @param long  Longitude of Amenity
+	 * @param lon  Longitude of Amenity
 	 * @param name  Name of Amenity as found in Open Street Maps
 	 * @param other  List of special values that may have come with the amenity
 	 */
@@ -86,7 +86,7 @@ public class Amenities {
 
 	/**
 	 * set the longitude  value of this amenity 
-	 * @param lat longitude position to set
+	 * @param lon longitude position to set
 	 */
     public void setLon(double lon){
         this.lon = lon;

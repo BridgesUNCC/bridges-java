@@ -74,7 +74,7 @@ public class DataSource {
 	 *
 	 *  More information on the dataset can be found at http://bridgesuncc.github.io/datasets.html
 	 *
-	 *	@param maxElements  the number of earthquake records retrieved, limited to 5000
+	 *	@param maxElem  the number of earthquake records retrieved, limited to 5000
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of earthquake records
@@ -296,7 +296,8 @@ public class DataSource {
 	 * @param minLon minimum longitude value for the area requested
 	 * @param maxLat maximum latitude value for the area requested
 	 * @param maxLon maximum longitude value for the area requested
-	 * @paral level resolution at which the data is to be retrieved
+	 * @param level resolution at which the data is to be retrieved
+     *
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
@@ -599,8 +600,9 @@ public class DataSource {
 	 *	and to look at the data, refer to <p>
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
 	 *
-	 *  @throws Exception if the request fails
 	 *  @param songTitle  title of song (string)
+	 *  @param artistName  name of artist (string)
+	 *  @throws Exception if the request fails
 	 *
 	 *  @return a Song object.
 	 */
@@ -672,9 +674,9 @@ public class DataSource {
 	/**
 	 * @brief Downloads and caches maps requested
 	 *
-	 * @param url, string of the url that will be used when requesting 
+	 * @param url  string of the url that will be used when requesting 
 	 *		map data from server
-	 * @param hashurl string of the url that will be used when requesting 
+	 * @param hashUrl string of the url that will be used when requesting 
 	 *		hash data from serverp
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from 
@@ -793,9 +795,9 @@ public class DataSource {
 	/**
 	 * @brief Downloads and caches amenity requested
 	 *
-	 * @param url, string of the url that will be used when requesting 
+	 * @param url  string of the url that will be used when requesting 
 	 *		amenity data from server
-	 * @param hashurl string of the url that will be used when requesting 
+	 * @param hashUrl string of the url that will be used when requesting 
 	 *		hash data from server
 	 * @return AmenityData object containing coordinates and meta data
 	 * @throws IOException If there is an error parsing response from 
@@ -876,15 +878,6 @@ public class DataSource {
 		
 		return temp;
 	}
-	/**
-	 *
-	 *	@param minLat  minimum latitude
-	 *	@param minLon  minimumm longitude
-	 *	@param maxLat  maximum latitude
-	 *	@param maxLon  maximum longitude
-	 *	@param res     resolution
-	 *
-	 */
 
 	/**
 	 * This method retrieves the elevation map of a region given the lat/long
@@ -895,7 +888,7 @@ public class DataSource {
 	 * @param minLat minimum latitude requested
 	 * @param minLon minimum longitude requested
 	 * @param maxLat maximum latitude requested
-	 * @param maxLat maximum longitude requested
+	 * @param maxLon maximum longitude requested
 	 * @param res spatial resolution, aka the distance between two samples (in degrees)
 	 * @return a ElevationData object mapping a region close to the box requested
 	 */

@@ -89,6 +89,7 @@ public class MLelement<E> extends SLelement<E> {
 	/**
 	 * Creates a new element and sets the next pointer
 	 * to the MLelement "next"
+	 * @param sublist pointer to the sublist
 	 * @param next the MLelement that should be assigned to the next pointer
 	 */
 	public MLelement (MLelement<E> sublist, MLelement<E> next) {

@@ -41,7 +41,7 @@ public class Song {
 	 * @param song    song title
 	 * @param album   album title
 	 * @param lyrics  lyrics of song (string)
-	 * @param release date  date released
+	 * @param release_date  date released
 	 */
 	public Song(String artist, String song, String album, String lyrics, String release_date) {
 		this.artist = artist;
@@ -75,7 +75,7 @@ public class Song {
 	}
 	/**
 	 *	 Set song title
-	 *   @param title song title  to set
+	 *   @param song song title  to set
 	 */
 	public 	void setSongTitle(String song) {
 		this.song = song;

@@ -49,8 +49,8 @@ public class ElevationData {
 	 * @param data  elevation data (2D array of ints)
 	 * @param cols  width of data 
 	 * @param rows  height of data
-	 * @param x11  lower left x coord of origin
-	 * @param y11  lower left y coord of origin
+	 * @param xll  lower left x coord of origin
+	 * @param yll  lower left y coord of origin
 	 * @param cellsize  size of each cell (resolution)
 	 * @param maxVal  max value in dataset
 	 */
@@ -80,7 +80,7 @@ public class ElevationData {
 	 *
 	 * @param data (2D array of ints)
 	 */
-	public void setData(int[][]data) {
+	public void setData(int[][] data) {
 		this.data = data;
 	}
 
@@ -137,7 +137,7 @@ public class ElevationData {
 	 *
 	 * set origin X
 	 *
-	 * @param x11 lower left x coord of origin to be set
+	 * @param xll lower left x coord of origin to be set
 	 */
 	public void setxll(double xll) {
 		this.xll = xll;
@@ -157,7 +157,7 @@ public class ElevationData {
 	 *
 	 * set origin X
 	 *
-	 * @param y11 lower left y coord of origin to be set
+	 * @param yll lower left y coord of origin to be set
 	 */
 	public void setyll(double yll) {
 		this.yll = yll;

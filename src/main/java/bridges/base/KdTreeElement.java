@@ -60,7 +60,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 * 	Construct an empty KdTreeElement with no key assigned and left and
 	 *	right pointers set to null.
 	 *
-	 **/
+	 */
 	public KdTreeElement() {
 		super();
 		this.thickness = 0.0f;
@@ -87,12 +87,12 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *	with a left pointer assigned to "left" and a right pointer assigned
 	 *	to "right".
 	 *
-	 * @param key the key to be used in a binary search tree implementation
+	 * @param partitioner the key to be used in a binary search tree implementation
 	 * @param e the object this KdTreeElement is holding
 	 * @param left the KdTreeElement that should be assigned to the left pointer
 	 * @param right the KdTreeElement that should be assigned to the right pointer
 	 *
-	 **/
+	 */
 	public KdTreeElement(K partitioner, E e, KdTreeElement<K, E> left, KdTreeElement<K, E> right) {
 		super(e, left, right);
 		this.setKey(partitioner);
@@ -103,7 +103,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *	and left and right pointers set to null.
 	 *
 	 * 	@param e the object this KdTreeElement is holding
-	 **/
+	 */
 	public KdTreeElement(E e) {
 		super(e);
 		this.thickness = 0.0f;
@@ -115,7 +115,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *
 	 * 	@param key the key to be used in a binary search tree implementation
 	 * 	@param dim the dimension of partitioning
-	 **/
+	 */
 	public KdTreeElement(K key, int dim) {
 		super();
 		this.setKey(key);
@@ -127,7 +127,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *	This method gets the data structure type
 	 *
 	 *	@return  The date structure type as a string
-	 **/
+	 */
 	public String getDataStructType() {
 		return "KdTree";
 	}
@@ -139,7 +139,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 * 	@param key the key to be used in a binary search tree implementation
 	 * 	@param e the object this KdTreeElement is holding
 	 *
-	 **/
+	 */
 	public KdTreeElement(K key, E e) {
 		super(e);
 		this.setKey(key);
@@ -153,7 +153,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 * 	@param label the label of KdTreeElement that shows up on the Bridges
 	 *	visualization
 	 * 	@param e the object this KdTreeElement is holding
-	 **/
+	 */
 	public KdTreeElement(String label, E e) {
 		super(label, e);
 		this.dimension = 0;
@@ -170,7 +170,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 * @param key the key to be used in a binary search tree implementation
 	 * @param e the object this KdTreeElement is holding
 	 *
-	 **/
+	 */
 	public KdTreeElement(String label, K key, E e) {
 		super(label, e);
 		this.setKey(key);
@@ -185,7 +185,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 * 	@param left the KdTreeElement that should be assigned to the left pointer
 	 * 	@param right the KdTreeElement that should be assigned to the right pointer
 	 *
-	 **/
+	 */
 	public KdTreeElement(KdTreeElement<K, E> left, KdTreeElement<K, E> right) {
 		super(left, right);
 	}
@@ -195,7 +195,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *
 	 * 	@return the partitioning dimension of this KdTreeElement
 	 *
-	 **/
+	 */
 	public int getDimension() {
 		return dimension;
 	}
@@ -204,7 +204,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *
 	 *	Set the dimension of the KdTreElement to key
 	 * 	@param dim the dimension to set
-	 **/
+	 */
 	public void setDimension(int dim) {
 		this.dimension = dimension;
 	}
@@ -213,7 +213,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *
 	 * 	@return the partitioner value
 	 *
-	 **/
+	 */
 	public K getPartitioner() {
 		return this.getKey();
 	}
@@ -222,8 +222,8 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *
 	 *	Set the dimension of the KdTreElement to key
 	 *
-	 * 	@param dim the dimension to set
-	 **/
+	 * 	@param partitioner the partitioner value to set
+	 */
 	public void setPartitioner(K partitioner) {
 		this.setKey(partitioner);
 	}
@@ -233,7 +233,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *
 	 * 	@return the thickness of this KdTreeElement
 	 *
-	 **/
+	 */
 	public float getThickness() {
 		return thickness;
 	}
@@ -245,7 +245,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *	lines
 	 *
 	 * 	@param th thickness of the partitioner to set
-	 **/
+	 */
 	public void setThickness(float th) {
 		this.thickness = th;
 	}
@@ -255,7 +255,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *
 	 * 	@return the left child of this KdTreeElement
 	 *
-	 **/
+	 */
 	@Override
 	public KdTreeElement<K, E> getLeft() {
 		return (KdTreeElement<K, E>) super.getLeft();
@@ -266,7 +266,7 @@ public class KdTreeElement<K, E> extends BSTElement<K, E> {
 	 *
 	 * 	@return the right child of this KdTreeElement
 	 *
-	 **/
+	 */
 	@Override
 	public KdTreeElement<K, E> getRight() {
 		return (KdTreeElement<K, E>) super.getRight();

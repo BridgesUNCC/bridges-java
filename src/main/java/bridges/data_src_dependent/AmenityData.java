@@ -42,7 +42,7 @@ public class AmenityData {
      * @param minLat  minimum latitude
      * @param minLon  minimum longitude
      * @param maxLat  maximum latitude
-     * @param maxnLon  maximum longitude
+     * @param maxLon  maximum longitude
      * @param count  number of amenities 
      */
 
@@ -68,8 +68,8 @@ public class AmenityData {
 	 * set  Amenity data
 	 * @param amenity amenity data to be added
 	 */
-    public void addAmenities(Amenities amenitiy){
-        this.data.add(amenitiy);
+    public void addAmenities(Amenities amenity){
+        this.data.add(amenity);
     }
 
 	/**

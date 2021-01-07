@@ -26,7 +26,7 @@ public class ActorMovieWikidata {
 	}
 
 	/**
-	 * get movie URI
+	 * @brief get movie URI
 	 * @return movie URI
 	 */
 	public String getMovieURI() {
@@ -34,15 +34,15 @@ public class ActorMovieWikidata {
 	}
 
 	/**
-	 * set movie URI
-	 * @param movie URI to be set
+	 * @brief set movie URI
+	 * @param movieURI movie's URI to be set
 	 */
 	public void setMovieURI(String movieURI) {
 		this.movieURI = movieURI;
 	}
 
 	/**
-	 * get actor  URI
+	 * @brief get actor  URI
 	 * @return actor  URI
 	 */
 	public String getActorURI() {
@@ -50,15 +50,15 @@ public class ActorMovieWikidata {
 	}
 
 	/**
-	 * set actor URI
-	 * @param actor URI to be set
+	 * @brief set actor URI
+	 * @param actorURI actor's URI to be set
 	 */
 	public void setActorURI(String actorURI) {
 		this.actorURI = actorURI;
 	}
 
 	/**
-	 * get movie name
+	 * @brief get movie name
 	 * @return movie name
 	 */
 	public String getMovieName() {
@@ -66,15 +66,15 @@ public class ActorMovieWikidata {
 	}
 
 	/**
-	 * set movie name
-	 * @param movie name to be assigned
+	 * @brief set movie name
+	 * @param movieName movie name to be assigned
 	 */
 	public void setMovieName(String movieName) {
 		this.movieName = movieName;
 	}
 
 	/**
-	 * get actor name
+	 * @brief get actor name
 	 * @return actor name
 	 */
 	public String getActorName() {
@@ -82,8 +82,8 @@ public class ActorMovieWikidata {
 	}
 
 	/**
-	 * set actor name
-	 * @param actor name to be assigned
+	 * @brief set actor name
+	 * @param actorName actor to be assigned
 	 */
 	public void setActorName(String actorName) {
 		this.actorName = actorName;
