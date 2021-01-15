@@ -895,9 +895,9 @@ public class DataSource {
 	public ElevationData getElevationData(double minLat, double minLon, 
 			double maxLat, double maxLon, double res) throws IOException {
 
-		String data_url = "http://cci-bridges-elevation-t.dyn.uncc.edu/elevation?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&resX=" + res + "&resY=" + res;
-		String hash_url = "http://cci-bridges-elevation-t.dyn.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat);
+		String data_url = "http://bridges-data-server-elevation.bridgesuncc.org/elevation?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&resX=" + res + "&resY=" + res;
 
+		String hash_url = "http://bridges-data-server-elevation.bridgesuncc.org/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat);
 		// store in cache or retrieve from cache if available
 		File cache_dir = new File("./cache/elevationData");
 		LRUCache lru = new LRUCache(30);
