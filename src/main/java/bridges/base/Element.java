@@ -20,7 +20,7 @@ import org.json.simple.JSONValue;
  *
  *  All the tutorials under
  
- *	http://bridgesuncc.github.io/Hello_World_Tutorials/Overview.html
+ *	http://bridgesuncc.github.io/tutorials/Overview.html
  *
  *  illustrate examples of using different types of Element objects and how to
  *	manipulate their visual attributes.
