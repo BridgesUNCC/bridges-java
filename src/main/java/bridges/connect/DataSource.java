@@ -895,34 +895,60 @@ public class DataSource {
 	public ElevationData getElevationData(double minLat, double minLon, 
 			double maxLat, double maxLon, double res) throws IOException {
 
+	    boolean debug = false;
+	    
 		String data_url = "http://bridges-data-server-elevation.bridgesuncc.org/elevation?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&resX=" + res + "&resY=" + res;
 
-		String hash_url = "http://bridges-data-server-elevation.bridgesuncc.org/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat);
+		String hash_url = "http://bridges-data-server-elevation.bridgesuncc.org/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&resX=" + res + "&resY=" + res;
 		// store in cache or retrieve from cache if available
-		File cache_dir = new File("./cache/elevationData");
+
 		LRUCache lru = new LRUCache(30);
 
 		// look for file in cache
 		String content = null;
 		String hash = null;
+
+		if (debug)
+		    System.err.println("Hitting hash URL: "+hash_url);
+		
 		HttpResponse hashResp = makeRequest(hash_url);
 		int hashStatus = hashResp.getStatusLine().getStatusCode();
 		hash = EntityUtils.toString(hashResp.getEntity());
+		if (debug)
+		    System.err.println("hash is: "+hash);
+		
 		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
+		    if (debug)
+			System.err.println("hash is in cache");
+		    
 			content = lru.getDoc(hash);
 		}
 
 		// if not in cache, hit server for data
 		if (content == null) {
+		    if (debug)
+			System.err.println("hash is not in cache");
+
+		    if (debug)
+			System.err.println("Hitting data URL: " + data_url);
+
+		    
 			HttpResponse resp = makeRequest(data_url);
 			int status = resp.getStatusLine().getStatusCode();
 			content = EntityUtils.toString(resp.getEntity());
 			if (status != 200) {
 				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
 			}
+			if (debug)
+			    System.err.println("Hitting hash URL: "+hash_url);
+
 			hashResp = makeRequest(hash_url);
 			hash = EntityUtils.toString(hashResp.getEntity());
 
+			if (debug)
+			    System.err.println("hash is: "+hash);
+
+			
 			//Checks to see if valid hash is generated
 			if (!hash.equals("false")) {
 				lru.putDoc(hash, content);
