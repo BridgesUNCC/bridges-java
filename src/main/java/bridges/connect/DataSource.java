@@ -8,7 +8,6 @@ import java.util.Iterator;
 
 import java.io.File;
 
-
 // exception related
 import java.io.IOException;
 import java.lang.Exception;
@@ -59,12 +58,26 @@ import bridges.connect.*;
  */
 public class DataSource {
 	private Bridges bridges;
+	private static LRUCache lru;
+	private static boolean debug = false;
+
+	private static String getOSMBaseURL() {
+		return "http://bridges-data-server-osm.bridgesuncc.org/";
+//		return "http://cci-bridges-osm.uncc.edu/";
+	}
+
+	private static String getElevationBaseURL() {
+		return "http://bridges-data-server-elevation.bridgesuncc.org/";
+	}
+
 
 	DataSource() {
+		lru = new LRUCache(30);
 	}
 
 	DataSource(Bridges b) {
 		bridges = b;
+		lru = new LRUCache(30);
 	}
 
 	/**
@@ -648,9 +661,21 @@ public class DataSource {
 	 */
 	private static OsmData getOsmDataDS(String location, String level) 
 								throws IOException {
-		String url = "http://cci-bridges-osm.uncc.edu/loc?location=" + location + "&level=" + level;
-		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?location=" + location + "&level=" + level;
-		return (downloadMapFile(url, hashUrl));
+		// URL to request map
+		String osm_url = getOSMBaseURL() + 
+				"loc?location=" + URLEncoder.encode(location) +
+				"&level="  + URLEncoder.encode(level);
+
+		// URL to get hash code
+		String hash_url = getOSMBaseURL() + 
+				"hash?location=" + URLEncoder.encode(location) +
+				"&level="  + URLEncoder.encode(level);
+
+System.out.println("URLs:" + osm_url + "\n" + hash_url);
+
+//		osm_url = "http://cci-bridges-osm.uncc.edu/loc?location=" + location + "&level=" + level;
+//		hash_url = "http://cci-bridges-osm.uncc.edu/hash?location=" + location + "&level=" + level;
+		return (parseOSMData(osm_url, hash_url));
 	}
 	/**
 	 * @brief Generates Open Street Map URL request for a given set of coordinates and returns the map data
@@ -666,13 +691,30 @@ public class DataSource {
 	private static OsmData getOsmDataDS(double minLat, double minLon, 
 		double maxLat, double maxLon, String level) throws IOException {
 
-		String url = "http://cci-bridges-osm.uncc.edu/coords?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
-		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
-		return (downloadMapFile(url, hashUrl));
+		// URL to request map
+		String osm_url = getOSMBaseURL() + 
+				"coords?minLon=" + URLEncoder.encode(Double.toString(minLon)) +
+				"&minLat=" + URLEncoder.encode(Double.toString(minLat)) +
+				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon)) +
+				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat)) +
+				"&level="  + URLEncoder.encode(level);
+
+		// URL to get hash code
+		String hash_url = getOSMBaseURL() + 
+				"hash?minLon=" + URLEncoder.encode(Double.toString(minLon)) +
+				"&minLat=" + URLEncoder.encode(Double.toString(minLat)) +
+				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon)) +
+				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat)) +
+				"&level="  + URLEncoder.encode(level);
+
+//		String url = "http://cci-bridges-osm.uncc.edu/coords?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
+//		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
+
+		return (parseOSMData(osm_url, hash_url));
 	}
 
 	/**
-	 * @brief Downloads and caches maps requested
+	 * @brief parses the OSM data and caches maps requested
 	 *
 	 * @param url  string of the url that will be used when requesting 
 	 *		map data from server
@@ -682,53 +724,16 @@ public class DataSource {
 	 * @throws IOException If there is an error parsing response from 
 	 *		server or is an invalid location name
 	 */
-	private static OsmData downloadMapFile(String url, String hashUrl) 
+	private static OsmData parseOSMData(String osm_url, String hash_url) 
 									throws IOException {
-		File cache_dir = new File("./cache");
-		LRUCache lru = new LRUCache(30);
 
-		// look for file in cache
-		String content = null;
-		String hash = null;
-		HttpResponse hashResp = makeRequest(hashUrl);
-		int hashStatus = hashResp.getStatusLine().getStatusCode();
-		hash = EntityUtils.toString(hashResp.getEntity());
-		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
-			content = lru.getDoc(hash);
-		}
-
-		// if not in cache, hit server for data
-		if (content == null) {
-			HttpResponse resp = makeRequest(url);
-			int status = resp.getStatusLine().getStatusCode();
-			content = EntityUtils.toString(resp.getEntity());
-			if (status != 200) {
-				if (status == 404) {
-					// attempt to get valid names
-					url = "http://cci-bridges-osm.dyn.uncc.edu/cities";
-					resp = makeRequest(url);
-					status = resp.getStatusLine().getStatusCode();
-					if (status == 200) {
-						content = EntityUtils.toString(resp.getEntity());
-						throw new RuntimeException("Invalid name" + "\nValid names:" + content);
-					}
-				}
-				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
-			}
-			hashResp = makeRequest(hashUrl);
-			hash = EntityUtils.toString(hashResp.getEntity());
-
-			//Checks to see if valid hash is generated
-			if (!hash.equals("false")) {
-				lru.putDoc(hash, content);
-			}
-		}
+		String osm_json = getDataSetJSON(osm_url, hash_url);
 
 		// parse that data
 		Gson gson = new Gson();
 		OsmServerResponse respObject;
 		try {
-			respObject = gson.fromJson(content, OsmServerResponse.class);
+			respObject = gson.fromJson(osm_json, OsmServerResponse.class);
 		}
 		catch (Exception e) {
 			throw new JsonParseException("Malformed JSON: Unable to Parse");
@@ -878,6 +883,84 @@ public class DataSource {
 		
 		return temp;
 	}
+	/**
+	 * @brief This method takes in both a dataset url and a hash url
+	 *  and returns the JSON string of the external dataset based on the query
+	 *
+	 *  This method is a utility function that supports retrieving 
+	 *  external dataset given a url to the dataset's server as well
+	 *  as a url to extract a hashcode for the dataset; the latter is
+	 *  is to suppor local caching. The dataset is only retrieved
+	 *  the server if a local copy is not available
+	 *
+	 *  Currently this function works with elevation, OpenStreet maps and 
+	 *  Amenity datasets
+	 *
+	 */
+	private static String getDataSetJSON(String data_url, String hash_url) 
+										throws IOException{
+
+		// look for dataset in cache
+		String data_content = null, hash = null;
+
+		if (debug)
+		    System.err.println("Hitting hash URL: "+hash_url);
+		
+		// get the hash code of the dataset
+		HttpResponse hashResp = makeRequest(hash_url);
+		int hashStatus = hashResp.getStatusLine().getStatusCode();
+		hash = EntityUtils.toString(hashResp.getEntity());
+
+		if (debug)
+		    System.err.println("hash is: "+hash);
+		
+		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
+		    if (debug)
+				System.err.println("hash is in cache");
+		    
+			data_content = lru.getDoc(hash);
+		}
+
+		// if not in cache, hit server for data
+		if (data_content == null) {
+		    if (debug)
+				System.err.println("hash is not in cache");
+
+		    if (debug)
+				System.err.println("Hitting data URL: " + data_url);
+		    
+			HttpResponse resp = makeRequest(data_url);
+
+			int status = resp.getStatusLine().getStatusCode();
+			System.err.println("Status code:" + status);
+
+			if (status != 200) {
+				throw new HttpResponseException(status, "Http Request Failed. Error Code:" 
+							+ status + ". Message:" + data_content);
+			}
+
+			data_content = EntityUtils.toString(resp.getEntity());
+
+			if (debug)
+				System.err.println("Hitting hash URL: " + hash_url);
+
+			// get hash code of dataset
+			hashResp = makeRequest(hash_url);
+
+			hash = EntityUtils.toString(hashResp.getEntity());
+
+			if (debug) {
+			    System.err.println("Status code:" + resp.getStatusLine().getStatusCode());
+			    System.err.println("Hash is: " + hash);
+			}
+			
+			//Checks to see if valid hash is generated
+			if (!hash.equals("false")) {
+				lru.putDoc(hash, data_content);
+			}
+		}
+		return data_content;
+	}
 
 	/**
 	 * This method retrieves the elevation map of a region given the lat/long
@@ -892,68 +975,31 @@ public class DataSource {
 	 * @param res spatial resolution, aka the distance between two samples (in degrees)
 	 * @return a ElevationData object mapping a region close to the box requested
 	 */
+
 	public ElevationData getElevationData(double minLat, double minLon, 
 			double maxLat, double maxLon, double res) throws IOException {
 
 	    boolean debug = false;
 	    
-		String data_url = "http://bridges-data-server-elevation.bridgesuncc.org/elevation?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&resX=" + res + "&resY=" + res;
+		String data_url = getElevationBaseURL() + 
+				"elevation?minLon=" + URLEncoder.encode(Double.toString(minLon)) +
+				"&minLat=" + URLEncoder.encode(Double.toString(minLat))+
+				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon)) +
+				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat)) + 
+				"&resX="   + URLEncoder.encode(Double.toString(res)) +
+				"&resY="   + URLEncoder.encode(Double.toString(res));
+                    
+		String hash_url = getElevationBaseURL() + 
+				"hash?minLon=" + URLEncoder.encode(Double.toString(minLon))+
+				"&minLat=" + URLEncoder.encode(Double.toString(minLat))+
+				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon)) +
+				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat)) + 
+				"&resX="   + URLEncoder.encode(Double.toString(res)) +
+				"&resY="   + URLEncoder.encode(Double.toString(res));
 
-		String hash_url = "http://bridges-data-server-elevation.bridgesuncc.org/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&resX=" + res + "&resY=" + res;
-		// store in cache or retrieve from cache if available
 
-		LRUCache lru = new LRUCache(30);
+		String elev_data_json = getDataSetJSON(data_url, hash_url);
 
-		// look for file in cache
-		String content = null;
-		String hash = null;
-
-		if (debug)
-		    System.err.println("Hitting hash URL: "+hash_url);
-		
-		HttpResponse hashResp = makeRequest(hash_url);
-		int hashStatus = hashResp.getStatusLine().getStatusCode();
-		hash = EntityUtils.toString(hashResp.getEntity());
-		if (debug)
-		    System.err.println("hash is: "+hash);
-		
-		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
-		    if (debug)
-			System.err.println("hash is in cache");
-		    
-			content = lru.getDoc(hash);
-		}
-
-		// if not in cache, hit server for data
-		if (content == null) {
-		    if (debug)
-			System.err.println("hash is not in cache");
-
-		    if (debug)
-			System.err.println("Hitting data URL: " + data_url);
-
-		    
-			HttpResponse resp = makeRequest(data_url);
-			int status = resp.getStatusLine().getStatusCode();
-			content = EntityUtils.toString(resp.getEntity());
-			if (status != 200) {
-				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
-			}
-			if (debug)
-			    System.err.println("Hitting hash URL: "+hash_url);
-
-			hashResp = makeRequest(hash_url);
-			hash = EntityUtils.toString(hashResp.getEntity());
-
-			if (debug)
-			    System.err.println("hash is: "+hash);
-
-			
-			//Checks to see if valid hash is generated
-			if (!hash.equals("false")) {
-				lru.putDoc(hash, content);
-			}
-		}
 
 		//Parse Data into object
 		int cols = 0;
@@ -963,7 +1009,7 @@ public class DataSource {
 		double cellsize = 0;
 		int maxVal = -9999999;
 
-		String [] lines = content.split("\n");
+		String [] lines = elev_data_json.split("\n");
 		cols = Integer.parseInt(lines[0].replaceAll("[^0-9]", ""));
 		rows = Integer.parseInt(lines[1].replaceAll("[^0-9]", ""));
 		xll = Double.parseDouble(lines[2].replaceAll("[^0-9.]", ""));
@@ -992,7 +1038,8 @@ public class DataSource {
 			}
 		}
 
-		ElevationData ret_data = new ElevationData(data, cols, rows, xll, yll, cellsize, maxVal);
+		ElevationData ret_data = new ElevationData(data, cols, rows, xll, yll, 
+											cellsize, maxVal);
 		return ret_data;
 	}
 
