@@ -20,7 +20,12 @@ import com.google.gson.JsonParseException;
 import com.google.common.net.UrlEscapers;
 import com.google.gson.Gson;
 import org.json.simple.parser.JSONParser;
+
+
+// encoder related
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 
 
 // JSON related
@@ -63,7 +68,6 @@ public class DataSource {
 
 	private static String getOSMBaseURL() {
 		return "http://bridges-data-server-osm.bridgesuncc.org/";
-//		return "http://cci-bridges-osm.uncc.edu/";
 	}
 
 	private static String getElevationBaseURL() {
@@ -663,18 +667,17 @@ public class DataSource {
 								throws IOException {
 		// URL to request map
 		String osm_url = getOSMBaseURL() + 
-				"loc?location=" + URLEncoder.encode(location) +
-				"&level="  + URLEncoder.encode(level);
+			"loc?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name()) +
+			"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
 		// URL to get hash code
 		String hash_url = getOSMBaseURL() + 
-				"hash?location=" + URLEncoder.encode(location) +
-				"&level="  + URLEncoder.encode(level);
+			"hash?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name()) +
+			"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
-System.out.println("URLs:" + osm_url + "\n" + hash_url);
+//		String osm_url = "http://bridges-data-server-osm.bridgesuncc.org/loc?location=" + location + "&level=" + level;
+//		String hash_url = "http://bridges-data-server-osm.bridgesuncc.org/hash?location=" + location + "&level=" + level;
 
-//		osm_url = "http://cci-bridges-osm.uncc.edu/loc?location=" + location + "&level=" + level;
-//		hash_url = "http://cci-bridges-osm.uncc.edu/hash?location=" + location + "&level=" + level;
 		return (parseOSMData(osm_url, hash_url));
 	}
 	/**
@@ -901,7 +904,8 @@ System.out.println("URLs:" + osm_url + "\n" + hash_url);
 										throws IOException{
 
 		// look for dataset in cache
-		String data_content = null, hash = null;
+		String data_content = null; 
+		String hash = null;
 
 		if (debug)
 		    System.err.println("Hitting hash URL: "+hash_url);
@@ -912,7 +916,7 @@ System.out.println("URLs:" + osm_url + "\n" + hash_url);
 		hash = EntityUtils.toString(hashResp.getEntity());
 
 		if (debug)
-		    System.err.println("hash is: "+hash);
+		    System.err.println("Hash is: "+hash);
 		
 		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
 		    if (debug)
@@ -932,7 +936,7 @@ System.out.println("URLs:" + osm_url + "\n" + hash_url);
 			HttpResponse resp = makeRequest(data_url);
 
 			int status = resp.getStatusLine().getStatusCode();
-			System.err.println("Status code:" + status);
+			System.err.println("[Data request:] Status code:" + status);
 
 			if (status != 200) {
 				throw new HttpResponseException(status, "Http Request Failed. Error Code:" 
@@ -950,7 +954,7 @@ System.out.println("URLs:" + osm_url + "\n" + hash_url);
 			hash = EntityUtils.toString(hashResp.getEntity());
 
 			if (debug) {
-			    System.err.println("Status code:" + resp.getStatusLine().getStatusCode());
+			    System.err.println("[Hash Request:] Status code:" + resp.getStatusLine().getStatusCode());
 			    System.err.println("Hash is: " + hash);
 			}
 			
