@@ -324,9 +324,10 @@ public class DataSource {
 	}
 
 
-	private static HttpResponse makeRequest(String url) throws ClientProtocolException, IOException {
+	private static HttpResponse makeRequest(String url) throws ClientProtocolException, 
+													IOException {
 		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet request = new HttpGet(UrlEscapers.urlFragmentEscaper().escape(url));
+		HttpGet request = new HttpGet(url);
 		return client.execute(request);
 	}
 
