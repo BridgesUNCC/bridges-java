@@ -74,6 +74,10 @@ public class DataSource {
 		return "http://bridges-data-server-elevation.bridgesuncc.org/";
 	}
 
+	private static String getGeniusBaseURL() {
+		return "http://bridges-data-server-elevation.bridgesuncc.org/";
+	}
+
 
 	DataSource() {
 		lru = new LRUCache(30);
@@ -630,14 +634,15 @@ public class DataSource {
 
 		// add the song title to the query url
 		if (songTitle.length() > 0) {
-			url += songTitle;
+			url += URLEncoder.encode(songTitle, StandardCharsets.UTF_8.name());
 		}
 		else {
 			throw new IllegalArgumentException("Must provide a valid song title.");
 		}
 		// add the artist name as a query variable where appropriate
 		if (artistName.length() > 0) {
-			url += "?artistName=" + artistName;
+			url += "?artistName=" + 
+					URLEncoder.encode(artistName, StandardCharsets.UTF_8.name());
 		}
 
 		// Create and execute the HTTP request
