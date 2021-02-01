@@ -2,6 +2,7 @@ package bridges.benchmark;
 
 import bridges.base.GraphAdjList;
 import bridges.base.LineChart;
+import bridges.connect.DataSource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class BFSBenchmark extends GraphBenchmark {
 	 * @param algoName Screen name of the algorithm
 	 * @param bfsAlgo the actual algorithm
 	 **/
-    public void run(String algoName, Consumer<BFSParams> bfsAlgo) throws IOException {
+    public void run(String algoName, DataSource ds, Consumer<BFSParams> bfsAlgo) throws IOException {
         ArrayList<Double> time = new ArrayList<>();
         ArrayList<Double> vertexCounts = new ArrayList<>();
         ArrayList<Double> edgeCounts = new ArrayList<>();
@@ -57,7 +58,7 @@ public class BFSBenchmark extends GraphBenchmark {
             System.err.print("*");
             GraphAdjList<String, String, String> graph = new GraphAdjList<>();
             long[] counts = new long[2];
-            generateWikidataActorMovieData(year, CURRENT_YEAR, counts, graph);
+            generateWikidataActorMovieData(year, CURRENT_YEAR, counts, graph, ds);
             vertexCounts.add((double) counts[0]);
             edgeCounts.add((double) counts[1]);
 

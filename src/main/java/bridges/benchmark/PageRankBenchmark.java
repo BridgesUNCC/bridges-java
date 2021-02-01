@@ -2,6 +2,7 @@ package bridges.benchmark;
 
 import bridges.base.GraphAdjList;
 import bridges.base.LineChart;
+import bridges.connect.DataSource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +43,8 @@ public class PageRankBenchmark extends GraphBenchmark{
         this(plot, Long.MAX_VALUE);
     }
 
-    public void run(String algoName, Consumer<PageRankParams> prAlgo) throws IOException {
+    public void run(String algoName, DataSource ds, Consumer<PageRankParams> prAlgo) 
+										throws IOException {
         ArrayList<Double> time = new ArrayList<>();
         ArrayList<Double> vertexCounts = new ArrayList<>();
         ArrayList<Double> edgeCounts = new ArrayList<>();
@@ -52,7 +54,7 @@ public class PageRankBenchmark extends GraphBenchmark{
             System.err.print("*");
             GraphAdjList<String, String, String> graph = new GraphAdjList<>();
             long[] counts = new long[2];
-            generateWikidataActorMovieData(year, CURRENT_YEAR, counts, graph);
+			generateWikidataActorMovieData(year, CURRENT_YEAR, counts, graph, ds);
 
             PageRankParams params = new PageRankParams();
             params.graph = graph;

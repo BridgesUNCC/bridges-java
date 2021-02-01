@@ -64,28 +64,30 @@ import bridges.connect.*;
 public class DataSource {
 	private Bridges bridges;
 	private static LRUCache lru;
-	private static boolean debug = false;
+	private boolean debug = false;
 
-	private static String getOSMBaseURL() {
+	private String getOSMBaseURL() {
 		return "http://bridges-data-server-osm.bridgesuncc.org/";
 	}
 
-	private static String getElevationBaseURL() {
+	private String getElevationBaseURL() {
 		return "http://bridges-data-server-elevation.bridgesuncc.org/";
 	}
 
-	private static String getGeniusBaseURL() {
+	private String getGeniusBaseURL() {
 		return "http://bridges-data-server-elevation.bridgesuncc.org/";
 	}
 
 
 	DataSource() {
-		lru = new LRUCache(30);
+		if (lru == null)
+			lru = new LRUCache(30);
 	}
 
 	DataSource(Bridges b) {
 		bridges = b;
-		lru = new LRUCache(30);
+		if (lru == null)
+			lru = new LRUCache(30);
 	}
 
 	/**
@@ -93,7 +95,8 @@ public class DataSource {
 	 *	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
 	 *  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
 	 *
-	 *  More information on the dataset can be found at http://bridgesuncc.github.io/datasets.html
+	 *  More information on the dataset can be found at 
+	 *		http://bridgesuncc.github.io/datasets.html
 	 *
 	 *	@param maxElem  the number of earthquake records retrieved, limited to 5000
 	 *  @throws Exception if the request fails
@@ -283,7 +286,7 @@ public class DataSource {
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public static OsmData getOsmData(String location) throws IOException {
+	public OsmData getOsmData(String location) throws IOException {
 		return getOsmDataDS(location, "default");
 	}
 	/**
@@ -293,7 +296,7 @@ public class DataSource {
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public static OsmData getOsmData(String location, String level) throws 
+	public OsmData getOsmData(String location, String level) throws 
 												IOException {
 		return getOsmDataDS(location, level);
 	}
@@ -307,7 +310,7 @@ public class DataSource {
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public static OsmData getOsmData(double minLat, double minLon, double maxLat,
+	public OsmData getOsmData(double minLat, double minLon, double maxLat,
 					 double maxLon) throws IOException {
 		return getOsmDataDS(minLat, minLon, maxLat, maxLon, "default");
 	}
@@ -322,26 +325,26 @@ public class DataSource {
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public static OsmData getOsmData(double minLat, double minLon, double maxLat, 
+	public OsmData getOsmData(double minLat, double minLon, double maxLat, 
 					double maxLon, String level) throws IOException {
 		return getOsmDataDS(minLat, minLon, maxLat, maxLon, level);
 	}
 
 
-	private static HttpResponse makeRequest(String url) throws ClientProtocolException, 
+	private HttpResponse makeRequest(String url) throws ClientProtocolException, 
 													IOException {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet request = new HttpGet(url);
 		return client.execute(request);
 	}
 
-	private static JSONArray unwrapJSONArray(HttpResponse response, String get) throws IOException {
+	private JSONArray unwrapJSONArray(HttpResponse response, String get) throws IOException {
 		String result = EntityUtils.toString(response.getEntity());
 		JSONObject full = (JSONObject)JSONValue.parse(result);
 		return (JSONArray)full.get(get);
 	}
 
-	private static JSONArray unwrapJSONArray(HttpResponse response) throws IOException {
+	private JSONArray unwrapJSONArray(HttpResponse response) throws IOException {
 		return	unwrapJSONArray(response, "data");
 	}
 	private ActorMovieIMDB parseActorMovieIMDB(JSONObject item) {
@@ -565,7 +568,7 @@ public class DataSource {
 	}
 
 	// parse a Song -- for internal use only
-	private static Song parseSong(JSONObject songJSON) {
+	private Song parseSong(JSONObject songJSON) {
 		Song song = new Song();
 		song.setArtist((String) songJSON.get("artist"));
 		song.setSongTitle((String) songJSON.get("song"));
@@ -669,7 +672,7 @@ public class DataSource {
 	 * @return OsmData  vertices and edges of Open Street Map data
 	 * @throws IOException  If there is an error parsing response from server or is an invalid location name
 	 */
-	private static OsmData getOsmDataDS(String location, String level) 
+	private OsmData getOsmDataDS(String location, String level) 
 								throws IOException {
 		// URL to request map
 		String osm_url = getOSMBaseURL() + 
@@ -680,9 +683,6 @@ public class DataSource {
 		String hash_url = getOSMBaseURL() + 
 			"hash?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name()) +
 			"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
-
-//		String osm_url = "http://bridges-data-server-osm.bridgesuncc.org/loc?location=" + location + "&level=" + level;
-//		String hash_url = "http://bridges-data-server-osm.bridgesuncc.org/hash?location=" + location + "&level=" + level;
 
 		return (parseOSMData(osm_url, hash_url));
 	}
@@ -697,27 +697,25 @@ public class DataSource {
 	 * @return OsmData  vertices and edges of Open Street Map data
 	 * @throws IOException  If there is an error parsing response from server or is an invalid location name
 	 */
-	private static OsmData getOsmDataDS(double minLat, double minLon, 
+	private OsmData getOsmDataDS(double minLat, double minLon, 
 		double maxLat, double maxLon, String level) throws IOException {
 
 		// URL to request map
 		String osm_url = getOSMBaseURL() + 
-				"coords?minLon=" + URLEncoder.encode(Double.toString(minLon)) +
-				"&minLat=" + URLEncoder.encode(Double.toString(minLat)) +
-				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon)) +
-				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat)) +
-				"&level="  + URLEncoder.encode(level);
+				"coords?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
+				"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name()) +
+				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
+				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) +
+				"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
 		// URL to get hash code
 		String hash_url = getOSMBaseURL() + 
-				"hash?minLon=" + URLEncoder.encode(Double.toString(minLon)) +
-				"&minLat=" + URLEncoder.encode(Double.toString(minLat)) +
-				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon)) +
-				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat)) +
-				"&level="  + URLEncoder.encode(level);
+				"hash?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
+				"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name()) +
+				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
+				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) +
+				"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
-//		String url = "http://cci-bridges-osm.uncc.edu/coords?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
-//		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&level=" + level;
 
 		return (parseOSMData(osm_url, hash_url));
 	}
@@ -733,7 +731,7 @@ public class DataSource {
 	 * @throws IOException If there is an error parsing response from 
 	 *		server or is an invalid location name
 	 */
-	private static OsmData parseOSMData(String osm_url, String hash_url) 
+	private OsmData parseOSMData(String osm_url, String hash_url) 
 									throws IOException {
 
 		String osm_json = getDataSetJSON(osm_url, hash_url);
@@ -819,8 +817,6 @@ public class DataSource {
 	 */
 	private AmenityData downloadAmenityData(String url, String hashUrl) 
 											throws IOException{
-		LRUCache lru = new LRUCache(30);
-
 		// look for file in cache
 		String content = null;
 		String hash = null;
@@ -906,7 +902,7 @@ public class DataSource {
 	 *  Amenity datasets
 	 *
 	 */
-	private static String getDataSetJSON(String data_url, String hash_url) 
+	private String getDataSetJSON(String data_url, String hash_url) 
 										throws IOException{
 
 		// look for dataset in cache
@@ -992,20 +988,20 @@ public class DataSource {
 	    boolean debug = false;
 	    
 		String data_url = getElevationBaseURL() + 
-				"elevation?minLon=" + URLEncoder.encode(Double.toString(minLon)) +
-				"&minLat=" + URLEncoder.encode(Double.toString(minLat))+
-				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon)) +
-				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat)) + 
-				"&resX="   + URLEncoder.encode(Double.toString(res)) +
-				"&resY="   + URLEncoder.encode(Double.toString(res));
+				"elevation?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
+				"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name())+
+				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
+				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) + 
+				"&resX="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name()) +
+				"&resY="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name());
                     
 		String hash_url = getElevationBaseURL() + 
-				"hash?minLon=" + URLEncoder.encode(Double.toString(minLon))+
-				"&minLat=" + URLEncoder.encode(Double.toString(minLat))+
-				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon)) +
-				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat)) + 
-				"&resX="   + URLEncoder.encode(Double.toString(res)) +
-				"&resY="   + URLEncoder.encode(Double.toString(res));
+				"hash?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name())+
+				"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name())+
+				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
+				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) + 
+				"&resX="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name()) +
+				"&resY="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name());
 
 
 		String elev_data_json = getDataSetJSON(data_url, hash_url);
@@ -1064,7 +1060,7 @@ public class DataSource {
 	 * @throws IOException If the response from WikiData is malformed or 
 	 *		an issue occurs making the request
 	 */
-	public static ArrayList<ActorMovieWikidata> getWikidataActorMovie (int 
+	public ArrayList<ActorMovieWikidata> getWikidataActorMovie (int 
 						yearBegin, int yearEnd) throws IOException {
 		ArrayList<ActorMovieWikidata> ret = new ArrayList<>();
 		int limit = 30;
@@ -1085,7 +1081,7 @@ public class DataSource {
 	 * 	request to WikiData, this allows us to
 	 * 	partition the request to prevent WikiData from kicking out the client.
 	 */
-	private static void populateWikidataActorMovie(int yearBegin, int yearEnd, 
+	private void populateWikidataActorMovie(int yearBegin, int yearEnd, 
 		ArrayList<ActorMovieWikidata> out, LRUCache cache) throws  IOException {
 
 		String cacheName = String.format("wikidata-actormovie-%d-%d", 
@@ -1218,7 +1214,7 @@ public class DataSource {
 	 *	it may only be needed in this case, where we need to convert an array 
 	 *	of bytes into a ColorGrid.
 	 */
-	private static Color getColorFromSignedBytes(byte r, byte g, byte b, byte a) {
+	private Color getColorFromSignedBytes(byte r, byte g, byte b, byte a) {
 		int R, G, B, A;
 		R = r < 0 ? 256 + r : r;
 		G = g < 0 ? 256 + g : g;
@@ -1239,7 +1235,7 @@ public class DataSource {
 	 * @param subassignment the ID of the subassignment to get
 	 * @return the ColorGrid stored in the bridges server
 	 */
-	public static ColorGrid getColorGridFromAssignment(String server, String 
+	public ColorGrid getColorGridFromAssignment(String server, String 
 			user, int assignment, int subassignment) throws IOException {
 
 		String response = getAssignment(server, user, assignment, subassignment);
@@ -1351,7 +1347,7 @@ public class DataSource {
 	 * @param assignment the ID of the assignment to get
 	 * @return the ColorGrid stored in the bridges server
 	 */
-	public static bridges.base.ColorGrid getColorGridFromAssignment(
+	public bridges.base.ColorGrid getColorGridFromAssignment(
 		String server, String user, int assignment) throws IOException {
 
 		return getColorGridFromAssignment(server, user, assignment, 0);
@@ -1368,7 +1364,7 @@ public class DataSource {
 	 * @return a string that is the JSON representation of the subassignment 
 	 *		as stored by the Bridges server.
 	 */
-	public static String getAssignment(String server, String user, 
+	public String getAssignment(String server, String user, 
 		int assignment, int subassignment) throws IOException {
 
 		String leadingZero = subassignment > 10 ? "" : "0";
@@ -1394,7 +1390,7 @@ public class DataSource {
 	 * @return a string that is the JSON representation of the subassignment 
 	 *		as stored by the Bridges server.
 	 */
-	public static String getAssignment(String server, String user, int assignment)
+	public String getAssignment(String server, String user, int assignment)
 							throws IOException, Exception {
 		return getAssignment(server, user, assignment, 0);
 	}

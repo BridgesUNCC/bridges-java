@@ -74,7 +74,8 @@ public class ShortestPathBenchmark extends GraphBenchmark {
 	 * @param algoName Screen name of the algorithm
 	 * @param spAlgo the actual algorithm
 	 **/
-    public void run(String algoName, Consumer<ShortestPathParams> spAlgo) throws IOException {
+    public void run(String algoName, Consumer<ShortestPathParams> spAlgo, DataSource ds) 
+									throws IOException {
         ArrayList<Double> time = new ArrayList<>();
         ArrayList<Double> vertexCounts = new ArrayList<>();
         ArrayList<Double> edgeCounts = new ArrayList<>();
@@ -83,7 +84,7 @@ public class ShortestPathBenchmark extends GraphBenchmark {
         double reflong = -73.98;
 
         for (double radius = 0.02; radius < 0.15; radius += 0.02) {
-            OsmData osmData = DataSource.getOsmData(reflat - radius, reflong - radius,
+            OsmData osmData = ds.getOsmData(reflat - radius, reflong - radius,
                     reflat + radius, reflong + radius);
             GraphAdjList<Integer, OsmVertex, Double> graph = osmData.getGraph();
 

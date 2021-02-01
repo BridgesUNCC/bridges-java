@@ -31,9 +31,10 @@ abstract class GraphBenchmark extends Benchmark {
     void generateWikidataActorMovieData(int yearMin,
                                         int yearMax,
                                         long[] counts,
-                                        GraphAdjList<String, String, String> graph)
-    throws IOException {
-        ArrayList<ActorMovieWikidata> data = DataSource.getWikidataActorMovie(yearMin, yearMax);
+                                        GraphAdjList<String, String, String> graph,
+										DataSource ds) throws IOException {
+
+        ArrayList<ActorMovieWikidata> data = ds.getWikidataActorMovie(yearMin, yearMax);
         long vertexCount = 0;
         long edgeCount = 0;
 
