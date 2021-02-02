@@ -78,6 +78,11 @@ public class DataSource {
 		return "http://bridges-data-server-elevation.bridgesuncc.org/";
 	}
 
+	private String getAmenityBaseURL() {
+		return "http://bridges-data-server-osm.bridgesuncc.org/";
+	}
+
+
 
 	DataSource() {
 		if (lru == null)
@@ -647,6 +652,9 @@ public class DataSource {
 			url += "?artistName=" + 
 					URLEncoder.encode(artistName, StandardCharsets.UTF_8.name());
 		}
+		else {
+			throw new IllegalArgumentException("Must provide a valid artist name");
+		}
 
 		// Create and execute the HTTP request
 		HttpResponse response = makeRequest(url);
@@ -677,12 +685,12 @@ public class DataSource {
 		// URL to request map
 		String osm_url = getOSMBaseURL() + 
 			"loc?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name()) +
-			"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
+			"&level="  		+ URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
 		// URL to get hash code
 		String hash_url = getOSMBaseURL() + 
 			"hash?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name()) +
-			"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
+			"&level="  		 + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
 		return (parseOSMData(osm_url, hash_url));
 	}
@@ -780,9 +788,15 @@ public class DataSource {
 	public AmenityData getAmenityData(String location, String amenity) 
 									throws IOException {
 		
-		String url = "http://cci-bridges-osm.uncc.edu/amenity?location=" + location + "&amenity=" + amenity;
-		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?location=" + location + "&amenity=" + amenity;
-		return (downloadAmenityData(url, hashUrl));
+		String url = getAmenityBaseURL() + 
+			"amenity?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name())+
+			"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
+
+		String hashUrl = getAmenityBaseURL() +
+			"hash?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name())+
+			"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
+
+		return (parseAmenityData(url, hashUrl));
 	}
 	
 	/** 
@@ -799,9 +813,21 @@ public class DataSource {
 	public AmenityData getAmenityData(double minLat, double minLon, double 
 				maxLat, double maxLon, String amenity) throws IOException {
 
-		String url = "http://cci-bridges-osm.uncc.edu/amenity?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
-		String hashUrl = "http://cci-bridges-osm.uncc.edu/hash?minLon=" + Double.toString(minLon) + "&minLat=" + Double.toString(minLat) + "&maxLon=" + Double.toString(maxLon) + "&maxLat=" + Double.toString(maxLat) + "&amenity=" + amenity;
-		return (downloadAmenityData(url, hashUrl));
+		String url = getAmenityBaseURL() + 
+			"amenity?minLon=" + Double.toString(minLon) + 
+				 	"&minLat=" + Double.toString(minLat) + 
+					"&maxLon=" + Double.toString(maxLon) + 
+					"&maxLat=" + Double.toString(maxLat) + 
+					"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
+
+		String hashUrl = getAmenityBaseURL() + 
+			"amenity?minLon=" + Double.toString(minLon) + 
+				 	"&minLat=" + Double.toString(minLat) + 
+					"&maxLon=" + Double.toString(maxLon) + 
+					"&maxLat=" + Double.toString(maxLat) + 
+					"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
+
+		return (parseAmenityData(url, hashUrl));
 	}
 
 	/**
@@ -815,8 +841,12 @@ public class DataSource {
 	 * @throws IOException If there is an error parsing response from 
 	 *		server or is an invalid location name
 	 */
-	private AmenityData downloadAmenityData(String url, String hashUrl) 
+	private AmenityData parseAmenityData(String amenity_url, String hash_url) 
 											throws IOException{
+
+		// get the JSON of the amenity data
+		String amenity_json = getDataSetJSON(amenity_url, hash_url);
+/*
 		// look for file in cache
 		String content = null;
 		String hash = null;
@@ -853,22 +883,23 @@ public class DataSource {
 				lru.putDoc(hash, content);
 			}
 		}
+*/
 
 		// Parse Data into object
-		AmenityData temp = new AmenityData();
+		AmenityData amenity_data = new AmenityData();
 		JSONParser parser = new JSONParser();
 
 		try {
-			JSONObject json = (JSONObject) parser.parse(content);
+			JSONObject json = (JSONObject) parser.parse(amenity_json);
 			JSONArray nodes = (JSONArray) json.get("nodes");
 			JSONObject meta = (JSONObject) json.get("meta");
 
 
-			temp.setCount(Integer.parseInt(meta.get("count").toString()));
-			temp.setMinLat(Double.parseDouble(meta.get("minlat").toString()));
-			temp.setMinLon(Double.parseDouble(meta.get("minlon").toString()));
-			temp.setMaxLat(Double.parseDouble(meta.get("maxlat").toString()));
-			temp.setMaxLon(Double.parseDouble(meta.get("maxlon").toString()));
+			amenity_data.setCount(Integer.parseInt(meta.get("count").toString()));
+			amenity_data.setMinLat(Double.parseDouble(meta.get("minlat").toString()));
+			amenity_data.setMinLon(Double.parseDouble(meta.get("minlon").toString()));
+			amenity_data.setMaxLat(Double.parseDouble(meta.get("maxlat").toString()));
+			amenity_data.setMaxLon(Double.parseDouble(meta.get("maxlon").toString()));
 			
 
 			Iterator<JSONArray> iter = nodes.iterator();
@@ -880,13 +911,14 @@ public class DataSource {
 				amen.setLon(Double.parseDouble(sub_data.get(2).toString()));
 				amen.setName(sub_data.get(3).toString());
 
-				temp.addAmenities(amen);
+				amenity_data.addAmenities(amen);
 			}
-		}catch(Exception e) {
+		}
+		catch(Exception e) {
 			System.out.println("Error Parsing Amenity Json: " + e);
 		}
 		
-		return temp;
+		return amenity_data;
 	}
 	/**
 	 * @brief This method takes in both a dataset url and a hash url
