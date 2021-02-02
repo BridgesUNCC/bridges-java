@@ -846,44 +846,6 @@ public class DataSource {
 
 		// get the JSON of the amenity data
 		String amenity_json = getDataSetJSON(amenity_url, hash_url);
-/*
-		// look for file in cache
-		String content = null;
-		String hash = null;
-		HttpResponse hashResp = makeRequest(hashUrl);
-		int hashStatus = hashResp.getStatusLine().getStatusCode();
-		hash = EntityUtils.toString(hashResp.getEntity());
-		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
-			content = lru.getDoc(hash);
-		}
-
-		// if not in cache, hit server for data
-		if (content == null) {
-			HttpResponse resp = makeRequest(url);
-			int status = resp.getStatusLine().getStatusCode();
-			content = EntityUtils.toString(resp.getEntity());
-			if (status != 200) {
-				if (status == 404) {
-					// attempt to get valid names
-					url = "http://cci-bridges-osm.dyn.uncc.edu/cities";
-					resp = makeRequest(url);
-					status = resp.getStatusLine().getStatusCode();
-					if (status == 200) {
-						content = EntityUtils.toString(resp.getEntity());
-						throw new RuntimeException("Invalid name" + "\nValid names:" + content);
-					}
-				}
-				throw new HttpResponseException(status, "Http Request Failed. Error Code:" + status + ". Message:" + content);
-			}
-			hashResp = makeRequest(hashUrl);
-			hash = EntityUtils.toString(hashResp.getEntity());
-
-			//Checks to see if valid hash is generated
-			if (!hash.equals("false")) {
-				lru.putDoc(hash, content);
-			}
-		}
-*/
 
 		// Parse Data into object
 		AmenityData amenity_data = new AmenityData();
