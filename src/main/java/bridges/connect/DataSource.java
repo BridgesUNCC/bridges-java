@@ -788,15 +788,15 @@ public class DataSource {
 	public AmenityData getAmenityData(String location, String amenity) 
 									throws IOException {
 		
-		String url = getAmenityBaseURL() + 
+		String amenity_url = getAmenityBaseURL() + 
 			"amenity?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name())+
 			"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
 
-		String hashUrl = getAmenityBaseURL() +
+		String hash_url = getAmenityBaseURL() +
 			"hash?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name())+
 			"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
 
-		return (parseAmenityData(url, hashUrl));
+		return (parseAmenityData(amenity_url, hash_url));
 	}
 	
 	/** 
@@ -813,21 +813,21 @@ public class DataSource {
 	public AmenityData getAmenityData(double minLat, double minLon, double 
 				maxLat, double maxLon, String amenity) throws IOException {
 
-		String url = getAmenityBaseURL() + 
+		String data_url = getAmenityBaseURL() + 
 			"amenity?minLon=" + Double.toString(minLon) + 
 				 	"&minLat=" + Double.toString(minLat) + 
 					"&maxLon=" + Double.toString(maxLon) + 
 					"&maxLat=" + Double.toString(maxLat) + 
 					"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
 
-		String hashUrl = getAmenityBaseURL() + 
-			"amenity?minLon=" + Double.toString(minLon) + 
+		String hash_url = getAmenityBaseURL() + 
+			"hash?minLon=" + Double.toString(minLon) + 
 				 	"&minLat=" + Double.toString(minLat) + 
 					"&maxLon=" + Double.toString(maxLon) + 
 					"&maxLat=" + Double.toString(maxLat) + 
 					"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
 
-		return (parseAmenityData(url, hashUrl));
+		return (parseAmenityData(data_url, hash_url));
 	}
 
 	/**
