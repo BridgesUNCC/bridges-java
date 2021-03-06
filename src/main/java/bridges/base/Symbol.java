@@ -174,7 +174,7 @@ public class Symbol {
 	 * @param strokewidth the stroke width to set
 	 */
 	public void setStrokeWidth(float strokewidth) {
-		if (strokewidth <= 0.0f || strokewidth > 10.0f) {
+		if (strokewidth < 0.0f || strokewidth > 10.0f) {
 			throw new IllegalArgumentException("Stroke width must be between 0 and 10");
 		}
 		else {

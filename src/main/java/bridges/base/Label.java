@@ -24,6 +24,7 @@ public class Label extends Symbol {
 	private Integer width = 100;
 	private Integer height = 50;
 	private Integer fontSize = DEFAULT_FONTSIZE;
+	private float rotation_angle = 0.0f;
 
 
 	/**
@@ -53,16 +54,78 @@ public class Label extends Symbol {
 	}
 
 	/**
+	 * @brief Set the rotation angle for the label
+	 *
+	 * Permits rotated text labels (only horiz and vertical
+	 *  supported now.
+	 *
+	 * @param angle  rotation angle in dedgrees
+	 *
+	 */
+	public void setRotationAngle (float angle) {
+		// temporary - only horizontal or vertical labels
+		rotation_angle = 0.0f;
+		if (angle == 90.)
+			rotation_angle = angle;
+	}
+
+	/**
+	 * @brief Get the rotation angle for the label
+	 *
+	 *
+	 * @return angle  rotation angle in degrees
+	 *
+	 */
+	 float getRotationAngle () {
+	 	return rotation_angle;
+	 }
+
+	/**
+	 * @brief This method returns the bounding box dimensions of
+	 *  the shape
+	 *
+	 *  A more accurate computation, takes into account
+	 *  the label string content
+	 *
+	 * @return vector of floats
+	 */
+
+	public float[] getBoundingBox() {
+
+		// first get the width of the string by parsing it
+		String str = getLabel();
+		float length = 0.0f;
+		for (char ch: str.toCharArray()) {
+			if (ch == 'm' || ch == 'w')
+				length +=  0.5;
+			else if (ch == 'i' || ch == 'l' || ch == 'j')
+				length +=  0.4;
+			else length += 0.6;
+		}
+		length *= fontSize;
+
+		float loc_x = this.getLocation()[0];
+		float loc_y = this.getLocation()[1];
+
+		float width = length;
+		float height = fontSize;
+
+		// order is xmin, ymin, xmax, ymax
+		float[] bbox = new float[4];
+		bbox[0] = loc_x - width/2.0f;
+		bbox[1] = loc_y - height;
+		bbox[2] = width;
+		bbox[3] = height;
+
+		return bbox;
+	}
+
+	/**
 	 *  Get the dimensions of the label object
-	 *  @return bounding box of the label (min x, max x, min y, max y)
+	 *  @return bounding box of the label (min x, min y, max x, max y)
 	 */
 	public float[] getDimensions() {
-		float length = (float) 0.09 * this.fontSize * this.getLabel().length();
-		float x = this.getLocation()[0];
-		float y = this.getLocation()[1];
-
-		return new float[] {(float) x - length / 2, (float) x + length / 2, (float) y, (float) y};
-
+		return getBoundingBox();
 	}
 
 	/**
@@ -76,9 +139,8 @@ public class Label extends Symbol {
 		json_builder.put("name", JSONValue.escape(super.label));
 		json_builder.put("shape", "text");
 
-		if (fontSize != DEFAULT_FONTSIZE) {
-			json_builder.put("font-size", fontSize);
-		}
+		json_builder.put("font-size", fontSize);
+		json_builder.put("angle", rotation_angle);
 
 		return json_builder;
 	}
