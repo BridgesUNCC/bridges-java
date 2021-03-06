@@ -87,6 +87,8 @@ public class Label extends Symbol {
 	 *  A more accurate computation, takes into account
 	 *  the label string content
 	 *
+	 *  @return bounding box of the label (min x, min y, max x, max y)
+	 *
 	 * @return vector of floats
 	 */
 
@@ -113,9 +115,9 @@ public class Label extends Symbol {
 		// order is xmin, ymin, xmax, ymax
 		float[] bbox = new float[4];
 		bbox[0] = loc_x - width/2.0f;
-		bbox[1] = loc_y - height;
-		bbox[2] = width;
-		bbox[3] = height;
+		bbox[1] = loc_y - height/2.0f;
+		bbox[2] = loc_x + width/2.0f;
+		bbox[3] = loc_y + height/2.0f;
 
 		return bbox;
 	}
