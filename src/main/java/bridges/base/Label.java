@@ -36,7 +36,7 @@ public class Label extends Symbol {
 	 */
 	public Label() {
 		super();
-		setStrokeWidth(0.0);
+		setStrokeWidth(0.0f);
 	}
 
 	/**
