@@ -11,7 +11,11 @@ import org.json.simple.JSONObject;
  *		Labels have  a text string, font size, width, height and location
  *
  * Basic styling such as stroke, color are defined in the superclass Symbol.
-
+ *
+ *
+ * On a label the "stroke" refer to the outside of the of the letter, and the "fill" refers to the inside of the letters. In most case, you want no stroke but a fill. 
+ *
+ *
  * @sa An example tutorial can be found at 
  * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
@@ -32,6 +36,7 @@ public class Label extends Symbol {
 	 */
 	public Label() {
 		super();
+		setStrokeWidth(0.0);
 	}
 
 	/**
