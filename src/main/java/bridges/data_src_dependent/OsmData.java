@@ -7,7 +7,7 @@ import bridges.base.GraphAdjList;
  *
  * This class holds Open Street Map data, from https://openstreetmap.org
  *
- * @author Kalpathi Subramanian, Erik Saule 
+ * @author Kalpathi Subramanian, Erik Saule
  *
  * @date 2/16/19, 12/26/20
  */

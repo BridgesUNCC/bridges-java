@@ -1,6 +1,6 @@
 package bridges.data_src_dependent;
 
-/** 
+/**
  * This class is used with actor movie data retrieved from Wikidata
  *
  * @author Erik Saule
@@ -13,7 +13,7 @@ public class ActorMovieWikidata {
 
 	/**
 	 * Constructor
-	 * @param movieURI 
+	 * @param movieURI
 	 * @param actorURI
 	 * @param movieName name of movie (string)
 	 * @param actorName name of actor (string)

@@ -119,7 +119,7 @@ public class Song {
 		return release_date;
 	}
 	/**
-	 *	 Set release date of song 
+	 *	 Set release date of song
 	 *   @param release_date date of release to set
 	 */
 	public void setReleaseDate(String release_date) {

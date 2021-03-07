@@ -24,7 +24,7 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-/** 
+/**
  *	This class contains the methods to make HTTP connections for transmitting
  *	the JSON representation of a data structure to the BRIDGES server
  */
@@ -465,8 +465,8 @@ public class Connector {
 	 * @throws IOException
 	 * @throws RateLimitException
 	 */
-	public String executeHTTPRequest(Request request) throws 
-			ClientProtocolException, IOException, RateLimitException {
+	public String executeHTTPRequest(Request request) throws
+		ClientProtocolException, IOException, RateLimitException {
 
 		// It's possible we need to reimplement this as a ResponseHandler
 		//System.out.println("Sending request: " + request);
@@ -566,17 +566,17 @@ public class Connector {
 		return executeHTTPRequest(Request.Get(prepareUSGS(url)));
 	}
 
-	/** 
+	/**
 	 *	Execute a simple POST request with relative paths, taking a Scala Map()
-	 *  of request parameters. 
+	 *  of request parameters.
 	 */
-	public String post(String url, Map<String, String> arguments) throws 
-								IOException, RateLimitException {
+	public String post(String url, Map<String, String> arguments) throws
+		IOException, RateLimitException {
 
 		//System.out.println("From Connector.post1()..\n");
 		if (Bridges.getDebugFlag()) {
-			System.err.println("Connector.post-StringMap(" + url + ", " + 
-									arguments.toString() + ")");
+			System.err.println("Connector.post-StringMap(" + url + ", " +
+				arguments.toString() + ")");
 			System.err.println("prepare(url)=" + prepare(url));
 		}
 		Request req = Request.Post(prepare(url));
@@ -598,10 +598,10 @@ public class Connector {
 	}
 
 	/**
-     * Idiom for enabling ordered iteration on any map.
-     * The reason for this is to make the strings compare equal for testing
-     * @param map
-     * @return sorted entries
+	 * Idiom for enabling ordered iteration on any map.
+	 * The reason for this is to make the strings compare equal for testing
+	 * @param map
+	 * @return sorted entries
 	 */
 	private static <K extends Comparable<K>, V> List<Entry<K, V>> sorted_entries(
 		Map<K, V> map) {
@@ -610,8 +610,8 @@ public class Connector {
 			public int compare(Entry<K, V> t, Entry<K, V> o) {
 				return t.getKey().compareTo(o.getKey());
 			}
-        });
-        return sorted_entries;
+		});
+		return sorted_entries;
 	}
 
 	/**
@@ -647,7 +647,7 @@ public class Connector {
 	}
 
 	/**
-	 * @param url  prepare the request to be sent using this url for 
+	 * @param url  prepare the request to be sent using this url for
 	 *		earthquake data
 	 * @returns the new url as a String
 	 */

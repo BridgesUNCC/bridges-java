@@ -49,12 +49,12 @@ import bridges.cache.LRUCache;
 import bridges.connect.*;
 
 /**
- *  @brief This class is the main BRIDGES class that facilitates access to 
+ *  @brief This class is the main BRIDGES class that facilitates access to
  *	external datasets
  *
  *  The DataSource class provides the BRIDGES API to all external datasets that
  *  are implemented in BRIDGES. These include earthquake data, song data, IMDB
- *	actor/movies, Wikidata, Guttenberg book collections, OpenStreet maps, 
+ *	actor/movies, Wikidata, Guttenberg book collections, OpenStreet maps,
  *  Shakespeare, play, sonnets, poems,  Cancer incidence data and IGN games
  *  Each dataset is accessed through a function call, which typically returns
  * 	a list of objects with all associated attributes. These can then be used
@@ -100,7 +100,7 @@ public class DataSource {
 	 *	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
 	 *  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
 	 *
-	 *  More information on the dataset can be found at 
+	 *  More information on the dataset can be found at
 	 *		http://bridgesuncc.github.io/datasets.html
 	 *
 	 *	@param maxElem  the number of earthquake records retrieved, limited to 5000
@@ -109,7 +109,7 @@ public class DataSource {
 	 *  @return a list of earthquake records
 	 */
 	public  List<EarthquakeUSGS> getEarthquakeUSGSData(
-							int maxElem) throws IOException {
+		int maxElem) throws IOException {
 		String url = "http://earthquakes-uncc.herokuapp.com/eq/latest/" + maxElem;
 		HttpResponse response = makeRequest(url);
 
@@ -301,8 +301,8 @@ public class DataSource {
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public OsmData getOsmData(String location, String level) throws 
-												IOException {
+	public OsmData getOsmData(String location, String level) throws
+		IOException {
 		return getOsmDataDS(location, level);
 	}
 
@@ -316,7 +316,7 @@ public class DataSource {
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
 	public OsmData getOsmData(double minLat, double minLon, double maxLat,
-					 double maxLon) throws IOException {
+		double maxLon) throws IOException {
 		return getOsmDataDS(minLat, minLon, maxLat, maxLon, "default");
 	}
 	/**
@@ -326,18 +326,18 @@ public class DataSource {
 	 * @param maxLat maximum latitude value for the area requested
 	 * @param maxLon maximum longitude value for the area requested
 	 * @param level resolution at which the data is to be retrieved
-     *
+	 *
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
 	 */
-	public OsmData getOsmData(double minLat, double minLon, double maxLat, 
-					double maxLon, String level) throws IOException {
+	public OsmData getOsmData(double minLat, double minLon, double maxLat,
+		double maxLon, String level) throws IOException {
 		return getOsmDataDS(minLat, minLon, maxLat, maxLon, level);
 	}
 
 
-	private HttpResponse makeRequest(String url) throws ClientProtocolException, 
-													IOException {
+	private HttpResponse makeRequest(String url) throws ClientProtocolException,
+		IOException {
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet request = new HttpGet(url);
 		return client.execute(request);
@@ -369,8 +369,8 @@ public class DataSource {
 	 *  @return a list of ActorMovieIMDB objects, but only actor and movie fields
 	 * 				in this version
 	 */
-	public List<ActorMovieIMDB> getActorMovieIMDBData(int maxElem) 
-					throws IOException, IllegalArgumentException {
+	public List<ActorMovieIMDB> getActorMovieIMDBData(int maxElem)
+	throws IOException, IllegalArgumentException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb";
 
@@ -403,8 +403,8 @@ public class DataSource {
 		}
 	}
 	/**
-	 *  This helper function provides access to a second curated IMDB 
-	 *	dataset; the data is retrieved, formatted into a list of 
+	 *  This helper function provides access to a second curated IMDB
+	 *	dataset; the data is retrieved, formatted into a list of
 	 *	ActorMovieIMDB objects
 	 *
 	 *  This version of the IMDB Actor/Movie data contains for each record,
@@ -417,7 +417,7 @@ public class DataSource {
 	 *  @return a list of ActorMovieIMDB objects
 	 */
 	public List<ActorMovieIMDB> getActorMovieIMDBData2 ()
-								throws IOException {
+	throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/imdb2";
 		HttpResponse response = makeRequest(url);
@@ -466,7 +466,7 @@ public class DataSource {
 	 *  @return a list of GutenbergBook objects
 	 */
 	public List<GutenbergBook> getGutenbergBookMetaData ()
-								throws IOException {
+	throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/books";
 		HttpResponse response = makeRequest(url);
@@ -589,7 +589,7 @@ public class DataSource {
 	 *	collection.
 	 *
 	 *  Each record in this collection has
-	 *	information on song title, artist, album, year, lyrics, and genre. 
+	 *	information on song title, artist, album, year, lyrics, and genre.
 	 *	For more information and to look at the data, refer to <p>
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
 	 *
@@ -625,7 +625,7 @@ public class DataSource {
 	/**
 	 *  These helper functions provides access to a particular song.
 	 *
-	 *  The record has information such as song title, artist, album, year, 
+	 *  The record has information such as song title, artist, album, year,
 	 *	lyrics, and genre. For more information
 	 *	and to look at the data, refer to <p>
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
@@ -637,7 +637,7 @@ public class DataSource {
 	 *  @return a Song object.
 	 */
 	public Song getSong(String songTitle, String artistName)
-								throws IOException {
+	throws IOException {
 		String url = "https://bridgesdata.herokuapp.com/api/songs/find/";
 
 		// add the song title to the query url
@@ -649,8 +649,8 @@ public class DataSource {
 		}
 		// add the artist name as a query variable where appropriate
 		if (artistName.length() > 0) {
-			url += "?artistName=" + 
-					URLEncoder.encode(artistName, StandardCharsets.UTF_8.name());
+			url += "?artistName=" +
+				URLEncoder.encode(artistName, StandardCharsets.UTF_8.name());
 		}
 		else {
 			throw new IllegalArgumentException("Must provide a valid artist name");
@@ -680,15 +680,15 @@ public class DataSource {
 	 * @return OsmData  vertices and edges of Open Street Map data
 	 * @throws IOException  If there is an error parsing response from server or is an invalid location name
 	 */
-	private OsmData getOsmDataDS(String location, String level) 
-								throws IOException {
+	private OsmData getOsmDataDS(String location, String level)
+	throws IOException {
 		// URL to request map
-		String osm_url = getOSMBaseURL() + 
+		String osm_url = getOSMBaseURL() +
 			"loc?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name()) +
 			"&level="  		+ URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
 		// URL to get hash code
-		String hash_url = getOSMBaseURL() + 
+		String hash_url = getOSMBaseURL() +
 			"hash?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name()) +
 			"&level="  		 + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
@@ -705,24 +705,24 @@ public class DataSource {
 	 * @return OsmData  vertices and edges of Open Street Map data
 	 * @throws IOException  If there is an error parsing response from server or is an invalid location name
 	 */
-	private OsmData getOsmDataDS(double minLat, double minLon, 
+	private OsmData getOsmDataDS(double minLat, double minLon,
 		double maxLat, double maxLon, String level) throws IOException {
 
 		// URL to request map
-		String osm_url = getOSMBaseURL() + 
-				"coords?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
-				"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name()) +
-				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
-				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) +
-				"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
+		String osm_url = getOSMBaseURL() +
+			"coords?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
+			"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name()) +
+			"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
+			"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) +
+			"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
 		// URL to get hash code
-		String hash_url = getOSMBaseURL() + 
-				"hash?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
-				"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name()) +
-				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
-				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) +
-				"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
+		String hash_url = getOSMBaseURL() +
+			"hash?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
+			"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name()) +
+			"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
+			"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) +
+			"&level="  + URLEncoder.encode(level, StandardCharsets.UTF_8.name());
 
 
 		return (parseOSMData(osm_url, hash_url));
@@ -731,16 +731,16 @@ public class DataSource {
 	/**
 	 * @brief parses the OSM data and caches maps requested
 	 *
-	 * @param url  string of the url that will be used when requesting 
+	 * @param url  string of the url that will be used when requesting
 	 *		map data from server
-	 * @param hashUrl string of the url that will be used when requesting 
+	 * @param hashUrl string of the url that will be used when requesting
 	 *		hash data from serverp
 	 * @return OsmData vertices and edges of Open Street Map data
-	 * @throws IOException If there is an error parsing response from 
+	 * @throws IOException If there is an error parsing response from
 	 *		server or is an invalid location name
 	 */
-	private OsmData parseOSMData(String osm_url, String hash_url) 
-									throws IOException {
+	private OsmData parseOSMData(String osm_url, String hash_url)
+	throws IOException {
 
 		String osm_json = getDataSetJSON(osm_url, hash_url);
 
@@ -777,7 +777,7 @@ public class DataSource {
 		return ret_data;
 	}
 
-	/** 
+	/**
 	 * This method retrieves the specified amenity related data given a location
 	 * from a specified openstreet mmap location
 	 *
@@ -785,23 +785,23 @@ public class DataSource {
 	 *	@param amenity  amenity type
 	 *	@throws exception
 	 */
-	public AmenityData getAmenityData(String location, String amenity) 
-									throws IOException {
-		
-		String amenity_url = getAmenityBaseURL() + 
-			"amenity?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name())+
+	public AmenityData getAmenityData(String location, String amenity)
+	throws IOException {
+
+		String amenity_url = getAmenityBaseURL() +
+			"amenity?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name()) +
 			"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
 
 		String hash_url = getAmenityBaseURL() +
-			"hash?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name())+
+			"hash?location=" + URLEncoder.encode(location, StandardCharsets.UTF_8.name()) +
 			"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
 
 		return (parseAmenityData(amenity_url, hash_url));
 	}
-	
-	/** 
-	 * This method retrieves the specified amenity related data given a 
-	 * bounding box of a region, from a Open Street map 
+
+	/**
+	 * This method retrieves the specified amenity related data given a
+	 * bounding box of a region, from a Open Street map
 	 *
 	 *	@param minLat  minimum latitude
 	 *	@param minLon  minimumm longitude
@@ -810,22 +810,22 @@ public class DataSource {
 	 *	@param amenity  amenity type
 	 *	@throws exception
 	 */
-	public AmenityData getAmenityData(double minLat, double minLon, double 
-				maxLat, double maxLon, String amenity) throws IOException {
+	public AmenityData getAmenityData(double minLat, double minLon, double
+		maxLat, double maxLon, String amenity) throws IOException {
 
-		String data_url = getAmenityBaseURL() + 
-			"amenity?minLon=" + Double.toString(minLon) + 
-				 	"&minLat=" + Double.toString(minLat) + 
-					"&maxLon=" + Double.toString(maxLon) + 
-					"&maxLat=" + Double.toString(maxLat) + 
-					"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
+		String data_url = getAmenityBaseURL() +
+			"amenity?minLon=" + Double.toString(minLon) +
+			"&minLat=" + Double.toString(minLat) +
+			"&maxLon=" + Double.toString(maxLon) +
+			"&maxLat=" + Double.toString(maxLat) +
+			"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
 
-		String hash_url = getAmenityBaseURL() + 
-			"hash?minLon=" + Double.toString(minLon) + 
-				 	"&minLat=" + Double.toString(minLat) + 
-					"&maxLon=" + Double.toString(maxLon) + 
-					"&maxLat=" + Double.toString(maxLat) + 
-					"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
+		String hash_url = getAmenityBaseURL() +
+			"hash?minLon=" + Double.toString(minLon) +
+			"&minLat=" + Double.toString(minLat) +
+			"&maxLon=" + Double.toString(maxLon) +
+			"&maxLat=" + Double.toString(maxLat) +
+			"&amenity=" + URLEncoder.encode(amenity, StandardCharsets.UTF_8.name());
 
 		return (parseAmenityData(data_url, hash_url));
 	}
@@ -833,16 +833,16 @@ public class DataSource {
 	/**
 	 * @brief Downloads and caches amenity requested
 	 *
-	 * @param url  string of the url that will be used when requesting 
+	 * @param url  string of the url that will be used when requesting
 	 *		amenity data from server
-	 * @param hashUrl string of the url that will be used when requesting 
+	 * @param hashUrl string of the url that will be used when requesting
 	 *		hash data from server
 	 * @return AmenityData object containing coordinates and meta data
-	 * @throws IOException If there is an error parsing response from 
+	 * @throws IOException If there is an error parsing response from
 	 *		server or is an invalid location name
 	 */
-	private AmenityData parseAmenityData(String amenity_url, String hash_url) 
-											throws IOException{
+	private AmenityData parseAmenityData(String amenity_url, String hash_url)
+	throws IOException {
 
 		// get the JSON of the amenity data
 		String amenity_json = getDataSetJSON(amenity_url, hash_url);
@@ -862,10 +862,10 @@ public class DataSource {
 			amenity_data.setMinLon(Double.parseDouble(meta.get("minlon").toString()));
 			amenity_data.setMaxLat(Double.parseDouble(meta.get("maxlat").toString()));
 			amenity_data.setMaxLon(Double.parseDouble(meta.get("maxlon").toString()));
-			
+
 
 			Iterator<JSONArray> iter = nodes.iterator();
-			while(iter.hasNext()){
+			while (iter.hasNext()) {
 				JSONArray sub_data = iter.next();
 				Amenities amen = new Amenities();
 				amen.setId(Double.parseDouble(sub_data.get(0).toString()));
@@ -876,67 +876,67 @@ public class DataSource {
 				amenity_data.addAmenities(amen);
 			}
 		}
-		catch(Exception e) {
+		catch (Exception e) {
 			System.out.println("Error Parsing Amenity Json: " + e);
 		}
-		
+
 		return amenity_data;
 	}
 	/**
 	 * @brief This method takes in both a dataset url and a hash url
 	 *  and returns the JSON string of the external dataset based on the query
 	 *
-	 *  This method is a utility function that supports retrieving 
+	 *  This method is a utility function that supports retrieving
 	 *  external dataset given a url to the dataset's server as well
 	 *  as a url to extract a hashcode for the dataset; the latter is
 	 *  is to suppor local caching. The dataset is only retrieved
 	 *  the server if a local copy is not available
 	 *
-	 *  Currently this function works with elevation, OpenStreet maps and 
+	 *  Currently this function works with elevation, OpenStreet maps and
 	 *  Amenity datasets
 	 *
 	 */
-	private String getDataSetJSON(String data_url, String hash_url) 
-										throws IOException{
+	private String getDataSetJSON(String data_url, String hash_url)
+	throws IOException {
 
 		// look for dataset in cache
-		String data_content = null; 
+		String data_content = null;
 		String hash = null;
 
 		if (debug)
-		    System.err.println("Hitting hash URL: "+hash_url);
-		
+			System.err.println("Hitting hash URL: " + hash_url);
+
 		// get the hash code of the dataset
 		HttpResponse hashResp = makeRequest(hash_url);
 		int hashStatus = hashResp.getStatusLine().getStatusCode();
 		hash = EntityUtils.toString(hashResp.getEntity());
 
 		if (debug)
-		    System.err.println("Hash is: "+hash);
-		
+			System.err.println("Hash is: " + hash);
+
 		if (!hash.equals("false") && hashStatus == 200 && lru.inCache(hash) == true) {
-		    if (debug)
+			if (debug)
 				System.err.println("hash is in cache");
-		    
+
 			data_content = lru.getDoc(hash);
 		}
 
 		// if not in cache, hit server for data
 		if (data_content == null) {
-		    if (debug)
+			if (debug)
 				System.err.println("hash is not in cache");
 
-		    if (debug)
+			if (debug)
 				System.err.println("Hitting data URL: " + data_url);
-		    
+
 			HttpResponse resp = makeRequest(data_url);
 
 			int status = resp.getStatusLine().getStatusCode();
 			System.err.println("[Data request:] Status code:" + status);
 
 			if (status != 200) {
-				throw new HttpResponseException(status, "Http Request Failed. Error Code:" 
-							+ status + ". Message:" + data_content);
+				throw new HttpResponseException(status, "Http Request Failed. Error Code:"
+					+ status + ". Message:" + data_content);
 			}
 
 			data_content = EntityUtils.toString(resp.getEntity());
@@ -950,10 +950,10 @@ public class DataSource {
 			hash = EntityUtils.toString(hashResp.getEntity());
 
 			if (debug) {
-			    System.err.println("[Hash Request:] Status code:" + resp.getStatusLine().getStatusCode());
-			    System.err.println("Hash is: " + hash);
+				System.err.println("[Hash Request:] Status code:" + resp.getStatusLine().getStatusCode());
+				System.err.println("Hash is: " + hash);
 			}
-			
+
 			//Checks to see if valid hash is generated
 			if (!hash.equals("false")) {
 				lru.putDoc(hash, data_content);
@@ -976,26 +976,26 @@ public class DataSource {
 	 * @return a ElevationData object mapping a region close to the box requested
 	 */
 
-	public ElevationData getElevationData(double minLat, double minLon, 
-			double maxLat, double maxLon, double res) throws IOException {
+	public ElevationData getElevationData(double minLat, double minLon,
+		double maxLat, double maxLon, double res) throws IOException {
 
-	    boolean debug = false;
-	    
-		String data_url = getElevationBaseURL() + 
-				"elevation?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
-				"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name())+
-				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
-				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) + 
-				"&resX="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name()) +
-				"&resY="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name());
-                    
-		String hash_url = getElevationBaseURL() + 
-				"hash?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name())+
-				"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name())+
-				"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
-				"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) + 
-				"&resX="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name()) +
-				"&resY="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name());
+		boolean debug = false;
+
+		String data_url = getElevationBaseURL() +
+			"elevation?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
+			"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name()) +
+			"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
+			"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) +
+			"&resX="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name()) +
+			"&resY="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name());
+
+		String hash_url = getElevationBaseURL() +
+			"hash?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
+			"&minLat=" + URLEncoder.encode(Double.toString(minLat), StandardCharsets.UTF_8.name()) +
+			"&maxLon=" + URLEncoder.encode(Double.toString(maxLon), StandardCharsets.UTF_8.name()) +
+			"&maxLat=" + URLEncoder.encode(Double.toString(maxLat), StandardCharsets.UTF_8.name()) +
+			"&resX="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name()) +
+			"&resY="   + URLEncoder.encode(Double.toString(res), StandardCharsets.UTF_8.name());
 
 
 		String elev_data_json = getDataSetJSON(data_url, hash_url);
@@ -1038,24 +1038,24 @@ public class DataSource {
 			}
 		}
 
-		ElevationData ret_data = new ElevationData(data, cols, rows, xll, yll, 
-											cellsize, maxVal);
+		ElevationData ret_data = new ElevationData(data, cols, rows, xll, yll,
+			cellsize, maxVal);
 		return ret_data;
 	}
 
 	/**
-	 * @brief This function returns the Movie and Actors playing in them 
+	 * @brief This function returns the Movie and Actors playing in them
 	 *		between two years from WikiData
 	 *
 	 * @param yearBegin inclusive start year
 	 * @param yearEnd inclusive end year
-	 * @return ArrayList of all ActorMovie pairs in Wikidata between 
+	 * @return ArrayList of all ActorMovie pairs in Wikidata between
 	 *		the years provided
-	 * @throws IOException If the response from WikiData is malformed or 
+	 * @throws IOException If the response from WikiData is malformed or
 	 *		an issue occurs making the request
 	 */
-	public ArrayList<ActorMovieWikidata> getWikidataActorMovie (int 
-						yearBegin, int yearEnd) throws IOException {
+	public ArrayList<ActorMovieWikidata> getWikidataActorMovie (int
+		yearBegin, int yearEnd) throws IOException {
 		ArrayList<ActorMovieWikidata> ret = new ArrayList<>();
 		int limit = 30;
 		if (yearEnd - yearBegin > 30)
@@ -1070,16 +1070,16 @@ public class DataSource {
 		return ret;
 	}
 
-	/** 
-	 *	Helper function that will actually create and execute the 
+	/**
+	 *	Helper function that will actually create and execute the
 	 * 	request to WikiData, this allows us to
 	 * 	partition the request to prevent WikiData from kicking out the client.
 	 */
-	private void populateWikidataActorMovie(int yearBegin, int yearEnd, 
+	private void populateWikidataActorMovie(int yearBegin, int yearEnd,
 		ArrayList<ActorMovieWikidata> out, LRUCache cache) throws  IOException {
 
-		String cacheName = String.format("wikidata-actormovie-%d-%d", 
-										yearBegin, yearEnd);
+		String cacheName = String.format("wikidata-actormovie-%d-%d",
+				yearBegin, yearEnd);
 		String json = null;
 
 		if (cache.inCache(cacheName)) {
@@ -1141,24 +1141,24 @@ public class DataSource {
 		}
 	}
 
-/////////////////////////////////////////////////////////////////////////
-// The following functions are provided to import store assignments on
-// the BRIDGES server. Currently supported: ColorGrid import
-/////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////
+	// The following functions are provided to import store assignments on
+	// the BRIDGES server. Currently supported: ColorGrid import
+	/////////////////////////////////////////////////////////////////////////
 	/**
 	 * This function obtains the JSON representation of a particular
 	 *	 subassignment.
 	 *
-	 * @return a string that is the JSON representation of the subassignment 
+	 * @return a string that is the JSON representation of the subassignment
 							as stored by the Bridges server.
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 * @param subassignment the ID of the subassignment to get
 	 */
-	public String getAssignmentJSON(String user, int assignment, 
-				int subassignment) throws IOException {
-		return getAssignment(bridges.getServerURL(), user, assignment, 
-							subassignment);
+	public String getAssignmentJSON(String user, int assignment,
+		int subassignment) throws IOException {
+		return getAssignment(bridges.getServerURL(), user, assignment,
+				subassignment);
 	}
 	/**
 	 * This function obtains the JSON representation of a particular subassignment.
@@ -1167,8 +1167,8 @@ public class DataSource {
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 */
-	public String getAssignmentJSON(String user, int assignment) 
-							throws IOException {
+	public String getAssignmentJSON(String user, int assignment)
+	throws IOException {
 		return getAssignmentJSON(user, assignment, 0);
 	}
 	/** Reconstruct a ColorGrid from an existing ColorGrid on the Bridges server
@@ -1178,10 +1178,10 @@ public class DataSource {
 	 * @param assignment the ID of the assignment to get
 	 * @param subassignment the ID of the subassignment to get
 	 */
-	public ColorGrid getColorGridFromAssignment(String user, int assignment, 
-					int subassignment) throws IOException {
-		return getColorGridFromAssignment(bridges.getServerURL(), user, 
-							assignment, subassignment);
+	public ColorGrid getColorGridFromAssignment(String user, int assignment,
+		int subassignment) throws IOException {
+		return getColorGridFromAssignment(bridges.getServerURL(), user,
+				assignment, subassignment);
 	}
 
 	/**
@@ -1191,21 +1191,21 @@ public class DataSource {
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 **/
-	public ColorGrid getColorGridFromAssignment(String user, int assignment) 
-									throws IOException {
-		return getColorGridFromAssignment(bridges.getServerURL(), user, 
-									assignment, 0);
+	public ColorGrid getColorGridFromAssignment(String user, int assignment)
+	throws IOException {
+		return getColorGridFromAssignment(bridges.getServerURL(), user,
+				assignment, 0);
 	}
 
 
-	/** 
-	 *	Due to the nature of how Java handles numbers, Bytes range from -128 to 
-	 *	127, which is problematic for Bridges Color objects which store 
-	 *	RGB as 0-255. This function translates 4 bytes into a Bridges 
+	/**
+	 *	Due to the nature of how Java handles numbers, Bytes range from -128 to
+	 *	127, which is problematic for Bridges Color objects which store
+	 *	RGB as 0-255. This function translates 4 bytes into a Bridges
 	 *	Color object, taking these factors into account.
 	 *
-	 * 	This function may be useful to add directly to the Color class, but 
-	 *	it may only be needed in this case, where we need to convert an array 
+	 * 	This function may be useful to add directly to the Color class, but
+	 *	it may only be needed in this case, where we need to convert an array
 	 *	of bytes into a ColorGrid.
 	 */
 	private Color getColorFromSignedBytes(byte r, byte g, byte b, byte a) {
@@ -1220,7 +1220,7 @@ public class DataSource {
 	}
 
 	/**
-	 * @brief Reconstruct a ColorGrid from an existing ColorGrid on the 
+	 * @brief Reconstruct a ColorGrid from an existing ColorGrid on the
 	 *	Bridges server
 	 *
 	 * @param server base URL of the Bridges service
@@ -1229,8 +1229,8 @@ public class DataSource {
 	 * @param subassignment the ID of the subassignment to get
 	 * @return the ColorGrid stored in the bridges server
 	 */
-	public ColorGrid getColorGridFromAssignment(String server, String 
-			user, int assignment, int subassignment) throws IOException {
+	public ColorGrid getColorGridFromAssignment(String server, String
+		user, int assignment, int subassignment) throws IOException {
 
 		String response = getAssignment(server, user, assignment, subassignment);
 
@@ -1333,7 +1333,7 @@ public class DataSource {
 	}
 
 	/**
-	 * @brief Reconstruct a ColorGrid from an existing ColorGrid on the 
+	 * @brief Reconstruct a ColorGrid from an existing ColorGrid on the
 	 *	Bridges server
 	 *
 	 * @param server base URL of the Bridges service
@@ -1348,22 +1348,22 @@ public class DataSource {
 	}
 
 	/***
-	 * This function obtains the JSON representation of a particular 
+	 * This function obtains the JSON representation of a particular
 	 *	subassignment.
 	 *
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 * @param subassignment the ID of the subassignment to get
 	 *
-	 * @return a string that is the JSON representation of the subassignment 
+	 * @return a string that is the JSON representation of the subassignment
 	 *		as stored by the Bridges server.
 	 */
-	public String getAssignment(String server, String user, 
+	public String getAssignment(String server, String user,
 		int assignment, int subassignment) throws IOException {
 
 		String leadingZero = subassignment > 10 ? "" : "0";
-		String url = String.format("%s/assignmentJSON/%d.%s%d/%s", server, 
-					assignment, leadingZero, subassignment, user);
+		String url = String.format("%s/assignmentJSON/%d.%s%d/%s", server,
+				assignment, leadingZero, subassignment, user);
 		HttpResponse resp = makeRequest(url);
 		int status = resp.getStatusLine().getStatusCode();
 		String result = EntityUtils.toString(resp.getEntity());
@@ -1375,17 +1375,17 @@ public class DataSource {
 		}
 	}
 	/***
-	 * @brief This function obtains the JSON representation of the first 
+	 * @brief This function obtains the JSON representation of the first
 	 *		subassignment of an assignment.
 	 *
 	 * @param user the name of the user who uploaded the assignment
 	 * @param assignment the ID of the assignment to get
 	 *
-	 * @return a string that is the JSON representation of the subassignment 
+	 * @return a string that is the JSON representation of the subassignment
 	 *		as stored by the Bridges server.
 	 */
 	public String getAssignment(String server, String user, int assignment)
-							throws IOException, Exception {
+	throws IOException, Exception {
 		return getAssignment(server, user, assignment, 0);
 	}
 

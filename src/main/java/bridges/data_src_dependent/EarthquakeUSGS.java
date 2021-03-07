@@ -8,12 +8,12 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
- * This class keeps earthquake tweet data, retrieved from US Geological Survey 
+ * This class keeps earthquake tweet data, retrieved from US Geological Survey
  *	Data
  *
  * @author Mihai Mehedint, Kalpathi Subramanian
  *
- * @date 12/26/20 
+ * @date 12/26/20
  *
  * Modifications:  removed dependencies on Tweet and its ancestors
  */
@@ -71,7 +71,7 @@ public class EarthquakeUSGS {
 
 
 	/**
-	 * Get properties of quake 
+	 * Get properties of quake
 	 *
 	 * @return properties of quake (string)
 	 */
@@ -81,7 +81,7 @@ public class EarthquakeUSGS {
 
 
 	/**
-	 * set properties of quake 
+	 * set properties of quake
 	 *
 	 * @param properties properties of quake (string) to be set
 	 */
@@ -98,7 +98,7 @@ public class EarthquakeUSGS {
 	//		return null;
 	//	}
 	/**
-	 * Get latitude of quake 
+	 * Get latitude of quake
 	 *
 	 * @return latitude of quake (double)
 	 */
@@ -106,7 +106,7 @@ public class EarthquakeUSGS {
 		return this.latit;
 	}
 	/**
-	 * Set latitude of quake 
+	 * Set latitude of quake
 	 *
 	 * @param latit latitude  of quake to be set
 	 */
@@ -114,7 +114,7 @@ public class EarthquakeUSGS {
 		this.latit = latit;
 	}
 	/**
-	 * Get longitude of quake 
+	 * Get longitude of quake
 	 *
 	 * @return longitude of quake (double)
 	 */
@@ -122,7 +122,7 @@ public class EarthquakeUSGS {
 		return longit;
 	}
 	/**
-	 * Set longitude of quake 
+	 * Set longitude of quake
 	 *
 	 * @param longit longitude  of quake to be set
 	 */
@@ -130,7 +130,7 @@ public class EarthquakeUSGS {
 		this.longit = longit;
 	}
 	/**
-	 * Get location of quake 
+	 * Get location of quake
 	 *
 	 * @return location of quake (string)
 	 */
@@ -138,7 +138,7 @@ public class EarthquakeUSGS {
 		return location;
 	}
 	/**
-	 * Set location of quake 
+	 * Set location of quake
 	 *
 	 * @param location location  of quake to be set
 	 */
@@ -154,7 +154,7 @@ public class EarthquakeUSGS {
 		return this.title;
 	}
 	/**
-	 * Set title of quake 
+	 * Set title of quake
 	 *
 	 * @param title title  of quake to be set
 	 */
@@ -162,7 +162,7 @@ public class EarthquakeUSGS {
 		this.title = title;
 	}
 	/**
-	 * Get url of quake 
+	 * Get url of quake
 	 *
 	 * @return url of quake (string)
 	 */
@@ -170,7 +170,7 @@ public class EarthquakeUSGS {
 		return url;
 	}
 	/**
-	 * Set url of quake 
+	 * Set url of quake
 	 *
 	 * @param url url  of quake to be set
 	 */
@@ -178,7 +178,7 @@ public class EarthquakeUSGS {
 		this.url = url;
 	}
 	/**
-	 * Set magnitude of quake 
+	 * Set magnitude of quake
 	 *
 	 * @param magnitude magnitude (double)  of quake to be set
 	 */
@@ -199,7 +199,7 @@ public class EarthquakeUSGS {
 		this.time = df.format(date);
 	}
 	/**
-	 * Get time of quake 
+	 * Get time of quake
 	 *
 	 * @return time of quake (string)
 	 */
@@ -207,7 +207,7 @@ public class EarthquakeUSGS {
 		return this.time;
 	}
 	/**
-	 * copy constructor 
+	 * copy constructor
 	 * @param eq the earthquake data to be copied into this object
 	 *
 	 */

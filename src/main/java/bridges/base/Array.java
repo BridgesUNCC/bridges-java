@@ -15,7 +15,7 @@ import bridges.validation.Validation;
  *
  *	This class can be used to create arrays of type Element<E>  where E
  *	is a generic object representing application specific data.
- *	
+ *
  *  This class is not directly called; instead use subclasses of arrays to
  *  construct arrays, depending on their dimension.
  *

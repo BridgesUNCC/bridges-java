@@ -3,7 +3,7 @@ package bridges.data_src_dependent;
 /**
  * @brief this is a class that defines an OpenStreet Map edge
  *
- * @author Erik Saule, Kalpathi Subramanian, 
+ * @author Erik Saule, Kalpathi Subramanian,
  * @date 12/26/20
  */
 

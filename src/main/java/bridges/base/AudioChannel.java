@@ -11,7 +11,7 @@ public class AudioChannel {
 	private int sampleCount;
 
 	/**
-	 * @brief constructore 
+	 * @brief constructore
 	 * @param sampleCount  number of samples
 	 */
 	public AudioChannel(int sampleCount) {
@@ -20,7 +20,7 @@ public class AudioChannel {
 	}
 
 	/**
-	 * @brief get sample count 
+	 * @brief get sample count
 	 * @return number of samples
 	 */
 	public int getChannelSize() {
@@ -37,7 +37,7 @@ public class AudioChannel {
 
 	/**
 	 * @brief set sample  at an index in the array
-	 * @param index 
+	 * @param index
 	 * @param sample sample data
 	 */
 	public void setSample(int index, int sample) {

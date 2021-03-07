@@ -69,7 +69,7 @@ public class SymbolCollection extends DataStruct {
 		symbols.put(s.getIdentifier(), s);
 	}
 	/**
-	 *   This method updates the bounding box of the domain, if needed, 
+	 *   This method updates the bounding box of the domain, if needed,
 	 *		by the input symbol
 	 *	 @param s  symbol to be updated
 	 */

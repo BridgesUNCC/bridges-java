@@ -6,9 +6,9 @@ import java.nio.ByteBuffer;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * @brief This class in BRIDGES is part of the BRIDGS Game API. It is for 
- *	representing an (m x n) game grid. Each position in the grid will hold 
- * 	a GameCell object, each of which has a foreground color, background color, 
+ * @brief This class in BRIDGES is part of the BRIDGS Game API. It is for
+ *	representing an (m x n) game grid. Each position in the grid will hold
+ * 	a GameCell object, each of which has a foreground color, background color,
  *	and a symbol.
  *
  *  The API supports 2D nonblocking games
@@ -23,8 +23,8 @@ public class GameGrid extends Grid<GameCell> {
 	ByteBuffer bf_symbols;
 	String encoding = "raw";
 
-	/** 
-	 *	@brief Enable changing the game grid encoding when building JSON 
+	/**
+	 *	@brief Enable changing the game grid encoding when building JSON
 	 *		representation.
 	 *
 	 *  @param encoding type of encoding. Supports "raw" and "rle"
@@ -96,9 +96,9 @@ public class GameGrid extends Grid<GameCell> {
 	}
 
 	/**
-	 *  Get background color of a cell 
+	 *  Get background color of a cell
 	 *
-	 *  @param row, col - integer indices specifying the position 
+	 *  @param row, col - integer indices specifying the position
 	 *
 	 *	@return background color of cell
 	 */
@@ -107,9 +107,9 @@ public class GameGrid extends Grid<GameCell> {
 	}
 
 	/**
-	 *  Get symbol at a cell 
+	 *  Get symbol at a cell
 	 *
-	 *  @param row, col - integer indices specifying the position 
+	 *  @param row, col - integer indices specifying the position
 	 *
 	 *	@return cell symbol
 	 */
@@ -118,9 +118,9 @@ public class GameGrid extends Grid<GameCell> {
 	}
 
 	/**
-	 *  Get symbol color of a cell 
+	 *  Get symbol color of a cell
 	 *
-	 *  @param row, col - integer indices specifying the position 
+	 *  @param row, col - integer indices specifying the position
 	 *
 	 *	@return cell symbol color
 	 */

@@ -10,7 +10,7 @@ import org.json.simple.JSONObject;
  *
  * Basic styling such as stroke, fill, color are defined in the superclass Symbol.
  *
- * @sa An example tutorial can be found at 
+ * @sa An example tutorial can be found at
  * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  * @author Kalpathi Subramanian
  * @date 12/23/18
@@ -136,7 +136,7 @@ public	class Rectangle extends  Symbol {
 		setLocation(origin[0], origin[1]);
 	}
 	/**
-	 *  Scale the rectangle about its center, i.e., the width and height 
+	 *  Scale the rectangle about its center, i.e., the width and height
 	 *	are scaled by the given scale factors
 	 *
 	 *  @param sx,sy scale factors along each axis

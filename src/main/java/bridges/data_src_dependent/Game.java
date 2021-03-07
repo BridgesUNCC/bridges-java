@@ -29,7 +29,7 @@ public class Game  {
 	private	double rating;		// game rating
 	Vector<String> genre;		// game type/category
 
-	/** 
+	/**
 	 * Constructor
 	 */
 	public	Game() {
@@ -38,7 +38,7 @@ public class Game  {
 		genre = new Vector<String>();
 	}
 
-	/** 
+	/**
 	 * Constructor
 	 *
 	 * @param title title of game

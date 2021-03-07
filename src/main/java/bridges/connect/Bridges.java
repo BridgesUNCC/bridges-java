@@ -215,7 +215,7 @@ public class Bridges {
 	/**
 	 *  @brief  sets a debug flag, used for debugging BRIDGES
 	 *
-	 * 	@param  flag  boolean 
+	 * 	@param  flag  boolean
 	 *
 	 */
 	public static void setDebugFlag (Boolean flag) {
@@ -260,13 +260,13 @@ public class Bridges {
 
 
 	/**
-	 * 	@brief Sets the coordinate system type.  
+	 * 	@brief Sets the coordinate system type.
 	 *
-	 *	Coordinate system type options are: ['cartesian', 
-	 *	'albersusa', 'equirectangular', 'window'], and 'cartesian' 
-	 *	is the default; The "window" option 
-	 *	only works for graphs and will automatically scale the view on 
-	 *	the browser to include all vertices which have a fixed location. 
+	 *	Coordinate system type options are: ['cartesian',
+	 *	'albersusa', 'equirectangular', 'window'], and 'cartesian'
+	 *	is the default; The "window" option
+	 *	only works for graphs and will automatically scale the view on
+	 *	the browser to include all vertices which have a fixed location.
 	 *	A different window can be specified using setWindow().
 	 *
 	 * 	@param coord 	this is the desired coordinate space
@@ -288,9 +288,9 @@ public class Bridges {
 	/**
 	 * @brief Specify the window that will be used to render the view by default.
 	 *
-	 * This function enables specifying the window that will rendered by 
-	 *	default in the view. This only works for graph data types. 
-	 *	And the coordinate system need ot be set to "window" using 
+	 * This function enables specifying the window that will rendered by
+	 *	default in the view. This only works for graph data types.
+	 *	And the coordinate system need ot be set to "window" using
 	 *	setCoordSystemType().
 	 *
 	 * 	@param x1 	minimum window x
@@ -329,7 +329,7 @@ public class Bridges {
 	}
 
 	/**
-	 *	@brief Flag to control printing the JSON of the data structure. 
+	 *	@brief Flag to control printing the JSON of the data structure.
 	 *		Used only for debugging BRIDGES
 	 * 	@return check if the flag to output the JSON is set
 	**/

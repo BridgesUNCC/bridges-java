@@ -2,7 +2,7 @@ package bridges.data_src_dependent;
 /**
  * @brief this is a class that defines an OpenStreet Map node or vertex
  *
- * @author Erik Saule, Kalpathi Subramanian, 
+ * @author Erik Saule, Kalpathi Subramanian,
  * @date 12/26/20
  */
 

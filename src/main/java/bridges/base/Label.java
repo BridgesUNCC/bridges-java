@@ -2,9 +2,12 @@ package bridges.base;
 import bridges.base.DataStruct;
 
 import java.util.ArrayList;
+import java.lang.Character;
+
 import bridges.base.Color;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONObject;
+
 
 /**
  * @brief This class used to label symbols.
@@ -68,10 +71,7 @@ public class Label extends Symbol {
 	 *
 	 */
 	public void setRotationAngle (float angle) {
-		// temporary - only horizontal or vertical labels
-		rotation_angle = 0.0f;
-		if (angle == 90.)
-			rotation_angle = angle;
+		rotation_angle = angle;
 	}
 
 	/**
@@ -102,12 +102,25 @@ public class Label extends Symbol {
 		// first get the width of the string by parsing it
 		String str = getLabel();
 		float length = 0.0f;
+		Boolean upper_case_exists = false;
 		for (char ch: str.toCharArray()) {
-			if (ch == 'm' || ch == 'w')
-				length +=  0.5;
-			else if (ch == 'i' || ch == 'l' || ch == 'j')
-				length +=  0.4;
-			else length += 0.6;
+			if (Character.isLowerCase(ch)) {
+				if (ch == 'm' || ch == 'w')
+					length +=  0.6f;
+				else if (ch == 'i' || ch == 'l' || ch == 'j')
+					length +=  0.4f;
+				else length += 0.5f;
+			}
+			else if (Character.isUpperCase(ch)) {
+				upper_case_exists = true;
+				if (ch == 'M' || ch == 'W') 
+					length +=  0.72f;
+				else if (ch == 'I')
+					length += 0.52f;	
+				else length += 0.62f;
+			}
+			else // support only spaces
+				length += 0.55;
 		}
 		length *= fontSize;
 
@@ -115,14 +128,34 @@ public class Label extends Symbol {
 		float loc_y = this.getLocation()[1];
 
 		float width = length;
-		float height = fontSize;
+		float height = 0.0f;
+		if (upper_case_exists) {
+			height = fontSize + 0.3f*fontSize;
+			}
+		else 
+			height = fontSize + 0.1f*fontSize;
+
+		// account for text orientation to compute an 
+		// axis aligned bounding box
+
+		float bbox_width = length;
+		float bbox_height = height;
+		if (rotation_angle == 90.0f || rotation_angle == -90.0f) {
+			bbox_width = height;
+			bbox_height = length;
+		}
+		else if (rotation_angle == -45.0f || rotation_angle == 45.0f) {
+			bbox_width  = length/(float) Math.sqrt(2.0);
+			bbox_height = length/(float) Math.sqrt(2.0);
+		}
+			
 
 		// order is xmin, ymin, xmax, ymax
 		float[] bbox = new float[4];
-		bbox[0] = loc_x - width/2.0f;
-		bbox[1] = loc_y - height/2.0f;
-		bbox[2] = loc_x + width/2.0f;
-		bbox[3] = loc_y + height/2.0f;
+		bbox[0] = loc_x - bbox_width/2.0f;
+		bbox[1] = loc_y - bbox_height/2.0f;
+		bbox[2] = loc_x + bbox_width/2.0f;
+		bbox[3] = loc_y + bbox_height/2.0f;
 
 		return bbox;
 	}

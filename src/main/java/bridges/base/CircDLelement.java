@@ -33,7 +33,7 @@ import java.util.Iterator;
  *
  *	@date   7/17/16, 1/16/17, 7/14/19
  *
- *  @param E  the generic parameter object that contains application specific 
+ *  @param E  the generic parameter object that contains application specific
  *		data, defined by the user when instantiating this object.
  *
  *

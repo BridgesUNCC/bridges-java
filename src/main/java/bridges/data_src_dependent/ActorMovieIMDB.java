@@ -3,7 +3,7 @@ package bridges.data_src_dependent;
 import java.util.Vector;
 
 /**
- * @brief This class represents an actor-movie pair object, to be used with the 
+ * @brief This class represents an actor-movie pair object, to be used with the
  * IMDB actor-movie dataset
  *
  * @author Kalpathi Subramanian
@@ -23,7 +23,7 @@ public class ActorMovieIMDB {
 
 	/**
 	 * @brief get the actor from this object
-	 * @return actor (string) 
+	 * @return actor (string)
 	 */
 	public String getActor() {
 		return actor;
@@ -38,7 +38,7 @@ public class ActorMovieIMDB {
 
 	/**
 	 * @brief get the movie from this object
-	 * @return movie (string) 
+	 * @return movie (string)
 	 */
 	public String getMovie() {
 		return movie;
@@ -53,7 +53,7 @@ public class ActorMovieIMDB {
 
 	/**
 	 * @brief get the movie rating from this object
-	 * @return rating (double) 
+	 * @return rating (double)
 	 */
 	public double getMovieRating() {
 		return rating;

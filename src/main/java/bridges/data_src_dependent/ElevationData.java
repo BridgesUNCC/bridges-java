@@ -47,7 +47,7 @@ public class ElevationData {
 	 * constructors
 	 *
 	 * @param data  elevation data (2D array of ints)
-	 * @param cols  width of data 
+	 * @param cols  width of data
 	 * @param rows  height of data
 	 * @param xll  lower left x coord of origin
 	 * @param yll  lower left y coord of origin
@@ -97,7 +97,7 @@ public class ElevationData {
 	/**
 	 *
 	 * set width
-	 * @param cols  width to be set 
+	 * @param cols  width to be set
 	 *
 	 */
 	public void setCols(int cols) {

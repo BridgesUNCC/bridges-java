@@ -1,6 +1,6 @@
 package bridges.data_src_dependent;
 /**
- * @brief Struct like class used to represent Bridges Assignment Data 
+ * @brief Struct like class used to represent Bridges Assignment Data
  *		as returned from the server
  *
  *	Assignment data has coordinate system type, encoding, nodes, map overlay

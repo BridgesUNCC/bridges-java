@@ -10,16 +10,16 @@ import org.json.simple.JSONValue;
 /**
  * @brief This is the main superclass in BRIDGES for  deriving a number of
  * 	objects used  in building arrays, lists, trees and graph data structures.
-  
- *  SLelement, DLelement, CircSLelement, CircDLelement, MLelement, 
- *	TreeElement, BinTreeElement, BSTElement, AVLTreeElement, KdTreeElement 
+
+ *  SLelement, DLelement, CircSLelement, CircDLelement, MLelement,
+ *	TreeElement, BinTreeElement, BSTElement, AVLTreeElement, KdTreeElement
  *	are all subclasses (see class hierarchy above).  Element contains  two
  *	visualizer objects (ElementVisualizer, LinkVisualizer) for specifying
- *	visual attributes for nodes and links respectively. It also contains a 
+ *	visual attributes for nodes and links respectively. It also contains a
  *	label that that can be displayed in BRIDGES visualizations.
  *
  *  All the tutorials under
- 
+
  *	http://bridgesuncc.github.io/tutorials/Overview.html
  *
  *  illustrate examples of using different types of Element objects and how to
@@ -184,7 +184,7 @@ public class Element<E> extends DataStruct {
 	/**
 	 * This method sets the visualizer object for the current
 	 * element object
-     *
+	 *
 	 * This is rarely used, as the constructor will create a visualizer for
 	 * this element
 	 *
@@ -218,7 +218,7 @@ public class Element<E> extends DataStruct {
 	/**
 	 *	@brief Sets the link from this element to a new incoming element
 	 *
-	 *  This is rarely used, as the constructor will create a link visualizer 
+	 *  This is rarely used, as the constructor will create a link visualizer
 	 *	for this element
 	 *
 	 *	@param el the element to be linked to.
@@ -300,7 +300,7 @@ public class Element<E> extends DataStruct {
 
 	/**
 	 * Get the JSON representation of the element; used internally to construct
-	 *  the data structure representation 
+	 *  the data structure representation
 	 *
 	 * @returns the encoded JSON string
 	 */
@@ -413,7 +413,7 @@ public class Element<E> extends DataStruct {
 	/**
 	 * @brief Change the element color
 	 *
-	 *  @param col The new color of the element. See the Color class 
+	 *  @param col The new color of the element. See the Color class
 	 *	for a complete list of supported color names.
 	 *
 	 */

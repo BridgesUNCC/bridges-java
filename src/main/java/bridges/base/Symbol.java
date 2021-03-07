@@ -259,15 +259,15 @@ public class Symbol {
 		}
 
 	}
-    	/**
-	 * This method sets the symbol location
-	 *
-	 * @param x  x coordinate
-	 * @param y  y coordinate
-	 */
+	/**
+	* This method sets the symbol location
+	*
+	* @param x  x coordinate
+	* @param y  y coordinate
+	*/
 
 	public void setLocation(double x, double y) {
-	    setLocation((float)x, (float)y);
+		setLocation((float)x, (float)y);
 	}
 
 	/**
@@ -313,7 +313,7 @@ public class Symbol {
 	 *  @brief Rotate a 2D point (about Z)
 	 *
 	 *  @param pt  2D point (x, y)
-	 *  @param angle rotation angle in degrees (positive is counter clockwise, 
+	 *  @param angle rotation angle in degrees (positive is counter clockwise,
 	 *		negative is clockwise)
 	 */
 	protected void rotatePoint (float[] pt, float angle) {

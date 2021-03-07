@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 
 
-/** 
+/**
  *	This class is a wrapper for a socket.io socket connection for BRIDGES
  */
 public class SocketConnection {
@@ -28,7 +28,7 @@ public class SocketConnection {
 	// Keep track of keypress listeners
 	private List<KeypressListener> listeners = new ArrayList<KeypressListener>();
 
-	/** 
+	/**
 	 * Register listeners to keypress events
 	 * @param toAdd keypress listener object
 	 */
@@ -38,7 +38,7 @@ public class SocketConnection {
 		listeners.add(toAdd);
 	}
 
-	/** 
+	/**
 	 *	Given username and assignment number, set up a connection to the socket
 	 *	server.<br>
 	 *  <b>TODO:</b> this will need to be refactored to sit within BRIDGES, but for now
@@ -155,10 +155,10 @@ public class SocketConnection {
 		}
 	}
 
-	/** 
+	/**
 	 *	Send a dataframe string to the socket server <br>
 	 *
-	 *  <b>TODO:</b> this currently emits a gamegrid:recv event. We may need 
+	 *  <b>TODO:</b> this currently emits a gamegrid:recv event. We may need
 	 *	to refactor this to consider a variety of dataframe types
 	 */
 	public void sendData(String dataframe) {
@@ -172,7 +172,7 @@ public class SocketConnection {
 		socket.emit("gamegrid:recv", dataframe);
 	}
 
-	/** 
+	/**
 	 *	 @brief close the socket
 	 */
 	public void close() {

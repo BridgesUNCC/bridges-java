@@ -93,7 +93,7 @@ public class Grid<E> extends DataStruct {
 	 *	@brief Get the (row, col) element in the grid
 	 * 	@param row row index
 	 * 	@param col column index
-     *  @return the element at (row, col)
+	 *  @return the element at (row, col)
 	 */
 	public E get(Integer row, Integer col) {
 		try {

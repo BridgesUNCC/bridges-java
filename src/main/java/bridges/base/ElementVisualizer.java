@@ -15,13 +15,13 @@ import java.util.Random;
  *	Visual properties include color, shape, opacity, size and location.
  *	Objects of this class are stored as part of the Element class.
  *	Generally, a user will manipulate the ElementVisualizer returned from the
- *	Element's getVisualizer() method (rather than creating this object directly), 
+ *	Element's getVisualizer() method (rather than creating this object directly),
  *	and then set attributes using its methods.
  *  Supported attributed values are as follows:<br>
  *
- *  <b>Color:</b> Supported colors by <b>name</b> using setColor(): 
- *		See the Color class for the complete list; colors are set by 
- *		by RGBA Specification,  0-255 for each component, or using color names. 
+ *  <b>Color:</b> Supported colors by <b>name</b> using setColor():
+ *		See the Color class for the complete list; colors are set by
+ *		by RGBA Specification,  0-255 for each component, or using color names.
  *
  *	<b>	Supported Shapes:</b>
  *	"circle", "square", "diamond", "cross",

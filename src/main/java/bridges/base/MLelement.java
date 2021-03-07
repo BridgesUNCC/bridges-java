@@ -21,7 +21,7 @@ import java.util.Vector;
  * list continues (getNext()/setNext()). As in singly linked elements, the next pointer
  * points to the following list element of the list or a sublist.
  * 	Multi-list elements contain a visualizer, for setting
- *	visual attributes, such as  color, shape, opacity, size, which is 
+ *	visual attributes, such as  color, shape, opacity, size, which is
  *	necessary for displaying them in a visualization
  *
  *	Elements also have a LinkVisualizer object, that is used when they are linked to

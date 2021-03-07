@@ -14,7 +14,7 @@ import bridges.validation.Validation;
  *	This class can be used to create 2D arrays of type Element<E>  where E
  *	is a generic object representing application specific data.
  *
- *	Arrays are internally represented as 1D arrays; 
+ *	Arrays are internally represented as 1D arrays;
  *
  * @param <E> The generic parameter object that is part of this element, representing
  *          application specific data.
@@ -55,7 +55,7 @@ public class Array2D<E> extends Array<E> {
 	 *
 	 *	@param row  - row index
 	 *	@param col  - column index
-	 *	@return Element<E>  object at 2D index:  row, col 
+	 *	@return Element<E>  object at 2D index:  row, col
 	 */
 	public Element<E> getElement(int row, int col) {
 		return super.getElement(row * num_cols + col);

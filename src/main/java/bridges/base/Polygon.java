@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * Basic styling such as stroke, fill, color are defined in the superclass Symbol.
  *
- * @sa An example tutorial can be found at 
+ * @sa An example tutorial can be found at
  * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
  * @author David Burlinson, Kalpathi Subramanian

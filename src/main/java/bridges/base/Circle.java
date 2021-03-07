@@ -10,7 +10,7 @@ import org.json.simple.JSONObject;
  *
  * Basic styling such as stroke, fill, color are defined in the superclass Symbol.
  *
- * @sa An example tutorial can be found at 
+ * @sa An example tutorial can be found at
  * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
  * @author Kalpathi Subramanian
