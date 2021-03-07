@@ -26,11 +26,11 @@ import org.json.simple.JSONObject;
  * @date 2018, 7/15/19
  */
 public class Label extends Symbol {
-	static final Integer DEFAULT_FONTSIZE = 12;
+	static final Float DEFAULT_FONTSIZE = 12.0f;
 
 	private Integer width = 100;
 	private Integer height = 50;
-	private Integer fontSize = DEFAULT_FONTSIZE;
+	private Float fontSize = DEFAULT_FONTSIZE;
 	private float rotation_angle = 0.0f;
 
 
@@ -51,8 +51,8 @@ public class Label extends Symbol {
 		this.setLabel(label);
 	}
 
-	public Label setFontSize(Integer size) {
-		if (size <= 0 || size > 200) {
+	public Label setFontSize(Float size) {
+		if (size <= 0. || size > 200.) {
 			throw new IllegalArgumentException("Please use font size between 0 and 200");
 		}
 		else {
