@@ -114,18 +114,16 @@ public class Label extends Symbol {
 			else if (Character.isUpperCase(ch)) {
 				upper_case_exists = true;
 				if (ch == 'M' || ch == 'W') 
-					length +=  0.72f;
+					length +=  0.70f;
 				else if (ch == 'I')
-					length += 0.52f;	
-				else length += 0.62f;
+					length += 0.50f;	
+				else length += 0.60f;
 			}
 			else // support only spaces
-				length += 0.55;
+				length += 0.50f;
 		}
 		length *= fontSize;
 
-		float loc_x = this.getLocation()[0];
-		float loc_y = this.getLocation()[1];
 
 		float width = length;
 		float height = 0.0f;
@@ -140,23 +138,59 @@ public class Label extends Symbol {
 
 		float bbox_width = length;
 		float bbox_height = height;
+
+		// deal first with vertical text - this is simple
+		float loc_x = (float) this.getLocation()[0];
+		float loc_y = (float) this.getLocation()[1];
+		float[] bbox = new float[4];
 		if (rotation_angle == 90.0f || rotation_angle == -90.0f) {
 			bbox_width = height;
 			bbox_height = length;
+			bbox[0] =  loc_x - bbox_width/2.0f;
+			bbox[1] =  loc_y - bbox_height/2.0f;
+			bbox[2] =  loc_x + bbox_width/2.0f;
+			bbox[3] =  loc_y + bbox_height/2.0f;
 		}
-		else if (rotation_angle == -45.0f || rotation_angle == 45.0f) {
-			bbox_width  = length/(float) Math.sqrt(2.0);
-			bbox_height = length/(float) Math.sqrt(2.0);
+		else  { 		
+			// deal with any arbitrary angle, rotat the bounding box by this
+			// angle, then recomput the bounding box
+			float[] pt = new float[2];
+
+			bbox[0] = bbox[1] = Float.MAX_VALUE;
+			bbox[2] = bbox[3] = -Float.MAX_VALUE;
+
+			// rotate  the four corners of the bounding box
+			for (int k = 0; k < 4; k++) {
+				switch (k) {
+					case 0:     // lower left at (0,0)
+						pt[0] = pt[1] = 0.0f;
+						break;
+					case 1:     // upper left
+						pt[0] = 0.0f; pt[1] = bbox_height;
+						break;
+					case 2:     // lower right
+						pt[0] = bbox_width; pt[1] = 0.0f;
+						break;
+					case 3:     // upper right
+						pt[0] = bbox_width; pt[1] = bbox_height;
+						break;
+					}
+				// rotate the point by the angle
+				rotatePoint (pt, rotation_angle);
+
+				// update bounding box
+				if (pt[0] < bbox[0])  bbox[0] = pt[0];
+				if (pt[1] < bbox[1])  bbox[1] = pt[1];
+				if (pt[0] > bbox[2])  bbox[2] = pt[0];
+				if (pt[1] > bbox[3])  bbox[3] = pt[1];
+			}
+
+			// translate center of box to center of label
+			float tx = loc_x - (bbox[0] + (bbox[2]-bbox[0])/2.0f);
+			float ty = loc_y - (bbox[1] + (bbox[3]-bbox[1])/2.0f);
+			bbox[0] += tx; bbox[2] += tx;
+			bbox[1] += ty; bbox[3] += ty;
 		}
-			
-
-		// order is xmin, ymin, xmax, ymax
-		float[] bbox = new float[4];
-		bbox[0] = loc_x - bbox_width/2.0f;
-		bbox[1] = loc_y - bbox_height/2.0f;
-		bbox[2] = loc_x + bbox_width/2.0f;
-		bbox[3] = loc_y + bbox_height/2.0f;
-
 		return bbox;
 	}
 
