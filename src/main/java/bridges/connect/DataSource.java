@@ -631,7 +631,7 @@ public class DataSource {
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
 	 *
 	 *  @param songTitle  title of song (string)
-	 *  @param artistName  name of artist (string)
+	 *  @param artistName  name of artist (string), empty string for unspecified
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a Song object.
@@ -652,9 +652,6 @@ public class DataSource {
 			url += "?artistName=" +
 				URLEncoder.encode(artistName, StandardCharsets.UTF_8.name());
 		}
-		else {
-			throw new IllegalArgumentException("Must provide a valid artist name");
-		}
 
 		// Create and execute the HTTP request
 		HttpResponse response = makeRequest(url);
@@ -672,6 +669,25 @@ public class DataSource {
 			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status + ". Message: " + result);
 		}
 	}
+	/**
+	 *  These helper functions provides access to a particular song.
+	 *
+	 *  The record has information such as song title, artist, album, year,
+	 *	lyrics, and genre. For more information
+	 *	and to look at the data, refer to <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
+	 *
+	 *  @param songTitle  title of song (string)
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a Song object.
+	 */
+	public Song getSong(String songTitle)
+	throws IOException {
+	    return getSong(songTitle, "");
+	}
+
+    
 	/**
 	 * @brief Generates Open Street Map URL request for a given location and returns the map data
 	 *
