@@ -180,10 +180,8 @@ public class DataSource {
 	 *
 	 *  @return a list of Shakespeare objects.
 	 */
-	public  List<Shakespeare> getShakespeareData(String works) throws Exception {
+    public  List<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
 		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";
-
-		Boolean textOnly = false;
 
 		if (works == "plays" || works == "poems") {
 			url += "/" + works;
@@ -219,6 +217,10 @@ public class DataSource {
 		}
 	}
 
+    public  List<Shakespeare> getShakespeareData(String works) throws Exception {
+	return getShakespeareData(works, false);
+    }
+    
 	/**
 	 *  This helper function provides access to a cancer dataset from CDC
 	 *  https://www.cdc.gov/cancer/npcr/uscs/download_data.htm and curated
