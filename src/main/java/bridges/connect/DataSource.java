@@ -32,6 +32,7 @@ import java.nio.charset.StandardCharsets;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.*;
 
 // HTTP related
 import org.apache.http.HttpResponse;
@@ -80,6 +81,10 @@ public class DataSource {
 
 	private String getAmenityBaseURL() {
 		return "http://bridges-data-server-osm.bridgesuncc.org/";
+	}
+
+	private String getGutenbergBaseURL(){
+		return "http://192.168.1.6:5000";
 	}
 
 
@@ -1060,6 +1065,98 @@ public class DataSource {
 			cellsize, maxVal);
 		return ret_data;
 	}
+
+	private String requestJSON(String url) throws IOException {
+		String data = "";
+		if (debug)
+			System.err.println("Hitting URL: " + url);
+
+		// get the hash code of the dataset
+		HttpResponse dataResp = makeRequest(url);
+		int requestStatus = dataResp.getStatusLine().getStatusCode();
+		data = EntityUtils.toString(dataResp.getEntity());
+
+		if (debug)
+			System.err.println("Data is: " + data);
+
+		if (requestStatus == 200){
+			return data;
+		} else {
+			throw new HttpResponseException(requestStatus, "Http Request Failed. Error Code:"
+					+ requestStatus + ". Message:" + data);
+		}
+		
+		
+	}
+
+	public List<GutenbergMeta> searchGutenbergMeta(String term, String catagory) throws IOException{
+		String url = getGutenbergBaseURL() + "/search?search=" + term + "&type=" + catagory;
+		String data = requestJSON(url);
+
+
+		JSONParser parser = new JSONParser();
+		List<GutenbergMeta> bookList = new ArrayList<GutenbergMeta>();
+
+		try{
+			JSONObject json = (JSONObject) parser.parse(data);
+			JSONArray books = (JSONArray) json.get("book_list");
+			Iterator<JSONObject> iter = books.iterator();
+		
+			while(iter.hasNext()){
+				JSONObject book = iter.next();
+
+				Gson gson = new Gson();
+				GutenbergMeta bookData = gson.fromJson(book.toString(), GutenbergMeta.class);
+				bookList.add(bookData);
+			}
+			return bookList;
+
+		} catch (Exception e) {
+			System.out.println("Error parsing the returned JSON"); 
+		}
+
+		return bookList;
+	}
+
+
+	public GutenbergMeta getMetaGutenbergData(int id) throws IOException {
+		String url = getGutenbergBaseURL() + "/meta?id=" + id;
+		String data = requestJSON(url);
+
+
+		JSONParser parser = new JSONParser();
+		GutenbergMeta bookData = null;
+
+		try{
+			JSONObject json = (JSONObject) parser.parse(data);
+			JSONArray books = (JSONArray) json.get("book_list");
+			Iterator<JSONObject> iter = books.iterator();
+		
+			while(iter.hasNext()){
+				JSONObject book = iter.next();
+
+				Gson gson = new Gson();
+				bookData = gson.fromJson(book.toString(), GutenbergMeta.class);
+				return bookData;
+			}
+			
+
+		} catch (Exception e) {
+			System.out.println("Error parsing the returned JSON"); 
+		}
+		return bookData;
+	}
+
+
+	public String getGutenbergText(int id) throws IOException{
+		String url = getGutenbergBaseURL() + "/book?id=" + id;
+		String data = requestJSON(url);
+		//TODO: Add local caching for book text
+
+
+		return data;
+	}
+
 
 	/**
 	 * @brief This function returns the Movie and Actors playing in them
