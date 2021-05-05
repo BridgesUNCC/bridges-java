@@ -84,7 +84,7 @@ public class DataSource {
 	}
 
 	private String getGutenbergBaseURL(){
-		return "http://192.168.1.6:5000";
+		return "http://bridges-data-server-gutenberg.bridgesuncc.org";
 	}
 
 
