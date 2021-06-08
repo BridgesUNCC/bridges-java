@@ -1151,7 +1151,7 @@ public class DataSource {
 	public String getGutenbergText(int id) throws IOException{
 		String url = getGutenbergBaseURL() + "/book?id=" + id;
 		String data;
-		if (lru.incache(id){
+		if (lru.incache(id)){
 			data = lru.getDoc(hash);
 		} else {
 			data = requestJSON(url);
