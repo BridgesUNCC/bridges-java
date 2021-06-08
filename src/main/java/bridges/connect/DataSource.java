@@ -1151,11 +1151,12 @@ public class DataSource {
 	public String getGutenbergText(int id) throws IOException{
 		String url = getGutenbergBaseURL() + "/book?id=" + id;
 		String data;
-		if (lru.incache(id)){
-			data = lru.getDoc(hash);
+		String cacheID = "gutenberg"+id;
+		if (lru.inCache(cacheID)){
+			data = lru.getDoc(cacheID);
 		} else {
 			data = requestJSON(url);
-			lru.put(String.valueOf(id), data);
+			lru.putDoc(cacheID, data);
 		}
 
 
