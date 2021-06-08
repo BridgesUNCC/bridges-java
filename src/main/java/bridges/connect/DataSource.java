@@ -1150,8 +1150,13 @@ public class DataSource {
 
 	public String getGutenbergText(int id) throws IOException{
 		String url = getGutenbergBaseURL() + "/book?id=" + id;
-		String data = requestJSON(url);
-		//TODO: Add local caching for book text
+		String data;
+		if (lru.incache(id){
+			data = lru.getDoc(hash);
+		} else {
+			data = requestJSON(url);
+			lru.put(String.valueOf(id), data);
+		}
 
 
 		return data;
