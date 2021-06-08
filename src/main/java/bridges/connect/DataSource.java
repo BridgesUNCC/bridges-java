@@ -1088,7 +1088,16 @@ public class DataSource {
 		
 		
 	}
-
+	
+	/**
+	* This function searches for a gutenberg book provided a search term and the type of search
+	* the search term is a string you want to match within the search type
+	*
+	* @param term is the search term to match
+	* @param category is the category to string match the term i.e: title, id, authors, genres, date_added, lang
+	*
+	* @returns a list of GutenbergMeta objects containing the books that matched the query
+	*/
 	public List<GutenbergMeta> searchGutenbergMeta(String term, String catagory) throws IOException{
 		String url = getGutenbergBaseURL() + "/search?search=" + term + "&type=" + catagory;
 		String data = requestJSON(url);
@@ -1118,7 +1127,13 @@ public class DataSource {
 		return bookList;
 	}
 
-
+	/**
+	* This function is to retrieve a gutenberg book metadata from a book ID
+	*
+	* @param id is the id of the book you want to retrieve
+	*
+	* @return a GutenbergMeta object of the book with the ID passed in
+	*/
 	public GutenbergMeta getMetaGutenbergData(int id) throws IOException {
 		String url = getGutenbergBaseURL() + "/meta?id=" + id;
 		String data = requestJSON(url);
@@ -1147,7 +1162,13 @@ public class DataSource {
 		return bookData;
 	}
 
-
+	/**
+	* This function gets the text of a gutenberg book based on the ID
+	*
+	* @param id is the id of the book you want the text of
+	*
+	* @returns a string of the book's text
+	*/
 	public String getGutenbergText(int id) throws IOException{
 		String url = getGutenbergBaseURL() + "/book?id=" + id;
 		String data;
