@@ -1103,7 +1103,6 @@ public class DataSource {
 														throws IOException{
 		String url = getGutenbergBaseURL() + "/search?search=" + 
 			URLEncoder.encode(term, StandardCharsets.UTF_8.name()) + "&type=" + category;
-		System.out.println(url);
 		String data = requestJSON(url);
 
 		JSONParser parser = new JSONParser();
@@ -1174,7 +1173,7 @@ public class DataSource {
 	*
 	* @returns a string of the book's text
 	*/
-	public String getGutenbergText(int id) throws IOException{
+	public String getGutenbergBookText(int id) throws IOException{
 		String url = getGutenbergBaseURL() + "/book?id=" + id;
 		String data;
 		String cacheID = "gutenberg"+id;
