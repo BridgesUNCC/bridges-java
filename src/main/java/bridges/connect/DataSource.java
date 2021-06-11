@@ -84,7 +84,7 @@ public class DataSource {
 	}
 
 	private String getGutenbergBaseURL(){
-		return "http://192.168.1.6:5000";
+		return "http://bridges-data-server-gutenberg.bridgesuncc.org";
 	}
 
 
@@ -472,8 +472,8 @@ public class DataSource {
 	 *
 	 *  @return a list of GutenbergBook objects
 	 */
-	public List<GutenbergBook> getGutenbergBookMetaData ()
-	throws IOException {
+	public List<GutenbergBook> getGutenbergBookMetaData () 
+							throws IOException {
 
 		String url = "https://bridgesdata.herokuapp.com/api/books";
 		HttpResponse response = makeRequest(url);
@@ -1088,16 +1088,28 @@ public class DataSource {
 		
 		
 	}
+    /**
+     * @brief Search the gutenberg data for retrieving meta
+     *   data of books matching a string and a category
+     *
+     *  Data is retrieved  into a vector of book records
+     *  
+     *  @param term  a string that matches the category 
+     *  @param category  category can be any book attribute (title, genre, 
+     *                  date, Library of Congress class, language)
+     */
 
-	public List<GutenbergMeta> searchGutenbergMeta(String term, String catagory) throws IOException{
-		String url = getGutenbergBaseURL() + "/search?search=" + term + "&type=" + catagory;
+	public List<GutenbergMeta> getGutenbergBookMetaData(String term, String category) 
+														throws IOException{
+		String url = getGutenbergBaseURL() + "/search?search=" + 
+			URLEncoder.encode(term, StandardCharsets.UTF_8.name()) + "&type=" + category;
+		System.out.println(url);
 		String data = requestJSON(url);
-
 
 		JSONParser parser = new JSONParser();
 		List<GutenbergMeta> bookList = new ArrayList<GutenbergMeta>();
 
-		try{
+		try	 {
 			JSONObject json = (JSONObject) parser.parse(data);
 			JSONArray books = (JSONArray) json.get("book_list");
 			Iterator<JSONObject> iter = books.iterator();
@@ -1111,7 +1123,8 @@ public class DataSource {
 			}
 			return bookList;
 
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println("Error parsing the returned JSON"); 
 		}
 
@@ -1119,7 +1132,7 @@ public class DataSource {
 	}
 
 
-	public GutenbergMeta getMetaGutenbergData(int id) throws IOException {
+	public GutenbergMeta getAGutenbergBookMetaData(int id) throws IOException {
 		String url = getGutenbergBaseURL() + "/meta?id=" + id;
 		String data = requestJSON(url);
 
