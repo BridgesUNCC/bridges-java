@@ -1132,6 +1132,13 @@ public class DataSource {
 	}
 
 
+	/**
+	* This function is to retrieve a gutenberg book metadata from a book ID
+	*
+	* @param id is the id of the book you want to retrieve
+	*
+	* @return a GutenbergMeta object of the book with the ID passed in
+	*/
 	public GutenbergMeta getAGutenbergBookMetaData(int id) throws IOException {
 		String url = getGutenbergBaseURL() + "/meta?id=" + id;
 		String data = requestJSON(url);
@@ -1160,11 +1167,23 @@ public class DataSource {
 		return bookData;
 	}
 
-
+	/**
+	* This function gets the text of a gutenberg book based on the ID
+	*
+	* @param id is the id of the book you want the text of
+	*
+	* @returns a string of the book's text
+	*/
 	public String getGutenbergText(int id) throws IOException{
 		String url = getGutenbergBaseURL() + "/book?id=" + id;
-		String data = requestJSON(url);
-		//TODO: Add local caching for book text
+		String data;
+		String cacheID = "gutenberg"+id;
+		if (lru.inCache(cacheID)){
+			data = lru.getDoc(cacheID);
+		} else {
+			data = requestJSON(url);
+			lru.putDoc(cacheID, data);
+		}
 
 
 		return data;
