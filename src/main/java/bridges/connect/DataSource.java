@@ -84,7 +84,8 @@ public class DataSource {
 	}
 
 	private String getGutenbergBaseURL(){
-		return "http://bridges-data-server-gutenberg.bridgesuncc.org";
+//		return "http://bridges-data-server-gutenberg.bridgesuncc.org/";
+		return "http://bridges-data-server-gutenberg-t.bridgesuncc.org/";
 	}
 
 
@@ -1184,8 +1185,18 @@ public class DataSource {
 			lru.putDoc(cacheID, data);
 		}
 
+		// need to parse the data
+		JSONParser parser = new JSONParser();
+		String book_text = new String();
+		try{
+			JSONObject json = (JSONObject) parser.parse(data);
+			book_text = json.get("book").toString();
+		} 
+		catch (Exception e) {
+			System.out.println("Error parsing the returned JSON"); 
+		}
 
-		return data;
+		return book_text;
 	}
 
 
