@@ -44,7 +44,7 @@ public class SimpleCache extends Cache {
     }
 
     public SimpleCache () {
-        this.cacheDir = "./cache/";
+        this.cacheDir = "./.cache/";
         // a reasonable location on unixes
         String home = System.getenv("HOME");
         if (home == null) {
@@ -60,7 +60,7 @@ public class SimpleCache extends Cache {
                 System.err.println("Error creating cache directory");
             }
         }
-        this.cacheDir += "bridges_data/";
+        this.cacheDir += "bridges_data/java/";
         dir = new File(cacheDir);
         if (!dir.exists()) {
             if (!dir.mkdir()) {
