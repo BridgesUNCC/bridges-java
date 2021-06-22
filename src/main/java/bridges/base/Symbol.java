@@ -29,47 +29,29 @@ import org.json.simple.JSONArray;
  * The overall Symbol can be made more of less visible by adjusting
  * its opacity using setOpacity().
  *
- * 	@author David Burlinson, Kalpathi Subramanian
+ * 	@author David Burlinson, Kalpathi Subramanian, Erik Saule
  *
  *	@date  2018, 7/15/19
+ *	@date  2020, 6/22/21
  *
 */
-public class Symbol {
+public abstract class Symbol {
 
-	static	Integer ids = 0;
-	private String identifier;
-	protected String label = "";
-	private String shape_type = "circle";
+	protected String label = null;
 
-	// Static default attribute values for all Symbols
-	static final Color DEFAULT_FILLCOLOR = new Color("blue");
-	static final float DEFAULT_OPACITY = 1.0f;
-	static final Color DEFAULT_STROKECOLOR = new Color("white");
-	static final float DEFAULT_STROKEWIDTH = 1.0f;
-	static final Integer DEFAULT_STROKEDASH = 1;
-	static final float DEFAULT_LOCATIONX = 0.0f;
-	static final float DEFAULT_LOCATIONY = 0.0f;
-
-	// default css attributes for Symbols
-	protected Color fillColor = new Color("blue");
-	protected float opacity = DEFAULT_OPACITY;
-	protected Color strokeColor = new Color("white");
-	protected float strokeWidth = DEFAULT_STROKEWIDTH;
-	protected Integer strokeDash = DEFAULT_STROKEDASH;
-
-	// default location attributes for Symbols
-	protected float locationX = DEFAULT_LOCATIONX;
-	protected float locationY = DEFAULT_LOCATIONY;
-
-
+    protected Color fillColor = null;
+    protected Float opacity = null;
+    protected Color strokeColor = null;
+    protected Float strokeWidth = null;
+    protected Integer strokeDash = null;
+    protected Integer layer = null;
+    protected float[] transform = null;
+    
 	/**
 	 *	Create a default symbol object
 	 */
 	public Symbol() {
 		super();
-		this.identifier = ids.toString();
-		this.label = "";
-		ids++;
 	}
 
 	/**
@@ -91,29 +73,15 @@ public class Symbol {
 	}
 
 	/**
-	 * This method returns the Symbol's unique identifier
-	 * @return the string identifier
-	 */
-	public String getIdentifier() {
-		return identifier;
-	}
-
-	/**
 	 *  Get the shape type
 	 *
 	 *	@return shape type
 	 */
 	protected String getShapeType() {
-		return shape_type;
+	    
+	    return "";
 	}
 
-	/**
-	 *	Set the shape type
-	 *	@param sh shape type
-	 */
-	protected void setShapeType(String sh) {
-		shape_type = sh;
-	}
 
 	/**
 	 * This method sets the symbol fill color
@@ -174,12 +142,7 @@ public class Symbol {
 	 * @param strokewidth the stroke width to set
 	 */
 	public void setStrokeWidth(float strokewidth) {
-		if (strokewidth < 0.0f || strokewidth > 10.0f) {
-			throw new IllegalArgumentException("Stroke width must be between 0 and 10");
-		}
-		else {
-			this.strokeWidth = strokewidth;
-		}
+	    this.strokeWidth = strokewidth;
 	}
 	/**
 	 * This method gets stroke width
@@ -187,7 +150,7 @@ public class Symbol {
 	 * @return  stroke width
 	 */
 
-	public float getStrokeWidth() {
+	public Float getStrokeWidth() {
 		return this.strokeWidth;
 	}
 
@@ -211,7 +174,7 @@ public class Symbol {
 	 *
 	 * @return  symbol opacity
 	 */
-	public float getOpacity() {
+	public Float getOpacity() {
 		return this.opacity;
 	}
 
@@ -221,13 +184,8 @@ public class Symbol {
 	 * @param dash dash level
 	 */
 	public Symbol setStrokeDash(int dash) {
-		if (dash < 0 || dash > 10) {
-			throw new IllegalArgumentException("Dash must be between 0 and 10 (inclusive)");
-		}
-		else {
-			this.strokeDash = dash;
-		}
-		return this;
+	    this.strokeDash = dash;
+	    return this;
 	}
 
 	/**
@@ -240,98 +198,41 @@ public class Symbol {
 		return this.strokeDash;
 	}
 
-
 	/**
-	 * This method sets the symbol location
+	 * This method sets the layer the symbol sits on
 	 *
-	 * @param x  x coordinate
-	 * @param y  y coordinate
+	 * @param layer layer (lower value closer to camera)
 	 */
-
-	public void setLocation(float x, float y) {
-		if ((x > Float.NEGATIVE_INFINITY && x < Float.POSITIVE_INFINITY) &&
-			(y > Float.NEGATIVE_INFINITY && y < Float.POSITIVE_INFINITY)) {
-			this.locationX = x;
-			this.locationY = y;
-		}
-		else {
-			throw new IllegalArgumentException("Coordinates must be real numbers");
-		}
-
-	}
-	/**
-	* This method sets the symbol location
-	*
-	* @param x  x coordinate
-	* @param y  y coordinate
-	*/
-
-	public void setLocation(double x, double y) {
-		setLocation((float)x, (float)y);
+	public Symbol setLayer(int layer) {
+	    this.layer = layer;
+	    return this;
 	}
 
 	/**
-	 * This method gets the symbol location
+	 * This method gets layer
 	 *
-	 * @return location (x, y) of the symbol
+	 * @return  layer layer (lower value closer to camera)
 	 */
 
-	public float[] getLocation() {
-		return new float[] {this.locationX, this.locationY};
+	public Integer getLayer() {
+	    return this.layer;
 	}
 
-	/**
-	 * Get Dimensions of symbol
-	 * @return  symbol dimensions
-	 */
-	public float[] getDimensions() {
-		return new float[] {0.0f, 0.0f, 0.0f, 0.0f};
-	}
 
-	/**
-	 *  Translate (move)  a 2D point along X and Y
-	 *  @param pt  2D point (x, y)
-	 *  @param tx, ty translation vector
-	 */
-	protected void translatePoint (float[] pt, float tx, float ty) {
-		pt[0] += tx;
-		pt[1] += ty;
-	}
+    public Symbol setTransform (float a, float b, float c,
+				float d, float e, float f) {
+	float[] mat = new float[6];
+	mat[0] = a; 	mat[1] = b; 	mat[2] = c;
+	mat[3] = d; 	mat[4] = e; 	mat[5] = f;
+	this.transform = mat;
+	return this;
+    }
 
-	/**
-	 * @brief Scale a 2D point; used to increase or decrease the size of objects
-	 *
-	 *  @param pt 2D point (x, y) to be scaled
-	 *  @param sx,sy  scale factors (along each axis)
-	 */
-	protected void scalePoint (float[] pt, float sx, float sy) {
-		pt[0] *= sx;
-		pt[1] *= sy;
-	}
-
-	/**
-	 *  @brief Rotate a 2D point (about Z)
-	 *
-	 *  @param pt  2D point (x, y)
-	 *  @param angle rotation angle in degrees (positive is counter clockwise,
-	 *		negative is clockwise)
-	 */
-	protected void rotatePoint (float[] pt, float angle) {
-		// compute sin, cos
-		double angle_r =  Math.toRadians(angle);
-		double c = Math.cos(angle_r);
-		double s = Math.sin(angle_r);
-
-		// rotate the point
-		double[] tmp = new double[2];
-		tmp[0] = pt[0] * c - pt[1] * s;
-		tmp[1] = pt[0] * s + pt[1] * c;
-
-		// assign to point
-		pt[0] = (float) tmp[0];
-		pt[1] = (float) tmp[1];
-	}
-
+    public float[] getTransform () {
+	
+	return this.transform;
+    }
+    
 	/**
 	 * Internal code for getting the representation  of the Symbol object.
 	 *
@@ -339,44 +240,47 @@ public class Symbol {
 	 */
 	public JSONObject getJSONRepresentation() {
 		JSONObject json_builder = new JSONObject();
-		JSONObject location = new JSONObject();
 		JSONArray myColor;
 
-		if (fillColor.getRepresentation().compareTo(DEFAULT_FILLCOLOR.getRepresentation()) != 0) {
+		json_builder.put ("type", getShapeType());
+		
+		if (fillColor != null) {
 			myColor = new JSONArray();
 			myColor.add(fillColor.getRed());
 			myColor.add(fillColor.getGreen());
 			myColor.add(fillColor.getBlue());
 			myColor.add(fillColor.getAlpha());
-			json_builder.put("fill", myColor);
+			json_builder.put("fill-color", myColor);
 		}
 
-		if (opacity != DEFAULT_OPACITY) {
+		if (opacity != null) {
 			json_builder.put("opacity", opacity);
 		}
 
-		if (strokeColor.getRepresentation().compareTo(DEFAULT_STROKECOLOR.getRepresentation()) != 0) {
+		if (transform != null) {
+			json_builder.put("transform", transform);
+		}
+
+		if (label != null) {
+			json_builder.put("label", label);
+		}
+
+		
+		if (strokeColor != null) {
 			myColor = new JSONArray();
 			myColor.add(strokeColor.getRed());
 			myColor.add(strokeColor.getGreen());
 			myColor.add(strokeColor.getBlue());
 			myColor.add(strokeColor.getAlpha());
-			json_builder.put("stroke", myColor);
+			json_builder.put("stroke-color", myColor);
 		}
 
-		if (strokeWidth != DEFAULT_STROKEWIDTH) {
+		if (strokeWidth != null) {
 			json_builder.put("stroke-width", strokeWidth);
 		}
 
-		if (strokeDash != DEFAULT_STROKEDASH) {
+		if (strokeDash != null) {
 			json_builder.put("stroke-dasharray", strokeDash);
-		}
-
-		if (!((locationX == DEFAULT_LOCATIONX) &&
-				(locationY == DEFAULT_LOCATIONY))) {
-			location.put("x", locationX);
-			location.put("y", locationY);
-			json_builder.put("location", location);
 		}
 
 		return json_builder;

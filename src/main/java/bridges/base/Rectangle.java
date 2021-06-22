@@ -1,6 +1,7 @@
 
 package bridges.base;
 
+import java.util.ArrayList;
 import bridges.base.Symbol;
 import org.json.simple.JSONObject;
 
@@ -12,14 +13,15 @@ import org.json.simple.JSONObject;
  *
  * @sa An example tutorial can be found at
  * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
- * @author Kalpathi Subramanian
- * @date 12/23/18
+ * @author Kalpathi Subramanian, Erik Saule
+ * @date 12/23/18, 6/22/21
  *
  */
 public	class Rectangle extends  Symbol {
 
 	// height, width of rectangle
 	private float width = 1.0f, height = 1.0f;
+    private float locx = 0.0f, locy = 0.0f;
 
 	/**
 	 *  Construct a default rectangle
@@ -56,7 +58,7 @@ public	class Rectangle extends  Symbol {
 	 *
 	 *  @return name   shape name
 	 */
-	public String getName()  {
+	public String getShapeType()  {
 		return "rect";
 	}
 
@@ -66,7 +68,7 @@ public	class Rectangle extends  Symbol {
 	 * @param w  width
 	 */
 	public void setWidth(float w) {
-		if (w <= 0.0f) {
+		if (w < 0.0f) {
 			throw new IllegalArgumentException ("Width needs to be positive");
 		}
 		width = w;
@@ -78,31 +80,12 @@ public	class Rectangle extends  Symbol {
 	 * @param h  height
 	 */
 	void setHeight(float h) {
-		if (h <= 0.0f) {
+		if (h < 0.0f) {
 			throw new IllegalArgumentException ("Height needs to be positive");
 		}
 		height = h;
 	}
 
-
-	/**
-	 * This method returns the dimensions of the shape: min and max
-	 *	values in X and Y
-	 *
-	 * @return rectangle's bounding box (array of 4 values)
-	 */
-	public float[] getDimensions() {
-
-		float[] dims = new float[4];
-		float[] location = getLocation();
-
-		dims[0] = location[0];
-		dims[1] = location[0] + width;
-		dims[2] = location[1];
-		dims[3] = location[1] + height;
-
-		return dims;
-	}
 
 	/*
 	 * This method sets the location and size of the rectangle
@@ -113,43 +96,11 @@ public	class Rectangle extends  Symbol {
 	 * @param h  height of rectangle
 	 */
 	public void setRectangle(float locx, float locy, float w, float h) 	{
+		this.locx = locx;
+		this.locy = locy;
 
-		if (w < 0.0f || h <= 0.0f) {
-			throw new IllegalArgumentException ("Width, Height need to be positive");
-		}
-		setLocation (locx, locy);
 		setWidth(w);
 		setHeight(h);
-
-		setShapeType("rect");
-	}
-
-	/**
-	 *  Translate the rectangle. The center of the rectangle is
-	 *  moved by the given factors.
-	 *
-	 *  @param tx,ty translation vector
-	 */
-	public void translate(float tx, float ty) {
-		float[] origin = getLocation();
-		translatePoint (origin, tx, ty);
-		setLocation(origin[0], origin[1]);
-	}
-	/**
-	 *  Scale the rectangle about its center, i.e., the width and height
-	 *	are scaled by the given scale factors
-	 *
-	 *  @param sx,sy scale factors along each axis
-	 */
-	public void scale(float sx, float sy) {
-		// scale the height, width
-		// center remains the same
-		float[] pt =  new float[2];
-		pt[0]  = width;
-		pt[1] = height;
-		scalePoint (pt, sx, sy);
-		width = pt[0];
-		height = pt[1];
 	}
 
 	/**
@@ -158,14 +109,14 @@ public	class Rectangle extends  Symbol {
 	 * @return JSON representation of rectangle (string)
 	 */
 	public JSONObject getJSONRepresentation() {
-
-		String shape = getShapeType();
-
 		// get the JSON of the attributes of the shape
 		JSONObject shape_json = super.getJSONRepresentation();
 
-		shape_json.put ("name", getLabel());
-		shape_json.put ("shape", shape);
+		ArrayList<Float> loc = new ArrayList<Float>();
+		loc.add(locx);
+		loc.add(locy);
+				
+		shape_json.put ("lowerleftcorner", loc);
 		shape_json.put ("width", width);
 		shape_json.put ("height", height);
 

@@ -2,6 +2,7 @@ package bridges.base;
 
 import bridges.base.DataStruct;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,7 +23,7 @@ import org.json.simple.JSONArray;
 public class SymbolCollection extends DataStruct {
 	// keep track of the shape elements; useful
 	// to maintain their properties
-	private final HashMap<String, Symbol> symbols;
+	private final ArrayList<Symbol> symbols;
 
 	// default domain (assuming square coordinate space)
 	//  domian emanates in x and y directions, both positive and negative, from 0,0
@@ -46,7 +47,7 @@ public class SymbolCollection extends DataStruct {
 	 *	Constructor - maintained internally as a hashmap
 	 */
 	public SymbolCollection() {
-		symbols = new HashMap<String, Symbol>();
+	    symbols = new ArrayList<Symbol>();
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class SymbolCollection extends DataStruct {
 	public void addSymbol(Symbol s) {
 		// note: it is the user's responsibility to handle
 		//  duplicates where desired
-		symbols.put(s.getIdentifier(), s);
+		symbols.add(s);
 	}
 	/**
 	 *   This method updates the bounding box of the domain, if needed,
@@ -74,23 +75,24 @@ public class SymbolCollection extends DataStruct {
 	 *	 @param s  symbol to be updated
 	 */
 	private void updateAxisDomains(Symbol s) {
-		float[] dims = s.getDimensions();
+	    return;
+		// float[] dims = s.getDimensions();
 
-		// check x axis
-		if (dims[0] < domainxmin) {
-			domainxmin = dims[0];
-		}
-		if (dims[1] > domainxmax) {
-			domainxmax = dims[1];
-		}
+		// // check x axis
+		// if (dims[0] < domainxmin) {
+		// 	domainxmin = dims[0];
+		// }
+		// if (dims[1] > domainxmax) {
+		// 	domainxmax = dims[1];
+		// }
 
-		// check y axis
-		if (dims[2] < domainymin) {
-			domainymin = dims[2];
-		}
-		if (dims[3] > domainymax) {
-			domainymax = dims[3];
-		}
+		// // check y axis
+		// if (dims[2] < domainymin) {
+		// 	domainymin = dims[2];
+		// }
+		// if (dims[3] > domainymax) {
+		// 	domainymax = dims[3];
+		// }
 	}
 
 	/**
@@ -101,12 +103,12 @@ public class SymbolCollection extends DataStruct {
 
 	public String getDataStructureRepresentation() {
 		JSONArray symbol_json = new JSONArray();
-		for (Entry<String, Symbol> symbol : symbols.entrySet()) {
+		for (Symbol symbol : symbols) {
 
 			if (autoscaledomain)
-				updateAxisDomains(symbol.getValue());
+				updateAxisDomains(symbol);
 
-			symbol_json.add(symbol.getValue().getJSONRepresentation());
+			symbol_json.add(symbol.getJSONRepresentation());
 		}
 
 		return "\"domainX\":[" + domainxmin + "," + domainxmax + "],\"domainY\":[" + domainymin + "," + domainymax + "]," + "\"symbols\":" + symbol_json + "}";

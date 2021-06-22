@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * @sa An example tutorial can be found at
  * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
- * @author David Burlinson, Kalpathi Subramanian
- * @date 12/23/18, 7/15/19
+ * @author David Burlinson, Kalpathi Subramanian, Erik Saule
+ * @date 12/23/18, 7/15/19, 6/22/21
  *
  */
 public class Polygon extends Polyline {
@@ -25,7 +25,6 @@ public class Polygon extends Polyline {
 	 */
 	public Polygon () {
 		super();
-		this.setShapeType("polygon");
 	}
 
 	/**
@@ -34,7 +33,6 @@ public class Polygon extends Polyline {
 	 */
 	public Polygon (ArrayList<Float>  pts) {
 		super(pts);
-		this.setShapeType("polygon");
 	}
 
 	/**
@@ -42,7 +40,7 @@ public class Polygon extends Polyline {
 	 *
 	 *  @return name   shape name
 	 */
-	public String getName() {
+	public String getShapeType() {
 		return "polygon";
 	}
 
