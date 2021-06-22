@@ -56,7 +56,7 @@ public class SymbolCollection extends DataStruct {
 	 *
 	 */
 	public String getDataStructType() {
-		return "SymbolCollection";
+		return "SymbolCollectionV2";
 	}
 
 	/**
