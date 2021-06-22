@@ -103,14 +103,18 @@ public class SymbolCollection extends DataStruct {
 
 	public String getDataStructureRepresentation() {
 		JSONArray symbol_json = new JSONArray();
+		 
 		for (Symbol symbol : symbols) {
 
 			if (autoscaledomain)
 				updateAxisDomains(symbol);
 
-			symbol_json.add(symbol.getJSONRepresentation());
+			//symbol_json.add(symbol.getJSONRepresentation());
+			symbol.addAllJSON(symbol_json, null);
 		}
 
 		return "\"domainX\":[" + domainxmin + "," + domainxmax + "],\"domainY\":[" + domainymin + "," + domainymax + "]," + "\"symbols\":" + symbol_json + "}";
 	}
+
+    
 }

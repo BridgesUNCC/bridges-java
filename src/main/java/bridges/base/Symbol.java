@@ -258,7 +258,14 @@ public abstract class Symbol {
 		}
 
 		if (transform != null) {
-			json_builder.put("transform", transform);
+		    ArrayList<Float> al = new ArrayList<Float>();
+		    al.add(transform[0]);
+		    al.add(transform[1]);
+		    al.add(transform[2]);
+		    al.add(transform[3]);
+		    al.add(transform[4]);
+		    al.add(transform[5]);
+			json_builder.put("transform", al);
 		}
 
 		if (label != null) {
@@ -285,4 +292,18 @@ public abstract class Symbol {
 
 		return json_builder;
 	}
+
+    public void addAllJSON (JSONArray symbol_json, Integer parent) {
+	int id = symbol_json.size();
+
+	JSONObject obj = this.getJSONRepresentation();
+
+	obj.put("ID", id);
+	
+	if (parent != null) {
+	    obj.put("parentID", parent);	    
+	}
+	
+	symbol_json.add(obj);
+    }
 }
