@@ -59,8 +59,9 @@ public abstract class Symbol {
 	 *
 	 * @param label the label to set
 	 */
-	public void setLabel(String label) {
+	public Symbol setLabel(String label) {
 		this.label = label;
+		return this;
 	}
 
 	/**
@@ -88,16 +89,18 @@ public abstract class Symbol {
 	 *
 	 * @param c the color to set
 	 */
-	public void setFillColor(Color c) {
+	public Symbol setFillColor(Color c) {
 		this.fillColor = c;
+		return this;
 	}
 	/**
 	 * This method sets the symbol fill color
 	 *
 	 * @param c the color to set
 	 */
-	public void setFillColor(String c) {
+	public Symbol setFillColor(String c) {
 		this.fillColor = new Color(c);
+		return this;
 	}
 	/**
 	* This method gets fill color
