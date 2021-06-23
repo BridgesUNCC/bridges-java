@@ -84,7 +84,7 @@ public class DataSource {
 	}
 
 	private String getGutenbergBaseURL(){
-		return "http://bridges-data-server-gutenberg.bridgesuncc.org/";
+		return "http://bridges-data-server-gutenberg-t.bridgesuncc.org/";
 	}
 
 
@@ -1189,7 +1189,7 @@ public class DataSource {
 		String book_text = new String();
 		try{
 			JSONObject json = (JSONObject) parser.parse(data);
-			book_text = json.get("book").toString();
+			book_text = json.get(String.valueOf(id)).toString();
 		} 
 		catch (Exception e) {
 			System.out.println("Error parsing the returned JSON"); 
