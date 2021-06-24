@@ -8,16 +8,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
 /**
- *  @brief This is a class in BRIDGES for deriving a
- *  number of Symbol objects for use in a SymbolCollection.
+ * @brief This is a class in BRIDGES for deriving a
+ * number of Symbol objects for use in a SymbolCollection.
  *
  * It is not intended that objects from this class will be directly
  * created. Rather, we expect that classes that derive from this class
- * be instantiated such as Circle, Label, Polyline, Polygon,
- * Rectangle.
+ * be instantiated such as Circle, Polyline, Polygon, Rectangle, Text.
  *
- *  Symbols correspond to a simplified subset of SVG paths
- *  and shapes for custom visual representations in BRIDGES.
+ * Symbols correspond to a simplified subset of SVG paths
+ * and shapes for custom visual representations in BRIDGES.
  *
  * The stroke is the actual lines that get drawn (such as the
  * perimeter of a rectangle) and its style is controlled by
@@ -25,6 +24,11 @@ import org.json.simple.JSONArray;
  *
  * The inside of the Symbol can be colored independently from the
  * stroke using setFillColor().
+ *
+ * Affine transformations are supported with each symbol. If specified,
+ * these will transform the shape (pre-multiply); translation, rotation and
+ * scale transforms are supported. These can be chained to form a composite
+ * transform
  *
  * The overall Symbol can be made more of less visible by adjusting
  * its opacity using setOpacity().
@@ -46,12 +50,16 @@ public abstract class Symbol {
     protected Integer strokeDash = null;
     protected Integer layer = null;
     protected float[] transform = null;
+
+	// represents the affine transform of the Symbol
+	private float[3][3] xform;
     
 	/**
 	 *	Create a default symbol object
 	 */
 	public Symbol() {
 		super();
+		identity(xform);
 	}
 
 	/**
@@ -83,20 +91,11 @@ public abstract class Symbol {
 	    return "";
 	}
 
-
 	/**
 	 * This method sets the symbol fill color
 	 *
 	 * @param c the color to set
-	 */
-	public Symbol setFillColor(Color c) {
-		this.fillColor = c;
-		return this;
-	}
-	/**
-	 * This method sets the symbol fill color
-	 *
-	 * @param c the color to set
+	 * @return the symbol
 	 */
 	public Symbol setFillColor(String c) {
 		this.fillColor = new Color(c);
@@ -115,14 +114,17 @@ public abstract class Symbol {
 	 * This method sets the symbol stroke color
 	 *
 	 * @param c the color to set
+	 * @return the symbol
 	 */
-	public void setStrokeColor(Color c) {
+	public Symbol setStrokeColor(Color c) {
 		this.strokeColor = c;
+		return this;
 	}
 	/**
 	 * This method sets the symbol stroke color
 	 *
 	 * @param c the named color to set
+	 * @return the symbol
 	 */
 	public Symbol setStrokeColor(String c) {
 		this.strokeColor = new Color(c);
@@ -140,12 +142,15 @@ public abstract class Symbol {
 	/**
 	 * @brief This method sets the symbol stroke width.
 	 *
-	 * This is the weight of the individual lines that are drawn, such as the perimeter of a rectangle.
+	 * This is the weight of the individual lines that are drawn, such as the 
+	 *	perimeter of a rectangle.
 	 *
 	 * @param strokewidth the stroke width to set
+	 * @return the symbol
 	 */
-	public void setStrokeWidth(float strokewidth) {
+	public Symbol setStrokeWidth(float strokewidth) {
 	    this.strokeWidth = strokewidth;
+		return this;
 	}
 	/**
 	 * This method gets stroke width
@@ -161,6 +166,7 @@ public abstract class Symbol {
 	 * @brief This method sets the symbol opacity
 	 *
 	 * @param op the opacity to set
+	 * @return the symbol
 	 */
 	public Symbol setOpacity(float op) {
 		if (op <= 0.0f || op > 1.0f) {
@@ -185,6 +191,7 @@ public abstract class Symbol {
 	 * This method sets the stroke dash level
 	 *
 	 * @param dash dash level
+	 * @return the symbol
 	 */
 	public Symbol setStrokeDash(int dash) {
 	    this.strokeDash = dash;
@@ -205,6 +212,7 @@ public abstract class Symbol {
 	 * This method sets the layer the symbol sits on
 	 *
 	 * @param layer layer (lower value closer to camera)
+	 * @return the symbol
 	 */
 	public Symbol setLayer(int layer) {
 	    this.layer = layer;
@@ -221,19 +229,125 @@ public abstract class Symbol {
 	    return this.layer;
 	}
 
+	/** 
+	 *	Matrix multiplication - premultiplication; multiplies m1 and m2 and stores
+	 *  result in m1
+	 *  
+	 */
+	private void matMult (float[3][3] m1, float[3][3] m2, float[3][3]) {
+		// multiply m1 and m2
+		float[3][3] result;
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				result[i][j] = 0.;
+				for (int k = 0; k < 3; ++k) 
+					result[i][j] += m1[i][k] * m2[k][j];
+			}
+		}
+    	// copy into m1
+		for (int i = 0; i < 3; ++i) 
+		for (int j = 0; j < 3; ++j) 
+			m1[i][j] = result[i][j];
+	}
 
+
+	/** 
+     *  create the identity matrix
+	 */ 
+	void identity(float[3][3] m) {
+		for (int i = 0; i < 3; ++i) 
+		for (int j = 0; j < 3; ++j) 
+			if (i == j)
+				m[i][j] = 1.;
+			else
+				m[i][j] = 0.;
+	}
+	
+	/** 
+     *  translate the symbol by tx, ty along the X and Y axes
+	 * 
+     * 	@param tx  translation in X
+     * 	@param ty  translation in Y
+	 */
+	void translate (float tx, float ty) {
+		float transl[3][3];
+
+		identity(transl);
+
+		// apply translation factors
+		transl[2][0] = tx;
+		transl[2][1] = ty;
+
+		// post multiply
+		matMult (xform, transl);
+	}
+	/** 
+     *  scale the symbol by sx, sy along the X and Y axes
+	 * 
+     * 	@param sx  scale factor in X
+     * 	@param sy  scale factor in Y
+	 */
+	void scale (float sx, float sy) {
+		float scale[3][3];
+		identity(scale);
+		// apply scale factors
+		scale[0][0] = sx; 
+		scale[1][1] = sy;
+
+		// post multiply
+		matMult (xform, scale);
+	}
+	/** 
+     *  rotate the symbol by angle theta  about Z axis (2D rotation)
+	 * 
+     * 	@param angle  angle (in degrees)
+	 */
+	void rotate (float angle) {
+		float rotation[3][3];
+		identity(rotation);
+
+		// convert to radians
+		float angle_r = angle * (float) (Math.PI/180.);
+		float cos_a = Math.cos(angle);
+		float sin_a = Math.sin(angle);
+		// apply rotation factors
+		rotation[0][0] = rotation[1][1] = cos_a; 
+		rotation[0][1] = -sin_a; rotation[1][0] = sin_a;
+
+		// post multiply
+		matMult (xform, rotation);
+	}
+
+	/**
+	 * This method sets the transform matrix for this symbol; terms passed in
+	 * row major order (2 rows by 3 columns)
+	 *
+	 * @param a transformation term 
+	 * @param b transformation term 
+	 * @param c transformation term 
+	 * @param d transformation term 
+	 * @param e transformation term 
+	 * @param f transformation term 
+	 *
+	 * @return the symbol
+	 */
     public Symbol setTransform (float a, float b, float c,
 				float d, float e, float f) {
-	float[] mat = new float[6];
-	mat[0] = a; 	mat[1] = b; 	mat[2] = c;
-	mat[3] = d; 	mat[4] = e; 	mat[5] = f;
-	this.transform = mat;
-	return this;
+		float[] mat = new float[6];
+		mat[0] = a; 	mat[1] = b; 	mat[2] = c;
+		mat[3] = d; 	mat[4] = e; 	mat[5] = f;
+		this.transform = mat;
+		return this;
     }
 
+	/**
+	 * This method returns the affine transformation associated with this
+	 * symbol
+	 *
+	 * @return  transformation matrix
+	 */
     public float[] getTransform () {
-	
-	return this.transform;
+		return this.transform;
     }
     
 	/**
