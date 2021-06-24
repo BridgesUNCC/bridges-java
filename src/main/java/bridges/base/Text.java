@@ -49,6 +49,11 @@ public class Text extends Symbol {
 		this.setText(label);
 	}
 
+    	public String getShapeType() {
+		return "text";
+	}
+
+    
     public Symbol setText(String t) {
 	this.text = t;
 	return this;
