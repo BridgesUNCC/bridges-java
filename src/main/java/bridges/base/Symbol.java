@@ -469,7 +469,7 @@ public abstract class Symbol {
 			json_builder.put("opacity", opacity);
 		}
 
-		if (xform_flag == true) {
+		if (xform_flag) {
 		    ArrayList<Float> al = new ArrayList<Float>();
 		    al.add(this.xform[0][0]);
 		    al.add(this.xform[1][0]);
