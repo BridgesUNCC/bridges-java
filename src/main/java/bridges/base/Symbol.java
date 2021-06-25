@@ -310,7 +310,7 @@ public abstract class Symbol {
 		transl[1][2] = ty;
 
 		// update symbol transform matrix
-		matMult (this.xform, transl);
+		this.xform = matMult (this.xform, transl);
 
 		xform_flag = true;
 		return transl;
@@ -469,14 +469,14 @@ public abstract class Symbol {
 			json_builder.put("opacity", opacity);
 		}
 
-		if (xform_flag) {
+		if (xform_flag == true) {
 		    ArrayList<Float> al = new ArrayList<Float>();
-		    al.add(xform[0][0]);
-		    al.add(xform[1][0]);
-		    al.add(xform[0][1]);
-		    al.add(xform[1][1]);
-		    al.add(xform[0][2]);
-		    al.add(xform[1][2]);
+		    al.add(this.xform[0][0]);
+		    al.add(this.xform[1][0]);
+		    al.add(this.xform[0][1]);
+		    al.add(this.xform[1][1]);
+		    al.add(this.xform[0][2]);
+		    al.add(this.xform[1][2]);
 			json_builder.put("transform", al);
 		}
 
