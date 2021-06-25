@@ -53,6 +53,7 @@ public abstract class Symbol {
 
 	// represents the affine transform of the Symbol
 	private float[][] xform;
+	Boolean xform_flag = false;
     
 	/**
 	 *	Create a default symbol object
@@ -311,6 +312,7 @@ public abstract class Symbol {
 		// update symbol transform matrix
 		matMult (this.xform, transl);
 
+		xform_flag = true;
 		return transl;
 	}
 	/** 
@@ -330,6 +332,8 @@ public abstract class Symbol {
 
 		// update symbol transform matrix
 		this.xform = matMult (this.xform, scale_m);
+
+		xform_flag = true;
 
 		return scale_m;
 	}
@@ -355,6 +359,8 @@ public abstract class Symbol {
 		// update symbol transform matrix
 		this.xform = matMult (this.xform, rotate_m);
 
+		xform_flag = true;
+
 		return rotate_m;
 	}
 	/** 
@@ -373,13 +379,12 @@ public abstract class Symbol {
 		// scale about the point (px, py)
 		float[][] scale_comp =  matMult(translate(px, py), 
 									matMult(scale_m, translate(-px, -py)) );
-//		printMat(scale_comp);
 
 		// update symbol transform matrix
 		this.xform = matMult (this.xform, scale_comp);
 
-		System.out.println("in scale about point..");
-		printMat(xform);
+		xform_flag = true;
+
 		return scale_comp;
 	}
 	/** 
@@ -402,6 +407,8 @@ public abstract class Symbol {
 
 		// update symbol transform matrix
 		this.xform = matMult (this.xform, rot_comp);
+
+		xform_flag = true;
 
 		return rot_comp;
 	}
@@ -462,14 +469,14 @@ public abstract class Symbol {
 			json_builder.put("opacity", opacity);
 		}
 
-		if (transform != null) {
+		if (xform_flag) {
 		    ArrayList<Float> al = new ArrayList<Float>();
-		    al.add(transform[0]);
-		    al.add(transform[1]);
-		    al.add(transform[2]);
-		    al.add(transform[3]);
-		    al.add(transform[4]);
-		    al.add(transform[5]);
+		    al.add(xform[0][0]);
+		    al.add(xform[1][0]);
+		    al.add(xform[0][1]);
+		    al.add(xform[1][1]);
+		    al.add(xform[0][2]);
+		    al.add(xform[1][2]);
 			json_builder.put("transform", al);
 		}
 
