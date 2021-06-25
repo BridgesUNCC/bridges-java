@@ -52,13 +52,14 @@ public abstract class Symbol {
     protected float[] transform = null;
 
 	// represents the affine transform of the Symbol
-	private float[3][3] xform;
+	private float[][] xform;
     
 	/**
 	 *	Create a default symbol object
 	 */
 	public Symbol() {
 		super();
+		xform = new float[3][3];
 		identity(xform);
 	}
 
@@ -230,92 +231,179 @@ public abstract class Symbol {
 	}
 
 	/** 
+	 *  Point - Matrix multiply (debugging purposes)
+     *  
+	 */
+	public float[] vecMatMult(float[][] m, float[] v) {
+		
+		float[] v_out = {
+					m[0][0]*v[0] + m[0][1]*v[1] + m[0][2] * v[2], 
+					m[1][0]*v[0] + m[1][1]*v[1] + m[1][2] * v[2],
+				 	1.0f
+				}; 
+
+		return v_out;
+	}
+	/** 
 	 *	Matrix multiplication - premultiplication; multiplies m1 and m2 and stores
 	 *  result in m1
 	 *  
 	 */
-	private void matMult (float[3][3] m1, float[3][3] m2, float[3][3]) {
+	private float[][] matMult (float[][] m1, float[][] m2) {
 		// multiply m1 and m2
-		float[3][3] result;
+		float[][] result = new float[3][3];
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 3; ++j) {
-				result[i][j] = 0.;
+				result[i][j] = 0.0f;
 				for (int k = 0; k < 3; ++k) 
 					result[i][j] += m1[i][k] * m2[k][j];
 			}
 		}
-    	// copy into m1
-		for (int i = 0; i < 3; ++i) 
-		for (int j = 0; j < 3; ++j) 
-			m1[i][j] = result[i][j];
+		return result;
 	}
 
+	/** 
+	 *	vector-Matrix multiplication (for debugging only)
+	 *  result in m1
+	 *  
+	 */
+	private void printMat(float[][] m) {
+		for (int j = 0; j < 3; j++) {
+			for (int k = 0; k < 3; k++)
+                System.out.print(m[j][k] + ",");
+
+            System.out.print("\n");
+		}
+	}
 
 	/** 
      *  create the identity matrix
+	 *
+	 *	@param  m  3x3 input matrix
 	 */ 
-	void identity(float[3][3] m) {
+	public float[][] identity(float[][] m) {
 		for (int i = 0; i < 3; ++i) 
 		for (int j = 0; j < 3; ++j) 
 			if (i == j)
-				m[i][j] = 1.;
+				m[i][j] = 1.0f;
 			else
-				m[i][j] = 0.;
+				m[i][j] = 0.0f;
+
+		return m;
 	}
 	
 	/** 
-     *  translate the symbol by tx, ty along the X and Y axes
+     *  translate the symbol by tx, ty along the X and Y axes,
+	 *	  updates the current transform matrix
 	 * 
      * 	@param tx  translation in X
      * 	@param ty  translation in Y
 	 */
-	void translate (float tx, float ty) {
-		float transl[3][3];
+	public float[][] translate (float tx, float ty) {
+		float transl[][] = new float[3][3];
 
 		identity(transl);
 
 		// apply translation factors
-		transl[2][0] = tx;
-		transl[2][1] = ty;
+		transl[0][2] = tx;
+		transl[1][2] = ty;
 
-		// post multiply
-		matMult (xform, transl);
+		// update symbol transform matrix
+		matMult (this.xform, transl);
+
+		return transl;
 	}
 	/** 
-     *  scale the symbol by sx, sy along the X and Y axes
+     *  scale the symbol by sx, sy along the X and Y axes,
+	 *	  updates the current transform matrix; note: scale is about
+	 *	  the origin
 	 * 
      * 	@param sx  scale factor in X
      * 	@param sy  scale factor in Y
 	 */
-	void scale (float sx, float sy) {
-		float scale[3][3];
-		identity(scale);
+	public float[][] scale (float sx, float sy) {
+		float scale_m[][] = new float[3][3];
+		identity(scale_m);
 		// apply scale factors
-		scale[0][0] = sx; 
-		scale[1][1] = sy;
+		scale_m[0][0] = sx; 
+		scale_m[1][1] = sy;
 
-		// post multiply
-		matMult (xform, scale);
+		// update symbol transform matrix
+		this.xform = matMult (this.xform, scale_m);
+
+		return scale_m;
 	}
 	/** 
-     *  rotate the symbol by angle theta  about Z axis (2D rotation)
+     *  rotate the symbol by angle theta  about Z axis (2D rotation),
+	 *	  updates the current transform matrix; note: rotation is about
+	 *	  the origin
 	 * 
      * 	@param angle  angle (in degrees)
 	 */
-	void rotate (float angle) {
-		float rotation[3][3];
-		identity(rotation);
+	public float[][] rotate (float angle) {
+		float rotate_m[][] = new float[3][3];
+		identity(rotate_m);
 
 		// convert to radians
-		float angle_r = angle * (float) (Math.PI/180.);
-		float cos_a = Math.cos(angle);
-		float sin_a = Math.sin(angle);
+		double angle_r = angle * (float) (Math.PI/180.);
+		float cos_a = (float) Math.cos(angle_r);
+		float sin_a = (float) Math.sin(angle_r);
 		// apply rotation factors
-		rotation[0][0] = rotation[1][1] = cos_a; 
-		rotation[0][1] = -sin_a; rotation[1][0] = sin_a;
+		rotate_m[0][0] = rotate_m[1][1] = cos_a; 
+		rotate_m[0][1] = -sin_a; rotate_m[1][0] = sin_a;
+
+		// update symbol transform matrix
+		this.xform = matMult (this.xform, rotate_m);
+
+		return rotate_m;
+	}
+	/** 
+     *  scale the symbol by (sx, sy) along the X and Y axes about the 
+	 * 	point (px, py); updates the current transform matrix; 
+	 * 
+     * 	@param sx  scale factor in X
+     * 	@param sy  scale factor in Y
+	 *	@param px  x coordinate of point
+	 *	@param py  y coordinate of point
+	 */
+	public float[][] scale (float sx, float sy, float px, float py) {
+		// form the scale matrix
+		float[][] scale_m = {{sx, 0.0f, 0.0f}, {0.0f, sy, 0.0f}, {0.0f, 0.0f, 1.0f}};
+
+		// scale about the point (px, py)
+		float[][] scale_comp =  matMult(translate(px, py), 
+									matMult(scale_m, translate(-px, -py)) );
+//		printMat(scale_comp);
+
+		// update symbol transform matrix
+		this.xform = matMult (this.xform, scale_comp);
+
+		System.out.println("in scale about point..");
+		printMat(xform);
+		return scale_comp;
+	}
+	/** 
+     *  rotate the symbol by angle theta  about Z axis (2D rotation) about the
+	 *	  point (px, py)
+	 * 
+     * 	@param angle  angle (in degrees)
+	 */
+	public float[][] rotate (float angle, float px, float py) {
+		// get the rotation matrix
+		// convert angle to radians
+		double angle_r = angle * (float) (Math.PI/180.);
+		float c = (float) Math.cos(angle_r);
+		float s = (float) Math.sin(angle_r);
+		float[][]  rotate_m =  {{c, -s, 0.0f}, {s, c, 0.0f}, {0.0f, 0.0f, 1.0f}};
 
 		// post multiply
-		matMult (xform, rotation);
+		float[][] rot_comp = matMult(translate(px, py), 
+								matMult(rotate_m, translate(-px, -py)) );
+
+		// update symbol transform matrix
+		this.xform = matMult (this.xform, rot_comp);
+
+		return rot_comp;
 	}
 
 	/**
@@ -333,10 +421,10 @@ public abstract class Symbol {
 	 */
     public Symbol setTransform (float a, float b, float c,
 				float d, float e, float f) {
-		float[] mat = new float[6];
-		mat[0] = a; 	mat[1] = b; 	mat[2] = c;
-		mat[3] = d; 	mat[4] = e; 	mat[5] = f;
-		this.transform = mat;
+		this.xform[0][0] = a; this.xform[0][1] = b; this.xform[0][2] = c;
+		this.xform[1][0] = d; this.xform[1][1] = e; this.xform[1][2] = f;
+		this.xform[2][0] = 0.0f; this.xform[2][1] = 0.0f; this.xform[2][2] = 1.0f;
+
 		return this;
     }
 
@@ -346,8 +434,8 @@ public abstract class Symbol {
 	 *
 	 * @return  transformation matrix
 	 */
-    public float[] getTransform () {
-		return this.transform;
+    public float[][] getTransform () {
+		return this.xform;
     }
     
 	/**
