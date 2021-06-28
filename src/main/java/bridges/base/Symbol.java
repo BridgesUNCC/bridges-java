@@ -235,7 +235,7 @@ public abstract class Symbol {
 	 *  Point - Matrix multiply (debugging purposes)
      *  
 	 */
-	public float[] vecMatMult(float[][] m, float[] v) {
+	private float[] vecMatMult(float[][] m, float[] v) {
 		
 		float[] v_out = {
 					m[0][0]*v[0] + m[0][1]*v[1] + m[0][2] * v[2], 
@@ -300,7 +300,7 @@ public abstract class Symbol {
      * 	@param tx  translation in X
      * 	@param ty  translation in Y
 	 */
-	public float[][] translate (float tx, float ty) {
+	public Symbol translate (float tx, float ty) {
 		float transl[][] = new float[3][3];
 
 		identity(transl);
@@ -313,7 +313,8 @@ public abstract class Symbol {
 		this.xform = matMult (this.xform, transl);
 
 		xform_flag = true;
-		return transl;
+
+		return this;
 	}
 	/** 
      *  scale the symbol by sx, sy along the X and Y axes,
@@ -323,7 +324,7 @@ public abstract class Symbol {
      * 	@param sx  scale factor in X
      * 	@param sy  scale factor in Y
 	 */
-	public float[][] scale (float sx, float sy) {
+	public Symbol  scale (float sx, float sy) {
 		float scale_m[][] = new float[3][3];
 		identity(scale_m);
 		// apply scale factors
@@ -335,7 +336,7 @@ public abstract class Symbol {
 
 		xform_flag = true;
 
-		return scale_m;
+		return this;
 	}
 	/** 
      *  rotate the symbol by angle theta  about Z axis (2D rotation),
@@ -344,7 +345,7 @@ public abstract class Symbol {
 	 * 
      * 	@param angle  angle (in degrees)
 	 */
-	public float[][] rotate (float angle) {
+	public Symbol rotate (float angle) {
 		float rotate_m[][] = new float[3][3];
 		identity(rotate_m);
 
@@ -361,7 +362,7 @@ public abstract class Symbol {
 
 		xform_flag = true;
 
-		return rotate_m;
+		return this;
 	}
 	/** 
      *  scale the symbol by (sx, sy) along the X and Y axes about the 
@@ -372,20 +373,22 @@ public abstract class Symbol {
 	 *	@param px  x coordinate of point
 	 *	@param py  y coordinate of point
 	 */
-	public float[][] scale (float sx, float sy, float px, float py) {
+	public Symbol scale (float sx, float sy, float px, float py) {
 		// form the scale matrix
 		float[][] scale_m = {{sx, 0.0f, 0.0f}, {0.0f, sy, 0.0f}, {0.0f, 0.0f, 1.0f}};
 
+		float[][] transl_pre = {{1.0f, 0.0f, -px}, {0.0f, 0.0f, -py}, {0.0f, 0.0f, 1.0f}};
+		float[][] transl_post = {{1.0f, 0.0f, px}, {0.0f, 0.0f, py}, {0.0f, 0.0f, 1.0f}};
+
 		// scale about the point (px, py)
-		float[][] scale_comp =  matMult(translate(px, py), 
-									matMult(scale_m, translate(-px, -py)) );
+		float[][] scale_comp =  matMult(transl_post, matMult(scale_m, transl_pre));
 
 		// update symbol transform matrix
 		this.xform = matMult (this.xform, scale_comp);
 
 		xform_flag = true;
 
-		return scale_comp;
+		return this;
 	}
 	/** 
      *  rotate the symbol by angle theta  about Z axis (2D rotation) about the
@@ -393,7 +396,7 @@ public abstract class Symbol {
 	 * 
      * 	@param angle  angle (in degrees)
 	 */
-	public float[][] rotate (float angle, float px, float py) {
+	public Symbol rotate (float angle, float px, float py) {
 		// get the rotation matrix
 		// convert angle to radians
 		double angle_r = angle * (float) (Math.PI/180.);
@@ -401,16 +404,18 @@ public abstract class Symbol {
 		float s = (float) Math.sin(angle_r);
 		float[][]  rotate_m =  {{c, -s, 0.0f}, {s, c, 0.0f}, {0.0f, 0.0f, 1.0f}};
 
-		// post multiply
-		float[][] rot_comp = matMult(translate(px, py), 
-								matMult(rotate_m, translate(-px, -py)) );
+		float[][] transl_pre = {{1.0f, 0.0f, -px}, {0.0f, 0.0f, -py}, {0.0f, 0.0f, 1.0f}};
+		float[][] transl_post = {{1.0f, 0.0f, px}, {0.0f, 0.0f, py}, {0.0f, 0.0f, 1.0f}};
+
+		// compose
+		float[][] rot_comp = matMult(transl_post, matMult(rotate_m, transl_pre));
 
 		// update symbol transform matrix
 		this.xform = matMult (this.xform, rot_comp);
 
 		xform_flag = true;
 
-		return rot_comp;
+		return this;
 	}
 
 	/**
@@ -431,6 +436,7 @@ public abstract class Symbol {
 		this.xform[0][0] = a; this.xform[0][1] = b; this.xform[0][2] = c;
 		this.xform[1][0] = d; this.xform[1][1] = e; this.xform[1][2] = f;
 		this.xform[2][0] = 0.0f; this.xform[2][1] = 0.0f; this.xform[2][2] = 1.0f;
+		xform_flag = true;
 
 		return this;
     }
