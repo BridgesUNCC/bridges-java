@@ -508,6 +508,10 @@ public abstract class Symbol {
 			json_builder.put("stroke-dasharray", strokeDash);
 		}
 
+		if (layer != null) {
+			json_builder.put("layer-dasharray", layer);
+		}
+
 		return json_builder;
 	}
 
