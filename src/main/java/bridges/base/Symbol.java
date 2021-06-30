@@ -510,7 +510,7 @@ public abstract class Symbol {
 		}
 
 		if (layer != null) {
-			json_builder.put("layer-dasharray", layer);
+			json_builder.put("layer", layer);
 		}
 
 		return json_builder;
