@@ -420,7 +420,7 @@ public abstract class Symbol {
 
 	/**
 	 * This method sets the transform matrix for this symbol; terms passed in
-	 * row major order (2 rows by 3 columns)
+	 * column major order.
 	 *
 	 * @param a transformation term 
 	 * @param b transformation term 
@@ -431,10 +431,11 @@ public abstract class Symbol {
 	 *
 	 * @return the symbol
 	 */
-    public Symbol setTransform (float a, float b, float c,
-				float d, float e, float f) {
-		this.xform[0][0] = a; this.xform[0][1] = b; this.xform[0][2] = c;
-		this.xform[1][0] = d; this.xform[1][1] = e; this.xform[1][2] = f;
+    public Symbol setTransform (float a, float b,
+				float c, float d,
+				float e, float f) {
+		this.xform[0][0] = a; this.xform[0][1] = c; this.xform[0][2] = e;
+		this.xform[1][0] = b; this.xform[1][1] = d; this.xform[1][2] = f;
 		this.xform[2][0] = 0.0f; this.xform[2][1] = 0.0f; this.xform[2][2] = 1.0f;
 		xform_flag = true;
 
