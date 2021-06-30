@@ -27,7 +27,8 @@ import org.json.simple.JSONObject;
  */
 public class Text extends Symbol {
     private Float fontSize = null;
-    private String anchorType = null;
+    private String anchorAlignmentLR = null;
+    private String anchorAlignmentTB = null;
     private String text = "";
     private float locx = 0.f;
     private float locy = 0.f;
@@ -76,8 +77,13 @@ public class Text extends Symbol {
 	return this;
     }
 
-    public Symbol setAnchorType(String type) {
-	this.anchorType = type;
+    /**
+     * @param typeLR valid parameters are "left", "middle", and "right"
+     * @param typeTB valid parameters are "top", "bottom", "embottom", "emtop", "middle"
+     **/
+    public Symbol setAnchorAlignment(String typeLR, String typeTB) {
+	anchorAlignmentLR = typeLR;
+	anchorAlignmentTB = typeTB;
 	return this;
     }
     
@@ -101,9 +107,13 @@ public class Text extends Symbol {
 		if (fontSize != null)
 		    json_builder.put("font-size", fontSize);
 
-		if (anchorType != null)
-		    json_builder.put("anchor-type", anchorType);
+		if (anchorAlignmentLR != null)
+		    json_builder.put("anchor-alignmentLR", anchorAlignmentLR);
 
+		if (anchorAlignmentTB != null)
+		    json_builder.put("anchor-alignmentTB", anchorAlignmentTB);
+
+		
 		return json_builder;
 	}
 }
