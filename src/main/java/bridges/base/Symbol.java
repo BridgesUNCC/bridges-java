@@ -377,8 +377,8 @@ public abstract class Symbol {
 		// form the scale matrix
 		float[][] scale_m = {{sx, 0.0f, 0.0f}, {0.0f, sy, 0.0f}, {0.0f, 0.0f, 1.0f}};
 
-		float[][] transl_pre = {{1.0f, 0.0f, -px}, {0.0f, 0.0f, -py}, {0.0f, 0.0f, 1.0f}};
-		float[][] transl_post = {{1.0f, 0.0f, px}, {0.0f, 0.0f, py}, {0.0f, 0.0f, 1.0f}};
+		float[][] transl_pre = {{1.0f, 0.0f, -px}, {0.0f, 1.0f, -py}, {0.0f, 0.0f, 1.0f}};
+		float[][] transl_post = {{1.0f, 0.0f, px}, {0.0f, 1.0f, py}, {0.0f, 0.0f, 1.0f}};
 
 		// scale about the point (px, py)
 		float[][] scale_comp =  matMult(transl_post, matMult(scale_m, transl_pre));
@@ -404,8 +404,8 @@ public abstract class Symbol {
 		float s = (float) Math.sin(angle_r);
 		float[][]  rotate_m =  {{c, -s, 0.0f}, {s, c, 0.0f}, {0.0f, 0.0f, 1.0f}};
 
-		float[][] transl_pre = {{1.0f, 0.0f, -px}, {0.0f, 0.0f, -py}, {0.0f, 0.0f, 1.0f}};
-		float[][] transl_post = {{1.0f, 0.0f, px}, {0.0f, 0.0f, py}, {0.0f, 0.0f, 1.0f}};
+		float[][] transl_pre = {{1.0f, 0.0f, -px}, {0.0f, 1.0f, -py}, {0.0f, 0.0f, 1.0f}};
+		float[][] transl_post = {{1.0f, 0.0f, px}, {0.0f, 1.0f, py}, {0.0f, 0.0f, 1.0f}};
 
 		// compose
 		float[][] rot_comp = matMult(transl_post, matMult(rotate_m, transl_pre));
