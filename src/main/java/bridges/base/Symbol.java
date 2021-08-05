@@ -317,6 +317,19 @@ public abstract class Symbol {
 		return this;
 	}
 	/** 
+     *  scale the symbol by s along X and Y axes
+	 *	  updates the current transform matrix; note: scale is about
+	 *	  the origin
+	 * 
+     * 	@param s  scale factor 
+	 */
+	public Symbol scale (float s) {
+		scale (s, s);
+
+		return this;
+	}
+	
+	/** 
      *  scale the symbol by sx, sy along the X and Y axes,
 	 *	  updates the current transform matrix; note: scale is about
 	 *	  the origin
