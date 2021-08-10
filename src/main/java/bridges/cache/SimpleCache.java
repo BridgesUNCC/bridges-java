@@ -37,7 +37,7 @@ public class SimpleCache extends Cache {
         this.cacheDir = cacheDir;
         File dir = new File(this.cacheDir);
         if (!dir.exists()) {
-            if (!dir.mkdir()) {
+            if (!dir.mkdirs()) {
                 System.err.println("Error creating cache directory");
             }
         }
@@ -56,14 +56,14 @@ public class SimpleCache extends Cache {
         }
         File dir = new File(cacheDir);
         if (!dir.exists()) {
-            if (!dir.mkdir()) {
+            if (!dir.mkdirs()) {
                 System.err.println("Error creating cache directory");
             }
         }
         this.cacheDir += "bridges_data/java/";
         dir = new File(cacheDir);
         if (!dir.exists()) {
-            if (!dir.mkdir()) {
+            if (!dir.mkdirs()) {
                 System.err.println("Error creating bridges cache directory");
             }
         }
