@@ -955,7 +955,8 @@ public class DataSource {
 			HttpResponse resp = makeRequest(data_url);
 
 			int status = resp.getStatusLine().getStatusCode();
-			System.err.println("[Data request:] Status code:" + status);
+			if (debug)
+			    System.err.println("[Data request:] Status code:" + status);
 
 			if (status != 200) {
 				throw new HttpResponseException(status, "Http Request Failed. Error Code:"
@@ -979,7 +980,11 @@ public class DataSource {
 
 			//Checks to see if valid hash is generated
 			if (!hash.equals("false")) {
+			    try{
 				lru.putDoc(hash, data_content);
+			    } catch (Exception e) {
+				System.err.println("Could not store data in cache. Ignoring exception:\n"+e.getMessage());
+			    }
 			}
 		}
 		return data_content;
