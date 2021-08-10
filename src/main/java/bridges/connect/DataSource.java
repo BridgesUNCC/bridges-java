@@ -84,7 +84,7 @@ public class DataSource {
 	}
 
 	private String getGutenbergBaseURL(){
-		return "http://bridges-data-server-gutenberg-t.bridgesuncc.org/";
+		return "http://bridges-data-server-gutenberg.bridgesuncc.org/";
 	}
 
 
@@ -456,79 +456,6 @@ public class DataSource {
 		}
 	}
 
-	/**
-	 *  This helper function provides access to the meta-data of the Gutenberg book
-	 *	collection (about 1000 books); the data is retrieved, formatted into a
-	 *	list of GutenbergBook objects.
-	 *
-	 *  Each book in this collection has  for each record,
-	 *	information on author (name, birth, death), title, languages, genres,
-	 *  subjects, metrics(number of chars, words, sentences, difficult words), url
-	 *	downloads. More information and commands to access the data can be found at <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <br>
-	 *  for more information and to look at the dataset.
-	 *
-	 *  @throws Exception if the request fails
-	 *
-	 *  @return a list of GutenbergBook objects
-	 */
-	public List<GutenbergBook> getGutenbergBookMetaData () 
-							throws IOException {
-
-		String url = "https://bridgesdata.herokuapp.com/api/books";
-		HttpResponse response = makeRequest(url);
-
-		int status = response.getStatusLine().getStatusCode();
-
-		if (status == 200) 	{
-			JSONArray json = unwrapJSONArray(response);
-
-			List<GutenbergBook> gb_list =
-				new ArrayList<GutenbergBook>(json.size());
-			for (int i = 0; i < json.size(); i++) {
-				JSONObject item = (JSONObject)json.get(i);
-				JSONObject author = (JSONObject)item.get("author");
-				JSONObject metrics = (JSONObject)item.get("metrics");
-				JSONArray lang = (JSONArray) item.get("languages");
-				JSONArray genres = (JSONArray)item.get("genres");
-				JSONArray subjects = (JSONArray)item.get("subjects");
-				Vector<String> gb_tmp = new Vector<String>(100);;
-
-				GutenbergBook gb = new GutenbergBook();
-
-				gb.setAuthorName ((String) author.get("name"));
-				gb.setAuthorBirth(((Number) (author.get("birth"))).intValue());
-				gb.setAuthorDeath(((Number) (author.get("death"))).intValue());
-				gb.setTitle((String) item.get("title"));
-				gb.setURL((String) item.get("url"));
-				gb.setNumDownloads(((Number) item.get("downloads")).intValue());
-				for (int k = 0; k < lang.size(); k++) {
-					gb_tmp.add((String)lang.get(k));
-				}
-				gb.setLanguages(gb_tmp);
-				gb_tmp.clear();
-
-				gb.setNumChars(((Number) (metrics.get("characters"))).intValue());
-				gb.setNumWords(((Number) (metrics.get("words"))).intValue());
-				gb.setNumSentences(((Number) (metrics.get("sentences"))).intValue());
-				gb.setNumDifficultWords(((Number) (metrics.get("difficultWords"))).intValue());
-				for (int k = 0; k < genres.size(); k++)
-					gb_tmp.add((String)genres.get(k));
-				gb.setGenres(gb_tmp);
-				gb_tmp.clear();
-				for (int k = 0; k < subjects.size(); k++)
-					gb_tmp.add((String)subjects.get(k));
-				gb.setSubjects(gb_tmp);
-				gb_tmp.clear();
-
-				gb_list.add(gb);
-			}
-			return gb_list;
-		}
-		else {
-			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
-		}
-	}
 	/**
 	 *  This helper function provides access to the meta-data of the video game
 	 *	collection.

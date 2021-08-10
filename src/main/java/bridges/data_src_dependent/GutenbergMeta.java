@@ -1,5 +1,20 @@
 package bridges.data_src_dependent;
 
+/** @brief Stores the meta data of a book as stored by project Gutenberg.
+ *
+ * This object stores the meta data of a book such as its title,
+ * author and genre. The meta data come from https://www.gutenberg.org/.
+ *
+ * Objects of this type are typically not constructed by the user but
+ * returned by a call to our Gutenberg API such as
+ * DataSource::getGutenbergBookMetaData() or
+ * DataSource::getAGutenbergBookMetaData().
+ *
+ * The object does not contain the text of the book itself. Though it
+ * can be obtained using DataSource::getGutenbergBookText()
+ *
+ *
+ **/
 public class GutenbergMeta {
     
     private int id;
@@ -31,7 +46,9 @@ public class GutenbergMeta {
         this.setLoc(loc);
     }
 
-
+    /**
+     * @brief GutenbergID of the book
+     */
     public int getId(){
         return id;
     }
@@ -40,6 +57,10 @@ public class GutenbergMeta {
         this.id = id;
     }
 
+    
+    /**
+     * @brief Title of the book
+     */
     public String getTitle(){
         return title;
     }
@@ -48,6 +69,12 @@ public class GutenbergMeta {
         this.title = title;
     }
 
+    /**
+     * @brief language of the book. 
+     *
+     * Note that translations of a text shows in the translated
+     * language and not in the original language.
+     **/
     public String getLanguage(){
         return lang;
     }
@@ -56,6 +83,11 @@ public class GutenbergMeta {
         this.lang = lang;
     }
 
+    /**
+     * @brief date at which the book was added to project Gutenberg.
+     *
+     * This is not a publication date!
+     **/
     public String getDate(){
         return date_added;
     }
@@ -64,6 +96,9 @@ public class GutenbergMeta {
         this.date_added = date;
     }
 
+    /**
+     * @brief List of authors
+     **/
     public String [] getAuthors(){
         return authors;
     }
@@ -72,6 +107,11 @@ public class GutenbergMeta {
         this.authors = authors;
     }
 
+    /**
+     * @brief List of genres
+     * 
+     * Note that the genres stored by project Gutenberg may more detailled than one could expect.
+     **/
     public String [] getGenres(){
         return genres;
     }
@@ -80,6 +120,10 @@ public class GutenbergMeta {
         this.genres = genres;
     }
 
+    /**
+     * @brief List of libary of congress classifications
+     * 
+     **/
     public String [] getLoc(){
         return loc_class;
     }
