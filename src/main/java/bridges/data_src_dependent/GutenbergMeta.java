@@ -7,12 +7,13 @@ package bridges.data_src_dependent;
  *
  * Objects of this type are typically not constructed by the user but
  * returned by a call to our Gutenberg API such as
- * DataSource::getGutenbergBookMetaData() or
- * DataSource::getAGutenbergBookMetaData().
+ * bridges::connect::DataSource::getGutenbergBookMetaData() or
+ * bridges::connect::DataSource::getAGutenbergBookMetaData(int).
  *
  * The object does not contain the text of the book itself. Though it
- * can be obtained using DataSource::getGutenbergBookText()
+ * can be obtained using bridges::connect::DataSource::getGutenbergBookText()
  *
+ * A tutorial of how to use the Gutenberg data in bridges is presented here: https://bridgesuncc.github.io/tutorials/Data_Guttenberg.html
  *
  **/
 public class GutenbergMeta {
