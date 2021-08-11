@@ -13,6 +13,8 @@ package bridges.data_src_dependent;
  *	http://www.cdc.gov/cancer/npcr/uscs/download_data.htm
  *
  *
+ * One does not typically create an object from this type, but rather obtain them by calling bridges::connect::DataSource::getCancerIncidenceData()
+ *
  * Refer to tutorial examples on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_CancerIncidence.html
  *
  *  Data: Courtesy of Corgis Datasets, 2017

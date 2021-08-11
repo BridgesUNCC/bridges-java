@@ -75,10 +75,6 @@ public class DataSource {
 		return "http://bridges-data-server-elevation.bridgesuncc.org/";
 	}
 
-	private String getGeniusBaseURL() {
-		return "http://bridges-data-server-elevation.bridgesuncc.org/";
-	}
-
 	private String getAmenityBaseURL() {
 		return "http://bridges-data-server-osm.bridgesuncc.org/";
 	}
@@ -107,6 +103,9 @@ public class DataSource {
 	 *
 	 *  More information on the dataset can be found at
 	 *		http://bridgesuncc.github.io/datasets.html
+	 *
+	 *
+	 * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_EQ_USGS.html
 	 *
 	 *	@param maxElem  the number of earthquake records retrieved, limited to 5000
 	 *  @throws Exception if the request fails
@@ -160,6 +159,8 @@ public class DataSource {
 	 *
 	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html
 	 *
+ * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_Shakespeare.html
+	 *
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of Shakespeare objects.
@@ -178,6 +179,9 @@ public class DataSource {
 	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html
 	 *
 	 * This function returns only some of the works, either the plays, or the poems, depending on the parameters.
+	 *
+	 *
+	 * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_Shakespeare.html
 	 *
 	 *  @throws Exception if the request fails
 	 *
@@ -222,6 +226,11 @@ public class DataSource {
 		}
 	}
 
+    /**
+     *
+     * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_Shakespeare.html
+     *
+     */
     public  List<Shakespeare> getShakespeareData(String works) throws Exception {
 	return getShakespeareData(works, false);
     }
@@ -237,6 +246,9 @@ public class DataSource {
 	 *
 	 *	For more information and to look at the data, refer to <p>
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *
+	 * Refer to tutorial examples on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_CancerIncidence.html
+
 	 *
 	 *  @throws Exception if the request fails
 	 *

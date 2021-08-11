@@ -11,6 +11,10 @@ import java.util.Scanner;
  * This class keeps earthquake tweet data, retrieved from US Geological Survey
  *	Data
  *
+ * One would normally not create an object of that type but rather obtain one by calling bridges::connect::DataSource::getEarthquakeUSGSData()
+ *
+ * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_EQ_USGS.html
+ *
  * @author Mihai Mehedint, Kalpathi Subramanian
  *
  * @date 12/26/20

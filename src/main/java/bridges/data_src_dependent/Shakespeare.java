@@ -10,11 +10,9 @@ import java.lang.String;
  * data source as part of their application. It provides an API that makes
  * it easy to access the attributes of this data set.
  *
- * Refer to tutorial examples to using this data source in data structure
- * assignments.
+ * One would not normally create an object of this type but rather get one by calling bridges::connect::DataSource::getShakespeareData()
  *
- *  Refer to tutorial examples to using this data source in data structure
- *  assignments.
+ * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_Shakespeare.html
  *
  * @author Kalpathi Subramanian
  * @date   2/1/17, 12/26/20
