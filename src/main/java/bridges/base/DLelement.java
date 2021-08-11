@@ -212,7 +212,7 @@ public class DLelement<E> extends SLelement<E> implements Iterable<E> {
 		return new DLelementReverseIterator<E> (this);
 	}
 	/**
-	 *  A reverse iterator for doubly linked lists
+	 *  @brief A reverse iterator for doubly linked list as a DLelement
 	 *
 	 */
 	class DLelementReverseIterator<E> implements Iterator<E> {

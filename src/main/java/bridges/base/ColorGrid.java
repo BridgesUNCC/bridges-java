@@ -6,7 +6,7 @@ import java.nio.Buffer;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * @brief This is a class in BRIDGES for representing an image
+ * @brief This is a class in BRIDGES for representing an image.
  *
  * A ColorGrid is essentially an image. One can construct an image of
  * a particular size using the ColorGrid() constructor to be either
@@ -22,7 +22,7 @@ import org.apache.commons.codec.binary.Base64;
  * You can get a ColorGrid from an existing Bridges ColorGrid assignment using
  * bridges.connect.DataSource.getColorGridFromAssignment()
  *
- * @sa See the tutorial about ColorGrid : http://bridgesuncc.github.io/tutorials/Grid.html
+ * @sa See the tutorial about ColorGrid : https://bridgesuncc.github.io/tutorials/Grid.html
  *
  * @author David Burlinson, Erik Saule
 **/
