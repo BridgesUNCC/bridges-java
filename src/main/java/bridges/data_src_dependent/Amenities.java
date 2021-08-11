@@ -3,7 +3,11 @@ package bridges.data_src_dependent;
 /**
  *  @brief  Class that hold individual Open Street Map Amenities
  *
- * This class holds the individual information for each amenity requested
+ * This class holds the individual information for each amenity requested. 
+ *
+ * Usually this class is not created by the user but part of an AmenityData object returned by bridges::connect::DataSource::getAmenityData()
+ *
+ * Check out the tutorial on getting amenity data at https://bridgesuncc.github.io/tutorials/Data_Amenity.html
  *
  * @author Jay Strahler
  */

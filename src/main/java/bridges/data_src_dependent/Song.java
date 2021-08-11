@@ -5,10 +5,9 @@ package bridges.data_src_dependent;
  *
  * This is a convenience class provided for  users who wish to use this
  * data source as part of their application. It provides an API that makes
- * it easy to access the attributes of this data set.
+ * it easy to access the attributes of this data set. The Song object is typically obtained from calling bridges::connect::DataSource::getSongData() or bridges::connect::DataSource::getSong().
  *
- * Refer to tutorial examples to using this data source in data structure
- * assignments.
+ * Refer to tutorial for example of using this feature: https://bridgesuncc.github.io/tutorials/Data_Song_Lyrics.html
  *
  *
  * @author David Burlinson

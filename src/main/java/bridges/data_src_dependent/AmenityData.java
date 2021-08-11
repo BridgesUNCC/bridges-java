@@ -8,6 +8,11 @@ import java.util.List;
  *
  * This class holds the data for all the amenities requested by the user
  *
+
+ * Usually this class is not created by the user but returned by bridges::connect::DataSource::getAmenityData()
+ *
+ * Check out the tutorial on getting amenity data at https://bridgesuncc.github.io/tutorials/Data_Amenity.html
+ *
  * @author Jay Strahler
  *
  * @date 12/28/20

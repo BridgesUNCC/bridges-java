@@ -294,6 +294,9 @@ public class DataSource {
 
 	/**
 	 * Generates Open Street Map URL request for a given location at general level of details and returns the map data
+	 *
+	 * Check out how to use OSM data at: https://bridgesuncc.github.io/tutorials/Data_OSM.html
+	 *
 	 * @param location name of city or area that the server supports
 	 * @return OsmData vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from server or is an invalid location name
@@ -303,6 +306,9 @@ public class DataSource {
 	}
 	/**
 	* Generates Open Street Map URL request for a given location and returns the map data
+	*
+	* Check out how to use OSM data at: https://bridgesuncc.github.io/tutorials/Data_OSM.html
+	*
 	 * @param location name of city or area that the server supports
 	 * @param level level of road detail on requested map
 	 * @return OsmData vertices and edges of Open Street Map data
@@ -315,6 +321,10 @@ public class DataSource {
 
 	/**
 	 * Generates Open Street Map URL request for a given set of coordinates with default level and returns the map data
+	 *
+	 * Check out how to use OSM data at: https://bridgesuncc.github.io/tutorials/Data_OSM.html
+
+	 *
 	 * @param minLat minimum latitude value for the area requested
 	 * @param minLon minimum longitude value for the area requested
 	 * @param maxLat maximum latitude value for the area requested
@@ -328,6 +338,9 @@ public class DataSource {
 	}
 	/**
 	 * Generates Open Street Map URL request for a given set of coordinates with default level and returns the map data
+	 *
+	 * Check out how to use OSM data at: https://bridgesuncc.github.io/tutorials/Data_OSM.html
+	 *
 	 * @param minLat minimum latitude value for the area requested
 	 * @param minLon minimum longitude value for the area requested
 	 * @param maxLat maximum latitude value for the area requested
@@ -369,6 +382,8 @@ public class DataSource {
 	/**
 	 *  Get ActorMovie IMDB Data
 	 *  retrieved, formatted into a list of ActorMovieIMDB objects
+	 *
+	 *  Check out the tutorial on the IMDB dataset at https://bridgesuncc.github.io/tutorials/Data_IMDB.html
 	 *
 	 *  @param maxElem the number of actor/movie pairs
 	 *  @throws Exception if the request fails
@@ -418,6 +433,9 @@ public class DataSource {
 	 *	actor name, movie name, movie genres, movie rating; refer to <p>
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *  for more information and to look at the dataset.
+	 *
+	 *
+	 * Check out the tutorial on the IMDB dataset at https://bridgesuncc.github.io/tutorials/Data_IMDB.html
 	 *
 	 *  @throws Exception if the request fails
 	 *
@@ -611,6 +629,8 @@ public class DataSource {
 	 *	and to look at the data, refer to <p>
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
 	 *
+	 * Refer to tutorial for example of using this feature: https://bridgesuncc.github.io/tutorials/Data_Song_Lyrics.html
+	 *
 	 *  @param songTitle  title of song (string)
 	 *  @throws Exception if the request fails
 	 *
@@ -731,6 +751,8 @@ public class DataSource {
 	 * This method retrieves the specified amenity related data given a location
 	 * from a specified openstreet mmap location
 	 *
+	 * Check out the tutorial on getting amenity data at https://bridgesuncc.github.io/tutorials/Data_Amenity.html
+	 *
 	 *	@param location city/town from where amenity data is sought
 	 *	@param amenity  amenity type
 	 *	@throws exception
@@ -752,6 +774,8 @@ public class DataSource {
 	/**
 	 * This method retrieves the specified amenity related data given a
 	 * bounding box of a region, from a Open Street map
+	 *
+	 * Check out the tutorial on getting amenity data at https://bridgesuncc.github.io/tutorials/Data_Amenity.html
 	 *
 	 *	@param minLat  minimum latitude
 	 *	@param minLon  minimumm longitude

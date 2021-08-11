@@ -6,6 +6,10 @@ import java.util.Vector;
  * @brief This class represents an actor-movie pair object, to be used with the
  * IMDB actor-movie dataset
  *
+ * A user typically does not create an ActorMovieIMDB object. They are usually returned by bridges::connect::DataSource::getActorMovieIMDBData() and bridges::connect::DataSource::getActorMovieIMDBData2()
+ *
+ * Check out the tutorial on the IMDB dataset at https://bridgesuncc.github.io/tutorials/Data_IMDB.html
+ *
  * @author Kalpathi Subramanian
  */
 public class ActorMovieIMDB {
