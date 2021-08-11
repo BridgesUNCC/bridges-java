@@ -67,19 +67,54 @@ public class DataSource {
 	private static LRUCache lru;
 	private boolean debug = false;
 
-	private String getOSMBaseURL() {
+    private String sourceType = "live";
+
+    /**
+     * @brief specify which server to use for accessing datasources.
+     *
+     * This is mostly useful for the BRIDGES team to debug issues with accessing data.
+     *
+     *  @param st should be \"live\", \"testing\", or \"local\"
+     */
+    public void setSourceType(String st) {
+	if (!(st.equals("live") || st.equals("testing") || st.equals("local")))
+	    throw new IllegalArgumentException ("parameter to DataSource::setSourceType should be \"live\", \"testing\", or \"local\"");
+
+	//activating debug information is a side effect we probably
+	//want in all cases where 
+	if (st.equals("testing") || st.equals("local"))
+	    debug = true;
+	
+	sourceType = new String(st);
+    }
+
+    private String getOSMBaseURL() {
+	    if (sourceType.equals("local"))
+		return "http://localhost:3000/";
+		
 		return "http://bridges-data-server-osm.bridgesuncc.org/";
 	}
 
 	private String getElevationBaseURL() {
-		return "http://bridges-data-server-elevation.bridgesuncc.org/";
+	    if (sourceType.equals("local"))
+		return "http://localhost:3000/";
+
+		    return "http://bridges-data-server-elevation.bridgesuncc.org/";
 	}
 
 	private String getAmenityBaseURL() {
-		return "http://bridges-data-server-osm.bridgesuncc.org/";
+	    if (sourceType.equals("local"))
+		return "http://localhost:3000/";
+
+	    return "http://bridges-data-server-osm.bridgesuncc.org/";
 	}
 
 	private String getGutenbergBaseURL(){
+	    if (sourceType.equals("local"))
+		return "http://localhost:3000/";
+	    if (sourceType.equals("testing"))
+		return "http://bridges-data-server-gutenberg-t.bridgesuncc.org/";
+
 		return "http://bridges-data-server-gutenberg.bridgesuncc.org/";
 	}
 
