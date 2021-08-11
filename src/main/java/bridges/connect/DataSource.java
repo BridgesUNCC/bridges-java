@@ -1024,7 +1024,9 @@ public class DataSource {
      * @brief Search the gutenberg data for retrieving meta
      *   data of books matching a string and a category
      *
-     *  Data is retrieved  into a vector of book records
+     *  Data is retrieved  into a vector of book records.
+     *
+     *  A tutorial of how to use the Gutenberg data in bridges is presented here: https://bridgesuncc.github.io/tutorials/Data_Guttenberg.html
      *  
      *  @param term  a string that matches the category 
      *  @param category  category can be any book attribute (title, genre, 
@@ -1066,6 +1068,8 @@ public class DataSource {
 	/**
 	* This function is to retrieve a gutenberg book metadata from a book ID
 	*
+	* A tutorial of how to use the Gutenberg data in BRIDGES is available: https://bridgesuncc.github.io/tutorials/Data_Guttenberg.html
+	*
 	* @param id is the id of the book you want to retrieve
 	*
 	* @return a GutenbergMeta object of the book with the ID passed in
@@ -1100,6 +1104,8 @@ public class DataSource {
 
 	/**
 	* This function gets the text of a gutenberg book based on the ID
+	*
+	* A tutorial of how to use the Gutenberg data in BRIDGES is available: https://bridgesuncc.github.io/tutorials/Data_Guttenberg.html
 	*
 	* @param id is the id of the book you want the text of
 	*
