@@ -55,7 +55,7 @@ import bridges.connect.*;
  *
  *  The DataSource class provides the BRIDGES API to all external datasets that
  *  are implemented in BRIDGES. These include earthquake data, song data, IMDB
- *	actor/movies, Wikidata, Guttenberg book collections, OpenStreet maps,
+ *	actor/movies, Wikidata, Gutenberg book collections, OpenStreet maps,
  *  Shakespeare, play, sonnets, poems,  Cancer incidence data and IGN games
  *  Each dataset is accessed through a function call, which typically returns
  * 	a list of objects with all associated attributes. These can then be used
@@ -1055,7 +1055,7 @@ public class DataSource {
      *
      *  Data is retrieved  into a vector of book records.
      *
-     *  A tutorial of how to use the Gutenberg data in bridges is presented here: https://bridgesuncc.github.io/tutorials/Data_Guttenberg.html
+     *  A tutorial of how to use the Gutenberg data in bridges is presented here: https://bridgesuncc.github.io/tutorials/Data_Gutenberg.html
      *  
      *  @param term  a string that matches the category 
      *  @param category  category can be any book attribute (title, genre, 
@@ -1097,7 +1097,7 @@ public class DataSource {
 	/**
 	* This function is to retrieve a gutenberg book metadata from a book ID
 	*
-	* A tutorial of how to use the Gutenberg data in BRIDGES is available: https://bridgesuncc.github.io/tutorials/Data_Guttenberg.html
+	* A tutorial of how to use the Gutenberg data in BRIDGES is available: https://bridgesuncc.github.io/tutorials/Data_Gutenberg.html
 	*
 	* @param id is the id of the book you want to retrieve
 	*
@@ -1134,7 +1134,7 @@ public class DataSource {
 	/**
 	* This function gets the text of a gutenberg book based on the ID
 	*
-	* A tutorial of how to use the Gutenberg data in BRIDGES is available: https://bridgesuncc.github.io/tutorials/Data_Guttenberg.html
+	* A tutorial of how to use the Gutenberg data in BRIDGES is available: https://bridgesuncc.github.io/tutorials/Data_Gutenberg.html
 	*
 	* @param id is the id of the book you want the text of
 	*

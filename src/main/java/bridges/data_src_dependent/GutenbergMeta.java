@@ -13,7 +13,7 @@ package bridges.data_src_dependent;
  * The object does not contain the text of the book itself. Though it
  * can be obtained using bridges::connect::DataSource::getGutenbergBookText()
  *
- * A tutorial of how to use the Gutenberg data in BRIDGES is available: https://bridgesuncc.github.io/tutorials/Data_Guttenberg.html
+ * A tutorial of how to use the Gutenberg data in BRIDGES is available: https://bridgesuncc.github.io/tutorials/Data_Gutenberg.html
  *
  **/
 public class GutenbergMeta {
