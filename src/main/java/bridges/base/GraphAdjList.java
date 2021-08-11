@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  *
  *	@brief The GraphAdjList class can be used to represent adjacency list based
- *		graphs in BRIDGES
+ *		graphs in BRIDGES.
  *
  *	The GraphAdjList class can be used to represent adjacency list
  *	based graphs in BRIDGES; it takes 3 generic parameters: (1) K,
@@ -70,8 +70,6 @@ import java.util.ArrayList;
  *   graph.getLinkVisualizer("baskin", "robins").setColor("green");
  *   graph.getLinkVisualizer("baskin", "robins").setOpacity("0.5f");
  *\endcode
- * \sa Example tutorial at
- *		http://bridgesuncc.github.io/tutorials/Graph_AL.html
  *
  * There are two visualization engines available for
  * graph. The small graph visualization supports all
@@ -85,14 +83,16 @@ import java.util.ArrayList;
  * forced to pick one used forceLargeVizualization() and
  * forceSmallVizualization
  *
+ * @param K  orderable key (String, Integer, etc) that is used to index into vertex
+ * @param E1 holds vertex specific information, defined by application
+ * @param E2 holds edge specific information, defined by application
+ *
+ * \sa Example tutorial at
+ *		https://bridgesuncc.github.io/tutorials/Graph_AL.html
  *
  * @author Kalpathi Subramanian, Erik Saule
  *
  * @date 6/29/15, 5/18/17, 4/24/18, 7/14/19, 1/5/21
- *
- * @param K  orderable key (String, Integer, etc) that is used to index into vertex
- * @param E1 holds vertex specific information, defined by application
- * @param E2 holds edge specific information, defined by application
  *
  */
 public class GraphAdjList<K, E1, E2> extends DataStruct  {

@@ -34,7 +34,7 @@ import java.util.Set;
  *  vertex ids, making it easier to set visual attributes to graph nodes and
  *	links.
  *
- *  @sa Example tutorial at http://bridgesuncc.github.io/tutorials/Graph_AM.html
+ *  @sa Example tutorial at https://bridgesuncc.github.io/tutorials/Graph_AM.html
  *
  *
  *  @author Kalpathi Subramanian, Mihai Mehedint
