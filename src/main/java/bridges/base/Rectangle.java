@@ -6,7 +6,8 @@ import bridges.base.Symbol;
 import org.json.simple.JSONObject;
 
 /**
- * @brief This class defines a rectangle and is part of the symbol collection.
+ * @brief This class defines a rectangle and is part of the bridges::base::SymbolCollection.
+ *
  *		A rectangle has height and width, and a location (rectangle center)
  *
  * Basic styling such as stroke, fill, color are defined in the superclass Symbol.

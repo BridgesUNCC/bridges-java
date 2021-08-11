@@ -33,6 +33,10 @@ import org.json.simple.JSONArray;
  * The overall Symbol can be made more of less visible by adjusting
  * its opacity using setOpacity().
  *
+ * @sa An example tutorial can be found at
+ * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
+ *
+ *
  * 	@author David Burlinson, Kalpathi Subramanian, Erik Saule
  *
  *	@date  2018, 7/15/19

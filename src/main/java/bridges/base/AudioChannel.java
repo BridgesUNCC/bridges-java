@@ -3,7 +3,12 @@ package bridges.base;
 
 /**
  * @brief This class provides support for audio API in bridges; this class
- *  stores the  properties and audio data of a single channel
+ *  stores the  properties and audio data of a single channel.
+ *
+ * This object is typically used as part of a bridges::base::AudioClip.
+ *
+ * See the tutorial on AudioClips at https://bridgesuncc.github.io/tutorials/AudioClip.html
+ *
  */
 
 public class AudioChannel {

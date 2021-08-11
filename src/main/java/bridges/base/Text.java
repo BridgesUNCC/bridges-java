@@ -10,14 +10,17 @@ import org.json.simple.JSONObject;
 
 
 /**
- * @brief This class used to label symbols.
- *		Labels have  a text string, font size, width, height and location
+ * @brief This class used to render text as part of a SymbolCollection.
+ *
+ *		Text have a text string, font size, anchor location, and anchoring mode.
  *
  * Basic styling such as stroke, color are defined in the superclass Symbol.
  *
- *
  * On a label the "stroke" refer to the outside of the of the letter, and the "fill" refers to the inside of the letters. In most case, you want no stroke but a fill. 
  *
+ * Text is placed by defining an anchor position and what that
+ * position is for the text (is it the middle? is it the top
+ * left?). Check the tutorial for details.
  *
  * @sa An example tutorial can be found at 
  * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html

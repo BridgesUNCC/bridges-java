@@ -6,10 +6,13 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 /**
- * @brief This class defines a polyline and is part of the symbol collection.
+ * @brief This class defines a polyline and is used as part of a SymbolCollection.
+ *
  *		A polyline has a sequence of points (x, y coordinate pairs)
  *
  * Basic styling such as stroke and fill are defined in the superclass Symbol.
+ *
+ * Note that since a Polyline is typically an open shape one usually want a fill that is transparent.
  *
  * @sa An example tutorial can be found at
  * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html

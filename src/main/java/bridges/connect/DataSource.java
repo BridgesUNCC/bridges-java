@@ -104,7 +104,6 @@ public class DataSource {
 	 *  More information on the dataset can be found at
 	 *		http://bridgesuncc.github.io/datasets.html
 	 *
-	 *
 	 * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_EQ_USGS.html
 	 *
 	 *	@param maxElem  the number of earthquake records retrieved, limited to 5000

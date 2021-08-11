@@ -57,6 +57,8 @@ import bridges_external.*;
  * [-2^(getSampleBits()-1) ; 2^(getSampleBits()-1)[ range. The
  * functions allow to specify for channel and sample index.
  *
+ * A tutorial is available at: https://bridgesuncc.github.io/tutorials/AudioClip.html
+ *
  **/
 
 public class AudioClip extends DataStruct {

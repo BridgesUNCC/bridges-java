@@ -130,8 +130,10 @@ public class CircDLelement<E> extends DLelement<E> implements Iterable<E> {
 	}
 
 	/**
-	 *  Implements an iterator on the Circular doubly linked element for ease
-	 *  iterating over lists
+	 *  @brief Implements an iterator on the Circular doubly linked element for ease
+	 *  iterating over lists.
+	 *
+	 *  Typically used as the iterator of a CircDLelement.
 	 */
 	class CircDLelementIterator<E> implements Iterator<E> {
 		CircDLelement<E> current, first;
@@ -166,8 +168,10 @@ public class CircDLelement<E> extends DLelement<E> implements Iterable<E> {
 	}
 
 	/**
-	 *  Implements a reverse iterator on the Circular doubly linked element for ease
-	 *  iterating over lists
+	 *  @brief Implements a reverse iterator on the Circular doubly linked element for ease
+	 *  iterating over lists.
+	 *
+	 *  Typically used as the iterator of a CircDLelement.
 	 */
 	class CircDLelementReverseIterator<E> implements Iterator<E> {
 		CircDLelement<E> current, first;

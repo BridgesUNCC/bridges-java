@@ -6,7 +6,8 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 /**
- * @brief This class defines a polygon and is part of the symbol collection.
+ * @brief This class defines a polygon and can be used as a part of a SymbolCollection.
+ *
  *		A polygon has a sequence of 2D points (x, y coordinate pairs)
  *
  * Basic styling such as stroke, fill, color are defined in the superclass Symbol.

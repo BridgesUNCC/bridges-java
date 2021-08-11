@@ -25,7 +25,7 @@ import java.util.Iterator;
  *  an element and its next element.
  *
  *  @sa Example Tutorial at
- *			http://bridgesuncc.github.io/tutorials/CircularSinglyLinkedList.html
+ *			https://bridgesuncc.github.io/tutorials/CircularSinglyLinkedList.html
  *
  *	@author Kalpathi Subramanian
  *
@@ -111,8 +111,7 @@ public class CircSLelement<E> extends SLelement<E> implements Iterable<E> {
 	}
 
 	/**
-	 *
-	 *  Implements an iterator on the Circular singly linked element for ease
+	 * @brief Implements an iterator on a CircSLelement for ease
 	 *  iterating over lists
 	 */
 	class CircSLelementIterator implements Iterator<E> {

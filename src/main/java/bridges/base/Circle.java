@@ -5,7 +5,8 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 /**
- * @brief This class defines a circle and is part of the symbol collection.
+ * @brief This class defines a circle and is part of the bridges::base::SymbolCollection.
+ *
  *		A circle has a center and radius
  *
  * Basic styling such as stroke, fill, color are defined in the superclass Symbol.
@@ -13,8 +14,8 @@ import java.util.ArrayList;
  * @sa An example tutorial can be found at
  * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
- * @author Kalpathi Subramanian
- * @date 12/24/18
+ * @author Kalpathi Subramanian, Erik Saule
+ * @date 12/24/18, 08/11/21
  *
  */
 public class Circle extends Symbol {
