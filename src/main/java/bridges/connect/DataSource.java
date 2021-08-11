@@ -483,6 +483,8 @@ public class DataSource {
 	 *	and to look at the data, refer to <p>
 	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
 	 *
+	 * Refer to tutorial examples on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_IGN_Games.html
+	 *
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of Game objects.

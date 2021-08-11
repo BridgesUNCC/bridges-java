@@ -11,6 +11,10 @@ package bridges.data_src_dependent;
  *	Significant groupings include age, gender, race and geographical area.
  *
  *	http://www.cdc.gov/cancer/npcr/uscs/download_data.htm
+ *
+ *
+ * Refer to tutorial examples on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_CancerIncidence.html
+ *
  *  Data: Courtesy of Corgis Datasets, 2017
  *
  *  Author: Kalpathi Subramanian, April, 2017

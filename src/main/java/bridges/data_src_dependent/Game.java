@@ -7,16 +7,15 @@ import java.lang.String;
  *
  * This is a convenience class provided for  users who wish to use this
  * data source as part of their application. It provides an API that makes
- * it easy to access the attributes of this data set.
+ * it easy to access the attributes of this data set. 
+ *
+ * One would not normally create an object of this type, but rather
+ * obtain them through a call to bridges::connect::DataSource::getGameData().
  *
  * Each game has a title, platform on which it can be played, rating and
  *  a list of genres
  *
- * Refer to tutorial examples to using this data source in data structure
- * assignments.
- *
- *  Refer to tutorial examples to using this data source in data structure
- *  assignments.
+ * Refer to tutorial examples on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_IGN_Games.html
  *
  * @author Kalpathi Subramanian
  * @date   2/1/17, 12/26/20
