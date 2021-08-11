@@ -1,4 +1,9 @@
 package bridges.data_src_dependent;
+
+import java.util.Vector;
+import java.lang.String;
+
+
 /**
  * @brief  A Song object, used along with the Songs data source (using the
  *			Genius API.
@@ -14,9 +19,6 @@ package bridges.data_src_dependent;
  * @date   5/21/18
  *
  */
-import java.util.Vector;
-import java.lang.String;
-
 public class Song {
 	private	String artist,
 			song,	// song title

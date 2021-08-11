@@ -1,7 +1,11 @@
 package bridges.data_src_dependent;
 
 /**
- * This class is used with actor movie data retrieved from Wikidata
+ * @brief Represent Actor Movie relations extacted from Wikidata
+ *
+ * Note that the end user will not create an object of that type in regular circumstances. But rather, ActorMovieWikidata objects are returned by bridges::connect::DataSource::getWikidataActorMovie()
+ *
+ * @sa Exemple of how to access that type of data is provided at: https://bridgesuncc.github.io/tutorials/Data_WikiDataActor.html
  *
  * @author Erik Saule
  */

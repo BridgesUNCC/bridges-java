@@ -25,6 +25,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /**
+ * @brief This is an internal class to BRIDGES that is not intended to be seen by the end user.
+ *
  *	This class contains the methods to make HTTP connections for transmitting
  *	the JSON representation of a data structure to the BRIDGES server
  */

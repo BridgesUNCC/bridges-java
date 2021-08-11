@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 
 /**
+ * @brief This is an internal class to BRIDGES that is not intended to be seen by the end user.
+ *
  *	This class is a wrapper for a socket.io socket connection for BRIDGES
  */
 public class SocketConnection {

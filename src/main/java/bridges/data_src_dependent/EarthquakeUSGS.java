@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
- * This class keeps earthquake tweet data, retrieved from US Geological Survey
- *	Data
+ * @brief This class stores the information of an earthquake, retrieved from US Geological Survey
+ *	Data tweet source
  *
  * One would normally not create an object of that type but rather obtain one by calling bridges::connect::DataSource::getEarthquakeUSGSData()
  *
