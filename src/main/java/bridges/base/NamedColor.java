@@ -5,6 +5,8 @@ package bridges.base;
  *
  *  These colors can be used as part of the Game API
  *
+ * @sa See the tutorial on making games in BRIDGES: https://bridgesuncc.github.io/tutorials/NonBlockingGame.html
+ *
  *	@author David Burlinson,
  *	@date 9/06/18
  *

@@ -4,7 +4,9 @@ package bridges.base;
  *	@brief This enum is used to represent named symbols for use in BRIDGES GameGrids.
  *
  *  These symbols can be used as part of the Game API
- %
+ *
+ * @sa See the tutorial on making games in BRIDGES: https://bridgesuncc.github.io/tutorials/NonBlockingGame.html
+ *
  *	@author David Burlinson,
  *	@date 10/09/18
  *

@@ -13,6 +13,8 @@ import org.apache.commons.codec.binary.Base64;
  *
  *  The API supports 2D nonblocking games
  *
+ * @sa See the tutorial on making games in BRIDGES: https://bridgesuncc.github.io/tutorials/NonBlockingGame.html
+x *
  * @author David Burlinson, Erik Saule
  *
  **/

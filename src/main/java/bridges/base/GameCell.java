@@ -3,9 +3,11 @@ package bridges.base;
 import bridges.base.NamedColor;
 
 /**
- *	@brief This class is used to represent cells in GameGrids in BRIDGES.
+ *	@brief This class is used to represent cells in GameGrid in BRIDGES.
  *	 It is part of the GameAPI.
  *  Each cell has a foreground color, background color, and a symbol shape.
+ *
+ * @sa See the tutorial on making games in BRIDGES: https://bridgesuncc.github.io/tutorials/NonBlockingGame.html
  *
  *	@author David Burlinson
  *	@date 9/06/18
