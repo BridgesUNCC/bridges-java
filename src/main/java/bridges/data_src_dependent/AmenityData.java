@@ -143,8 +143,9 @@ public class AmenityData {
 	}
 
 	/**
-	 * get the count of amenities
-	 * @param count of amenities
+	 * @brief get the count of amenities
+	 *
+	 * @return count of amenities
 	 */
 	public int getCount() {
 		return count;
