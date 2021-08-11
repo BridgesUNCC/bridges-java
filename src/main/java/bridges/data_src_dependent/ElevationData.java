@@ -1,7 +1,11 @@
 package bridges.data_src_dependent;
 
 /**
- * Object that holds elevation data retrieved from NOAA repository
+ * @brief Object that holds elevation data retrieved from NOAA repository
+ *
+ * A user would not normally  create an ElevationData object but rather obtain one from calling bridges::connect::DataSource::getElevationData()
+ *
+ * A tutorial on how to use the Elevation dataset is available at: https://bridgesuncc.github.io/tutorials/Data_Elevation.html
  *
  * @author Jay Strahler
  *

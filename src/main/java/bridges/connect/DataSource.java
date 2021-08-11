@@ -918,10 +918,13 @@ public class DataSource {
 	}
 
 	/**
-	 * This method retrieves the elevation map of a region given the lat/long
-	 * range (bounding box) and resolution level
+	 * @brief This method retrieves the elevation map of a region given the lat/long
+	 * range (bounding box) and resolution level.
+	 *
 	 * Note that the ElevationData that is returned
 	 * may have slightly different location and resolution.
+	 *
+	 * A tutorial on how to use the Elevation dataset is available at: https://bridgesuncc.github.io/tutorials/Data_Elevation.html
 	 *
 	 * @param minLat minimum latitude requested
 	 * @param minLon minimum longitude requested
