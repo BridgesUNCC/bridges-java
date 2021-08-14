@@ -137,7 +137,7 @@ public class DataSource {
 	 *  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
 	 *
 	 *  More information on the dataset can be found at
-	 *		http://bridgesuncc.github.io/datasets.html
+	 *		https://bridgesuncc.github.io/datasets.html
 	 *
 	 * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_EQ_USGS.html
 	 *
@@ -191,7 +191,7 @@ public class DataSource {
 	 *  Each record in this collection has
 	 *	information on title, type (poem, Sonnet, play) and text.
 	 *
-	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html
+	 *	For more information and to look at the data, refer to https://bridgesuncc.github.io/datasets.html
 	 *
  * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_Shakespeare.html
 	 *
@@ -210,7 +210,7 @@ public class DataSource {
 	 *  Each record in this collection has
 	 *	information on title, type (poem, Sonnet, play) and text.
 	 *
-	 *	For more information and to look at the data, refer to http://bridgesuncc.github.io/datasets.html
+	 *	For more information and to look at the data, refer to https://bridgesuncc.github.io/datasets.html
 	 *
 	 * This function returns only some of the works, either the plays, or the poems, depending on the parameters.
 	 *
@@ -279,7 +279,7 @@ public class DataSource {
 	 *	CancerIncidence class.
 	 *
 	 *	For more information and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesuncc.github.io/datasets.html <p>
 	 *
 	 * Refer to tutorial examples on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_CancerIncidence.html
 
@@ -477,7 +477,7 @@ public class DataSource {
 	 *
 	 *  This version of the IMDB Actor/Movie data contains for each record,
 	 *	actor name, movie name, movie genres, movie rating; refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesuncc.github.io/datasets.html <p>
 	 *  for more information and to look at the dataset.
 	 *
 	 *
@@ -527,7 +527,7 @@ public class DataSource {
 	 *  Each record in this collection has
 	 *	information on game title, platform, rating, and genre. For more information
 	 *	and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://bridgesuncc.github.io/datasets.html <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesuncc.github.io/datasets.html <p>
 	 *
 	 * Refer to tutorial examples on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_IGN_Games.html
 	 *
