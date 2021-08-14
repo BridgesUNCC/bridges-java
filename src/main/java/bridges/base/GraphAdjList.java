@@ -88,7 +88,7 @@ import java.util.ArrayList;
  * @param E2 holds edge specific information, defined by application
  *
  * \sa Example tutorial at
- *		https://bridgesuncc.github.io/tutorials/Graph_AL.html
+ *		https://bridgesuncc.github.io/tutorials/Graph.html
  *
  * @author Kalpathi Subramanian, Erik Saule
  *
