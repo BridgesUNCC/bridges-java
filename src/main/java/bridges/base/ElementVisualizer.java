@@ -38,7 +38,7 @@ import java.util.Random;
  *	@date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
  *  \sa Example Tutorial (with singly linked list) at <br>
- *	http://bridgesuncc.github.io/tutorials/SLL.html
+ *	https://bridgesuncc.github.io/tutorials/SinglyLinkedList.html
  *
  */
 

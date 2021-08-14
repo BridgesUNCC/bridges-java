@@ -31,7 +31,7 @@ import javax.xml.crypto.Data;
  *	include USGS Earthquake Data, IMDB Actor/Movie Data (2 versions), Gutenberg Book
  *	Collection Meta Data, a Video Game Dataset and Shakespeare Dataset. More information
  *	is found in the respective methods (below) and at <p>
- *	http://bridgesuncc.github.io/datasets.html <p>
+ *	https://bridgesuncc.github.io/datasets.html <p>
  *
  *	A typical Bridges program includes creating the Bridges object, followed by creation
  *  of the data structure by the user, assigning visual attributes to elements of the
@@ -44,7 +44,7 @@ import javax.xml.crypto.Data;
  * 	@date  1/16/17, 5/19/17
  *
  *	\sa Tutorial examples at <br>
- *	http://bridgesuncc.github.io/tutorials/Overview.html
+ *	https://bridgesuncc.github.io/tutorials/Overview.html
  */
 
 public class Bridges {

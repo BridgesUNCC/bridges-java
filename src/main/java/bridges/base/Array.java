@@ -26,7 +26,7 @@ import bridges.validation.Validation;
  *          application specific data.
  *
  *  \sa Example Tutorial at <br>
- *		http://bridgesuncc.github.io/tutorials/Array.html (1D, 2D, and 3D Array)<br>
+ *		https://bridgesuncc.github.io/tutorials/Array.html (1D, 2D, and 3D Array)<br>
  *
  */
 public class Array<E> extends DataStruct {

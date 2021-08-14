@@ -39,7 +39,7 @@ import bridges.base.GraphAdjList;
  *	@param K orderable key (string, int, etc) that is used to index into vertex
  *
  *	@sa Example tutorial at
- *		http://bridgesuncc.github.io/tutorials/Graph.html
+ *		https://bridgesuncc.github.io/tutorials/Graph.html
  *
  *
  *

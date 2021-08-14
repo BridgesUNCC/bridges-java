@@ -26,7 +26,7 @@ import java.util.Vector;
  *          application specific data.
  *
  *	@sa Example tutorial at
- *		http://bridgesuncc.github.io/tutorials/Tree.html
+ *		https://bridgesuncc.github.io/tutorials/Tree.html
  *
  * 	@author Kalpathi  Subramanian
  *

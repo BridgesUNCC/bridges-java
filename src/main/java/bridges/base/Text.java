@@ -23,7 +23,7 @@ import org.json.simple.JSONObject;
  * left?). Check the tutorial for details.
  *
  * @sa An example tutorial can be found at 
- * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
+ * 		https://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
  * @author David Burlinson, Erik Saule
  * @date 2018, 7/15/19, 06/22/21

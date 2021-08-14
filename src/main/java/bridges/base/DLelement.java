@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
  *	@date 6/22/16, 1/7/17, 5/17/17, 7/14/19
  *
  *	\sa Example Tutorial at <br>
- *		http://bridgesuncc.github.io/tutorials/DoublyLinkedList.html
+ *		https://bridgesuncc.github.io/tutorials/DoublyLinkedList.html
  *
  *	@param E The generic parameter object that is part of this element, representing
  *          application specific data.

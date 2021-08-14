@@ -15,7 +15,7 @@ import org.json.simple.JSONArray;
  * Setting properties of groups may have surprising consequences. For instance setting the opacity of a SymbolGroup will apply a multiplicative opacity to all the objects in the group, but setting an fill color will only impact the Symbol in the SymbolGroup that do not have a defined fill color.
  *
  * @sa An example tutorial can be found at
- * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
+ * 		https://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
  * 	@author Erik Saule
  *

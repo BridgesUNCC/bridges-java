@@ -15,7 +15,7 @@ import org.json.simple.JSONArray;
  * @brief SymbolCollection represents a collection of symbols to visualize in Bridges
  * This class is a container for the different symbol  types supported in BRIDGES.
  *
- * @sa See tutorial at http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
+ * @sa See tutorial at https://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
  * @author David Burlinson
  * @date 2018, 7/15/19

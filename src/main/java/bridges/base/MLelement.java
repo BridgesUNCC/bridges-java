@@ -33,7 +33,7 @@ import java.util.Vector;
  * @param E The generic parameter object that is part of this element, representing
  *			either application specific data, or a pointer to a sublist.
  *
- *	@sa Example Tutorial at http://bridgesuncc.github.io/tutorials/MultiList.html
+ *	@sa Example Tutorial at https://bridgesuncc.github.io/tutorials/MultiList.html
  *
  * @author Kalpathi Subramanian
  *

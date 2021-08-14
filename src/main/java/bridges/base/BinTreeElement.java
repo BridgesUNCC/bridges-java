@@ -17,7 +17,7 @@ package bridges.base;
  *  the current element and its left or  right child
  *
  * @sa Example Tutorial at
- *			http://bridgesuncc.github.io/tutorials/BinTree.html
+ *			https://bridgesuncc.github.io/tutorials/BinTree.html
  *
  * @param E the generic parameter object that is part of this element, representing
  *		application specific data.

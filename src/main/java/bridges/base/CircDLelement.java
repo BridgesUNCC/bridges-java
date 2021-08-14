@@ -27,7 +27,7 @@ import java.util.Iterator;
  *  the element and its previous or next nodes.
  *
  *	\sa Example Tutorial at
- *		http://bridgesuncc.github.io/tutorials/CircularDoublyLinkedList.html
+ *		https://bridgesuncc.github.io/tutorials/CircularDoublyLinkedList.html
  *
  *  @author Kalpathi Subramanian
  *

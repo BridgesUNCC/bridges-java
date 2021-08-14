@@ -19,7 +19,7 @@ import bridges.base.*;
  *
  *
  *  @sa Example tutorial using AVLTreeElement at
- *      http://bridgesuncc.github.io/tutorials/AVL.html
+ *      https://bridgesuncc.github.io/tutorials/AVL.html
  *
  *  @param E the generic parameter object that is part of this element, representing
  *      application specific data.

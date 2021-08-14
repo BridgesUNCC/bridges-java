@@ -20,7 +20,7 @@ import org.json.simple.JSONValue;
  *  the current element and its left or right child
  *
  *	@sa Example tutorial using BSTElement at
- *		http://bridgesuncc.github.io/tutorials/BinarySearchTree.html
+ *		https://bridgesuncc.github.io/tutorials/BinarySearchTree.html
  *
  *	@param E the generic parameter object that is part of this element, representing
  *      application specific data.

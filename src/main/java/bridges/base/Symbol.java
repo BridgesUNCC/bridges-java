@@ -34,7 +34,7 @@ import org.json.simple.JSONArray;
  * its opacity using setOpacity().
  *
  * @sa An example tutorial can be found at
- * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
+ * 		https://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
  *
  * 	@author David Burlinson, Kalpathi Subramanian, Erik Saule

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Note that since a Polyline is typically an open shape one usually want a fill that is transparent.
  *
  * @sa An example tutorial can be found at
- * 		http://bridgesuncc.github.io/tutorials/Symbol_Collection.html
+ * 		https://bridgesuncc.github.io/tutorials/Symbol_Collection.html
  *
  * @author David Burlinson, Kalpathi Subramanian, Erik Saule
  * @date 12/23/18, 7/15/19, 6/22/21
