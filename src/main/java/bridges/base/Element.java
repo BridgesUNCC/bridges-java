@@ -1,4 +1,4 @@
-spackage bridges.base;
+package bridges.base;
 
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
