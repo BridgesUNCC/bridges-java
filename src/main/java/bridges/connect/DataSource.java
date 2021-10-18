@@ -1083,8 +1083,8 @@ public class DataSource {
 		int requestStatus = dataResp.getStatusLine().getStatusCode();
 		data = EntityUtils.toString(dataResp.getEntity());
 
-		if (debug)
-			System.err.println("Data is: " + data);
+//		if (debug)
+//			System.err.println("Data is: " + data);
 
 		if (requestStatus == 200){
 			return data;
