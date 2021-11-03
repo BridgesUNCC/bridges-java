@@ -108,6 +108,16 @@ public abstract class Symbol {
 		return this;
 	}
 	/**
+	 * This method sets the symbol fill color
+	 *
+	 * @param c the color to set
+	 * @return the symbol
+	 */
+	public Symbol setFillColor(Color c) {
+		this.fillColor = c;
+		return this;
+	}
+        /**
 	* This method gets fill color
 	*
 	* @return  fill color
