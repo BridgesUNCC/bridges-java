@@ -245,7 +245,7 @@ public class EarthquakeUSGS {
 	/**
 	 * function for internal use
 	 */
-	public String enterCarriageReturn(String str) {
+	private String enterCarriageReturn(String str) {
 		return str = str.replace(" ", "\\n");
 	}
 
