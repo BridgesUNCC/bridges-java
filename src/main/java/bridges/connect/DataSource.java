@@ -1037,7 +1037,8 @@ public class DataSource {
 		double xll = 0;
 		double yll = 0;
 		double cellsize = 0;
-		int maxVal = -9999999;
+		int maxVal = Integer.MIN_VALUE;
+		int minVal = Integer.MAX_VALUE;
 
 		String [] lines = elev_data_json.split("\n");
 		cols = Integer.parseInt(lines[0].replaceAll("[^0-9]", ""));
@@ -1065,11 +1066,15 @@ public class DataSource {
 				if (data[i][j] > maxVal) {
 					maxVal = data[i][j];
 				}
+				if (data[i][j] < minVal) {
+					minVal = data[i][j];
+				}
+
 			}
 		}
 
 		ElevationData ret_data = new ElevationData(data, cols, rows, xll, yll,
-			cellsize, maxVal);
+							   cellsize, maxVal, minVal);
 		return ret_data;
 	}
 
@@ -1083,8 +1088,8 @@ public class DataSource {
 		int requestStatus = dataResp.getStatusLine().getStatusCode();
 		data = EntityUtils.toString(dataResp.getEntity());
 
-		if (debug)
-			System.err.println("Data is: " + data);
+//		if (debug)
+//			System.err.println("Data is: " + data);
 
 		if (requestStatus == 200){
 			return data;
