@@ -79,6 +79,54 @@ public class Grid<E> extends DataStruct {
 		}
 	}
 
+    public void resize(int rows, int cols) {
+	int[] oldsize = gridSize;
+	//ArrayList<ArrayList<E>> oldgrid = grid;
+
+	int[] size = new int[] {rows, cols};
+	if ((size[0] <= 0 || size[0] > maxGridSize[0]) ||
+	    (size[1] <= 0 || size[1] > maxGridSize[1])) {
+	    throw new IllegalArgumentException(
+					       "\nInvalid size: [" + size[0] + "," + size[1] + "]... please use values between (0 and " + maxGridSize[0] + "] for rows and values between (0 and " + maxGridSize[1] + "] for columns!\n");
+	}
+	
+	gridSize = size.clone();
+
+	if (size[1] < oldsize[1]) {
+	    //shrink every row
+	    for (int i=0; i<oldsize[0]; i++) {
+		//really grid.get(i).removeRange(size[1], oldsize[1]); but it is protected
+		for (int j=size[1]; j<oldsize[1]; ++j)
+		    grid.get(i).remove(size[1]);
+	    }
+	} else if (oldsize[1]< size[1]) {
+	    //add some nulls at the end of every row
+	    for (int i=0; i<oldsize[0]; i++) {
+		for (int j=oldsize[1];j<size[1];++j) {
+		    grid.get(i).add(null);
+		}
+	    }
+	}
+	if (size[0] < oldsize[0]) {
+	    //shrink row
+	    //really grid.removeRange(size[0], oldsize[0]); but it is protected
+	    for (int j=size[0]; j<oldsize[0]; ++j)
+		grid.remove(size[0]);
+	}
+	else if (oldsize[0] < size[0]) {
+	    //add empty rows
+	    for (int i=oldsize[0]; i<size[0]; ++i) {
+		grid.add(new ArrayList<E>(size[1]));
+		for (int j=0; j<size[1]; ++j) {
+		    grid.get(i).add(null);
+		}
+	    }
+	}
+	
+	    
+	
+    }
+    
 	/**
 	 *
 	 * @brief Get the grid dimensions
