@@ -47,6 +47,7 @@ public class SortingBenchmark extends Benchmark {
 	private int baseSize;
 	private int increment;
 	private double geoBase;
+    private String generatorType;
 
 	public SortingBenchmark(LineChart p) {
 	    super(p);
@@ -59,6 +60,7 @@ public class SortingBenchmark extends Benchmark {
 		baseSize = 1;
 		increment = 1;
 		geoBase = 1.;
+		setGenerator("random");
 	}
 
 	/**
@@ -138,12 +140,67 @@ public class SortingBenchmark extends Benchmark {
 	}
 
 
-	private void generate(int[] arr, int n) {
+	private void generateRandom(int[] arr, int n) {
 		for (int i = 0; i < n; i++) {
 			arr[i] = r.nextInt(2 * n);
 		}
 	}
+	private void generateInOrder(int[] arr, int n) {
+		for (int i = 0; i < n; i++) {
+		    arr[i] = i;
+		}
+	}
+    private void generateReverseOrder(int[] arr, int n) {
+		for (int i = 0; i < n; i++) {
+		    arr[i] = n-i;
+		}
+	}
+    private void generateFewValues(int[] arr, int n) {
+		for (int i = 0; i < n; i++) {
+		    arr[i] = r.nextInt(4);
+		}
+	}
+    private void generateAlmostSorted(int[] arr, int n) {
+	if (n < 20) {
+	    generateRandom(arr, n);
+	} else {
+	    int i;
+		for ( i = 0; i < n-20; i++) {
+		    arr[i] = i;
+		}
+		for ( ; i < n; i++) {
+		    			arr[i] = r.nextInt(2 * n);
+		}
+	}
+    }
+    
+	private void generate(int[] arr, int n) {
+	    if (generatorType.equals("random")) {
+		generateRandom(arr, n);
+	    } else if (generatorType.equals("inorder")) {
+		generateInOrder(arr, n);
+	    } else if (generatorType.equals("reverseorder")) {
+		generateReverseOrder(arr, n);
+	    } else if (generatorType.equals("fewdifferentvalues")) {
+		generateFewValues(arr, n);
+	    } else if (generatorType.equals("almostsorted")) {
+		generateAlmostSorted(arr, n);
+	    } else {
+		throw new java.lang.UnsupportedOperationException ("unknown generator");
+	    }
+	}
+    
+    /**
+     * @param generatorName possible values are "random", "inorder", "reverseorder", "fewdifferentvalues", "almostsorted"
+     **/
+    public void setGenerator(String generatorName) {
+	generatorType = generatorName;
+    }
 
+    public String getGenerator() {
+	return generatorType;
+    }
+    
 	private boolean check (int[] arr, int n) {
 		boolean ok = true;
 		for (int i = 1; i < n; ++i) {
