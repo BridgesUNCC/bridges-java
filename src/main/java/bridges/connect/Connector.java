@@ -111,7 +111,7 @@ public class Connector {
 	 *
 	 * @param server_url  server url to be set
 	 */
-	public void setServerURL(String server_url) {
+	protected void setServerURL(String server_url) {
 		while (server_url.endsWith("/"))
 			server_url = server_url.substring(0, server_url.length() - 1);
 		if (server_url.length() > 0)
