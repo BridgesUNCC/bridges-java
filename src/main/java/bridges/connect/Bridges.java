@@ -145,7 +145,7 @@ public class Bridges {
 	 * @param username   this is the username (from the Bridges account)
 	 *
 	 */
-	public void init(int assignment, String username, String appl_id) {
+	protected void init(int assignment, String username, String appl_id) {
 		String envAssignment = System.getenv("FORCE_BRIDGES_ASSIGNMENT");
 		String envApiKey = System.getenv("FORCE_BRIDGES_APIKEY");
 		String envUser = System.getenv("FORCE_BRIDGES_USERNAME");
