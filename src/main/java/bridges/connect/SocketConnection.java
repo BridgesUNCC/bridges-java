@@ -53,7 +53,8 @@ public class SocketConnection {
 			opts.transports = new String[] {"websocket"};
 
 
-			String url = "https://bridges-games.herokuapp.com";
+			//String url = "https://bridges-games.herokuapp.com";
+			String url = bridges.getServerURL();
 
 			if (Bridges.getDebugFlag()) {
 				System.out.println("Connecting to " + url + " using mainly transport " + opts.transports[0]);
