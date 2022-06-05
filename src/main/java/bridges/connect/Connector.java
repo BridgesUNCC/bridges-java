@@ -62,6 +62,7 @@ public class Connector {
 				.setRedirectStrategy(new LaxRedirectStrategy())
 				.build()
 			);
+		setServer("live");
 	}
 
 	/* Accessors and Mutators */
@@ -73,9 +74,14 @@ public class Connector {
 	 * @param server  server type
 	 */
 	public void setServer(String server) throws IllegalArgumentException {
+	    String envServer = System.getenv("FORCE_BRIDGES_APISERVER");
 		if (Bridges.getDebugFlag()) {
 			System.err.println("Connector.setServer(" + server + ")");
+			if (envServer != null)
+			    System.err.println("Overiden by environment(" + envServer + ")");
 		}
+		if (envServer != null)
+		    server = envServer;
 		switch (server) {
 			case "live":
 				setServerURL(server_live);
