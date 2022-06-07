@@ -8,28 +8,31 @@ public class Reddit {
 	private String title, author, subreddit, url, text;
 	private int id, score, vote_ratio, comment_count, post_time;
 
-    def __init__(self, id = 0, title = "", author= "", score = 0, vote_ratio = 0, comment_count = 0, subreddit = "", post_time = 0, url = "", text = ""):
-        self.id = id
+    
 
 	public Reddit() {
 		id = 0;
-        title = "";
-		self.author = "";
-		self.score = 0;
-		self.vote_ratio = 0
-		self.comment_count = 0;
-		subreddit = "";
-		self.post_time = 0;
-		self.url = "";
-		self.text = "";
+		title = "";
+		this.author = "";
+		this.score = 0;
+		this.vote_ratio = 0;
+		this.comment_count = 0;
+		this.subreddit = "";
+		this.post_time = 0;
+		this.url = "";
+		this.text = "";
 	}
 
+    //this should be an other constructor
+//    def __init__(self, id = 0, title = "", author= "", score = 0, vote_ratio = 0, comment_count = 0, subreddit = "", post_time = 0, url = "", text = ""):
+    
+    
     public int getID() {
         return id;
 	}
 
     public void setID(int i) {
-        id = i
+        id = i;
 	}
 
 	public String  getTitle(){
@@ -48,13 +51,13 @@ public class Reddit {
         author = auth;
 	}
 
-    public int getSscore(self) {
+    public int getSscore() {
 		return score;
 	}
 
-    public void setScore(int sc):
+    public void setScore(int sc){
         score = sc;
-
+    }
     public int  getVoteRatio() {
         return vote_ratio;
 	}
@@ -67,12 +70,13 @@ public class Reddit {
         return comment_count;
 	}
 
-    public setCommentCount(int cnt) {
+    public void setCommentCount(int cnt) {
         comment_count = cnt;
 	}
 
-    public String  getSubReddit():
+    public String  getSubReddit(){
         return subreddit;
+    }
 
     public void setSubReddit(String sr){
         subreddit = sr;
@@ -82,7 +86,7 @@ public class Reddit {
         return post_time;
 	}
 
-    public void  setPostTime(pt){
+    public void  setPostTime(int pt){
         post_time = pt;
 	} 
 
@@ -90,7 +94,7 @@ public class Reddit {
         return url;
 	}
 
-    public void  setUrl(u) {
+    public void  setUrl(String u) {
         url = u; 
 	}
 
@@ -98,7 +102,7 @@ public class Reddit {
         return text;
 	}
 
-    public setText(String txt) {  
+    public void setText(String txt) {  
         text = txt; 
 	}
 }
