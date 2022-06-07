@@ -118,6 +118,16 @@ public class DataSource {
 		return "http://bridges-data-server-gutenberg.bridgesuncc.org/";
 	}
 
+	String  getRedditURL() {
+		if (sourceType.equals("testing"))
+			return "http://bridges-data-server-reddit-t.bridgesuncc.org";
+		else if (sourceType.equals("local"))
+			return "http://localhost:9999";
+		else
+			return "http://bridges-data-server-reddit.bridgesuncc.org";
+	}
+
+
 
 
 	DataSource() {
@@ -1315,6 +1325,22 @@ public class DataSource {
 		}
 	}
 
+	/////////////////////////////////////////////////////////////////////////
+	//  Gettin Reddit data
+	/////////////////////////////////////////////////////////////////////////
+	public Vector<Reddit> getRedditData (String subreddit, int time_request) {
+		String base_url = getRedditURL();
+		System.out.println("reddit base url:" +  base_url);
+		String url = base_url + "/cache?subreddit=" + subreddit +
+			"&time_request=" + String.valueOf(time_request);
+
+		System.out.println("reddit url:" +  url);
+//      content = server_request(url)
+//      data = json.loads(content.decode("utf-8"))
+
+		Vector<Reddit> reddit_posts = new Vector<Reddit>();
+		return reddit_posts;
+	}
 	/////////////////////////////////////////////////////////////////////////
 	// The following functions are provided to import store assignments on
 	// the BRIDGES server. Currently supported: ColorGrid import
