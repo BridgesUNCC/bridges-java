@@ -154,14 +154,10 @@ public class DataSource {
 			url += "state=" + params.get("state") + "&";
 		if (params.containsKey("country")) 
 			url += "country=" + params.get("country") + "&";	
-		if (params.containsKey("latitMin")) 
-			url += "latitMin=" + params.get("latitMin") + "&";
-		if (params.containsKey("latitMax")) 
-			url += "latitMax=" + params.get("latitMax") + "&";
-		if (params.containsKey("longitMin"))
-			url += "longitMin=" + params.get("longitMin") + "&";
-		if (params.containsKey("longitMax")) 
-			url += "longitMax=" + params.get("longitMax") + "&";
+		if (params.containsKey("minLatLong")) 
+			url += "minLatLong=" + params.get("minLatLong") + "&";
+		if (params.containsKey("maxLatLong")) 
+			url += "maxLatLong=" + params.get("maxLatLong") + "&";
 		if (params.containsKey("elevation")) 
 			url += "elevation=" + params.get("elevation") + "&";
 		if (params.containsKey("population"))
