@@ -143,7 +143,22 @@ public class DataSource {
 	}
 
 	/**
-	 *   This function gets the US Cities data
+	 * @brief  Retrieves US city data based on a set of filtering parameters
+	 *
+	 * @param  params  this represents a specification of the filtering
+	 *          parameters provided as a map. Multiple parameters will result
+	 *          in filtering as a combination (intersection)
+	 *          Available parameters and their  types are as follows:
+	 *         'city' : string
+	 *         'state' : string
+	 *         'country' : string
+	 *         'time_zone' : string
+	 *         'elevation' : integer
+	 *         'population' : integer
+	 *         'minLatLong' : float, float    -- Lat long minima
+	 *         'maxLatLong' : float, float    -- Lat long maxima
+	 *
+	 *
 	 */
 	public List<USCities> getUSCitiesData(HashMap<String, String> params) throws 
 					IOException {
@@ -167,8 +182,6 @@ public class DataSource {
 
 		// remove last & 
 		url = url.substring(0, url.length()-1);
-
-		System.out.println ("url = " + url);
 
 		// make the http request
 		HttpResponse  response = makeRequest(url);
