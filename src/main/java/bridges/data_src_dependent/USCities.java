@@ -4,14 +4,14 @@ import java.lang.String;
 
 public class USCities {
 
-	private String String city, state, country, time_zone;
+	private String city, state, country, time_zone;
 	private	int elevation, population;
 	private  float latit, longit;
 
 	public USCities() {
 		this.city = this.state = this.country = this.time_zone = new String();
 		this.elevation = this.population = 0;
-		this.latit = this.longit = 0.;
+		this.latit = this.longit = 0.0f;
 	}
 
 	public USCities (String cty, String st, String cntry, String tm_zone,
@@ -20,11 +20,13 @@ public class USCities {
 		this.state = st;
 		this.country = cntry;
 		this.time_zone = tm_zone;
+		this.elevation = elev;
+		this.population = pop;
 		this.latit = lat;
 		this.longit = lon;
 	}
 
-	public int getCity() {
+	public String getCity() {
 		return this.city;
 	}
 

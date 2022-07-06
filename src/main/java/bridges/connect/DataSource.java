@@ -118,7 +118,7 @@ public class DataSource {
 		return "http://bridges-data-server-gutenberg.bridgesuncc.org/";
 	}
 
-	String  getRedditURL() {
+	private String  getRedditURL() {
 		if (sourceType.equals("testing"))
 			return "http://bridges-data-server-reddit-t.bridgesuncc.org";
 		else if (sourceType.equals("local"))
@@ -127,8 +127,9 @@ public class DataSource {
 			return "http://bridges-data-server-reddit.bridgesuncc.org";
 	}
 
-
-
+	private String getUSCitiesURL() {
+		return "http://bridgesdata.herokuapp.com/api/us_cities";
+	}
 
 	DataSource() {
 		if (lru == null)
@@ -139,6 +140,75 @@ public class DataSource {
 		bridges = b;
 		if (lru == null)
 			lru = new LRUCache(30);
+	}
+
+	/**
+	 *   This function gets the US Cities data
+	 */
+	public List<USCities> getUSCitiesData(HashMap<String, String> params) throws 
+					IOException {
+		String url = getUSCitiesURL() + "?";
+		if (params.containsKey("city")) 
+			url += "city=" + params.get("city") + "&";
+		if (params.containsKey("state")) 
+			url += "state=" + params.get("state") + "&";
+		if (params.containsKey("country")) 
+			url += "country=" + params.get("country") + "&";	
+		if (params.containsKey("latitMin")) 
+			url += "latitMin=" + params.get("latitMin") + "&";
+		if (params.containsKey("latitMax")) 
+			url += "latitMax=" + params.get("latitMax") + "&";
+		if (params.containsKey("longitMin"))
+			url += "longitMin=" + params.get("longitMin") + "&";
+		if (params.containsKey("longitMax")) 
+			url += "longitMax=" + params.get("longitMax") + "&";
+		if (params.containsKey("elevation")) 
+			url += "elevation=" + params.get("elevation") + "&";
+		if (params.containsKey("population"))
+			url += "population=" + params.get("population") + "&";
+		if (params.containsKey("limit"))
+			url += "limit=" + params.get("limit") + "&";
+
+		// remove last & 
+		url = url.substring(0, url.length()-1);
+
+		System.out.println ("url = " + url);
+
+		// make the http request
+		HttpResponse  response = makeRequest(url);
+
+		// check response
+		int status = response.getStatusLine().getStatusCode();
+
+		if (status == 200) {  //  ok
+
+			// parse the response
+			JSONArray json_arr = unwrapJSONArray(response, "data");
+			List<USCities> us_cities = new ArrayList<USCities>(json_arr.size());
+			for (int i = 0; i < json_arr.size(); i++) {
+                JSONObject item = (JSONObject) json_arr.get(i);
+
+				String city = (String) item.get("city");
+				String state = (String) item.get("state");
+				String country = (String) item.get("country");
+				String time_zone = (String) item.get("timezone");
+				long  elevation = (long) item.get("elevation");
+				long population = (long) item.get("population");
+				double latit = (double) item.get("lat");
+				double longit = (double) item.get("lon");
+
+				// put into object
+				USCities city_data = new USCities (city, state, country, time_zone,
+					(int) elevation, (int) population, (float) latit, (float) longit);
+
+				us_cities.add(city_data);
+
+			}
+			return us_cities;
+		}
+		else 
+            throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " 
+									+ status);
 	}
 
 	/**
