@@ -48,15 +48,15 @@ public class USCities {
 		this.country = cntry;
 	}
 
-	public int getTimeZone() {
+	public String getTimeZone() {
 		return this.time_zone;
 	}
 
-	public void setTimeZone(int tz) {
+	public void setTimeZone(String tz) {
 		this.time_zone = tz;
 	}
 
-	public int  getLatitude() {
+	public float  getLatitude() {
 		return this.latit;
 	}
 
@@ -64,11 +64,27 @@ public class USCities {
 		this.latit = lat;
 	}
 
-	public int  getLongitude()  {
+	public float  getLongitude()  {
 		return this.longit;
 	}
 
 	public void setLongitude(float lon) {
 		this.longit = lon;
 	}
+
+	public int getElevation() {
+		return elevation;
+	}
+
+	public void setElevation(int elev) {
+		elevation = elev;
+	}
+
+	public int getPopulation() {
+		return population;
+	}   
+                
+	public void setPopulation(int pop) {
+		population = pop;
+	}   
 };
