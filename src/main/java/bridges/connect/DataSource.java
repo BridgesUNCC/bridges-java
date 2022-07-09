@@ -160,8 +160,8 @@ public class DataSource {
 	 *
 	 *
 	 */
-	public List<USCities> getUSCitiesData(HashMap<String, String> params) throws 
-					IOException {
+	public Vector<USCities> getUSCitiesData(HashMap<String, String> params) 
+			throws IOException {
 		String url = getUSCitiesURL() + "?";
 		if (params.containsKey("city")) 
 			url += "city=" + params.get("city") + "&";
@@ -193,7 +193,7 @@ public class DataSource {
 
 			// parse the response
 			JSONArray json_arr = unwrapJSONArray(response, "data");
-			List<USCities> us_cities = new ArrayList<USCities>(json_arr.size());
+			Vector<USCities> us_cities = new Vector<USCities>(json_arr.size());
 			for (int i = 0; i < json_arr.size(); i++) {
                 JSONObject item = (JSONObject) json_arr.get(i);
 
