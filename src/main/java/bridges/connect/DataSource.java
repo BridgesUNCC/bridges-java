@@ -149,12 +149,15 @@ public class DataSource {
 	 *          parameters provided as a map. Multiple parameters will result
 	 *          in filtering as a combination (intersection)
 	 *          Available parameters and their  types are as follows:
+     *
 	 *         'city' : string
 	 *         'state' : string
 	 *         'country' : string
 	 *         'time_zone' : string
-	 *         'elevation' : integer
-	 *         'population' : integer
+	 *         'minElevation' : integer
+	 *         'maxElevation' : integer
+	 *         'minPopulation' : integer
+	 *         'maxPopulation' : integer
 	 *         'minLatLong' : float, float    -- Lat long minima
 	 *         'maxLatLong' : float, float    -- Lat long maxima
 	 *
