@@ -162,11 +162,11 @@ public class Reddit {
      *
      *   @return URL
      */
-    public String  getUrl() {
+    public String  getURL() {
         return url;
 	}
 
-    public void  setUrl(String u) {
+    public void  setURL(String u) {
         url = u; 
 	}
 

@@ -1469,7 +1469,7 @@ public class DataSource {
 			r.setCommentCount(comment_count);
 			r.setSubreddit(subred);
 			r.setPostTime(posttime);
-			r.setUrl(posturl);
+			r.setURL(posturl);
 			r.setText(text);
 
 			reddit_posts.add(r);
