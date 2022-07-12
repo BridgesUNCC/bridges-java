@@ -2,16 +2,33 @@ package bridges.data_src_dependent;
 
 import java.lang.String;
 
+/**
+* @brief Class that holds data of US Cities
+* 
+* A user would not normally create an ElevationData object but 
+* rather obtain one from calling bridges::DataSource::getUSCities()
+*
+* A tutorial on how to use the US Cities dataset is available at: 
+*  https://bridgesuncc.github.io/tutorials/USCities.html (to be done!)
+*
+* Each city contains the city name, state, country, time zone, elevation,
+*  population and lat/long location information.
+*
+* @author Kalpathi Subramanian
+*
+* @date 6/7/22
+*/
+
 public class USCities {
 
-	private String String city, state, country, time_zone;
+	private String city, state, country, time_zone;
 	private	int elevation, population;
 	private  float latit, longit;
 
 	public USCities() {
 		this.city = this.state = this.country = this.time_zone = new String();
 		this.elevation = this.population = 0;
-		this.latit = this.longit = 0.;
+		this.latit = this.longit = 0.0f;
 	}
 
 	public USCities (String cty, String st, String cntry, String tm_zone,
@@ -20,11 +37,13 @@ public class USCities {
 		this.state = st;
 		this.country = cntry;
 		this.time_zone = tm_zone;
+		this.elevation = elev;
+		this.population = pop;
 		this.latit = lat;
 		this.longit = lon;
 	}
 
-	public int getCity() {
+	public String getCity() {
 		return this.city;
 	}
 
@@ -48,15 +67,15 @@ public class USCities {
 		this.country = cntry;
 	}
 
-	public int getTimeZone() {
+	public String getTimeZone() {
 		return this.time_zone;
 	}
 
-	public void setTimeZone(int tz) {
+	public void setTimeZone(String tz) {
 		this.time_zone = tz;
 	}
 
-	public int  getLatitude() {
+	public float  getLatitude() {
 		return this.latit;
 	}
 
@@ -64,11 +83,27 @@ public class USCities {
 		this.latit = lat;
 	}
 
-	public int  getLongitude()  {
+	public float  getLongitude()  {
 		return this.longit;
 	}
 
 	public void setLongitude(float lon) {
 		this.longit = lon;
 	}
+
+	public int getElevation() {
+		return elevation;
+	}
+
+	public void setElevation(int elev) {
+		elevation = elev;
+	}
+
+	public int getPopulation() {
+		return population;
+	}   
+                
+	public void setPopulation(int pop) {
+		population = pop;
+	}   
 };
