@@ -23,9 +23,6 @@ public class Reddit {
 		this.text = "";
 	}
 
-    //this should be an other constructor
-//    def __init__(self, id = 0, title = "", author= "", score = 0, vote_ratio = 0, comment_count = 0, subreddit = "", post_time = 0, url = "", text = ""):
-    
     
     public int getID() {
         return id;
