@@ -2,6 +2,23 @@ package bridges.data_src_dependent;
 
 import java.lang.String;
 
+/**
+ * @brief  An object to represent a Reddit post, used along with the Reddit data source
+ *
+ * This is a convenience class provided for  users who wish to use this
+ * data source as part of their application. It provides an API that makes
+ * it easy to access the attributes of this data set.
+ *
+ * The Reddit object is typically not created by a student but rather
+ * obtained from calling bridges::connect::DataSource::getRedditData().
+ *
+ * Refer to tutorial for example of using this feature: https://bridgesuncc.github.io/tutorials/
+ *
+ *
+ * @author Erik Saule
+ * @date   7/12/22
+ *
+ */
 public class Reddit {
 
     private String id, title, author, subreddit, url, text;
@@ -9,9 +26,13 @@ public class Reddit {
     private float vote_ratio;
     
 
+	/**
+	 * @brief Reddit default constructor
+	 *
+	 */
 	public Reddit() {
-		id = "";
-		title = "";
+		this.id = "";
+		this.title = "";
 		this.author = "";
 		this.score = 0;
 		this.vote_ratio = 0.0f;
@@ -22,7 +43,11 @@ public class Reddit {
 		this.text = "";
 	}
 
-    
+    	/**
+	 *           @brief return id of the reddit post
+	 *
+	 *   @return id
+	 */
     public String getID() {
         return id;
 	}
@@ -31,7 +56,13 @@ public class Reddit {
         id = i;
 	}
 
-	public String  getTitle(){
+
+    	/**
+	 *           @brief return the title of the reddit post
+	 *
+	 *   @return title
+	 */
+    public String  getTitle(){
 		return title; 
 	}
 
@@ -39,6 +70,12 @@ public class Reddit {
 		title = titl;
 	}
 
+    
+    	/**
+	 *           @brief return the author of the reddit post
+	 *
+	 *   @return author's username
+	 */
 	public String getAuthor() {
 		return author;
 	}
@@ -47,6 +84,13 @@ public class Reddit {
         author = auth;
 	}
 
+
+    
+    	/**
+	 *           @brief return the score (upvotes - downvotes) of the reddit post
+	 *
+	 *   @return score (upvotes - downvotes)
+	 */
     public int getScore() {
 		return score;
 	}
@@ -54,14 +98,26 @@ public class Reddit {
     public void setScore(int sc){
         score = sc;
     }
+
+    
+    /**
+     *   @brief ratio of upvotes to downvotes of the reddit post
+     *
+     *   @return vote ratio
+     */
     public float  getVoteRatio() {
         return vote_ratio;
 	}
-
+    
     public void setVoteRatio(float vr) {
         vote_ratio = vr; 
 	}
 
+    /**
+     *   @brief number of comments of the reddit post
+     *
+     *   @return number of comments
+     */
     public int  getCommentCount()  {
         return comment_count;
 	}
@@ -70,6 +126,12 @@ public class Reddit {
         comment_count = cnt;
 	}
 
+    
+    /**
+     *   @brief name of the subreddit the post appeared in
+     *
+     *   @return subreddit name
+     */
     public String  getSubreddit(){
         return subreddit;
     }
@@ -78,6 +140,11 @@ public class Reddit {
         subreddit = sr;
 	}
 
+    /**
+     *   @brief time the post was made (UNIX time)
+     *
+     *   @return unix time
+     */
     public int  getPostTime() {
         return post_time;
 	}
@@ -86,6 +153,15 @@ public class Reddit {
         post_time = pt;
 	} 
 
+    
+    /**
+     *   @brief  URL associated with the post. 
+     *
+     *   This could be the url of the reddit post itself or the URL of an associated article/video
+     *
+     *
+     *   @return URL
+     */
     public String  getUrl() {
         return url;
 	}
@@ -94,6 +170,17 @@ public class Reddit {
         url = u; 
 	}
 
+    
+    /**
+     *   @brief   returns the text of the reddit post.
+     *
+     *   The text of the reddit post. Often in markdown format.
+     *
+     *  The text could be empty if the reddit post is just a link to a video or an article
+     *
+     *
+     *   @return full text of the reddit post
+     */
     public String  getText() {
         return text;
 	}
