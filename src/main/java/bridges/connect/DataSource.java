@@ -173,15 +173,20 @@ public class DataSource {
 			url += "minLatLong=" + params.get("minLatLong") + "&";
 		if (params.containsKey("maxLatLong")) 
 			url += "maxLatLong=" + params.get("maxLatLong") + "&";
-		if (params.containsKey("elevation")) 
-			url += "elevation=" + params.get("elevation") + "&";
-		if (params.containsKey("population"))
-			url += "population=" + params.get("population") + "&";
+		if (params.containsKey("minElevation")) 
+			url += "minElevation=" + params.get("minElevation") + "&";
+		if (params.containsKey("maxElevation")) 
+			url += "maxElevation=" + params.get("maxElevation") + "&";
+		if (params.containsKey("minPopulation"))
+			url += "minPopulation=" + params.get("minPopulation") + "&";
+		if (params.containsKey("maxPopulation"))
+			url += "maxPopulation=" + params.get("maxPopulation") + "&";
 		if (params.containsKey("limit"))
 			url += "limit=" + params.get("limit") + "&";
 
 		// remove last & 
 		url = url.substring(0, url.length()-1);
+System.out.println("URL: " + url);
 
 		// make the http request
 		HttpResponse  response = makeRequest(url);
