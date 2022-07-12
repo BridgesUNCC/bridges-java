@@ -14,7 +14,7 @@ import java.lang.Exception;
 import com.google.gson.JsonParseException;
 import org.apache.http.client.ClientProtocolException;
 import com.google.gson.JsonParseException;
-
+import org.json.simple.parser.ParseException;
 
 // parser related
 import com.google.common.net.UrlEscapers;
@@ -1409,11 +1409,13 @@ public class DataSource {
 	/////////////////////////////////////////////////////////////////////////
 	public ArrayList<Reddit> getRedditData (String subreddit, int time_request) {
 		String base_url = getRedditURL();
-		System.out.println("reddit base url:" +  base_url);
+		if (debug)
+		    System.out.println("reddit base url:" +  base_url);
 		String url = base_url + "/cache?subreddit=" + subreddit +
 			"&time_request=" + String.valueOf(time_request);
 
-		System.out.println("reddit url:" +  url);
+		if (debug)
+		    System.out.println("reddit url:" +  url);
 //      content = server_request(url)
 //      data = json.loads(content.decode("utf-8"))
 
@@ -1421,13 +1423,31 @@ public class DataSource {
 		return reddit_posts;
 	}
 
-    public ArrayList<String> getAvailableSubreddit() {
+    public ArrayList<String> getAvailableSubreddits() throws IOException{
 		String base_url = getRedditURL();
 		if (debug)
 		    System.out.println("reddit base url:" +  base_url);
 		String url = base_url + "/listJSON";
 		if (debug)
 		    System.out.println("url:" +  url);
+
+		ArrayList<String> subreddits = new ArrayList<String>();
+		
+		String js = requestJSON(url);
+		try {
+		    JSONParser parser = new JSONParser();
+		    JSONArray json = (JSONArray) parser.parse(js);
+		    
+		    for (Object jv : json) {
+			String subredditName = ((String) jv);
+			subreddits.add(subredditName);
+		    }
+		}
+		catch (ParseException e) {
+		    throw new JsonParseException("Malformed JSON: Unable to Parse", e);
+		}
+
+		return subreddits;
     }
 	
 	/////////////////////////////////////////////////////////////////////////
