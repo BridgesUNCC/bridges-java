@@ -1,6 +1,5 @@
 package bridges.data_src_dependent;
 
-import java.util.Vector;
 import java.lang.String;
 
 public class Reddit {
@@ -15,7 +14,7 @@ public class Reddit {
 		title = "";
 		this.author = "";
 		this.score = 0;
-		this.vote_ratio = 0.;
+		this.vote_ratio = 0.0f;
 		this.comment_count = 0;
 		this.subreddit = "";
 		this.post_time = 0;
