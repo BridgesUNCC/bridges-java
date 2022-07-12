@@ -6,8 +6,8 @@ import java.lang.String;
 public class Reddit {
 
 	private String title, author, subreddit, url, text;
-	private int id, score, vote_ratio, comment_count, post_time;
-
+	private int id, score,  comment_count, post_time;
+    private float vote_ratio;
     
 
 	public Reddit() {
@@ -15,7 +15,7 @@ public class Reddit {
 		title = "";
 		this.author = "";
 		this.score = 0;
-		this.vote_ratio = 0;
+		this.vote_ratio = 0.;
 		this.comment_count = 0;
 		this.subreddit = "";
 		this.post_time = 0;
@@ -58,11 +58,11 @@ public class Reddit {
     public void setScore(int sc){
         score = sc;
     }
-    public int  getVoteRatio() {
+    public float  getVoteRatio() {
         return vote_ratio;
 	}
 
-    public void setVoteRatio(int vr) {
+    public void setVoteRatio(float vr) {
         vote_ratio = vr; 
 	}
 
