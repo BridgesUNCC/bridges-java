@@ -4,13 +4,13 @@ import java.lang.String;
 
 public class Reddit {
 
-	private String title, author, subreddit, url, text;
-	private int id, score,  comment_count, post_time;
+    private String id, title, author, subreddit, url, text;
+    private int  score,  comment_count, post_time;
     private float vote_ratio;
     
 
 	public Reddit() {
-		id = 0;
+		id = "";
 		title = "";
 		this.author = "";
 		this.score = 0;
@@ -23,11 +23,11 @@ public class Reddit {
 	}
 
     
-    public int getID() {
+    public String getID() {
         return id;
 	}
 
-    public void setID(int i) {
+    public void setID(String i) {
         id = i;
 	}
 
@@ -47,7 +47,7 @@ public class Reddit {
         author = auth;
 	}
 
-    public int getSscore() {
+    public int getScore() {
 		return score;
 	}
 
@@ -70,11 +70,11 @@ public class Reddit {
         comment_count = cnt;
 	}
 
-    public String  getSubReddit(){
+    public String  getSubreddit(){
         return subreddit;
     }
 
-    public void setSubReddit(String sr){
+    public void setSubreddit(String sr){
         subreddit = sr;
 	}
 

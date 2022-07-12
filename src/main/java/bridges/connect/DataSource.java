@@ -1407,7 +1407,7 @@ public class DataSource {
 	/////////////////////////////////////////////////////////////////////////
 	//  Getting Reddit data
 	/////////////////////////////////////////////////////////////////////////
-	public ArrayList<Reddit> getRedditData (String subreddit, int time_request) {
+	public ArrayList<Reddit> getRedditData (String subreddit, int time_request) throws IOException{
 		String base_url = getRedditURL();
 		if (debug)
 		    System.out.println("reddit base url:" +  base_url);
@@ -1420,6 +1420,45 @@ public class DataSource {
 //      data = json.loads(content.decode("utf-8"))
 
 		ArrayList<Reddit> reddit_posts = new ArrayList<Reddit>();
+
+		String js = requestJSON(url);
+		try {
+		    JSONParser parser = new JSONParser();
+		    JSONObject json = (JSONObject) parser.parse(js);
+		    
+		    for (Object jv : json.values()) {
+			JSONObject jo = ((JSONObject) jv);
+
+			String id = (String) jo.get("id");
+			String title = (String) jo.get("title");
+			String author = (String) jo.get("author");
+			String subred = (String) jo.get("subreddit");
+			String posturl = (String) jo.get("url");
+			String text = (String) jo.get("text");
+			int score = (int)(long)(Long) jo.get("score");
+			float vote_ratio = (float)(double)(Double) jo.get("vote_ratio");
+			int comment_count = (int)(long)(Long) jo.get("comment_count");
+			int posttime = (int)Math.round(((Double) jo.get("post_time")));
+
+			Reddit r = new Reddit();
+			r.setID(id);
+			r.setTitle(title);
+			r.setAuthor(author);
+			r.setScore(score);
+			r.setVoteRatio(vote_ratio);
+			r.setCommentCount(comment_count);
+			r.setSubreddit(subred);
+			r.setPostTime(posttime);
+			r.setUrl(posturl);
+			r.setText(text);
+
+			reddit_posts.add(r);
+		    }
+		}
+		catch (ParseException e) {
+		    throw new JsonParseException("Malformed JSON: Unable to Parse", e);
+		}
+
 		return reddit_posts;
 	}
 
