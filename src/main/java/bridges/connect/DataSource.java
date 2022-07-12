@@ -1407,6 +1407,26 @@ public class DataSource {
 	/////////////////////////////////////////////////////////////////////////
 	//  Getting Reddit data
 	/////////////////////////////////////////////////////////////////////////
+   /**
+     *     @brief retrieves the most recent reddit posts from a subreddit
+     * 
+     * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
+     *
+     * @return a list of reddit objects with the data of the posts
+     *
+     **/
+	public ArrayList<Reddit> getRedditData (String subreddit) throws IOException{
+	    return getRedditData(subreddit, -9999);
+	}
+    /**
+     *     @brief retrieves the reddit posts from a subreddit
+     * 
+     * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
+     * @param time_request unix timestamp of when requested subreddit was generated or less than 0 for now  
+     *
+     * @return a list of reddit objects with the data of the posts
+     *
+     **/
 	public ArrayList<Reddit> getRedditData (String subreddit, int time_request) throws IOException{
 		String base_url = getRedditURL();
 		if (debug)
@@ -1462,6 +1482,11 @@ public class DataSource {
 		return reddit_posts;
 	}
 
+    /**
+     * @brief retrieves the subreddits made available by BRIDGES
+     *
+     * @return a list of strings of subreddit names
+     **/
     public ArrayList<String> getAvailableSubreddits() throws IOException{
 		String base_url = getRedditURL();
 		if (debug)
