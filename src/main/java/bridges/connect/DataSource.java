@@ -14,7 +14,7 @@ import java.lang.Exception;
 import com.google.gson.JsonParseException;
 import org.apache.http.client.ClientProtocolException;
 import com.google.gson.JsonParseException;
-
+import org.json.simple.parser.ParseException;
 
 // parser related
 import com.google.common.net.UrlEscapers;
@@ -149,12 +149,15 @@ public class DataSource {
 	 *          parameters provided as a map. Multiple parameters will result
 	 *          in filtering as a combination (intersection)
 	 *          Available parameters and their  types are as follows:
+     *
 	 *         'city' : string
 	 *         'state' : string
 	 *         'country' : string
 	 *         'time_zone' : string
-	 *         'elevation' : integer
-	 *         'population' : integer
+	 *         'minElevation' : integer
+	 *         'maxElevation' : integer
+	 *         'minPopulation' : integer
+	 *         'maxPopulation' : integer
 	 *         'minLatLong' : float, float    -- Lat long minima
 	 *         'maxLatLong' : float, float    -- Lat long maxima
 	 *
@@ -173,15 +176,20 @@ public class DataSource {
 			url += "minLatLong=" + params.get("minLatLong") + "&";
 		if (params.containsKey("maxLatLong")) 
 			url += "maxLatLong=" + params.get("maxLatLong") + "&";
-		if (params.containsKey("elevation")) 
-			url += "elevation=" + params.get("elevation") + "&";
-		if (params.containsKey("population"))
-			url += "population=" + params.get("population") + "&";
+		if (params.containsKey("minElevation")) 
+			url += "minElevation=" + params.get("minElevation") + "&";
+		if (params.containsKey("maxElevation")) 
+			url += "maxElevation=" + params.get("maxElevation") + "&";
+		if (params.containsKey("minPopulation"))
+			url += "minPopulation=" + params.get("minPopulation") + "&";
+		if (params.containsKey("maxPopulation"))
+			url += "maxPopulation=" + params.get("maxPopulation") + "&";
 		if (params.containsKey("limit"))
 			url += "limit=" + params.get("limit") + "&";
 
 		// remove last & 
 		url = url.substring(0, url.length()-1);
+System.out.println("URL: " + url);
 
 		// make the http request
 		HttpResponse  response = makeRequest(url);
@@ -1405,21 +1413,115 @@ public class DataSource {
 	}
 
 	/////////////////////////////////////////////////////////////////////////
-	//  Gettin Reddit data
+	//  Getting Reddit data
 	/////////////////////////////////////////////////////////////////////////
-	public Vector<Reddit> getRedditData (String subreddit, int time_request) {
+   /**
+     *     @brief retrieves the most recent reddit posts from a subreddit
+     * 
+     * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
+     *
+     * @return a list of reddit objects with the data of the posts
+     *
+     **/
+	public ArrayList<Reddit> getRedditData (String subreddit) throws IOException{
+	    return getRedditData(subreddit, -9999);
+	}
+    /**
+     *     @brief retrieves the reddit posts from a subreddit
+     * 
+     * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
+     * @param time_request unix timestamp of when requested subreddit was generated or less than 0 for now  
+     *
+     * @return a list of reddit objects with the data of the posts
+     *
+     **/
+	public ArrayList<Reddit> getRedditData (String subreddit, int time_request) throws IOException{
 		String base_url = getRedditURL();
-		System.out.println("reddit base url:" +  base_url);
+		if (debug)
+		    System.out.println("reddit base url:" +  base_url);
 		String url = base_url + "/cache?subreddit=" + subreddit +
 			"&time_request=" + String.valueOf(time_request);
 
-		System.out.println("reddit url:" +  url);
+		if (debug)
+		    System.out.println("reddit url:" +  url);
 //      content = server_request(url)
 //      data = json.loads(content.decode("utf-8"))
 
-		Vector<Reddit> reddit_posts = new Vector<Reddit>();
+		ArrayList<Reddit> reddit_posts = new ArrayList<Reddit>();
+
+		String js = requestJSON(url);
+		try {
+		    JSONParser parser = new JSONParser();
+		    JSONObject json = (JSONObject) parser.parse(js);
+		    
+		    for (Object jv : json.values()) {
+			JSONObject jo = ((JSONObject) jv);
+
+			String id = (String) jo.get("id");
+			String title = (String) jo.get("title");
+			String author = (String) jo.get("author");
+			String subred = (String) jo.get("subreddit");
+			String posturl = (String) jo.get("url");
+			String text = (String) jo.get("text");
+			int score = (int)(long)(Long) jo.get("score");
+			float vote_ratio = (float)(double)(Double) jo.get("vote_ratio");
+			int comment_count = (int)(long)(Long) jo.get("comment_count");
+			int posttime = (int)Math.round(((Double) jo.get("post_time")));
+
+			Reddit r = new Reddit();
+			r.setID(id);
+			r.setTitle(title);
+			r.setAuthor(author);
+			r.setScore(score);
+			r.setVoteRatio(vote_ratio);
+			r.setCommentCount(comment_count);
+			r.setSubreddit(subred);
+			r.setPostTime(posttime);
+			r.setURL(posturl);
+			r.setText(text);
+
+			reddit_posts.add(r);
+		    }
+		}
+		catch (ParseException e) {
+		    throw new JsonParseException("Malformed JSON: Unable to Parse", e);
+		}
+
 		return reddit_posts;
 	}
+
+    /**
+     * @brief retrieves the subreddits made available by BRIDGES
+     *
+     * @return a list of strings of subreddit names
+     **/
+    public ArrayList<String> getAvailableSubreddits() throws IOException{
+		String base_url = getRedditURL();
+		if (debug)
+		    System.out.println("reddit base url:" +  base_url);
+		String url = base_url + "/listJSON";
+		if (debug)
+		    System.out.println("url:" +  url);
+
+		ArrayList<String> subreddits = new ArrayList<String>();
+		
+		String js = requestJSON(url);
+		try {
+		    JSONParser parser = new JSONParser();
+		    JSONArray json = (JSONArray) parser.parse(js);
+		    
+		    for (Object jv : json) {
+			String subredditName = ((String) jv);
+			subreddits.add(subredditName);
+		    }
+		}
+		catch (ParseException e) {
+		    throw new JsonParseException("Malformed JSON: Unable to Parse", e);
+		}
+
+		return subreddits;
+    }
+	
 	/////////////////////////////////////////////////////////////////////////
 	// The following functions are provided to import store assignments on
 	// the BRIDGES server. Currently supported: ColorGrid import
