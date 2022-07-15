@@ -160,7 +160,7 @@ public class DataSource {
 	 *
 	 *
 	 */
-	public Vector<USCities> getUSCitiesData(HashMap<String, String> params) 
+	public Vector<City> getUSCitiesData(HashMap<String, String> params) 
 			throws IOException {
 		String url = getUSCitiesURL() + "?";
 		if (params.containsKey("city")) 
@@ -193,7 +193,7 @@ public class DataSource {
 
 			// parse the response
 			JSONArray json_arr = unwrapJSONArray(response, "data");
-			Vector<USCities> us_cities = new Vector<USCities>(json_arr.size());
+			Vector<City> us_cities = new Vector<City>(json_arr.size());
 			for (int i = 0; i < json_arr.size(); i++) {
                 JSONObject item = (JSONObject) json_arr.get(i);
 
@@ -207,7 +207,7 @@ public class DataSource {
 				double longit = (double) item.get("lon");
 
 				// put into object
-				USCities city_data = new USCities (city, state, country, time_zone,
+				City city_data = new City (city, state, country, time_zone,
 					(int) elevation, (int) population, (float) latit, (float) longit);
 
 				us_cities.add(city_data);

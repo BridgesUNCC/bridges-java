@@ -3,15 +3,17 @@ package bridges.data_src_dependent;
 import java.lang.String;
 
 /**
-* @brief Class that holds data of US Cities
+* @brief Class that holds data of  a city
 * 
-* A user would not normally create an ElevationData object but 
-* rather obtain one from calling bridges::DataSource::getUSCities()
+* A user would not normally create an City object but 
+* rather obtain one from calling bridges.getDataSource().getUSCities(), 
+* bridges.getDataSource().getWorldCities(), etc.
+* 
 *
-* A tutorial on how to use the US Cities dataset is available at: 
+* A tutorial on how to use the City objects is available at: 
 *  https://bridgesuncc.github.io/tutorials/USCities.html (to be done!)
 *
-* Each city contains the city name, state, country, time zone, elevation,
+* Each city object contains the city name, state, country, time zone, elevation,
 *  population and lat/long location information.
 *
 * @author Kalpathi Subramanian
@@ -19,19 +21,19 @@ import java.lang.String;
 * @date 6/7/22
 */
 
-public class USCities {
+public class City {
 
 	private String city, state, country, time_zone;
 	private	int elevation, population;
 	private  float latit, longit;
 
-	public USCities() {
+	public City() {
 		this.city = this.state = this.country = this.time_zone = new String();
 		this.elevation = this.population = 0;
 		this.latit = this.longit = 0.0f;
 	}
 
-	public USCities (String cty, String st, String cntry, String tm_zone,
+	public City (String cty, String st, String cntry, String tm_zone,
 		int elev, int pop, float lat, float lon) {
 		this.city = cty;
 		this.state = st;
