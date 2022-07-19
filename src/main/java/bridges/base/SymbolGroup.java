@@ -21,10 +21,10 @@ import org.json.simple.JSONArray;
  *
  *	@date 6/22/21
  **/
-public class SymbolGroup extends Symbol{
+public class SymbolGroup extends Symbol {
 
-    ArrayList<Symbol> al = new ArrayList<Symbol>();
-    
+	ArrayList<Symbol> al = new ArrayList<Symbol>();
+
 	/**
 	 *	Create a default symbol object
 	 */
@@ -32,30 +32,30 @@ public class SymbolGroup extends Symbol{
 		super();
 	}
 
-    public void addSymbol(Symbol s) {
-	al.add(s);
-    }
+	public void addSymbol(Symbol s) {
+		al.add(s);
+	}
 
-    	public String getShapeType() {
+	public String getShapeType() {
 		return "group";
 	}
 
-    
-    public void addAllJSON (JSONArray symbol_json, Integer parent) {
-	int id = symbol_json.size();
 
-	JSONObject obj = this.getJSONRepresentation();
+	public void addAllJSON (JSONArray symbol_json, Integer parent) {
+		int id = symbol_json.size();
 
-	obj.put("ID", id);
-	
-	if (parent != null) {
-	    obj.put("parentID", parent);	    
+		JSONObject obj = this.getJSONRepresentation();
+
+		obj.put("ID", id);
+
+		if (parent != null) {
+			obj.put("parentID", parent);
+		}
+
+		symbol_json.add(obj);
+
+		for (Symbol s : al) {
+			s.addAllJSON(symbol_json, id);
+		}
 	}
-	
-	symbol_json.add(obj);
-
-	for (Symbol s : al) {
-	    s.addAllJSON(symbol_json, id);
-	}
-    }
 }

@@ -47,18 +47,18 @@ public abstract class Symbol {
 
 	protected String label = null;
 
-    protected Color fillColor = null;
-    protected Float opacity = null;
-    protected Color strokeColor = null;
-    protected Float strokeWidth = null;
-    protected Integer strokeDash = null;
-    protected Integer layer = null;
-    protected float[] transform = null;
+	protected Color fillColor = null;
+	protected Float opacity = null;
+	protected Color strokeColor = null;
+	protected Float strokeWidth = null;
+	protected Integer strokeDash = null;
+	protected Integer layer = null;
+	protected float[] transform = null;
 
 	// represents the affine transform of the Symbol
 	private float[][] xform;
 	Boolean xform_flag = false;
-    
+
 	/**
 	 *	Create a default symbol object
 	 */
@@ -93,8 +93,8 @@ public abstract class Symbol {
 	 *	@return shape type
 	 */
 	protected String getShapeType() {
-	    
-	    return "";
+
+		return "";
 	}
 
 	/**
@@ -117,7 +117,7 @@ public abstract class Symbol {
 		this.fillColor = c;
 		return this;
 	}
-        /**
+	/**
 	* This method gets fill color
 	*
 	* @return  fill color
@@ -158,14 +158,14 @@ public abstract class Symbol {
 	/**
 	 * @brief This method sets the symbol stroke width.
 	 *
-	 * This is the weight of the individual lines that are drawn, such as the 
+	 * This is the weight of the individual lines that are drawn, such as the
 	 *	perimeter of a rectangle.
 	 *
 	 * @param strokewidth the stroke width to set
 	 * @return the symbol
 	 */
 	public Symbol setStrokeWidth(float strokewidth) {
-	    this.strokeWidth = strokewidth;
+		this.strokeWidth = strokewidth;
 		return this;
 	}
 	/**
@@ -210,8 +210,8 @@ public abstract class Symbol {
 	 * @return the symbol
 	 */
 	public Symbol setStrokeDash(int dash) {
-	    this.strokeDash = dash;
-	    return this;
+		this.strokeDash = dash;
+		return this;
 	}
 
 	/**
@@ -231,8 +231,8 @@ public abstract class Symbol {
 	 * @return the symbol
 	 */
 	public Symbol setLayer(int layer) {
-	    this.layer = layer;
-	    return this;
+		this.layer = layer;
+		return this;
 	}
 
 	/**
@@ -242,27 +242,27 @@ public abstract class Symbol {
 	 */
 
 	public Integer getLayer() {
-	    return this.layer;
+		return this.layer;
 	}
 
-	/** 
+	/**
 	 *  Point - Matrix multiply (debugging purposes)
-     *  
+	 *
 	 */
 	private float[] vecMatMult(float[][] m, float[] v) {
-		
+
 		float[] v_out = {
-					m[0][0]*v[0] + m[0][1]*v[1] + m[0][2] * v[2], 
-					m[1][0]*v[0] + m[1][1]*v[1] + m[1][2] * v[2],
-				 	1.0f
-				}; 
+			m[0][0] * v[0] + m[0][1] * v[1] + m[0][2] * v[2],
+			m[1][0] * v[0] + m[1][1] * v[1] + m[1][2] * v[2],
+			1.0f
+		};
 
 		return v_out;
 	}
-	/** 
+	/**
 	 *	Matrix multiplication - premultiplication; multiplies m1 and m2 and stores
 	 *  result in m1
-	 *  
+	 *
 	 */
 	private float[][] matMult (float[][] m1, float[][] m2) {
 		// multiply m1 and m2
@@ -270,49 +270,49 @@ public abstract class Symbol {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 3; ++j) {
 				result[i][j] = 0.0f;
-				for (int k = 0; k < 3; ++k) 
+				for (int k = 0; k < 3; ++k)
 					result[i][j] += m1[i][k] * m2[k][j];
 			}
 		}
 		return result;
 	}
 
-	/** 
+	/**
 	 *	vector-Matrix multiplication (for debugging only)
 	 *  result in m1
-	 *  
+	 *
 	 */
 	private void printMat(float[][] m) {
 		for (int j = 0; j < 3; j++) {
 			for (int k = 0; k < 3; k++)
-                System.out.print(m[j][k] + ",");
+				System.out.print(m[j][k] + ",");
 
-            System.out.print("\n");
+			System.out.print("\n");
 		}
 	}
 
-	/** 
-     *  create the identity matrix
+	/**
+	 *  create the identity matrix
 	 *
 	 *	@param  m  3x3 input matrix
-	 */ 
+	 */
 	public float[][] identity(float[][] m) {
-		for (int i = 0; i < 3; ++i) 
-		for (int j = 0; j < 3; ++j) 
-			if (i == j)
-				m[i][j] = 1.0f;
-			else
-				m[i][j] = 0.0f;
+		for (int i = 0; i < 3; ++i)
+			for (int j = 0; j < 3; ++j)
+				if (i == j)
+					m[i][j] = 1.0f;
+				else
+					m[i][j] = 0.0f;
 
 		return m;
 	}
-	
-	/** 
-     *  translate the symbol by tx, ty along the X and Y axes,
+
+	/**
+	 *  translate the symbol by tx, ty along the X and Y axes,
 	 *	  updates the current transform matrix
-	 * 
-     * 	@param tx  translation in X
-     * 	@param ty  translation in Y
+	 *
+	 * 	@param tx  translation in X
+	 * 	@param ty  translation in Y
 	 */
 	public Symbol translate (float tx, float ty) {
 		float transl[][] = new float[3][3];
@@ -330,32 +330,32 @@ public abstract class Symbol {
 
 		return this;
 	}
-	/** 
-     *  scale the symbol by s along X and Y axes
+	/**
+	 *  scale the symbol by s along X and Y axes
 	 *	  updates the current transform matrix; note: scale is about
 	 *	  the origin
-	 * 
-     * 	@param s  scale factor 
+	 *
+	 * 	@param s  scale factor
 	 */
 	public Symbol scale (float s) {
 		scale (s, s);
 
 		return this;
 	}
-	
-	/** 
-     *  scale the symbol by sx, sy along the X and Y axes,
+
+	/**
+	 *  scale the symbol by sx, sy along the X and Y axes,
 	 *	  updates the current transform matrix; note: scale is about
 	 *	  the origin
-	 * 
-     * 	@param sx  scale factor in X
-     * 	@param sy  scale factor in Y
+	 *
+	 * 	@param sx  scale factor in X
+	 * 	@param sy  scale factor in Y
 	 */
 	public Symbol  scale (float sx, float sy) {
 		float scale_m[][] = new float[3][3];
 		identity(scale_m);
 		// apply scale factors
-		scale_m[0][0] = sx; 
+		scale_m[0][0] = sx;
 		scale_m[1][1] = sy;
 
 		// update symbol transform matrix
@@ -365,24 +365,25 @@ public abstract class Symbol {
 
 		return this;
 	}
-	/** 
-     *  rotate the symbol by angle theta  about Z axis (2D rotation),
+	/**
+	 *  rotate the symbol by angle theta  about Z axis (2D rotation),
 	 *	  updates the current transform matrix; note: rotation is about
 	 *	  the origin
-	 * 
-     * 	@param angle  angle (in degrees)
+	 *
+	 * 	@param angle  angle (in degrees)
 	 */
 	public Symbol rotate (float angle) {
 		float rotate_m[][] = new float[3][3];
 		identity(rotate_m);
 
 		// convert to radians
-		double angle_r = angle * (float) (Math.PI/180.);
+		double angle_r = angle * (float) (Math.PI / 180.);
 		float cos_a = (float) Math.cos(angle_r);
 		float sin_a = (float) Math.sin(angle_r);
 		// apply rotation factors
-		rotate_m[0][0] = rotate_m[1][1] = cos_a; 
-		rotate_m[0][1] = -sin_a; rotate_m[1][0] = sin_a;
+		rotate_m[0][0] = rotate_m[1][1] = cos_a;
+		rotate_m[0][1] = -sin_a;
+		rotate_m[1][0] = sin_a;
 
 		// update symbol transform matrix
 		this.xform = matMult (this.xform, rotate_m);
@@ -391,12 +392,12 @@ public abstract class Symbol {
 
 		return this;
 	}
-	/** 
-     *  scale the symbol by (sx, sy) along the X and Y axes about the 
-	 * 	point (px, py); updates the current transform matrix; 
-	 * 
-     * 	@param sx  scale factor in X
-     * 	@param sy  scale factor in Y
+	/**
+	 *  scale the symbol by (sx, sy) along the X and Y axes about the
+	 * 	point (px, py); updates the current transform matrix;
+	 *
+	 * 	@param sx  scale factor in X
+	 * 	@param sy  scale factor in Y
 	 *	@param px  x coordinate of point
 	 *	@param py  y coordinate of point
 	 */
@@ -417,16 +418,16 @@ public abstract class Symbol {
 
 		return this;
 	}
-	/** 
-     *  rotate the symbol by angle theta  about Z axis (2D rotation) about the
+	/**
+	 *  rotate the symbol by angle theta  about Z axis (2D rotation) about the
 	 *	  point (px, py)
-	 * 
-     * 	@param angle  angle (in degrees)
+	 *
+	 * 	@param angle  angle (in degrees)
 	 */
 	public Symbol rotate (float angle, float px, float py) {
 		// get the rotation matrix
 		// convert angle to radians
-		double angle_r = angle * (float) (Math.PI/180.);
+		double angle_r = angle * (float) (Math.PI / 180.);
 		float c = (float) Math.cos(angle_r);
 		float s = (float) Math.sin(angle_r);
 		float[][]  rotate_m =  {{c, -s, 0.0f}, {s, c, 0.0f}, {0.0f, 0.0f, 1.0f}};
@@ -449,25 +450,31 @@ public abstract class Symbol {
 	 * This method sets the transform matrix for this symbol; terms passed in
 	 * column major order.
 	 *
-	 * @param a transformation term 
-	 * @param b transformation term 
-	 * @param c transformation term 
-	 * @param d transformation term 
-	 * @param e transformation term 
-	 * @param f transformation term 
+	 * @param a transformation term
+	 * @param b transformation term
+	 * @param c transformation term
+	 * @param d transformation term
+	 * @param e transformation term
+	 * @param f transformation term
 	 *
 	 * @return the symbol
 	 */
-    public Symbol setTransform (float a, float b,
-				float c, float d,
-				float e, float f) {
-		this.xform[0][0] = a; this.xform[0][1] = c; this.xform[0][2] = e;
-		this.xform[1][0] = b; this.xform[1][1] = d; this.xform[1][2] = f;
-		this.xform[2][0] = 0.0f; this.xform[2][1] = 0.0f; this.xform[2][2] = 1.0f;
+	public Symbol setTransform (float a, float b,
+		float c, float d,
+		float e, float f) {
+		this.xform[0][0] = a;
+		this.xform[0][1] = c;
+		this.xform[0][2] = e;
+		this.xform[1][0] = b;
+		this.xform[1][1] = d;
+		this.xform[1][2] = f;
+		this.xform[2][0] = 0.0f;
+		this.xform[2][1] = 0.0f;
+		this.xform[2][2] = 1.0f;
 		xform_flag = true;
 
 		return this;
-    }
+	}
 
 	/**
 	 * This method returns the affine transformation associated with this
@@ -475,10 +482,10 @@ public abstract class Symbol {
 	 *
 	 * @return  transformation matrix
 	 */
-    public float[][] getTransform () {
+	public float[][] getTransform () {
 		return this.xform;
-    }
-    
+	}
+
 	/**
 	 * Internal code for getting the representation  of the Symbol object.
 	 *
@@ -489,7 +496,7 @@ public abstract class Symbol {
 		JSONArray myColor;
 
 		json_builder.put ("type", getShapeType());
-		
+
 		if (fillColor != null) {
 			myColor = new JSONArray();
 			myColor.add(fillColor.getRed());
@@ -504,13 +511,13 @@ public abstract class Symbol {
 		}
 
 		if (xform_flag) {
-		    ArrayList<Float> al = new ArrayList<Float>();
-		    al.add(this.xform[0][0]);
-		    al.add(this.xform[1][0]);
-		    al.add(this.xform[0][1]);
-		    al.add(this.xform[1][1]);
-		    al.add(this.xform[0][2]);
-		    al.add(this.xform[1][2]);
+			ArrayList<Float> al = new ArrayList<Float>();
+			al.add(this.xform[0][0]);
+			al.add(this.xform[1][0]);
+			al.add(this.xform[0][1]);
+			al.add(this.xform[1][1]);
+			al.add(this.xform[0][2]);
+			al.add(this.xform[1][2]);
 			json_builder.put("transform", al);
 		}
 
@@ -518,7 +525,7 @@ public abstract class Symbol {
 			json_builder.put("label", label);
 		}
 
-		
+
 		if (strokeColor != null) {
 			myColor = new JSONArray();
 			myColor.add(strokeColor.getRed());
@@ -543,17 +550,17 @@ public abstract class Symbol {
 		return json_builder;
 	}
 
-    public void addAllJSON (JSONArray symbol_json, Integer parent) {
-	int id = symbol_json.size();
+	public void addAllJSON (JSONArray symbol_json, Integer parent) {
+		int id = symbol_json.size();
 
-	JSONObject obj = this.getJSONRepresentation();
+		JSONObject obj = this.getJSONRepresentation();
 
-	obj.put("ID", id);
-	
-	if (parent != null) {
-	    obj.put("parentID", parent);	    
+		obj.put("ID", id);
+
+		if (parent != null) {
+			obj.put("parentID", parent);
+		}
+
+		symbol_json.add(obj);
 	}
-	
-	symbol_json.add(obj);
-    }
 }
