@@ -74,14 +74,14 @@ public class Connector {
 	 * @param server  server type
 	 */
 	public void setServer(String server) throws IllegalArgumentException {
-	    String envServer = System.getenv("FORCE_BRIDGES_APISERVER");
+		String envServer = System.getenv("FORCE_BRIDGES_APISERVER");
 		if (Bridges.getDebugFlag()) {
 			System.err.println("Connector.setServer(" + server + ")");
 			if (envServer != null)
-			    System.err.println("Overiden by environment(" + envServer + ")");
+				System.err.println("Overiden by environment(" + envServer + ")");
 		}
 		if (envServer != null)
-		    server = envServer;
+			server = envServer;
 		switch (server) {
 			case "live":
 				setServerURL(server_live);
