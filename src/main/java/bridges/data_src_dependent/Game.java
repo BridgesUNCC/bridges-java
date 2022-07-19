@@ -7,7 +7,7 @@ import java.lang.String;
  *
  * This is a convenience class provided for  users who wish to use this
  * data source as part of their application. It provides an API that makes
- * it easy to access the attributes of this data set. 
+ * it easy to access the attributes of this data set.
  *
  * One would not normally create an object of this type, but rather
  * obtain them through a call to bridges::connect::DataSource::getGameData().

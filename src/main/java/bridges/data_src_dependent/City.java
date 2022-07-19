@@ -4,13 +4,13 @@ import java.lang.String;
 
 /**
 * @brief Class that holds data of  a city
-* 
-* A user would not normally create an City object but 
-* rather obtain one from calling bridges.getDataSource().getUSCities(), 
-* bridges.getDataSource().getWorldCities(), etc.
-* 
 *
-* A tutorial on how to use the City objects is available at: 
+* A user would not normally create an City object but
+* rather obtain one from calling bridges.getDataSource().getUSCities(),
+* bridges.getDataSource().getWorldCities(), etc.
+*
+*
+* A tutorial on how to use the City objects is available at:
 *  https://bridgesuncc.github.io/tutorials/USCities.html (to be done!)
 *
 * Each city object contains the city name, state, country, time zone, elevation,
@@ -103,9 +103,9 @@ public class City {
 
 	public int getPopulation() {
 		return population;
-	}   
-                
+	}
+
 	public void setPopulation(int pop) {
 		population = pop;
-	}   
+	}
 };

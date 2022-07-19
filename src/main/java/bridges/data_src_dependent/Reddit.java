@@ -21,10 +21,10 @@ import java.lang.String;
  */
 public class Reddit {
 
-    private String id, title, author, subreddit, url, text;
-    private int  score,  comment_count, post_time;
-    private float vote_ratio;
-    
+	private String id, title, author, subreddit, url, text;
+	private int  score,  comment_count, post_time;
+	private float vote_ratio;
+
 
 	/**
 	 * @brief Reddit default constructor
@@ -43,149 +43,149 @@ public class Reddit {
 		this.text = "";
 	}
 
-    	/**
-	 *           @brief return id of the reddit post
-	 *
-	 *   @return id
-	 */
-    public String getID() {
-        return id;
+	/**
+	*           @brief return id of the reddit post
+	*
+	*   @return id
+	*/
+	public String getID() {
+		return id;
 	}
 
-    public void setID(String i) {
-        id = i;
+	public void setID(String i) {
+		id = i;
 	}
 
 
-    	/**
-	 *           @brief return the title of the reddit post
-	 *
-	 *   @return title
-	 */
-    public String  getTitle(){
-		return title; 
+	/**
+	*           @brief return the title of the reddit post
+	*
+	*   @return title
+	*/
+	public String  getTitle() {
+		return title;
 	}
 
 	public void  setTitle(String titl) {
 		title = titl;
 	}
 
-    
-    	/**
-	 *           @brief return the author of the reddit post
-	 *
-	 *   @return author's username
-	 */
+
+	/**
+	*           @brief return the author of the reddit post
+	*
+	*   @return author's username
+	*/
 	public String getAuthor() {
 		return author;
 	}
 
-    public void setAuthor(String auth) {
-        author = auth;
+	public void setAuthor(String auth) {
+		author = auth;
 	}
 
 
-    
-    	/**
-	 *           @brief return the score (upvotes - downvotes) of the reddit post
-	 *
-	 *   @return score (upvotes - downvotes)
-	 */
-    public int getScore() {
+
+	/**
+	*           @brief return the score (upvotes - downvotes) of the reddit post
+	*
+	*   @return score (upvotes - downvotes)
+	*/
+	public int getScore() {
 		return score;
 	}
 
-    public void setScore(int sc){
-        score = sc;
-    }
-
-    
-    /**
-     *   @brief ratio of upvotes to downvotes of the reddit post
-     *
-     *   @return vote ratio
-     */
-    public float  getVoteRatio() {
-        return vote_ratio;
-	}
-    
-    public void setVoteRatio(float vr) {
-        vote_ratio = vr; 
+	public void setScore(int sc) {
+		score = sc;
 	}
 
-    /**
-     *   @brief number of comments of the reddit post
-     *
-     *   @return number of comments
-     */
-    public int  getCommentCount()  {
-        return comment_count;
+
+	/**
+	 *   @brief ratio of upvotes to downvotes of the reddit post
+	 *
+	 *   @return vote ratio
+	 */
+	public float  getVoteRatio() {
+		return vote_ratio;
 	}
 
-    public void setCommentCount(int cnt) {
-        comment_count = cnt;
+	public void setVoteRatio(float vr) {
+		vote_ratio = vr;
 	}
 
-    
-    /**
-     *   @brief name of the subreddit the post appeared in
-     *
-     *   @return subreddit name
-     */
-    public String  getSubreddit(){
-        return subreddit;
-    }
-
-    public void setSubreddit(String sr){
-        subreddit = sr;
+	/**
+	 *   @brief number of comments of the reddit post
+	 *
+	 *   @return number of comments
+	 */
+	public int  getCommentCount()  {
+		return comment_count;
 	}
 
-    /**
-     *   @brief time the post was made (UNIX time)
-     *
-     *   @return unix time
-     */
-    public int  getPostTime() {
-        return post_time;
+	public void setCommentCount(int cnt) {
+		comment_count = cnt;
 	}
 
-    public void  setPostTime(int pt){
-        post_time = pt;
-	} 
 
-    
-    /**
-     *   @brief  URL associated with the post. 
-     *
-     *   This could be the url of the reddit post itself or the URL of an associated article/video
-     *
-     *
-     *   @return URL
-     */
-    public String  getURL() {
-        return url;
+	/**
+	 *   @brief name of the subreddit the post appeared in
+	 *
+	 *   @return subreddit name
+	 */
+	public String  getSubreddit() {
+		return subreddit;
 	}
 
-    public void  setURL(String u) {
-        url = u; 
+	public void setSubreddit(String sr) {
+		subreddit = sr;
 	}
 
-    
-    /**
-     *   @brief   returns the text of the reddit post.
-     *
-     *   The text of the reddit post. Often in markdown format.
-     *
-     *  The text could be empty if the reddit post is just a link to a video or an article
-     *
-     *
-     *   @return full text of the reddit post
-     */
-    public String  getText() {
-        return text;
+	/**
+	 *   @brief time the post was made (UNIX time)
+	 *
+	 *   @return unix time
+	 */
+	public int  getPostTime() {
+		return post_time;
 	}
 
-    public void setText(String txt) {  
-        text = txt; 
+	public void  setPostTime(int pt) {
+		post_time = pt;
+	}
+
+
+	/**
+	 *   @brief  URL associated with the post.
+	 *
+	 *   This could be the url of the reddit post itself or the URL of an associated article/video
+	 *
+	 *
+	 *   @return URL
+	 */
+	public String  getURL() {
+		return url;
+	}
+
+	public void  setURL(String u) {
+		url = u;
+	}
+
+
+	/**
+	 *   @brief   returns the text of the reddit post.
+	 *
+	 *   The text of the reddit post. Often in markdown format.
+	 *
+	 *  The text could be empty if the reddit post is just a link to a video or an article
+	 *
+	 *
+	 *   @return full text of the reddit post
+	 */
+	public String  getText() {
+		return text;
+	}
+
+	public void setText(String txt) {
+		text = txt;
 	}
 }

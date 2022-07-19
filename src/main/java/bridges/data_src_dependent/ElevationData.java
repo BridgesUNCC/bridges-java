@@ -30,7 +30,7 @@ public class ElevationData {
 
 	// max val in dataset
 	private int maxVal;
-    private int minVal;
+	private int minVal;
 
 
 	/**
@@ -60,7 +60,7 @@ public class ElevationData {
 	 * @param cellsize  size of each cell (resolution)
 	 * @param maxVal  max value in dataset
 	 */
-    public ElevationData (int[][] data, int cols, int rows, double xll, double yll, double cellsize, int maxVal, int minVal) {
+	public ElevationData (int[][] data, int cols, int rows, double xll, double yll, double cellsize, int maxVal, int minVal) {
 		this.setData(data);
 		this.setCols(cols);
 		this.setRows(rows);
@@ -81,10 +81,10 @@ public class ElevationData {
 		return data;
 	}
 
-    public int getVal(int r, int c) {
-	return data[r][c];
-    }
-    
+	public int getVal(int r, int c) {
+		return data[r][c];
+	}
+
 	/**
 	 *
 	 * set elev. data
@@ -98,13 +98,13 @@ public class ElevationData {
 		this.maxVal = Integer.MIN_VALUE;
 		this.minVal = Integer.MAX_VALUE;
 
-		for (int i=0; i<rows; i++)
-		    for (int j=0; j<cols; j++) {
-			if (data[i][j] > this.maxVal)
-			    this.maxVal = data[i][j];
-			if (data[i][j] < this.minVal)
-			    this.minVal = data[i][j];
-		    }
+		for (int i = 0; i < rows; i++)
+			for (int j = 0; j < cols; j++) {
+				if (data[i][j] > this.maxVal)
+					this.maxVal = data[i][j];
+				if (data[i][j] < this.minVal)
+					this.minVal = data[i][j];
+			}
 	}
 
 	/**
