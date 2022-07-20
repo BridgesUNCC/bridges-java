@@ -20,6 +20,10 @@ import java.util.ArrayList;
  *	BRIDGES provides methods to visualize the graph and its
  *	contents.
  *
+ *      In most cases, you want all the three types to be the same, or
+ *      in cases where you only care about the vertex key type, one
+ *      can use the GraphAdjListSimple helper class.
+ *
  *	The vertices of the graph are held in a Java hashmap, for near
  *	constant time access; this enables to use strings or integer ids
  *	for vertices. The adjacency lists, also a Java hashmap are
