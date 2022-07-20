@@ -3,7 +3,7 @@ package bridges.data_src_dependent;
 /**
  *  @brief  Class that hold individual Open Street Map Amenities
  *
- * This class holds the individual information for each amenity requested. 
+ * This class holds the individual information for each amenity requested.
  *
  * Usually this class is not created by the user but part of an AmenityData object returned by bridges::connect::DataSource::getAmenityData()
  *
@@ -12,9 +12,9 @@ package bridges.data_src_dependent;
  * @author Jay Strahler
  */
 
-public class Amenities {
+public class Amenity {
 
-	private double id_val;
+	private long id_val;
 	private double lat;
 	private double lon;
 	private String name;
@@ -23,7 +23,7 @@ public class Amenities {
 	/**
 	 * Default Constructor
 	 */
-	public Amenities() {
+	public Amenity() {
 		this.id_val = 0;
 		this.lat = 0;
 		this.lon = 0;
@@ -39,7 +39,7 @@ public class Amenities {
 	 * @param name  Name of Amenity as found in Open Street Maps
 	 * @param other  List of special values that may have come with the amenity
 	 */
-	public Amenities (double id_val, double lat, double lon, String name, String[] other) {
+	public Amenity (long id_val, double lat, double lon, String name, String[] other) {
 		this.setId(id_val);
 		this.setLat(lat);
 		this.setLon(lon);
@@ -52,7 +52,7 @@ public class Amenities {
 	 * get the ID  of this amenity
 	 * @return ID value
 	 */
-	public double getId() {
+	public long getId() {
 		return id_val;
 	}
 
@@ -60,7 +60,7 @@ public class Amenities {
 	 * set the ID value of this amenity
 	 * @param id_val ID value to set
 	 */
-	public void setId(double id_val) {
+	public void setId(long id_val) {
 		this.id_val = id_val;
 	}
 

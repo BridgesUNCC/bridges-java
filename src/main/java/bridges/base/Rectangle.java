@@ -22,7 +22,7 @@ public	class Rectangle extends  Symbol {
 
 	// height, width of rectangle
 	private float width = 1.0f, height = 1.0f;
-    private float locx = 0.0f, locy = 0.0f;
+	private float locx = 0.0f, locy = 0.0f;
 
 	/**
 	 *  Construct a default rectangle
@@ -116,7 +116,7 @@ public	class Rectangle extends  Symbol {
 		ArrayList<Float> loc = new ArrayList<Float>();
 		loc.add(locx);
 		loc.add(locy);
-				
+
 		shape_json.put ("lowerleftcorner", loc);
 		shape_json.put ("width", width);
 		shape_json.put ("height", height);

@@ -22,8 +22,8 @@ public class Circle extends Symbol {
 
 	// radius of circle
 	private float radius = 1.0f;
-    private float x;
-    private float y;
+	private float x;
+	private float y;
 
 	/**
 	 *  Construct a default circle  (center at origin, radius of 10 units)
@@ -82,8 +82,8 @@ public class Circle extends Symbol {
 	 * @return none
 	 */
 	public void setCircle (float locx, float locy, float r) {
-	    this.x = locx;
-	this.y =  locy;
+		this.x = locx;
+		this.y =  locy;
 		if (r < 0)
 			throw new IllegalArgumentException ("Illegal value for radius. Must be positive");
 		radius = r;
@@ -105,9 +105,9 @@ public class Circle extends Symbol {
 		ArrayList<Float> loc = new ArrayList<Float>();
 		loc.add(x);
 		loc.add(y);
-		
+
 		shape_json.put ("center", loc);
-		
+
 		return shape_json;
 	}
 };

@@ -67,53 +67,53 @@ public class DataSource {
 	private static LRUCache lru;
 	private boolean debug = false;
 
-    private String sourceType = "live";
+	private String sourceType = "live";
 
-    /**
-     * @brief specify which server to use for accessing datasources.
-     *
-     * This is mostly useful for the BRIDGES team to debug issues with accessing data.
-     *
-     *  @param st should be \"live\", \"testing\", or \"local\"
-     */
-    public void setSourceType(String st) {
-	if (!(st.equals("live") || st.equals("testing") || st.equals("local")))
-	    throw new IllegalArgumentException ("parameter to DataSource::setSourceType should be \"live\", \"testing\", or \"local\"");
+	/**
+	 * @brief specify which server to use for accessing datasources.
+	 *
+	 * This is mostly useful for the BRIDGES team to debug issues with accessing data.
+	 *
+	 *  @param st should be \"live\", \"testing\", or \"local\"
+	 */
+	public void setSourceType(String st) {
+		if (!(st.equals("live") || st.equals("testing") || st.equals("local")))
+			throw new IllegalArgumentException ("parameter to DataSource::setSourceType should be \"live\", \"testing\", or \"local\"");
 
-	//activating debug information is a side effect we probably
-	//want in all cases where 
-	if (st.equals("testing") || st.equals("local"))
-	    debug = true;
-	
-	sourceType = new String(st);
-    }
+		//activating debug information is a side effect we probably
+		//want in all cases where
+		if (st.equals("testing") || st.equals("local"))
+			debug = true;
 
-    private String getOSMBaseURL() {
-	    if (sourceType.equals("local"))
-		return "http://localhost:3000/";
-		
+		sourceType = new String(st);
+	}
+
+	private String getOSMBaseURL() {
+		if (sourceType.equals("local"))
+			return "http://localhost:3000/";
+
 		return "http://bridges-data-server-osm.bridgesuncc.org/";
 	}
 
 	private String getElevationBaseURL() {
-	    if (sourceType.equals("local"))
-		return "http://localhost:3000/";
+		if (sourceType.equals("local"))
+			return "http://localhost:3000/";
 
-		    return "http://bridges-data-server-elevation.bridgesuncc.org/";
+		return "http://bridges-data-server-elevation.bridgesuncc.org/";
 	}
 
 	private String getAmenityBaseURL() {
-	    if (sourceType.equals("local"))
-		return "http://localhost:3000/";
+		if (sourceType.equals("local"))
+			return "http://localhost:3000/";
 
-	    return "http://bridges-data-server-osm.bridgesuncc.org/";
+		return "http://bridges-data-server-osm.bridgesuncc.org/";
 	}
 
-	private String getGutenbergBaseURL(){
-	    if (sourceType.equals("local"))
-		return "http://localhost:3000/";
-	    if (sourceType.equals("testing"))
-		return "http://bridges-data-server-gutenberg-t.bridgesuncc.org/";
+	private String getGutenbergBaseURL() {
+		if (sourceType.equals("local"))
+			return "http://localhost:3000/";
+		if (sourceType.equals("testing"))
+			return "http://bridges-data-server-gutenberg-t.bridgesuncc.org/";
 
 		return "http://bridges-data-server-gutenberg.bridgesuncc.org/";
 	}
@@ -149,47 +149,53 @@ public class DataSource {
 	 *          parameters provided as a map. Multiple parameters will result
 	 *          in filtering as a combination (intersection)
 	 *          Available parameters and their  types are as follows:
-     *
+	 *
 	 *         'city' : string
 	 *         'state' : string
 	 *         'country' : string
 	 *         'time_zone' : string
-	 *         'minElevation' : integer
-	 *         'maxElevation' : integer
-	 *         'minPopulation' : integer
-	 *         'maxPopulation' : integer
-	 *         'minLatLong' : float, float    -- Lat long minima
-	 *         'maxLatLong' : float, float    -- Lat long maxima
+	 *         'min_elev' : integer
+	 *         'max_elev' : integer
+	 *         'min_pop' : integer
+	 *         'max_pop' : integer
+	 *         'min_lat' : float
+	 *         'min_long' : float
+	 *         'max_lat' : float
+	 *         'max_long' : float
 	 *
 	 *
 	 */
-	public Vector<USCities> getUSCitiesData(HashMap<String, String> params) 
-			throws IOException {
+	public Vector<City> getUSCitiesData(HashMap<String, String> params)
+	throws IOException {
 		String url = getUSCitiesURL() + "?";
-		if (params.containsKey("city")) 
+		if (params.containsKey("city"))
 			url += "city=" + params.get("city") + "&";
-		if (params.containsKey("state")) 
+		if (params.containsKey("state"))
 			url += "state=" + params.get("state") + "&";
-		if (params.containsKey("country")) 
-			url += "country=" + params.get("country") + "&";	
-		if (params.containsKey("minLatLong")) 
-			url += "minLatLong=" + params.get("minLatLong") + "&";
-		if (params.containsKey("maxLatLong")) 
-			url += "maxLatLong=" + params.get("maxLatLong") + "&";
-		if (params.containsKey("minElevation")) 
-			url += "minElevation=" + params.get("minElevation") + "&";
-		if (params.containsKey("maxElevation")) 
-			url += "maxElevation=" + params.get("maxElevation") + "&";
-		if (params.containsKey("minPopulation"))
-			url += "minPopulation=" + params.get("minPopulation") + "&";
-		if (params.containsKey("maxPopulation"))
-			url += "maxPopulation=" + params.get("maxPopulation") + "&";
+		if (params.containsKey("country"))
+			url += "country=" + params.get("country") + "&";
+		if (params.containsKey("min_lat"))
+			url += "minLat=" + params.get("min_lat") + "&";
+		if (params.containsKey("max_lat"))
+			url += "maxLat=" + params.get("max_lat") + "&";
+		if (params.containsKey("min_long"))
+			url += "minLong=" + params.get("min_long") + "&";
+		if (params.containsKey("max_long"))
+			url += "maxLong=" + params.get("max_long") + "&";
+		if (params.containsKey("min_elev"))
+			url += "minElevation=" + params.get("min_elev") + "&";
+		if (params.containsKey("max_elev"))
+			url += "maxElevation=" + params.get("max_elev") + "&";
+		if (params.containsKey("min_pop"))
+			url += "minPopulation=" + params.get("min_pop") + "&";
+		if (params.containsKey("max_pop"))
+			url += "maxPopulation=" + params.get("max_pop") + "&";
 		if (params.containsKey("limit"))
 			url += "limit=" + params.get("limit") + "&";
 
-		// remove last & 
-		url = url.substring(0, url.length()-1);
-System.out.println("URL: " + url);
+		// remove last &
+		url = url.substring(0, url.length() - 1);
+		System.out.println("URL: " + url);
 
 		// make the http request
 		HttpResponse  response = makeRequest(url);
@@ -201,9 +207,9 @@ System.out.println("URL: " + url);
 
 			// parse the response
 			JSONArray json_arr = unwrapJSONArray(response, "data");
-			Vector<USCities> us_cities = new Vector<USCities>(json_arr.size());
+			Vector<City> us_cities = new Vector<City>(json_arr.size());
 			for (int i = 0; i < json_arr.size(); i++) {
-                JSONObject item = (JSONObject) json_arr.get(i);
+				JSONObject item = (JSONObject) json_arr.get(i);
 
 				String city = (String) item.get("city");
 				String state = (String) item.get("state");
@@ -215,7 +221,7 @@ System.out.println("URL: " + url);
 				double longit = (double) item.get("lon");
 
 				// put into object
-				USCities city_data = new USCities (city, state, country, time_zone,
+				City city_data = new City (city, state, country, time_zone,
 					(int) elevation, (int) population, (float) latit, (float) longit);
 
 				us_cities.add(city_data);
@@ -223,9 +229,9 @@ System.out.println("URL: " + url);
 			}
 			return us_cities;
 		}
-		else 
-            throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " 
-									+ status);
+		else
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: "
+				+ status);
 	}
 
 	/**
@@ -290,7 +296,7 @@ System.out.println("URL: " + url);
 	 *
 	 *	For more information and to look at the data, refer to https://bridgesuncc.github.io/datasets.html
 	 *
- * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_Shakespeare.html
+	* Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_Shakespeare.html
 	 *
 	 *  @throws Exception if the request fails
 	 *
@@ -320,7 +326,7 @@ System.out.println("URL: " + url);
 	 *
 	 *  @return a list of Shakespeare objects.
 	 */
-    public  List<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
+	public  List<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
 		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";
 
 		if (works == "plays" || works == "poems") {
@@ -357,15 +363,15 @@ System.out.println("URL: " + url);
 		}
 	}
 
-    /**
-     *
-     * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_Shakespeare.html
-     *
-     */
-    public  List<Shakespeare> getShakespeareData(String works) throws Exception {
-	return getShakespeareData(works, false);
-    }
-    
+	/**
+	 *
+	 * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_Shakespeare.html
+	 *
+	 */
+	public  List<Shakespeare> getShakespeareData(String works) throws Exception {
+		return getShakespeareData(works, false);
+	}
+
 	/**
 	 *  This helper function provides access to a cancer dataset from CDC
 	 *  https://www.cdc.gov/cancer/npcr/uscs/download_data.htm and curated
@@ -783,10 +789,10 @@ System.out.println("URL: " + url);
 	 */
 	public Song getSong(String songTitle)
 	throws IOException {
-	    return getSong(songTitle, "");
+		return getSong(songTitle, "");
 	}
 
-    
+
 	/**
 	 * @brief Generates Open Street Map URL request for a given location and returns the map data
 	 *
@@ -902,7 +908,7 @@ System.out.println("URL: " + url);
 	 *	@param amenity  amenity type
 	 *	@throws exception
 	 */
-	public AmenityData getAmenityData(String location, String amenity)
+	public Vector<Amenity> getAmenityData(String location, String amenity)
 	throws IOException {
 
 		String amenity_url = getAmenityBaseURL() +
@@ -929,7 +935,7 @@ System.out.println("URL: " + url);
 	 *	@param amenity  amenity type
 	 *	@throws exception
 	 */
-	public AmenityData getAmenityData(double minLat, double minLon, double
+	public Vector<Amenity> getAmenityData(double minLat, double minLon, double
 		maxLat, double maxLon, String amenity) throws IOException {
 
 		String data_url = getAmenityBaseURL() +
@@ -960,14 +966,14 @@ System.out.println("URL: " + url);
 	 * @throws IOException If there is an error parsing response from
 	 *		server or is an invalid location name
 	 */
-	private AmenityData parseAmenityData(String amenity_url, String hash_url)
-	throws IOException {
+	private Vector<Amenity> parseAmenityData(String amenity_url,
+		String hash_url) throws IOException {
 
 		// get the JSON of the amenity data
 		String amenity_json = getDataSetJSON(amenity_url, hash_url);
 
 		// Parse Data into object
-		AmenityData amenity_data = new AmenityData();
+		Vector<Amenity> amenities = new Vector<Amenity>();
 		JSONParser parser = new JSONParser();
 
 		try {
@@ -975,31 +981,23 @@ System.out.println("URL: " + url);
 			JSONArray nodes = (JSONArray) json.get("nodes");
 			JSONObject meta = (JSONObject) json.get("meta");
 
-
-			amenity_data.setCount(Integer.parseInt(meta.get("count").toString()));
-			amenity_data.setMinLat(Double.parseDouble(meta.get("minlat").toString()));
-			amenity_data.setMinLon(Double.parseDouble(meta.get("minlon").toString()));
-			amenity_data.setMaxLat(Double.parseDouble(meta.get("maxlat").toString()));
-			amenity_data.setMaxLon(Double.parseDouble(meta.get("maxlon").toString()));
-
-
 			Iterator<JSONArray> iter = nodes.iterator();
 			while (iter.hasNext()) {
 				JSONArray sub_data = iter.next();
-				Amenities amen = new Amenities();
-				amen.setId(Double.parseDouble(sub_data.get(0).toString()));
+				Amenity amen = new Amenity();
+				amen.setId(Long.parseLong(sub_data.get(0).toString()));
 				amen.setLat(Double.parseDouble(sub_data.get(1).toString()));
 				amen.setLon(Double.parseDouble(sub_data.get(2).toString()));
 				amen.setName(sub_data.get(3).toString());
 
-				amenity_data.addAmenities(amen);
+				amenities.add(amen);
 			}
 		}
 		catch (Exception e) {
 			System.out.println("Error Parsing Amenity Json: " + e);
 		}
 
-		return amenity_data;
+		return amenities;
 	}
 	/**
 	 * @brief This method takes in both a dataset url and a hash url
@@ -1052,7 +1050,7 @@ System.out.println("URL: " + url);
 
 			int status = resp.getStatusLine().getStatusCode();
 			if (debug)
-			    System.err.println("[Data request:] Status code:" + status);
+				System.err.println("[Data request:] Status code:" + status);
 
 			if (status != 200) {
 				throw new HttpResponseException(status, "Http Request Failed. Error Code:"
@@ -1076,11 +1074,12 @@ System.out.println("URL: " + url);
 
 			//Checks to see if valid hash is generated
 			if (!hash.equals("false")) {
-			    try{
-				lru.putDoc(hash, data_content);
-			    } catch (Exception e) {
-				System.err.println("Could not store data in cache. Ignoring exception:\n"+e.getMessage());
-			    }
+				try {
+					lru.putDoc(hash, data_content);
+				}
+				catch (Exception e) {
+					System.err.println("Could not store data in cache. Ignoring exception:\n" + e.getMessage());
+				}
 			}
 		}
 		return data_content;
@@ -1171,7 +1170,7 @@ System.out.println("URL: " + url);
 		}
 
 		ElevationData ret_data = new ElevationData(data, cols, rows, xll, yll,
-							   cellsize, maxVal, minVal);
+			cellsize, maxVal, minVal);
 		return ret_data;
 	}
 
@@ -1185,34 +1184,35 @@ System.out.println("URL: " + url);
 		int requestStatus = dataResp.getStatusLine().getStatusCode();
 		data = EntityUtils.toString(dataResp.getEntity());
 
-//		if (debug)
-//			System.err.println("Data is: " + data);
+		//		if (debug)
+		//			System.err.println("Data is: " + data);
 
-		if (requestStatus == 200){
+		if (requestStatus == 200) {
 			return data;
-		} else {
-			throw new HttpResponseException(requestStatus, "Http Request Failed. Error Code:"
-					+ requestStatus + ". Message:" + data);
 		}
-		
-		
-	}
-    /**
-     * @brief Search the gutenberg data for retrieving meta
-     *   data of books matching a string and a category
-     *
-     *  Data is retrieved  into a vector of book records.
-     *
-     *  A tutorial of how to use the Gutenberg data in bridges is presented here: https://bridgesuncc.github.io/tutorials/Data_Gutenberg.html
-     *  
-     *  @param term  a string that matches the category 
-     *  @param category  category can be any book attribute (title, genre, 
-     *                  date, Library of Congress class, language)
-     */
+		else {
+			throw new HttpResponseException(requestStatus, "Http Request Failed. Error Code:"
+				+ requestStatus + ". Message:" + data);
+		}
 
-	public List<GutenbergMeta> getGutenbergBookMetaData(String term, String category) 
-														throws IOException{
-		String url = getGutenbergBaseURL() + "/search?search=" + 
+
+	}
+	/**
+	 * @brief Search the gutenberg data for retrieving meta
+	 *   data of books matching a string and a category
+	 *
+	 *  Data is retrieved  into a vector of book records.
+	 *
+	 *  A tutorial of how to use the Gutenberg data in bridges is presented here: https://bridgesuncc.github.io/tutorials/Data_Gutenberg.html
+	 *
+	 *  @param term  a string that matches the category
+	 *  @param category  category can be any book attribute (title, genre,
+	 *                  date, Library of Congress class, language)
+	 */
+
+	public List<GutenbergMeta> getGutenbergBookMetaData(String term, String category)
+	throws IOException {
+		String url = getGutenbergBaseURL() + "/search?search=" +
 			URLEncoder.encode(term, StandardCharsets.UTF_8.name()) + "&type=" + category;
 		String data = requestJSON(url);
 
@@ -1223,8 +1223,8 @@ System.out.println("URL: " + url);
 			JSONObject json = (JSONObject) parser.parse(data);
 			JSONArray books = (JSONArray) json.get("book_list");
 			Iterator<JSONObject> iter = books.iterator();
-		
-			while(iter.hasNext()){
+
+			while (iter.hasNext()) {
 				JSONObject book = iter.next();
 
 				Gson gson = new Gson();
@@ -1233,9 +1233,9 @@ System.out.println("URL: " + url);
 			}
 			return bookList;
 
-		} 
+		}
 		catch (Exception e) {
-			System.out.println("Error parsing the returned JSON"); 
+			System.out.println("Error parsing the returned JSON");
 		}
 
 		return bookList;
@@ -1259,22 +1259,23 @@ System.out.println("URL: " + url);
 		JSONParser parser = new JSONParser();
 		GutenbergMeta bookData = null;
 
-		try{
+		try {
 			JSONObject json = (JSONObject) parser.parse(data);
 			JSONArray books = (JSONArray) json.get("book_list");
 			Iterator<JSONObject> iter = books.iterator();
-		
-			while(iter.hasNext()){
+
+			while (iter.hasNext()) {
 				JSONObject book = iter.next();
 
 				Gson gson = new Gson();
 				bookData = gson.fromJson(book.toString(), GutenbergMeta.class);
 				return bookData;
 			}
-			
 
-		} catch (Exception e) {
-			System.out.println("Error parsing the returned JSON"); 
+
+		}
+		catch (Exception e) {
+			System.out.println("Error parsing the returned JSON");
 		}
 		return bookData;
 	}
@@ -1288,13 +1289,14 @@ System.out.println("URL: " + url);
 	*
 	* @returns a string of the book's text
 	*/
-	public String getGutenbergBookText(int id) throws IOException{
+	public String getGutenbergBookText(int id) throws IOException {
 		String url = getGutenbergBaseURL() + "/book?id=" + id;
 		String data;
-		String cacheID = "gutenberg"+id;
-		if (lru.inCache(cacheID)){
+		String cacheID = "gutenberg" + id;
+		if (lru.inCache(cacheID)) {
 			data = lru.getDoc(cacheID);
-		} else {
+		}
+		else {
 			data = requestJSON(url);
 			lru.putDoc(cacheID, data);
 		}
@@ -1302,12 +1304,12 @@ System.out.println("URL: " + url);
 		// need to parse the data
 		JSONParser parser = new JSONParser();
 		String book_text = new String();
-		try{
+		try {
 			JSONObject json = (JSONObject) parser.parse(data);
 			book_text = json.get(String.valueOf(id)).toString();
-		} 
+		}
 		catch (Exception e) {
-			System.out.println("Error parsing the returned JSON"); 
+			System.out.println("Error parsing the returned JSON");
 		}
 
 		return book_text;
@@ -1415,113 +1417,113 @@ System.out.println("URL: " + url);
 	/////////////////////////////////////////////////////////////////////////
 	//  Getting Reddit data
 	/////////////////////////////////////////////////////////////////////////
-   /**
-     *     @brief retrieves the most recent reddit posts from a subreddit
-     * 
-     * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
-     *
-     * @return a list of reddit objects with the data of the posts
-     *
-     **/
-	public ArrayList<Reddit> getRedditData (String subreddit) throws IOException{
-	    return getRedditData(subreddit, -9999);
+	/**
+	  *     @brief retrieves the most recent reddit posts from a subreddit
+	  *
+	  * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
+	  *
+	  * @return a list of reddit objects with the data of the posts
+	  *
+	  **/
+	public ArrayList<Reddit> getRedditData (String subreddit) throws IOException {
+		return getRedditData(subreddit, -9999);
 	}
-    /**
-     *     @brief retrieves the reddit posts from a subreddit
-     * 
-     * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
-     * @param time_request unix timestamp of when requested subreddit was generated or less than 0 for now  
-     *
-     * @return a list of reddit objects with the data of the posts
-     *
-     **/
-	public ArrayList<Reddit> getRedditData (String subreddit, int time_request) throws IOException{
+	/**
+	 *     @brief retrieves the reddit posts from a subreddit
+	 *
+	 * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
+	 * @param time_request unix timestamp of when requested subreddit was generated or less than 0 for now
+	 *
+	 * @return a list of reddit objects with the data of the posts
+	 *
+	 **/
+	public ArrayList<Reddit> getRedditData (String subreddit, int time_request) throws IOException {
 		String base_url = getRedditURL();
 		if (debug)
-		    System.out.println("reddit base url:" +  base_url);
+			System.out.println("reddit base url:" +  base_url);
 		String url = base_url + "/cache?subreddit=" + subreddit +
 			"&time_request=" + String.valueOf(time_request);
 
 		if (debug)
-		    System.out.println("reddit url:" +  url);
-//      content = server_request(url)
-//      data = json.loads(content.decode("utf-8"))
+			System.out.println("reddit url:" +  url);
+		//      content = server_request(url)
+		//      data = json.loads(content.decode("utf-8"))
 
 		ArrayList<Reddit> reddit_posts = new ArrayList<Reddit>();
 
 		String js = requestJSON(url);
 		try {
-		    JSONParser parser = new JSONParser();
-		    JSONObject json = (JSONObject) parser.parse(js);
-		    
-		    for (Object jv : json.values()) {
-			JSONObject jo = ((JSONObject) jv);
+			JSONParser parser = new JSONParser();
+			JSONObject json = (JSONObject) parser.parse(js);
 
-			String id = (String) jo.get("id");
-			String title = (String) jo.get("title");
-			String author = (String) jo.get("author");
-			String subred = (String) jo.get("subreddit");
-			String posturl = (String) jo.get("url");
-			String text = (String) jo.get("text");
-			int score = (int)(long)(Long) jo.get("score");
-			float vote_ratio = (float)(double)(Double) jo.get("vote_ratio");
-			int comment_count = (int)(long)(Long) jo.get("comment_count");
-			int posttime = (int)Math.round(((Double) jo.get("post_time")));
+			for (Object jv : json.values()) {
+				JSONObject jo = ((JSONObject) jv);
 
-			Reddit r = new Reddit();
-			r.setID(id);
-			r.setTitle(title);
-			r.setAuthor(author);
-			r.setScore(score);
-			r.setVoteRatio(vote_ratio);
-			r.setCommentCount(comment_count);
-			r.setSubreddit(subred);
-			r.setPostTime(posttime);
-			r.setURL(posturl);
-			r.setText(text);
+				String id = (String) jo.get("id");
+				String title = (String) jo.get("title");
+				String author = (String) jo.get("author");
+				String subred = (String) jo.get("subreddit");
+				String posturl = (String) jo.get("url");
+				String text = (String) jo.get("text");
+				int score = (int)(long)(Long) jo.get("score");
+				float vote_ratio = (float)(double)(Double) jo.get("vote_ratio");
+				int comment_count = (int)(long)(Long) jo.get("comment_count");
+				int posttime = (int)Math.round(((Double) jo.get("post_time")));
 
-			reddit_posts.add(r);
-		    }
+				Reddit r = new Reddit();
+				r.setID(id);
+				r.setTitle(title);
+				r.setAuthor(author);
+				r.setScore(score);
+				r.setVoteRatio(vote_ratio);
+				r.setCommentCount(comment_count);
+				r.setSubreddit(subred);
+				r.setPostTime(posttime);
+				r.setURL(posturl);
+				r.setText(text);
+
+				reddit_posts.add(r);
+			}
 		}
 		catch (ParseException e) {
-		    throw new JsonParseException("Malformed JSON: Unable to Parse", e);
+			throw new JsonParseException("Malformed JSON: Unable to Parse", e);
 		}
 
 		return reddit_posts;
 	}
 
-    /**
-     * @brief retrieves the subreddits made available by BRIDGES
-     *
-     * @return a list of strings of subreddit names
-     **/
-    public ArrayList<String> getAvailableSubreddits() throws IOException{
+	/**
+	 * @brief retrieves the subreddits made available by BRIDGES
+	 *
+	 * @return a list of strings of subreddit names
+	 **/
+	public ArrayList<String> getAvailableSubreddits() throws IOException {
 		String base_url = getRedditURL();
 		if (debug)
-		    System.out.println("reddit base url:" +  base_url);
+			System.out.println("reddit base url:" +  base_url);
 		String url = base_url + "/listJSON";
 		if (debug)
-		    System.out.println("url:" +  url);
+			System.out.println("url:" +  url);
 
 		ArrayList<String> subreddits = new ArrayList<String>();
-		
+
 		String js = requestJSON(url);
 		try {
-		    JSONParser parser = new JSONParser();
-		    JSONArray json = (JSONArray) parser.parse(js);
-		    
-		    for (Object jv : json) {
-			String subredditName = ((String) jv);
-			subreddits.add(subredditName);
-		    }
+			JSONParser parser = new JSONParser();
+			JSONArray json = (JSONArray) parser.parse(js);
+
+			for (Object jv : json) {
+				String subredditName = ((String) jv);
+				subreddits.add(subredditName);
+			}
 		}
 		catch (ParseException e) {
-		    throw new JsonParseException("Malformed JSON: Unable to Parse", e);
+			throw new JsonParseException("Malformed JSON: Unable to Parse", e);
 		}
 
 		return subreddits;
-    }
-	
+	}
+
 	/////////////////////////////////////////////////////////////////////////
 	// The following functions are provided to import store assignments on
 	// the BRIDGES server. Currently supported: ColorGrid import

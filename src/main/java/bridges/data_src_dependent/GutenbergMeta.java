@@ -17,120 +17,120 @@ package bridges.data_src_dependent;
  *
  **/
 public class GutenbergMeta {
-    
-    private int id;
-    private String title;
-    private String lang;
-    private String date_added;
-    private String [] authors;
-    private String [] genres;
-    private String [] loc_class;
 
-    
-    public GutenbergMeta(){
-        this.id = 0;
-        this.title = null;
-        this.lang = null;
-        this.date_added = null;
-        this.authors = null;
-        this.genres = null;
-        this.loc_class = null;
-    }
+	private int id;
+	private String title;
+	private String lang;
+	private String date_added;
+	private String [] authors;
+	private String [] genres;
+	private String [] loc_class;
 
-    public GutenbergMeta(int id, String title, String lang, String date, String [] authors, String [] genres, String [] loc){
-        this.setId(id);
-        this.setTitle(title);
-        this.setLanguage(lang);
-        this.setDate(date);
-        this.setAuthors(authors);
-        this.setGenres(genres);
-        this.setLoc(loc);
-    }
 
-    /**
-     * @brief GutenbergID of the book
-     */
-    public int getId(){
-        return id;
-    }
+	public GutenbergMeta() {
+		this.id = 0;
+		this.title = null;
+		this.lang = null;
+		this.date_added = null;
+		this.authors = null;
+		this.genres = null;
+		this.loc_class = null;
+	}
 
-    public void setId(int id){
-        this.id = id;
-    }
+	public GutenbergMeta(int id, String title, String lang, String date, String [] authors, String [] genres, String [] loc) {
+		this.setId(id);
+		this.setTitle(title);
+		this.setLanguage(lang);
+		this.setDate(date);
+		this.setAuthors(authors);
+		this.setGenres(genres);
+		this.setLoc(loc);
+	}
 
-    
-    /**
-     * @brief Title of the book
-     */
-    public String getTitle(){
-        return title;
-    }
+	/**
+	 * @brief GutenbergID of the book
+	 */
+	public int getId() {
+		return id;
+	}
 
-    public void setTitle(String title){
-        this.title = title;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    /**
-     * @brief language of the book. 
-     *
-     * Note that translations of a text shows in the translated
-     * language and not in the original language.
-     **/
-    public String getLanguage(){
-        return lang;
-    }
 
-    public void setLanguage(String lang){
-        this.lang = lang;
-    }
+	/**
+	 * @brief Title of the book
+	 */
+	public String getTitle() {
+		return title;
+	}
 
-    /**
-     * @brief date at which the book was added to project Gutenberg.
-     *
-     * This is not a publication date!
-     **/
-    public String getDate(){
-        return date_added;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setDate(String date){
-        this.date_added = date;
-    }
+	/**
+	 * @brief language of the book.
+	 *
+	 * Note that translations of a text shows in the translated
+	 * language and not in the original language.
+	 **/
+	public String getLanguage() {
+		return lang;
+	}
 
-    /**
-     * @brief List of authors
-     **/
-    public String [] getAuthors(){
-        return authors;
-    }
+	public void setLanguage(String lang) {
+		this.lang = lang;
+	}
 
-    public void setAuthors(String [] authors){
-        this.authors = authors;
-    }
+	/**
+	 * @brief date at which the book was added to project Gutenberg.
+	 *
+	 * This is not a publication date!
+	 **/
+	public String getDate() {
+		return date_added;
+	}
 
-    /**
-     * @brief List of genres
-     * 
-     * Note that the genres stored by project Gutenberg may more detailled than one could expect.
-     **/
-    public String [] getGenres(){
-        return genres;
-    }
+	public void setDate(String date) {
+		this.date_added = date;
+	}
 
-    public void setGenres(String [] genres){
-        this.genres = genres;
-    }
+	/**
+	 * @brief List of authors
+	 **/
+	public String [] getAuthors() {
+		return authors;
+	}
 
-    /**
-     * @brief List of libary of congress classifications
-     * 
-     **/
-    public String [] getLoc(){
-        return loc_class;
-    }
+	public void setAuthors(String [] authors) {
+		this.authors = authors;
+	}
 
-    public void setLoc(String [] loc){
-        this.loc_class = loc;
-    }
+	/**
+	 * @brief List of genres
+	 *
+	 * Note that the genres stored by project Gutenberg may more detailled than one could expect.
+	 **/
+	public String [] getGenres() {
+		return genres;
+	}
+
+	public void setGenres(String [] genres) {
+		this.genres = genres;
+	}
+
+	/**
+	 * @brief List of libary of congress classifications
+	 *
+	 **/
+	public String [] getLoc() {
+		return loc_class;
+	}
+
+	public void setLoc(String [] loc) {
+		this.loc_class = loc;
+	}
 
 }

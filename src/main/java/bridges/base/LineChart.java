@@ -32,7 +32,7 @@ import org.json.simple.JSONValue;
  * The LineChart can have a title (see getTitle() and setTitle()) and
  * a subtitle (see setSubTitle() and getSubTitle()).
  *
- * @sa See tutorial on using LineChart at: 
+ * @sa See tutorial on using LineChart at:
  *		https://bridgesuncc.github.io/tutorials/LineChart.html
  *
  * @author Erik Saule

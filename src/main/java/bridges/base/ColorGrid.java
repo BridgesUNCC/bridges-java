@@ -84,18 +84,18 @@ public class ColorGrid extends Grid<Color> {
 			}
 		}
 	}
-    @Override
-    public void resize(int rows, int cols) {
-	super.resize(rows, cols);
-	for (int i = 0; i < gridSize[0]; i++) {
-	    for (int j = 0; j < gridSize[1]; j++) {
-		if (this.get(i,j) == null)
-		    this.set(i, j, baseColor);
-	    }
+	@Override
+	public void resize(int rows, int cols) {
+		super.resize(rows, cols);
+		for (int i = 0; i < gridSize[0]; i++) {
+			for (int j = 0; j < gridSize[1]; j++) {
+				if (this.get(i, j) == null)
+					this.set(i, j, baseColor);
+			}
+		}
 	}
-    }
-    
-    /**
+
+	/**
 	 *	Get the height of the color grid
 	 *
 	 *	@return the height (number of rows) of the grid

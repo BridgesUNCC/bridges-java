@@ -47,7 +47,7 @@ public class SymbolCollection extends DataStruct {
 	 *	Constructor - maintained internally as a hashmap
 	 */
 	public SymbolCollection() {
-	    symbols = new ArrayList<Symbol>();
+		symbols = new ArrayList<Symbol>();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class SymbolCollection extends DataStruct {
 	 *	 @param s  symbol to be updated
 	 */
 	private void updateAxisDomains(Symbol s) {
-	    return;
+		return;
 		// float[] dims = s.getDimensions();
 
 		// // check x axis
@@ -103,7 +103,7 @@ public class SymbolCollection extends DataStruct {
 
 	public String getDataStructureRepresentation() {
 		JSONArray symbol_json = new JSONArray();
-		 
+
 		for (Symbol symbol : symbols) {
 
 			if (autoscaledomain)
@@ -116,5 +116,5 @@ public class SymbolCollection extends DataStruct {
 		return "\"domainX\":[" + domainxmin + "," + domainxmax + "],\"domainY\":[" + domainymin + "," + domainymax + "]," + "\"symbols\":" + symbol_json + "}";
 	}
 
-    
+
 }
