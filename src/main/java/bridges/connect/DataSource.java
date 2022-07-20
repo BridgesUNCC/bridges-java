@@ -154,12 +154,14 @@ public class DataSource {
 	 *         'state' : string
 	 *         'country' : string
 	 *         'time_zone' : string
-	 *         'minElevation' : integer
-	 *         'maxElevation' : integer
-	 *         'minPopulation' : integer
-	 *         'maxPopulation' : integer
-	 *         'minLatLong' : float, float    -- Lat long minima
-	 *         'maxLatLong' : float, float    -- Lat long maxima
+	 *         'min_elev' : integer
+	 *         'max_elev' : integer
+	 *         'min_pop' : integer
+	 *         'max_pop' : integer
+	 *         'min_lat' : float
+	 *         'min_long' : float
+	 *         'max_lat' : float
+	 *         'max_long' : float
 	 *
 	 *
 	 */
@@ -172,18 +174,22 @@ public class DataSource {
 			url += "state=" + params.get("state") + "&";
 		if (params.containsKey("country"))
 			url += "country=" + params.get("country") + "&";
-		if (params.containsKey("minLatLong"))
-			url += "minLatLong=" + params.get("minLatLong") + "&";
-		if (params.containsKey("maxLatLong"))
-			url += "maxLatLong=" + params.get("maxLatLong") + "&";
-		if (params.containsKey("minElevation"))
-			url += "minElevation=" + params.get("minElevation") + "&";
-		if (params.containsKey("maxElevation"))
-			url += "maxElevation=" + params.get("maxElevation") + "&";
-		if (params.containsKey("minPopulation"))
-			url += "minPopulation=" + params.get("minPopulation") + "&";
-		if (params.containsKey("maxPopulation"))
-			url += "maxPopulation=" + params.get("maxPopulation") + "&";
+		if (params.containsKey("min_lat"))
+			url += "minLat=" + params.get("min_lat") + "&";
+		if (params.containsKey("max_lat"))
+			url += "maxLat=" + params.get("max_lat") + "&";
+		if (params.containsKey("min_long"))
+			url += "minLong=" + params.get("min_long") + "&";
+		if (params.containsKey("max_long"))
+			url += "maxLong=" + params.get("max_long") + "&";
+		if (params.containsKey("min_elev"))
+			url += "minElevation=" + params.get("min_elev") + "&";
+		if (params.containsKey("max_elev"))
+			url += "maxElevation=" + params.get("max_elev") + "&";
+		if (params.containsKey("min_pop"))
+			url += "minPopulation=" + params.get("min_pop") + "&";
+		if (params.containsKey("max_pop"))
+			url += "maxPopulation=" + params.get("max_pop") + "&";
 		if (params.containsKey("limit"))
 			url += "limit=" + params.get("limit") + "&";
 
