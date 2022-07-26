@@ -54,6 +54,13 @@ public	class Rectangle extends  Symbol {
 		setRectangle (locx, locy, w, h);
 	}
 
+    public float getLocationX() {
+	return locx;
+    }
+    public float getLocationY() {
+	return locy;
+    }
+    
 	/**
 	 *	This method gets the name of the shape
 	 *
@@ -75,6 +82,11 @@ public	class Rectangle extends  Symbol {
 		width = w;
 	}
 
+	public float getWidth() {
+	    return width;
+	}
+
+    
 	/**
 	 * This method sets the shape height
 	 *
@@ -87,7 +99,10 @@ public	class Rectangle extends  Symbol {
 		height = h;
 	}
 
-
+    public float getHeight() {
+	return height;
+    }
+    
 	/*
 	 * This method sets the location and size of the rectangle
 	 *
