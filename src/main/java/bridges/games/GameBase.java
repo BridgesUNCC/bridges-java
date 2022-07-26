@@ -33,6 +33,13 @@ public abstract class GameBase {
         gameBaseInit(assid, login, apikey, rows, cols);
     }
 
+
+    public GameBase(int assid, String login, String apikey, int rows, int cols, boolean d) {
+	debug = d;
+        gameBaseInit(assid, login, apikey, rows, cols);
+    }
+
+    
     private void gameBaseInit(int id, String log, String key, int rows, int cols) {
         firsttime = true;
 

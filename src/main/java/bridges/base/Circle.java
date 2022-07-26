@@ -91,7 +91,7 @@ public class Circle extends Symbol {
 
 
     public float getRadius() {
-	return r;
+	return radius;
     }
 
     public float getXLocation() {

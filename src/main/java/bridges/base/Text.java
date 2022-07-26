@@ -87,10 +87,10 @@ public class Text extends Symbol {
 		return this;
 	}
 
-    public getAnchorLocationX() {
+    public float getAnchorLocationX() {
 	return locx;
     }
-    public getAnchorLocationY() {
+    public float getAnchorLocationY() {
 	return locy;
     }	
 

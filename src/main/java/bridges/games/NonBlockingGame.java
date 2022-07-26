@@ -210,6 +210,18 @@ public abstract class NonBlockingGame extends GameBase {
         nonBlockInit();
     }
 
+    public NonBlockingGame(int assignmentID, String login, String apikey, int rows, int cols, boolean deb) {
+        super(assignmentID, login, apikey, rows, cols, deb);
+
+	if ((cols * rows) > 1024) { // Allows students to create smaller grids if they prefer.
+            System.out.println("ERROR: Number of cells in a non-blocking game grid cannot exceed 32x32 or 1024.");
+            System.exit(1);
+        }
+        
+        nonBlockInit();
+    }
+
+    
     ///Initializes specific non-blocking game variables
     private void nonBlockInit() {
         
