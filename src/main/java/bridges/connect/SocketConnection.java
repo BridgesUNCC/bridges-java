@@ -107,7 +107,8 @@ public class SocketConnection {
 				@Override
 				public void call(Object... args) {
 					JSONObject obj = (JSONObject) args[0];
-					// System.out.println(obj);
+					if (Bridges.getDebugFlag())
+					    System.out.println(obj);
 
 					// pass keypresses to all keypress listeners
 					for (KeypressListener hl : listeners) {
@@ -140,8 +141,7 @@ public class SocketConnection {
 				public void call(Object... args) {
 					try {
 						System.out.println(args);
-						System.out
-						.println("The server closed the connection.");
+						System.out.println("The server closed the connection.");
 					}
 					catch (Exception err) {
 						System.out.println(err);

@@ -277,8 +277,8 @@ public abstract class NonBlockingGame extends GameBase {
     public void start() {
         sleepTimer();
         // visualize the grid
-        render();
         initialize();
+        render();
 
         long framelimit = -1;
 
