@@ -12,7 +12,7 @@ import java.lang.String;
  * The Reddit object is typically not created by a student but rather
  * obtained from calling bridges::connect::DataSource::getRedditData().
  *
- * Refer to tutorial for example of using this feature: https://bridgesuncc.github.io/tutorials/
+ * Refer to tutorial for example of using this feature: https://bridgesuncc.github.io/tutorials/Data_Reddit.html
  *
  *
  * @author Erik Saule
