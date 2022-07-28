@@ -563,7 +563,7 @@ public class Connector {
 	}
 
 	/**
-	 * Execute a request of earthquakes to https://earthquakes-uncc.herokuapp.com/eq/
+	 * Execute a request of earthquakes to Earthquake server
 	 * @param url
 	 * @return JSON string
 	 * @throws RateLimitException
