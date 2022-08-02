@@ -63,6 +63,10 @@ public class Text extends Symbol {
 		return this;
 	}
 
+	public String getText() {
+		return text;
+	}
+
 	public Text setFontSize(float size) {
 		if (size < 0.) {
 			throw new IllegalArgumentException("Please use font size greater tan 0 ");
@@ -73,11 +77,21 @@ public class Text extends Symbol {
 		return this;
 	}
 
+	public float getFontSize() {
+		return fontSize;
+	}
 
 	public Symbol setAnchorLocation(float x, float y) {
 		this.locx = x;
 		this.locy = y;
 		return this;
+	}
+
+	public float getAnchorLocationX() {
+		return locx;
+	}
+	public float getAnchorLocationY() {
+		return locy;
 	}
 
 	/**
@@ -88,6 +102,14 @@ public class Text extends Symbol {
 		anchorAlignmentLR = typeLR;
 		anchorAlignmentTB = typeTB;
 		return this;
+	}
+
+	public String getAnchroAlignmentLR () {
+		return anchorAlignmentLR;
+	}
+
+	public String getAnchroAlignmentTB () {
+		return anchorAlignmentTB;
 	}
 
 	/**

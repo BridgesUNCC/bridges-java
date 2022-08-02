@@ -37,7 +37,7 @@ package bridges.base;
  * 	BRIDGES is funded by the National Science Foundation through NSF TUES Project DUE-1245841 and IUSE Projects DUE-1726809, DUE-214381
  *
  *	\section contacts_sec Contacts:
- *	Kalpathi Subramanian, krs@uncc.edu, Jamie Payton, payton@temple.edu, Erik Saule, esaule@uncc.edu,  	Paula Goolkasian, pagoolka@uncc.edu (and previously 
+ *	Kalpathi Subramanian, krs@uncc.edu, Jamie Payton, payton@temple.edu, Erik Saule, esaule@uncc.edu,  	Paula Goolkasian, pagoolka@uncc.edu (and previously
  *	Michael Youngblood, gmyoungblood@gmail.com, Robert Kosara, rkosara@tableau.com)
 
 
