@@ -90,17 +90,17 @@ public class Circle extends Symbol {
 	}
 
 
-    public float getRadius() {
-	return radius;
-    }
+	public float getRadius() {
+		return radius;
+	}
 
-    public float getXLocation() {
-	return x;
-    }
-    
-    public float getYLocation() {
-	return y;
-    }
+	public float getXLocation() {
+		return x;
+	}
+
+	public float getYLocation() {
+		return y;
+	}
 	/**
 	 * This method returns the JSON representation of the shape
 	 *

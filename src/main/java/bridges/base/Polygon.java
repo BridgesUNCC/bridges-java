@@ -36,7 +36,7 @@ public class Polygon extends Polyline {
 		super(pts);
 	}
 
-    
+
 	/**
 	 *	This method gets the name of the shape
 	 *
