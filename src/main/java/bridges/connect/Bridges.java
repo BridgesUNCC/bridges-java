@@ -63,12 +63,12 @@ public class Bridges {
 	private static Integer MaxTitleSize = 200,
 						   MaxDescrSize = 1000;
 	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular", "window"};
-
+	private static String[] map = {"us", "all"};
 	private static Boolean map_overlay = false;	// default to no map overlay
 	private static double[] window;
 	private static String display_mode = "slide"; // default to slide (vs stack)
 	private static String coord_system_type = projection_options[0];	// default to Cartesian space
-
+	
 	private DataStruct ds_handle = null;		// data structure handle
 
 	//  string constants  for use in constructing JSON
@@ -242,6 +242,19 @@ public class Bridges {
 	public void setMapOverlay (Boolean flag) {
 		map_overlay = flag;
 	}
+	
+	
+	/**
+	 *  @brief Sets the type of map overlay to use
+	 *
+	 *  @param map     this is an Array describing the map overlay. The first element of the array is which map to use: "world" or "us"
+	 *  and the second element is what attribute from the map to show: a country from world map, or a state from US map.
+	 *
+	 **/
+	public void setMap(String map, String info) {
+		Bridges.map[0] = map;
+		Bridges.map[1] = info;
+	}
 
 	/**
 	 * Set the current assignment display mode to slide or stack, or throw an error;
@@ -284,6 +297,7 @@ public class Bridges {
 			coord_system_type = "cartesian";
 		}
 	}
+	
 
 	/**
 	 * @brief Specify the window that will be used to render the view by default.
@@ -552,6 +566,7 @@ public class Bridges {
 			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) +
 			QUOTE + COMMA +
 			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
+			QUOTE + "map" + QUOTE + COLON + OPEN_BOX + QUOTE + Bridges.map[0] + QUOTE + COMMA + QUOTE + Bridges.map[1] + QUOTE + CLOSE_BOX + COMMA +
 			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
 			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
 
