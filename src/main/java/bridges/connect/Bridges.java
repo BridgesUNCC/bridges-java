@@ -53,6 +53,7 @@ public class Bridges {
 	private  Connector connector;
 	private int element_array_size;
 	private static boolean json_flag = false;
+	private static boolean label_flag = false;
 	private static boolean post_link_url_flag = true;
 	private static int assignment;
 	private static int assignment_part;
@@ -341,8 +342,16 @@ public class Bridges {
 	 * 	@param flag the flag to print the JSON represenation of the data structure
 	 *		to standard output. Used for debugging BRIDGES
 	 **/
-	public void setVisualizeJSON (boolean flag) {
+	public void setJSONFlag (boolean flag) {
 		json_flag = flag;
+	}
+
+	/**
+	 * 	@param flag the flag to turn labels on/off on the entire visualization
+     *
+	 **/
+	public void setLabellag (boolean flag) {
+		label_flag = flag;
 	}
 
 	/**
