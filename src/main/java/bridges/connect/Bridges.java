@@ -334,7 +334,7 @@ public class Bridges {
 	 *		Used only for debugging BRIDGES
 	 * 	@return check if the flag to output the JSON is set
 	**/
-	public boolean visualizeJSON() {
+	public boolean getJSONFlag() {
 		return json_flag;
 	}
 
@@ -350,7 +350,7 @@ public class Bridges {
 	 * 	@param flag the flag to turn labels on/off on the entire visualization
      *
 	 **/
-	public void setLabellag (boolean flag) {
+	public void setLabelFlag (boolean flag) {
 		label_flag = flag;
 	}
 
@@ -562,6 +562,7 @@ public class Bridges {
 			QUOTE + COMMA +
 			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
 			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
+			QUOTE + "label_flag" + QUOTE + COLON + label_flag + COMMA +
 			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
 
 		// if window is specified, add it to JSON
