@@ -1012,6 +1012,15 @@ public class DataSource {
 	 *  Currently this function works with elevation, OpenStreet maps and
 	 *  Amenity datasets
 	 *
+	 *
+			 * Multiple dataset follow the same protocol. They have a hash url and a data url.
+			 * Hitting the data URL should always returns the appropriate data.
+			 * Hitting the hash URL should return a hash code for the data, assuming such a hash code is available.
+			 *  If it is not available the cache url return "false". 
+			 *
+			 * It is possible for the hash URL to return "false" if the underlying data is not know to the server yet.
+			 * Internally, this happens in cases of server-side caching; for instance the first time a data is accessed, if you hit the hash URL before the data url, it shoudl return "false". 
+	 *
 	 */
 	private String getDataSetJSON(String data_url, String hash_url)
 	throws IOException {
