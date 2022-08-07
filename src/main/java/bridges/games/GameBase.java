@@ -49,7 +49,7 @@ public abstract class GameBase {
 
         if (debug) {
             Bridges.setDebugFlag(true);
-            bridges.setVisualizeJSON(true);
+            bridges.setJSONFlag(true);
         }
 
         // /make sure the bridges connects to the game version of the web app

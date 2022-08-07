@@ -53,6 +53,7 @@ public class Bridges {
 	private  Connector connector;
 	private int element_array_size;
 	private static boolean json_flag = false;
+	private static boolean label_flag = false;
 	private static boolean post_link_url_flag = true;
 	private static int assignment;
 	private static int assignment_part;
@@ -63,12 +64,12 @@ public class Bridges {
 	private static Integer MaxTitleSize = 200,
 						   MaxDescrSize = 1000;
 	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular", "window"};
-
+	private static String[] map = {"us", "all"};
 	private static Boolean map_overlay = false;	// default to no map overlay
 	private static double[] window;
 	private static String display_mode = "slide"; // default to slide (vs stack)
 	private static String coord_system_type = projection_options[0];	// default to Cartesian space
-
+	
 	private DataStruct ds_handle = null;		// data structure handle
 
 	//  string constants  for use in constructing JSON
@@ -242,6 +243,19 @@ public class Bridges {
 	public void setMapOverlay (Boolean flag) {
 		map_overlay = flag;
 	}
+	
+	
+	/**
+	 *  @brief Sets the type of map overlay to use
+	 *
+	 *  @param map     this is an Array describing the map overlay. The first element of the array is which map to use: "world" or "us"
+	 *  and the second element is what attribute from the map to show: a country from world map, or a state from US map.
+	 *
+	 **/
+	public void setMap(String map, String info) {
+		Bridges.map[0] = map;
+		Bridges.map[1] = info;
+	}
 
 	/**
 	 * Set the current assignment display mode to slide or stack, or throw an error;
@@ -284,6 +298,7 @@ public class Bridges {
 			coord_system_type = "cartesian";
 		}
 	}
+	
 
 	/**
 	 * @brief Specify the window that will be used to render the view by default.
@@ -333,7 +348,7 @@ public class Bridges {
 	 *		Used only for debugging BRIDGES
 	 * 	@return check if the flag to output the JSON is set
 	**/
-	public boolean visualizeJSON() {
+	public boolean getJSONFlag() {
 		return json_flag;
 	}
 
@@ -341,8 +356,16 @@ public class Bridges {
 	 * 	@param flag the flag to print the JSON represenation of the data structure
 	 *		to standard output. Used for debugging BRIDGES
 	 **/
-	public void setVisualizeJSON (boolean flag) {
+	public void setJSONFlag (boolean flag) {
 		json_flag = flag;
+	}
+
+	/**
+	 * 	@param flag the flag to turn labels on/off on the entire visualization
+     *
+	 **/
+	public void setLabelFlag (boolean flag) {
+		label_flag = flag;
 	}
 
 	/**
@@ -552,7 +575,9 @@ public class Bridges {
 			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) +
 			QUOTE + COMMA +
 			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
+			QUOTE + "map" + QUOTE + COLON + OPEN_BOX + QUOTE + Bridges.map[0] + QUOTE + COMMA + QUOTE + Bridges.map[1] + QUOTE + CLOSE_BOX + COMMA +
 			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
+			QUOTE + "label_flag" + QUOTE + COLON + label_flag + COMMA +
 			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
 
 		// if window is specified, add it to JSON

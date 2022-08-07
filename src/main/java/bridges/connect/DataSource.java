@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import java.io.File;
@@ -166,7 +167,23 @@ public class DataSource {
 	 *
 	 */
 	public Vector<City> getUSCitiesData(HashMap<String, String> params)
-	throws IOException {
+									throws IOException {
+
+		// error checking on parameters
+		// put legal keys into a set
+		HashSet<String> legal_keys = new HashSet<String>();
+			legal_keys.add("city"); legal_keys.add("state"); legal_keys.add("country");
+			legal_keys.add("min_pop"); legal_keys.add("max_pop");
+			legal_keys.add("min_long"); legal_keys.add("max_long");
+			legal_keys.add("min_lat"); legal_keys.add("max_lat");
+			legal_keys.add("min_elev"); legal_keys.add("max_elev");
+			legal_keys.add("time_zone"); legal_keys.add("limit");
+
+		for (HashMap.Entry<String, String> entry : params.entrySet()) {
+			if (!legal_keys.contains(entry.getKey())) 
+				throw new RuntimeException("\nIllegal parameter: " + entry.getKey() +"\n\nLegal Key values: \n   'city', 'state', 'country', 'min_lat', 'max_lat', 'min_long', 'max_long', 'min_pop', 'max_pop', 'time_zone', 'limit'");
+		}
+
 		String url = getUSCitiesURL() + "?";
 		if (params.containsKey("city"))
 			url += "city=" + params.get("city") + "&";

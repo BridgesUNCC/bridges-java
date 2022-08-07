@@ -32,6 +32,10 @@ public class SymbolGroup extends Symbol {
 		super();
 	}
 
+    public ArrayList<Symbol> getAllSymbols () {
+	return al;
+    }
+    
 	public void addSymbol(Symbol s) {
 		al.add(s);
 	}
