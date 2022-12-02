@@ -103,7 +103,7 @@ import bridges.connect.SocketConnection;
  * @sa See tutorial at  https://bridgesuncc.github.io/tutorials/NonBlockingGame.html
  *
  * @author Erik Saule
- * @date 7/21/19
+ * @date 7/21/19, 12/02/22
  *
  **/
 
@@ -113,6 +113,20 @@ public abstract class NonBlockingGame extends GameBase {
     ///helper class to make Input Management a bit easier.
     private InputHelper ih;
 
+    private InputStateMachine upSM;
+    private InputStateMachine downSM;
+    private InputStateMachine leftSM;
+    private InputStateMachine rightSM;
+
+    private InputStateMachine qSM;
+    private InputStateMachine spaceSM;
+    
+    private InputStateMachine wSM;
+    private InputStateMachine aSM;
+    private InputStateMachine sSM;
+    private InputStateMachine dSM;
+
+    
     ///used for fps control
     private long timeoflastframe;
 
@@ -123,6 +137,26 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.left();
     }
 
+    protected boolean keyLeftJustPressed() {
+        return leftSM.justPressed();
+    }
+    protected boolean keyLeftStillPressed() {
+        return leftSM.stillPressed();
+    }
+    protected boolean keyLeftJustNotPressed() {
+        return leftSM.justNotPressed();
+    }
+    protected boolean keyLeftStillNotPressed() {
+        return leftSM.stillNotPressed();
+    }
+    protected boolean keyLeftFire() {
+        return leftSM.fire();
+    }
+    protected void keyLeftSetupFire(int f) {
+        leftSM.setFireCooldown(f);
+    }
+
+
     /// @brief Is the RightArrow key currently pressed?
     ///
     /// @return true if "right" is pressed
@@ -130,6 +164,26 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.right();
     }
 
+    protected boolean keyRightJustPressed() {
+        return rightSM.justPressed();
+    }
+    protected boolean keyRightStillPressed() {
+        return rightSM.stillPressed();
+    }
+    protected boolean keyRightJustNotPressed() {
+        return rightSM.justNotPressed();
+    }
+    protected boolean keyRightStillNotPressed() {
+        return rightSM.stillNotPressed();
+    }
+    protected boolean keyRightFire() {
+        return rightSM.fire();
+    }
+    protected void keyRightSetupFire(int f) {
+        rightSM.setFireCooldown(f);
+    }
+
+    
     /// @brief Is the UpArrow key currently pressed?
     ///
     /// @return true if "up" is pressed
@@ -137,12 +191,53 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.up();
     }
 
+    protected boolean keyUpJustPressed() {
+        return upSM.justPressed();
+    }
+    protected boolean keyUpStillPressed() {
+        return upSM.stillPressed();
+    }
+    protected boolean keyUpJustNotPressed() {
+        return upSM.justNotPressed();
+    }
+    protected boolean keyUpStillNotPressed() {
+        return upSM.stillNotPressed();
+    }
+    protected boolean keyUpFire() {
+        return upSM.fire();
+    }
+    protected void keyUpSetupFire(int f) {
+        upSM.setFireCooldown(f);
+    }
+
+
+    
     /// @brief Is the DownArrow key currently pressed?
     ///
     /// @return true if "down" is pressed
     protected boolean keyDown() {
         return ih.down();
     }
+
+    protected boolean keyDownJustPressed() {
+        return downSM.justPressed();
+    }
+    protected boolean keyDownStillPressed() {
+        return downSM.stillPressed();
+    }
+    protected boolean keyDownJustNotPressed() {
+        return downSM.justNotPressed();
+    }
+    protected boolean keyDownStillNotPressed() {
+        return downSM.stillNotPressed();
+    }
+    protected boolean keyDownFire() {
+        return downSM.fire();
+    }
+    protected void keyDownSetupFire(int f) {
+        downSM.setFireCooldown(f);
+    }
+
 
     /// @brief Is the Q key currently pressed?
     ///
@@ -151,12 +246,52 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.q();
     }
 
+    protected boolean keyQJustPressed() {
+        return qSM.justPressed();
+    }
+    protected boolean keyQStillPressed() {
+        return qSM.stillPressed();
+    }
+    protected boolean keyQJustNotPressed() {
+        return qSM.justNotPressed();
+    }
+    protected boolean keyQStillNotPressed() {
+        return qSM.stillNotPressed();
+    }
+    protected boolean keyQFire() {
+        return qSM.fire();
+    }
+    protected void keyQSetupFire(int f) {
+        qSM.setFireCooldown(f);
+    }
+
+
     /// @brief Is the SpaceBar key currently pressed?
     ///
     /// @return true if SpaceBar is pressed
     protected boolean keySpace() {
         return ih.space();
     }
+
+    protected boolean keySpaceJustPressed() {
+        return spaceSM.justPressed();
+    }
+    protected boolean keySpaceStillPressed() {
+        return spaceSM.stillPressed();
+    }
+    protected boolean keySpaceJustNotPressed() {
+        return spaceSM.justNotPressed();
+    }
+    protected boolean keySpaceStillNotPressed() {
+        return spaceSM.stillNotPressed();
+    }
+    protected boolean keySpaceFire() {
+        return spaceSM.fire();
+    }
+    protected void keySpaceSetupFire(int f) {
+        spaceSM.setFireCooldown(f);
+    }
+
 
     /// @brief Is the W key currently pressed?
     ///
@@ -165,12 +300,52 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.w();
     }
 
+    protected boolean keyWJustPressed() {
+        return wSM.justPressed();
+    }
+    protected boolean keyWStillPressed() {
+        return wSM.stillPressed();
+    }
+    protected boolean keyWJustNotPressed() {
+        return wSM.justNotPressed();
+    }
+    protected boolean keyWStillNotPressed() {
+        return wSM.stillNotPressed();
+    }
+    protected boolean keyWFire() {
+        return wSM.fire();
+    }
+    protected void keyWSetupFire(int f) {
+        wSM.setFireCooldown(f);
+    }
+
+    
     /// @brief Is the A key currently pressed?
     ///
     /// @return true if "a" is pressed?
     protected boolean keyA() {
         return ih.a();
     }
+
+    protected boolean keyAJustPressed() {
+        return aSM.justPressed();
+    }
+    protected boolean keyAStillPressed() {
+        return aSM.stillPressed();
+    }
+    protected boolean keyAJustNotPressed() {
+        return aSM.justNotPressed();
+    }
+    protected boolean keyAStillNotPressed() {
+        return aSM.stillNotPressed();
+    }
+    protected boolean keyAFire() {
+        return aSM.fire();
+    }
+    protected void keyASetupFire(int f) {
+        aSM.setFireCooldown(f);
+    }
+
 
     /// @brief Is the S key currently pressed?
     ///
@@ -179,12 +354,52 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.s();
     }
 
+    protected boolean keySJustPressed() {
+        return sSM.justPressed();
+    }
+    protected boolean keySStillPressed() {
+        return sSM.stillPressed();
+    }
+    protected boolean keySJustNotPressed() {
+        return sSM.justNotPressed();
+    }
+    protected boolean keySStillNotPressed() {
+        return sSM.stillNotPressed();
+    }
+    protected boolean keySFire() {
+        return sSM.fire();
+    }
+    protected void keySSetupFire(int f) {
+        sSM.setFireCooldown(f);
+    }
+
+    
     /// @brief Is the D key currently pressed?
     ///
     /// @return true if "d" is pressed
     protected boolean keyD() {
         return ih.d();
     }
+
+    protected boolean keyDJustPressed() {
+        return dSM.justPressed();
+    }
+    protected boolean keyDStillPressed() {
+        return dSM.stillPressed();
+    }
+    protected boolean keyDJustNotPressed() {
+        return dSM.justNotPressed();
+    }
+    protected boolean keyDStillNotPressed() {
+        return dSM.stillNotPressed();
+    }
+    protected boolean keyDFire() {
+        return dSM.fire();
+    }
+    protected void keyDSetupFire(int f) {
+        dSM.setFireCooldown(f);
+    }
+
 
     /// @brief Construct a NonBlockingGame object. It is expected
     /// students will never directly construct a NonBlockingGame
@@ -230,8 +445,38 @@ public abstract class NonBlockingGame extends GameBase {
         // /Create input helpter for non-blocking game.
         ih = new InputHelper();
         registerKeypress(ih);
+
+	upSM = new InputStateMachine(()->ih.up());
+	downSM = new InputStateMachine(()->ih.down());
+	leftSM = new InputStateMachine(()->ih.left());
+	rightSM = new InputStateMachine(()->ih.right());
+
+
+	aSM = new InputStateMachine(()->ih.a());
+	sSM = new InputStateMachine(()->ih.s());
+	dSM = new InputStateMachine(()->ih.d());
+	wSM = new InputStateMachine(()->ih.w());
+
+	qSM = new InputStateMachine(()->ih.q());
+	spaceSM = new InputStateMachine(()->ih.space());
     }
 
+    private void updateInputState() {
+	upSM.update();
+	downSM.update();
+	leftSM.update();
+	rightSM.update();
+	
+	aSM.update();
+	sSM.update();
+	dSM.update();
+	wSM.update();
+
+    	qSM.update();
+	spaceSM.update();
+    }
+
+    
     /// sleeps so there is time between frames
     private void sleepTimer() {
 	sleepTimer(1000);
@@ -297,6 +542,7 @@ public abstract class NonBlockingGame extends GameBase {
 
         long frame = 0;
         while (gameStarted) {
+	    updateInputState();
             gameLoop();
             render();
             controlFrameRate();
