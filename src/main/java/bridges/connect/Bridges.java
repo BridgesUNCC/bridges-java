@@ -34,8 +34,8 @@ import javax.xml.crypto.Data;
  *	https://bridgesuncc.github.io/datasets.html <p>
  *
  *	A typical Bridges program includes creating the Bridges object, followed by creation
- *  of the data structure by the user, assigning visual attributes to elements of the
- *	data structure, followed by specification of teh data structure type  and the
+ *      of the data structure by the user, assigning visual attributes to elements of the
+ *	data structure, followed by specification of the data structure type  and the
  *	call to visualize the data structure (Bridges::setDataStructure() and visualize()
  *	methods).
  *
