@@ -150,7 +150,7 @@ public class SLelement<E> extends Element<E> implements Iterable<E> {
 	public String getDataStructureRepresentation() {
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
-		// get teh list nodes
+		// get the list nodes
 		Vector<Element<E> > nodes = new Vector<Element<E>> ();
 		getListElements(nodes);
 

@@ -498,7 +498,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		}
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
-		// get teh list nodes
+		// get the list nodes
 		ArrayList<Element<E1> > nodes = new ArrayList<Element<E1>> ();
 
 		for (Entry<K, Element<E1>> element : vertices.entrySet())

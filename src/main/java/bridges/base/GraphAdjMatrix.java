@@ -312,7 +312,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	public String getDataStructureRepresentation() {
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
-		// get teh list nodes
+		// get the list nodes
 		Vector<Element<E1>> nodes = new Vector<Element<E1>>();
 
 		for (Entry<K, Element<E1>> element : vertices.entrySet())
