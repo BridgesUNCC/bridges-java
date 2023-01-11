@@ -32,6 +32,8 @@ class InputStateMachine {
      
      public void update() {
 	 boolean currentState = rawState.get();
+
+	 //update cycle state
 	 switch(s) {
 	 case JUST_PRESSED:
 	     if (currentState) {
@@ -63,6 +65,7 @@ class InputStateMachine {
 	     break;
 	 }
 
+	 //update fire state
 	 switch (f) {
 	 case FIRE:
 	     if (currentState) {
