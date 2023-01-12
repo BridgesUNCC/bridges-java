@@ -100,10 +100,58 @@ import bridges.connect.SocketConnection;
  * }
  * \endcode
  *
+ *
+ * The previous way will have an action executed at each
+ * frame of the game if the key stays pressed. This
+ * could be cumbersome for some games and you may want
+ * a key press to be triggered with a cooldown (so
+ * that it activates only every so many frames). You can
+ * configure how many frames will pass between two
+ * activations of the key with keyUpSetupFire() and
+ * you can tell whether it is a fire frame with
+ * keyUpFire(). There are similar functions for all
+ * keys that are recognized by Bridges. See the
+ * following code for a simple usage:
+ *
+ * \code{.java}
+ * void initialize() override {
+ *   keyUpSetupFire(20); 
+ * }
+ * void gameLoop() override {
+ *   if (keyUpFire()) //will only be true once every 20 frames
+ *     setBGColor(rand()%10, rand()%10, NamedColor.lightsalmon);
+ * }
+ * \endcode
+
+ * Bridges supports a third way to use inputs that
+ * enables you to know the first frame a key is
+ * pressed and the first frame a key is no longer
+ * pressed. You can also know whether a key is still
+ * being pressed (after the first frame it is being
+ * pressed) and whether it is still not pressed (after
+ * the first frame it is no longer pressed). The four
+ * functions are keyUpJustPressed(),
+ * keyUpStillPressed(), keyUpJustNotPressed(),
+ * keyUpStillNotPressed(). The following code
+ * examplifies the usage of these functions.
+ *
+ * \code{.java}
+ * virtual void gameLoop() override {
+ *   if (keyUpJustPressed())
+ *     setBGColor(0, 0, NamedColor.lightsalmon);
+ *   if (keyUpStillPressed())
+ *     setBGColor(0, 1, NamedColor.lightsalmon);
+ *   if (keyUpJustNotPressed())
+ *     setBGColor(0, 2, NamedColor.lightsalmon);
+ *   if (keyUpStillNotPressed())
+ *     setBGColor(0, 3, NamedColor.lightsalmon);
+ * }
+ * \endcode      
+ *
  * @sa See tutorial at  https://bridgesuncc.github.io/tutorials/NonBlockingGame.html
  *
  * @author Erik Saule
- * @date 7/21/19, 12/02/22
+ * @date 7/21/19, 12/02/22, 1/11/2023
  *
  **/
 
@@ -137,21 +185,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.left();
     }
 
+	/// @brief indicates whether the Left key has just been pressed this current frame.
     protected boolean keyLeftJustPressed() {
         return leftSM.justPressed();
     }
+	/// @brief indicates whether the Left key is still being pressed in this frame.
     protected boolean keyLeftStillPressed() {
         return leftSM.stillPressed();
     }
+	/// @brief indicates whether the Left key has been just released in this frame
     protected boolean keyLeftJustNotPressed() {
         return leftSM.justNotPressed();
     }
+	/// @brief indicates whether the Left key not pressed and has not been pressed for more than a frame
     protected boolean keyLeftStillNotPressed() {
         return leftSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the Left key.
     protected boolean keyLeftFire() {
         return leftSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keyLeftSetupFire(int f) {
         leftSM.setFireCooldown(f);
     }
@@ -164,21 +219,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.right();
     }
 
+	/// @brief indicates whether the Right key has just been pressed this current frame.
     protected boolean keyRightJustPressed() {
         return rightSM.justPressed();
     }
+	/// @brief indicates whether the Right key is still being pressed in this frame.
     protected boolean keyRightStillPressed() {
         return rightSM.stillPressed();
     }
+	/// @brief indicates whether the Right key has been just released in this frame
     protected boolean keyRightJustNotPressed() {
         return rightSM.justNotPressed();
     }
+	/// @brief indicates whether the Right key not pressed and has not been pressed for more than a frame
     protected boolean keyRightStillNotPressed() {
         return rightSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the Right key.
     protected boolean keyRightFire() {
         return rightSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keyRightSetupFire(int f) {
         rightSM.setFireCooldown(f);
     }
@@ -191,21 +253,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.up();
     }
 
+	/// @brief indicates whether the Up key has just been pressed this current frame.
     protected boolean keyUpJustPressed() {
         return upSM.justPressed();
     }
+	/// @brief indicates whether the Up key is still being pressed in this frame.
     protected boolean keyUpStillPressed() {
         return upSM.stillPressed();
     }
+	/// @brief indicates whether the Up key has been just released in this frame
     protected boolean keyUpJustNotPressed() {
         return upSM.justNotPressed();
     }
+	/// @brief indicates whether the Up key not pressed and has not been pressed for more than a frame
     protected boolean keyUpStillNotPressed() {
         return upSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the Up key.
     protected boolean keyUpFire() {
         return upSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keyUpSetupFire(int f) {
         upSM.setFireCooldown(f);
     }
@@ -219,21 +288,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.down();
     }
 
+	/// @brief indicates whether the Down key has just been pressed this current frame.
     protected boolean keyDownJustPressed() {
         return downSM.justPressed();
     }
+	/// @brief indicates whether the Down key is still being pressed in this frame.
     protected boolean keyDownStillPressed() {
         return downSM.stillPressed();
     }
+	/// @brief indicates whether the Down key has been just released in this frame
     protected boolean keyDownJustNotPressed() {
         return downSM.justNotPressed();
     }
+	/// @brief indicates whether the Down key not pressed and has not been pressed for more than a frame
     protected boolean keyDownStillNotPressed() {
         return downSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the Down key.
     protected boolean keyDownFire() {
         return downSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keyDownSetupFire(int f) {
         downSM.setFireCooldown(f);
     }
@@ -246,21 +322,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.q();
     }
 
+	/// @brief indicates whether the Q key has just been pressed this current frame.
     protected boolean keyQJustPressed() {
         return qSM.justPressed();
     }
+	/// @brief indicates whether the Q key is still being pressed in this frame.
     protected boolean keyQStillPressed() {
         return qSM.stillPressed();
     }
+	/// @brief indicates whether the Q key has been just released in this frame
     protected boolean keyQJustNotPressed() {
         return qSM.justNotPressed();
     }
+	/// @brief indicates whether the Q key not pressed and has not been pressed for more than a frame
     protected boolean keyQStillNotPressed() {
         return qSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the Q key.
     protected boolean keyQFire() {
         return qSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keyQSetupFire(int f) {
         qSM.setFireCooldown(f);
     }
@@ -273,21 +356,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.space();
     }
 
+	/// @brief indicates whether the Space key has just been pressed this current frame.
     protected boolean keySpaceJustPressed() {
         return spaceSM.justPressed();
     }
+	/// @brief indicates whether the Space key is still being pressed in this frame.
     protected boolean keySpaceStillPressed() {
         return spaceSM.stillPressed();
     }
+	/// @brief indicates whether the Space key has been just released in this frame
     protected boolean keySpaceJustNotPressed() {
         return spaceSM.justNotPressed();
     }
+	/// @brief indicates whether the Space key not pressed and has not been pressed for more than a frame
     protected boolean keySpaceStillNotPressed() {
         return spaceSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the Space key.
     protected boolean keySpaceFire() {
         return spaceSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keySpaceSetupFire(int f) {
         spaceSM.setFireCooldown(f);
     }
@@ -300,21 +390,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.w();
     }
 
+	/// @brief indicates whether the W key has just been pressed this current frame.
     protected boolean keyWJustPressed() {
         return wSM.justPressed();
     }
+	/// @brief indicates whether the W key is still being pressed in this frame.
     protected boolean keyWStillPressed() {
         return wSM.stillPressed();
     }
+	/// @brief indicates whether the W key has been just released in this frame
     protected boolean keyWJustNotPressed() {
         return wSM.justNotPressed();
     }
+	/// @brief indicates whether the W key not pressed and has not been pressed for more than a frame
     protected boolean keyWStillNotPressed() {
         return wSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the W key.
     protected boolean keyWFire() {
         return wSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keyWSetupFire(int f) {
         wSM.setFireCooldown(f);
     }
@@ -327,21 +424,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.a();
     }
 
+	/// @brief indicates whether the A key has just been pressed this current frame.
     protected boolean keyAJustPressed() {
         return aSM.justPressed();
     }
+	/// @brief indicates whether the A key is still being pressed in this frame.
     protected boolean keyAStillPressed() {
         return aSM.stillPressed();
     }
+	/// @brief indicates whether the A key has been just released in this frame
     protected boolean keyAJustNotPressed() {
         return aSM.justNotPressed();
     }
+	/// @brief indicates whether the A key not pressed and has not been pressed for more than a frame
     protected boolean keyAStillNotPressed() {
         return aSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the A key.
     protected boolean keyAFire() {
         return aSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keyASetupFire(int f) {
         aSM.setFireCooldown(f);
     }
@@ -354,21 +458,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.s();
     }
 
+	/// @brief indicates whether the S key has just been pressed this current frame.
     protected boolean keySJustPressed() {
         return sSM.justPressed();
     }
+	/// @brief indicates whether the S key is still being pressed in this frame.
     protected boolean keySStillPressed() {
         return sSM.stillPressed();
     }
+	/// @brief indicates whether the S key has been just released in this frame
     protected boolean keySJustNotPressed() {
         return sSM.justNotPressed();
     }
+	/// @brief indicates whether the S key not pressed and has not been pressed for more than a frame
     protected boolean keySStillNotPressed() {
         return sSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the S key.
     protected boolean keySFire() {
         return sSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keySSetupFire(int f) {
         sSM.setFireCooldown(f);
     }
@@ -381,21 +492,28 @@ public abstract class NonBlockingGame extends GameBase {
         return ih.d();
     }
 
+	/// @brief indicates whether the D key has just been pressed this current frame.
     protected boolean keyDJustPressed() {
         return dSM.justPressed();
     }
+	/// @brief indicates whether the D key is still being pressed in this frame.
     protected boolean keyDStillPressed() {
         return dSM.stillPressed();
     }
+	/// @brief indicates whether the D key has been just released in this frame
     protected boolean keyDJustNotPressed() {
         return dSM.justNotPressed();
     }
+	/// @brief indicates whether the D key not pressed and has not been pressed for more than a frame
     protected boolean keyDStillNotPressed() {
         return dSM.stillNotPressed();
     }
+	///@brief indicates whether the current frame is a fire frame for the D key.
     protected boolean keyDFire() {
         return dSM.fire();
     }
+	///
+	///@param f how many frames between two fire events
     protected void keyDSetupFire(int f) {
         dSM.setFireCooldown(f);
     }
