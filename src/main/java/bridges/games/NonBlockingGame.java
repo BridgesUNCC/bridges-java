@@ -516,6 +516,17 @@ public abstract class NonBlockingGame extends GameBase {
     protected double getFrameRate() {
 	return fps;
     }
+
+    /// @brief change the frame rate is the game running at
+    ///
+    /// The fps is caps at 30 fps and can't drop below 1 fps
+    protected void setFrameRate(double fps) {
+	if (fps > 30.0)
+	    fps = 30.0;
+	if (fps < 1.0)
+	    fps = 1.0;
+	this.fps = fps;
+    }
     
     /// Call this function to start the game engine.
     ///
