@@ -557,15 +557,18 @@ public class Bridges {
 		if (response.length() > 0) {
 			// Return a URL to the user
 			if (post_link_url_flag) {
-				System.out.println("\nCheck Your Visualization at the following link:\n\n" +
-					connector.getServerURL() + "/assignments/" + assignment + "/"
-					+ userName + "\n\n");
+			    System.out.println("\nCheck Your Visualization at the following link:\n\n" + getVisualizeURL()
+					 + "\n\n");
 			}
 
 			// Increment the subassignment counter
 			assignment_part++;
 		}
 	}
+    String getVisualizeURL() {
+	return connector.getServerURL() + "/assignments/" + assignment + "/"
+	    + userName;
+    }
 	String getJSONHeader() {
 
 		String json_hdr =
