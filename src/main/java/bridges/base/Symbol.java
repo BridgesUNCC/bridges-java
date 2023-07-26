@@ -324,7 +324,7 @@ public abstract class Symbol {
 		transl[1][2] = ty;
 
 		// update symbol transform matrix
-		this.xform = matMult (this.xform, transl);
+		this.xform = matMult (transl, this.xform);
 
 		xform_flag = true;
 
@@ -359,7 +359,7 @@ public abstract class Symbol {
 		scale_m[1][1] = sy;
 
 		// update symbol transform matrix
-		this.xform = matMult (this.xform, scale_m);
+		this.xform = matMult (scale_m, this.xform);
 
 		xform_flag = true;
 
@@ -386,7 +386,7 @@ public abstract class Symbol {
 		rotate_m[1][0] = sin_a;
 
 		// update symbol transform matrix
-		this.xform = matMult (this.xform, rotate_m);
+		this.xform = matMult (rotate_m, this.xform);
 
 		xform_flag = true;
 
@@ -412,7 +412,7 @@ public abstract class Symbol {
 		float[][] scale_comp =  matMult(transl_post, matMult(scale_m, transl_pre));
 
 		// update symbol transform matrix
-		this.xform = matMult (this.xform, scale_comp);
+		this.xform = matMult (scale_comp, this.xform);
 
 		xform_flag = true;
 
@@ -439,7 +439,7 @@ public abstract class Symbol {
 		float[][] rot_comp = matMult(transl_post, matMult(rotate_m, transl_pre));
 
 		// update symbol transform matrix
-		this.xform = matMult (this.xform, rot_comp);
+		this.xform = matMult ( rot_comp, this.xform);
 
 		xform_flag = true;
 
