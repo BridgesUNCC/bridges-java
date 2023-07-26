@@ -60,7 +60,7 @@ public class Bridges {
 	private static String key;
 	private static Boolean debug_flag = false;   // debug mode
 	private static String userName, vis_type,
-			title, description;
+			title = "", description = "";
 	private static Integer MaxTitleSize = 200,
 						   MaxDescrSize = 1000;
 	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular", "window"};
