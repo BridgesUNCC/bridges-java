@@ -565,7 +565,8 @@ public class Bridges {
 			assignment_part++;
 		}
 	}
-    String getVisualizeURL() {
+    
+    public String getVisualizeURL() {
 	return connector.getServerURL() + "/assignments/" + assignment + "/"
 	    + userName;
     }
