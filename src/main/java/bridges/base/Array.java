@@ -22,6 +22,8 @@ import bridges.validation.Validation;
  *	Arrays are internally represented as 1D arrays; currently 1D, 2D  and
  *	3D arrays are supported.
  *
+ * dims is cols, rows, slices
+ *
  * @param <E> The generic parameter object that is part of this element, representing
  *          application specific data.
  *
