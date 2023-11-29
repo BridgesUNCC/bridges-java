@@ -711,7 +711,7 @@ public class DataSource {
 	 *  Each record in this collection has
 	 *	information on song title, artist, album, year, lyrics, and genre.
 	 *	For more information and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/song <p>
 	 *
 	 *  @throws Exception if the request fails
 	 *
@@ -748,7 +748,7 @@ public class DataSource {
 	 *  The record has information such as song title, artist, album, year,
 	 *	lyrics, and genre. For more information
 	 *	and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/song <p>
 	 *
 	 *  @param songTitle  title of song (string)
 	 *  @param artistName  name of artist (string), empty string for unspecified
@@ -795,7 +795,7 @@ public class DataSource {
 	 *  The record has information such as song title, artist, album, year,
 	 *	lyrics, and genre. For more information
 	 *	and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/songs <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/song <p>
 	 *
 	 * Refer to tutorial for example of using this feature: https://bridgesuncc.github.io/tutorials/Data_Song_Lyrics.html
 	 *
