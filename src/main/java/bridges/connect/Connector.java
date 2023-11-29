@@ -525,7 +525,7 @@ public class Connector {
 			// But otherwise, throw something less helpful.
 			throw new IOException("Server errored, but gave an invalid"
 				+ " report: " + text + ". Consider filing a bug report"
-				+ " about this at http://github.com/SeanTater/bridges.");
+				+ " about this at https://github.com/BridgesUNCC/bridgesAPI.");
 		}
 
 		// Handle empty responses
@@ -536,10 +536,10 @@ public class Connector {
 	}
 
 	/** Execute a simple GET request relative to the server root.
-	    Omit the leading http://hostname, but include the leading /:
-	    [good]: /api/followgraph/user/sean
-	    [bad]: api/followgraph/user/sean
-	    [bad]: http://myserver:9183/api/followgraph/user/sean   NullPointerException*/
+	    Omit the leading http://bridgesdata.herokuapp.com, but include the leading /:
+	    [good]: /api/songs/find/Bohemian%20Rhapsody
+	    [bad]: api/songs/find/Bohemian%20Rhapsody
+	    [bad]: http://bridgesdata.herokuapp.com/api/songs/find/Bohemian%20Rhapsody   NullPointerException*/
 	public String get(String url) throws RateLimitException, IOException {
 		if (Bridges.getDebugFlag())
 			System.err.println("get Connector url before formatting: " + url);
