@@ -15,3 +15,9 @@
 - Install [Gradle](http://gradle.org)
 - Run ```gradle fatjar``` in your bridges directory.
 - The resulting jar can be found in ```./build/libs/*.jar```
+
+#### Dependency
+
+You need a somewhat recent gradle. Version 4.4 is too old. Version 8.8 works.
+
+[Install info on gradle](https://docs.gradle.org/current/userguide/installation.html#ex-installing-manually ).
