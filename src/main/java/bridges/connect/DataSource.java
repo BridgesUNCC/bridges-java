@@ -132,6 +132,13 @@ public class DataSource {
 		return "http://bridgesdata.herokuapp.com/api/us_cities";
 	}
 
+    private void defaultDebug() {
+	String envAssignment = System.getenv("FORCE_BRIDGES_DATADEBUG");
+	if (envAssignment != null)
+	    debug = true;
+
+    }
+    
 	DataSource() {
 		if (lru == null)
 			lru = new LRUCache(30);
@@ -1130,8 +1137,6 @@ public class DataSource {
 
 	public ElevationData getElevationData(double minLat, double minLon,
 		double maxLat, double maxLon, double res) throws IOException {
-
-		boolean debug = false;
 
 		String data_url = getElevationBaseURL() +
 			"elevation?minLon=" + URLEncoder.encode(Double.toString(minLon), StandardCharsets.UTF_8.name()) +
