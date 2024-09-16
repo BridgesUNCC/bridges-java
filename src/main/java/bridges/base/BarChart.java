@@ -59,6 +59,8 @@ public class BarChart extends DataStruct {
 		this.xLabel = "";
 		this.yLabel = "";
 		this.alignment = "horizontal";
+		this.seriesData = new HashMap<String, double[]>();
+		this.seriesBins = new Vector<String>();
 	}
 
 	/**
