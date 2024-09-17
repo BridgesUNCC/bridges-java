@@ -12,22 +12,14 @@ import org.json.simple.JSONValue;
  * represent categorical data as a series of rectangular bars with heights
  * proportional to the values they represent
  *
- * A series is represented by two arrays xdata and ydata such that
- * there is a point at (xdata[0], ydata[0]), an other at (xdata[1],
- * ydata[1]), ... One can add a series by passing the two arrays using
- * setDataSeries() or add the arrays individually using setXData() and
- * setYData().
+ * A series is represented by two arrays xdata and ydata. The x axis
+ * data is a series of equal sized bins, while the y axis data represents 
+ * the value of that bin (or count).  Bins are added using setSeriesBins() and
+ * their values are added using addDataSeries(). Labels are associated with 
+ * the datasets
  *
- * The different series have a label associated with them by default
- * which can be disabled (see toggleSeriesLabel()).
- *
- * The data is typically shown with axes that use a linear
- * scale. However, the scale can be changed to logarithmic for each
- * axis individually (see toggleLogarithmicX() and
- * toggleLogarithmic()).
- *
- * The LineChart can have a title (see getTitle() and setTitle()) and
- * a subtitle (see setSubTitle() and getSubTitle()).
+ * The Bar charts  can have a title, subtitle, and a tooltip indicating the
+ * the bin values.
  *
  * @sa See tutorial on using BarChart at:
  *		https://bridgesuncc.github.io/tutorials/BarChart.html
@@ -192,13 +184,11 @@ public class BarChart extends DataStruct {
 	}
 
 	/**
-	 * @brief Add a series (or update it)
+	 * @brief Add data values for the bins
 	 *
-	 * @param seriesName indicates the series to add (or change)
-	 * @param data the X data in the series
-	 *
+	 * @param seriesName indicates the name of the data to add
+	 * @param data values of the bins
 	 **/
-
 	public void addDataSeries(String seriesName, double[] data) {
 		seriesData.put(seriesName, data);
 	}
