@@ -220,7 +220,6 @@ public class BarChart extends DataStruct {
 		String series_json = "";
 		series_json += JSONValue.toJSONString("series") + COLON + OPEN_BOX;
 		for (Entry<String, double[]> entry : seriesData.entrySet()) {
-			series_json += OPEN_CURLY;
 			String key = entry.getKey();
 			double[] value = entry.getValue();
 			series_json += OPEN_CURLY + JSONValue.toJSONString("name") + COLON + JSONValue.toJSONString(key) + COMMA + JSONValue.toJSONString("data") + COLON + OPEN_BOX;
