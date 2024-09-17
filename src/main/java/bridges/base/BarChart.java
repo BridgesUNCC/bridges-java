@@ -3,43 +3,85 @@ package bridges.base;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Vector;
+import java.util.ArrayList;
 import org.json.simple.JSONValue;
+
 
 /**
  * @brief Support for drawing Bar charts 
  *
  * Bar charts (https://en.wikipedia.org/wiki/Bar_chart) are used to
- * represent categorical data as a series of rectangular bars with heights
- * proportional to the values they represent
+ * represent categorical data as a series of rectangular bars with length
+ * proportional to the values they represent.
+ *  
+ * Series in a bar chart provides data for a number of categories
+ * (sometimes called bins). Categories are defined using
+ * setCategories() and the series are added using addDataSeries().
+ * The series are rendered in the order in which they were added. Once
+ * a series has been added, it can not be modified.
  *
- * A series is represented by two arrays xdata and ydata. The x axis
- * data is a series of equal sized bins, while the y axis data represents 
- * the value of that bin (or count).  Bins are added using setSeriesBins() and
- * their values are added using addDataSeries(). Labels are associated with 
- * the datasets
- *
- * The Bar charts  can have a title, subtitle, and a tooltip indicating the
- * the bin values. They can be vertical or horizontally aligned
- *
+ * One should always define the categories before adding data. Changing the
+ * categories after series have been added will throw exceptions;
+ * adding series with different number of values than the number of
+ * categories will throw an exception.
+ *      
+ * The Bar charts can have a title, subtitle. The charts can be
+ * horizontal or vertically oriented, using setBarOrientation().
+ * 
+ * A tooltip indicating the value of a series in a particular bin is
+ * displayed by hovering on a bar. One can append a string to the
+ * value using setTooltipSuffix() to specify units in the tooltip if desired.
+ *  
  * @sa See tutorial on using BarChart at:
  *		https://bridgesuncc.github.io/tutorials/BarChart.html
  *
- * @author Kalpathi Subramanian
+ * @author Kalpathi Subramanian, Erik Saule
  *
  * @date 09/15/24
  *
  **/
 public class BarChart extends DataStruct {
+    class Pair<K, V> {
+	private K key;
+	private V value;
+	
+	public Pair(K key, V value) {
+	    this.key = key;
+	    this.value = value;
+	}
+	
+	public K getFirst() {
+	    return key;
+	}
+	
+	public void setFirst(K key) {
+	    this.key = key;
+	}
+	
+	public V getSecond() {
+	    return value;
+	}
+	
+	public void setSecond(V value) {
+	    this.value = value;
+	}
+	
+	@Override
+	public String toString() {
+	    return "Pair{" + "key=" + key + ", value=" + value + '}';
+	}
+    }
 
+    
 	private String title;
 	private String subtitle;
-	private String xLabel;
-	private String yLabel;
+	private String cLabel;
+	private String vLabel;
 	private String tooltipSuffix;
-	private String alignment;
+	private String orientation;
 
-	private HashMap<String, double[]> seriesData;
-	private Vector<String> seriesBins;
+	private ArrayList<Pair<String, double[]>> seriesData;
+	private Vector<String> categories;
 
 	/**
 	 * @brief Line chart default constructor
@@ -48,11 +90,11 @@ public class BarChart extends DataStruct {
 	public BarChart() {
 		this.title = "";
 		this.subtitle = "";
-		this.xLabel = "";
-		this.yLabel = "";
-		this.alignment = "horizontal";
-		this.seriesData = new HashMap<String, double[]>();
-		this.seriesBins = new Vector<String>();
+		this.cLabel = "";
+		this.vLabel = "";
+		this.orientation = "horizontal";
+		this.seriesData = new ArrayList<Pair<String, double[]>>();
+		this.categories = new Vector<String>();
 	}
 
 	/**
@@ -103,66 +145,67 @@ public class BarChart extends DataStruct {
 
 
 	/**
-	 * @brief Change the bins label (X axis)
+	 * @brief Change the category axis label
 	 *
-	 * @param xaxisNamel label to show for the X-axis
+	 * @param cAxisName label to show for the category axis
 	 **/
-	public void setBinsLabel(String xaxisName) {
-		this.xLabel = xaxisName;
+	public void setCategoriesLabel(String cAxisName) {
+		this.cLabel = cAxisName;
 	}
 
 	/**
-	 * @brief Returns the label for the X-axis
+	 * @brief Returns the label for the category axis
 	 *
-	 * @return label shown for the X-axis
+	 * @return label shown for the category axis
 	 **/
-	public String getBinsLabel() {
-		return this.xLabel;
+	public String getCategoriesLabel() {
+		return this.cLabel;
 	}
 
 	/**
-	 * @brief Change the label for the Y-axis
+	 * @brief Change the label for the value axis
 	 *
-	 * @param yaxisName label to use for the Y-axis
+	 * @param yaxisName label to use for the value axis
 	 **/
-	public void setSeriesLabel(String yaxisName) {
-		this.yLabel = yaxisName;
+	public void setValueLabel(String vAxisName) {
+		this.vLabel = vAxisName;
 	}
 
 	/**
-	 * @brief Returns the label for the Y-axis
+	 * @brief Returns the label for the vlue axis
 	 *
-	 * @return label shown for the Y-axis
+	 * @return label shown for the value axis
 	 **/
-	public String getSeriesLabel() {
-		return this.yLabel;
+	public String getValueLabel() {
+		return this.vLabel;
 	}
 
 	/**
-	 * @brief sets the bar chart alignment 
+	 * @brief sets the bar chart orientation
 	 *
-	 * Bar charts can be 'horizontal' or 'vertical'
+	 * Bar charts can be "horizontal" or "vertical". Throws exception on other values.
 	 *
-	 * @param align 
+	 * @param orient
 	 **/
-	public void setBarAlignment(String align) {
-		this.alignment = align;
+	public void setBarOrientation(String orient) {
+	    if (!orient.equals("horizontal") && !orient.equals("vertical"))
+		throw new IllegalArgumentException("Orientation should be \"horizontal\" or \"vertical\".");
+		this.orientation = orient;
 	}
 
 	/**
-	 * @brief gets the bar chart alignment
+	 * @brief gets the bar chart orientation
 	 *
-	 * @return alignment 
+	 * @return orientation (either "horizontal" or "vertical")
 	 **/
-	public String getBarAlignment () {
-		return this.alignment;
+	public String getBarOrientation () {
+		return this.orientation;
 	}
 
 	/**
 	 * @brief sets the tooltip suffix
 	 *
-	 * This prints a string that is more informative of the values
-	 * represented by the bars
+	 * This appends a string to the values in the hover tooltip.
 	 *
 	 * @param suffix 
 	 **/
@@ -180,22 +223,41 @@ public class BarChart extends DataStruct {
 	}
 
 	/**
-	 *  @brief set the bins for this bar chart
+	 *  @brief set the category labels for this bar chart
 	 *
-	 *  @param bins
+	 * Will throw an exception if there are already data series defined. 
+	 *
+	 *  @param categories the name of each category
 	 */
-	public void setSeriesBins(Vector<String> bins) {
-		this.seriesBins = bins;
+	public void setCategories(Vector<String> categories) {
+	    if (seriesData.size()>0)
+		throw new IllegalStateException ("Can't change categoriess after series have been added.");
+	    this.categories = categories;
 	}
 
 	/**
-	 * @brief Add data values for the bins
+	 * @brief Add a series of data
+	 *
+	 * This will throw an exception if the
+	 * data vector does not have the same
+	 * size as the number of categories.
+	 *
+	 * This will throw exceptions if two series have the same name.
 	 *
 	 * @param seriesName indicates the name of the data to add
-	 * @param data values of the bins
+	 * @param data values of that serie for each category
 	 **/
 	public void addDataSeries(String seriesName, double[] data) {
-		seriesData.put(seriesName, data);
+	    if (data.length != categories.size())
+		throw new IllegalArgumentException ("The data vector should have the same size as the number of categories.");
+
+	    for (Pair<String, double[]> entry : seriesData) {
+		String key = entry.getFirst();
+		if (seriesName.equals(key))
+		    throw new IllegalArgumentException ("Can't have two series with the same name.");
+	    }	    
+	    
+	    seriesData.add(new Pair<String, double[]>(seriesName, data));
 	}
 
 	/**
@@ -206,7 +268,7 @@ public class BarChart extends DataStruct {
 		bins_json += JSONValue.toJSONString("xAxis") + COLON + OPEN_CURLY + 
 				JSONValue.toJSONString("categories") + COLON + OPEN_BOX;
 
-		for (String entry : this.seriesBins) {
+		for (String entry : this.categories) {
 			bins_json += JSONValue.toJSONString(entry) + COMMA;
 		}
 		bins_json = bins_json.substring(0, bins_json.length()-1);
@@ -214,9 +276,9 @@ public class BarChart extends DataStruct {
 
 		String series_json = "";
 		series_json += JSONValue.toJSONString("series") + COLON + OPEN_BOX;
-		for (Entry<String, double[]> entry : seriesData.entrySet()) {
-			String key = entry.getKey();
-			double[] value = entry.getValue();
+		for (Pair<String, double[]> entry : seriesData) {
+			String key = entry.getFirst();
+			double[] value = entry.getSecond();
 			series_json += OPEN_CURLY + JSONValue.toJSONString("name") + COLON + JSONValue.toJSONString(key) + COMMA + JSONValue.toJSONString("data") + COLON + OPEN_BOX;
 
 			for ( int i = 0; i < value.length ; i++) {
@@ -231,10 +293,10 @@ public class BarChart extends DataStruct {
 
 		String json_str = JSONValue.toJSONString("plot_title") + COLON +  JSONValue.toJSONString(this.getTitle()) + COMMA +
 			JSONValue.toJSONString("subtitle") + COLON + JSONValue.toJSONString(this.getSubTitle())  + COMMA +
-			JSONValue.toJSONString("xLabel") + COLON + JSONValue.toJSONString(this.getBinsLabel()) +  COMMA +
-			JSONValue.toJSONString("yLabel") + COLON + JSONValue.toJSONString(this.getSeriesLabel()) + COMMA +
+			JSONValue.toJSONString("xLabel") + COLON + JSONValue.toJSONString(this.getCategoriesLabel()) +  COMMA +
+			JSONValue.toJSONString("yLabel") + COLON + JSONValue.toJSONString(this.getValueLabel()) + COMMA +
 			JSONValue.toJSONString("tooltipSuffix") + COLON + JSONValue.toJSONString(getTooltipSuffix()) + COMMA +
-			JSONValue.toJSONString("alignment") + COLON + JSONValue.toJSONString(getBarAlignment()) + COMMA +
+			JSONValue.toJSONString("alignment") + COLON + JSONValue.toJSONString(getBarOrientation()) + COMMA +
 			JSONValue.toJSONString("xaxis_data") + COLON + OPEN_CURLY + bins_json + CLOSE_CURLY + COMMA + 
 			JSONValue.toJSONString("yaxis_data") + COLON + OPEN_CURLY + series_json + CLOSE_CURLY + CLOSE_CURLY;
 
