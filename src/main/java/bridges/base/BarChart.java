@@ -19,7 +19,7 @@ import org.json.simple.JSONValue;
  * the datasets
  *
  * The Bar charts  can have a title, subtitle, and a tooltip indicating the
- * the bin values.
+ * the bin values. They can be vertical or horizontally aligned
  *
  * @sa See tutorial on using BarChart at:
  *		https://bridgesuncc.github.io/tutorials/BarChart.html
@@ -139,7 +139,9 @@ public class BarChart extends DataStruct {
 	}
 
 	/**
-	 * @brief sets the bar chart alignment
+	 * @brief sets the bar chart alignment 
+	 *
+	 * Bar charts can be 'horizontal' or 'vertical'
 	 *
 	 * @param align 
 	 **/
@@ -158,6 +160,9 @@ public class BarChart extends DataStruct {
 
 	/**
 	 * @brief sets the tooltip suffix
+	 *
+	 * This prints a string that is more informative of the values
+	 * represented by the bars
 	 *
 	 * @param suffix 
 	 **/
