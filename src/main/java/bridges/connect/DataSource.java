@@ -62,6 +62,9 @@ import bridges.connect.*;
  * 	a list of objects with all associated attributes. These can then be used
  *	as part of a data structure, algorithm. Some initial support to import
  *  previously built data structures is also provided.
+ *
+ * Debug information about the data access get printed on stdout if
+ * FORCE_BRIDGES_DATADEBUG exists in the environment.
  */
 public class DataSource {
 	private Bridges bridges;

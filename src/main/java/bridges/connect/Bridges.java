@@ -39,6 +39,21 @@ import javax.xml.crypto.Data;
  *	call to visualize the data structure (Bridges::setDataStructure() and visualize()
  *	methods).
  *
+ * If the FORCE_BRIDGES_APIKEY environment variable is set,
+ * use the environment variable as APIkey in all cases.
+ *
+ * If the FORCE_BRIDGES_USERNAME environment variable is set,
+ * use the environment variable as username in all cases.
+ *
+ * If the FORCE_BRIDGES_ASSIGNMENT environment variable is set,
+ * use the environment variable as assignment number in all cases.
+ *
+ * If the FORCE_BRIDGES_APISERVER environment variable is set,
+ * use the environment variable as API server in all cases.
+ *
+ * If the FORCE_BRIDGES_DATADEBUG environment variable is set,
+ * output debug information about access data sources.
+ *
  * 	@author Sean Gallagher, Kalpathi Subramanaian, Mihai Mehedint, David Burlinson.
  *
  * 	@date  1/16/17, 5/19/17
