@@ -1,6 +1,11 @@
 package bridges.data_src_dependent;
 
 import java.lang.String;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import bridges.base.Color;
+
+import bridges.data_src_dependent.County;
 
 /**
 * @brief Class that State and its attributes
@@ -23,20 +28,24 @@ public class State {
 	private	Color stroke_color, fill_color;
 	private float stroke_width;
 	private Boolean view_counties;	// boolean if counties are stored
-	private HashMap<String, County> counties;
+	private HashMap<String,County> counties;
 
 	public State() {
 		this.name = new String();
-		this.stroke_width = 1.0;
+		this.stroke_width = 1.0f;
 		this.fill_color = new Color();
 		this.stroke_color = new Color(0, 255, 0);
 		this.view_counties = true;
-		this.counties = new HashMap<String, County> ();
+		this.counties = new HashMap<String,County> ();
 	}
 
 	public State(String state_name) {
 		this.name = state_name;
-		State();
+		this.stroke_width = 1.0f;
+		this.fill_color = new Color();
+		this.stroke_color = new Color(0, 255, 0);
+		this.view_counties = true;
+		this.counties = new HashMap<String,County> ();
 	}
 
 	// getters, setters
@@ -79,7 +88,7 @@ public class State {
 	Boolean getViewCountiesFlag()  {
 		return view_counties;
 	}
-	void setViewCountiesFlag(bool flag) {
+	void setViewCountiesFlag(Boolean flag) {
 		view_counties = flag;
 	}
 };

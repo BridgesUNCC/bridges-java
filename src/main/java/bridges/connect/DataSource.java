@@ -135,6 +135,11 @@ public class DataSource {
 		return "http://bridgesdata.herokuapp.com/api/us_cities";
 	}
 
+	private String getUSStateCountiesURL() {
+			return "http://bridgesdata.herokuapp.com/api/us_map?state=";
+	}
+
+
     private void defaultDebug() {
 	String envAssignment = System.getenv("FORCE_BRIDGES_DATADEBUG");
 	if (envAssignment != null)
@@ -259,6 +264,55 @@ public class DataSource {
 		else
 			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: "
 				+ status);
+	}
+
+	/** 
+	 *  These functions implement the US map interface in BRIDGES.
+	 *  These are use to retrieve US state and county information.
+	 */
+
+	String[] all_states = new String[]{"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York"," North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"};
+	// this function gets all states  but no county information
+	Vector<State> getUSMapData () throws IOException {
+		return getUSMapCountyData(all_states, false);
+	}
+
+	// this function gets all states  and all state counties
+	Vector<State> getUSMapCountyData () throws IOException {
+		return getUSMapCountyData(all_states, true);
+	}
+
+	// this function gets the specified states and its counties
+	// if view counties is set to true
+	Vector<State> getUSMapCountyData (String[] state_names,
+				Boolean view_counties) throws IOException {
+		Vector<State> states = new Vector<State>();
+		String url = getUSStateCountiesURL();
+		for (int k = 0; k < state_names.length; k++)
+			url += String.valueOf(k) + ",";
+		// remove last comma
+		url = url.substring(0, url.length()-1);
+		
+		// make the request
+		HttpResponse response = makeRequest(url);
+		int status = response.getStatusLine().getStatusCode();
+		if (status == 200) {
+			JSONArray json = unwrapJSONArray(response, "data");
+
+			ArrayList<State> state_data = 
+							new ArrayList<State>(json.size());
+            for (int i = 0; i < json.size(); i++) {
+                JSONObject item = (JSONObject)json.get(i);
+                String state_name = (String) (((JSONObject)item.get("_id")).get("_input"));
+				System.out.println ("state name.."  + state_name);
+//                JSONArray coords = (JSONArray)
+//                   ((JSONObject)item.get("geometry")).get("coordinates");
+			}
+		}
+		else {
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
+        }
+		return states;
 	}
 
 	/**
