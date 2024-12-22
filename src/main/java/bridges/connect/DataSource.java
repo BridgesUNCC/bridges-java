@@ -273,18 +273,18 @@ public class DataSource {
 
 	String[] all_states = new String[]{"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York"," North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"};
 	// this function gets all states  but no county information
-	Vector<State> getUSMapData () throws IOException {
+	public Vector<State> getUSMapData () throws IOException {
 		return getUSMapCountyData(all_states, false);
 	}
 
 	// this function gets all states  and all state counties
-	Vector<State> getUSMapCountyData () throws IOException {
+	public Vector<State> getUSMapCountyData () throws IOException {
 		return getUSMapCountyData(all_states, true);
 	}
 
 	// this function gets the specified states and its counties
 	// if view counties is set to true
-	Vector<State> getUSMapCountyData (String[] state_names,
+	public Vector<State> getUSMapCountyData (String[] state_names,
 				Boolean view_counties) throws IOException {
 		Vector<State> states = new Vector<State>();
 		String url = getUSStateCountiesURL();
@@ -305,6 +305,7 @@ public class DataSource {
                 JSONObject item = (JSONObject)json.get(i);
                 String state_name = (String) (((JSONObject)item.get("_id")).get("_input"));
 				System.out.println ("state name.."  + state_name);
+				states.add(new State(state_name));
 //                JSONArray coords = (JSONArray)
 //                   ((JSONObject)item.get("geometry")).get("coordinates");
 			}

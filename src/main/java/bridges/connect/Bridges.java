@@ -70,6 +70,7 @@ public class Bridges {
 	private static boolean json_flag = false;
 	private static boolean label_flag = false;
 	private static boolean post_link_url_flag = true;
+	private static boolean map_as_json = false;
 	private static int assignment;
 	private static int assignment_part;
 	private static String key;
@@ -259,7 +260,6 @@ public class Bridges {
 		map_overlay = flag;
 	}
 	
-	
 	/**
 	 *  @brief Sets the type of map overlay to use
 	 *
@@ -270,6 +270,18 @@ public class Bridges {
 	public void setMap(String map, String info) {
 		Bridges.map[0] = map;
 		Bridges.map[1] = info;
+	}
+
+	public void setMap(USMap map) {
+		String map_str = map.getMapRepresentation();
+		setMapOverlay (map.getOverlay());
+		setCoordSystemType(map.getProjection());
+	//	this.map = map_str;
+		setMapAsJSON(true);
+	}
+
+	public void setMapAsJSON(Boolean b) {
+		map_as_json = b;
 	}
 
 	/**

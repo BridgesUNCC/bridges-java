@@ -78,17 +78,17 @@ public class State {
 		this.fill_color = c;
 	}
 
-	float getStrokeWidth()  {
+	public float getStrokeWidth()  {
 		return stroke_width;
 	}
-	void setStrokeWidth(float width) {
+	public void setStrokeWidth(float width) {
 		stroke_width = width;
 	}
 
-	Boolean getViewCountiesFlag()  {
+	public Boolean getViewCountiesFlag()  {
 		return view_counties;
 	}
-	void setViewCountiesFlag(Boolean flag) {
+	public void setViewCountiesFlag(Boolean flag) {
 		view_counties = flag;
 	}
 };

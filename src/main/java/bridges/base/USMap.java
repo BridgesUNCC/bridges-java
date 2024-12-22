@@ -1,35 +1,42 @@
 package bridges.base;
 
 import java.util.Vector;
+import java.util.HashMap;
+import java.util.Map;
 
-public class USMap extends Map {
+import bridges.data_src_dependent.State;
+import bridges.data_src_dependent.County;
+
+
+public class USMap extends AbstrMap {
 
 	private Vector<String> state_names;
 	private Vector<State>  state_data;
 
-	USMap (vector<State> st_data) {
+	USMap (Vector<State> st_data) {
 		state_data = st_data;
 	}
 
-	private String getDataStructureRepresentation() {
+	public String getDataStructureRepresentation() {
 		return QUOTE + "mapdummy" + COLON + "true" + CLOSE_CURLY + QUOTE;
 	}
 
 	public String getProjection() {
 		return "albersusa";
+	}
 
 	public Boolean getOverlay() {
 		return true;
 	}
 
-	public getMapData () {
+	public Vector<State> getMapData () {
 		return state_data;
 	}
-	public setStateData (Vector<State> st_data) {
+	public void setStateData (Vector<State> st_data) {
 		state_data = st_data;
 	}
 
-	public getMapRepresentation() {
+	public String getMapRepresentation() {
 		// generates a JSON of the states with county information
 		String map_str = OPEN_BOX;
 		for (State st : state_data) {
@@ -48,32 +55,37 @@ public class USMap extends Map {
 
 			// get all the counties
 			map_str += OPEN_BOX;  // array of counties
-			for (auto& c : st.getCounties()) {
+			for (Map.Entry<String,County> entry : st.accessCounties().entrySet()) {
+				// get the county object
+				County c = entry.getValue();	
+
+				// build the JSON
 				map_str +=  OPEN_CURLY +
 				QUOTE +	"_geoid" + QUOTE + COLON + 
-				c.second.getGeoId()+ COMMA +
+				c.getGeoId()+ COMMA +
 				QUOTE +	"_fips_code" + QUOTE + COLON + 
-				c.second.getFipsCode()+ COMMA +
+				c.getFipsCode()+ COMMA +
 				QUOTE +	"_county_name" + QUOTE +COLON + 
-				c.second.getCountyName() + COMMA +
+				c.getCountyName() + COMMA +
 				QUOTE +	"_state_name" + QUOTE +COLON + 
-				c.second.getStateName() + COMMA +
+				c.getStateName() + COMMA +
 				QUOTE +	"_stroke_color" + QUOTE + COLON + 
-				c.second.getStrokeColor().getRepresentation()+ COMMA +
+				c.getStrokeColor().getRepresentation()+ COMMA +
 				QUOTE +	"_stroke_width" + QUOTE +COLON + 
-				c.second.getStrokeWidth() + COMMA +
+				c.getStrokeWidth() + COMMA +
 				QUOTE +	"_fill_color" + QUOTE + COLON + 
-				c.second.getFillColor().getRepresentation() + COMMA +
+				c.getFillColor().getRepresentation() + COMMA +
 				QUOTE +	"_hide" + QUOTE + COLON + 
-				c.second.getHideFlag() + 
+				c.getHideFlag() + 
 				CLOSE_CURLY + COMMA;
 			}
 			// remove last comma
-			if (st.getCounties().size()) // case where counties are on
-				map_str = map_str.substr(0, map_str.size()-1);
+			if (st.accessCounties().size() > 0) // case where counties are on
+				map_str = map_str.substring(0, map_str.length()-1);
 				map_str += CLOSE_BOX + CLOSE_CURLY +  COMMA;
 			}
 			// close the states array
-			map_str = map_str.substr(0, map_str.size()-1) +  CLOSE_BOX;
+			map_str = map_str.substring(0, map_str.length()-1) +  CLOSE_BOX;
 			return map_str;
+	}
 };
