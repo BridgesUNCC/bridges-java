@@ -227,7 +227,6 @@ public class DataSource {
 
 		// remove last &
 		url = url.substring(0, url.length() - 1);
-		System.out.println("URL: " + url);
 
 		// make the http request
 		HttpResponse  response = makeRequest(url);
@@ -294,7 +293,6 @@ public class DataSource {
 		// remove last comma
 		st_names = URLEncoder.encode(st_names.substring(0,st_names.length()-1));
 		url +=  st_names;
-System.out.println (url);
 		
 		// make the request
 		HttpResponse response = makeRequest(url);
@@ -316,21 +314,23 @@ System.out.println (url);
                 String state_name = (String) (
 							((JSONObject)st.get("_id")).get("input"));
 				State state =  new State(state_name);
-				System.out.println ("state name.."  + state_name);
 
 				// get the county data from the JSON
-                JSONArray counties = (JSONArray) st.get("counties");
-				for (int j = 0; j < counties.size(); j++) {
-					JSONObject county_properties = (JSONObject) 
-						((JSONObject) counties.get(j)).get("properties");
-					String geoid = (String) county_properties.get("GEOID");
-					String fips_code = (String) county_properties.get("FIPS_CODE");
-					String county_name = (String) county_properties.get("COUNTY_STATE_CODE");
-					String st_name = (String) county_properties.get("COUNTY_STATE_NAME");
-					System.out.println ("props: " + fips_code + "," + geoid +
-						"," + county_name + "," + state_name);
-					state_counties.put (geoid, new County(geoid, fips_code, 
-							county_name, st_name));
+				if (view_counties) { // flag to get the county information
+                	JSONArray counties = (JSONArray) st.get("counties");
+					for (int j = 0; j < counties.size(); j++) {
+						JSONObject county_properties = (JSONObject) 
+							((JSONObject) counties.get(j)).get("properties");
+						String geoid = (String) county_properties.get("GEOID");
+						String fips_code = (String) county_properties.get("FIPS_CODE");
+						String county_name = (String) county_properties.get("COUNTY_STATE_CODE");
+						String st_name = (String) county_properties.get("COUNTY_STATE_NAME");
+						state_counties.put (geoid, new County(geoid, fips_code, 
+								county_name, st_name));
+					}
+				}
+				else {
+					state.setViewCountiesFlag(false);// no counties 
 				}
 				// add counties to the state
 				state.setCounties(state_counties);

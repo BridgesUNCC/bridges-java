@@ -2,6 +2,7 @@ package bridges.base;
 
 import java.util.Vector;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Map;
 
 import bridges.data_src_dependent.State;
@@ -42,7 +43,7 @@ public class USMap extends AbstrMap {
 		for (State st : state_data) {
 			map_str += OPEN_CURLY + 
 			QUOTE + "_state_name" + QUOTE + COLON + 
-			st.getStateName() + COMMA +
+			QUOTE + st.getStateName() + QUOTE + COMMA +
 			QUOTE+ "_stroke_color" + QUOTE + COLON +
 			st.getStrokeColor().getRepresentation() + COMMA +
 			QUOTE +	"_stroke_width" + QUOTE + COLON + 
@@ -62,13 +63,13 @@ public class USMap extends AbstrMap {
 				// build the JSON
 				map_str +=  OPEN_CURLY +
 				QUOTE +	"_geoid" + QUOTE + COLON + 
-				c.getGeoId()+ COMMA +
+				QUOTE + c.getGeoId()+ QUOTE + COMMA +
 				QUOTE +	"_fips_code" + QUOTE + COLON + 
-				c.getFipsCode()+ COMMA +
-				QUOTE +	"_county_name" + QUOTE +COLON + 
-				c.getCountyName() + COMMA +
-				QUOTE +	"_state_name" + QUOTE +COLON + 
-				c.getStateName() + COMMA +
+				QUOTE + c.getFipsCode()+ QUOTE + COMMA +
+				QUOTE +	"_county_name" + QUOTE + COLON + 
+				QUOTE + c.getCountyName() + QUOTE + COMMA +
+				QUOTE +	"_state_name" + QUOTE + COLON + 
+				QUOTE + c.getStateName() + QUOTE + COMMA +
 				QUOTE +	"_stroke_color" + QUOTE + COLON + 
 				c.getStrokeColor().getRepresentation()+ COMMA +
 				QUOTE +	"_stroke_width" + QUOTE +COLON + 

@@ -276,6 +276,7 @@ public class Bridges {
 		String map_str = map.getMapRepresentation();
 		setMapOverlay (map.getOverlay());
 		setCoordSystemType(map.getProjection());
+		this.map = map_str;
 		setMapAsJSON(true);
 	}
 
