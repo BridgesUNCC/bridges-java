@@ -80,7 +80,7 @@ public class Bridges {
 	private static Integer MaxTitleSize = 200,
 						   MaxDescrSize = 1000;
 	private static String[] projection_options = {"cartesian", "albersusa", "equirectangular", "window"};
-	private static String[] map = {"us", "all"};
+	private static String map = new String();
 	private static Boolean map_overlay = false;	// default to no map overlay
 	private static double[] window;
 	private static String display_mode = "slide"; // default to slide (vs stack)
@@ -267,16 +267,15 @@ public class Bridges {
 	 *  and the second element is what attribute from the map to show: a country from world map, or a state from US map.
 	 *
 	 **/
-	public void setMap(String map, String info) {
-		Bridges.map[0] = map;
-		Bridges.map[1] = info;
+	public void setMap(String map_str) {
+		Bridges.map = map;
+		setMapAsJSON(false);
 	}
 
 	public void setMap(USMap map) {
 		String map_str = map.getMapRepresentation();
 		setMapOverlay (map.getOverlay());
 		setCoordSystemType(map.getProjection());
-	//	this.map = map_str;
 		setMapAsJSON(true);
 	}
 
@@ -605,11 +604,14 @@ public class Bridges {
 			QUOTE + "title"   + QUOTE + COLON + QUOTE + JSONValue.escape(title) + QUOTE + COMMA +
 			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) +
 			QUOTE + COMMA +
-			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
-			QUOTE + "map" + QUOTE + COLON + OPEN_BOX + QUOTE + Bridges.map[0] + QUOTE + COMMA + QUOTE + Bridges.map[1] + QUOTE + CLOSE_BOX + COMMA +
-			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA +
 			QUOTE + "label_flag" + QUOTE + COLON + label_flag + COMMA +
-			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA;
+			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA +
+			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
+			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA;
+		if (map_as_json) 
+			json_hdr += QUOTE + "map" + QUOTE + COLON + map + COMMA;
+		else 
+			json_hdr += QUOTE + "map" + QUOTE + COLON + QUOTE + map + QUOTE + COMMA;
 
 		// if window is specified, add it to JSON
 		if (window != null && window.length == 4) {
@@ -617,7 +619,6 @@ public class Bridges {
 			json_hdr += window[0] + COMMA + window[1] + COMMA + window[2] + COMMA + window[3];
 			json_hdr += CLOSE_BOX + COMMA;
 		}
-
 
 		return json_hdr;
 	}

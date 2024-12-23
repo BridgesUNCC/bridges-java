@@ -13,7 +13,7 @@ public class USMap extends AbstrMap {
 	private Vector<String> state_names;
 	private Vector<State>  state_data;
 
-	USMap (Vector<State> st_data) {
+	public USMap (Vector<State> st_data) {
 		state_data = st_data;
 	}
 

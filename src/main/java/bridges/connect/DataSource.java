@@ -287,11 +287,14 @@ public class DataSource {
 	public Vector<State> getUSMapCountyData (String[] state_names,
 				Boolean view_counties) throws IOException {
 		Vector<State> states = new Vector<State>();
+		String st_names = new String();
 		String url = getUSStateCountiesURL();
 		for (int k = 0; k < state_names.length; k++)
-			url += String.valueOf(k) + ",";
+			st_names += state_names[k] + ",";
 		// remove last comma
-		url = url.substring(0, url.length()-1);
+		st_names = URLEncoder.encode(st_names.substring(0,st_names.length()-1));
+		url +=  st_names;
+System.out.println (url);
 		
 		// make the request
 		HttpResponse response = makeRequest(url);
@@ -302,12 +305,38 @@ public class DataSource {
 			ArrayList<State> state_data = 
 							new ArrayList<State>(json.size());
             for (int i = 0; i < json.size(); i++) {
-                JSONObject item = (JSONObject)json.get(i);
-                String state_name = (String) (((JSONObject)item.get("_id")).get("_input"));
+				// create a county hash map
+				HashMap<String, County> state_counties = 
+							new HashMap<String, County>();
+
+				// get the state name first
+                JSONObject st = (JSONObject)json.get(i);
+
+				// create the state
+                String state_name = (String) (
+							((JSONObject)st.get("_id")).get("input"));
+				State state =  new State(state_name);
 				System.out.println ("state name.."  + state_name);
-				states.add(new State(state_name));
-//                JSONArray coords = (JSONArray)
-//                   ((JSONObject)item.get("geometry")).get("coordinates");
+
+				// get the county data from the JSON
+                JSONArray counties = (JSONArray) st.get("counties");
+				for (int j = 0; j < counties.size(); j++) {
+					JSONObject county_properties = (JSONObject) 
+						((JSONObject) counties.get(j)).get("properties");
+					String geoid = (String) county_properties.get("GEOID");
+					String fips_code = (String) county_properties.get("FIPS_CODE");
+					String county_name = (String) county_properties.get("COUNTY_STATE_CODE");
+					String st_name = (String) county_properties.get("COUNTY_STATE_NAME");
+					System.out.println ("props: " + fips_code + "," + geoid +
+						"," + county_name + "," + state_name);
+					state_counties.put (geoid, new County(geoid, fips_code, 
+							county_name, st_name));
+				}
+				// add counties to the state
+				state.setCounties(state_counties);
+
+				// add state  to the state list
+				states.add(state);
 			}
 		}
 		else {
