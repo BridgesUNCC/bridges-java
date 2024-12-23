@@ -42,7 +42,7 @@ public class State {
 	public State(String state_name) {
 		this.name = state_name;
 		this.stroke_width = 1.0f;
-		this.fill_color = new Color();
+		this.fill_color = new Color("blue");
 		this.stroke_color = new Color(0, 255, 0);
 		this.view_counties = true;
 		this.counties = new HashMap<String,County> ();
