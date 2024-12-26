@@ -135,6 +135,11 @@ public class DataSource {
 		return "http://bridgesdata.herokuapp.com/api/us_cities";
 	}
 
+	private String getUSStateCountiesURL() {
+			return "http://bridgesdata.herokuapp.com/api/us_map?state=";
+	}
+
+
     private void defaultDebug() {
 	String envAssignment = System.getenv("FORCE_BRIDGES_DATADEBUG");
 	if (envAssignment != null)
@@ -222,7 +227,6 @@ public class DataSource {
 
 		// remove last &
 		url = url.substring(0, url.length() - 1);
-		System.out.println("URL: " + url);
 
 		// make the http request
 		HttpResponse  response = makeRequest(url);
@@ -259,6 +263,86 @@ public class DataSource {
 		else
 			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: "
 				+ status);
+	}
+
+	/** 
+	 *  These functions implement the US map interface in BRIDGES.
+	 *  These are use to retrieve US state and county information.
+	 */
+
+	String[] all_states = new String[]{"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"};
+	// this function gets all states  but no county information
+	public Vector<State> getUSMapData () throws IOException {
+		return getUSMapCountyData(all_states, false);
+	}
+
+	// this function gets all states  and all state counties
+	public Vector<State> getUSMapCountyData () throws IOException {
+		return getUSMapCountyData(all_states, true);
+	}
+
+	// this function gets the specified states and its counties
+	// if view counties is set to true
+	public Vector<State> getUSMapCountyData (String[] state_names,
+				Boolean view_counties) throws IOException {
+		Vector<State> states = new Vector<State>();
+		String st_names = new String();
+		String url = getUSStateCountiesURL();
+		for (int k = 0; k < state_names.length; k++)
+			st_names += state_names[k] + ",";
+		// remove last comma
+		st_names = URLEncoder.encode(st_names.substring(0,st_names.length()-1));
+		url +=  st_names;
+		
+		// make the request
+		HttpResponse response = makeRequest(url);
+		int status = response.getStatusLine().getStatusCode();
+		if (status == 200) {
+			JSONArray json = unwrapJSONArray(response, "data");
+
+			ArrayList<State> state_data = 
+							new ArrayList<State>(json.size());
+            for (int i = 0; i < json.size(); i++) {
+				// create a county hash map
+				HashMap<String, County> state_counties = 
+							new HashMap<String, County>();
+
+				// get the state name first
+                JSONObject st = (JSONObject)json.get(i);
+
+				// create the state
+                String state_name = (String) (
+							((JSONObject)st.get("_id")).get("input"));
+				State state =  new State(state_name);
+
+				// get the county data from the JSON
+				if (view_counties) { // flag to get the county information
+                	JSONArray counties = (JSONArray) st.get("counties");
+					for (int j = 0; j < counties.size(); j++) {
+						JSONObject county_properties = (JSONObject) 
+							((JSONObject) counties.get(j)).get("properties");
+						String geoid = (String) county_properties.get("GEOID");
+						String fips_code = (String) county_properties.get("FIPS_CODE");
+						String county_name = (String) county_properties.get("COUNTY_STATE_CODE");
+						String st_name = (String) county_properties.get("COUNTY_STATE_NAME");
+						state_counties.put (geoid, new County(geoid, fips_code, 
+								county_name, st_name));
+					}
+				}
+				else {
+					state.setViewCountiesFlag(false);// no counties 
+				}
+				// add counties to the state
+				state.setCounties(state_counties);
+
+				// add state  to the state list
+				states.add(state);
+			}
+		}
+		else {
+			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
+        }
+		return states;
 	}
 
 	/**
