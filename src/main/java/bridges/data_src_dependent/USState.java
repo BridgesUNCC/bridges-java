@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import bridges.base.Color;
 
-import bridges.data_src_dependent.County;
+import bridges.data_src_dependent.USCounty;
 
 /**
-* @brief Class that State and its attributes
+* @brief Class for USState and its attributes
 *
 *
 * A tutorial on how to use the these objects is available at:
@@ -22,38 +22,38 @@ import bridges.data_src_dependent.County;
 * @date 12/22/24
 */
 
-public class State {
+public class USState {
 
 	private String name;
 	private	Color stroke_color, fill_color;
 	private float stroke_width;
 	private Boolean view_counties;	// boolean if counties are stored
-	private HashMap<String,County> counties;
+	private HashMap<String,USCounty> counties;
 
-	public State() {
+	public USState() {
 		this.name = new String();
 		this.stroke_width = 1.0f;
 		this.fill_color = new Color();
 		this.stroke_color = new Color(0, 255, 0);
 		this.view_counties = true;
-		this.counties = new HashMap<String,County> ();
+		this.counties = new HashMap<String,USCounty> ();
 	}
 
-	public State(String state_name) {
+	public USState(String state_name) {
 		this.name = state_name;
 		this.stroke_width = 1.0f;
 		this.fill_color = new Color("blue");
 		this.stroke_color = new Color(0, 255, 0);
 		this.view_counties = true;
-		this.counties = new HashMap<String,County> ();
+		this.counties = new HashMap<String,USCounty> ();
 	}
 
 	// getters, setters
-	public HashMap<String, County> accessCounties() {
+	public HashMap<String, USCounty> accessCounties() {
 		return this.counties;
 	}
 
-	public void setCounties(HashMap<String, County> c) {
+	public void setCounties(HashMap<String, USCounty> c) {
 		this.counties = c;
 	}
 

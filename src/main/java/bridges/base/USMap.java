@@ -1,20 +1,20 @@
 package bridges.base;
 
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Map;
 
-import bridges.data_src_dependent.State;
-import bridges.data_src_dependent.County;
+import bridges.data_src_dependent.USState;
+import bridges.data_src_dependent.USCounty;
 
 
-public class USMap extends AbstrMap {
+public class USMap extends DataStruct implements AbstrMap {
 
-	private Vector<String> state_names;
-	private Vector<State>  state_data;
+	private ArrayList<String> state_names;
+	private ArrayList<USState>  state_data;
 
-	public USMap (Vector<State> st_data) {
+	public USMap (ArrayList<USState> st_data) {
 		state_data = st_data;
 	}
 
@@ -22,6 +22,10 @@ public class USMap extends AbstrMap {
 		return QUOTE + "mapdummy" + COLON + "true" + CLOSE_CURLY + QUOTE;
 	}
 
+    public String getDataStructType() {
+	return "us_map";
+    }
+    
 	public String getProjection() {
 		return "albersusa";
 	}
@@ -30,17 +34,17 @@ public class USMap extends AbstrMap {
 		return true;
 	}
 
-	public Vector<State> getMapData () {
+	public ArrayList<USState> getMapData () {
 		return state_data;
 	}
-	public void setStateData (Vector<State> st_data) {
+	public void setStateData (ArrayList<USState> st_data) {
 		state_data = st_data;
 	}
 
 	public String getMapRepresentation() {
 		// generates a JSON of the states with county information
 		String map_str = OPEN_BOX;
-		for (State st : state_data) {
+		for (USState st : state_data) {
 			map_str += OPEN_CURLY + 
 			QUOTE + "_state_name" + QUOTE + COLON + 
 			QUOTE + st.getStateName() + QUOTE + COMMA +
@@ -56,9 +60,9 @@ public class USMap extends AbstrMap {
 
 			// get all the counties
 			map_str += OPEN_BOX;  // array of counties
-			for (Map.Entry<String,County> entry : st.accessCounties().entrySet()) {
+			for (Map.Entry<String,USCounty> entry : st.accessCounties().entrySet()) {
 				// get the county object
-				County c = entry.getValue();	
+				USCounty c = entry.getValue();
 
 				// build the JSON
 				map_str +=  OPEN_CURLY +

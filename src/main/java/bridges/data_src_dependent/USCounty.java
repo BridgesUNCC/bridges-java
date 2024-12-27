@@ -18,14 +18,14 @@ import bridges.base.Color;
 * @date 12/22/24
 */
 
-public class County {
+public class USCounty {
 
 	private String county_name, state_name, geoid, fips_code;
 	private	Color stroke_color, fill_color;
 	private float stroke_width;
 	Boolean hide_flag;			// county visibility
 	
-	public County() {
+	public USCounty() {
 		this.county_name = new String();
 		this.state_name = new String();
 		this.stroke_width = 1.0f;
@@ -35,7 +35,7 @@ public class County {
 		this.stroke_color = new Color(0, 255, 0);
 		this.hide_flag = false;
 	}
-	public County(String geoid, String fips_code, String county_name,
+	public USCounty(String geoid, String fips_code, String county_name,
 			String state_name) {
 		this.county_name = county_name;
 		this.state_name = state_name;

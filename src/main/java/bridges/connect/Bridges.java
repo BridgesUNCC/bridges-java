@@ -272,7 +272,7 @@ public class Bridges {
 		setMapAsJSON(false);
 	}
 
-	public void setMap(USMap map) {
+	public void setMap(AbstrMap map) {
 		String map_str = map.getMapRepresentation();
 		setMapOverlay (map.getOverlay());
 		setCoordSystemType(map.getProjection());
