@@ -32,7 +32,7 @@ public class USCounty {
 		this.geoid  = new String();
 		this.fips_code  = new String();
 		this.fill_color = new Color(255, 0, 0);
-		this.stroke_color = new Color(0, 255, 0);
+		this.stroke_color = new Color(0, 0, 255);
 		this.hide_flag = false;
 	}
 	public USCounty(String geoid, String fips_code, String county_name,
@@ -43,7 +43,7 @@ public class USCounty {
 		this.geoid  = geoid;
 		this.fips_code  = fips_code;
 		this.fill_color = new Color(255, 0, 0);
-		this.stroke_color = new Color(0, 255, 0);
+		this.stroke_color = new Color(0, 0, 255);
 		this.hide_flag = false;
 	}
 

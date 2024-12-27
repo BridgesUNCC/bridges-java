@@ -33,8 +33,8 @@ public class USState {
 	public USState() {
 		this.name = new String();
 		this.stroke_width = 1.0f;
-		this.fill_color = new Color();
-		this.stroke_color = new Color(0, 255, 0);
+		this.fill_color = new Color("blue");
+		this.stroke_color = new Color("red");
 		this.view_counties = true;
 		this.counties = new HashMap<String,USCounty> ();
 	}
@@ -43,7 +43,7 @@ public class USState {
 		this.name = state_name;
 		this.stroke_width = 1.0f;
 		this.fill_color = new Color("blue");
-		this.stroke_color = new Color(0, 255, 0);
+		this.stroke_color = new Color("red");
 		this.view_counties = true;
 		this.counties = new HashMap<String,USCounty> ();
 	}
