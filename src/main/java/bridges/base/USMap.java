@@ -60,7 +60,7 @@ public class USMap extends DataStruct implements AbstrMap {
 
 			// get all the counties
 			map_str += OPEN_BOX;  // array of counties
-			for (Map.Entry<String,USCounty> entry : st.accessCounties().entrySet()) {
+			for (Map.Entry<String,USCounty> entry : st.getCounties().entrySet()) {
 				// get the county object
 				USCounty c = entry.getValue();
 
@@ -85,7 +85,7 @@ public class USMap extends DataStruct implements AbstrMap {
 				CLOSE_CURLY + COMMA;
 			}
 			// remove last comma
-			if (st.accessCounties().size() > 0) // case where counties are on
+			if (st.getCounties().size() > 0) // case where counties are on
 				map_str = map_str.substring(0, map_str.length()-1);
 				map_str += CLOSE_BOX + CLOSE_CURLY +  COMMA;
 			}

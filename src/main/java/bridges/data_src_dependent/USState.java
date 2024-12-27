@@ -49,7 +49,7 @@ public class USState {
 	}
 
 	// getters, setters
-	public HashMap<String, USCounty> accessCounties() {
+	public HashMap<String, USCounty> getCounties() {
 		return this.counties;
 	}
 
