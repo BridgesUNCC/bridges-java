@@ -19,7 +19,7 @@ public class USMap extends DataStruct implements AbstrMap {
 	}
 
 	public String getDataStructureRepresentation() {
-		return QUOTE + "mapdummy" + COLON + "true" + CLOSE_CURLY + QUOTE;
+		return QUOTE + "mapdummy" + QUOTE + COLON + QUOTE + "true" + QUOTE + CLOSE_CURLY;
 	}
 
     public String getDataStructType() {

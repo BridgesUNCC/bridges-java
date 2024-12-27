@@ -554,6 +554,12 @@ public class Bridges {
 		String[] nodes_links = new String[2];
 		String response = "";
 
+		// There are two ways to use map from user perspective.
+		// Either use it as parameter to setMap() to get an overlay.
+		// Or pass it as a datastructure. This ugly piece of code handles that case.
+		if (ds_handle instanceof AbstrMap)
+		    setMap((AbstrMap)ds_handle);
+		
 		String nodes_links_str = this.ds_handle.getDataStructureRepresentation();
 
 		String json_hdr = getJSONHeader();
