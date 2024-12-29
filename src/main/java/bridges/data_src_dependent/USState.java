@@ -8,19 +8,19 @@ import bridges.base.Color;
 import bridges.data_src_dependent.USCounty;
 
 /**
-* @brief Class for USState and its attributes
-*
-*
-* A tutorial on how to use the these objects is available at:
-*  ???
-*
-*  Each State object contains its name, stroke color, stroke width, fill color, 
-*  and a list of counties 
-*
-* @author Kalpathi Subramanian, Erik Saule
-*
-* @date 12/22/24
-*/
+ * @brief Class for USState and its attributes
+ *
+ *
+ *
+ * Each State object contains its name, stroke color, stroke width, 
+ * fill color, and a list of counties 
+ * A tutorial on how to use the these objects is available at:
+ *  ???
+ *
+ * @author Kalpathi Subramanian, Erik Saule
+ * @date  Last modified Dec 29, 2024
+ *
+ */
 
 public class USState {
 
@@ -30,6 +30,9 @@ public class USState {
 	private Boolean view_counties;	// boolean if counties are stored
 	private HashMap<String,USCounty> counties;
 
+	/**
+	 *  @brief Default constructor
+	 */
 	public USState() {
 		this.name = new String();
 		this.stroke_width = 1.0f;
@@ -39,6 +42,11 @@ public class USState {
 		this.counties = new HashMap<String,USCounty> ();
 	}
 
+	/** 
+	 * @brief Constructor for a specific state
+	 *
+	 * @param state_name  state info
+	 */
 	public USState(String state_name) {
 		this.name = state_name;
 		this.stroke_width = 1.0f;
@@ -49,7 +57,7 @@ public class USState {
 	}
 
 	// getters, setters
-	public HashMap<String, USCounty> getCounties() {
+	public HashMap<String, USCounty> accessCounties() {
 		return this.counties;
 	}
 

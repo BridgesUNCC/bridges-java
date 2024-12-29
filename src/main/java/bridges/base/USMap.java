@@ -24,8 +24,8 @@ import bridges.data_src_dependent.USCounty;
  * population counts, election statistics or any attribute at the state
  * or county level.
  *
- * See the Maps tutorials for examples of the usage of the US Map API
- *
+ * See the Maps tutorials for examples of the usage of the US Map API at
+ * http://????
  */
 
 public class USMap extends DataStruct implements AbstrMap {
@@ -79,7 +79,7 @@ public class USMap extends DataStruct implements AbstrMap {
 	public String getMapRepresentation() {
 		// generates a JSON of the states with county information
 		String map_str = OPEN_BOX;
-		for (State st : state_data) {
+		for (USState st : state_data) {
 			map_str += OPEN_CURLY +
 				QUOTE + "_state_name" + QUOTE + COLON +
 				QUOTE + st.getStateName() + QUOTE + COMMA +
@@ -95,9 +95,9 @@ public class USMap extends DataStruct implements AbstrMap {
 
 			// get all the counties
 			map_str += OPEN_BOX;  // array of counties
-			for (Map.Entry<String, County> entry : st.accessCounties().entrySet()) {
+			for (Map.Entry<String, USCounty> entry : st.accessCounties().entrySet()) {
 				// get the county object
-				County c = entry.getValue();
+				USCounty c = entry.getValue();
 				// build the JSON
 				map_str +=  OPEN_CURLY +
 					QUOTE +	"_geoid" + QUOTE + COLON +
