@@ -134,7 +134,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	public String getDataStructType() {
 		if (forceLargeViz ||
 			(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE &&
-				areAllVerticesLocated())) {
+			areAllVerticesLocated())) {
 			return "largegraph";
 		}
 		return "GraphAdjacencyList";
@@ -204,7 +204,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		if (getEdge(src, dest) != null)
 			return;
 
-		adj_list.put(src, new SLelement<Edge<K, E2>>(new Edge<K, E2>(src, dest, data), adj_list.get(src)));
+		adj_list.put(src, new SLelement<Edge<K, E2 >> (new Edge<K, E2>(src, dest, data), adj_list.get(src)));
 	}
 	/**
 	 *	@brief Sets data for a graph vertex
@@ -264,7 +264,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		}
 		// look for the edge
 
-		SLelement<Edge<K, E2>> sle = adj_list.get(src);
+		SLelement<Edge<K, E2 >> sle = adj_list.get(src);
 		while (sle != null) {
 			K edge_dest = ((Edge<K, E2>) sle.getValue()).getTo();
 			if (edge_dest.equals(dest)) {	// found
@@ -293,7 +293,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		}
 
 		// look for the edge
-		SLelement<Edge<K, E2>> sle = adj_list.get(src);
+		SLelement<Edge<K, E2 >> sle = adj_list.get(src);
 		while (sle != null) {
 			K edge_dest = ((Edge<K, E2>) sle.getValue()).getTo();
 			if (edge_dest.equals(dest)) 	// found
@@ -371,10 +371,10 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	@param vertex  vertex identifier
 	 *	@return  an iterable set of the outgoing edge of this vertex
 	 */
-	public Iterable<Edge<K, E2>> outgoingEdgeSetOf(K vertex) {
+	public Iterable<Edge<K, E2 >> outgoingEdgeSetOf(K vertex) {
 		//TODO: This should probably not create an array list, but create an iterable type out of SLelement
-		ArrayList<Edge<K, E2>> edgeSet = new ArrayList<Edge<K, E2>>();
-		SLelement<Edge<K, E2>> list = getAdjacencyList(vertex);
+		ArrayList<Edge<K, E2 >> edgeSet = new ArrayList<Edge<K, E2 >> ();
+		SLelement<Edge<K, E2 >> list = getAdjacencyList(vertex);
 
 		if (list != null) {
 			for (Edge<K, E2> element : list) {
@@ -436,7 +436,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 * @return true if all vertices have both an x and y location
 	 */
 	private boolean areAllVerticesLocated() {
-		for (Entry<K, Element<E1>> element : vertices.entrySet()) {
+		for (Entry<K, Element<E1 >> element : vertices.entrySet()) {
 			Element<E1> el = element.getValue();
 			ElementVisualizer elvis = el.getVisualizer();
 			if (elvis.getLocationX() == Double.POSITIVE_INFINITY
@@ -499,9 +499,9 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
 		// get the list nodes
-		ArrayList<Element<E1> > nodes = new ArrayList<Element<E1>> ();
+		ArrayList<Element<E1> > nodes = new ArrayList<Element<E1 >> ();
 
-		for (Entry<K, Element<E1>> element : vertices.entrySet())
+		for (Entry<K, Element<E1 >> element : vertices.entrySet())
 			nodes.add(element.getValue());
 
 		// remap  map these nodes to  0...MaxNodes-1
@@ -518,8 +518,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 
 		// build the links JSON - traverse the adj. lists
 		StringBuilder links_JSON = new StringBuilder();
-		for (Entry<K, SLelement<Edge<K, E2>>> a_list : adj_list.entrySet()) {
-			SLelement<Edge<K, E2>> list = a_list.getValue();
+		for (Entry<K, SLelement<Edge<K, E2 >>> a_list : adj_list.entrySet()) {
+			SLelement<Edge<K, E2 >> list = a_list.getValue();
 			// get the source vertex index for the JSON (int)
 			Element<E1> src_vert = vertices.get(a_list.getKey());
 			while (list != null) {
@@ -531,7 +531,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 				// get link representation
 				LinkVisualizer lv = edge.getLinkVisualizer();
 				links_JSON.append(lv.getLinkRepresentation(
-						Integer.toString(src_indx), Integer.toString(dest_indx))).append(COMMA);
+					Integer.toString(src_indx), Integer.toString(dest_indx))).append(COMMA);
 				list = list.getNext();
 			}
 		}
@@ -554,9 +554,9 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	private String getDataStructureLargeGraph() {
 		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
 		// get the list nodes
-		ArrayList<Element<E1>> nodes = new ArrayList<Element<E1>>();
+		ArrayList<Element<E1 >> nodes = new ArrayList<Element<E1 >> ();
 
-		for (Entry<K, Element<E1>> element : vertices.entrySet())
+		for (Entry<K, Element<E1 >> element : vertices.entrySet())
 			nodes.add(element.getValue());
 
 		String nodes_JSON = "";
@@ -587,8 +587,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 
 		String link_JSON = "";
 
-		for (Entry<K, SLelement<Edge<K, E2>>> a_list : adj_list.entrySet()) {
-			SLelement<Edge<K, E2>> list = a_list.getValue();
+		for (Entry<K, SLelement<Edge<K, E2 >>> a_list : adj_list.entrySet()) {
+			SLelement<Edge<K, E2 >> list = a_list.getValue();
 			Element<E1> src_vert = vertices.get(a_list.getKey());
 			while (list != null) {
 				Integer src_indx = node_map.get(src_vert);

@@ -36,7 +36,7 @@ import java.util.Vector;
 public class TreeElement<E> extends Element<E> {
 
 	// holds all children of the node
-	private Vector<TreeElement<E>> children;
+	private Vector<TreeElement<E >> children;
 
 	/**
 	 *
@@ -46,7 +46,7 @@ public class TreeElement<E> extends Element<E> {
 	 */
 	public TreeElement() {
 		super();
-		children = new Vector<TreeElement <E>> (2);
+		children = new Vector<TreeElement <E >> (2);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class TreeElement<E> extends Element<E> {
 	 */
 	public TreeElement (E e) {
 		super(e);
-		children = new Vector<TreeElement <E>> (2);
+		children = new Vector<TreeElement <E >> (2);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class TreeElement<E> extends Element<E> {
 	 */
 	public TreeElement (String label, E e) {
 		super(label, e);
-		children = new Vector<TreeElement <E>> (2);
+		children = new Vector<TreeElement <E >> (2);
 	}
 
 

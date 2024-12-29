@@ -8,12 +8,12 @@ import org.json.simple.JSONValue;
 
 
 /**
- * @brief Support for drawing Bar charts 
+ * @brief Support for drawing Bar charts
  *
  * Bar charts (https://en.wikipedia.org/wiki/Bar_chart) are used to
  * represent categorical data as a series of rectangular bars with length
  * proportional to the values they represent.
- *  
+ *
  * Series in a bar chart provides data for a number of categories
  * (sometimes called bins). Categories are defined using
  * setCategories() and the series are added using addDataSeries().
@@ -24,14 +24,14 @@ import org.json.simple.JSONValue;
  * categories after series have been added will throw exceptions;
  * adding series with different number of values than the number of
  * categories will throw an exception.
- *      
+ *
  * The Bar charts can have a title, subtitle. The charts can be
  * horizontal or vertically oriented, using setBarOrientation().
- * 
+ *
  * A tooltip indicating the value of a series in a particular bin is
  * displayed by hovering on a bar. One can append a string to the
  * value using setTooltipSuffix() to specify units in the tooltip if desired.
- *  
+ *
  * @sa See tutorial on using BarChart at:
  *		https://bridgesuncc.github.io/tutorials/BarChart.html
  *
@@ -41,38 +41,38 @@ import org.json.simple.JSONValue;
  *
  **/
 public class BarChart extends DataStruct {
-    class Pair<K, V> {
-	private K key;
-	private V value;
-	
-	public Pair(K key, V value) {
-	    this.key = key;
-	    this.value = value;
-	}
-	
-	public K getFirst() {
-	    return key;
-	}
-	
-	public void setFirst(K key) {
-	    this.key = key;
-	}
-	
-	public V getSecond() {
-	    return value;
-	}
-	
-	public void setSecond(V value) {
-	    this.value = value;
-	}
-	
-	@Override
-	public String toString() {
-	    return "Pair{" + "key=" + key + ", value=" + value + '}';
-	}
-    }
+	class Pair<K, V> {
+		private K key;
+		private V value;
 
-    
+		public Pair(K key, V value) {
+			this.key = key;
+			this.value = value;
+		}
+
+		public K getFirst() {
+			return key;
+		}
+
+		public void setFirst(K key) {
+			this.key = key;
+		}
+
+		public V getSecond() {
+			return value;
+		}
+
+		public void setSecond(V value) {
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return "Pair{" + "key=" + key + ", value=" + value + '}';
+		}
+	}
+
+
 	private String title;
 	private String subtitle;
 	private String cLabel;
@@ -80,7 +80,7 @@ public class BarChart extends DataStruct {
 	private String tooltipSuffix;
 	private String orientation;
 
-	private ArrayList<Pair<String, double[]>> seriesData;
+	private ArrayList<Pair<String, double[] >> seriesData;
 	private Vector<String> categories;
 
 	/**
@@ -93,7 +93,7 @@ public class BarChart extends DataStruct {
 		this.cLabel = "";
 		this.vLabel = "";
 		this.orientation = "horizontal";
-		this.seriesData = new ArrayList<Pair<String, double[]>>();
+		this.seriesData = new ArrayList<Pair<String, double[] >> ();
 		this.categories = new Vector<String>();
 	}
 
@@ -188,8 +188,8 @@ public class BarChart extends DataStruct {
 	 * @param orient
 	 **/
 	public void setBarOrientation(String orient) {
-	    if (!orient.equals("horizontal") && !orient.equals("vertical"))
-		throw new IllegalArgumentException("Orientation should be \"horizontal\" or \"vertical\".");
+		if (!orient.equals("horizontal") && !orient.equals("vertical"))
+			throw new IllegalArgumentException("Orientation should be \"horizontal\" or \"vertical\".");
 		this.orientation = orient;
 	}
 
@@ -207,7 +207,7 @@ public class BarChart extends DataStruct {
 	 *
 	 * This appends a string to the values in the hover tooltip.
 	 *
-	 * @param suffix 
+	 * @param suffix
 	 **/
 	public void setTooltipSuffix(String suffix) {
 		this.tooltipSuffix = suffix;
@@ -216,7 +216,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief gets the tooltip suffix
 	 *
-	 * @return suffix 
+	 * @return suffix
 	 **/
 	public String getTooltipSuffix () {
 		return this.tooltipSuffix;
@@ -225,14 +225,14 @@ public class BarChart extends DataStruct {
 	/**
 	 *  @brief set the category labels for this bar chart
 	 *
-	 * Will throw an exception if there are already data series defined. 
+	 * Will throw an exception if there are already data series defined.
 	 *
 	 *  @param categories the name of each category
 	 */
 	public void setCategories(Vector<String> categories) {
-	    if (seriesData.size()>0)
-		throw new IllegalStateException ("Can't change categoriess after series have been added.");
-	    this.categories = categories;
+		if (seriesData.size() > 0)
+			throw new IllegalStateException ("Can't change categoriess after series have been added.");
+		this.categories = categories;
 	}
 
 	/**
@@ -248,16 +248,16 @@ public class BarChart extends DataStruct {
 	 * @param data values of that serie for each category
 	 **/
 	public void addDataSeries(String seriesName, double[] data) {
-	    if (data.length != categories.size())
-		throw new IllegalArgumentException ("The data vector should have the same size as the number of categories.");
+		if (data.length != categories.size())
+			throw new IllegalArgumentException ("The data vector should have the same size as the number of categories.");
 
-	    for (Pair<String, double[]> entry : seriesData) {
-		String key = entry.getFirst();
-		if (seriesName.equals(key))
-		    throw new IllegalArgumentException ("Can't have two series with the same name.");
-	    }	    
-	    
-	    seriesData.add(new Pair<String, double[]>(seriesName, data));
+		for (Pair<String, double[]> entry : seriesData) {
+			String key = entry.getFirst();
+			if (seriesName.equals(key))
+				throw new IllegalArgumentException ("Can't have two series with the same name.");
+		}
+
+		seriesData.add(new Pair<String, double[]>(seriesName, data));
 	}
 
 	/**
@@ -265,13 +265,13 @@ public class BarChart extends DataStruct {
 	 */
 	public String getDataStructureRepresentation() {
 		String bins_json = "";
-		bins_json += JSONValue.toJSONString("xAxis") + COLON + OPEN_CURLY + 
-				JSONValue.toJSONString("categories") + COLON + OPEN_BOX;
+		bins_json += JSONValue.toJSONString("xAxis") + COLON + OPEN_CURLY +
+			JSONValue.toJSONString("categories") + COLON + OPEN_BOX;
 
 		for (String entry : this.categories) {
 			bins_json += JSONValue.toJSONString(entry) + COMMA;
 		}
-		bins_json = bins_json.substring(0, bins_json.length()-1);
+		bins_json = bins_json.substring(0, bins_json.length() - 1);
 		bins_json += CLOSE_BOX + CLOSE_CURLY;
 
 		String series_json = "";
@@ -297,7 +297,7 @@ public class BarChart extends DataStruct {
 			JSONValue.toJSONString("yLabel") + COLON + JSONValue.toJSONString(this.getValueLabel()) + COMMA +
 			JSONValue.toJSONString("tooltipSuffix") + COLON + JSONValue.toJSONString(getTooltipSuffix()) + COMMA +
 			JSONValue.toJSONString("alignment") + COLON + JSONValue.toJSONString(getBarOrientation()) + COMMA +
-			JSONValue.toJSONString("xaxis_data") + COLON + OPEN_CURLY + bins_json + CLOSE_CURLY + COMMA + 
+			JSONValue.toJSONString("xaxis_data") + COLON + OPEN_CURLY + bins_json + CLOSE_CURLY + COMMA +
 			JSONValue.toJSONString("yaxis_data") + COLON + OPEN_CURLY + series_json + CLOSE_CURLY + CLOSE_CURLY;
 
 		return json_str;

@@ -155,7 +155,7 @@ public class DLelement<E> extends SLelement<E> implements Iterable<E> {
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
 		// get the list nodes
-		Vector<Element<E> > nodes = new Vector<Element<E>> ();
+		Vector<Element<E> > nodes = new Vector<Element<E >> ();
 		this.getListElements(nodes);
 
 		// generate the JSON of the list nodes
@@ -177,16 +177,16 @@ public class DLelement<E> extends SLelement<E> implements Iterable<E> {
 			if (nxt != null) { 		// add the link
 				links_JSON
 				.append(getLinkRepresentation( par.getLinkVisualizer(nxt),
-						Integer.toString(node_map.get(par)),
-						Integer.toString(node_map.get(nxt))))
+					Integer.toString(node_map.get(par)),
+					Integer.toString(node_map.get(nxt))))
 				.append(COMMA);
 			}
 			if (prv != null) { 		// add the link
 				links_JSON
 				.append(getLinkRepresentation(
-						par.getLinkVisualizer(prv),
-						Integer.toString(node_map.get(par)),
-						Integer.toString(node_map.get(prv))))
+					par.getLinkVisualizer(prv),
+					Integer.toString(node_map.get(par)),
+					Integer.toString(node_map.get(prv))))
 				.append(COMMA);
 			}
 		}

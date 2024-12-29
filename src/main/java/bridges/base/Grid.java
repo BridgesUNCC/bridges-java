@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Grid<E> extends DataStruct {
 
-	protected ArrayList<ArrayList<E>> grid;
+	protected ArrayList<ArrayList<E >> grid;
 	protected static final int[] defaultGridSize = {10, 10};
 	protected int[] gridSize;
 	protected static int[] maxGridSize = {1080, 1920};
@@ -66,7 +66,7 @@ public class Grid<E> extends DataStruct {
 		gridSize = size.clone();
 
 		// set up outer list capacity (rows)
-		grid = new ArrayList<ArrayList<E>>(size[0]);
+		grid = new ArrayList<ArrayList<E >> (size[0]);
 
 		for (int i = 0; i < size[0]; i++) {
 			// set up inner lists (columns)

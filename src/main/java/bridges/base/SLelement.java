@@ -151,7 +151,7 @@ public class SLelement<E> extends Element<E> implements Iterable<E> {
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
 		// get the list nodes
-		Vector<Element<E> > nodes = new Vector<Element<E>> ();
+		Vector<Element<E> > nodes = new Vector<Element<E >> ();
 		getListElements(nodes);
 
 		// generate the JSON of the list nodes
@@ -171,9 +171,9 @@ public class SLelement<E> extends Element<E> implements Iterable<E> {
 			SLelement<E> chld = par.next;
 			if (chld != null) { 		// add the link
 				links_JSON.append(getLinkRepresentation(
-						par.getLinkVisualizer(chld),
-						Integer.toString(node_map.get(par)),
-						Integer.toString(node_map.get(chld))) );
+					par.getLinkVisualizer(chld),
+					Integer.toString(node_map.get(par)),
+					Integer.toString(node_map.get(chld))) );
 				links_JSON.append(COMMA);
 			}
 		}
@@ -232,7 +232,7 @@ public class SLelement<E> extends Element<E> implements Iterable<E> {
 	 *	@param nodes  a vector of the ndoes in the list
 	 *
 	 */
-	protected void getListElements(Vector<Element<E>> nodes) {
+	protected void getListElements(Vector<Element<E >> nodes) {
 		SLelement<E> el = this;
 		// try to handle all lists in subclasses, except multilists
 		nodes.clear();

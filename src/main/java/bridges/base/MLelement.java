@@ -176,13 +176,13 @@ public class MLelement<E> extends SLelement<E> {
 	 */
 	public String getDataStructureRepresentation() {
 
-		Vector<Element<E> > nodes = new Vector<Element<E>> ();
+		Vector<Element<E> > nodes = new Vector<Element<E >> ();
 		nodes.clear();
 		getListElements(nodes);
 
 		// generate the JSON of the list nodes
 		StringBuilder nodes_JSON = new StringBuilder();
-		HashMap<Element<E>, Integer> node_map = new HashMap<Element<E>, Integer>();
+		HashMap<Element<E>, Integer > node_map = new HashMap<Element<E>, Integer>();
 
 		for (int k = 0; k < nodes.size(); k++) {
 			node_map.put(nodes.get(k), k);
@@ -202,9 +202,9 @@ public class MLelement<E> extends SLelement<E> {
 				if (chld != null) { 		// add the link
 					links_JSON
 					.append(getLinkRepresentation(
-							par.getLinkVisualizer(chld),
-							Integer.toString(node_map.get(par)),
-							Integer.toString(node_map.get(chld))))
+						par.getLinkVisualizer(chld),
+						Integer.toString(node_map.get(par)),
+						Integer.toString(node_map.get(chld))))
 					.append(COMMA);
 				}
 			}
@@ -212,9 +212,9 @@ public class MLelement<E> extends SLelement<E> {
 			if (chld != null) { 		// add the link
 				links_JSON
 				.append(getLinkRepresentation(
-						par.getLinkVisualizer(chld),
-						Integer.toString(node_map.get(par)),
-						Integer.toString(node_map.get(chld))))
+					par.getLinkVisualizer(chld),
+					Integer.toString(node_map.get(par)),
+					Integer.toString(node_map.get(chld))))
 				.append(COMMA);
 			}
 		}
@@ -238,11 +238,11 @@ public class MLelement<E> extends SLelement<E> {
 	 *	@param nodes  a vector of the nodes in the list
 	 *
 	 */
-	protected void getListElements(Vector<Element<E>> nodes) {
+	protected void getListElements(Vector<Element<E >> nodes) {
 		getListElements_R (this, nodes);
 	}
 
-	void getListElements_R (MLelement<E> list, Vector<Element<E>> nodes) {
+	void getListElements_R (MLelement<E> list, Vector<Element<E >> nodes) {
 		MLelement<E> el = list;
 		// try to handld all lists in subclasses, except multilists
 		while (el != null) {

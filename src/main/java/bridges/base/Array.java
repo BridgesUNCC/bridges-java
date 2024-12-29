@@ -32,7 +32,7 @@ import bridges.validation.Validation;
  *
  */
 public class Array<E> extends DataStruct {
-	private ArrayList<Element<E>> array_data;
+	private ArrayList<Element<E >> array_data;
 	private int num_dims;					// 1D, 2D and 3D arrays supported
 	private int[] dims = {1, 1, 1};			// array dimensions
 	private int size;						// array size
@@ -41,7 +41,7 @@ public class Array<E> extends DataStruct {
 	 * Construct a default array object
 	 */
 	public Array() {
-		array_data = new ArrayList<Element<E>>();
+		array_data = new ArrayList<Element<E >> ();
 		num_dims = 1;
 		dims[0] = dims[1] = dims[2] = size = 0;
 		size = 0;

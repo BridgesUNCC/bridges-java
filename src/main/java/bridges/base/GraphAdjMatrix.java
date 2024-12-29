@@ -50,21 +50,21 @@ import java.util.Set;
 public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 
 	// graph vertices list
-	private final HashMap<K, Element<E1>> vertices;
+	private final HashMap<K, Element<E1 >> vertices;
 
 	// holds the adjacency list of edges
-	private final HashMap<K, HashMap<K, Integer>> matrix;
+	private final HashMap<K, HashMap<K, Integer >> matrix;
 
 	// holds edge information of type E2 for graph edges
-	private final HashMap<K, HashMap<K, E2>> edge_data;
+	private final HashMap<K, HashMap<K, E2 >> edge_data;
 
 	/**
 	 * Constructor
 	 */
 	public GraphAdjMatrix() {
-		vertices = new HashMap<K, Element<E1>>();
-		matrix = new HashMap<K, HashMap<K, Integer>>();
-		edge_data = new HashMap<K, HashMap<K, E2>>();
+		vertices = new HashMap<K, Element<E1 >> ();
+		matrix = new HashMap<K, HashMap<K, Integer >> ();
+		edge_data = new HashMap<K, HashMap<K, E2 >> ();
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 
 
 		// fill up this vertex's row and column elements
-		for (Entry<K, Element<E1>> el : vertices.entrySet()) {
+		for (Entry<K, Element<E1 >> el : vertices.entrySet()) {
 			(matrix.get(k)).put(el.getKey(), 0); // row
 			(matrix.get(el.getKey())).put(k, 0); // col
 		}
@@ -240,7 +240,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	 * <p>
 	 * return -- vertices held in an unordered  map
 	 */
-	public HashMap<K, Element<E1>> getVertices() {
+	public HashMap<K, Element<E1 >> getVertices() {
 		return vertices;
 	}
 
@@ -249,7 +249,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 	 *
 	 * @return - the graph's adjacency matrix
 	 */
-	public HashMap<K, HashMap<K, Integer>> getAdjacencyMatrix() {
+	public HashMap<K, HashMap<K, Integer >> getAdjacencyMatrix() {
 		return matrix;
 	}
 
@@ -313,9 +313,9 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 		// map to reorder the nodes for building JSON
 		HashMap<Element<E1>, Integer> node_map = new HashMap<Element<E1>, Integer>();
 		// get the list nodes
-		Vector<Element<E1>> nodes = new Vector<Element<E1>>();
+		Vector<Element<E1 >> nodes = new Vector<Element<E1 >> ();
 
-		for (Entry<K, Element<E1>> element : vertices.entrySet())
+		for (Entry<K, Element<E1 >> element : vertices.entrySet())
 			nodes.add(element.getValue());
 
 		// remap  map these nodes to  0...MaxNodes-1
@@ -332,7 +332,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 
 		// build the links JSON - traverse the adj. lists
 		StringBuilder links_JSON = new StringBuilder();
-		for (Entry<K, HashMap<K, Integer>> el_src : matrix.entrySet()) {
+		for (Entry<K, HashMap<K, Integer >> el_src : matrix.entrySet()) {
 
 			Element<E1> src_vert = vertices.get(el_src.getKey());
 			Integer src_indx = node_map.get(src_vert);
@@ -343,7 +343,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 					Integer dest_indx = node_map.get(dest_vert);
 
 					links_JSON.append(src_vert.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert),
-							Integer.toString(src_indx), Integer.toString(dest_indx)))
+						Integer.toString(src_indx), Integer.toString(dest_indx)))
 					.append(COMMA);
 				}
 			}
