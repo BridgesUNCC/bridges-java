@@ -8,27 +8,67 @@ import java.util.Map;
 import bridges.data_src_dependent.State;
 import bridges.data_src_dependent.County;
 
+	/**
+     * @brief This class provides an API to building, displaying and 
+     * manipulating  US maps and counties in BRIDGES
+     *
+     * In the current implementation, we can draw a US map  with all state 
+     * boundaries, a map with all US state and county boundaries, or 
+     * specify a set of states  and display the state and/or county
+     * boundaries. 
+     *
+     * Functions are provided to access each US state or county and color
+     * its boundary or its interior using the stroke color  and fill color
+     * functions. This lets us build map based applications where the fill
+     * fill color can be used to represent different data attributes, such 
+     * population counts, election statistics or any attribute at the state
+     * or county level.
+     *
+     * See the Maps tutorials for examples of the usage of the US Map API
+     *
+     */
 
 public class USMap extends AbstrMap {
 
 	private Vector<String> state_names;
-	private Vector<State>  state_data;
+	private Vector<State>  state_data; // state and county information for each state
 
+	/**
+	 * @brief Construtor: creates an object with the given state data
+	 *
+	 * @param st_data  state and county information  for a set of states
+	 */
 	public USMap (Vector<State> st_data) {
 		state_data = st_data;
 	}
 
+	/**
+	 *  @brief get JSON representation of the data structure - a dummy string
+	 *
+	 *  @return JSON string
+	 */
 	public String getDataStructureRepresentation() {
 		return QUOTE + "mapdummy" + COLON + "true" + CLOSE_CURLY + QUOTE;
 	}
-
+/**
+                 * @brief Gets the type of map projection. For US map we 
+                 *  currently use albersusa
+                 *
+                 */
 	public String getProjection() {
 		return "albersusa";
 	}
 
+	/**
+                 *
+                 * @brief Gets the map overlay flag. 
+                 *
+				 * @return boolean 
+                 */
 	public Boolean getOverlay() {
 		return true;
 	}
+
 
 	public Vector<State> getMapData () {
 		return state_data;
