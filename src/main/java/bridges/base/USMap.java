@@ -1,12 +1,12 @@
 package bridges.base;
 
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Map;
 
-import bridges.data_src_dependent.State;
-import bridges.data_src_dependent.County;
+import bridges.data_src_dependent.USState;
+import bridges.data_src_dependent.USCounty;
 
 /**
  * @brief This class provides an API to building, displaying and
@@ -28,17 +28,17 @@ import bridges.data_src_dependent.County;
  *
  */
 
-public class USMap extends AbstrMap {
-
-	private Vector<String> state_names;
-	private Vector<State>  state_data; // state and county information for each state
+public class USMap extends DataStruct implements AbstrMap {
 
 	/**
 	 * @brief Construtor: creates an object with the given state data
 	 *
 	 * @param st_data  state and county information  for a set of states
 	 */
-	public USMap (Vector<State> st_data) {
+	private ArrayList<String> state_names;
+	private ArrayList<USState>  state_data;
+
+	public USMap (ArrayList<USState> st_data) {
 		state_data = st_data;
 	}
 
@@ -48,13 +48,13 @@ public class USMap extends AbstrMap {
 	 *  @return JSON string
 	 */
 	public String getDataStructureRepresentation() {
-		return QUOTE + "mapdummy" + COLON + "true" + CLOSE_CURLY + QUOTE;
+		return QUOTE + "mapdummy" + QUOTE + COLON + QUOTE + "true" + QUOTE + CLOSE_CURLY;
 	}
-	/**
-	                 * @brief Gets the type of map projection. For US map we
-	                 *  currently use albersusa
-	                 *
-	                 */
+
+    public String getDataStructType() {
+	return "us_map";
+    }
+    
 	public String getProjection() {
 		return "albersusa";
 	}
@@ -69,11 +69,10 @@ public class USMap extends AbstrMap {
 		return true;
 	}
 
-
-	public Vector<State> getMapData () {
+	public ArrayList<USState> getMapData () {
 		return state_data;
 	}
-	public void setStateData (Vector<State> st_data) {
+	public void setStateData (ArrayList<USState> st_data) {
 		state_data = st_data;
 	}
 
@@ -99,7 +98,6 @@ public class USMap extends AbstrMap {
 			for (Map.Entry<String, County> entry : st.accessCounties().entrySet()) {
 				// get the county object
 				County c = entry.getValue();
-
 				// build the JSON
 				map_str +=  OPEN_CURLY +
 					QUOTE +	"_geoid" + QUOTE + COLON +

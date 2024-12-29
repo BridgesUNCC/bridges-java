@@ -13,8 +13,3 @@ public abstract class AbstrMap {
 	CLOSE_PAREN = ")",
 	OPEN_BOX = "[",
 	CLOSE_BOX = "]";
-
-	public abstract String getProjection();
-	public abstract Boolean getOverlay();
-	public abstract String  getMapRepresentation();
-};
