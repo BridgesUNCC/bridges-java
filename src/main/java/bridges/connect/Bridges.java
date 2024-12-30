@@ -268,7 +268,7 @@ public class Bridges {
 	 *
 	 **/
 	public void setMap(String map_str) {
-		Bridges.map = map;
+		this.map = map;
 		setMapAsJSON(false);
 	}
 
