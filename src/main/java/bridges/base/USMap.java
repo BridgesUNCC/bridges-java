@@ -31,7 +31,7 @@ import bridges.data_src_dependent.USCounty;
 public class USMap extends DataStruct implements AbstrMap {
 
 	/**
-	 * @brief Construtor: creates an object with the given state data
+	 * @brief Constructor: creates an object with the given state data
 	 *
 	 * @param st_data  state and county information  for a set of states
 	 */
