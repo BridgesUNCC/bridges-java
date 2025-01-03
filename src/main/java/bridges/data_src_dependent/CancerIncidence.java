@@ -10,7 +10,7 @@ package bridges.data_src_dependent;
  *	all types of cancer reported for different demograpic groups.
  *	Significant groupings include age, gender, race and geographical area.
  *
- *	http://www.cdc.gov/cancer/npcr/uscs/download_data.htm
+ *	https://www.cdc.gov/united-states-cancer-statistics/public-use/index.html
  *
  *
  * One does not typically create an object from this type, but rather obtain them by calling bridges::connect::DataSource::getCancerIncidenceData()

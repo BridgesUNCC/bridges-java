@@ -485,9 +485,9 @@ public class DataSource {
 
 	/**
 	 *  This helper function provides access to a cancer dataset from CDC
-	 *  https://www.cdc.gov/cancer/npcr/uscs/download_data.htm and curated
+	 *  https://www.cdc.gov/united-states-cancer-statistics/public-use/index.html and curated
 	 *  by Austin (Cory) Bart as part of the Corgis data collection
-	 *	https://think.cs.vt.edu/corgis/
+	 *	https://corgis-edu.github.io/corgis/
 	 *
 	 *  Each record in this collection has a number of fields detailed in the
 	 *	CancerIncidence class.
