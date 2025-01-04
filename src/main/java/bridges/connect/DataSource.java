@@ -268,22 +268,27 @@ public class DataSource {
 	/** 
 	 *  These functions implement the US map interface in BRIDGES.
 	 *  These are use to retrieve US state and county information.
+	 * See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
 	 */
 
 	String[] all_states = new String[]{"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"};
-	// this function gets all states  but no county information
+	/// this function gets all states  but no county information
 	public ArrayList<USState> getUSMapData () throws IOException {
 		return getUSMapCountyData(all_states, false);
 	}
 
-	// this function gets all states  and all state counties
+	/// @brief  gets all states  and all state counties
+        /// See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
 	public ArrayList<USState> getUSMapCountyData () throws IOException {
 		return getUSMapCountyData(all_states, true);
 	}
 
-	// this function gets the specified states and its counties
-	// if view counties is set to true.
-        // Note that it only gets the counties if view_counties is true
+	/// @brief can get the specified states and its counties
+        /// See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
+        ///
+        /// @param state_names Explicit names of states. e.g., "North Carolina"
+        /// @param view_counties get the counties information only this true
+        ///
 	public ArrayList<USState> getUSMapCountyData (String[] state_names,
 				Boolean view_counties) throws IOException {
 		ArrayList<USState> states = new ArrayList<USState>();

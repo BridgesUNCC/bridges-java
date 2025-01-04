@@ -25,7 +25,7 @@ import bridges.data_src_dependent.USCounty;
  * or county level.
  *
  * See the Maps tutorials for examples of the usage of the US Map API at
- * http://????
+ * https://bridgesuncc.github.io/tutorials/Map.html
  */
 
 public class USMap extends DataStruct implements AbstrMap {

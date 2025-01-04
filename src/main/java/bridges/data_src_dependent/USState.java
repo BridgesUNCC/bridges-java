@@ -15,7 +15,7 @@ import bridges.data_src_dependent.USCounty;
  * Each State object contains its name, stroke color, stroke width, 
  * fill color, and a list of counties 
  * A tutorial on how to use the these objects is available at:
- *  ???
+ * https://bridgesuncc.github.io/tutorials/Map.html
  *
  * @author Kalpathi Subramanian, Erik Saule
  * @date  Last modified Dec 29, 2024
