@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 /**
  * @brief This class defines a rectangle and is part of the bridges::base::SymbolCollection.
  *
- *		A rectangle has height and width, and a location (rectangle center)
+ *		A rectangle has height and width, and a location (lower left corner of rectangle)
  *
  * Basic styling such as stroke, fill, color are defined in the superclass Symbol.
  *
@@ -43,9 +43,9 @@ public	class Rectangle extends  Symbol {
 	}
 
 	/**
-	 *  Construct a rectangle with given its location (center),  height and width
-	 *  @param locx x coordinate of center
-	 *  @param locy y coordinate of center
+	 *  Construct a rectangle with given its location (lower left corner),  height and width
+	 *  @param locx lower left x coordinate of rectangle
+	 *  @param locy y lower left ycoordinate of rectangle
 	 *  @param w  width of rectangle
 	 *  @param h  height of rectangle
 	 */
