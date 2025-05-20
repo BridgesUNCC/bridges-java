@@ -350,6 +350,7 @@ public class DataSource {
 		return states;
 	}
 
+    
 	/**
 	 *  This helper function provides a simple API to retrieve current USGS earthquake
 	 *	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
@@ -360,14 +361,22 @@ public class DataSource {
 	 *
 	 * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_EQ_USGS.html
 	 *
-	 *	@param maxElem  the number of earthquake records retrieved, limited to 5000
+	 *	@param maxElem  the number of earthquake records retrieved. Zero or negative rquests all available earthquakes.
+	 *
 	 *  @throws Exception if the request fails
 	 *
 	 *  @return a list of earthquake records
 	 */
 	public  List<EarthquakeUSGS> getEarthquakeUSGSData(
 		int maxElem) throws IOException {
-		String url = "http://earthquakes-uncc.herokuapp.com/eq/latest/" + maxElem;
+		String url;
+		if (maxElem > 0) {
+		    url = "http://earthquakes-uncc.herokuapp.com/eq/latest/" + maxElem;
+		}
+		else {
+		    url = "http://earthquakes-uncc.herokuapp.com/eq";
+		}
+		
 		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
@@ -400,7 +409,28 @@ public class DataSource {
 			throw new HttpResponseException(status, "HTTP Request Failed. Error Code: " + status);
 		}
 	}
+    
+	/**
+	 *  This helper function provides a simple API to retrieve current USGS earthquake
+	 *	Tweet data from the USGS website (https://earthquake.usgs.gov/earthquakes/map/);
+	 *  The data is retrieved and formatted into a list of EarthquakeUSGS objects.
+	 * This function returns all available earthquakes.
+	 *
+	 *  More information on the dataset can be found at
+	 *		https://bridgesuncc.github.io/datasets.html
+	 *
+	 * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_EQ_USGS.html
+	 *
+	 *
+	 *  @throws Exception if the request fails
+	 *
+	 *  @return a list of earthquake records
+	 */
+	public  List<EarthquakeUSGS> getEarthquakeUSGSData() throws IOException {
+	    return getEarthquakeUSGSData(0);
+	}
 
+    
 	/**
 	 *  @brief This function provides access to a collection of Shakespeare plays,
 	 * 	poems and plays.
