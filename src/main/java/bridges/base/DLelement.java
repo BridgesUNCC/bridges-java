@@ -177,16 +177,16 @@ public class DLelement<E> extends SLelement<E> implements Iterable<E> {
 			if (nxt != null) { 		// add the link
 				links_JSON
 				.append(getLinkRepresentation( par.getLinkVisualizer(nxt),
-					Integer.toString(node_map.get(par)),
-					Integer.toString(node_map.get(nxt))))
+						Integer.toString(node_map.get(par)),
+						Integer.toString(node_map.get(nxt))))
 				.append(COMMA);
 			}
 			if (prv != null) { 		// add the link
 				links_JSON
 				.append(getLinkRepresentation(
-					par.getLinkVisualizer(prv),
-					Integer.toString(node_map.get(par)),
-					Integer.toString(node_map.get(prv))))
+						par.getLinkVisualizer(prv),
+						Integer.toString(node_map.get(par)),
+						Integer.toString(node_map.get(prv))))
 				.append(COMMA);
 			}
 		}

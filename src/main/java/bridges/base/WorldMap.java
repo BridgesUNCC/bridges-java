@@ -23,10 +23,10 @@ public class WorldMap extends DataStruct implements AbstrMap {
 		return QUOTE + "mapdummy" + QUOTE + COLON + QUOTE + "true" + QUOTE + CLOSE_CURLY;
 	}
 
-    public String getDataStructType() {
-	return "world_map";
-    }
-    
+	public String getDataStructType() {
+		return "world_map";
+	}
+
 	public String getProjection() {
 		return "equirectangular";
 	}
@@ -43,6 +43,6 @@ public class WorldMap extends DataStruct implements AbstrMap {
 
 
 	public String getMapRepresentation() {
-	  return "\"all\"";
+		return "\"all\"";
 	}
 };

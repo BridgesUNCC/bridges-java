@@ -51,10 +51,10 @@ public class USMap extends DataStruct implements AbstrMap {
 		return QUOTE + "mapdummy" + QUOTE + COLON + QUOTE + "true" + QUOTE + CLOSE_CURLY;
 	}
 
-    public String getDataStructType() {
-	return "us_map";
-    }
-    
+	public String getDataStructType() {
+		return "us_map";
+	}
+
 	public String getProjection() {
 		return "albersusa";
 	}

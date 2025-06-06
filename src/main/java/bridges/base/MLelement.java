@@ -202,9 +202,9 @@ public class MLelement<E> extends SLelement<E> {
 				if (chld != null) { 		// add the link
 					links_JSON
 					.append(getLinkRepresentation(
-						par.getLinkVisualizer(chld),
-						Integer.toString(node_map.get(par)),
-						Integer.toString(node_map.get(chld))))
+							par.getLinkVisualizer(chld),
+							Integer.toString(node_map.get(par)),
+							Integer.toString(node_map.get(chld))))
 					.append(COMMA);
 				}
 			}
@@ -212,9 +212,9 @@ public class MLelement<E> extends SLelement<E> {
 			if (chld != null) { 		// add the link
 				links_JSON
 				.append(getLinkRepresentation(
-					par.getLinkVisualizer(chld),
-					Integer.toString(node_map.get(par)),
-					Integer.toString(node_map.get(chld))))
+						par.getLinkVisualizer(chld),
+						Integer.toString(node_map.get(par)),
+						Integer.toString(node_map.get(chld))))
 				.append(COMMA);
 			}
 		}

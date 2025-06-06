@@ -134,7 +134,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	public String getDataStructType() {
 		if (forceLargeViz ||
 			(!forceSmallViz && this.vertices.size() > LARGE_GRAPH_VERT_SIZE &&
-			areAllVerticesLocated())) {
+				areAllVerticesLocated())) {
 			return "largegraph";
 		}
 		return "GraphAdjacencyList";
@@ -531,7 +531,7 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 				// get link representation
 				LinkVisualizer lv = edge.getLinkVisualizer();
 				links_JSON.append(lv.getLinkRepresentation(
-					Integer.toString(src_indx), Integer.toString(dest_indx))).append(COMMA);
+						Integer.toString(src_indx), Integer.toString(dest_indx))).append(COMMA);
 				list = list.getNext();
 			}
 		}
