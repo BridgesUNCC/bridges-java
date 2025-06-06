@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 import java.io.File;
+import java.io.FileReader;
 
 // exception related
 import java.io.IOException;
@@ -273,6 +274,7 @@ public class DataSource {
 
 	String[] all_states = new String[]{"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"};
 	/// this function gets all states  but no county information
+
 	public ArrayList<USState> getUSMapData () throws IOException {
 		return getUSMapCountyData(all_states, false);
 	}
@@ -283,12 +285,14 @@ public class DataSource {
 		return getUSMapCountyData(all_states, true);
 	}
 
-	/// @brief can get the specified states and its counties
-        /// See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
-        ///
-        /// @param state_names Explicit names of states. e.g., "North Carolina"
-        /// @param view_counties get the counties information only this true
-        ///
+	/** 
+	 *	@brief Gets the specified states and its counties
+	 *
+	 *	See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
+	 * 
+	 *	@param state_names Explicit names of states. e.g., "North Carolina"
+	 *	@param view_counties get the counties information only this true
+	 */
 	public ArrayList<USState> getUSMapCountyData (String[] state_names,
 				Boolean view_counties) throws IOException {
 		ArrayList<USState> states = new ArrayList<USState>();
@@ -349,6 +353,34 @@ public class DataSource {
         }
 		return states;
 	}
+	/** 
+	 *	@brief Gets the specified countries and associated data
+	 *
+	 *	See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
+	 * 
+	 *	@param country_names Explicit names of states. e.g., "Germany, France"
+	 */
+	public ArrayList<Country> getCountryData (String[] cntry_names) throws 
+										IOException {
+		ArrayList<Country> countries = new ArrayList<Country>();
+		JSONParser parser = new JSONParser();
+		try {
+			JSONObject cntry_obj = (JSONObject) parser.parse(new FileReader("./world-countries-iso-3166.json"));
+			JSONArray cntry_arr = (JSONArray) cntry_obj.get("data");
+			for (Object country: cntry_arr) {
+				JSONObject c = (JSONObject) country;
+				countries.add (new Country((String) c.get("name"), 
+									(String) c.get("alpha2_id"),
+									(String) c.get("alpha3_id"),
+									(int) c.get("numeric3_id"))
+								);
+			}
+		}
+		catch (Exception e) {
+		//	throw new HttpIOException(status, "Reading JSON file failed! " + status);
+        }
+		return countries;
+	}
 
     
 	/**
@@ -359,9 +391,11 @@ public class DataSource {
 	 *  More information on the dataset can be found at
 	 *		https://bridgesuncc.github.io/datasets.html
 	 *
-	 * Refer to the tutorial  on how to use this dataset: https://bridgesuncc.github.io/tutorials/Data_EQ_USGS.html
+	 * Refer to the tutorial  on how to use this dataset: 
+	 * 	https://bridgesuncc.github.io/tutorials/Data_EQ_USGS.html
 	 *
-	 *	@param maxElem  the number of earthquake records retrieved. Zero or negative rquests all available earthquakes.
+	 *	@param maxElem  the number of earthquake records retrieved. Zero or 
+	 *		negative requests all available earthquakes.
 	 *
 	 *  @throws Exception if the request fails
 	 *
