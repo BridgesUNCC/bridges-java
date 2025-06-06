@@ -39,6 +39,9 @@ public class WorldMap extends DataStruct implements AbstrMap {
 	public WorldMap () {
 	}
 
+	public WorldMap (ArrayList<Country> country_data) {
+		this.country_data = country_data;
+	}
 	public String getProjection() {
 		return "equirectangular";
 	}
@@ -84,7 +87,7 @@ public class WorldMap extends DataStruct implements AbstrMap {
 		}
 		// close the countries array
 		map_str = map_str.substring(0, map_str.length() - 1) +  CLOSE_BOX;
-		//System.out.println("World Map JSON: " + map_str);
+		System.out.println("World Map JSON: " + map_str);
 		return map_str;
 	}
 

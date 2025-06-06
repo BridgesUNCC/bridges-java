@@ -24,7 +24,7 @@ public class Country {
 	private String name;
 	private String alpha2_id;		// two character id
 	private String alpha3_id;		// three character id
-	private int numeric3_id;     // 3 digit numeric id
+	private long numeric3_id;     // 3 digit numeric id
 	private	Color stroke_color, fill_color;
 	private float stroke_width;
 
@@ -46,7 +46,7 @@ public class Country {
 	 *
 	 * @param state_name  state info
 	 */
-	public Country(String country, String alpha2_id, String alpha3_id, int numeric3_id) {
+	public Country(String country, String alpha2_id, String alpha3_id, long numeric3_id) {
 		this.name = country;
 		this.alpha2_id = alpha2_id;
 		this.alpha3_id = alpha3_id;
@@ -79,7 +79,7 @@ public class Country {
 		this.alpha3_id = id;
 	}
 
-	public int getNumeric3Id() {
+	public long getNumeric3Id() {
 		return this.numeric3_id;
 	}
 	public void setNumeric3Id(int id) {

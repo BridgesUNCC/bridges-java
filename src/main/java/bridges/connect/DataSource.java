@@ -365,18 +365,29 @@ public class DataSource {
 		ArrayList<Country> countries = new ArrayList<Country>();
 		JSONParser parser = new JSONParser();
 		try {
-			JSONObject cntry_obj = (JSONObject) parser.parse(new FileReader("./world-countries-iso-3166.json"));
+System.out.println("in try clause..");
+			JSONObject cntry_obj = (JSONObject) 
+				parser.parse(new FileReader("/Users/krs/bridges/java/world-countries-iso-3166.json"));
 			JSONArray cntry_arr = (JSONArray) cntry_obj.get("data");
-			for (Object country: cntry_arr) {
-				JSONObject c = (JSONObject) country;
+			for (int k = 0; k < cntry_arr.size();k++) {
+				JSONObject c = (JSONObject) cntry_arr.get(k);
+System.out.println((String) c.get("name"));
+System.out.println((String) c.get("alpha-2"));
+System.out.println((String) c.get("alpha-3"));
+System.out.println(c.get("numeric-3"));
+//int val = 20;
+//System.out.println(val);
+				long  n = (long) c.get("numeric-3");
+				System.out.println("n: " + n);
 				countries.add (new Country((String) c.get("name"), 
-									(String) c.get("alpha2_id"),
-									(String) c.get("alpha3_id"),
-									(int) c.get("numeric3_id"))
-								);
+									(String) c.get("alpha-2"),
+									(String) c.get("alpha-3"),
+									(long) c.get("numeric-3")) );
+//				countries.add (new Country());
 			}
 		}
 		catch (Exception e) {
+			System.out.println("Failed reading..");
 		//	throw new HttpIOException(status, "Reading JSON file failed! " + status);
         }
 		return countries;
