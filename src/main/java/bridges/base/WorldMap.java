@@ -66,11 +66,11 @@ public class WorldMap extends DataStruct implements AbstrMap {
 		for (Country cntry : country_data) {
 			map_str += OPEN_CURLY +
 				QUOTE + "_country_name" + QUOTE + COLON +
-				cntry.getCountryName() + COMMA +
+				QUOTE + cntry.getCountryName() + QUOTE + COMMA +
 				QUOTE + "_alpha2" + QUOTE + COLON +
-				cntry.getAlpha2Id() + COMMA +
+				QUOTE + cntry.getAlpha2Id() + QUOTE + COMMA +
 				QUOTE + "_alpha3" + QUOTE + COLON + 
-				cntry.getAlpha3Id() + COMMA +
+				QUOTE + cntry.getAlpha3Id() + QUOTE + COMMA +
 				QUOTE + "_numeric" + QUOTE + COLON + 
 				cntry.getNumeric3Id() + COMMA +
 				QUOTE + "_fill_color" + QUOTE + COLON +

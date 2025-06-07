@@ -6,6 +6,7 @@ import java.util.Vector;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.lang.String;
 
 import java.io.File;
 import java.io.FileReader;
@@ -272,17 +273,17 @@ public class DataSource {
 	 * See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
 	 */
 
-	String[] all_states = new String[]{"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"};
+//	String[] all_states = new String[]{"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"};
 	/// this function gets all states  but no county information
 
 	public ArrayList<USState> getUSMapData () throws IOException {
-		return getUSMapCountyData(all_states, false);
+		return getUSMapCountyData(MapConstants.all_states, false);
 	}
 
 	/// @brief  gets all states  and all state counties
         /// See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
 	public ArrayList<USState> getUSMapCountyData () throws IOException {
-		return getUSMapCountyData(all_states, true);
+		return getUSMapCountyData(MapConstants.all_states, true);
 	}
 
 	/** 
@@ -353,6 +354,14 @@ public class DataSource {
         }
 		return states;
 	}
+	/**
+	 *
+	 *	@brief Gets the all the world countries' data
+     */
+	public ArrayList<Country> getWorldMapData () throws IOException {
+		System.out.println(MapConstants.all_countries[0]);
+		return getWorldMapData (MapConstants.all_countries);
+	}
 	/** 
 	 *	@brief Gets the specified countries and associated data
 	 *
@@ -360,37 +369,45 @@ public class DataSource {
 	 * 
 	 *	@param country_names Explicit names of states. e.g., "Germany, France"
 	 */
-	public ArrayList<Country> getCountryData (String[] cntry_names) throws 
+	public ArrayList<Country> getWorldMapData (String[] cntry_names) throws 
 										IOException {
-		ArrayList<Country> countries = new ArrayList<Country>();
+
+		// we will read all of the countries and  then look
+		// for countries specified in the input parameter
+
+		ArrayList<Country> cntry_list = new ArrayList<Country>();
+		HashMap<String, Country> countries = new HashMap<String, Country>();
+
+		// ArrayList<Country> countries = new ArrayList<Country>();
 		JSONParser parser = new JSONParser();
 		try {
-System.out.println("in try clause..");
 			JSONObject cntry_obj = (JSONObject) 
 				parser.parse(new FileReader("/Users/krs/bridges/java/world-countries-iso-3166.json"));
 			JSONArray cntry_arr = (JSONArray) cntry_obj.get("data");
 			for (int k = 0; k < cntry_arr.size();k++) {
 				JSONObject c = (JSONObject) cntry_arr.get(k);
-System.out.println((String) c.get("name"));
-System.out.println((String) c.get("alpha-2"));
-System.out.println((String) c.get("alpha-3"));
-System.out.println(c.get("numeric-3"));
-//int val = 20;
-//System.out.println(val);
-				long  n = (long) c.get("numeric-3");
-				System.out.println("n: " + n);
-				countries.add (new Country((String) c.get("name"), 
+//System.out.println((String) c.get("name"));
+//System.out.println((String) c.get("alpha-2"));
+//System.out.println((String) c.get("alpha-3"));
+//System.out.println(c.get("numeric-3"));
+				String name = (String) c.get("name");
+				countries.put (name, new Country((String) c.get("name"), 
 									(String) c.get("alpha-2"),
 									(String) c.get("alpha-3"),
 									(long) c.get("numeric-3")) );
-//				countries.add (new Country());
 			}
+
+			// now create a list of the requested countries as requested 
+			for (String c : cntry_names) {
+				cntry_list.add (countries.get(c));
+			}
+
 		}
 		catch (Exception e) {
 			System.out.println("Failed reading..");
 		//	throw new HttpIOException(status, "Reading JSON file failed! " + status);
         }
-		return countries;
+		return cntry_list;
 	}
 
     
