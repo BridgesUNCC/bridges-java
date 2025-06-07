@@ -359,7 +359,6 @@ public class DataSource {
 	 *	@brief Gets the all the world countries' data
      */
 	public ArrayList<Country> getWorldMapData () throws IOException {
-		System.out.println(MapConstants.all_countries[0]);
 		return getWorldMapData (MapConstants.all_countries);
 	}
 	/** 
@@ -386,10 +385,6 @@ public class DataSource {
 			JSONArray cntry_arr = (JSONArray) cntry_obj.get("data");
 			for (int k = 0; k < cntry_arr.size();k++) {
 				JSONObject c = (JSONObject) cntry_arr.get(k);
-//System.out.println((String) c.get("name"));
-//System.out.println((String) c.get("alpha-2"));
-//System.out.println((String) c.get("alpha-3"));
-//System.out.println(c.get("numeric-3"));
 				String name = (String) c.get("name");
 				countries.put (name, new Country((String) c.get("name"), 
 									(String) c.get("alpha-2"),

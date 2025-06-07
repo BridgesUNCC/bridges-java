@@ -87,7 +87,6 @@ public class WorldMap extends DataStruct implements AbstrMap {
 		}
 		// close the countries array
 		map_str = map_str.substring(0, map_str.length() - 1) +  CLOSE_BOX;
-		System.out.println("World Map JSON: " + map_str);
 		return map_str;
 	}
 
