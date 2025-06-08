@@ -1021,7 +1021,7 @@
 			"alpha-2": "CW",
 			"alpha-3": "CUW",
 			"numeric-3": 531,
-			"name": "Cura\u00e7ao",
+			"name": "Curacao",
 			"divisions": {
 				"-": "Curacao"
 			}
@@ -1434,7 +1434,7 @@
 			"alpha-2": "FM",
 			"alpha-3": "FSM",
 			"numeric-3": 583,
-			"name": "Micronesia (Federated States of)",
+			"name": "Micronesia",
 			"divisions": {
 				"FM-TRK": "Chuuk",
 				"FM-KSA": "Kosrae",
@@ -1490,7 +1490,7 @@
 			"alpha-2": "GB",
 			"alpha-3": "GBR",
 			"numeric-3": 826,
-			"name": "United Kingdom of Great Britain and Northern Ireland",
+			"name": "United Kingdom",
 			"divisions": {
 				"GB-ENG": "England",
 				"GB-NIR": "Northern Ireland",

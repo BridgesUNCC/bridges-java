@@ -36,7 +36,7 @@ public final class MapConstants {
 		"Cuba", "Cabo Verde", "Cura\u00e7ao", "Christmas Island", "Cyprus", "Czechia", 
 		"Germany", "Djibouti", "Denmark", "Dominica", "Dominican Republic", "Algeria", 
 		"Ecuador", "Estonia", "Egypt", "Western Sahara", "Eritrea", "Spain", "Ethiopia", 
-		"Finland", "Fiji", "Falkland Islands", "Micronesia (Federated States of)", 
+		"Finland", "Fiji", "Falkland Islands", "Micronesia", 
 		"Faroe Islands", "France", "Gabon", "United Kingdom of Great Britain and Northern Ireland",
 		"Grenada", "Georgia", "French Guiana", "Guernsey", "Ghana", "Gibraltar", "Greenland", 
 		"Gambia", "Guinea", "Guadeloupe", "Equatorial Guinea", "Greece", 
