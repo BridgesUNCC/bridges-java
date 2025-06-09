@@ -33,11 +33,11 @@ public final class MapConstants {
 		"Cocos (Keeling) Islands", "Democratic Republic of the Congo", 
 		"Central African Republic", "Congo", "Switzerland", "Cote d'Ivoire", 
 		"Cook Islands", "Chile", "Cameroon", "China", "Colombia", "Costa Rica", 
-		"Cuba", "Cabo Verde", "Cura\u00e7ao", "Christmas Island", "Cyprus", "Czechia", 
+		"Cuba", "Cabo Verde", "Curacao", "Christmas Island", "Cyprus", "Czechia", 
 		"Germany", "Djibouti", "Denmark", "Dominica", "Dominican Republic", "Algeria", 
 		"Ecuador", "Estonia", "Egypt", "Western Sahara", "Eritrea", "Spain", "Ethiopia", 
 		"Finland", "Fiji", "Falkland Islands", "Micronesia", 
-		"Faroe Islands", "France", "Gabon", "United Kingdom of Great Britain and Northern Ireland",
+		"Faroe Islands", "France", "Gabon", "United Kingdom",
 		"Grenada", "Georgia", "French Guiana", "Guernsey", "Ghana", "Gibraltar", "Greenland", 
 		"Gambia", "Guinea", "Guadeloupe", "Equatorial Guinea", "Greece", 
 		"South Georgia and the South Sandwich Islands", "Guatemala", "Guam", "Guinea-Bissau", 
@@ -74,4 +74,3 @@ public final class MapConstants {
 		"Yemen", "Mayotte", "South Africa", "Zambia", "Zimbabwe"
 	};
 };
-
