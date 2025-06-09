@@ -8,7 +8,7 @@ import java.lang.String;
 
 public final class MapConstants {
 
-	public static final String[] all_states	= {
+	public static final String[] ALL_US_STATES	= {
 		"Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", 
 		"Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", 
 		"Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", 
@@ -21,7 +21,7 @@ public final class MapConstants {
 	};
 
 
-	public static final String[] all_countries = {
+	public static final String[] ALL_COUNTRIES = {
 		"Andorra", "United Arab Emirates", "Afghanistan", "Antigua and Barbuda", 
 		"Anguilla", "Albania", "Armenia", "Angola", "Antarctica", "Argentina", 
 		"American Samoa", "Austria", "Australia", "Aruba", "Aland Islands",

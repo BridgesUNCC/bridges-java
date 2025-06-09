@@ -273,17 +273,16 @@ public class DataSource {
 	 * See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
 	 */
 
-//	String[] all_states = new String[]{"Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"};
 	/// this function gets all states  but no county information
 
 	public ArrayList<USState> getUSMapData () throws IOException {
-		return getUSMapCountyData(MapConstants.all_states, false);
+		return getUSMapCountyData(MapConstants.ALL_US_STATES, false);
 	}
 
 	/// @brief  gets all states  and all state counties
         /// See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
 	public ArrayList<USState> getUSMapCountyData () throws IOException {
-		return getUSMapCountyData(MapConstants.all_states, true);
+		return getUSMapCountyData(MapConstants.ALL_US_STATES, true);
 	}
 
 	/** 
@@ -359,7 +358,7 @@ public class DataSource {
 	 *	@brief Gets the all the world countries' data
      */
 	public ArrayList<Country> getWorldMapData () throws IOException {
-		return getWorldMapData (MapConstants.all_countries);
+		return getWorldMapData (MapConstants.ALL_COUNTRIES);
 	}
 	/** 
 	 *	@brief Gets the specified countries and associated data
@@ -381,7 +380,7 @@ public class DataSource {
 		JSONParser parser = new JSONParser();
 		try {
 			JSONObject cntry_obj = (JSONObject) 
-				parser.parse(new FileReader("/Users/krs/bridges/java/world-countries-iso-3166.json"));
+				parser.parse(new FileReader("/Users/krs/bridges/data/world-countries-iso-3166.json"));
 			JSONArray cntry_arr = (JSONArray) cntry_obj.get("data");
 			for (int k = 0; k < cntry_arr.size();k++) {
 				JSONObject c = (JSONObject) cntry_arr.get(k);
