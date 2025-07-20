@@ -281,8 +281,10 @@ public class Bridges {
 	 *
 	 * See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
 	 *
-	 *  @param map     this is an Array describing the map overlay. The first element of the array is which map to use: "world" or "us"
-	 *  and the second element is what attribute from the map to show: a country from world map, or a state from US map.
+	 *  @param map     this is an Array describing the map overlay. The first element of 
+	 *  	the array is which map to use: "world" or "us"
+	 *  and the second element is what attribute from the map to show: a country from 
+	 *		world map, or a state from US map.
 	 *
 	 **/
 	public void setMap(AbstrMap map) {
@@ -308,10 +310,10 @@ public class Bridges {
 				display_mode = mode;
 				break;
 			default:
-				throw new IllegalArgumentException("Invalid display mode '" + mode + "'. Please use one of the following options: ['slide', 'stack'].");
+				throw new IllegalArgumentException("Invalid display mode '" + mode + 
+					"'. Please use one of the following options: ['slide', 'stack'].");
 		}
 	}
-
 
 	/**
 	 * 	@brief Sets the coordinate system type.

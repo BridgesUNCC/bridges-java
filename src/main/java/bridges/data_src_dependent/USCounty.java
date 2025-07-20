@@ -56,8 +56,8 @@ public class USCounty {
 		this.stroke_width = 1.0f;
 		this.geoid  = geoid;
 		this.fips_code  = fips_code;
-		this.fill_color = new Color(255, 0, 0);
-		this.stroke_color = new Color(0, 0, 255);
+		this.fill_color = new Color("lightblue");
+		this.stroke_color = new Color("green");
 		this.hide_flag = false;
 	}
 

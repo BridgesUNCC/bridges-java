@@ -343,7 +343,7 @@ public class GraphAdjMatrix<K, E1, E2> extends DataStruct {
 					Integer dest_indx = node_map.get(dest_vert);
 
 					links_JSON.append(src_vert.getLinkRepresentation(src_vert.getLinkVisualizer(dest_vert),
-						Integer.toString(src_indx), Integer.toString(dest_indx)))
+							Integer.toString(src_indx), Integer.toString(dest_indx)))
 					.append(COMMA);
 				}
 			}

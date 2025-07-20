@@ -326,7 +326,7 @@ public class Element<E> extends DataStruct {
 		// check against default values
 		Boolean loc_flag =
 			!((visualizer.getLocationX() == Double.POSITIVE_INFINITY) ||
-			(visualizer.getLocationY() == Double.POSITIVE_INFINITY));
+				(visualizer.getLocationY() == Double.POSITIVE_INFINITY));
 		if (loc_flag)
 			json_str += COMMA + QUOTE + "location" + QUOTE + COLON +
 				OPEN_BOX +

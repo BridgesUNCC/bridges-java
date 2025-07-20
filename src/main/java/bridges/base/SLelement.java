@@ -171,9 +171,9 @@ public class SLelement<E> extends Element<E> implements Iterable<E> {
 			SLelement<E> chld = par.next;
 			if (chld != null) { 		// add the link
 				links_JSON.append(getLinkRepresentation(
-					par.getLinkVisualizer(chld),
-					Integer.toString(node_map.get(par)),
-					Integer.toString(node_map.get(chld))) );
+						par.getLinkVisualizer(chld),
+						Integer.toString(node_map.get(par)),
+						Integer.toString(node_map.get(chld))) );
 				links_JSON.append(COMMA);
 			}
 		}
