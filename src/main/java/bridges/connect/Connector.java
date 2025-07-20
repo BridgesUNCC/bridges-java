@@ -66,7 +66,7 @@ public class Connector {
 
 	/* Accessors and Mutators */
 	/**
-	 * Set the current server to 'live', 'clone', or 'local', or throw an error;
+	 * Set the current server to 'live', 'clone', 'games', or 'local', or throw an error;
 	 *	live is the default, clone is used for development/testing and local
 	 * for use by developers on their local machines
 	 *
@@ -95,7 +95,7 @@ public class Connector {
 				setServerURL(server_games);
 				break;
 			default:
-				throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'sockets', 'games', 'local'].");
+				throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'games', 'local'].");
 		}
 	}
 
