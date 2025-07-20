@@ -91,9 +91,6 @@ public class Connector {
 			case "local":
 				setServerURL(server_local);
 				break;
-			case "sockets":
-				setServerURL(server_sockets);
-				break;
 			case "games":
 				setServerURL(server_games);
 				break;
