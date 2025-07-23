@@ -593,12 +593,14 @@ public class Bridges {
 			System.err.println("There was a problem sending the visualization"
 				+ " representation to the server. \n"
 				+ e.getMessage());
+			throw e;
 		}
 		catch (RateLimitException e) {
 			System.err.println("There was a problem sending the visualization"
 				+ " representation to the server. However, it responded with"
 				+ " an impossible 'RateLimitException'. "
 				+ e.getMessage());
+			throw e;
 		}
 
 		// Only print a url and increment assignment part when a successful upload has completed
