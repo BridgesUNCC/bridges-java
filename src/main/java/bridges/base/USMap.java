@@ -37,9 +37,14 @@ public class USMap extends DataStruct implements AbstrMap {
 	 */
 	private ArrayList<String> state_names;
 	private ArrayList<USState>  state_data;
+    private boolean all;
 
+    	public USMap () {
+	    all = true;
+	}
+    
 	public USMap (ArrayList<USState> st_data) {
-		state_data = st_data;
+	    this.setStateData(st_data);
 	}
 
 	/**
@@ -73,10 +78,14 @@ public class USMap extends DataStruct implements AbstrMap {
 		return state_data;
 	}
 	public void setStateData (ArrayList<USState> st_data) {
+	    all = false;
 		state_data = st_data;
 	}
 
 	public String getMapRepresentation() {
+	    if (this.all) {
+		return "[\"all\"]";
+	    }
 		// generates a JSON of the states with county information
 		String map_str = OPEN_BOX;
 		for (USState st : state_data) {

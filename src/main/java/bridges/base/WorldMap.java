@@ -22,6 +22,9 @@ import bridges.data_src_dependent.Country;
   * level. We stop at the country level as each country has its own subdivisions,
   * such as discticts, states, regions, counties, etc.
   *
+  * The default constructor allows to get a basic map fo the entire world and supports no styling.
+  *
+  *
   * See the Maps tutorials for examples of the usage of the World Map API
   *  at https://bridgesuncc.github.io/tutorials/Map.html
   *
@@ -35,12 +38,14 @@ public class WorldMap extends DataStruct implements AbstrMap {
 
 	private ArrayList<String> country_names;
 	private ArrayList<Country> country_data;
-
+    private boolean all;
+    
 	public WorldMap () {
+	    this.all = true;
 	}
 
 	public WorldMap (ArrayList<Country> country_data) {
-		this.country_data = country_data;
+	    this.setCountryData(country_data);
 	}
 	public String getProjection() {
 		return "equirectangular";
@@ -55,12 +60,20 @@ public class WorldMap extends DataStruct implements AbstrMap {
 		return true;
 	}
 
+	public void setCountryData (ArrayList<Country> country_data) {
+	    this.all = false;
+	    this.country_data = country_data;
+	}
+    
 	/**
 	 * @brief Generates the JSON representation of the World map
 	 *
 	 * @returns string
 	 */
 	public String getMapRepresentation() {
+	    if (this.all) {
+		return "[\"all\"]";
+	    }
 		// generates a JSON of the country information
 		String map_str = OPEN_BOX;
 		for (Country cntry : country_data) {
@@ -102,8 +115,4 @@ public class WorldMap extends DataStruct implements AbstrMap {
 	public String getDataStructType() {
 		return "world_map";
 	}
-
-//	public String getMapRepresentation() {
-//		return "\"all\"";
-//	}
 };
