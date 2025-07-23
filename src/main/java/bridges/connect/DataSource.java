@@ -141,6 +141,9 @@ public class DataSource {
 			return "http://bridgesdata.herokuapp.com/api/us_map?state=";
 	}
 
+	private String getWorldCountriesURL() {
+			return "http://static-data.bridgesuncc.org/api/world_map";
+	}
 
     private void defaultDebug() {
 	String envAssignment = System.getenv("FORCE_BRIDGES_DATADEBUG");
@@ -379,23 +382,27 @@ public class DataSource {
 		// ArrayList<Country> countries = new ArrayList<Country>();
 		JSONParser parser = new JSONParser();
 		try {
-			JSONObject cntry_obj = (JSONObject) 
-				parser.parse(new FileReader("/Users/krs/bridges/data/world-countries-iso-3166.json"));
-			JSONArray cntry_arr = (JSONArray) cntry_obj.get("data");
-			for (int k = 0; k < cntry_arr.size();k++) {
-				JSONObject c = (JSONObject) cntry_arr.get(k);
-				String name = (String) c.get("name");
-				countries.put (name, new Country((String) c.get("name"), 
-									(String) c.get("alpha-2"),
-									(String) c.get("alpha-3"),
-									(long) c.get("numeric-3")) );
-			}
+			String url = getWorldCountriesURL();
 
-			// now create a list of the requested countries as requested 
-			for (String c : cntry_names) {
-				cntry_list.add (countries.get(c));
-			}
+			// make the request
+			HttpResponse response = makeRequest(url);
+			int status = response.getStatusLine().getStatusCode();
+   			if (status == 200) {
+				JSONArray cntry_arr = unwrapJSONArray(response, "data");
+				for (int k = 0; k < cntry_arr.size();k++) {
+					JSONObject c = (JSONObject) cntry_arr.get(k);
+					String name = (String) c.get("name");
+					countries.put (name, new Country((String) c.get("name"), 
+										(String) c.get("alpha-2"),
+										(String) c.get("alpha-3"),
+										(long) c.get("numeric-3")) );
+				}
 
+				// now create a list of the requested countries as requested 
+				for (String c : cntry_names) {
+					cntry_list.add (countries.get(c));
+				}
+			}
 		}
 		catch (Exception e) {
 			System.out.println("Failed reading..");
