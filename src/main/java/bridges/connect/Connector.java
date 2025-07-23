@@ -41,16 +41,15 @@ import bridges.validation.RateLimitException;
 // import org.json.JSONException;
 // import org.json.JSONObject;
 public class Connector {
-	String server_live = "http://bridges-cs.herokuapp.com";
-	String server_clone = "http://bridges-clone.herokuapp.com";
-	String server_sockets = "http://bridges-sockets.herokuapp.com";
-	String server_games = "http://bridges-games.herokuapp.com";
+	String server_live = "http://assignments.bridgesuncc.org";
+	String server_clone = "http://assignments-clone.bridgesuncc.org";
+    //String server_sockets = "http://bridges-sockets.herokuapp.com";
+	String server_games = "http://games.bridgesuncc.org";
 	String server_local = "http://127.0.0.1:3000";
 
 	String server_type = "application";
-	String server_url = "http://bridges-cs.herokuapp.com";
-	String usgs_url = "https://earthquakes-uncc.herokuapp.com/eq";  //usgs earthquakes url
-	String airline_url = "https://earthquakes-uncc.herokuapp.com/airline"; //corgis airline data
+	String server_url = "http://assignments.bridgesuncc.org";
+	String usgs_url = "https://earthquakes-data.bridgesuncc.org/eq";  //usgs earthquakes url
 
 	Executor http_connection;
 	int pattern_found = 0; //semaphor
@@ -67,7 +66,7 @@ public class Connector {
 
 	/* Accessors and Mutators */
 	/**
-	 * Set the current server to 'live', 'clone', or 'local', or throw an error;
+	 * Set the current server to 'live', 'clone', 'games', or 'local', or throw an error;
 	 *	live is the default, clone is used for development/testing and local
 	 * for use by developers on their local machines
 	 *
@@ -92,14 +91,11 @@ public class Connector {
 			case "local":
 				setServerURL(server_local);
 				break;
-			case "sockets":
-				setServerURL(server_sockets);
-				break;
 			case "games":
 				setServerURL(server_games);
 				break;
 			default:
-				throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'sockets', 'games', 'local'].");
+				throw new IllegalArgumentException("Invalid server option. Please use one of the following options: ['live', 'clone', 'games', 'local'].");
 		}
 	}
 
@@ -536,10 +532,10 @@ public class Connector {
 	}
 
 	/** Execute a simple GET request relative to the server root.
-	    Omit the leading http://bridgesdata.herokuapp.com, but include the leading /:
+	    Omit the leading http://static-data.bridgesuncc.org, but include the leading /:
 	    [good]: /api/songs/find/Bohemian%20Rhapsody
 	    [bad]: api/songs/find/Bohemian%20Rhapsody
-	    [bad]: http://bridgesdata.herokuapp.com/api/songs/find/Bohemian%20Rhapsody   NullPointerException*/
+	    [bad]: http://static-data.bridgesuncc.org/api/songs/find/Bohemian%20Rhapsody   NullPointerException*/
 	public String get(String url) throws RateLimitException, IOException {
 		if (Bridges.getDebugFlag())
 			System.err.println("get Connector url before formatting: " + url);

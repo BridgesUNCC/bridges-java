@@ -98,47 +98,47 @@ public class DataSource {
 		if (sourceType.equals("local"))
 			return "http://localhost:3000/";
 
-		return "http://bridges-data-server-osm.bridgesuncc.org/";
+		return "http://osm-data.bridgesuncc.org/";
 	}
 
 	private String getElevationBaseURL() {
 		if (sourceType.equals("local"))
 			return "http://localhost:3000/";
 
-		return "http://bridges-data-server-elevation.bridgesuncc.org/";
+		return "http://elevation-data.bridgesuncc.org/";
 	}
 
 	private String getAmenityBaseURL() {
 		if (sourceType.equals("local"))
 			return "http://localhost:3000/";
 
-		return "http://bridges-data-server-osm.bridgesuncc.org/";
+		return "http://osm-data.bridgesuncc.org/";
 	}
 
 	private String getGutenbergBaseURL() {
 		if (sourceType.equals("local"))
 			return "http://localhost:3000/";
 		if (sourceType.equals("testing"))
-			return "http://bridges-data-server-gutenberg-t.bridgesuncc.org/";
+			return "http://gutenberg-t-data.bridgesuncc.org/";
 
-		return "http://bridges-data-server-gutenberg.bridgesuncc.org/";
+		return "http://gutenberg-data.bridgesuncc.org/";
 	}
 
 	private String  getRedditURL() {
 		if (sourceType.equals("testing"))
-			return "http://bridges-data-server-reddit-t.bridgesuncc.org";
+			return "http://reddit-t-data.bridgesuncc.org";
 		else if (sourceType.equals("local"))
 			return "http://localhost:9999";
 		else
-			return "http://bridges-data-server-reddit.bridgesuncc.org";
+			return "http://reddit-data.bridgesuncc.org";
 	}
 
 	private String getUSCitiesURL() {
-		return "http://bridgesdata.herokuapp.com/api/us_cities";
+		return "http://static-data.bridgesuncc.org/api/us_cities";
 	}
 
 	private String getUSStateCountiesURL() {
-			return "http://bridgesdata.herokuapp.com/api/us_map?state=";
+			return "http://static-data.bridgesuncc.org/api/us_map?state=";
 	}
 
 	private String getWorldCountriesURL() {
@@ -434,10 +434,10 @@ public class DataSource {
 		int maxElem) throws IOException {
 		String url;
 		if (maxElem > 0) {
-		    url = "http://earthquakes-uncc.herokuapp.com/eq/latest/" + maxElem;
+		    url = "http://earthquakes-data.bridgesuncc.org/eq/latest/" + maxElem;
 		}
 		else {
-		    url = "http://earthquakes-uncc.herokuapp.com/eq";
+		    url = "http://earthquakes-data.bridgesuncc.org/eq";
 		}
 		
 		HttpResponse response = makeRequest(url);
@@ -1636,7 +1636,7 @@ public class DataSource {
 	/**
 	  *     @brief retrieves the most recent reddit posts from a subreddit
 	  *
-	  * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
+	  * @param subreddit the name of the subreddit ( check list available at http://reddit0data.bridgesuncc.org/list or using getAvailableSubreddits() )
 	  *
 	  * @return a list of reddit objects with the data of the posts
 	  *
@@ -1647,7 +1647,7 @@ public class DataSource {
 	/**
 	 *     @brief retrieves the reddit posts from a subreddit
 	 *
-	 * @param subreddit the name of the subreddit ( check list available at http://bridges-data-server-reddit.bridgesuncc.org/list or using getAvailableSubreddits() )
+	 * @param subreddit the name of the subreddit ( check list available at http://reddit-data.bridgesuncc.org/list or using getAvailableSubreddits() )
 	 * @param time_request unix timestamp of when requested subreddit was generated or less than 0 for now
 	 *
 	 * @return a list of reddit objects with the data of the posts
