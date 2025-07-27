@@ -182,6 +182,8 @@ public class TreeElement<E> extends Element<E> {
 							Integer.toString(lv.getColor().getBlue()) + COMMA +
 							Float.toString(lv.getColor().getAlpha()) +
 							CLOSE_BOX + COMMA +
+							QUOTE + "label" + QUOTE + COLON +
+							QUOTE + lv.getLabel() + QUOTE + COMMA +
 							QUOTE + "thickness" + QUOTE + COLON +
 							String.valueOf(lv.getThickness()) +
 							CLOSE_CURLY + COMMA;

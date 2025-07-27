@@ -40,13 +40,29 @@ public class WorldMap extends DataStruct implements AbstrMap {
 	private ArrayList<Country> country_data;
     private boolean all;
     
+	/**
+	 *  @brief  constructor for drawing the World map as an overlay with default
+	 *   colors
+	 */
 	public WorldMap () {
 	    this.all = true;
 	}
 
+	/**
+	 *  @brief  constructor for drawing the World map when countries need to have 
+	 *   data mapped onto them
+	 *
+	 *  @param country_data  list of country objects
+	 */
 	public WorldMap (ArrayList<Country> country_data) {
 	    this.setCountryData(country_data);
 	}
+
+	/**
+	 * get the world map projection
+	 *
+	 * @return projection type 
+	 */
 	public String getProjection() {
 		return "equirectangular";
 	}
@@ -60,6 +76,11 @@ public class WorldMap extends DataStruct implements AbstrMap {
 		return true;
 	}
 
+	/**
+	 *  @brief  set country data 
+	 *
+	 *  @param country_data list of country objects
+	 */
 	public void setCountryData (ArrayList<Country> country_data) {
 	    this.all = false;
 	    this.country_data = country_data;

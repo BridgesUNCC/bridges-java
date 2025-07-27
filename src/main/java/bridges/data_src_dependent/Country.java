@@ -29,7 +29,7 @@ public class Country {
 	private float stroke_width;
 
 	/**
-	 *  @brief Default constructor
+	 *  @brief Default constructor 
 	 */
 	public Country() {
 		this.name = new String();
@@ -42,9 +42,12 @@ public class Country {
 	}
 
 	/** 
-	 * @brief Constructor for a specific state
+	 * @brief Constructor for a specific country
 	 *
-	 * @param state_name  state info
+	 * @param country  country name
+	 * @param alpha2_id 2 letter alphabetic country id
+	 * @param alpha3_id 3 letter alphabetic country id
+	 * @param numeric_id numeric country id
 	 */
 	public Country(String country, String alpha2_id, String alpha3_id, long numeric3_id) {
 		this.name = country;
@@ -107,4 +110,3 @@ public class Country {
 		stroke_width = width;
 	}
 };
-

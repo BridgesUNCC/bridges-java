@@ -59,7 +59,7 @@ public class LinkVisualizer {
 	CLOSE_BOX = "]";
 
 	// link label
-	private String label;
+	private String label = "";
 
 	// link color
 	private Color color;
