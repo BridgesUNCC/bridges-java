@@ -98,7 +98,7 @@ public class BarChart extends DataStruct {
 	}
 
 	/**
-	 * 	@brief gets the data type
+	 * 	@brief gets the data structure type
 	 *
 	 *	@return data type of the bar chart
 	 */
@@ -126,7 +126,7 @@ public class BarChart extends DataStruct {
 	}
 
 	/**
-	 * @brief Subtitle of the plot
+	 * @brief Set subtitle of the plot
 	 *
 	 * @param s the subtitle to be shown
 	 **/
@@ -135,7 +135,7 @@ public class BarChart extends DataStruct {
 	}
 
 	/**
-	 * @brief Subtitle of the plot
+	 * @brief Get subtitle of the plot
 	 *
 	 * @return the subtitle to be shown
 	 **/
@@ -145,7 +145,7 @@ public class BarChart extends DataStruct {
 
 
 	/**
-	 * @brief Change the category axis label
+	 * @brief Set the category axis label
 	 *
 	 * @param cAxisName label to show for the category axis
 	 **/
@@ -163,7 +163,7 @@ public class BarChart extends DataStruct {
 	}
 
 	/**
-	 * @brief Change the label for the value axis
+	 * @brief Set the label for the value axis
 	 *
 	 * @param yaxisName label to use for the value axis
 	 **/
