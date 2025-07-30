@@ -13,7 +13,7 @@ import bridges.data_src_dependent.USCounty;
  * This object is used alongside with the WorldMap object. Each country
  * has a stroke color and fill color and a set of ids
  *
- * See tutorial at  https://bridgesuncc.github.io/tutorials/Map.html
+ * See tutorial at  https://bridgesuncc.github.io/tutorials/WorldMap.html
  *
  * @author Kalpathi Subramanian
  * @date  Last modified June 6, 2025
