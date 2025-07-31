@@ -1638,7 +1638,7 @@ public class DataSource {
 	/**
 	  *     @brief retrieves the most recent reddit posts from a subreddit
 	  *
-	  * @param subreddit the name of the subreddit ( check list available at http://reddit0data.bridgesuncc.org/list or using getAvailableSubreddits() )
+	  * @param subreddit the name of the subreddit ( check list available at http://reddit-data.bridgesuncc.org/list or using getAvailableSubreddits() )
 	  *
 	  * @return a list of reddit objects with the data of the posts
 	  *
