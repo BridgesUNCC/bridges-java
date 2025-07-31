@@ -267,8 +267,7 @@ public class Bridges {
 	 *
 	 * See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
 	 *
-	 *  @param map     this is an Array describing the map overlay. The first element of the array is which map to use: "world" or "us"
-	 *  and the second element is what attribute from the map to show: a country from world map, or a state from US map.
+	 *  @param map_str The exact JSON representation of a map.
 	 *
 	 **/
 	public void setMap(String map_str) {
@@ -416,8 +415,6 @@ public class Bridges {
 	 *
 	 *  @param link_url_flag - flag  that controls if the link is printed
 	 *              to console
-	 *  @return none
-	 *
 	 */
 	public void  postVisualizationLink(boolean link_url_flag) {
 		post_link_url_flag = link_url_flag;

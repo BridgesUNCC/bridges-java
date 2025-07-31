@@ -79,7 +79,6 @@ public class Circle extends Symbol {
 	 * @param locx  x coordinate of circle center
 	 * @param locy  y coordinate of circle center
 	 * @param r  radius of circle
-	 * @return none
 	 */
 	public void setCircle (float locx, float locy, float r) {
 		this.x = locx;

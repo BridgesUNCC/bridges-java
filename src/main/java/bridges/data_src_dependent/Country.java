@@ -47,7 +47,7 @@ public class Country {
 	 * @param country  country name
 	 * @param alpha2_id 2 letter alphabetic country id
 	 * @param alpha3_id 3 letter alphabetic country id
-	 * @param numeric_id numeric country id
+	 * @param numeric3_id 3 number country id
 	 */
 	public Country(String country, String alpha2_id, String alpha3_id, long numeric3_id) {
 		this.name = country;

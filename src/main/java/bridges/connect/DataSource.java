@@ -533,10 +533,12 @@ public class DataSource {
 	 *
 	 *  @param works return only some of the works. "Plays" for only the plays, "Poems", or "" for all.
 	 *
+	 *  @param textOnly enable to strip all formating from the text, removing line breaks, paragraphs, punctuation, converting upper case to lower case, ...
+	 *
 	 *  @return a list of Shakespeare objects.
 	 */
 	public  List<Shakespeare> getShakespeareData(String works, Boolean textOnly) throws Exception {
-		String url = "https://bridgesdata.herokuapp.com/api/shakespeare";
+		String url = "https://static-data.bridgesuncc.org/api/shakespeare";
 
 		if (works == "plays" || works == "poems") {
 			url += "/" + works;
@@ -601,7 +603,7 @@ public class DataSource {
 	 *  @return a list of Cancer incidence objects.
 	 */
 	public List<CancerIncidence> getCancerIncidenceData() throws Exception {
-		String url = "https://bridgesdata.herokuapp.com/api/cancer/withlocations";
+		String url = "https://static-data.bridgesuncc.org/api/cancer/withlocations";
 		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
@@ -752,7 +754,7 @@ public class DataSource {
 	public List<ActorMovieIMDB> getActorMovieIMDBData(int maxElem)
 	throws IOException, IllegalArgumentException {
 
-		String url = "https://bridgesdata.herokuapp.com/api/imdb";
+		String url = "https://static-data.bridgesuncc.org/api/imdb";
 
 		if (maxElem > 0) {
 			url += "?limit=" + maxElem;
@@ -802,7 +804,7 @@ public class DataSource {
 	public List<ActorMovieIMDB> getActorMovieIMDBData2 ()
 	throws IOException {
 
-		String url = "https://bridgesdata.herokuapp.com/api/imdb2";
+		String url = "https://static-data.bridgesuncc.org/api/imdb2";
 		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
@@ -849,7 +851,7 @@ public class DataSource {
 	 */
 	public List<Game> getGameData() throws IOException {
 
-		String url = "https://bridgesdata.herokuapp.com/api/games";
+		String url = "https://static-data.bridgesuncc.org/api/games";
 		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
@@ -903,7 +905,7 @@ public class DataSource {
 	 *  Each record in this collection has
 	 *	information on song title, artist, album, year, lyrics, and genre.
 	 *	For more information and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/song <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://static-data.bridgesuncc.org/api/datasets/song <p>
 	 *
 	 *  @throws Exception if the request fails
 	 *
@@ -911,7 +913,7 @@ public class DataSource {
 	 */
 	public ArrayList<Song> getSongData() throws IOException {
 
-		String url = "https://bridgesdata.herokuapp.com/api/songs";
+		String url = "https://static-data.bridgesuncc.org/api/songs";
 		HttpResponse response = makeRequest(url);
 
 		int status = response.getStatusLine().getStatusCode();
@@ -940,7 +942,7 @@ public class DataSource {
 	 *  The record has information such as song title, artist, album, year,
 	 *	lyrics, and genre. For more information
 	 *	and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/song <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://static-data.bridgesuncc.org/api/datasets/song <p>
 	 *
 	 *  @param songTitle  title of song (string)
 	 *  @param artistName  name of artist (string), empty string for unspecified
@@ -950,7 +952,7 @@ public class DataSource {
 	 */
 	public Song getSong(String songTitle, String artistName)
 	throws IOException {
-		String url = "https://bridgesdata.herokuapp.com/api/songs/find/";
+		String url = "https://static-data.bridgesuncc.org/api/songs/find/";
 
 		// add the song title to the query url
 		if (songTitle.length() > 0) {
@@ -987,7 +989,7 @@ public class DataSource {
 	 *  The record has information such as song title, artist, album, year,
 	 *	lyrics, and genre. For more information
 	 *	and to look at the data, refer to <p>
-	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://bridgesdata.herokuapp.com/api/datasets/song <p>
+	 *	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://static-data.bridgesuncc.org/api/datasets/song <p>
 	 *
 	 * Refer to tutorial for example of using this feature: https://bridgesuncc.github.io/tutorials/Data_Song_Lyrics.html
 	 *

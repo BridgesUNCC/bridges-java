@@ -167,7 +167,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief Set the label for the value axis
 	 *
-	 * @param yaxisName label for the value axis
+	 * @param vAxisName label for the value axis
 	 **/
 	public void setValueLabel(String vAxisName) {
 		this.vLabel = vAxisName;

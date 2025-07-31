@@ -125,7 +125,7 @@ public class Array<E> extends DataStruct {
 	/**
 	 *	@brief Get the size of each dimensions;
 	 *
-	 *	@return dim[] size of each dimension is returned
+	 *	@param dim a 1D array of size at least 3 where each dimension gets returned
 	 */
 	public void getDimensions(int[] dim) {
 		dim[0] = dims[0];
