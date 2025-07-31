@@ -59,6 +59,7 @@ public class ElevationData {
 	 * @param yll  lower left y coord of origin
 	 * @param cellsize  size of each cell (resolution)
 	 * @param maxVal  max value in dataset
+	 * @param minVal  min value in dataset
 	 */
 	public ElevationData (int[][] data, int cols, int rows, double xll, double yll, double cellsize, int maxVal, int minVal) {
 		this.setData(data);

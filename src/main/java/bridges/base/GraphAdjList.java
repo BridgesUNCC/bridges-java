@@ -146,10 +146,8 @@ public class GraphAdjList<K, E1, E2> extends DataStruct  {
 	 *	list; user is responsible for checking if the vertex already
 	 *	exists. This method will replace the value for this key
 	 *
-	 *	@param k - vertex id
-	 *	@param e - vertex info, currently used as a label by default
-	 *
-	 *	@return none
+	 *	@param k vertex id
+	 *	@param e vertex info, currently used as a label by default
 	 */
 
 	public void addVertex(K k, E1 e) {

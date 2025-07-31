@@ -153,9 +153,8 @@ public class OsmData {
 	/**
 	 *   get the range of dataset in Cartesian coords
 	 *
-	 *   @param  latr: double[2]
-	 *   @param  lonr: double[2]
-	 *	 @return none
+	 *   @param  latr double[2]: min and max
+	 *   @param  lonr double[2]
 	 */
 	public void getLatLongRange(double[] latr, double[] lonr) {
 		latr[0] = latitude_range[0];
