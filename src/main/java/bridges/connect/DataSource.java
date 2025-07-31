@@ -368,7 +368,7 @@ public class DataSource {
 	 *
 	 *	See tutorial at https://bridgesuncc.github.io/tutorials/Map.html
 	 * 
-	 *	@param country_names Explicit names of states. e.g., "Germany, France"
+	 *	@param cntry_names Explicit names of countries. e.g., "Germany, France"
 	 */
 	public ArrayList<Country> getWorldMapData (String[] cntry_names) throws 
 										IOException {
@@ -1063,11 +1063,11 @@ public class DataSource {
 	/**
 	 * @brief parses the OSM data and caches maps requested
 	 *
-	 * @param url  string of the url that will be used when requesting
+	 * @param osm_url  string of the url that will be used when requesting
 	 *		map data from server
-	 * @param hashUrl string of the url that will be used when requesting
+	 * @param hash_url string of the url that will be used when requesting
 	 *		hash data from serverp
-	 * @return OsmData vertices and edges of Open Street Map data
+	 * @return vertices and edges of Open Street Map data
 	 * @throws IOException If there is an error parsing response from
 	 *		server or is an invalid location name
 	 */
@@ -1169,11 +1169,11 @@ public class DataSource {
 	/**
 	 * @brief Downloads and caches amenity requested
 	 *
-	 * @param url  string of the url that will be used when requesting
+	 * @param amenity_url  string of the url that will be used when requesting
 	 *		amenity data from server
-	 * @param hashUrl string of the url that will be used when requesting
+	 * @param hash_url string of the url that will be used when requesting
 	 *		hash data from server
-	 * @return AmenityData object containing coordinates and meta data
+	 * @return list of amenities returned in that URL
 	 * @throws IOException If there is an error parsing response from
 	 *		server or is an invalid location name
 	 */
