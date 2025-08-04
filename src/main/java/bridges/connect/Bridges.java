@@ -68,7 +68,8 @@ public class Bridges {
 	private  Connector connector;
 	private int element_array_size;
 	private static boolean json_flag = false;
-	private static boolean label_flag = false;
+	private static boolean element_label_flag = false;
+	private static boolean link_label_flag = false;
 	private static boolean post_link_url_flag = true;
 	private static boolean map_as_json = false;
 	private static int assignment;
@@ -403,12 +404,23 @@ public class Bridges {
 	}
 
 	/**
-	 * 	@param flag the flag to turn labels on/off on the entire visualization
+	 * 	@param flag the flag to turn element labels on/off on 
+	 *  the entire visualization
      *
 	 **/
-	public void setLabelFlag (boolean flag) {
-		label_flag = flag;
+	public void setElementLabelFlag (boolean flag) {
+		element_label_flag = flag;
 	}
+
+	/**
+	 * 	@param flag the flag to turn link labels on/off on 
+	 *  the entire visualization
+     *
+	 **/
+	public void setLinkLabelFlag (boolean flag) {
+		link_label_flag = flag;
+	}
+
 
 	/**
 	 *  This method is used to suppress the visualization link that is
@@ -628,7 +640,8 @@ public class Bridges {
 			QUOTE + "title"   + QUOTE + COLON + QUOTE + JSONValue.escape(title) + QUOTE + COMMA +
 			QUOTE + "description" + QUOTE + COLON + QUOTE + JSONValue.escape(description) +
 			QUOTE + COMMA +
-			QUOTE + "label_flag" + QUOTE + COLON + label_flag + COMMA +
+			QUOTE + "element_label_flag" + QUOTE + COLON + element_label_flag + COMMA +
+			QUOTE + "link_label_flag" + QUOTE + COLON + link_label_flag + COMMA +
 			QUOTE + "display_mode" + QUOTE + COLON + QUOTE + display_mode + QUOTE + COMMA +
 			QUOTE + "coord_system_type" + QUOTE + COLON + QUOTE + coord_system_type + QUOTE + COMMA +
 			QUOTE + "map_overlay" + QUOTE + COLON + map_overlay + COMMA;
@@ -644,8 +657,7 @@ public class Bridges {
 			json_hdr += CLOSE_BOX + COMMA;
 		}
 
-		return json_hdr;
-	}
+		return json_hdr; }
 
 	String getServerURL() {
 		return connector.getServerURL();
