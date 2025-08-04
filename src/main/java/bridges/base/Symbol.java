@@ -423,6 +423,8 @@ public abstract class Symbol {
 	 *	  point (px, py)
 	 *
 	 * 	@param angle  angle (in degrees)
+	 * @param px x coordinate of the point to rotate around
+	 * @param py y coordinate of the point to rotate around
 	 */
 	public Symbol rotate (float angle, float px, float py) {
 		// get the rotation matrix

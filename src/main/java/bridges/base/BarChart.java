@@ -98,7 +98,9 @@ public class BarChart extends DataStruct {
 	}
 
 	/**
-	 * 	@brief gets the data structure type
+	 * 	@brief gets the data structure type.
+	 *
+	 *      This is essentially a BRIDGES internal function. The end-user should never need it.
 	 *
 	 *	@return data type of the bar chart
 	 */
@@ -110,7 +112,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief Title of the plot
 	 *
-	 * @param t the title to be shown
+	 * @param t the title of the bar chart
 	 **/
 	public void setTitle(String t) {
 		this.title = t;
@@ -119,7 +121,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief Title of the plot
 	 *
-	 * @return the title to be shown
+	 * @return the title of the bar chart
 	 **/
 	public String getTitle() {
 		return this.title;
@@ -128,7 +130,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief Set subtitle of the plot
 	 *
-	 * @param s the subtitle to be shown
+	 * @param s the subtitle of the bar chart
 	 **/
 	public void setSubTitle(String s) {
 		this.subtitle = s;
@@ -137,7 +139,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief Get subtitle of the plot
 	 *
-	 * @return the subtitle to be shown
+	 * @return the subtitle of the bar chart.
 	 **/
 	public String getSubTitle() {
 		return this.subtitle;
@@ -147,7 +149,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief Set the category axis label
 	 *
-	 * @param cAxisName label to show for the category axis
+	 * @param cAxisName label for the category axis
 	 **/
 	public void setCategoriesLabel(String cAxisName) {
 		this.cLabel = cAxisName;
@@ -156,7 +158,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief Returns the label for the category axis
 	 *
-	 * @return label shown for the category axis
+	 * @return labelfor the category axis
 	 **/
 	public String getCategoriesLabel() {
 		return this.cLabel;
@@ -165,7 +167,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief Set the label for the value axis
 	 *
-	 * @param yaxisName label to use for the value axis
+	 * @param vAxisName label for the value axis
 	 **/
 	public void setValueLabel(String vAxisName) {
 		this.vLabel = vAxisName;
@@ -174,7 +176,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief Returns the label for the vlue axis
 	 *
-	 * @return label shown for the value axis
+	 * @return label for the value axis
 	 **/
 	public String getValueLabel() {
 		return this.vLabel;
@@ -207,7 +209,7 @@ public class BarChart extends DataStruct {
 	 *
 	 * This appends a string to the values in the hover tooltip.
 	 *
-	 * @param suffix
+	 * @param suffix string appended to the values in the tooltip
 	 **/
 	public void setTooltipSuffix(String suffix) {
 		this.tooltipSuffix = suffix;
@@ -216,7 +218,7 @@ public class BarChart extends DataStruct {
 	/**
 	 * @brief gets the tooltip suffix
 	 *
-	 * @return suffix
+	 * @return suffix appended to values
 	 **/
 	public String getTooltipSuffix () {
 		return this.tooltipSuffix;

@@ -46,6 +46,7 @@ public class BFSBenchmark extends GraphBenchmark {
 	 * @brief benchmark a particular BFS algorithm that accepts a single BFSParams argument
 	 *
 	 * @param algoName Screen name of the algorithm
+	 * @param ds a DataSource object used to create the underlying dataset
 	 * @param bfsAlgo the actual algorithm
 	 **/
     public void run(String algoName, DataSource ds, Consumer<BFSParams> bfsAlgo) throws IOException {
