@@ -7,8 +7,8 @@ import bridges.connect.SocketConnection;
  * simple non blocking games.
  *
  * The games that can be created out of NonBlockingGame are based on a
- * simple board grid of at most 1024 cells (e.g., 32x32, or any
- * combinations less than 1024 cells). Each cell has a background
+ * simple board grid of at most 48x48 cells (or any
+ * combinations less than 48x48 cells). Each cell has a background
  * color, and a colored symbol.
  *
  * This class is used by having another class derive from it and
@@ -64,9 +64,8 @@ import bridges.connect.SocketConnection;
  * on a cell that does not exist will lead to an error. One can
  * specify a gameboard of a different size by changing the parameters
  * to the NonBlockingGame constructor. However, the game board can not
- * be more than 1024 cells in total, so a 15x15 board is possible, a
- * 32x32 board is the largest square board possible, and a rectangular
- * 64x16 rectangular board is also possible. But a 100x20 board would
+ * be more than 48x48 cells in total, so a 15x15 board is possible, a
+ * 96x24 rectangular board is also possible. But a 200x20 board would
  * be 2000 cells and is not possible. For instance a board of 16 rows
  * and 64 columns can be created defining the my_game constructor as:
  *
@@ -524,8 +523,7 @@ public abstract class NonBlockingGame extends GameBase {
     /// object but rather derive from it.
     ///
     ///
-    /// The created grid can not be larger than 1024 cells in total
-    /// (e.g., 32x32, or 2x512 are ok).
+    /// The created grid can not be larger than 48x48 cells in total
     ///
     /// @param assignmentID bridges assignment ID
     /// @param login login on the bridges server
@@ -535,8 +533,8 @@ public abstract class NonBlockingGame extends GameBase {
     public NonBlockingGame(int assignmentID, String login, String apikey, int rows, int cols) {
         super(assignmentID, login, apikey, rows, cols);
 
-	if ((cols * rows) > 1024) { // Allows students to create smaller grids if they prefer.
-            System.out.println("ERROR: Number of cells in a non-blocking game grid cannot exceed 32x32 or 1024.");
+	if ((cols * rows) > 48*48) { // Allows students to create smaller grids if they prefer.
+            System.out.println("ERROR: Number of cells in a non-blocking game grid cannot exceed 48x48 or 2304 cells in total.");
             System.exit(1);
         }
         
@@ -546,8 +544,8 @@ public abstract class NonBlockingGame extends GameBase {
     public NonBlockingGame(int assignmentID, String login, String apikey, int rows, int cols, boolean deb) {
         super(assignmentID, login, apikey, rows, cols, deb);
 
-	if ((cols * rows) > 1024) { // Allows students to create smaller grids if they prefer.
-            System.out.println("ERROR: Number of cells in a non-blocking game grid cannot exceed 32x32 or 1024.");
+	if ((cols * rows) > 48*48) { // Allows students to create smaller grids if they prefer.
+            System.out.println("ERROR: Number of cells in a non-blocking game grid cannot exceed 48x48 or 2304.");
             System.exit(1);
         }
         
