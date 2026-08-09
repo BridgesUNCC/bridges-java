@@ -1,6 +1,7 @@
 package bridges.base;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class LineChart extends DataStruct {
 
 	private HashMap<String, double[]> yaxisData;
 	private HashMap<String, double[]> xaxisData;
+
+	private HashMap<String, Integer> line_width = new HashMap<String,Integer>();;
 
 	/**
 	 * @brief Line chart default constructor
@@ -210,6 +213,7 @@ public class LineChart extends DataStruct {
 	public void setDataSeries(String seriesName, double[] xdata, double[] ydata) {
 		setXData(seriesName, xdata);
 		setYData(seriesName, ydata);
+		line_width.put(seriesName, 1);
 	}
 
 	/**
@@ -222,6 +226,7 @@ public class LineChart extends DataStruct {
 	public void setDataSeries(String seriesName, ArrayList<Double> xdata, ArrayList<Double> ydata) {
 		setXData(seriesName, xdata);
 		setYData(seriesName, ydata);
+		line_width.put(seriesName, 1);
 	}
 	/**
 	 * @brief Add a series (or update it)
@@ -233,6 +238,8 @@ public class LineChart extends DataStruct {
 	public void setDataSeries(String seriesName, double[] xdata, ArrayList<Double> ydata) {
 		setXData(seriesName, xdata);
 		setYData(seriesName, ydata);
+		line_width.put(seriesName, 1);
+System.out.println("entered..");
 	}
 
 	/**
@@ -245,6 +252,7 @@ public class LineChart extends DataStruct {
 	public void setDataSeries(String seriesName, ArrayList<Double> xdata, double[] ydata) {
 		setXData(seriesName, xdata);
 		setYData(seriesName, ydata);
+		line_width.put(seriesName, 1);
 	}
 
 	/**
@@ -314,6 +322,28 @@ public class LineChart extends DataStruct {
 	public double[] getYData(String series) {
 		return yaxisData.get(series);
 	}
+
+	/**
+	 * @brief set line width for the series
+	 *
+	 * @param series
+	 * @param width  
+	 **/
+	public void setLineWidth(String series, Integer width) {
+		this.line_width.put(series, width);
+	}
+
+	/**
+	 * @brief Returns the line width for the series
+	 *
+     * @param series
+	 *
+	 * @return  line width
+	 **/
+	public Integer getLineWidth(String series) {
+		return this.line_width.get(series);
+	}
+
 
 	/**
 	 * @brief check if the LineChart is in a valid state.
@@ -398,6 +428,14 @@ public class LineChart extends DataStruct {
 		}
 		yaxis_json = yaxis_json.substring(0, yaxis_json.length() - 1);
 
+		// add line widths for each series
+		String lw_json = JSONValue.toJSONString("linewidth") + COLON + OPEN_CURLY;
+		for (Map.Entry<String, Integer> entry: line_width.entrySet()) {
+			lw_json += JSONValue.toJSONString(entry.getKey()) + COLON + 
+						JSONValue.toJSONString(entry.getValue()) + COMMA;
+		}
+		lw_json = lw_json.substring(0, lw_json.length()-1) + CLOSE_CURLY;
+		System.out.println("Line width JSON:" + lw_json);
 
 		String json_str = JSONValue.toJSONString("plot_title") + COLON +  JSONValue.toJSONString(this.getTitle()) + COMMA +
 			JSONValue.toJSONString("subtitle") + COLON + JSONValue.toJSONString(this.getSubTitle())  + COMMA +
@@ -408,7 +446,9 @@ public class LineChart extends DataStruct {
 			JSONValue.toJSONString("options") + COLON + OPEN_CURLY + JSONValue.toJSONString("mouseTracking") + COLON +
 			this.mouseTrack + COMMA + JSONValue.toJSONString("dataLabels") + COLON + this.dataLabel + CLOSE_CURLY + COMMA +
 			JSONValue.toJSONString("xaxis_data") + COLON + OPEN_BOX + xaxis_json + CLOSE_BOX + COMMA +
-			JSONValue.toJSONString("yaxis_data") + COLON + OPEN_BOX + yaxis_json + CLOSE_BOX +
+			JSONValue.toJSONString("yaxis_data") + COLON + OPEN_BOX + yaxis_json + CLOSE_BOX + COMMA +
+					lw_json +
+			
 			CLOSE_CURLY;
 		return json_str;
 
