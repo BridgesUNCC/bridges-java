@@ -239,7 +239,6 @@ public class LineChart extends DataStruct {
 		setXData(seriesName, xdata);
 		setYData(seriesName, ydata);
 		line_width.put(seriesName, 1);
-System.out.println("entered..");
 	}
 
 	/**
@@ -435,7 +434,6 @@ System.out.println("entered..");
 						JSONValue.toJSONString(entry.getValue()) + COMMA;
 		}
 		lw_json = lw_json.substring(0, lw_json.length()-1) + CLOSE_CURLY;
-		System.out.println("Line width JSON:" + lw_json);
 
 		String json_str = JSONValue.toJSONString("plot_title") + COLON +  JSONValue.toJSONString(this.getTitle()) + COMMA +
 			JSONValue.toJSONString("subtitle") + COLON + JSONValue.toJSONString(this.getSubTitle())  + COMMA +
