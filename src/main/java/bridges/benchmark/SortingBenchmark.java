@@ -252,6 +252,7 @@ public class SortingBenchmark extends Benchmark {
 				break;
 			}
 		}
+		this.plot.setLineWidth (algoName, 1);
 		this.plot.setXData(algoName, xData);
 		this.plot.setYData(algoName, time);
 	}
